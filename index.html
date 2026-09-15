@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berita Angin - Portal Berita & Analisis Terkini (Edisi Lengkap & Terperinci)</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Berita Angin - Portal Berita & Analisis Terkini</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script>
@@ -129,7 +128,8 @@
     .page-view.active {
         display: block;
     }
-    
+
+    /* Tabel Kustom untuk Laporan Artikel */
     table.article-table {
         width: 100%;
         border-collapse: collapse;
@@ -152,7 +152,8 @@
     html.dark table.article-table tr:nth-child(even) {
         background-color: #1e293b;
     }
-    
+
+    /* Callout Box Kustom */
     .article-callout {
         background-color: #f1f5f9;
         border-left: 4px solid #0284c7;
@@ -185,8 +186,8 @@
                     <div class="hidden md:flex justify-between items-center py-1.5 border-b dark:border-gray-700 text-xs text-gray-500">
                         <div>
                             <a href="#home" onclick="showHome(); return false;" class="hover:text-primary mr-3">Beranda Utama</a>
-                            <a href="#ekonomi" onclick="openArticle('side-1'); return false;" class="hover:text-primary mr-3">Ekonomi & Bisnis</a>
-                            <a href="#politik" onclick="openArticle('side-2'); return false;" class="hover:text-primary">Politik & Kebijakan</a>
+                            <a href="#ekonomi" onclick="openArticle('headline-main'); return false;" class="hover:text-primary mr-3">Ekonomi & Bisnis</a>
+                            <a href="#politik" onclick="openArticle('feed-1'); return false;" class="hover:text-primary">Politik & Kebijakan</a>
                         </div>
                         <div class="flex items-center space-x-3">
                             <div class="flex items-center space-x-1 font-mono bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded text-primary font-semibold">
@@ -204,7 +205,7 @@
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                             </button>
                             <a href="#" onclick="showHome(); return false;" class="text-3xl font-black text-primary cursor-pointer">
-                                BERITA ANGIN
+                               BERITA ANGIN
                             </a>
                         </div>
                         <div class="hidden md:block text-center">
@@ -221,29 +222,29 @@
                             </button>
                         </div>
                     </div>
-                    <!-- Desktop Navigation -->
+                    <!-- Navigation -->
                     <nav id="main-nav" class="hidden md:flex justify-center items-center space-x-6 py-2.5 text-sm font-bold border-t dark:border-gray-700">
                         <a href="#" onclick="showHome(); return false;" class="nav-link text-primary border-b-2 border-primary pb-1 transition flex items-center space-x-1.5">
                             <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             <span>PERISTIWA</span>
                         </a>
-                        <a href="#" onclick="openArticle('side-1'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
+                        <a href="#" onclick="openArticle('headline-main'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
                             <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             <span>EKONOMI</span>
                         </a>
-                        <a href="#" onclick="openArticle('feed-1'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
+                        <a href="#" onclick="openArticle('side-1'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
                             <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                             <span>TEKNOLOGI</span>
                         </a>
-                        <a href="#" onclick="openArticle('side-3'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
+                        <a href="#" onclick="openArticle('side-4'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
                             <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
                             <span>PASAR</span>
                         </a>
-                        <a href="#" onclick="openArticle('side-2'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
+                        <a href="#" onclick="openArticle('feed-1'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
                             <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>
                             <span>POLITIK</span>
                         </a>
-                        <a href="#" onclick="openArticle('side-4'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
+                        <a href="#" onclick="openArticle('side-2'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
                             <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             <span>SOSIAL</span>
                         </a>
@@ -254,13 +255,13 @@
                      <div class="px-4 py-2 border-t dark:border-gray-700">
                         <input type="text" id="mobile-search" placeholder="Cari berita..." class="border rounded-full py-2 px-4 w-full bg-gray-100 dark:bg-gray-800 dark:border-gray-600 mb-2">
                      </div>
-                     <nav class="flex flex-col text-left" id="mobile-nav-list">
-                        <a href="#" onclick="showHome(); toggleMobileMenu(); return false;" class="py-3 font-bold text-primary bg-gray-100 dark:bg-gray-800 flex items-center justify-start space-x-3 px-6"><span>PERISTIWA</span></a>
-                        <a href="#" onclick="openArticle('side-1'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-start space-x-3 px-6"><span>EKONOMI</span></a>
-                        <a href="#" onclick="openArticle('feed-1'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-start space-x-3 px-6"><span>TEKNOLOGI</span></a>
-                        <a href="#" onclick="openArticle('side-3'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-start space-x-3 px-6"><span>PASAR</span></a>
-                        <a href="#" onclick="openArticle('side-2'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-start space-x-3 px-6"><span>POLITIK</span></a>
-                        <a href="#" onclick="openArticle('side-4'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-start space-x-3 px-6"><span>SOSIAL</span></a>
+                     <nav class="flex flex-col text-center" id="mobile-nav-list">
+                        <a href="#" onclick="showHome(); toggleMobileMenu(); return false;" class="py-3 font-bold text-primary bg-gray-100 dark:bg-gray-800 flex items-center justify-center space-x-2"><span>PERISTIWA</span></a>
+                        <a href="#" onclick="openArticle('headline-main'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-center space-x-2"><span>EKONOMI</span></a>
+                        <a href="#" onclick="openArticle('side-1'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-center space-x-2"><span>TEKNOLOGI</span></a>
+                        <a href="#" onclick="openArticle('side-4'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-center space-x-2"><span>PASAR</span></a>
+                        <a href="#" onclick="openArticle('feed-1'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-center space-x-2"><span>POLITIK</span></a>
+                        <a href="#" onclick="openArticle('side-2'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-center space-x-2"><span>SOSIAL</span></a>
                      </nav>
                 </div>
             </header>
@@ -279,11 +280,11 @@
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="relative rounded-lg overflow-hidden group cursor-pointer flex flex-col justify-end min-h-[380px]" onclick="openArticle('headline-main')">
                                 <div class="absolute inset-0 overflow-hidden rounded-lg">
-                                    <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80" alt="KM Virgo" class="w-full h-full object-cover transition-transform duration-300 group-hover-image">
+                                    <img src="KM Virgo Transport 8.jpg" alt="KM Virgo" class="w-full h-full object-cover transition-transform duration-300 group-hover-image">
                                 </div>
                                 <div class="relative z-10 p-6 bg-gradient-to-t from-black/90 via-black/70 to-transparent">
                                     <span class="text-xs font-bold bg-primary text-white px-2.5 py-1 rounded">PERISTIWA</span>
-                                    <h1 class="text-xl md:text-2xl font-bold text-white mt-2 leading-tight">Tragedi Tenggelamnya Kapal Motor Virgo: Investigasi Komprehensif Keselamatan Maritim</h1>
+                                    <h1 class="text-xl md:text-2xl font-bold text-white mt-2 leading-tight">Tragedi Tenggelamnya Kapal Laut KM Virgo Transport 8: Investigasi Komprehensif Keselamatan Maritim</h1>
                                     <p class="text-xs md:text-sm text-gray-200 mt-2 line-clamp-2">Dunia transportasi laut nasional kembali diguncang musibah maritim menyusul tenggelamnya KM Virgo di perairan lepas nusantara akibat terjangan gelombang tinggi...</p>
                                     <div class="mt-3 text-xs text-gray-300 flex items-center space-x-2">
                                         <span>Oleh Tim Investigasi Utama</span>
@@ -296,7 +297,7 @@
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="group flex flex-col justify-between bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border dark:border-gray-700 cursor-pointer" onclick="openArticle('side-1')">
                                     <div>
-                                        <div class="overflow-hidden rounded-lg mb-2"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80" class="w-full h-32 object-cover group-hover-image transition-transform duration-300" alt="MBG"></div>
+                                        <div class="overflow-hidden rounded-lg mb-2"><img src="MBG.jpg" class="w-full h-32 object-cover group-hover-image transition-transform duration-300" alt="MBG"></div>
                                         <span class="text-[10px] font-bold text-primary">EKONOMI</span>
                                         <h3 class="font-bold text-sm leading-snug article-title-hover mt-1">Eskalasi Program Makan Bergizi Gratis (MBG) & Rantai Pasok Pangan</h3>
                                         <p class="text-xs text-gray-600 dark:text-dark-text-secondary mt-1">Transformasi penggerak ekonomi pedesaan melalui pelibatan KUD dan kelompok tani...</p>
@@ -353,7 +354,7 @@
                                         <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0"><img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover group-hover-image transition-transform duration-300" alt="KM Virgo"></div>
                                         <div>
                                             <span class="text-xs font-bold text-primary">PERISTIWA</span>
-                                            <h3 class="text-xl font-bold mt-1 article-title-hover">Tragedi Tenggelamnya Kapal Motor Virgo</h3>
+                                            <h3 class="text-xl font-bold mt-1 article-title-hover">Tragedi Tenggelamnya Kapal Laut KM Virgo Transport 8: Investigasi Komprehensif Keselamatan Maritim</h3>
                                             <p class="text-sm text-gray-600 dark:text-dark-text-secondary mt-1">Investigasi mendalam terkait aspek keselamatan maritim, dugaan overloading, dan koordinasi evakuasi SAR Gabungan...</p>
                                             <p class="text-xs text-gray-500 mt-2">Investigasi Khusus</p>
                                         </div>
@@ -497,30 +498,23 @@
         </footer>
     </div>
     
-    <!-- Script JavaScript & Basis Data Artikel yang Diperpanjang & Diperinci -->
+    <!-- Script JavaScript dan Basis Data Artikel -->
     <script>
         const articlesData = {
             "headline-main": {
-                category: "PERISTIWA & INVESTIGASI MENDALAM",
-                title: "Tragedi Tenggelamnya Kapal Motor Virgo: Investigasi Komprehensif Keselamatan Maritim, Evaluasi SAR, dan Tinjauan Regulasi Syahbandar",
+                category: "PERISTIWA & INVESTIGASI",
+                title: "Tragedi Tragedi Tenggelamnya Kapal Laut KM Virgo Transport 8: Investigasi Komprehensif Keselamatan Maritim",
                 author: "Tim Investigasi Utama Berita Angin",
                 time: "15 September 2026",
-                image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80",
+                image: "KM Virgo Transport 8.jpg",
                 content: `
-                    <p>Dunia transportasi laut nasional kembali diguncang oleh musibah maritim berdarah dingin menyusul tenggelamnya <strong>Kapal Motor (KM) Virgo</strong> di perairan lepas nusantara. Berdasarkan investigasi awal dan data kompilasi dari Tim Search and Rescue (SAR) Gabungan, insiden nahas ini bermula ketika kapal melintasi alur pelayaran padat di tengah terjangan anomali cuaca ekstrem berupa gelombang tinggi mencapai 3,5 hingga 4 meter serta hembusan angin kencang secara mendadak yang memicu kepanikan kru kapal.</p>
+                    <p>Dunia transportasi laut nasional kembali diguncang oleh musibah maritim berdarah dingin menyusul tenggelamnya <strong>Kapal Motor (KM) Virgo</strong> di perairan lepas nusantara. Berdasarkan investigasi awal dan data kompilasi dari Tim Search and Rescue (SAR) Gabungan, insiden nahas ini bermula ketika kapal melintasi alur pelayaran padat di tengah terjangan anomali cuaca ekstrem berupa gelombang tinggi mencapai 3,5 hingga 4 meter serta hembusan angin kencang secara mendadak.</p>
+                    <p>Analisis awal dari otoritas pelabuhan menunjukkan adanya indikasi kuat pelanggaran terhadap batasan kapasitas muatan (overloading). Muatan kargo dan kendaraan logistik yang melebihi batas tonase yang diizinkan telah mengubah titik gravitasi kapal secara drastis, sehingga stabilitas lambung kapal (metacentric height) menurun drastis ketika dihantam hantaman ombak besar dari lambung samping. Akibatnya, kapal mengalami kemiringan ekstrem dalam hitungan menit sebelum akhirnya tenggelam sepenuhnya ke dasar laut.</p>
                     
-                    <p>Analisis forensik maritim dan keterangan otoritas pelabuhan menunjukkan adanya indikasi kuat pelanggaran terhadap batasan kapasitas muatan (overloading). Muatan kargo komersial serta kendaraan logistik berat yang melebihi batas tonase yang diizinkan telah mengubah titik gravitasi kapal secara drastis. Hal ini menyebabkan penurunan signifikan pada stabilitas lambung kapal (metacentric height) ketika dihantam hantaman ombak besar secara beruntun dari lambung samping. Akibatnya, kapal mengalami kemiringan ekstrem dalam hitungan menit sebelum akhirnya kehilangan daya apung dan tenggelam sepenuhnya ke dasar laut.</p>
-                    
-                    <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Kronologi Detik-Detik Evakuasi dan Kendala di Lapangan</h3>
-                    <p>Sinyal marabahaya (distress signal) yang dipancarkan oleh radio anjungan KM Virgo diterima oleh stasiun bumi SAR pada pukul 03.15 WITA. Respons cepat langsung dikerahkan dengan mengerahkan kapal patroli cepat milik KPLP dan unsur TNI Angkatan Laut. Namun, proses evakuasi menghadapi tantangan berat akibat jarak pandang bawah air yang sangat pendek (zero visibility), arus bawah laut yang berputar kencang, serta kondisi serpihan kargo yang membahayakan manuver penyelam penyelamat.</p>
-                    
-                    <p>Hingga laporan ini diturunkan, tim SAR gabungan telah berhasil menyelamatkan 45 penumpang dalam keadaan selamat, sementara puluhan lainnya masih dalam pencarian intensif. Keluarga korban histeris mendatangi posko krisis di pelabuhan utama untuk menanti kepastian nasib sanak saudara mereka.</p>
-
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Langkah Cepat Tanggap Darurat dan Investigasi KNKT</h3>
                     <p>Menanggapi tragedi kemanusiaan ini, pemerintah melalui Kementerian Perhubungan bergerak cepat dengan menerjunkan tim khusus dari Komite Nasional Keselamatan Transportasi (KNKT) bersama Kesatuan Penjagaan Laut dan Pantai (KPLP). Tim gabungan langsung melakukan audit investigatif terhadap manajemen pelabuhan asal, keabsahan dokumen manifes penumpang, serta kelayakan operasional kapal sebelum bertolak.</p>
-                    
-                    <p>Operasi pencarian dan evakuasi korban melibatkan armada utama KRI dari TNI Angkatan Laut, helikopter patroli udara, serta puluhan kapal nelayan lokal yang dikoordinasikan secara terpusat di bawah kendali Badan Nasional Pencarian dan Pertolongan (Basarnas).</p>
-                    
+                    <p>Operasi pencarian dan evakuasi korban melibatkan armada utama KRI dari TNI Angkatan Laut, helikopter patroli udara, serta puluhan kapal nelayan lokal yang dikoordinasikan secara terpusat. Meskipun dihadapkan pada kendala jarak pandang di dalam air dan arus bawah laut yang kuat, tim penyelam gabungan terus memperluas radius pencarian guna menemukan para korban yang masih dinyatakan hilang.</p>
+
                     <div class="article-callout">
                         <div class="article-callout-title">Catatan Kritis Kebijakan Keselamatan Pelayaran</div>
                         <p style="margin: 0;">Tragedi KM Virgo menjadi peringatan keras (wakeup call) bagi seluruh operator pelabuhan dan syahbandar untuk tidak berkompromi terhadap standar operasional prosedur (SOP) keselamatan. Uji petik berkala (ramp check) serta penegakan hukum yang tegas terhadap praktik pemalsuan data manifes mutlak diperlukan guna mencegah berulangnya bencana serupa di masa depan.</p>
@@ -528,54 +522,48 @@
                 `
             },
             "side-1": {
-                category: "EKONOMI & KEBIJAKAN STRATEGIS",
-                title: "Eskalasi Program Makan Bergizi Gratis (MBG): Transformasi Rantai Pasok Pangan, Standarisasi Gizi, dan Penggerak Ekonomi Pedesaan",
+                category: "EKONOMI & KEBIJAKAN",
+                title: "Eskalasi Program Makan Bergizi Gratis (MBG): Transformasi Rantai Pasok Pangan dan Penggerak Ekonomi Pedesaan",
                 author: "Rubrik Ekonomi & Pangan",
                 time: "15 September 2026",
-                image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
+                image: "MBG1.jpg",
                 content: `
-                    <p>Program strategis nasional <strong>Makan Bergizi Gratis (MBG)</strong> terus menunjukkan eskalasi masif dalam hal cakupan wilayah dan jumlah penerima manfaat yang terdiri dari anak-anak sekolah mulai dari tingkat PAUD, SD, SMP, SMA, hingga santri pondok pesantren dan ibu hamil di seluruh penjuru tanah air. Pemerintah pusat menegaskan bahwa pengawasan ketat dilakukan secara berkala demi menjamin aspek higienitas, standar kandungan gizi makro (protein hewani dan nabati, karbohidrat kompleks) dan mikro (vitamin, zat besi, kalsium), serta ketepatan jadwal distribusi makanan ke setiap satuan pendidikan.</p>
+                    <p>Program strategis nasional <strong>Makan Bergizi Gratis (MBG)</strong> terus menunjukkan eskalasi masif dalam hal cakupan wilayah dan jumlah penerima manfaat yang terdiri dari anak-anak sekolah mulai dari tingkat PAUD, SD, SMP, SMA, hingga santri pondok pesantren dan ibu hamil. Pemerintah pusat menegaskan bahwa pengawasan ketat dilakukan secara berkala demi menjamin aspek higienitas, standar kandungan gizi makro (protein, karbohidrat, lemak) dan mikro (vitamin, mineral), serta ketepatan jadwal distribusi makanan.</p>
+                    <p>Dalam kerangka operasional terbaru, model pengelolaan dapur umum MBG mengalami perombakan struktural yang melibatkan Koperasi Unit Desa (KUD), kelompok tani lokal, serta peternak rakyat setempat. Kebijakan ini dirancang secara matang untuk menciptakan efek berganda (multiplier effect) yang nyata bagi perekonomian akar rumput. Seluruh pasokan bahan baku utama seperti beras organik, sayuran segar, telur ayam ras, dan daging segar dibeli langsung dari produsen lokal dengan harga yang adil, sehingga memutus mata rantai tengkulak yang selama ini merugikan petani.</p>
                     
-                    <p>Dalam kerangka operasional terbaru, model pengelolaan dapur umum MBG mengalami perombakan struktural yang melibatkan Koperasi Unit Desa (KUD), kelompok tani lokal, serta peternak rakyat setempat. Kebijakan ini dirancang secara matang untuk menciptakan efek berganda (multiplier effect) yang nyata bagi perekonomian akar rumput. Seluruh pasokan bahan baku utama seperti beras organik, sayuran segar, telur ayam ras, dan daging segar dibeli langsung dari produsen lokal dengan harga keekonomian yang adil, sehingga memutus mata rantai tengkulak yang selama ini merugikan petani.</p>
-                    
-                    <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Tantangan Distribusi Logistik dan Standarisasi Dapur Umum</h3>
+                    <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Tantangan Distribusi dan Standarisasi Dapur Umum</h3>
                     <p>Kendati mendapatkan sambutan positif dari masyarakat luas, pelaksanaan program MBG di lapangan tidak luput dari tantangan logistik yang kompleks. Di wilayah geografis yang sulit dijangkau atau kepulauan terpencil, tantangan utama terletak pada ketepatan waktu pengiriman agar makanan tetap hangat, segar, dan layak konsumsi sebelum jam istirahat sekolah tiba. Oleh karena itu, pemerintah terus memperkuat infrastruktur rantai pasok dingin (cold chain) serta menggandeng pakar gizi universitas lokal untuk melakukan audit mutu harian pada setiap dapur umum yang beroperasi.</p>
-                    
-                    <p>Evaluasi berkala juga melibatkan lintas lembaga termasuk Badan Pengawas Obat dan Makanan (BPOM) guna memastikan zero tolerance terhadap kasus keracunan makanan serta menjamin higienitas kemasan ramah lingkungan yang digunakan dalam distribusi massal.</p>
                 `
             },
             "side-2": {
-                category: "POLITIK & REFORMASI BIROKRASI",
-                title: "Dinamika Internal Pemerintahan: Isu Pencopotan, Rotasi Strategis, dan Reformasi Birokrasi Menyeluruh di Kementerian Keuangan",
+                category: "POLITIK & PEMERINTAHAN",
+                title: "Dinamika Internal Pemerintahan: Isu Pencopotan, Rotasi Strategis, dan Reformasi Birokrasi di Kementerian Keuangan",
                 author: "Liputan Khusus Politik",
                 time: "15 September 2026",
                 image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80",
                 content: `
                     <p>Sektor birokrasi pemerintahan digemparkan oleh gelombang dinamika internal di tubuh <strong>Kementerian Keuangan</strong> menyusul maraknya isu rotasi, mutasi, dan pencopotan sejumlah pejabat eselon strategis. Langkah restrukturisasi besar-besaran ini diumumkan oleh pihak istana sebagai bagian dari strategi penyegaran organisasi, peningkatan akuntabilitas publik, serta optimalisasi pencapaian target penerimaan negara di tengah tekanan ekonomi global yang sarat ketidakpastian.</p>
-                    
                     <p>Para pengamat ekonomi dan hukum tata negara menilai bahwa perombakan di tubuh instansi bendahara negara ini membawa sinyal politik yang kuat mengenai pentingnya integritas moral, kecepatan eksekusi anggaran fiskal, serta reformasi sistem perpajakan yang lebih adaptif terhadap era ekonomi digital. Transparansi dalam proses pengisian jabatan publik menjadi sorotan utama agar kebijakan fiskal tetap berada pada jalur yang kredibel dan terhindar dari konflik kepentingan.</p>
                     
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Respon Pasar dan Kepercayaan Investor Internasional</h3>
                     <p>Pelaku pasar keuangan domestik maupun investor global memantau secara seksama pergerakan birokrasi di Kementerian Keuangan ini. Stabilitas fiskal Indonesia yang selama ini dijaga melalui disiplin anggaran yang ketat menjadi fondasi utama kepercayaan pasar. Dengan adanya restrukturisasi ini, pemerintah berkomitmen untuk menjaga rasio defisit anggaran terhadap PDB di bawah ambang batas aman UU, sambil terus mempercepat pencairan stimulus ekonomi bagi sektor riil.</p>
-                    
-                    <p>DPR RI berencana memanggil jajaran pimpinan baru kementerian untuk melakukan Rapat Dengar Pendapat (RDP) guna memaparkan peta jalan (roadmap) kebijakan fiskal semester kedua tahun 2026.</p>
                 `
             },
             "side-3": {
                 category: "PASAR & MAKROEKONOMI",
-                title: "Imbas Makroekonomi: Analisis Mendalam Pergerakan Indeks Harga Saham Gabungan (IHSG) dan Fluktuasi Harga Sembako di Pasar Tradisional",
+                title: "Imbas Makroekonomi: Analisis Pergerakan Indeks Harga Saham Gabungan (IHSG) dan Fluktuasi Sembako di Pasar Tradisional",
                 author: "Analis Pasar & Keuangan",
                 time: "15 September 2026",
                 image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=400&q=80",
                 content: `
-                    <p>Kombinasi berbagai sentimen domestik dan global—mulai dari perombakan kabinet, dinamika kebijakan fiskal, hingga gangguan rantai pasok akibat anomali cuaca—memberikan dampak langsung terhadap pergerakan pasar modal serta daya beli masyarakat di pasar ritel konvensional.</p>
+                    <p>Kombinasi berbagai sentimen domestik—mulai dari perombakan kabinet, dinamika kebijakan fiskal, hingga gangguan rantai pasok akibat cuaca—memberikan dampak langsung terhadap pergerakan pasar modal serta daya beli masyarakat di pasar ritel konvensional.</p>
                     
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">A. Pergerakan Dinamis Indeks Harga Saham Gabungan (IHSG)</h3>
-                    <p>Di lantai bursa efek, Indeks Harga Saham Gabungan (IHSG) sempat mengalami fase fluktuasi tajam akibat aksi <em>wait and see</em> yang dilakukan oleh para investor institusional maupun asing. Ketidakpastian arah kebijakan jangka pendek membuat volume perdagangan melambat. Kendati demikian, emiten-emiten berkapitalisasi pasar besar (blue chip) di sektor perbankan utama, telekomunikasi, dan energi esensial tetap mencatatkan fundamental yang tangguh, menahan koreksi indeks agar tidak terperosok lebih dalam di zona merah.</p>
-                    
+                    <p>Di lantai bursa efek, Indeks Harga Saham Gabungan (IHSG) sempat mengalami fase fluktuasi tajam akibat aksi <em>wait and see</em> yang dilakukan oleh para investor institusional maupun asing. Ketidakpastian arah kebijakan jangka pendek membuat volume perdagangan melambat. Kendati demikian, emiten-emiten berkapitalisasi pasar besar (blue chip) di sektor perbankan utama, telekomunikasi, dan energi esensial tetap mencatatkan fundamental yang tangguh, menahan koreksi indeks agar tidak terperosok lebih dalam.</p>
+
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">B. Stabilitas Harga Sembako di Pasar Tradisional: Tinjauan Harga Komoditas</h3>
                     <p>Hasil pantauan langsung di berbagai pasar tradisional utama menunjukkan adanya kenaikan harga pada beberapa komoditas pangan yang dipicu oleh penurunan produksi pertanian akibat faktor cuaca ekstrem serta lonjakan biaya transportasi logistik antardaerah. Berikut adalah rincian rata-rata harga komoditas pangan pokok:</p>
-                    
+
                     <table class="article-table">
                         <thead>
                             <tr>
@@ -616,30 +604,26 @@
             },
             "side-4": {
                 category: "PERISTIWA & BENCANA ALAM",
-                title: "Tanggap Darurat Bencana Hidrometeorologi: Penanganan Komprehensif Banjir Bandang dan Longsor di Aceh Tenggara",
+                title: "Tanggap Darurat Bencana Hidrometeorologi: Penanganan Banjir Bandang dan Longsor di Aceh Tenggara",
                 author: "Wartawan Lapangan Bencana",
                 time: "15 September 2026",
                 image: "https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=400&q=80",
                 content: `
-                    <p>Bencana alam hidrometeorologi kembali menghantam wilayah barat nusantara, kali ini meluluhlantakkan sejumlah kawasan di Kabupaten <strong>Aceh Tenggara</strong>. Hujan deras dengan intensitas ekstrim yang mengguyur kawasan pegunungan Bukit Barisan selama beberapa hari berturut-turut memicu meluapnya debit air Sungai Alas dan anak-anak sungainya, sehingga menerjang permukiman penduduk dalam bentuk banjir bandang yang membawa serta material lumpur tebal, batu besar, dan kayu gelondongan.</p>
-                    
+                    <p>Bencana alam hidrometeorologi kembali menghantam wilayah barat nusantara, kali ini meluluhlantakkan sejumlah kawasan di Kabupaten <strong>Aceh Tenggara</strong>. Hujan deras dengan intensitas ekstrim yang mengguyur kawasan pegunungan selama beberapa hari berturut-turut memicu meluapnya debit air Sungai Alas dan anak-anak sungainya, sehingga menerjang permukiman penduduk dalam bentuk banjir bandang yang membawa serta material lumpur tebal, batu besar, dan kayu gelondongan sisa pembalakan liar.</p>
                     <p>Dampak kerusakan akibat bencana ini sangat signifikan: ratusan unit rumah warga mengalami rusak berat hingga hanyut terbawa arus, puluhan hektare lahan pertanian siap panen terendam lumpur, serta jembatan penghubung antar-kecamatan putus total, mengisolasi sejumlah desa terpencil. Badan Penanggulangan Bencana Daerah (BPBD) Aceh Tenggara bersama prajurit TNI dari Kodim setempat, personel Polri, SAR, serta relawan kemanusiaan langsung dikerahkan ke lokasi untuk mendirikan posko pengungsian terpadu, dapur umum lapangan, dan posko kesehatan darurat.</p>
                     
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Prioritas Penanganan Pengungsi dan Mitigasi Jangka Panjang</h3>
                     <p>Fokus utama operasi darurat saat ini adalah penyaluran air bersih, logistik makanan siap saji, selimut, serta obat-obatan bagi ribuan warga yang mengungsi di tempat-tempat aman. Alat berat dikerahkan secara simultan untuk membersihkan material longsor yang menutup akses jalan utama logistik. Pemerintah daerah bersama Kementerian Pekerjaan Umum juga mulai merancang relokasi permukiman bagi warga yang tinggal di zona merah rawan longsor susulan.</p>
-                    
-                    <p>Menteri Sosial yang meninjau lokasi langsung memastikan bahwa santunan duka dan jaminan hidup bagi korban terdampak akan segera dicairkan dalam minggu ini.</p>
                 `
             },
             "feed-1": {
                 category: "SAINS & ANTARIKSA",
-                title: "Keajaiban Sains Angkasa: Fenomena Konjungsi Kasat Mata Bulan Sabit dan Planet Venus di Langit Malam Nusantara",
+                title: "Keajaiban Sains Angkasa: Fenomena Konjungsi Kasat Mata Bulan Sabit dan Planet Venus di Langit Nusantara",
                 author: "Rubrik Sains & Astronomi",
                 time: "15 September 2026",
                 image: "https://images.unsplash.com/photo-1516331138075-f3adc1e149cd?auto=format&fit=crop&w=200&q=80",
                 content: `
-                    <p>Di tengah hiruk-pikuk dinamika sosial, politik, dan ekonomi yang melanda tanah air, langit malam nusantara disuguhkan dengan pemandangan astronomis yang sangat memukau dan langka, yakni fenomena konjungsi kasat mata antara <strong>Bulan sabit muda dan Planet Venus</strong> (yang populer dikenal sebagai Bintang Kejora). Fenomena ini dapat disaksikan secara jelas tepat setelah matahari terbenam menghadap ke arah barat dengan mata telanjang.</p>
-                    
+                    <p>Di tengah hiruk-pikuk dinamika sosial, politik, dan ekonomi yang melanda tanah air, langit malam nusantara disuguhkan dengan pemandangan astronomis yang sangat memukau dan langka, yakni fenomena konjungsi kasat mata antara <strong>Bulan sabit muda dan Planet Venus</strong> (yang populer dikenal sebagai Bintang Kejora). Fenomena ini dapat disaksikan secara jelas tepat setelah matahari terbenam menghadap ke arah barat.</p>
                     <p>Lembaga Penerbangan dan Antariksa Nasional (LAPAN) di bawah Badan Riset dan Inovasi Nasional (BRIN) memberikan penjelasan ilmiah bahwa konjungsi ini terjadi akibat pergerakan orbit relatif antara Bumi, Bulan, and Venus yang berada pada garis pandang yang hampir segaris dari perspektif pengamat di permukaan Bumi. Meskipun secara jarak fisik antariksa jarak keduanya sangat jauh berjuta-juta kilometer, konfigurasi optik ini menciptakan pemandangan visual yang seolah-olah Venus bersanding sangat dekat dengan sabit Bulan yang indah.</p>
                     
                     <div class="article-callout">
@@ -655,7 +639,6 @@
             document.getElementById('article-page').classList.remove('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
         function openArticle(articleId) {
             const article = articlesData[articleId];
             if (!article) return;
@@ -669,12 +652,10 @@
             document.getElementById('article-page').classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
         }
-
         function updateLiveFrequencyTime() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -686,7 +667,6 @@
                 timeEl.innerText = timeString;
             }
         }
-
         let isMoreLoaded = false;
         function loadMoreArticles() {
             const terkiniList = document.getElementById('terkini-list');
@@ -729,7 +709,6 @@
                 alert('Semua berita terbaru telah dimuat pada halaman ini.');
             }
         }
-
         document.addEventListener('DOMContentLoaded', () => {
             updateLiveFrequencyTime();
             setInterval(updateLiveFrequencyTime, 1000);
@@ -810,7 +789,6 @@
                 });
             }
         });
-
         function resetSearchBanner() {
             const banner = document.getElementById('content-header-banner');
             if (banner) {
