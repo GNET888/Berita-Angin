@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berita Angin - Portal Berita & Analisis Terkini</title>
+    <title>Berita Angin - Portal Berita & Analisis Terkini (Edisi Lengkap & Terperinci)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
@@ -129,8 +129,7 @@
     .page-view.active {
         display: block;
     }
-
-    /* Tabel Kustom untuk Laporan Artikel */
+    
     table.article-table {
         width: 100%;
         border-collapse: collapse;
@@ -153,8 +152,7 @@
     html.dark table.article-table tr:nth-child(even) {
         background-color: #1e293b;
     }
-
-    /* Callout Box Kustom */
+    
     .article-callout {
         background-color: #f1f5f9;
         border-left: 4px solid #0284c7;
@@ -199,7 +197,6 @@
                             <div id="current-datetime">Selasa, 15 Sep 2026</div>
                         </div>
                     </div>
-
                     <!-- Main Header -->
                     <div class="flex justify-between items-center py-4">
                         <div class="flex items-center">
@@ -224,7 +221,6 @@
                             </button>
                         </div>
                     </div>
-
                     <!-- Desktop Navigation -->
                     <nav id="main-nav" class="hidden md:flex justify-center items-center space-x-6 py-2.5 text-sm font-bold border-t dark:border-gray-700">
                         <a href="#" onclick="showHome(); return false;" class="nav-link text-primary border-b-2 border-primary pb-1 transition flex items-center space-x-1.5">
@@ -253,7 +249,6 @@
                         </a>
                     </nav>
                 </div>
-
                  <!-- Mobile Menu -->
                 <div id="mobile-menu" class="hidden md:hidden">
                      <div class="px-4 py-2 border-t dark:border-gray-700">
@@ -380,7 +375,6 @@
                         <!-- Sidebar -->
                         <aside class="col-span-12 lg:col-span-4">
                              <div class="space-y-8">
-                                <!-- Sorotan Utama -->
                                 <div class="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-lg border dark:border-gray-700 shadow-md">
                                     <h3 class="terpopuler-header">SOROTAN UTAMA</h3>
                                     <ol class="p-2 space-y-4">
@@ -397,42 +391,6 @@
                                             <h4 class="font-bold leading-tight article-title-hover group-hover:text-primary transition pt-2">Penanganan Darurat Bencana Banjir Bandang Aceh Tenggara</h4>
                                         </li>
                                     </ol>
-                                </div>
-                                
-                                <!-- REAL-TIME PASAR BURSA EFEK INDONESIA (IHSG) - SESUAI TEMA PORTAL -->
-                                <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700 shadow-md overflow-hidden">
-                                    <div class="bg-primary text-white px-4 py-2 flex justify-between items-center">
-                                        <div class="flex items-center space-x-2">
-                                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                                            <h3 class="font-bold text-xs tracking-wider uppercase">BURSA EFEK INDONESIA</h3>
-                                        </div>
-                                        <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded font-mono font-bold">LIVE IDX</span>
-                                    </div>
-                                    <div class="p-4 space-y-3">
-                                        <div>
-                                            <div class="flex justify-between text-xs text-gray-500 dark:text-dark-text-secondary">
-                                                <span>IHSG (COMPOSITE)</span>
-                                                <span id="market-status" class="text-emerald-600 dark:text-emerald-400 font-bold">● Sesi Aktif</span>
-                                            </div>
-                                            <div class="flex items-baseline justify-between mt-1">
-                                                <span id="idx-ihsg-val" class="text-2xl font-black font-mono text-secondary dark:text-white">7,345.20</span>
-                                                <span id="idx-ihsg-chg" class="text-xs font-bold font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-500/20 px-2 py-0.5 rounded">+48.30 (+0.66%)</span>
-                                            </div>
-                                        </div>
-                                        <div class="grid grid-cols-2 gap-2 pt-2 border-t border-gray-200 dark:border-gray-700 text-xs">
-                                            <div class="bg-white dark:bg-gray-800 p-2 rounded border dark:border-gray-700">
-                                                <div class="text-gray-400 dark:text-dark-text-secondary text-[10px]">LQ45 (Unggulan)</div>
-                                                <div id="idx-lq45-val" class="font-mono font-bold mt-0.5 text-emerald-600 dark:text-emerald-300">924.15 <span class="text-[10px]">+0.42%</span></div>
-                                            </div>
-                                            <div class="bg-white dark:bg-gray-800 p-2 rounded border dark:border-gray-700">
-                                                <div class="text-gray-400 dark:text-dark-text-secondary text-[10px]">Nilai Transaksi</div>
-                                                <div class="font-mono font-bold mt-0.5 text-secondary dark:text-white">Rp 10.4 T</div>
-                                            </div>
-                                        </div>
-                                        <div class="text-[10px] text-gray-400 dark:text-dark-text-secondary text-right italic pt-1">
-                                            Sumber: IDX Real-Time &bull; <span id="idx-update-time">00:00:00</span>
-                                        </div>
-                                    </div>
                                 </div>
                                 
                                 <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg text-center border dark:border-gray-700">
@@ -539,22 +497,30 @@
         </footer>
     </div>
     
-    <!-- Script JavaScript & Basis Data Artikel -->
+    <!-- Script JavaScript & Basis Data Artikel yang Diperpanjang & Diperinci -->
     <script>
         const articlesData = {
             "headline-main": {
-                category: "PERISTIWA & INVESTIGASI",
-                title: "Tragedi Tenggelamnya Kapal Motor Virgo: Investigasi Komprehensif Keselamatan Maritim dan Evaluasi SAR",
+                category: "PERISTIWA & INVESTIGASI MENDALAM",
+                title: "Tragedi Tenggelamnya Kapal Motor Virgo: Investigasi Komprehensif Keselamatan Maritim, Evaluasi SAR, dan Tinjauan Regulasi Syahbandar",
                 author: "Tim Investigasi Utama Berita Angin",
                 time: "15 September 2026",
                 image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80",
                 content: `
-                    <p>Dunia transportasi laut nasional kembali diguncang oleh musibah maritim berdarah dingin menyusul tenggelamnya <strong>Kapal Motor (KM) Virgo</strong> di perairan lepas nusantara. Berdasarkan investigasi awal dan data kompilasi dari Tim Search and Rescue (SAR) Gabungan, insiden nahas ini bermula ketika kapal melintasi alur pelayaran padat di tengah terjangan anomali cuaca ekstrem berupa gelombang tinggi mencapai 3,5 hingga 4 meter serta hembusan angin kencang secara mendadak.</p>
-                    <p>Analisis awal dari otoritas pelabuhan menunjukkan adanya indikasi kuat pelanggaran terhadap batasan kapasitas muatan (overloading). Muatan kargo dan kendaraan logistik yang melebihi batas tonase yang diizinkan telah mengubah titik gravitasi kapal secara drastis, sehingga stabilitas lambung kapal (metacentric height) menurun drastis ketika dihantam hantaman ombak besar dari lambung samping. Akibatnya, kapal mengalami kemiringan ekstrem dalam hitungan menit sebelum akhirnya tenggelam sepenuhnya ke dasar laut.</p>
+                    <p>Dunia transportasi laut nasional kembali diguncang oleh musibah maritim berdarah dingin menyusul tenggelamnya <strong>Kapal Motor (KM) Virgo</strong> di perairan lepas nusantara. Berdasarkan investigasi awal dan data kompilasi dari Tim Search and Rescue (SAR) Gabungan, insiden nahas ini bermula ketika kapal melintasi alur pelayaran padat di tengah terjangan anomali cuaca ekstrem berupa gelombang tinggi mencapai 3,5 hingga 4 meter serta hembusan angin kencang secara mendadak yang memicu kepanikan kru kapal.</p>
                     
+                    <p>Analisis forensik maritim dan keterangan otoritas pelabuhan menunjukkan adanya indikasi kuat pelanggaran terhadap batasan kapasitas muatan (overloading). Muatan kargo komersial serta kendaraan logistik berat yang melebihi batas tonase yang diizinkan telah mengubah titik gravitasi kapal secara drastis. Hal ini menyebabkan penurunan signifikan pada stabilitas lambung kapal (metacentric height) ketika dihantam hantaman ombak besar secara beruntun dari lambung samping. Akibatnya, kapal mengalami kemiringan ekstrem dalam hitungan menit sebelum akhirnya kehilangan daya apung dan tenggelam sepenuhnya ke dasar laut.</p>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Kronologi Detik-Detik Evakuasi dan Kendala di Lapangan</h3>
+                    <p>Sinyal marabahaya (distress signal) yang dipancarkan oleh radio anjungan KM Virgo diterima oleh stasiun bumi SAR pada pukul 03.15 WITA. Respons cepat langsung dikerahkan dengan mengerahkan kapal patroli cepat milik KPLP dan unsur TNI Angkatan Laut. Namun, proses evakuasi menghadapi tantangan berat akibat jarak pandang bawah air yang sangat pendek (zero visibility), arus bawah laut yang berputar kencang, serta kondisi serpihan kargo yang membahayakan manuver penyelam penyelamat.</p>
+                    
+                    <p>Hingga laporan ini diturunkan, tim SAR gabungan telah berhasil menyelamatkan 45 penumpang dalam keadaan selamat, sementara puluhan lainnya masih dalam pencarian intensif. Keluarga korban histeris mendatangi posko krisis di pelabuhan utama untuk menanti kepastian nasib sanak saudara mereka.</p>
+
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Langkah Cepat Tanggap Darurat dan Investigasi KNKT</h3>
                     <p>Menanggapi tragedi kemanusiaan ini, pemerintah melalui Kementerian Perhubungan bergerak cepat dengan menerjunkan tim khusus dari Komite Nasional Keselamatan Transportasi (KNKT) bersama Kesatuan Penjagaan Laut dan Pantai (KPLP). Tim gabungan langsung melakukan audit investigatif terhadap manajemen pelabuhan asal, keabsahan dokumen manifes penumpang, serta kelayakan operasional kapal sebelum bertolak.</p>
-                    <p>Operasi pencarian dan evakuasi korban melibatkan armada utama KRI dari TNI Angkatan Laut, helikopter patroli udara, serta puluhan kapal nelayan lokal yang dikoordinasikan secara terpusat. Meskipun dihadapkan pada kendala jarak pandang di dalam air dan arus bawah laut yang kuat, tim penyelam gabungan terus memperluas radius pencarian guna menemukan para korban yang masih dinyatakan hilang.</p>
+                    
+                    <p>Operasi pencarian dan evakuasi korban melibatkan armada utama KRI dari TNI Angkatan Laut, helikopter patroli udara, serta puluhan kapal nelayan lokal yang dikoordinasikan secara terpusat di bawah kendali Badan Nasional Pencarian dan Pertolongan (Basarnas).</p>
+                    
                     <div class="article-callout">
                         <div class="article-callout-title">Catatan Kritis Kebijakan Keselamatan Pelayaran</div>
                         <p style="margin: 0;">Tragedi KM Virgo menjadi peringatan keras (wakeup call) bagi seluruh operator pelabuhan dan syahbandar untuk tidak berkompromi terhadap standar operasional prosedur (SOP) keselamatan. Uji petik berkala (ramp check) serta penegakan hukum yang tegas terhadap praktik pemalsuan data manifes mutlak diperlukan guna mencegah berulangnya bencana serupa di masa depan.</p>
@@ -562,46 +528,54 @@
                 `
             },
             "side-1": {
-                category: "EKONOMI & KEBIJAKAN",
-                title: "Eskalasi Program Makan Bergizi Gratis (MBG): Transformasi Rantai Pasok Pangan dan Penggerak Ekonomi Pedesaan",
+                category: "EKONOMI & KEBIJAKAN STRATEGIS",
+                title: "Eskalasi Program Makan Bergizi Gratis (MBG): Transformasi Rantai Pasok Pangan, Standarisasi Gizi, dan Penggerak Ekonomi Pedesaan",
                 author: "Rubrik Ekonomi & Pangan",
                 time: "15 September 2026",
                 image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
                 content: `
-                    <p>Program strategis nasional <strong>Makan Bergizi Gratis (MBG)</strong> terus menunjukkan eskalasi masif dalam hal cakupan wilayah dan jumlah penerima manfaat yang terdiri dari anak-anak sekolah mulai dari tingkat PAUD, SD, SMP, SMA, hingga santri pondok pesantren dan ibu hamil. Pemerintah pusat menegaskan bahwa pengawasan ketat dilakukan secara berkala demi menjamin aspek higienitas, standar kandungan gizi makro (protein, karbohidrat, lemak) dan mikro (vitamin, mineral), serta ketepatan jadwal distribusi makanan.</p>
-                    <p>Dalam kerangka operasional terbaru, model pengelolaan dapur umum MBG mengalami perombakan struktural yang melibatkan Koperasi Unit Desa (KUD), kelompok tani lokal, serta peternak rakyat setempat. Kebijakan ini dirancang secara matang untuk menciptakan efek berganda (multiplier effect) yang nyata bagi perekonomian akar rumput. Seluruh pasokan bahan baku utama seperti beras organik, sayuran segar, telur ayam ras, dan daging segar dibeli langsung dari produsen lokal dengan harga yang adil, sehingga memutus mata rantai tengkulak yang selama ini merugikan petani.</p>
+                    <p>Program strategis nasional <strong>Makan Bergizi Gratis (MBG)</strong> terus menunjukkan eskalasi masif dalam hal cakupan wilayah dan jumlah penerima manfaat yang terdiri dari anak-anak sekolah mulai dari tingkat PAUD, SD, SMP, SMA, hingga santri pondok pesantren dan ibu hamil di seluruh penjuru tanah air. Pemerintah pusat menegaskan bahwa pengawasan ketat dilakukan secara berkala demi menjamin aspek higienitas, standar kandungan gizi makro (protein hewani dan nabati, karbohidrat kompleks) dan mikro (vitamin, zat besi, kalsium), serta ketepatan jadwal distribusi makanan ke setiap satuan pendidikan.</p>
                     
-                    <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Tantangan Distribusi dan Standarisasi Dapur Umum</h3>
+                    <p>Dalam kerangka operasional terbaru, model pengelolaan dapur umum MBG mengalami perombakan struktural yang melibatkan Koperasi Unit Desa (KUD), kelompok tani lokal, serta peternak rakyat setempat. Kebijakan ini dirancang secara matang untuk menciptakan efek berganda (multiplier effect) yang nyata bagi perekonomian akar rumput. Seluruh pasokan bahan baku utama seperti beras organik, sayuran segar, telur ayam ras, dan daging segar dibeli langsung dari produsen lokal dengan harga keekonomian yang adil, sehingga memutus mata rantai tengkulak yang selama ini merugikan petani.</p>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Tantangan Distribusi Logistik dan Standarisasi Dapur Umum</h3>
                     <p>Kendati mendapatkan sambutan positif dari masyarakat luas, pelaksanaan program MBG di lapangan tidak luput dari tantangan logistik yang kompleks. Di wilayah geografis yang sulit dijangkau atau kepulauan terpencil, tantangan utama terletak pada ketepatan waktu pengiriman agar makanan tetap hangat, segar, dan layak konsumsi sebelum jam istirahat sekolah tiba. Oleh karena itu, pemerintah terus memperkuat infrastruktur rantai pasok dingin (cold chain) serta menggandeng pakar gizi universitas lokal untuk melakukan audit mutu harian pada setiap dapur umum yang beroperasi.</p>
+                    
+                    <p>Evaluasi berkala juga melibatkan lintas lembaga termasuk Badan Pengawas Obat dan Makanan (BPOM) guna memastikan zero tolerance terhadap kasus keracunan makanan serta menjamin higienitas kemasan ramah lingkungan yang digunakan dalam distribusi massal.</p>
                 `
             },
             "side-2": {
-                category: "POLITIK & PEMERINTAHAN",
-                title: "Dinamika Internal Pemerintahan: Isu Pencopotan, Rotasi Strategis, dan Reformasi Birokrasi di Kementerian Keuangan",
+                category: "POLITIK & REFORMASI BIROKRASI",
+                title: "Dinamika Internal Pemerintahan: Isu Pencopotan, Rotasi Strategis, dan Reformasi Birokrasi Menyeluruh di Kementerian Keuangan",
                 author: "Liputan Khusus Politik",
                 time: "15 September 2026",
                 image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80",
                 content: `
                     <p>Sektor birokrasi pemerintahan digemparkan oleh gelombang dinamika internal di tubuh <strong>Kementerian Keuangan</strong> menyusul maraknya isu rotasi, mutasi, dan pencopotan sejumlah pejabat eselon strategis. Langkah restrukturisasi besar-besaran ini diumumkan oleh pihak istana sebagai bagian dari strategi penyegaran organisasi, peningkatan akuntabilitas publik, serta optimalisasi pencapaian target penerimaan negara di tengah tekanan ekonomi global yang sarat ketidakpastian.</p>
+                    
                     <p>Para pengamat ekonomi dan hukum tata negara menilai bahwa perombakan di tubuh instansi bendahara negara ini membawa sinyal politik yang kuat mengenai pentingnya integritas moral, kecepatan eksekusi anggaran fiskal, serta reformasi sistem perpajakan yang lebih adaptif terhadap era ekonomi digital. Transparansi dalam proses pengisian jabatan publik menjadi sorotan utama agar kebijakan fiskal tetap berada pada jalur yang kredibel dan terhindar dari konflik kepentingan.</p>
                     
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Respon Pasar dan Kepercayaan Investor Internasional</h3>
                     <p>Pelaku pasar keuangan domestik maupun investor global memantau secara seksama pergerakan birokrasi di Kementerian Keuangan ini. Stabilitas fiskal Indonesia yang selama ini dijaga melalui disiplin anggaran yang ketat menjadi fondasi utama kepercayaan pasar. Dengan adanya restrukturisasi ini, pemerintah berkomitmen untuk menjaga rasio defisit anggaran terhadap PDB di bawah ambang batas aman UU, sambil terus mempercepat pencairan stimulus ekonomi bagi sektor riil.</p>
+                    
+                    <p>DPR RI berencana memanggil jajaran pimpinan baru kementerian untuk melakukan Rapat Dengar Pendapat (RDP) guna memaparkan peta jalan (roadmap) kebijakan fiskal semester kedua tahun 2026.</p>
                 `
             },
             "side-3": {
                 category: "PASAR & MAKROEKONOMI",
-                title: "Imbas Makroekonomi: Analisis Pergerakan Indeks Harga Saham Gabungan (IHSG) dan Fluktuasi Sembako di Pasar Tradisional",
+                title: "Imbas Makroekonomi: Analisis Mendalam Pergerakan Indeks Harga Saham Gabungan (IHSG) dan Fluktuasi Harga Sembako di Pasar Tradisional",
                 author: "Analis Pasar & Keuangan",
                 time: "15 September 2026",
                 image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=400&q=80",
                 content: `
-                    <p>Kombinasi berbagai sentimen domestik—mulai dari perombakan kabinet, dinamika kebijakan fiskal, hingga gangguan rantai pasok akibat cuaca—memberikan dampak langsung terhadap pergerakan pasar modal serta daya beli masyarakat di pasar ritel konvensional.</p>
+                    <p>Kombinasi berbagai sentimen domestik dan global—mulai dari perombakan kabinet, dinamika kebijakan fiskal, hingga gangguan rantai pasok akibat anomali cuaca—memberikan dampak langsung terhadap pergerakan pasar modal serta daya beli masyarakat di pasar ritel konvensional.</p>
                     
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">A. Pergerakan Dinamis Indeks Harga Saham Gabungan (IHSG)</h3>
-                    <p>Di lantai bursa efek, Indeks Harga Saham Gabungan (IHSG) sempat mengalami fase fluktuasi tajam akibat aksi <em>wait and see</em> yang dilakukan oleh para investor institusional maupun asing. Ketidakpastian arah kebijakan jangka pendek membuat volume perdagangan melambat. Kendati demikian, emiten-emiten berkapitalisasi pasar besar (blue chip) di sektor perbankan utama, telekomunikasi, dan energi esensial tetap mencatatkan fundamental yang tangguh, menahan koreksi indeks agar tidak terperosok lebih dalam.</p>
+                    <p>Di lantai bursa efek, Indeks Harga Saham Gabungan (IHSG) sempat mengalami fase fluktuasi tajam akibat aksi <em>wait and see</em> yang dilakukan oleh para investor institusional maupun asing. Ketidakpastian arah kebijakan jangka pendek membuat volume perdagangan melambat. Kendati demikian, emiten-emiten berkapitalisasi pasar besar (blue chip) di sektor perbankan utama, telekomunikasi, dan energi esensial tetap mencatatkan fundamental yang tangguh, menahan koreksi indeks agar tidak terperosok lebih dalam di zona merah.</p>
+                    
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">B. Stabilitas Harga Sembako di Pasar Tradisional: Tinjauan Harga Komoditas</h3>
                     <p>Hasil pantauan langsung di berbagai pasar tradisional utama menunjukkan adanya kenaikan harga pada beberapa komoditas pangan yang dipicu oleh penurunan produksi pertanian akibat faktor cuaca ekstrem serta lonjakan biaya transportasi logistik antardaerah. Berikut adalah rincian rata-rata harga komoditas pangan pokok:</p>
+                    
                     <table class="article-table">
                         <thead>
                             <tr>
@@ -642,26 +616,30 @@
             },
             "side-4": {
                 category: "PERISTIWA & BENCANA ALAM",
-                title: "Tanggap Darurat Bencana Hidrometeorologi: Penanganan Banjir Bandang dan Longsor di Aceh Tenggara",
+                title: "Tanggap Darurat Bencana Hidrometeorologi: Penanganan Komprehensif Banjir Bandang dan Longsor di Aceh Tenggara",
                 author: "Wartawan Lapangan Bencana",
                 time: "15 September 2026",
                 image: "https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=400&q=80",
                 content: `
-                    <p>Bencana alam hidrometeorologi kembali menghantam wilayah barat nusantara, kali ini meluluhlantakkan sejumlah kawasan di Kabupaten <strong>Aceh Tenggara</strong>. Hujan deras dengan intensitas ekstrim yang mengguyur kawasan pegunungan selama beberapa hari berturut-turut memicu meluapnya debit air Sungai Alas dan anak-anak sungainya, sehingga menerjang permukiman penduduk dalam bentuk banjir bandang yang membawa serta material lumpur tebal, batu besar, dan kayu gelondongan sisa pembalakan liar.</p>
+                    <p>Bencana alam hidrometeorologi kembali menghantam wilayah barat nusantara, kali ini meluluhlantakkan sejumlah kawasan di Kabupaten <strong>Aceh Tenggara</strong>. Hujan deras dengan intensitas ekstrim yang mengguyur kawasan pegunungan Bukit Barisan selama beberapa hari berturut-turut memicu meluapnya debit air Sungai Alas dan anak-anak sungainya, sehingga menerjang permukiman penduduk dalam bentuk banjir bandang yang membawa serta material lumpur tebal, batu besar, dan kayu gelondongan.</p>
+                    
                     <p>Dampak kerusakan akibat bencana ini sangat signifikan: ratusan unit rumah warga mengalami rusak berat hingga hanyut terbawa arus, puluhan hektare lahan pertanian siap panen terendam lumpur, serta jembatan penghubung antar-kecamatan putus total, mengisolasi sejumlah desa terpencil. Badan Penanggulangan Bencana Daerah (BPBD) Aceh Tenggara bersama prajurit TNI dari Kodim setempat, personel Polri, SAR, serta relawan kemanusiaan langsung dikerahkan ke lokasi untuk mendirikan posko pengungsian terpadu, dapur umum lapangan, dan posko kesehatan darurat.</p>
                     
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Prioritas Penanganan Pengungsi dan Mitigasi Jangka Panjang</h3>
                     <p>Fokus utama operasi darurat saat ini adalah penyaluran air bersih, logistik makanan siap saji, selimut, serta obat-obatan bagi ribuan warga yang mengungsi di tempat-tempat aman. Alat berat dikerahkan secara simultan untuk membersihkan material longsor yang menutup akses jalan utama logistik. Pemerintah daerah bersama Kementerian Pekerjaan Umum juga mulai merancang relokasi permukiman bagi warga yang tinggal di zona merah rawan longsor susulan.</p>
+                    
+                    <p>Menteri Sosial yang meninjau lokasi langsung memastikan bahwa santunan duka dan jaminan hidup bagi korban terdampak akan segera dicairkan dalam minggu ini.</p>
                 `
             },
             "feed-1": {
                 category: "SAINS & ANTARIKSA",
-                title: "Keajaiban Sains Angkasa: Fenomena Konjungsi Kasat Mata Bulan Sabit dan Planet Venus di Langit Nusantara",
+                title: "Keajaiban Sains Angkasa: Fenomena Konjungsi Kasat Mata Bulan Sabit dan Planet Venus di Langit Malam Nusantara",
                 author: "Rubrik Sains & Astronomi",
                 time: "15 September 2026",
                 image: "https://images.unsplash.com/photo-1516331138075-f3adc1e149cd?auto=format&fit=crop&w=200&q=80",
                 content: `
-                    <p>Di tengah hiruk-pikuk dinamika sosial, politik, dan ekonomi yang melanda tanah air, langit malam nusantara disuguhkan dengan pemandangan astronomis yang sangat memukau dan langka, yakni fenomena konjungsi kasat mata antara <strong>Bulan sabit muda dan Planet Venus</strong> (yang populer dikenal sebagai Bintang Kejora). Fenomena ini dapat disaksikan secara jelas tepat setelah matahari terbenam menghadap ke arah barat.</p>
+                    <p>Di tengah hiruk-pikuk dinamika sosial, politik, dan ekonomi yang melanda tanah air, langit malam nusantara disuguhkan dengan pemandangan astronomis yang sangat memukau dan langka, yakni fenomena konjungsi kasat mata antara <strong>Bulan sabit muda dan Planet Venus</strong> (yang populer dikenal sebagai Bintang Kejora). Fenomena ini dapat disaksikan secara jelas tepat setelah matahari terbenam menghadap ke arah barat dengan mata telanjang.</p>
+                    
                     <p>Lembaga Penerbangan dan Antariksa Nasional (LAPAN) di bawah Badan Riset dan Inovasi Nasional (BRIN) memberikan penjelasan ilmiah bahwa konjungsi ini terjadi akibat pergerakan orbit relatif antara Bumi, Bulan, and Venus yang berada pada garis pandang yang hampir segaris dari perspektif pengamat di permukaan Bumi. Meskipun secara jarak fisik antariksa jarak keduanya sangat jauh berjuta-juta kilometer, konfigurasi optik ini menciptakan pemandangan visual yang seolah-olah Venus bersanding sangat dekat dengan sabit Bulan yang indah.</p>
                     
                     <div class="article-callout">
@@ -706,26 +684,6 @@
             const timeEl = document.getElementById('live-frequency-time');
             if (timeEl) {
                 timeEl.innerText = timeString;
-            }
-            const idxTimeEl = document.getElementById('idx-update-time');
-            if (idxTimeEl) {
-                idxTimeEl.innerText = `${hours}:${minutes}:${seconds}`;
-            }
-        }
-
-        // Simulasi fluktuasi real-time indeks pasar bursa efek
-        function simulateMarketTick() {
-            const ihsgValEl = document.getElementById('idx-ihsg-val');
-            const ihsgChgEl = document.getElementById('idx-ihsg-chg');
-            const lq45ValEl = document.getElementById('idx-lq45-val');
-            
-            if (ihsgValEl && ihsgChgEl) {
-                let currentVal = 7345.20 + (Math.random() * 2 - 0.9);
-                let currentChg = 48.30 + (Math.random() * 0.6 - 0.3);
-                let currentPct = 0.66 + (Math.random() * 0.02 - 0.01);
-                
-                ihsgValEl.innerText = currentVal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-                ihsgChgEl.innerText = `+${currentChg.toFixed(2)} (+${currentPct.toFixed(2)}%)`;
             }
         }
 
@@ -775,7 +733,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateLiveFrequencyTime();
             setInterval(updateLiveFrequencyTime, 1000);
-            setInterval(simulateMarketTick, 4000);
             
             const mobileMenuBtn = document.getElementById('mobile-menu-button');
             if (mobileMenuBtn) {
