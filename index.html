@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="id" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berita Angin - Portal Berita & Analisis Terkini</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': '#005C9E', 
+                        'secondary': '#212121', 
+                        'accent': '#FFD700', 
+                        'dark-bg': '#121212',
+                        'dark-surface': '#1e1e1e',
+                        'dark-text': '#e0e0e0',
+                        'dark-text-secondary': '#a0a0a0',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+        background-color: #f0f4f8;
+        color: #0f172a;
+        font-family: 'Inter', sans-serif;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    html.dark body {
+        background-color: #0b1120;
+        color: #f8fafc;
+    }
+    
+    html.dark #main-header,
+    html.dark .bg-white,
+    html.dark footer,
+    html.dark #article-page main,
+    html.dark #home-page main {
+        background-color: #1e293b !important;
+        border-color: #334155 !important;
+        color: #f8fafc !important;
+    }
+    
+    html.dark .text-slate-900,
+    html.dark .text-slate-800,
+    html.dark .text-slate-700 {
+        color: #f1f5f9 !important;
+    }
+    
+    html.dark .text-slate-600,
+    html.dark .text-slate-500 {
+        color: #94a3b8 !important;
+    }
+    
+    .kompas-header {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #0284c7;
+        border-bottom: 3px solid #0284c7;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .terpopuler-header {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #ffffff;
+        background-color: #0284c7;
+        text-align: center;
+        padding: 0.5rem 0;
+        margin-bottom: 1rem;
+        border-radius: 0.5rem 0.5rem 0 0;
+    }
+    
+    .group .group-hover-image {
+        transition: transform 0.3s ease;
+    }
+    
+    .group:hover .group-hover-image {
+        transform: scale(1.05);
+    }
+    
+    #main-header.sticky {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.1);
+    }
+    
+    .placeholder-for-sticky {
+        display: none;
+    }
+    
+    #main-header.sticky+.placeholder-for-sticky {
+        display: block;
+    }
+    
+    .article-title-hover:hover {
+        color: #0284c7;
+        cursor: pointer;
+    }
+    
+    .terpopuler-item .number {
+        color: #cbd5e1;
+        -webkit-text-stroke: 1px #0284c7;
+    }
+    
+    .terpopuler-item:hover .number {
+        color: #0284c7;
+        -webkit-text-stroke: 0;
+    }
+    
+    .page-view {
+        display: none;
+    }
+    
+    .page-view.active {
+        display: block;
+    }
+
+    /* Tabel Kustom untuk Laporan Artikel */
+    table.article-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 9.5pt;
+    }
+    table.article-table th, table.article-table td {
+        border: 1px solid #cbd5e1;
+        padding: 8px 10px;
+        text-align: left;
+    }
+    table.article-table th {
+        background-color: #1e3a8a;
+        color: #ffffff;
+        font-weight: 600;
+    }
+    table.article-table tr:nth-child(even) {
+        background-color: #f8fafc;
+    }
+    html.dark table.article-table tr:nth-child(even) {
+        background-color: #1e293b;
+    }
+
+    /* Callout Box Kustom */
+    .article-callout {
+        background-color: #f1f5f9;
+        border-left: 4px solid #0284c7;
+        padding: 12px 15px;
+        margin: 15px 0;
+        border-radius: 0 6px 6px 0;
+        font-size: 9.5pt;
+    }
+    html.dark .article-callout {
+        background-color: #1e293b;
+        border-left-color: #38bdf8;
+    }
+    .article-callout-title {
+        font-weight: bold;
+        color: #0369a1;
+        margin-bottom: 4px;
+    }
+    html.dark .article-callout-title {
+        color: #38bdf8;
+    }
+</style>
+</head>
+<body class="antialiased">
+    <div id="root" class="bg-gray-100 dark:bg-dark-bg min-h-screen flex flex-col justify-between">
+        <div>
+            <!-- Header -->
+            <header id="main-header" class="bg-white dark:bg-dark-surface w-full transition-all duration-300 border-b-2 border-gray-200 dark:border-gray-700">
+                <div class="container mx-auto px-4">
+                    <!-- Top Bar dengan Live Frekuensi Waktu -->
+                    <div class="hidden md:flex justify-between items-center py-1.5 border-b dark:border-gray-700 text-xs text-gray-500">
+                        <div>
+                            <a href="#home" onclick="showHome(); return false;" class="hover:text-primary mr-3">Beranda Utama</a>
+                            <a href="#ekonomi" onclick="openArticle('side-1'); return false;" class="hover:text-primary mr-3">Ekonomi & Bisnis</a>
+                            <a href="#politik" onclick="openArticle('side-2'); return false;" class="hover:text-primary">Politik & Kebijakan</a>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-1 font-mono bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded text-primary font-semibold">
+                                <svg class="w-3.5 h-3.5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span id="live-frequency-time">00:00:00 WITA</span>
+                            </div>
+                            <span class="text-gray-300 dark:text-gray-600">|</span>
+                            <div id="current-datetime">Selasa, 15 Sep 2026</div>
+                        </div>
+                    </div>
+
+                    <!-- Main Header -->
+                    <div class="flex justify-between items-center py-4">
+                        <div class="flex items-center">
+                            <button class="md:hidden p-2 -ml-2 mr-2" id="mobile-menu-button">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                            </button>
+                            <a href="#" onclick="showHome(); return false;" class="text-3xl font-black text-primary cursor-pointer">
+                                BERITA ANGIN
+                            </a>
+                        </div>
+                        <div class="hidden md:block text-center">
+                            <span class="text-lg font-bold text-secondary dark:text-white">1% Issue 99% Fakta</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="relative hidden lg:block">
+                                <input type="text" id="desktop-search" placeholder="Cari berita & isu..." class="border rounded-full py-2 px-4 w-52 bg-gray-100 dark:bg-gray-800 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary">
+                                <svg class="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </div>
+                            <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                               <svg id="theme-icon-light" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                               <svg id="theme-icon-dark" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Navigation -->
+                    <nav id="main-nav" class="hidden md:flex justify-center items-center space-x-6 py-2.5 text-sm font-bold border-t dark:border-gray-700">
+                        <a href="#" onclick="showHome(); return false;" class="nav-link text-primary border-b-2 border-primary pb-1 transition flex items-center space-x-1.5">
+                            <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            <span>PERISTIWA</span>
+                        </a>
+                        <a href="#" onclick="openArticle('side-1'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
+                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span>EKONOMI</span>
+                        </a>
+                        <a href="#" onclick="openArticle('feed-1'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
+                            <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            <span>TEKNOLOGI</span>
+                        </a>
+                        <a href="#" onclick="openArticle('side-3'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
+                            <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                            <span>PASAR</span>
+                        </a>
+                        <a href="#" onclick="openArticle('side-2'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
+                            <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"></path></svg>
+                            <span>POLITIK</span>
+                        </a>
+                        <a href="#" onclick="openArticle('side-4'); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
+                            <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            <span>SOSIAL</span>
+                        </a>
+                    </nav>
+                </div>
+
+                 <!-- Mobile Menu (Rata Kiri / justify-start) -->
+                <div id="mobile-menu" class="hidden md:hidden">
+                     <div class="px-4 py-2 border-t dark:border-gray-700">
+                        <input type="text" id="mobile-search" placeholder="Cari berita..." class="border rounded-full py-2 px-4 w-full bg-gray-100 dark:bg-gray-800 dark:border-gray-600 mb-2">
+                     </div>
+                     <nav class="flex flex-col text-left" id="mobile-nav-list">
+                        <a href="#" onclick="showHome(); toggleMobileMenu(); return false;" class="py-3 font-bold text-primary bg-gray-100 dark:bg-gray-800 flex items-center justify-start space-x-3 px-6"><span>PERISTIWA</span></a>
+                        <a href="#" onclick="openArticle('side-1'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-start space-x-3 px-6"><span>EKONOMI</span></a>
+                        <a href="#" onclick="openArticle('feed-1'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-start space-x-3 px-6"><span>TEKNOLOGI</span></a>
+                        <a href="#" onclick="openArticle('side-3'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-start space-x-3 px-6"><span>PASAR</span></a>
+                        <a href="#" onclick="openArticle('side-2'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-start space-x-3 px-6"><span>POLITIK</span></a>
+                        <a href="#" onclick="openArticle('side-4'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-start space-x-3 px-6"><span>SOSIAL</span></a>
+                     </nav>
+                </div>
+            </header>
+            <div class="placeholder-for-sticky" style="height: 140px;"></div>
+            
+            <!-- VIEW 1: HOME PAGE -->
+            <div id="home-page" class="page-view active">
+                <main class="container mx-auto p-4 bg-white dark:bg-dark-surface shadow-lg my-4 rounded-xl">
+                    <div id="content-header-banner" class="mb-6 hidden bg-primary/10 border-l-4 border-primary p-4 rounded-r-lg flex justify-between items-center">
+                        <span id="banner-text" class="font-bold text-primary">Hasil pencarian topik</span>
+                        <button onclick="resetSearchBanner()" class="text-xs font-bold uppercase underline hover:text-primary">Tutup</button>
+                    </div>
+                     
+                    <!-- Headline Section -->
+                    <section id="headline-section" class="mb-6">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="relative rounded-lg overflow-hidden group cursor-pointer flex flex-col justify-end min-h-[380px]" onclick="openArticle('headline-main')">
+                                <div class="absolute inset-0 overflow-hidden rounded-lg">
+                                    <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80" alt="KM Virgo" class="w-full h-full object-cover transition-transform duration-300 group-hover-image">
+                                </div>
+                                <div class="relative z-10 p-6 bg-gradient-to-t from-black/90 via-black/70 to-transparent">
+                                    <span class="text-xs font-bold bg-primary text-white px-2.5 py-1 rounded">PERISTIWA</span>
+                                    <h1 class="text-xl md:text-2xl font-bold text-white mt-2 leading-tight">Tragedi Tenggelamnya Kapal Motor Virgo: Investigasi Komprehensif Keselamatan Maritim</h1>
+                                    <p class="text-xs md:text-sm text-gray-200 mt-2 line-clamp-2">Dunia transportasi laut nasional kembali diguncang musibah maritim menyusul tenggelamnya KM Virgo di perairan lepas nusantara akibat terjangan gelombang tinggi...</p>
+                                    <div class="mt-3 text-xs text-gray-300 flex items-center space-x-2">
+                                        <span>Oleh Tim Investigasi Utama</span>
+                                        <span>&bull;</span>
+                                        <span>15 Sep 2026</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="group flex flex-col justify-between bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border dark:border-gray-700 cursor-pointer" onclick="openArticle('side-1')">
+                                    <div>
+                                        <div class="overflow-hidden rounded-lg mb-2"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80" class="w-full h-32 object-cover group-hover-image transition-transform duration-300" alt="MBG"></div>
+                                        <span class="text-[10px] font-bold text-primary">EKONOMI</span>
+                                        <h3 class="font-bold text-sm leading-snug article-title-hover mt-1">Eskalasi Program Makan Bergizi Gratis (MBG) & Rantai Pasok Pangan</h3>
+                                        <p class="text-xs text-gray-600 dark:text-dark-text-secondary mt-1">Transformasi penggerak ekonomi pedesaan melalui pelibatan KUD dan kelompok tani...</p>
+                                    </div>
+                                    <span class="text-[10px] text-gray-400 mt-2">Kebijakan Publik</span>
+                                </div>
+                                 <div class="group flex flex-col justify-between bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border dark:border-gray-700 cursor-pointer" onclick="openArticle('side-2')">
+                                    <div>
+                                        <div class="overflow-hidden rounded-lg mb-2"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80" class="w-full h-32 object-cover group-hover-image transition-transform duration-300" alt="Kemenkeu"></div>
+                                        <span class="text-[10px] font-bold text-primary">POLITIK</span>
+                                        <h3 class="font-bold text-sm leading-snug article-title-hover mt-1">Dinamika Internal Kemenkeu: Isu Pencopotan dan Rotasi Strategis</h3>
+                                        <p class="text-xs text-gray-600 dark:text-dark-text-secondary mt-1">Langkah restrukturisasi besar-besaran untuk optimalisasi penerimaan negara...</p>
+                                    </div>
+                                    <span class="text-[10px] text-gray-400 mt-2">Pemerintahan</span>
+                                </div>
+                                 <div class="group flex flex-col justify-between bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border dark:border-gray-700 cursor-pointer" onclick="openArticle('side-3')">
+                                    <div>
+                                        <div class="overflow-hidden rounded-lg mb-2"><img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=400&q=80" class="w-full h-32 object-cover group-hover-image transition-transform duration-300" alt="IHSG"></div>
+                                        <span class="text-[10px] font-bold text-primary">PASAR</span>
+                                        <h3 class="font-bold text-sm leading-snug article-title-hover mt-1">Imbas Makroekonomi: IHSG dan Fluktuasi Harga Sembako</h3>
+                                        <p class="text-xs text-gray-600 dark:text-dark-text-secondary mt-1">Analisis pergerakan saham dan tabel harga rata-rata komoditas pangan pokok...</p>
+                                    </div>
+                                    <span class="text-[10px] text-gray-400 mt-2">Bursa & Finansial</span>
+                                </div>
+                                 <div class="group flex flex-col justify-between bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border dark:border-gray-700 cursor-pointer" onclick="openArticle('side-4')">
+                                    <div>
+                                        <div class="overflow-hidden rounded-lg mb-2"><img src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=400&q=80" class="w-full h-32 object-cover group-hover-image transition-transform duration-300" alt="Aceh"></div>
+                                        <span class="text-[10px] font-bold text-primary">PERISTIWA</span>
+                                        <h3 class="font-bold text-sm leading-snug article-title-hover mt-1">Tanggap Darurat Banjir Bandang di Aceh Tenggara</h3>
+                                        <p class="text-xs text-gray-600 dark:text-dark-text-secondary mt-1">Penanganan korban dan mitigasi bencana hidrometeorologi di wilayah pegunungan...</p>
+                                    </div>
+                                    <span class="text-[10px] text-gray-400 mt-2">Bencana Alam</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <div class="grid grid-cols-12 gap-8">
+                        <!-- Main Feed -->
+                        <div class="col-span-12 lg:col-span-8">
+                            <section class="mb-8">
+                                <h2 class="kompas-header">BERITA PILIHAN & LAPORAN KHUSUS INVESTIGASI</h2>
+                                <ul id="terkini-list" class="space-y-4">
+                                   <li class="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-gray-700 group cursor-pointer" onclick="openArticle('feed-1')">
+                                        <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0"><img src="https://images.unsplash.com/photo-1516331138075-f3adc1e149cd?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover group-hover-image transition-transform duration-300" alt="Venus"></div>
+                                        <div>
+                                            <span class="text-xs font-bold text-primary">SAINS & ANTARIKSA</span>
+                                            <h3 class="text-xl font-bold mt-1 article-title-hover">Keajaiban Angkasa: Konjungsi Bulan Sabit dan Planet Venus</h3>
+                                            <p class="text-sm text-gray-600 dark:text-dark-text-secondary mt-1">Langit malam nusantara disuguhkan pemandangan astronomis memukau konjungsi kasat mata Bulan sabit muda dan Bintang Kejora...</p>
+                                            <p class="text-xs text-gray-500 mt-2">Astronomi Publik</p>
+                                        </div>
+                                    </li>
+                                     <li class="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-gray-700 group cursor-pointer" onclick="openArticle('headline-main')">
+                                        <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0"><img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover group-hover-image transition-transform duration-300" alt="KM Virgo"></div>
+                                        <div>
+                                            <span class="text-xs font-bold text-primary">PERISTIWA</span>
+                                            <h3 class="text-xl font-bold mt-1 article-title-hover">Tragedi Tenggelamnya Kapal Motor Virgo</h3>
+                                            <p class="text-sm text-gray-600 dark:text-dark-text-secondary mt-1">Investigasi mendalam terkait aspek keselamatan maritim, dugaan overloading, dan koordinasi evakuasi SAR Gabungan...</p>
+                                            <p class="text-xs text-gray-500 mt-2">Investigasi Khusus</p>
+                                        </div>
+                                    </li>
+                                     <li class="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-gray-700 group cursor-pointer" onclick="openArticle('side-1')">
+                                        <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover group-hover-image transition-transform duration-300" alt="MBG"></div>
+                                        <div>
+                                            <span class="text-xs font-bold text-primary">EKONOMI</span>
+                                            <h3 class="text-xl font-bold mt-1 article-title-hover">Transformasi Rantai Pasok Pangan Program MBG</h3>
+                                            <p class="text-sm text-gray-600 dark:text-dark-text-secondary mt-1">Mendorong multiplier effect ekonomi kerakyatan melalui pembelian langsung bahan baku dari petani dan peternak lokal...</p>
+                                            <p class="text-xs text-gray-500 mt-2">Kebijakan Nasional</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <button onclick="loadMoreArticles()" id="load-more-btn" class="w-full mt-4 py-2 text-center font-bold text-primary border-2 border-primary rounded-lg hover:bg-primary hover:text-white transition">MUAT ARTIKEL LAINNYA</button> 
+                            </section>
+                        </div>
+                        
+                        <!-- Sidebar -->
+                        <aside class="col-span-12 lg:col-span-4">
+                             <div class="space-y-8">
+                                <div class="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-lg border dark:border-gray-700 shadow-md">
+                                    <h3 class="terpopuler-header">SOROTAN UTAMA</h3>
+                                    <ol class="p-2 space-y-4">
+                                        <li class="flex items-start group terpopuler-item cursor-pointer" onclick="openArticle('side-3')">
+                                            <span class="text-5xl font-black number mr-4">1</span>
+                                            <h4 class="font-bold leading-tight article-title-hover group-hover:text-primary transition pt-2">Fluktuasi Harga Sembako dan Analisis Tren IHSG Terkini</h4>
+                                        </li>
+                                         <li class="flex items-start group terpopuler-item border-t dark:border-gray-700 pt-4 cursor-pointer" onclick="openArticle('side-2')">
+                                            <span class="text-5xl font-black number mr-4">2</span>
+                                            <h4 class="font-bold leading-tight article-title-hover group-hover:text-primary transition pt-2">Dinamika Kemenkeu: Rotasi Birokrasi dan Kepercayaan Pasar</h4>
+                                        </li>
+                                        <li class="flex items-start group terpopuler-item border-t dark:border-gray-700 pt-4 cursor-pointer" onclick="openArticle('side-4')">
+                                            <span class="text-5xl font-black number mr-4">3</span>
+                                            <h4 class="font-bold leading-tight article-title-hover group-hover:text-primary transition pt-2">Penanganan Darurat Bencana Banjir Bandang Aceh Tenggara</h4>
+                                        </li>
+                                    </ol>
+                                </div>
+                                
+                                <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg text-center border dark:border-gray-700">
+                                    <p class="text-xs text-gray-400 mb-2">BULETIN HARIAN</p>
+                                    <h4 class="font-bold text-sm text-primary mb-1">Dapatkan Update Berita Pilihan Langsung</h4>
+                                    <p class="text-xs text-gray-600 dark:text-dark-text-secondary mb-3">Berlangganan buletin mingguan untuk laporan investigasi eksklusif lintas sektor.</p>
+                                    <a href="#" onclick="alert('Terima kasih telah mendaftar buletin harian.'); return false;" class="inline-block px-4 py-2 bg-primary text-white text-xs font-bold rounded hover:bg-primary/90 transition">Langganan Gratis</a>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </main>
+            </div>
+            
+            <!-- VIEW 2: DEDICATED ARTICLE PAGE -->
+            <div id="article-page" class="page-view">
+                <main class="container mx-auto p-4 max-w-4xl bg-white dark:bg-dark-surface shadow-lg my-6 rounded-xl">
+                    <div class="mb-6">
+                        <button onclick="showHome()" class="flex items-center space-x-2 text-primary font-bold hover:underline">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                            <span>Kembali ke Beranda Utama</span>
+                        </button>
+                    </div>
+                    <article class="space-y-6">
+                        <div>
+                            <span id="page-article-category" class="text-xs font-bold bg-primary text-white px-3 py-1.5 rounded uppercase tracking-wider">KATEGORI</span>
+                            <h1 id="page-article-title" class="text-3xl md:text-4xl font-black mt-3 leading-tight text-secondary dark:text-white">Judul Artikel Lengkap</h1>
+                            <div class="text-xs text-gray-500 flex items-center space-x-3 mt-3 border-b dark:border-gray-700 pb-4">
+                                <span id="page-article-author">Oleh Tim Redaksi</span>
+                                <span>&bull;</span>
+                                <span id="page-article-time">15 September 2026</span>
+                            </div>
+                        </div>
+                        <div class="rounded-xl overflow-hidden shadow-md">
+                            <img id="page-article-image" src="" alt="Ilustrasi Artikel" class="w-full h-72 md:h-96 object-cover">
+                        </div>
+                        <div id="page-article-content" class="text-base md:text-lg text-gray-700 dark:text-dark-text leading-relaxed space-y-4">
+                            <!-- Isi artikel dinamis -->
+                        </div>
+                        <div class="border-t dark:border-gray-700 pt-6 mt-8 flex justify-between items-center">
+                            <button onclick="showHome()" class="px-5 py-2.5 bg-gray-200 dark:bg-gray-700 text-secondary dark:text-dark-text rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+                                &larr; Beranda
+                            </button>
+                            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-5 py-2.5 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition">
+                                Atas Halaman &uarr;
+                            </button>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="bg-white dark:bg-dark-surface mt-8 border-t-4 border-primary">
+            <div class="container mx-auto px-8 py-12">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8 pb-8 border-b dark:border-gray-700 gap-4 text-center md:text-left">
+                    <div>
+                        <a href="#" onclick="showHome(); return false;" class="text-4xl font-black text-primary cursor-pointer">BERITA ANGIN</a>
+                        <p class="text-sm text-gray-500">1% ISSUE 99% FAKTA</p>
+                    </div>
+                    <div class="flex space-x-4 items-center">
+                        <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" class="text-[#1877F2] hover:opacity-85 transition-all duration-300 transform hover:scale-125" title="Facebook">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="text-gray-900 dark:text-gray-100 hover:opacity-85 transition-all duration-300 transform hover:scale-125" title="Twitter / X">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                        </a>
+                        <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" class="text-[#E1306C] hover:opacity-85 transition-all duration-300 transform hover:scale-125" title="Instagram">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
+                        </a>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-gray-900 dark:text-gray-100 hover:opacity-85 transition-all duration-300 transform hover:scale-125" title="GitHub">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" /></svg>  
+                        </a>
+                        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" class="text-[#0A66C2] hover:opacity-85 transition-all duration-300 transform hover:scale-125" title="LinkedIn">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm text-gray-700 dark:text-gray-300">
+                    <div class="font-bold space-y-3">
+                        <a href="#" onclick="openArticle('headline-main'); return false;" class="block hover:text-primary">Peristiwa</a>
+                        <a href="#" onclick="openArticle('side-1'); return false;" class="block hover:text-primary">Ekonomi</a>
+                        <a href="#" onclick="openArticle('side-3'); return false;" class="block hover:text-primary">Pasar</a>
+                    </div>
+                    <div class="font-bold space-y-3">
+                        <a href="#" onclick="openArticle('side-2'); return false;" class="block hover:text-primary">Politik</a>
+                        <a href="#" onclick="openArticle('side-4'); return false;" class="block hover:text-primary">Bencana</a>
+                        <a href="#" onclick="openArticle('feed-1'); return false;" class="block hover:text-primary">Sains</a>
+                    </div>
+                     <div class="font-bold space-y-3">
+                        <a href="#" onclick="alert('Halaman Redaksi'); return false;" class="block hover:text-primary">Redaksi</a>
+                        <a href="#" onclick="alert('Kontak Kami'); return false;" class="block hover:text-primary">Kontak</a>
+                        <a href="#" onclick="alert('Kebijakan Privasi'); return false;" class="block hover:text-primary">Kebijakan Privasi</a>
+                    </div>
+                     <div class="text-xs text-gray-500 col-span-2 md:col-span-1">
+                        <h5 class="font-bold text-base text-gray-800 dark:text-gray-100 mb-3">TENTANG BERITA ANGIN</h5>
+                        <p class="leading-relaxed">Portal berita independen penyaji informasi akurat, tajam, dan terpercaya dengan prinsip 1% Issue 99% Fakta.</p>
+                    </div>
+                </div>
+                <div class="mt-12 border-t dark:border-gray-700 pt-8 text-center text-sm text-gray-500">
+                    <p>&copy; 2026 Berita Angin. Hak Cipta Dilindungi Undang-Undang.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Script JavaScript & Basis Data Artikel -->
+    <script>
+        const articlesData = {
+            "headline-main": {
+                category: "PERISTIWA & INVESTIGASI",
+                title: "Tragedi Tenggelamnya Kapal Motor Virgo: Investigasi Komprehensif Keselamatan Maritim dan Evaluasi SAR",
+                author: "Tim Investigasi Utama Berita Angin",
+                time: "15 September 2026",
+                image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80",
+                content: `
+                    <p>Dunia transportasi laut nasional kembali diguncang oleh musibah maritim berdarah dingin menyusul tenggelamnya <strong>Kapal Motor (KM) Virgo</strong> di perairan lepas nusantara. Berdasarkan investigasi awal dan data kompilasi dari Tim Search and Rescue (SAR) Gabungan, insiden nahas ini bermula ketika kapal melintasi alur pelayaran padat di tengah terjangan anomali cuaca ekstrem berupa gelombang tinggi mencapai 3,5 hingga 4 meter serta hembusan angin kencang secara mendadak.</p>
+                    <p>Analisis awal dari otoritas pelabuhan menunjukkan adanya indikasi kuat pelanggaran terhadap batasan kapasitas muatan (overloading). Muatan kargo dan kendaraan logistik yang melebihi batas tonase yang diizinkan telah mengubah titik gravitasi kapal secara drastis, sehingga stabilitas lambung kapal (metacentric height) menurun drastis ketika dihantam hantaman ombak besar dari lambung samping. Akibatnya, kapal mengalami kemiringan ekstrem dalam hitungan menit sebelum akhirnya tenggelam sepenuhnya ke dasar laut.</p>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Langkah Cepat Tanggap Darurat dan Investigasi KNKT</h3>
+                    <p>Menanggapi tragedi kemanusiaan ini, pemerintah melalui Kementerian Perhubungan bergerak cepat dengan menerjunkan tim khusus dari Komite Nasional Keselamatan Transportasi (KNKT) bersama Kesatuan Penjagaan Laut dan Pantai (KPLP). Tim gabungan langsung melakukan audit investigatif terhadap manajemen pelabuhan asal, keabsahan dokumen manifes penumpang, serta kelayakan operasional kapal sebelum bertolak.</p>
+                    <p>Operasi pencarian dan evakuasi korban melibatkan armada utama KRI dari TNI Angkatan Laut, helikopter patroli udara, serta puluhan kapal nelayan lokal yang dikoordinasikan secara terpusat. Meskipun dihadapkan pada kendala jarak pandang di dalam air dan arus bawah laut yang kuat, tim penyelam gabungan terus memperluas radius pencarian guna menemukan para korban yang masih dinyatakan hilang.</p>
+                    <div class="article-callout">
+                        <div class="article-callout-title">Catatan Kritis Kebijakan Keselamatan Pelayaran</div>
+                        <p style="margin: 0;">Tragedi KM Virgo menjadi peringatan keras (wakeup call) bagi seluruh operator pelabuhan dan syahbandar untuk tidak berkompromi terhadap standar operasional prosedur (SOP) keselamatan. Uji petik berkala (ramp check) serta penegakan hukum yang tegas terhadap praktik pemalsuan data manifes mutlak diperlukan guna mencegah berulangnya bencana serupa di masa depan.</p>
+                    </div>
+                `
+            },
+            "side-1": {
+                category: "EKONOMI & KEBIJAKAN",
+                title: "Eskalasi Program Makan Bergizi Gratis (MBG): Transformasi Rantai Pasok Pangan dan Penggerak Ekonomi Pedesaan",
+                author: "Rubrik Ekonomi & Pangan",
+                time: "15 September 2026",
+                image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80",
+                content: `
+                    <p>Program strategis nasional <strong>Makan Bergizi Gratis (MBG)</strong> terus menunjukkan eskalasi masif dalam hal cakupan wilayah dan jumlah penerima manfaat yang terdiri dari anak-anak sekolah mulai dari tingkat PAUD, SD, SMP, SMA, hingga santri pondok pesantren dan ibu hamil. Pemerintah pusat menegaskan bahwa pengawasan ketat dilakukan secara berkala demi menjamin aspek higienitas, standar kandungan gizi makro (protein, karbohidrat, lemak) dan mikro (vitamin, mineral), serta ketepatan jadwal distribusi makanan.</p>
+                    <p>Dalam kerangka operasional terbaru, model pengelolaan dapur umum MBG mengalami perombakan struktural yang melibatkan Koperasi Unit Desa (KUD), kelompok tani lokal, serta peternak rakyat setempat. Kebijakan ini dirancang secara matang untuk menciptakan efek berganda (multiplier effect) yang nyata bagi perekonomian akar rumput. Seluruh pasokan bahan baku utama seperti beras organik, sayuran segar, telur ayam ras, dan daging segar dibeli langsung dari produsen lokal dengan harga yang adil, sehingga memutus mata rantai tengkulak yang selama ini merugikan petani.</p>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Tantangan Distribusi dan Standarisasi Dapur Umum</h3>
+                    <p>Kendati mendapatkan sambutan positif dari masyarakat luas, pelaksanaan program MBG di lapangan tidak luput dari tantangan logistik yang kompleks. Di wilayah geografis yang sulit dijangkau atau kepulauan terpencil, tantangan utama terletak pada ketepatan waktu pengiriman agar makanan tetap hangat, segar, dan layak konsumsi sebelum jam istirahat sekolah tiba. Oleh karena itu, pemerintah terus memperkuat infrastruktur rantai pasok dingin (cold chain) serta menggandeng pakar gizi universitas lokal untuk melakukan audit mutu harian pada setiap dapur umum yang beroperasi.</p>
+                `
+            },
+            "side-2": {
+                category: "POLITIK & PEMERINTAHAN",
+                title: "Dinamika Internal Pemerintahan: Isu Pencopotan, Rotasi Strategis, dan Reformasi Birokrasi di Kementerian Keuangan",
+                author: "Liputan Khusus Politik",
+                time: "15 September 2026",
+                image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80",
+                content: `
+                    <p>Sektor birokrasi pemerintahan digemparkan oleh gelombang dinamika internal di tubuh <strong>Kementerian Keuangan</strong> menyusul maraknya isu rotasi, mutasi, dan pencopotan sejumlah pejabat eselon strategis. Langkah restrukturisasi besar-besaran ini diumumkan oleh pihak istana sebagai bagian dari strategi penyegaran organisasi, peningkatan akuntabilitas publik, serta optimalisasi pencapaian target penerimaan negara di tengah tekanan ekonomi global yang sarat ketidakpastian.</p>
+                    <p>Para pengamat ekonomi dan hukum tata negara menilai bahwa perombakan di tubuh instansi bendahara negara ini membawa sinyal politik yang kuat mengenai pentingnya integritas moral, kecepatan eksekusi anggaran fiskal, serta reformasi sistem perpajakan yang lebih adaptif terhadap era ekonomi digital. Transparansi dalam proses pengisian jabatan publik menjadi sorotan utama agar kebijakan fiskal tetap berada pada jalur yang kredibel dan terhindar dari konflik kepentingan.</p>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Respon Pasar dan Kepercayaan Investor Internasional</h3>
+                    <p>Pelaku pasar keuangan domestik maupun investor global memantau secara seksama pergerakan birokrasi di Kementerian Keuangan ini. Stabilitas fiskal Indonesia yang selama ini dijaga melalui disiplin anggaran yang ketat menjadi fondasi utama kepercayaan pasar. Dengan adanya restrukturisasi ini, pemerintah berkomitmen untuk menjaga rasio defisit anggaran terhadap PDB di bawah ambang batas aman UU, sambil terus mempercepat pencairan stimulus ekonomi bagi sektor riil.</p>
+                `
+            },
+            "side-3": {
+                category: "PASAR & MAKROEKONOMI",
+                title: "Imbas Makroekonomi: Analisis Pergerakan Indeks Harga Saham Gabungan (IHSG) dan Fluktuasi Sembako di Pasar Tradisional",
+                author: "Analis Pasar & Keuangan",
+                time: "15 September 2026",
+                image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=400&q=80",
+                content: `
+                    <p>Kombinasi berbagai sentimen domestik—mulai dari perombakan kabinet, dinamika kebijakan fiskal, hingga gangguan rantai pasok akibat cuaca—memberikan dampak langsung terhadap pergerakan pasar modal serta daya beli masyarakat di pasar ritel konvensional.</p>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">A. Pergerakan Dinamis Indeks Harga Saham Gabungan (IHSG)</h3>
+                    <p>Di lantai bursa efek, Indeks Harga Saham Gabungan (IHSG) sempat mengalami fase fluktuasi tajam akibat aksi <em>wait and see</em> yang dilakukan oleh para investor institusional maupun asing. Ketidakpastian arah kebijakan jangka pendek membuat volume perdagangan melambat. Kendati demikian, emiten-emiten berkapitalisasi pasar besar (blue chip) di sektor perbankan utama, telekomunikasi, dan energi esensial tetap mencatatkan fundamental yang tangguh, menahan koreksi indeks agar tidak terperosok lebih dalam.</p>
+                    <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">B. Stabilitas Harga Sembako di Pasar Tradisional: Tinjauan Harga Komoditas</h3>
+                    <p>Hasil pantauan langsung di berbagai pasar tradisional utama menunjukkan adanya kenaikan harga pada beberapa komoditas pangan yang dipicu oleh penurunan produksi pertanian akibat faktor cuaca ekstrem serta lonjakan biaya transportasi logistik antardaerah. Berikut adalah rincian rata-rata harga komoditas pangan pokok:</p>
+                    <table class="article-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Komoditas Pangan Strategis</th>
+                                <th>Harga Rata-Rata (Per Kg/Liter)</th>
+                                <th>Analisis Tren & Faktor Penyebab</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Beras Premium & Medium SPHP</td>
+                                <td>Rp 13.500 - Rp 15.500</td>
+                                <td>Cenderung stabil berkat operasi pasar berkala dan intervensi pasokan beras Bulog.</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Cabai Merah Keriting & Cabai Rawit</td>
+                                <td>Rp 42.000 - Rp 58.000</td>
+                                <td>Fluktuatif tinggi akibat gagal panen di sentra produksi karena curah hujan berlebih.</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Daging Ayam Ras & Telur Ayam</td>
+                                <td>Rp 36.000 - Rp 39.000</td>
+                                <td>Relatif stabil, pasokan dari peternak mandiri mencukupi permintaan harian.</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Minyak Goreng (Curah & Kemasan)</td>
+                                <td>Rp 15.500 - Rp 18.500</td>
+                                <td>Stabil terkendali di bawah Harga Eceran Tertinggi (HET) yang ditetapkan pemerintah.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `
+            },
+            "side-4": {
+                category: "PERISTIWA & BENCANA ALAM",
+                title: "Tanggap Darurat Bencana Hidrometeorologi: Penanganan Banjir Bandang dan Longsor di Aceh Tenggara",
+                author: "Wartawan Lapangan Bencana",
+                time: "15 September 2026",
+                image: "https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=400&q=80",
+                content: `
+                    <p>Bencana alam hidrometeorologi kembali menghantam wilayah barat nusantara, kali ini meluluhlantakkan sejumlah kawasan di Kabupaten <strong>Aceh Tenggara</strong>. Hujan deras dengan intensitas ekstrim yang mengguyur kawasan pegunungan selama beberapa hari berturut-turut memicu meluapnya debit air Sungai Alas dan anak-anak sungainya, sehingga menerjang permukiman penduduk dalam bentuk banjir bandang yang membawa serta material lumpur tebal, batu besar, dan kayu gelondongan sisa pembalakan liar.</p>
+                    <p>Dampak kerusakan akibat bencana ini sangat signifikan: ratusan unit rumah warga mengalami rusak berat hingga hanyut terbawa arus, puluhan hektare lahan pertanian siap panen terendam lumpur, serta jembatan penghubung antar-kecamatan putus total, mengisolasi sejumlah desa terpencil. Badan Penanggulangan Bencana Daerah (BPBD) Aceh Tenggara bersama prajurit TNI dari Kodim setempat, personel Polri, SAR, serta relawan kemanusiaan langsung dikerahkan ke lokasi untuk mendirikan posko pengungsian terpadu, dapur umum lapangan, dan posko kesehatan darurat.</p>
+                    
+                    <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Prioritas Penanganan Pengungsi dan Mitigasi Jangka Panjang</h3>
+                    <p>Fokus utama operasi darurat saat ini adalah penyaluran air bersih, logistik makanan siap saji, selimut, serta obat-obatan bagi ribuan warga yang mengungsi di tempat-tempat aman. Alat berat dikerahkan secara simultan untuk membersihkan material longsor yang menutup akses jalan utama logistik. Pemerintah daerah bersama Kementerian Pekerjaan Umum juga mulai merancang relokasi permukiman bagi warga yang tinggal di zona merah rawan longsor susulan.</p>
+                `
+            },
+            "feed-1": {
+                category: "SAINS & ANTARIKSA",
+                title: "Keajaiban Sains Angkasa: Fenomena Konjungsi Kasat Mata Bulan Sabit dan Planet Venus di Langit Nusantara",
+                author: "Rubrik Sains & Astronomi",
+                time: "15 September 2026",
+                image: "https://images.unsplash.com/photo-1516331138075-f3adc1e149cd?auto=format&fit=crop&w=200&q=80",
+                content: `
+                    <p>Di tengah hiruk-pikuk dinamika sosial, politik, dan ekonomi yang melanda tanah air, langit malam nusantara disuguhkan dengan pemandangan astronomis yang sangat memukau dan langka, yakni fenomena konjungsi kasat mata antara <strong>Bulan sabit muda dan Planet Venus</strong> (yang populer dikenal sebagai Bintang Kejora). Fenomena ini dapat disaksikan secara jelas tepat setelah matahari terbenam menghadap ke arah barat.</p>
+                    <p>Lembaga Penerbangan dan Antariksa Nasional (LAPAN) di bawah Badan Riset dan Inovasi Nasional (BRIN) memberikan penjelasan ilmiah bahwa konjungsi ini terjadi akibat pergerakan orbit relatif antara Bumi, Bulan, and Venus yang berada pada garis pandang yang hampir segaris dari perspektif pengamat di permukaan Bumi. Meskipun secara jarak fisik antariksa jarak keduanya sangat jauh berjuta-juta kilometer, konfigurasi optik ini menciptakan pemandangan visual yang seolah-olah Venus bersanding sangat dekat dengan sabit Bulan yang indah.</p>
+                    
+                    <div class="article-callout">
+                        <div class="article-callout-title">Edukasi Publik dan Pengamatan Astronomi</div>
+                        <p style="margin: 0;">Fenomena alam ini sepenuhnya aman untuk disaksikan secara langsung dengan mata telanjang tanpa memerlukan bantuan alat optik khusus seperti teleskop atau binokuler. Momen ini dimanfaatkan oleh komunitas astronomi amatir dan lembaga pendidikan untuk menggelar pengamatan bersama guna meningkatkan literasi sains antariksa di kalangan generasi muda Indonesia.</p>
+                    </div>
+                `
+            }
+        };
+
+        function showHome() {
+            document.getElementById('home-page').classList.add('active');
+            document.getElementById('article-page').classList.remove('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openArticle(articleId) {
+            const article = articlesData[articleId];
+            if (!article) return;
+            document.getElementById('page-article-category').innerText = article.category;
+            document.getElementById('page-article-title').innerText = article.title;
+            document.getElementById('page-article-author').innerText = `Oleh ${article.author}`;
+            document.getElementById('page-article-time').innerText = article.time;
+            document.getElementById('page-article-image').src = article.image;
+            document.getElementById('page-article-content').innerHTML = article.content;
+            document.getElementById('home-page').classList.remove('active');
+            document.getElementById('article-page').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        function updateLiveFrequencyTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const timeString = `${hours}:${minutes}:${seconds} WITA`;
+            const timeEl = document.getElementById('live-frequency-time');
+            if (timeEl) {
+                timeEl.innerText = timeString;
+            }
+        }
+
+        let isMoreLoaded = false;
+        function loadMoreArticles() {
+            const terkiniList = document.getElementById('terkini-list');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            if (!isMoreLoaded) {
+                const newArticle1 = document.createElement('li');
+                newArticle1.className = "flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-gray-700 group cursor-pointer";
+                newArticle1.setAttribute('onclick', "openArticle('side-2')");
+                newArticle1.innerHTML = `
+                    <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover group-hover-image transition-transform duration-300" alt="Kemenkeu">
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-primary">POLITIK</span>
+                        <h3 class="text-xl font-bold mt-1 article-title-hover">Dinamika Internal Kemenkeu dan Reformasi Birokrasi</h3>
+                        <p class="text-sm text-gray-600 dark:text-dark-text-secondary mt-1">Langkah restrukturisasi strategis di tubuh Kementerian Keuangan demi optimalisasi pencapaian target penerimaan negara...</p>
+                        <p class="text-xs text-gray-500 mt-2">Pemerintahan & Fiskal</p>
+                    </div>
+                `;
+                const newArticle2 = document.createElement('li');
+                newArticle2.className = "flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-gray-700 group cursor-pointer";
+                newArticle2.setAttribute('onclick', "openArticle('side-4')");
+                newArticle2.innerHTML = `
+                    <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover group-hover-image transition-transform duration-300" alt="Bencana">
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-primary">PERISTIWA</span>
+                        <h3 class="text-xl font-bold mt-1 article-title-hover">Tanggap Darurat Banjir Bandang di Aceh Tenggara</h3>
+                        <p class="text-sm text-gray-600 dark:text-dark-text-secondary mt-1">BPBD bersama TNI dan SAR gabungan dirikan posko pengungsian serta distribusikan logistik darurat bagi warga terdampak...</p>
+                        <p class="text-xs text-gray-500 mt-2">Bencana & Kemanusiaan</p>
+                    </div>
+                `;
+                terkiniList.appendChild(newArticle1);
+                terkiniList.appendChild(newArticle2);
+                loadMoreBtn.innerText = "SEMUA ARTIKEL TERBARU TELAH DIMUAT";
+                loadMoreBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                isMoreLoaded = true;
+            } else {
+                alert('Semua berita terbaru telah dimuat pada halaman ini.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLiveFrequencyTime();
+            setInterval(updateLiveFrequencyTime, 1000);
+            
+            const mobileMenuBtn = document.getElementById('mobile-menu-button');
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            }
+            
+            const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
+            const todayStr = new Date().toLocaleDateString('id-ID', options);
+            const dateEl = document.getElementById('current-datetime');
+            if (dateEl) {
+                dateEl.innerText = todayStr;
+            }
+            
+            window.addEventListener('scroll', () => {
+                const header = document.getElementById('main-header');
+                if (window.scrollY > 100) {
+                    header.classList.add('sticky');
+                } else {
+                    header.classList.remove('sticky');
+                }
+            });
+            
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const lightIcon = document.getElementById('theme-icon-light');
+            const darkIcon = document.getElementById('theme-icon-dark');
+            const htmlEl = document.documentElement;
+            
+            if (localStorage.getItem('theme') === 'dark') {
+                htmlEl.classList.add('dark');
+                lightIcon.classList.add('hidden');
+                darkIcon.classList.remove('hidden');
+            }
+            
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    htmlEl.classList.toggle('dark');
+                    if (htmlEl.classList.contains('dark')) {
+                        localStorage.setItem('theme', 'dark');
+                        lightIcon.classList.add('hidden');
+                        darkIcon.classList.remove('hidden');
+                    } else {
+                        localStorage.setItem('theme', 'light');
+                        lightIcon.classList.remove('hidden');
+                        darkIcon.classList.add('hidden');
+                    }
+                });
+            }
+            
+            const handleSearch = (query) => {
+                if (!query.trim()) return;
+                const banner = document.getElementById('content-header-banner');
+                const bannerText = document.getElementById('banner-text');
+                if (banner && bannerText) {
+                    banner.classList.remove('hidden');
+                    bannerText.innerText = `Hasil pencarian untuk: "${query}"`;
+                }
+            };
+            
+            const desktopSearch = document.getElementById('desktop-search');
+            if (desktopSearch) {
+                desktopSearch.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        handleSearch(e.target.value);
+                    }
+                });
+            }
+            
+            const mobileSearch = document.getElementById('mobile-search');
+            if (mobileSearch) {
+                mobileSearch.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        handleSearch(e.target.value);
+                        toggleMobileMenu();
+                    }
+                });
+            }
+        });
+
+        function resetSearchBanner() {
+            const banner = document.getElementById('content-header-banner');
+            if (banner) {
+                banner.classList.add('hidden');
+            }
+            const desktopSearch = document.getElementById('desktop-search');
+            const mobileSearch = document.getElementById('mobile-search');
+            if (desktopSearch) desktopSearch.value = '';
+            if (mobileSearch) mobileSearch.value = '';
+        }
+    </script>
+</body>
+</html>
