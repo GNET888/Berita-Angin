@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Berita Angin - Portal Berita & Analisis Terkini</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -128,7 +129,6 @@
     .page-view.active {
         display: block;
     }
-
     /* Tabel Kustom untuk Laporan Artikel */
     table.article-table {
         width: 100%;
@@ -152,7 +152,6 @@
     html.dark table.article-table tr:nth-child(even) {
         background-color: #1e293b;
     }
-
     /* Callout Box Kustom */
     .article-callout {
         background-color: #f1f5f9;
@@ -394,6 +393,38 @@
                                     </ol>
                                 </div>
                                 
+                                <!-- WIDGET CHART REAL-TIME BEI & CRYPTO (DITAMBAHKAN TEPAT DI BAWAH SOROTAN UTAMA) -->
+                                <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg border dark:border-gray-700 shadow-md">
+                                    <div class="flex justify-between items-center mb-3 border-b pb-2 dark:border-gray-700">
+                                        <h3 class="font-bold text-sm text-secondary dark:text-white flex items-center space-x-1.5">
+                                            <svg class="w-4 h-4 text-emerald-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                                            <span>BURSA & CRYPTO LIVE</span>
+                                        </h3>
+                                        <span class="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300 px-2 py-0.5 rounded-full font-mono font-semibold">LIVE</span>
+                                    </div>
+                                    
+                                    <!-- Selector Tabs -->
+                                    <div class="flex space-x-2 mb-3">
+                                        <button onclick="switchMarketTab('bei')" id="btn-bei" class="flex-1 py-1 text-xs font-bold rounded bg-primary text-white transition">IHSG (BEI)</button>
+                                        <button onclick="switchMarketTab('crypto')" id="btn-crypto" class="flex-1 py-1 text-xs font-bold rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 transition">Crypto (BTC)</button>
+                                    </div>
+                                    
+                                    <!-- Price Display Info -->
+                                    <div id="market-info" class="mb-3">
+                                        <div class="flex justify-between items-baseline">
+                                            <span id="market-name" class="text-xs text-gray-500 dark:text-gray-400 font-semibold">IHSG (Bursa Efek Indonesia)</span>
+                                            <span id="market-change" class="text-xs font-bold text-emerald-600 dark:text-emerald-400">+0.74% (+55.20)</span>
+                                        </div>
+                                        <div class="text-xl font-black font-mono text-secondary dark:text-white" id="market-price">7,485.30</div>
+                                    </div>
+                                    
+                                    <!-- Canvas Chart -->
+                                    <div class="h-40 w-full relative">
+                                        <canvas id="liveMarketChart"></canvas>
+                                    </div>
+                                    <div class="mt-2 text-[10px] text-gray-400 text-center font-mono">Pembaruan data real-time otomatis setiap 3 detik</div>
+                                </div>
+                                
                                 <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg text-center border dark:border-gray-700">
                                     <p class="text-xs text-gray-400 mb-2">BULETIN HARIAN</p>
                                     <h4 class="font-bold text-sm text-primary mb-1">Dapatkan Update Berita Pilihan Langsung</h4>
@@ -514,7 +545,6 @@
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">Langkah Cepat Tanggap Darurat dan Investigasi KNKT</h3>
                     <p>Menanggapi tragedi kemanusiaan ini, pemerintah melalui Kementerian Perhubungan bergerak cepat dengan menerjunkan tim khusus dari Komite Nasional Keselamatan Transportasi (KNKT) bersama Kesatuan Penjagaan Laut dan Pantai (KPLP). Tim gabungan langsung melakukan audit investigatif terhadap manajemen pelabuhan asal, keabsahan dokumen manifes penumpang, serta kelayakan operasional kapal sebelum bertolak.</p>
                     <p>Operasi pencarian dan evakuasi korban melibatkan armada utama KRI dari TNI Angkatan Laut, helikopter patroli udara, serta puluhan kapal nelayan lokal yang dikoordinasikan secara terpusat. Meskipun dihadapkan pada kendala jarak pandang di dalam air dan arus bawah laut yang kuat, tim penyelam gabungan terus memperluas radius pencarian guna menemukan para korban yang masih dinyatakan hilang.</p>
-
                     <div class="article-callout">
                         <div class="article-callout-title">Catatan Kritis Kebijakan Keselamatan Pelayaran</div>
                         <p style="margin: 0;">Tragedi KM Virgo menjadi peringatan keras (wakeup call) bagi seluruh operator pelabuhan dan syahbandar untuk tidak berkompromi terhadap standar operasional prosedur (SOP) keselamatan. Uji petik berkala (ramp check) serta penegakan hukum yang tegas terhadap praktik pemalsuan data manifes mutlak diperlukan guna mencegah berulangnya bencana serupa di masa depan.</p>
@@ -560,10 +590,8 @@
                     
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">A. Pergerakan Dinamis Indeks Harga Saham Gabungan (IHSG)</h3>
                     <p>Di lantai bursa efek, Indeks Harga Saham Gabungan (IHSG) sempat mengalami fase fluktuasi tajam akibat aksi <em>wait and see</em> yang dilakukan oleh para investor institusional maupun asing. Ketidakpastian arah kebijakan jangka pendek membuat volume perdagangan melambat. Kendati demikian, emiten-emiten berkapitalisasi pasar besar (blue chip) di sektor perbankan utama, telekomunikasi, dan energi esensial tetap mencatatkan fundamental yang tangguh, menahan koreksi indeks agar tidak terperosok lebih dalam.</p>
-
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">B. Stabilitas Harga Sembako di Pasar Tradisional: Tinjauan Harga Komoditas</h3>
                     <p>Hasil pantauan langsung di berbagai pasar tradisional utama menunjukkan adanya kenaikan harga pada beberapa komoditas pangan yang dipicu oleh penurunan produksi pertanian akibat faktor cuaca ekstrem serta lonjakan biaya transportasi logistik antardaerah. Berikut adalah rincian rata-rata harga komoditas pangan pokok:</p>
-
                     <table class="article-table">
                         <thead>
                             <tr>
@@ -633,6 +661,111 @@
                 `
             }
         };
+        
+        let marketChart;
+        let currentMarket = 'bei';
+        
+        const beiData = {
+            labels: ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
+            prices: [7430, 7445, 7420, 7450, 7465, 7455, 7480, 7485.30],
+            name: 'IHSG (Bursa Efek Indonesia)',
+            change: '+0.74% (+55.20)',
+            color: '#0284c7'
+        };
+        
+        const cryptoData = {
+            labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'],
+            prices: [91200, 91800, 91500, 92400, 93100, 92800, 93450.20],
+            name: 'Bitcoin / Crypto Index (USD)',
+            change: '+2.45% (+$2,250)',
+            color: '#f59e0b'
+        };
+
+        function initMarketChart() {
+            const ctx = document.getElementById('liveMarketChart');
+            if (!ctx) return;
+            
+            marketChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: beiData.labels,
+                    datasets: [{
+                        label: beiData.name,
+                        data: beiData.prices,
+                        borderColor: beiData.color,
+                        backgroundColor: 'rgba(2, 132, 199, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { size: 10 }, color: '#94a3b8' }
+                        },
+                        y: {
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' },
+                            ticks: { font: { size: 10 }, color: '#94a3b8' }
+                        }
+                    }
+                }
+            });
+            
+            // Simulasi pembaruan data real-time setiap 3 detik
+            setInterval(() => {
+                if (!marketChart) return;
+                const dataset = marketChart.data.datasets[0];
+                const lastVal = dataset.data[dataset.data.length - 1];
+                const delta = (Math.random() - 0.48) * (currentMarket === 'bei' ? 4 : 120);
+                const newVal = parseFloat((lastVal + delta).toFixed(2));
+                
+                dataset.data[dataset.data.length - 1] = newVal;
+                document.getElementById('market-price').innerText = newVal.toLocaleString();
+                marketChart.update('none');
+            }, 3000);
+        }
+
+        function switchMarketTab(type) {
+            currentMarket = type;
+            const btnBei = document.getElementById('btn-bei');
+            const btnCrypto = document.getElementById('btn-crypto');
+            const marketName = document.getElementById('market-name');
+            const marketChange = document.getElementById('market-change');
+            const marketPrice = document.getElementById('market-price');
+            
+            if (type === 'bei') {
+                btnBei.className = "flex-1 py-1 text-xs font-bold rounded bg-primary text-white transition";
+                btnCrypto.className = "flex-1 py-1 text-xs font-bold rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 transition";
+                marketName.innerText = beiData.name;
+                marketChange.innerText = beiData.change;
+                marketPrice.innerText = beiData.prices[beiData.prices.length - 1].toLocaleString();
+                
+                marketChart.data.labels = beiData.labels;
+                marketChart.data.datasets[0].data = beiData.prices;
+                marketChart.data.datasets[0].borderColor = beiData.color;
+                marketChart.data.datasets[0].backgroundColor = 'rgba(2, 132, 199, 0.1)';
+            } else {
+                btnCrypto.className = "flex-1 py-1 text-xs font-bold rounded bg-amber-500 text-white transition";
+                btnBei.className = "flex-1 py-1 text-xs font-bold rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 transition";
+                marketName.innerText = cryptoData.name;
+                marketChange.innerText = cryptoData.change;
+                marketPrice.innerText = cryptoData.prices[cryptoData.prices.length - 1].toLocaleString();
+                
+                marketChart.data.labels = cryptoData.labels;
+                marketChart.data.datasets[0].data = cryptoData.prices;
+                marketChart.data.datasets[0].borderColor = cryptoData.color;
+                marketChart.data.datasets[0].backgroundColor = 'rgba(245, 158, 11, 0.1)';
+            }
+            marketChart.update();
+        }
 
         function showHome() {
             document.getElementById('home-page').classList.add('active');
@@ -712,6 +845,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateLiveFrequencyTime();
             setInterval(updateLiveFrequencyTime, 1000);
+            initMarketChart();
             
             const mobileMenuBtn = document.getElementById('mobile-menu-button');
             if (mobileMenuBtn) {
