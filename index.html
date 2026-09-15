@@ -254,7 +254,7 @@
                     </nav>
                 </div>
 
-                 <!-- Mobile Menu (Rata Kiri / justify-start) -->
+                 <!-- Mobile Menu -->
                 <div id="mobile-menu" class="hidden md:hidden">
                      <div class="px-4 py-2 border-t dark:border-gray-700">
                         <input type="text" id="mobile-search" placeholder="Cari berita..." class="border rounded-full py-2 px-4 w-full bg-gray-100 dark:bg-gray-800 dark:border-gray-600 mb-2">
@@ -380,6 +380,7 @@
                         <!-- Sidebar -->
                         <aside class="col-span-12 lg:col-span-4">
                              <div class="space-y-8">
+                                <!-- Sorotan Utama -->
                                 <div class="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-lg border dark:border-gray-700 shadow-md">
                                     <h3 class="terpopuler-header">SOROTAN UTAMA</h3>
                                     <ol class="p-2 space-y-4">
@@ -396,6 +397,42 @@
                                             <h4 class="font-bold leading-tight article-title-hover group-hover:text-primary transition pt-2">Penanganan Darurat Bencana Banjir Bandang Aceh Tenggara</h4>
                                         </li>
                                     </ol>
+                                </div>
+                                
+                                <!-- REAL-TIME PASAR BURSA EFEK INDONESIA (IHSG) - SESUAI TEMA PORTAL -->
+                                <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-gray-700 shadow-md overflow-hidden">
+                                    <div class="bg-primary text-white px-4 py-2 flex justify-between items-center">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                            <h3 class="font-bold text-xs tracking-wider uppercase">BURSA EFEK INDONESIA</h3>
+                                        </div>
+                                        <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded font-mono font-bold">LIVE IDX</span>
+                                    </div>
+                                    <div class="p-4 space-y-3">
+                                        <div>
+                                            <div class="flex justify-between text-xs text-gray-500 dark:text-dark-text-secondary">
+                                                <span>IHSG (COMPOSITE)</span>
+                                                <span id="market-status" class="text-emerald-600 dark:text-emerald-400 font-bold">‚óè Sesi Aktif</span>
+                                            </div>
+                                            <div class="flex items-baseline justify-between mt-1">
+                                                <span id="idx-ihsg-val" class="text-2xl font-black font-mono text-secondary dark:text-white">7,345.20</span>
+                                                <span id="idx-ihsg-chg" class="text-xs font-bold font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-500/20 px-2 py-0.5 rounded">+48.30 (+0.66%)</span>
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-2 pt-2 border-t border-gray-200 dark:border-gray-700 text-xs">
+                                            <div class="bg-white dark:bg-gray-800 p-2 rounded border dark:border-gray-700">
+                                                <div class="text-gray-400 dark:text-dark-text-secondary text-[10px]">LQ45 (Unggulan)</div>
+                                                <div id="idx-lq45-val" class="font-mono font-bold mt-0.5 text-emerald-600 dark:text-emerald-300">924.15 <span class="text-[10px]">+0.42%</span></div>
+                                            </div>
+                                            <div class="bg-white dark:bg-gray-800 p-2 rounded border dark:border-gray-700">
+                                                <div class="text-gray-400 dark:text-dark-text-secondary text-[10px]">Nilai Transaksi</div>
+                                                <div class="font-mono font-bold mt-0.5 text-secondary dark:text-white">Rp 10.4 T</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-[10px] text-gray-400 dark:text-dark-text-secondary text-right italic pt-1">
+                                            Sumber: IDX Real-Time &bull; <span id="idx-update-time">00:00:00</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 
                                 <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg text-center border dark:border-gray-700">
@@ -559,7 +596,7 @@
                 time: "15 September 2026",
                 image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=400&q=80",
                 content: `
-                    <p>Kombinasi berbagai sentimen domestikómulai dari perombakan kabinet, dinamika kebijakan fiskal, hingga gangguan rantai pasok akibat cuacaómemberikan dampak langsung terhadap pergerakan pasar modal serta daya beli masyarakat di pasar ritel konvensional.</p>
+                    <p>Kombinasi berbagai sentimen domestik‚Äîmulai dari perombakan kabinet, dinamika kebijakan fiskal, hingga gangguan rantai pasok akibat cuaca‚Äîmemberikan dampak langsung terhadap pergerakan pasar modal serta daya beli masyarakat di pasar ritel konvensional.</p>
                     
                     <h3 class="text-xl font-bold mt-6 mb-2 text-slate-900 dark:text-white">A. Pergerakan Dinamis Indeks Harga Saham Gabungan (IHSG)</h3>
                     <p>Di lantai bursa efek, Indeks Harga Saham Gabungan (IHSG) sempat mengalami fase fluktuasi tajam akibat aksi <em>wait and see</em> yang dilakukan oleh para investor institusional maupun asing. Ketidakpastian arah kebijakan jangka pendek membuat volume perdagangan melambat. Kendati demikian, emiten-emiten berkapitalisasi pasar besar (blue chip) di sektor perbankan utama, telekomunikasi, dan energi esensial tetap mencatatkan fundamental yang tangguh, menahan koreksi indeks agar tidak terperosok lebih dalam.</p>
@@ -670,6 +707,26 @@
             if (timeEl) {
                 timeEl.innerText = timeString;
             }
+            const idxTimeEl = document.getElementById('idx-update-time');
+            if (idxTimeEl) {
+                idxTimeEl.innerText = `${hours}:${minutes}:${seconds}`;
+            }
+        }
+
+        // Simulasi fluktuasi real-time indeks pasar bursa efek
+        function simulateMarketTick() {
+            const ihsgValEl = document.getElementById('idx-ihsg-val');
+            const ihsgChgEl = document.getElementById('idx-ihsg-chg');
+            const lq45ValEl = document.getElementById('idx-lq45-val');
+            
+            if (ihsgValEl && ihsgChgEl) {
+                let currentVal = 7345.20 + (Math.random() * 2 - 0.9);
+                let currentChg = 48.30 + (Math.random() * 0.6 - 0.3);
+                let currentPct = 0.66 + (Math.random() * 0.02 - 0.01);
+                
+                ihsgValEl.innerText = currentVal.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                ihsgChgEl.innerText = `+${currentChg.toFixed(2)} (+${currentPct.toFixed(2)}%)`;
+            }
         }
 
         let isMoreLoaded = false;
@@ -718,6 +775,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             updateLiveFrequencyTime();
             setInterval(updateLiveFrequencyTime, 1000);
+            setInterval(simulateMarketTick, 4000);
             
             const mobileMenuBtn = document.getElementById('mobile-menu-button');
             if (mobileMenuBtn) {
