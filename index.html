@@ -173,6 +173,117 @@
     html.dark .article-callout-title {
         color: #38bdf8;
     }
+    /* =========================================================
+       CAROUSEL: BERITA PILIHAN & LAPORAN KHUSUS INVESTIGASI
+       Konten artikel tetap memakai HTML yang sudah ada.
+       ========================================================= */
+    #terkini-carousel {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+    }
+    #terkini-list.terkini-carousel-track {
+        display: flex !important;
+        gap: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        list-style: none;
+        transform: translate3d(0, 0, 0);
+        transition: transform 500ms ease;
+        will-change: transform;
+    }
+    #terkini-list.terkini-carousel-track > li {
+        flex: 0 0 100%;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0 !important;
+        min-width: 100%;
+        padding: 1rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.75rem;
+        background: #ffffff;
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+    }
+    html.dark #terkini-list.terkini-carousel-track > li {
+        background: #1e293b;
+        border-color: #334155;
+    }
+    .terkini-carousel-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-top: 0.75rem;
+    }
+    .terkini-carousel-arrow {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 9999px;
+        border: 1px solid #0284c7;
+        color: #0284c7;
+        background: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        font-weight: 900;
+        cursor: pointer;
+        transition: all 180ms ease;
+        flex-shrink: 0;
+    }
+    .terkini-carousel-arrow:hover {
+        background: #0284c7;
+        color: #ffffff;
+    }
+    .terkini-carousel-arrow:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+    }
+    html.dark .terkini-carousel-arrow {
+        background: #1e293b;
+        border-color: #38bdf8;
+        color: #38bdf8;
+    }
+    html.dark .terkini-carousel-arrow:hover {
+        background: #0284c7;
+        color: #ffffff;
+    }
+    .terkini-carousel-dots {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        flex: 1;
+    }
+    .terkini-carousel-dot {
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 9999px;
+        border: 0;
+        padding: 0;
+        background: #cbd5e1;
+        cursor: pointer;
+        transition: all 180ms ease;
+    }
+    .terkini-carousel-dot.active {
+        width: 1.5rem;
+        background: #0284c7;
+    }
+    html.dark .terkini-carousel-dot {
+        background: #475569;
+    }
+    html.dark .terkini-carousel-dot.active {
+        background: #38bdf8;
+    }
+    @media (max-width: 640px) {
+        #terkini-list.terkini-carousel-track > li {
+            padding: 0.75rem;
+        }
+        .terkini-carousel-arrow {
+            width: 2.25rem;
+            height: 2.25rem;
+        }
+    }
 </style>
 </head>
 <body class="antialiased">
@@ -339,7 +450,8 @@
                         <div class="col-span-12 lg:col-span-8">
                             <section class="mb-8">
                                 <h2 class="kompas-header">BERITA PILIHAN & LAPORAN KHUSUS INVESTIGASI</h2>
-                                <ul id="terkini-list" class="space-y-4">
+                                <div id="terkini-carousel" aria-label="Carousel Berita Pilihan dan Laporan Khusus Investigasi">
+                                <ul id="terkini-list" class="space-y-4 terkini-carousel-track">
                                    <li class="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-gray-700 group cursor-pointer" onclick="openArticle('feed-1')">
                                         <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0"><img src="https://images.unsplash.com/photo-1516331138075-f3adc1e149cd?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover group-hover-image transition-transform duration-300" alt="Venus"></div>
                                         <div>
@@ -368,7 +480,90 @@
                                         </div>
                                     </li>
                                 </ul>
+                                </div>
+                                <div class="terkini-carousel-nav" aria-label="Navigasi carousel">
+                                    <button type="button" id="terkini-prev" class="terkini-carousel-arrow" aria-label="Berita sebelumnya" title="Sebelumnya">&#10094;</button>
+                                    <div id="terkini-dots" class="terkini-carousel-dots" aria-label="Pilih berita"></div>
+                                    <button type="button" id="terkini-next" class="terkini-carousel-arrow" aria-label="Berita berikutnya" title="Berikutnya">&#10095;</button>
+                                </div>
                                 <button onclick="loadMoreArticles()" id="load-more-btn" class="w-full mt-4 py-2 text-center font-bold text-primary border-2 border-primary rounded-lg hover:bg-primary hover:text-white transition">MUAT ARTIKEL LAINNYA</button> 
+                                
+                                <!-- TAMBAHAN WIDGET INDEKS HARGA SAHAM GABUNGAN & PASAR TERKAIT DI BAWAH BUTTON MUAT ARTIKEL -->
+                                <div class="mt-6 bg-gray-50 dark:bg-gray-800/60 p-5 rounded-xl border dark:border-gray-700 shadow-md">
+                                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 mb-4 border-b dark:border-gray-700 gap-2">
+                                        <div>
+                                            <h3 class="font-black text-base text-secondary dark:text-white flex items-center space-x-2">
+                                                <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                                <span>RINGKASAN INDEKS HARGA SAHAM GABUNGAN (IHSG) & PASAR</span>
+                                            </h3>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Data ringkas bursa saham utama, sektor penggerak, dan indikator pasar finansial global.</p>
+                                        </div>
+                                        <span class="text-[11px] bg-primary/10 text-primary px-2.5 py-1 rounded-full font-mono font-bold">Real-time Sesi Bursa</span>
+                                    </div>
+
+                                    <!-- Grid Ringkasan Pasar -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                                        <!-- IHSG Card -->
+                                        <div class="bg-white dark:bg-gray-900 p-3.5 rounded-lg border dark:border-gray-700 shadow-sm">
+                                            <div class="text-xs text-gray-500 font-semibold">IHSG (BEI)</div>
+                                            <div class="text-lg font-black font-mono text-secondary dark:text-white mt-1">7,485.30</div>
+                                            <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 flex items-center space-x-1">
+                                                <span>&#9650; +55.20 (+0.74%)</span>
+                                            </div>
+                                        </div>
+                                        <!-- LQ45 Card -->
+                                        <div class="bg-white dark:bg-gray-900 p-3.5 rounded-lg border dark:border-gray-700 shadow-sm">
+                                            <div class="text-xs text-gray-500 font-semibold">Indeks LQ45</div>
+                                            <div class="text-lg font-black font-mono text-secondary dark:text-white mt-1">924.15</div>
+                                            <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 flex items-center space-x-1">
+                                                <span>&#9650; +8.40 (+0.92%)</span>
+                                            </div>
+                                        </div>
+                                        <!-- Kurs USD/IDR Card -->
+                                        <div class="bg-white dark:bg-gray-900 p-3.5 rounded-lg border dark:border-gray-700 shadow-sm">
+                                            <div class="text-xs text-gray-500 font-semibold">Kurs USD / IDR</div>
+                                            <div class="text-lg font-black font-mono text-secondary dark:text-white mt-1">Rp 15,850</div>
+                                            <div class="text-xs font-bold text-rose-600 dark:text-rose-400 mt-0.5 flex items-center space-x-1">
+                                                <span>&#9660; -15.00 (-0.09%)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Tabel Sektor Terkait Pasar -->
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full text-xs text-left border-collapse">
+                                            <thead>
+                                                <tr class="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-b dark:border-gray-700">
+                                                    <th class="p-2.5 font-bold">Sektor Utama Bursa</th>
+                                                    <th class="p-2.5 font-bold">Terakhir</th>
+                                                    <th class="p-2.5 font-bold">Perubahan</th>
+                                                    <th class="p-2.5 font-bold">Sentimen Pasar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y dark:divide-gray-700 font-mono text-gray-600 dark:text-gray-300">
+                                                <tr>
+                                                    <td class="p-2.5 font-sans font-semibold text-secondary dark:text-white">Financials (IDXFIN)</td>
+                                                    <td class="p-2.5">1,420.50</td>
+                                                    <td class="p-2.5 text-emerald-600 font-bold">+1.24%</td>
+                                                    <td class="p-2.5 font-sans text-emerald-600 font-semibold">Bullish (Penggerak Utama)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-2.5 font-sans font-semibold text-secondary dark:text-white">Consumer Staples (IDXCYCL)</td>
+                                                    <td class="p-2.5">812.30</td>
+                                                    <td class="p-2.5 text-emerald-600 font-bold">+0.45%</td>
+                                                    <td class="p-2.5 font-sans text-gray-500">Stabil / Konsolidasi</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-2.5 font-sans font-semibold text-secondary dark:text-white">Energy & Mining (IDXENERGY)</td>
+                                                    <td class="p-2.5">2,310.80</td>
+                                                    <td class="p-2.5 text-rose-600 font-bold">-0.32%</td>
+                                                    <td class="p-2.5 font-sans text-rose-500">Koreksi Tipis Komoditas</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mt-3 text-[10px] text-gray-400 text-right">Sumber: Bursa Efek Indonesia (BEI) & Analisis Pasar Terpadu Berita Angin</div>
+                                </div>
                             </section>
                         </div>
                         
@@ -402,29 +597,6 @@
                                         </h3>
                                         <span class="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300 px-2 py-0.5 rounded-full font-mono font-semibold">LIVE</span>
                                     </div>
-                                    
-                                    <!-- Selector Tabs -->
-                                    <div class="flex space-x-2 mb-3">
-                                        <button onclick="switchMarketTab('bei')" id="btn-bei" class="flex-1 py-1 text-xs font-bold rounded bg-primary text-white transition">IHSG (BEI)</button>
-                                        <button onclick="switchMarketTab('crypto')" id="btn-crypto" class="flex-1 py-1 text-xs font-bold rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 transition">Crypto (BTC)</button>
-                                    </div>
-                                    
-                                    <!-- Price Display Info -->
-                                    <div id="market-info" class="mb-3">
-                                        <div class="flex justify-between items-baseline">
-                                            <span id="market-name" class="text-xs text-gray-500 dark:text-gray-400 font-semibold">IHSG (Bursa Efek Indonesia)</span>
-                                            <span id="market-change" class="text-xs font-bold text-emerald-600 dark:text-emerald-400">+0.74% (+55.20)</span>
-                                        </div>
-                                        <div class="text-xl font-black font-mono text-secondary dark:text-white" id="market-price">7,485.30</div>
-                                    </div>
-                                    
-                                    <!-- Canvas Chart -->
-                                    <div class="h-40 w-full relative">
-                                        <canvas id="liveMarketChart"></canvas>
-                                    </div>
-                                    <div class="mt-2 text-[10px] text-gray-400 text-center font-mono">Pembaruan data real-time otomatis setiap 3 detik</div>
-                                </div>
-
                                 <!-- WIDGET KURS MATA UANG INTERNASIONAL (BARU DITAMBAHKAN) -->
                                 <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg border dark:border-gray-700 shadow-md">
                                     <div class="flex justify-between items-center mb-3 border-b pb-2 dark:border-gray-700">
@@ -728,7 +900,6 @@
             change: '+2.45% (+$2,250)',
             color: '#f59e0b'
         };
-
         // Kurs referensi terhadap IDR (Rupiah)
         const exchangeRatesToIDR = {
             IDR: 1,
@@ -742,7 +913,6 @@
             CNY: 2220,
             SAR: 4220
         };
-
         function convertCurrency() {
             const amount = parseFloat(document.getElementById('conv-amount').value) || 0;
             const fromCurr = document.getElementById('conv-from').value;
@@ -764,7 +934,6 @@
             document.getElementById('conv-result').innerText = formattedResult;
             document.getElementById('conv-rate-info').innerText = `1 ${fromCurr} = ${(exchangeRatesToIDR[fromCurr] / exchangeRatesToIDR[toCurr]).toFixed(4)} ${toCurr}`;
         }
-
         function initMarketChart() {
             const ctx = document.getElementById('liveMarketChart');
             if (!ctx) return;
@@ -816,7 +985,6 @@
                 marketChart.update('none');
             }, 3000);
         }
-
         function switchMarketTab(type) {
             currentMarket = type;
             const btnBei = document.getElementById('btn-bei');
@@ -850,7 +1018,6 @@
             }
             marketChart.update();
         }
-
         function showHome() {
             document.getElementById('home-page').classList.add('active');
             document.getElementById('article-page').classList.remove('active');
@@ -885,9 +1052,113 @@
             }
         }
         let isMoreLoaded = false;
+        let terkiniCarouselIndex = 0;
+        let terkiniCarouselTimer = null;
+        let terkiniCarouselPaused = false;
+        function getTerkiniSlides() {
+            const list = document.getElementById('terkini-list');
+            return list ? Array.from(list.children) : [];
+        }
+        function updateTerkiniCarousel() {
+            const list = document.getElementById('terkini-list');
+            const slides = getTerkiniSlides();
+            const prev = document.getElementById('terkini-prev');
+            const next = document.getElementById('terkini-next');
+            const dots = document.getElementById('terkini-dots');
+            if (!list || !slides.length) return;
+            if (terkiniCarouselIndex >= slides.length) {
+                terkiniCarouselIndex = slides.length - 1;
+            }
+            if (terkiniCarouselIndex < 0) {
+                terkiniCarouselIndex = 0;
+            }
+            list.style.transform = `translate3d(-${terkiniCarouselIndex * 100}%, 0, 0)`;
+            if (prev) prev.disabled = slides.length <= 1 || terkiniCarouselIndex === 0;
+            if (next) next.disabled = slides.length <= 1 || terkiniCarouselIndex === slides.length - 1;
+            if (dots) {
+                dots.innerHTML = '';
+                slides.forEach((_, index) => {
+                    const dot = document.createElement('button');
+                    dot.type = 'button';
+                    dot.className = 'terkini-carousel-dot' + (index === terkiniCarouselIndex ? ' active' : '');
+                    dot.setAttribute('aria-label', `Tampilkan berita ${index + 1}`);
+                    dot.setAttribute('aria-current', index === terkiniCarouselIndex ? 'true' : 'false');
+                    dot.addEventListener('click', () => {
+                        terkiniCarouselIndex = index;
+                        updateTerkiniCarousel();
+                        restartTerkiniCarouselAutoPlay();
+                    });
+                    dots.appendChild(dot);
+                });
+            }
+        }
+        function moveTerkiniCarousel(direction) {
+            const slides = getTerkiniSlides();
+            if (slides.length <= 1) return;
+            terkiniCarouselIndex += direction;
+            if (terkiniCarouselIndex >= slides.length) {
+                terkiniCarouselIndex = 0;
+            }
+            if (terkiniCarouselIndex < 0) {
+                terkiniCarouselIndex = slides.length - 1;
+            }
+            updateTerkiniCarousel();
+        }
+        function stopTerkiniCarouselAutoPlay() {
+            if (terkiniCarouselTimer) {
+                clearInterval(terkiniCarouselTimer);
+                terkiniCarouselTimer = null;
+            }
+        }
+        function startTerkiniCarouselAutoPlay() {
+            stopTerkiniCarouselAutoPlay();
+            terkiniCarouselTimer = setInterval(() => {
+                if (!terkiniCarouselPaused && document.visibilityState === 'visible') {
+                    moveTerkiniCarousel(1);
+                }
+            }, 5000);
+        }
+        function restartTerkiniCarouselAutoPlay() {
+            startTerkiniCarouselAutoPlay();
+        }
+        function initTerkiniCarousel() {
+            const viewport = document.getElementById('terkini-carousel');
+            const prev = document.getElementById('terkini-prev');
+            const next = document.getElementById('terkini-next');
+            const list = document.getElementById('terkini-list');
+            if (!viewport || !list) return;
+            list.classList.add('terkini-carousel-track');
+            if (prev) {
+                prev.addEventListener('click', () => {
+                    moveTerkiniCarousel(-1);
+                    restartTerkiniCarouselAutoPlay();
+                });
+            }
+            if (next) {
+                next.addEventListener('click', () => {
+                    moveTerkiniCarousel(1);
+                    restartTerkiniCarouselAutoPlay();
+                });
+            }
+            viewport.addEventListener('mouseenter', () => {
+                terkiniCarouselPaused = true;
+            });
+            viewport.addEventListener('mouseleave', () => {
+                terkiniCarouselPaused = false;
+            });
+            viewport.addEventListener('touchstart', () => {
+                terkiniCarouselPaused = true;
+            }, { passive: true });
+            viewport.addEventListener('touchend', () => {
+                terkiniCarouselPaused = false;
+            }, { passive: true });
+            updateTerkiniCarousel();
+            startTerkiniCarouselAutoPlay();
+        }
         function loadMoreArticles() {
             const terkiniList = document.getElementById('terkini-list');
             const loadMoreBtn = document.getElementById('load-more-btn');
+            if (!terkiniList || !loadMoreBtn) return;
             if (!isMoreLoaded) {
                 const newArticle1 = document.createElement('li');
                 newArticle1.className = "flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-gray-700 group cursor-pointer";
@@ -919,11 +1190,11 @@
                 `;
                 terkiniList.appendChild(newArticle1);
                 terkiniList.appendChild(newArticle2);
+                isMoreLoaded = true;
                 loadMoreBtn.innerText = "SEMUA ARTIKEL TERBARU TELAH DIMUAT";
                 loadMoreBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                isMoreLoaded = true;
-            } else {
-                alert('Semua berita terbaru telah dimuat pada halaman ini.');
+                loadMoreBtn.disabled = true;
+                updateTerkiniCarousel();
             }
         }
         document.addEventListener('DOMContentLoaded', () => {
@@ -931,6 +1202,7 @@
             setInterval(updateLiveFrequencyTime, 1000);
             initMarketChart();
             convertCurrency();
+            initTerkiniCarousel();
             
             const mobileMenuBtn = document.getElementById('mobile-menu-button');
             if (mobileMenuBtn) {
