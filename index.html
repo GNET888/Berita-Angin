@@ -19,10 +19,13 @@
                         'primary': '#005C9E', 
                         'secondary': '#212121', 
                         'accent': '#FFD700', 
-                        'dark-bg': '#121212',
-                        'dark-surface': '#1e1e1e',
-                        'dark-text': '#e0e0e0',
-                        'dark-text-secondary': '#a0a0a0',
+                        /* Tema Dark-Black Kustom */
+                        'dark-bg': '#000000',
+                        'dark-surface': '#121212',
+                        'dark-surface-card': '#1a1a1a',
+                        'dark-border': '#2c2c2c',
+                        'dark-text': '#f3f4f6',
+                        'dark-text-secondary': '#9ca3af',
                     }
                 }
             }
@@ -30,15 +33,15 @@
     </script>
 <style>
     body {
-        background-color: #f0f4f8;
-        color: #0f172a;
+        background-color: #ffffff;
+        color: #111827;
         font-family: 'Inter', sans-serif;
         transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     html.dark body {
-        background-color: #0b1120;
-        color: #f8fafc;
+        background-color: #000000;
+        color: #f3f4f6;
     }
     
     html.dark #main-header,
@@ -46,20 +49,20 @@
     html.dark footer,
     html.dark #article-page main,
     html.dark #home-page main {
-        background-color: #1e293b !important;
-        border-color: #334155 !important;
-        color: #f8fafc !important;
+        background-color: #121212 !important;
+        border-color: #2c2c2c !important;
+        color: #f3f4f6 !important;
     }
     
     html.dark .text-slate-900,
     html.dark .text-slate-800,
     html.dark .text-slate-700 {
-        color: #f1f5f9 !important;
+        color: #f9fafb !important;
     }
     
     html.dark .text-slate-600,
     html.dark .text-slate-500 {
-        color: #94a3b8 !important;
+        color: #9ca3af !important;
     }
     
     .kompas-header {
@@ -96,7 +99,7 @@
         left: 0;
         right: 0;
         z-index: 50;
-        box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.1);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
     }
     
     .placeholder-for-sticky {
@@ -129,7 +132,7 @@
     .page-view.active {
         display: block;
     }
-    /* Tabel Kustom untuk Laporan Artikel */
+    
     table.article-table {
         width: 100%;
         border-collapse: collapse;
@@ -141,6 +144,9 @@
         padding: 8px 10px;
         text-align: left;
     }
+    html.dark table.article-table th, html.dark table.article-table td {
+        border-color: #2c2c2c;
+    }
     table.article-table th {
         background-color: #1e3a8a;
         color: #ffffff;
@@ -150,9 +156,9 @@
         background-color: #f8fafc;
     }
     html.dark table.article-table tr:nth-child(even) {
-        background-color: #1e293b;
+        background-color: #1a1a1a;
     }
-    /* Callout Box Kustom */
+    
     .article-callout {
         background-color: #f1f5f9;
         border-left: 4px solid #0284c7;
@@ -162,7 +168,7 @@
         font-size: 9.5pt;
     }
     html.dark .article-callout {
-        background-color: #1e293b;
+        background-color: #1a1a1a;
         border-left-color: #38bdf8;
     }
     .article-callout-title {
@@ -173,10 +179,7 @@
     html.dark .article-callout-title {
         color: #38bdf8;
     }
-    /* =========================================================
-       CAROUSEL: BERITA PILIHAN & LAPORAN KHUSUS INVESTIGASI
-       Konten artikel tetap memakai HTML yang sudah ada.
-       ========================================================= */
+    
     #terkini-carousel {
         position: relative;
         overflow: hidden;
@@ -205,8 +208,8 @@
         box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
     }
     html.dark #terkini-list.terkini-carousel-track > li {
-        background: #1e293b;
-        border-color: #334155;
+        background: #1a1a1a;
+        border-color: #2c2c2c;
     }
     .terkini-carousel-nav {
         display: flex;
@@ -240,7 +243,7 @@
         cursor: not-allowed;
     }
     html.dark .terkini-carousel-arrow {
-        background: #1e293b;
+        background: #1a1a1a;
         border-color: #38bdf8;
         color: #38bdf8;
     }
@@ -287,24 +290,24 @@
 </style>
 </head>
 <body class="antialiased">
-    <div id="root" class="bg-gray-100 dark:bg-dark-bg min-h-screen flex flex-col justify-between">
+    <div id="root" class="bg-white dark:bg-dark-bg min-h-screen flex flex-col justify-between">
         <div>
             <!-- Header -->
-            <header id="main-header" class="bg-white dark:bg-dark-surface w-full transition-all duration-300 border-b-2 border-gray-200 dark:border-gray-700">
+            <header id="main-header" class="bg-white dark:bg-dark-surface w-full transition-all duration-300 border-b-2 border-gray-200 dark:border-dark-border">
                 <div class="container mx-auto px-4">
                     <!-- Top Bar dengan Live Frekuensi Waktu -->
-                    <div class="hidden md:flex justify-between items-center py-1.5 border-b dark:border-gray-700 text-xs text-gray-500">
+                    <div class="hidden md:flex justify-between items-center py-1.5 border-b dark:border-dark-border text-xs text-gray-500">
                         <div>
                             <a href="#home" onclick="showHome(); return false;" class="hover:text-primary mr-3">Beranda Utama</a>
                             <a href="#ekonomi" onclick="openArticle('headline-main'); return false;" class="hover:text-primary mr-3">Ekonomi & Bisnis</a>
                             <a href="#politik" onclick="openArticle('feed-1'); return false;" class="hover:text-primary">Politik & Kebijakan</a>
                         </div>
                         <div class="flex items-center space-x-3">
-                            <div class="flex items-center space-x-1 font-mono bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded text-primary font-semibold">
+                            <div class="flex items-center space-x-1 font-mono bg-gray-100 dark:bg-dark-surface-card px-2 py-0.5 rounded text-primary font-semibold">
                                 <svg class="w-3.5 h-3.5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span id="live-frequency-time">00:00:00 WITA</span>
                             </div>
-                            <span class="text-gray-300 dark:text-gray-600">|</span>
+                            <span class="text-gray-300 dark:text-gray-700">|</span>
                             <div id="current-datetime">Selasa, 15 Sep 2026</div>
                         </div>
                     </div>
@@ -323,17 +326,17 @@
                         </div>
                         <div class="flex items-center space-x-2">
                             <div class="relative hidden lg:block">
-                                <input type="text" id="desktop-search" placeholder="Cari berita & isu..." class="border rounded-full py-2 px-4 w-52 bg-gray-100 dark:bg-gray-800 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary">
+                                <input type="text" id="desktop-search" placeholder="Cari berita & isu..." class="border rounded-full py-2 px-4 w-52 bg-gray-100 dark:bg-dark-surface-card dark:border-dark-border focus:outline-none focus:ring-2 focus:ring-primary">
                                 <svg class="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             </div>
-                            <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                            <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-dark-surface-card">
                                <svg id="theme-icon-light" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                                <svg id="theme-icon-dark" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                             </button>
                         </div>
                     </div>
                     <!-- Navigation -->
-                    <nav id="main-nav" class="hidden md:flex justify-center items-center space-x-6 py-2.5 text-sm font-bold border-t dark:border-gray-700">
+                    <nav id="main-nav" class="hidden md:flex justify-center items-center space-x-6 py-2.5 text-sm font-bold border-t dark:border-dark-border">
                         <a href="#" onclick="showHome(); return false;" class="nav-link text-primary border-b-2 border-primary pb-1 transition flex items-center space-x-1.5">
                             <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             <span>PERISTIWA</span>
@@ -362,16 +365,16 @@
                 </div>
                  <!-- Mobile Menu -->
                 <div id="mobile-menu" class="hidden md:hidden">
-                     <div class="px-4 py-2 border-t dark:border-gray-700">
-                        <input type="text" id="mobile-search" placeholder="Cari berita..." class="border rounded-full py-2 px-4 w-full bg-gray-100 dark:bg-gray-800 dark:border-gray-600 mb-2">
+                     <div class="px-4 py-2 border-t dark:border-dark-border">
+                        <input type="text" id="mobile-search" placeholder="Cari berita..." class="border rounded-full py-2 px-4 w-full bg-gray-100 dark:bg-dark-surface-card dark:border-dark-border mb-2">
                      </div>
                      <nav class="flex flex-col text-center" id="mobile-nav-list">
-                        <a href="#" onclick="showHome(); toggleMobileMenu(); return false;" class="py-3 font-bold text-primary bg-gray-100 dark:bg-gray-800 flex items-center justify-center space-x-2"><span>PERISTIWA</span></a>
-                        <a href="#" onclick="openArticle('headline-main'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-center space-x-2"><span>EKONOMI</span></a>
-                        <a href="#" onclick="openArticle('side-1'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-center space-x-2"><span>TEKNOLOGI</span></a>
-                        <a href="#" onclick="openArticle('side-4'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-center space-x-2"><span>PASAR</span></a>
-                        <a href="#" onclick="openArticle('feed-1'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-center space-x-2"><span>POLITIK</span></a>
-                        <a href="#" onclick="openArticle('side-2'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-gray-700 flex items-center justify-center space-x-2"><span>SOSIAL</span></a>
+                        <a href="#" onclick="showHome(); toggleMobileMenu(); return false;" class="py-3 font-bold text-primary bg-gray-100 dark:bg-dark-surface-card flex items-center justify-center space-x-2"><span>PERISTIWA</span></a>
+                        <a href="#" onclick="openArticle('headline-main'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-dark-border flex items-center justify-center space-x-2"><span>EKONOMI</span></a>
+                        <a href="#" onclick="openArticle('side-1'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-dark-border flex items-center justify-center space-x-2"><span>TEKNOLOGI</span></a>
+                        <a href="#" onclick="openArticle('side-4'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-dark-border flex items-center justify-center space-x-2"><span>PASAR</span></a>
+                        <a href="#" onclick="openArticle('feed-1'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-dark-border flex items-center justify-center space-x-2"><span>POLITIK</span></a>
+                        <a href="#" onclick="openArticle('side-2'); toggleMobileMenu(); return false;" class="py-3 font-bold text-gray-700 dark:text-dark-text-secondary border-t dark:border-dark-border flex items-center justify-center space-x-2"><span>SOSIAL</span></a>
                      </nav>
                 </div>
             </header>
@@ -379,7 +382,7 @@
             
             <!-- VIEW 1: HOME PAGE -->
             <div id="home-page" class="page-view active">
-                <main class="container mx-auto p-4 bg-white dark:bg-dark-surface shadow-lg my-4 rounded-xl">
+                <main class="container mx-auto p-4 bg-white dark:bg-dark-surface shadow-lg my-4 rounded-xl border dark:border-dark-border">
                     <div id="content-header-banner" class="mb-6 hidden bg-primary/10 border-l-4 border-primary p-4 rounded-r-lg flex justify-between items-center">
                         <span id="banner-text" class="font-bold text-primary">Hasil pencarian topik</span>
                         <button onclick="resetSearchBanner()" class="text-xs font-bold uppercase underline hover:text-primary">Tutup</button>
@@ -405,7 +408,7 @@
                             </div>
                             
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div class="group flex flex-col justify-between bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border dark:border-gray-700 cursor-pointer" onclick="openArticle('side-1')">
+                                <div class="group flex flex-col justify-between bg-gray-50 dark:bg-dark-surface-card p-3 rounded-lg border dark:border-dark-border cursor-pointer" onclick="openArticle('side-1')">
                                     <div>
                                         <div class="overflow-hidden rounded-lg mb-2"><img src="MBG.jpg" class="w-full h-32 object-cover group-hover-image transition-transform duration-300" alt="MBG"></div>
                                         <span class="text-[10px] font-bold text-primary">EKONOMI</span>
@@ -414,7 +417,7 @@
                                     </div>
                                     <span class="text-[10px] text-gray-400 mt-2">Kebijakan Publik</span>
                                 </div>
-                                 <div class="group flex flex-col justify-between bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border dark:border-gray-700 cursor-pointer" onclick="openArticle('side-2')">
+                                 <div class="group flex flex-col justify-between bg-gray-50 dark:bg-dark-surface-card p-3 rounded-lg border dark:border-dark-border cursor-pointer" onclick="openArticle('side-2')">
                                     <div>
                                         <div class="overflow-hidden rounded-lg mb-2"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80" class="w-full h-32 object-cover group-hover-image transition-transform duration-300" alt="Kemenkeu"></div>
                                         <span class="text-[10px] font-bold text-primary">POLITIK</span>
@@ -423,7 +426,7 @@
                                     </div>
                                     <span class="text-[10px] text-gray-400 mt-2">Pemerintahan</span>
                                 </div>
-                                 <div class="group flex flex-col justify-between bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border dark:border-gray-700 cursor-pointer" onclick="openArticle('side-3')">
+                                 <div class="group flex flex-col justify-between bg-gray-50 dark:bg-dark-surface-card p-3 rounded-lg border dark:border-dark-border cursor-pointer" onclick="openArticle('side-3')">
                                     <div>
                                         <div class="overflow-hidden rounded-lg mb-2"><img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=400&q=80" class="w-full h-32 object-cover group-hover-image transition-transform duration-300" alt="IHSG"></div>
                                         <span class="text-[10px] font-bold text-primary">PASAR</span>
@@ -432,7 +435,7 @@
                                     </div>
                                     <span class="text-[10px] text-gray-400 mt-2">Bursa & Finansial</span>
                                 </div>
-                                 <div class="group flex flex-col justify-between bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border dark:border-gray-700 cursor-pointer" onclick="openArticle('side-4')">
+                                 <div class="group flex flex-col justify-between bg-gray-50 dark:bg-dark-surface-card p-3 rounded-lg border dark:border-dark-border cursor-pointer" onclick="openArticle('side-4')">
                                     <div>
                                         <div class="overflow-hidden rounded-lg mb-2"><img src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=400&q=80" class="w-full h-32 object-cover group-hover-image transition-transform duration-300" alt="Aceh"></div>
                                         <span class="text-[10px] font-bold text-primary">PERISTIWA</span>
@@ -452,7 +455,7 @@
                                 <h2 class="kompas-header">BERITA PILIHAN & LAPORAN KHUSUS INVESTIGASI</h2>
                                 <div id="terkini-carousel" aria-label="Carousel Berita Pilihan dan Laporan Khusus Investigasi">
                                 <ul id="terkini-list" class="space-y-4 terkini-carousel-track">
-                                   <li class="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-gray-700 group cursor-pointer" onclick="openArticle('feed-1')">
+                                   <li class="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-dark-border group cursor-pointer" onclick="openArticle('feed-1')">
                                         <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0"><img src="https://images.unsplash.com/photo-1516331138075-f3adc1e149cd?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover group-hover-image transition-transform duration-300" alt="Venus"></div>
                                         <div>
                                             <span class="text-xs font-bold text-primary">SAINS & ANTARIKSA</span>
@@ -461,7 +464,7 @@
                                             <p class="text-xs text-gray-500 mt-2">Astronomi Publik</p>
                                         </div>
                                     </li>
-                                     <li class="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-gray-700 group cursor-pointer" onclick="openArticle('headline-main')">
+                                     <li class="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-dark-border group cursor-pointer" onclick="openArticle('headline-main')">
                                         <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0"><img src="KM Virgo Transport 8.jpg" class="w-full h-full object-cover group-hover-image transition-transform duration-300" alt="KM Virgo"></div>
                                         <div>
                                             <span class="text-xs font-bold text-primary">PERISTIWA</span>
@@ -470,7 +473,7 @@
                                             <p class="text-xs text-gray-500 mt-2">Investigasi Khusus</p>
                                         </div>
                                     </li>
-                                     <li class="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-gray-700 group cursor-pointer" onclick="openArticle('side-1')">
+                                     <li class="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-dark-border group cursor-pointer" onclick="openArticle('side-1')">
                                         <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0"><img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=200&q=80" class="w-full h-full object-cover group-hover-image transition-transform duration-300" alt="MBG"></div>
                                         <div>
                                             <span class="text-xs font-bold text-primary">EKONOMI</span>
@@ -488,9 +491,9 @@
                                 </div>
                                 <button onclick="loadMoreArticles()" id="load-more-btn" class="w-full mt-4 py-2 text-center font-bold text-primary border-2 border-primary rounded-lg hover:bg-primary hover:text-white transition">MUAT ARTIKEL LAINNYA</button> 
                                 
-                                <!-- TAMBAHAN WIDGET INDEKS HARGA SAHAM GABUNGAN & PASAR TERKAIT DI BAWAH BUTTON MUAT ARTIKEL -->
-                                <div class="mt-6 bg-gray-50 dark:bg-gray-800/60 p-5 rounded-xl border dark:border-gray-700 shadow-md">
-                                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 mb-4 border-b dark:border-gray-700 gap-2">
+                                <!-- WIDGET INDEKS HARGA SAHAM GABUNGAN & PASAR TERKAIT -->
+                                <div class="mt-6 bg-gray-50 dark:bg-dark-surface-card p-5 rounded-xl border dark:border-dark-border shadow-md">
+                                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 mb-4 border-b dark:border-dark-border gap-2">
                                         <div>
                                             <h3 class="font-black text-base text-secondary dark:text-white flex items-center space-x-2">
                                                 <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
@@ -500,11 +503,10 @@
                                         </div>
                                         <span class="text-[11px] bg-primary/10 text-primary px-2.5 py-1 rounded-full font-mono font-bold">Real-time Sesi Bursa</span>
                                     </div>
-
                                     <!-- Grid Ringkasan Pasar -->
                                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
                                         <!-- IHSG Card -->
-                                        <div class="bg-white dark:bg-gray-900 p-3.5 rounded-lg border dark:border-gray-700 shadow-sm">
+                                        <div class="bg-white dark:bg-dark-surface p-3.5 rounded-lg border dark:border-dark-border shadow-sm">
                                             <div class="text-xs text-gray-500 font-semibold">IHSG (BEI)</div>
                                             <div class="text-lg font-black font-mono text-secondary dark:text-white mt-1">7,485.30</div>
                                             <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 flex items-center space-x-1">
@@ -512,7 +514,7 @@
                                             </div>
                                         </div>
                                         <!-- LQ45 Card -->
-                                        <div class="bg-white dark:bg-gray-900 p-3.5 rounded-lg border dark:border-gray-700 shadow-sm">
+                                        <div class="bg-white dark:bg-dark-surface p-3.5 rounded-lg border dark:border-dark-border shadow-sm">
                                             <div class="text-xs text-gray-500 font-semibold">Indeks LQ45</div>
                                             <div class="text-lg font-black font-mono text-secondary dark:text-white mt-1">924.15</div>
                                             <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-0.5 flex items-center space-x-1">
@@ -520,7 +522,7 @@
                                             </div>
                                         </div>
                                         <!-- Kurs USD/IDR Card -->
-                                        <div class="bg-white dark:bg-gray-900 p-3.5 rounded-lg border dark:border-gray-700 shadow-sm">
+                                        <div class="bg-white dark:bg-dark-surface p-3.5 rounded-lg border dark:border-dark-border shadow-sm">
                                             <div class="text-xs text-gray-500 font-semibold">Kurs USD / IDR</div>
                                             <div class="text-lg font-black font-mono text-secondary dark:text-white mt-1">Rp 15,850</div>
                                             <div class="text-xs font-bold text-rose-600 dark:text-rose-400 mt-0.5 flex items-center space-x-1">
@@ -528,19 +530,18 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- Tabel Sektor Terkait Pasar -->
-                                    <div class="overflow-x-auto">
+                                    <div class="overflow-x-auto mb-4">
                                         <table class="w-full text-xs text-left border-collapse">
                                             <thead>
-                                                <tr class="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-b dark:border-gray-700">
+                                                <tr class="bg-gray-100 dark:bg-dark-surface text-gray-700 dark:text-gray-300 border-b dark:border-dark-border">
                                                     <th class="p-2.5 font-bold">Sektor Utama Bursa</th>
                                                     <th class="p-2.5 font-bold">Terakhir</th>
                                                     <th class="p-2.5 font-bold">Perubahan</th>
                                                     <th class="p-2.5 font-bold">Sentimen Pasar</th>
                                                 </tr>
                                             </thead>
-                                            <tbody class="divide-y dark:divide-gray-700 font-mono text-gray-600 dark:text-gray-300">
+                                            <tbody class="divide-y dark:divide-dark-border font-mono text-gray-600 dark:text-gray-300">
                                                 <tr>
                                                     <td class="p-2.5 font-sans font-semibold text-secondary dark:text-white">Financials (IDXFIN)</td>
                                                     <td class="p-2.5">1,420.50</td>
@@ -562,7 +563,47 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="mt-3 text-[10px] text-gray-400 text-right">Sumber: Bursa Efek Indonesia (BEI) & Analisis Pasar Terpadu Berita Angin</div>
+                
+                                    
+                                    <div class="mt-3 text-[10px] text-gray-400 text-right">Sumber: Bursa Efek Indonesia (BEI) & Aggregator Global Crypto Market Cap</div>
+                                </div>
+
+                                <!-- CARD BARU: TOTAL KAPITALISASI PASAR CRYPTO (TOTAL MARKET CAP) DI BAWAH RINGKASAN IHSG & PASAR -->
+                                <div class="mt-4 bg-gray-50 dark:bg-dark-surface-card p-5 rounded-xl border dark:border-dark-border shadow-md">
+                                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-3 mb-4 border-b dark:border-dark-border gap-2">
+                                        <div>
+                                            <h3 class="font-black text-base text-secondary dark:text-white flex items-center space-x-2">
+                                                <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                <span>TOTAL KAPITALISASI PASAR CRYPTO (TOTAL MARKET CAP)</span>
+                                            </h3>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Statistik menyeluruh dari nilai kapitalisasi aset kripto global secara real-time.</p>
+                                        </div>
+                                        <span class="text-[11px] bg-amber-500/10 text-amber-600 dark:text-amber-400 px-2.5 py-1 rounded-full font-mono font-bold">Global Crypto Index</span>
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-3">
+                                        <div class="bg-white dark:bg-dark-surface p-3.5 rounded-lg border dark:border-dark-border shadow-sm">
+                                            <div class="text-xs text-gray-500 font-semibold">Total Market Cap</div>
+                                            <div class="text-lg font-black font-mono text-secondary dark:text-white mt-1">$2.458 Triliun</div>
+                                            <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                                                <span>&#9650; +2.34% (24j)</span>
+                                            </div>
+                                        </div>
+                                        <div class="bg-white dark:bg-dark-surface p-3.5 rounded-lg border dark:border-dark-border shadow-sm">
+                                            <div class="text-xs text-gray-500 font-semibold">Volume 24 Jam</div>
+                                            <div class="text-lg font-black font-mono text-secondary dark:text-white mt-1">$84.5 Miliar</div>
+                                            <div class="text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                                                <span>&#9650; +5.12%</span>
+                                            </div>
+                                        </div>
+                                        <div class="bg-white dark:bg-dark-surface p-3.5 rounded-lg border dark:border-dark-border shadow-sm">
+                                            <div class="text-xs text-gray-500 font-semibold">Dominasi Bitcoin (BTC.D)</div>
+                                            <div class="text-lg font-black font-mono text-secondary dark:text-white mt-1">54.2%</div>
+                                            <div class="text-xs font-bold text-rose-600 dark:text-rose-400 mt-0.5">
+                                                <span>&#9660; -0.15%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-[10px] text-gray-400 text-right">Sumber: Aggregator Global Crypto Market Cap</div>
                                 </div>
                             </section>
                         </div>
@@ -570,26 +611,59 @@
                         <!-- Sidebar -->
                         <aside class="col-span-12 lg:col-span-4">
                              <div class="space-y-8">
-                                <div class="bg-gray-50 dark:bg-gray-800/50 p-2 rounded-lg border dark:border-gray-700 shadow-md">
+                                <div class="bg-gray-50 dark:bg-dark-surface-card p-2 rounded-lg border dark:border-dark-border shadow-md">
                                     <h3 class="terpopuler-header">SOROTAN UTAMA</h3>
                                     <ol class="p-2 space-y-4">
                                         <li class="flex items-start group terpopuler-item cursor-pointer" onclick="openArticle('side-3')">
                                             <span class="text-5xl font-black number mr-4">1</span>
                                             <h4 class="font-bold leading-tight article-title-hover group-hover:text-primary transition pt-2">Fluktuasi Harga Sembako dan Analisis Tren IHSG Terkini</h4>
                                         </li>
-                                         <li class="flex items-start group terpopuler-item border-t dark:border-gray-700 pt-4 cursor-pointer" onclick="openArticle('side-2')">
+                                         <li class="flex items-start group terpopuler-item border-t dark:border-dark-border pt-4 cursor-pointer" onclick="openArticle('side-2')">
                                             <span class="text-5xl font-black number mr-4">2</span>
                                             <h4 class="font-bold leading-tight article-title-hover group-hover:text-primary transition pt-2">Dinamika Kemenkeu: Rotasi Birokrasi dan Kepercayaan Pasar</h4>
                                         </li>
-                                        <li class="flex items-start group terpopuler-item border-t dark:border-gray-700 pt-4 cursor-pointer" onclick="openArticle('side-4')">
+                                        <li class="flex items-start group terpopuler-item border-t dark:border-dark-border pt-4 cursor-pointer" onclick="openArticle('side-4')">
                                             <span class="text-5xl font-black number mr-4">3</span>
                                             <h4 class="font-bold leading-tight article-title-hover group-hover:text-primary transition pt-2">Penanganan Darurat Bencana Banjir Bandang Aceh Tenggara</h4>
                                         </li>
                                     </ol>
                                 </div>
-                                <!-- WIDGET KURS MATA UANG INTERNASIONAL (BARU DITAMBAHKAN) -->
-                                <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg border dark:border-gray-700 shadow-md">
-                                    <div class="flex justify-between items-center mb-3 border-b pb-2 dark:border-gray-700">
+                                
+                                <!-- WIDGET CHART REAL-TIME BEI & CRYPTO -->
+                                <div class="bg-gray-50 dark:bg-dark-surface-card p-4 rounded-lg border dark:border-dark-border shadow-md">
+                                    <div class="flex justify-between items-center mb-3 border-b pb-2 dark:border-dark-border">
+                                        <h3 class="font-bold text-sm text-secondary dark:text-white flex items-center space-x-1.5">
+                                            <svg class="w-4 h-4 text-emerald-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                                            <span>BURSA & CRYPTO LIVE</span>
+                                        </h3>
+                                        <span class="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300 px-2 py-0.5 rounded-full font-mono font-semibold">LIVE</span>
+                                    </div>
+                                    
+                                    <!-- Selector Tabs -->
+                                    <div class="flex space-x-2 mb-3">
+                                        <button onclick="switchMarketTab('bei')" id="btn-bei" class="flex-1 py-1 text-xs font-bold rounded bg-primary text-white transition">IHSG (BEI)</button>
+                                        <button onclick="switchMarketTab('crypto')" id="btn-crypto" class="flex-1 py-1 text-xs font-bold rounded bg-gray-200 dark:bg-dark-surface text-gray-700 dark:text-gray-300 transition">Crypto (BTC)</button>
+                                    </div>
+                                    
+                                    <!-- Price Display Info -->
+                                    <div id="market-info" class="mb-3">
+                                        <div class="flex justify-between items-baseline">
+                                            <span id="market-name" class="text-xs text-gray-500 dark:text-gray-400 font-semibold">IHSG (Bursa Efek Indonesia)</span>
+                                            <span id="market-change" class="text-xs font-bold text-emerald-600 dark:text-emerald-400">+0.74% (+55.20)</span>
+                                        </div>
+                                        <div class="text-xl font-black font-mono text-secondary dark:text-white" id="market-price">7,485.30</div>
+                                    </div>
+                                    
+                                    <!-- Canvas Chart -->
+                                    <div class="h-40 w-full relative">
+                                        <canvas id="liveMarketChart"></canvas>
+                                    </div>
+                                    <div class="mt-2 text-[10px] text-gray-400 text-center font-mono">Pembaruan data real-time otomatis setiap 3 detik</div>
+                                </div>
+                                
+                                <!-- WIDGET KURS MATA UANG INTERNASIONAL -->
+                                <div class="bg-gray-50 dark:bg-dark-surface-card p-4 rounded-lg border dark:border-dark-border shadow-md">
+                                    <div class="flex justify-between items-center mb-3 border-b pb-2 dark:border-dark-border">
                                         <h3 class="font-bold text-sm text-secondary dark:text-white flex items-center space-x-1.5">
                                             <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
                                             <span>KONVERTER KURS MATA UANG</span>
@@ -600,12 +674,12 @@
                                     <div class="space-y-3">
                                         <div>
                                             <label class="block text-[11px] font-semibold text-gray-500 dark:text-gray-400 mb-1">Jumlah</label>
-                                            <input type="number" id="conv-amount" value="1" min="1" oninput="convertCurrency()" class="w-full border rounded p-2 text-sm bg-white dark:bg-gray-900 dark:border-gray-700 font-mono focus:outline-none focus:ring-2 focus:ring-primary">
+                                            <input type="number" id="conv-amount" value="1" min="1" oninput="convertCurrency()" class="w-full border rounded p-2 text-sm bg-white dark:bg-dark-surface dark:border-dark-border font-mono focus:outline-none focus:ring-2 focus:ring-primary">
                                         </div>
                                         <div class="grid grid-cols-2 gap-2">
                                             <div>
                                                 <label class="block text-[11px] font-semibold text-gray-500 dark:text-gray-400 mb-1">Dari Negara / Mata Uang</label>
-                                                <select id="conv-from" onchange="convertCurrency()" class="w-full border rounded p-2 text-xs bg-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                                                <select id="conv-from" onchange="convertCurrency()" class="w-full border rounded p-2 text-xs bg-white dark:bg-dark-surface dark:border-dark-border focus:outline-none focus:ring-2 focus:ring-primary">
                                                     <option value="IDR" selected>IDR - Rupiah Indonesia</option>
                                                     <option value="USD">USD - Dolar AS</option>
                                                     <option value="EUR">EUR - Euro Eropa</option>
@@ -620,7 +694,7 @@
                                             </div>
                                             <div>
                                                 <label class="block text-[11px] font-semibold text-gray-500 dark:text-gray-400 mb-1">Ke Mata Uang</label>
-                                                <select id="conv-to" onchange="convertCurrency()" class="w-full border rounded p-2 text-xs bg-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                                                <select id="conv-to" onchange="convertCurrency()" class="w-full border rounded p-2 text-xs bg-white dark:bg-dark-surface dark:border-dark-border focus:outline-none focus:ring-2 focus:ring-primary">
                                                     <option value="IDR">IDR - Rupiah Indonesia</option>
                                                     <option value="USD" selected>USD - Dolar AS</option>
                                                     <option value="EUR">EUR - Euro Eropa</option>
@@ -649,7 +723,7 @@
             
             <!-- VIEW 2: DEDICATED ARTICLE PAGE -->
             <div id="article-page" class="page-view">
-                <main class="container mx-auto p-4 max-w-4xl bg-white dark:bg-dark-surface shadow-lg my-6 rounded-xl">
+                <main class="container mx-auto p-4 max-w-4xl bg-white dark:bg-dark-surface shadow-lg my-6 rounded-xl border dark:border-dark-border">
                     <div class="mb-6">
                         <button onclick="showHome()" class="flex items-center space-x-2 text-primary font-bold hover:underline">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
@@ -660,7 +734,7 @@
                         <div>
                             <span id="page-article-category" class="text-xs font-bold bg-primary text-white px-3 py-1.5 rounded uppercase tracking-wider">KATEGORI</span>
                             <h1 id="page-article-title" class="text-3xl md:text-4xl font-black mt-3 leading-tight text-secondary dark:text-white">Judul Artikel Lengkap</h1>
-                            <div class="text-xs text-gray-500 flex items-center space-x-3 mt-3 border-b dark:border-gray-700 pb-4">
+                            <div class="text-xs text-gray-500 flex items-center space-x-3 mt-3 border-b dark:border-dark-border pb-4">
                                 <span id="page-article-author">Oleh Tim Redaksi</span>
                                 <span>&bull;</span>
                                 <span id="page-article-time">15 September 2026</span>
@@ -672,8 +746,8 @@
                         <div id="page-article-content" class="text-base md:text-lg text-gray-700 dark:text-dark-text leading-relaxed space-y-4">
                             <!-- Isi artikel dinamis -->
                         </div>
-                        <div class="border-t dark:border-gray-700 pt-6 mt-8 flex justify-between items-center">
-                            <button onclick="showHome()" class="px-5 py-2.5 bg-gray-200 dark:bg-gray-700 text-secondary dark:text-dark-text rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+                        <div class="border-t dark:border-dark-border pt-6 mt-8 flex justify-between items-center">
+                            <button onclick="showHome()" class="px-5 py-2.5 bg-gray-200 dark:bg-dark-surface-card text-secondary dark:text-dark-text rounded-lg font-bold hover:bg-gray-300 dark:hover:bg-gray-700 transition">
                                 &larr; Beranda
                             </button>
                             <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-5 py-2.5 bg-primary text-white rounded-lg font-bold hover:bg-primary/90 transition">
@@ -688,7 +762,7 @@
         <!-- Footer -->
         <footer class="bg-white dark:bg-dark-surface mt-8 border-t-4 border-primary">
             <div class="container mx-auto px-8 py-12">
-                <div class="flex flex-col md:flex-row justify-between items-center mb-8 pb-8 border-b dark:border-gray-700 gap-4 text-center md:text-left">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8 pb-8 border-b dark:border-dark-border gap-4 text-center md:text-left">
                     <div>
                         <a href="#" onclick="showHome(); return false;" class="text-4xl font-black text-primary cursor-pointer">BERITA ANGIN</a>
                         <p class="text-sm text-gray-500">1% ISSUE 99% FAKTA</p>
@@ -732,7 +806,7 @@
                         <p class="leading-relaxed">Portal berita independen penyaji informasi akurat, tajam, dan terpercaya dengan prinsip 1% Issue 99% Fakta.</p>
                     </div>
                 </div>
-                <div class="mt-12 border-t dark:border-gray-700 pt-8 text-center text-sm text-gray-500">
+                <div class="mt-12 border-t dark:border-dark-border pt-8 text-center text-sm text-gray-500">
                     <p>&copy; 2026 Berita Angin. Hak Cipta Dilindungi Undang-Undang.</p>
                 </div>
             </div>
@@ -890,7 +964,6 @@
             change: '+2.45% (+$2,250)',
             color: '#f59e0b'
         };
-        // Kurs referensi terhadap IDR (Rupiah)
         const exchangeRatesToIDR = {
             IDR: 1,
             USD: 15850,
@@ -908,7 +981,6 @@
             const fromCurr = document.getElementById('conv-from').value;
             const toCurr = document.getElementById('conv-to').value;
             
-            // Konversi ke IDR terlebih dahulu, lalu ke mata uang tujuan
             const amountInIDR = amount * exchangeRatesToIDR[fromCurr];
             const result = amountInIDR / exchangeRatesToIDR[toCurr];
             
@@ -962,7 +1034,6 @@
                 }
             });
             
-            // Simulasi pembaruan data real-time setiap 3 detik
             setInterval(() => {
                 if (!marketChart) return;
                 const dataset = marketChart.data.datasets[0];
@@ -973,6 +1044,12 @@
                 dataset.data[dataset.data.length - 1] = newVal;
                 document.getElementById('market-price').innerText = newVal.toLocaleString();
                 marketChart.update('none');
+                // Update Real-Time Crypto Total Market Cap simulation
+                const cryptoCapEl = document.getElementById('crypto-total-cap');
+                if (cryptoCapEl) {
+                    const currentCap = 2.458 + (Math.random() - 0.49) * 0.005;
+                    cryptoCapEl.innerText = `$${currentCap.toFixed(3)} Triliun`;
+                }
             }, 3000);
         }
         function switchMarketTab(type) {
@@ -985,7 +1062,7 @@
             
             if (type === 'bei') {
                 btnBei.className = "flex-1 py-1 text-xs font-bold rounded bg-primary text-white transition";
-                btnCrypto.className = "flex-1 py-1 text-xs font-bold rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 transition";
+                btnCrypto.className = "flex-1 py-1 text-xs font-bold rounded bg-gray-200 dark:bg-dark-surface text-gray-700 dark:text-gray-300 transition";
                 marketName.innerText = beiData.name;
                 marketChange.innerText = beiData.change;
                 marketPrice.innerText = beiData.prices[beiData.prices.length - 1].toLocaleString();
@@ -996,7 +1073,7 @@
                 marketChart.data.datasets[0].backgroundColor = 'rgba(2, 132, 199, 0.1)';
             } else {
                 btnCrypto.className = "flex-1 py-1 text-xs font-bold rounded bg-amber-500 text-white transition";
-                btnBei.className = "flex-1 py-1 text-xs font-bold rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 transition";
+                btnBei.className = "flex-1 py-1 text-xs font-bold rounded bg-gray-200 dark:bg-dark-surface text-gray-700 dark:text-gray-300 transition";
                 marketName.innerText = cryptoData.name;
                 marketChange.innerText = cryptoData.change;
                 marketPrice.innerText = cryptoData.prices[cryptoData.prices.length - 1].toLocaleString();
@@ -1151,7 +1228,7 @@
             if (!terkiniList || !loadMoreBtn) return;
             if (!isMoreLoaded) {
                 const newArticle1 = document.createElement('li');
-                newArticle1.className = "flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-gray-700 group cursor-pointer";
+                newArticle1.className = "flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-dark-border group cursor-pointer";
                 newArticle1.setAttribute('onclick', "openArticle('side-2')");
                 newArticle1.innerHTML = `
                     <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0">
@@ -1165,7 +1242,7 @@
                     </div>
                 `;
                 const newArticle2 = document.createElement('li');
-                newArticle2.className = "flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-gray-700 group cursor-pointer";
+                newArticle2.className = "flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-dark-border group cursor-pointer";
                 newArticle2.setAttribute('onclick', "openArticle('side-4')");
                 newArticle2.innerHTML = `
                     <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0">
