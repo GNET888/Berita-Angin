@@ -393,7 +393,7 @@
                                     </ol>
                                 </div>
                                 
-                                <!-- WIDGET CHART REAL-TIME BEI & CRYPTO (DITAMBAHKAN TEPAT DI BAWAH SOROTAN UTAMA) -->
+                                <!-- WIDGET CHART REAL-TIME BEI & CRYPTO -->
                                 <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg border dark:border-gray-700 shadow-md">
                                     <div class="flex justify-between items-center mb-3 border-b pb-2 dark:border-gray-700">
                                         <h3 class="font-bold text-sm text-secondary dark:text-white flex items-center space-x-1.5">
@@ -423,6 +423,61 @@
                                         <canvas id="liveMarketChart"></canvas>
                                     </div>
                                     <div class="mt-2 text-[10px] text-gray-400 text-center font-mono">Pembaruan data real-time otomatis setiap 3 detik</div>
+                                </div>
+
+                                <!-- WIDGET KURS MATA UANG INTERNASIONAL (BARU DITAMBAHKAN) -->
+                                <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg border dark:border-gray-700 shadow-md">
+                                    <div class="flex justify-between items-center mb-3 border-b pb-2 dark:border-gray-700">
+                                        <h3 class="font-bold text-sm text-secondary dark:text-white flex items-center space-x-1.5">
+                                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                                            <span>KONVERTER KURS MATA UANG</span>
+                                        </h3>
+                                        <span class="text-[10px] bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-300 px-2 py-0.5 rounded-full font-mono font-semibold">VALAS</span>
+                                    </div>
+                                    
+                                    <div class="space-y-3">
+                                        <div>
+                                            <label class="block text-[11px] font-semibold text-gray-500 dark:text-gray-400 mb-1">Jumlah</label>
+                                            <input type="number" id="conv-amount" value="1" min="1" oninput="convertCurrency()" class="w-full border rounded p-2 text-sm bg-white dark:bg-gray-900 dark:border-gray-700 font-mono focus:outline-none focus:ring-2 focus:ring-primary">
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-2">
+                                            <div>
+                                                <label class="block text-[11px] font-semibold text-gray-500 dark:text-gray-400 mb-1">Dari Negara / Mata Uang</label>
+                                                <select id="conv-from" onchange="convertCurrency()" class="w-full border rounded p-2 text-xs bg-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                                                    <option value="IDR" selected>IDR - Rupiah Indonesia</option>
+                                                    <option value="USD">USD - Dolar AS</option>
+                                                    <option value="EUR">EUR - Euro Eropa</option>
+                                                    <option value="SGD">SGD - Dolar Singapura</option>
+                                                    <option value="MYR">MYR - Ringgit Malaysia</option>
+                                                    <option value="JPY">JPY - Yen Jepang</option>
+                                                    <option value="GBP">GBP - Poundsterling Inggris</option>
+                                                    <option value="AUD">AUD - Dolar Australia</option>
+                                                    <option value="CNY">CNY - Yuan Tiongkok</option>
+                                                    <option value="SAR">SAR - Riyal Arab Saudi</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="block text-[11px] font-semibold text-gray-500 dark:text-gray-400 mb-1">Ke Mata Uang</label>
+                                                <select id="conv-to" onchange="convertCurrency()" class="w-full border rounded p-2 text-xs bg-white dark:bg-gray-900 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary">
+                                                    <option value="IDR">IDR - Rupiah Indonesia</option>
+                                                    <option value="USD" selected>USD - Dolar AS</option>
+                                                    <option value="EUR">EUR - Euro Eropa</option>
+                                                    <option value="SGD">SGD - Dolar Singapura</option>
+                                                    <option value="MYR">MYR - Ringgit Malaysia</option>
+                                                    <option value="JPY">JPY - Yen Jepang</option>
+                                                    <option value="GBP">GBP - Poundsterling Inggris</option>
+                                                    <option value="AUD">AUD - Dolar Australia</option>
+                                                    <option value="CNY">CNY - Yuan Tiongkok</option>
+                                                    <option value="SAR">SAR - Riyal Arab Saudi</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="bg-primary/10 p-3 rounded-lg text-center mt-2">
+                                            <div class="text-[11px] text-gray-500 dark:text-gray-400">Hasil Konversi:</div>
+                                            <div id="conv-result" class="text-lg font-black font-mono text-primary mt-0.5">0.000063 USD</div>
+                                            <div id="conv-rate-info" class="text-[10px] text-gray-400 mt-1">Kurs Referensi BI / Pasar Global</div>
+                                        </div>
+                                    </div>
                                 </div>
                                 
                                 <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg text-center border dark:border-gray-700">
@@ -534,7 +589,7 @@
         const articlesData = {
             "headline-main": {
                 category: "PERISTIWA & INVESTIGASI",
-                title: "Tragedi Tragedi Tenggelamnya Kapal Laut KM Virgo Transport 8: Investigasi Komprehensif Keselamatan Maritim",
+                title: "Tragedi Tenggelamnya Kapal Laut KM Virgo Transport 8: Investigasi Komprehensif Keselamatan Maritim",
                 author: "Tim Investigasi Utama Berita Angin",
                 time: "15 September 2026",
                 image: "KM Virgo Transport 8.jpg",
@@ -680,6 +735,42 @@
             change: '+2.45% (+$2,250)',
             color: '#f59e0b'
         };
+
+        // Kurs referensi terhadap IDR (Rupiah)
+        const exchangeRatesToIDR = {
+            IDR: 1,
+            USD: 15850,
+            EUR: 17200,
+            SGD: 11950,
+            MYR: 3550,
+            JPY: 105,
+            GBP: 20400,
+            AUD: 10600,
+            CNY: 2220,
+            SAR: 4220
+        };
+
+        function convertCurrency() {
+            const amount = parseFloat(document.getElementById('conv-amount').value) || 0;
+            const fromCurr = document.getElementById('conv-from').value;
+            const toCurr = document.getElementById('conv-to').value;
+            
+            // Konversi ke IDR terlebih dahulu, lalu ke mata uang tujuan
+            const amountInIDR = amount * exchangeRatesToIDR[fromCurr];
+            const result = amountInIDR / exchangeRatesToIDR[toCurr];
+            
+            let formattedResult;
+            if (toCurr === 'IDR') {
+                formattedResult = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 2 }).format(result);
+            } else if (toCurr === 'JPY') {
+                formattedResult = result.toFixed(2) + ' JPY';
+            } else {
+                formattedResult = new Intl.NumberFormat('en-US', { style: 'currency', currency: toCurr }).format(result);
+            }
+            
+            document.getElementById('conv-result').innerText = formattedResult;
+            document.getElementById('conv-rate-info').innerText = `1 ${fromCurr} = ${(exchangeRatesToIDR[fromCurr] / exchangeRatesToIDR[toCurr]).toFixed(4)} ${toCurr}`;
+        }
 
         function initMarketChart() {
             const ctx = document.getElementById('liveMarketChart');
@@ -846,6 +937,7 @@
             updateLiveFrequencyTime();
             setInterval(updateLiveFrequencyTime, 1000);
             initMarketChart();
+            convertCurrency();
             
             const mobileMenuBtn = document.getElementById('mobile-menu-button');
             if (mobileMenuBtn) {
