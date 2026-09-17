@@ -6,6 +6,8 @@
     <title>Berita Angin - Portal Berita & Analisis Terkini</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome untuk ikon terminal pro -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -25,6 +27,13 @@
                         'dark-border': '#2c2c2c',
                         'dark-text': '#f3f4f6',
                         'dark-text-secondary': '#9ca3af',
+                        'terminalBg': '#090d16',
+                        'panelBg': '#111827',
+                        'borderCol': '#1f293d',
+                        'neonGreen': '#10b981',
+                        'neonRed': '#ef4444',
+                        'neonBlue': '#3b82f6',
+                        'neonPurple': '#8b5cf6'
                     }
                 }
             }
@@ -61,6 +70,37 @@
     html.dark .text-slate-600,
     html.dark .text-slate-500 {
         color: #9ca3af !important;
+    }
+
+    /* Penyesuaian Dinamis Tema untuk ProTrader Terminal di dalam Stock Exchange */
+    html.light #stock-exchange-page main {
+        background-color: #f8fafc !important;
+        color: #111827 !important;
+        border-color: #cbd5e1 !important;
+    }
+    html.light #stock-exchange-page .bg-panelBg {
+        background-color: #ffffff !important;
+        border-color: #cbd5e1 !important;
+    }
+    html.light #stock-exchange-page .bg-terminalBg {
+        background-color: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+    }
+    html.light #stock-exchange-page .text-white {
+        color: #111827 !important;
+    }
+    html.light #stock-exchange-page .text-gray-400,
+    html.light #stock-exchange-page .text-gray-500 {
+        color: #64748b !important;
+    }
+    html.light #stock-exchange-page .border-borderCol {
+        border-color: #cbd5e1 !important;
+    }
+    html.light #stock-exchange-page tr.hover\:bg-gray-800\/40:hover {
+        background-color: rgba(0, 0, 0, 0.04) !important;
+    }
+    html.light #stock-exchange-page .bg-gray-800\/30 {
+        background-color: rgba(0, 0, 0, 0.03) !important;
     }
     
     .kompas-header {
@@ -597,7 +637,7 @@
                         <p class="text-xs text-gray-500 dark:text-gray-400">Live prices across the assets you're watching.</p>
                     </div>
                     
-                    <!-- TAMBAHAN BARU: MARKET STATUS BANNER -->
+                    <!-- MARKET STATUS BANNER -->
                     <div class="bg-gradient-to-r from-primary/10 via-emerald-500/10 to-primary/10 border border-primary/20 p-4 rounded-xl mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
                         <div class="flex items-center space-x-3">
                             <div class="p-2.5 rounded-lg bg-emerald-500 text-white font-bold">
@@ -618,7 +658,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                         <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
                             <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">MarketCap</span>
@@ -649,8 +688,7 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- TAMBAHAN BARU: SECTION KOIN YANG SEDANG TREND & DERIVATIVES -->
+                    <!-- SECTION KOIN YANG SEDANG TREND & DERIVATIVES -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                         <!-- Trending Coins Card -->
                         <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl shadow-sm flex flex-col justify-between">
@@ -703,7 +741,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Derivatives Market Summary Card -->
                         <div class="lg:col-span-2 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl shadow-sm flex flex-col justify-between">
                             <div class="flex items-center justify-between mb-3 border-b border-gray-200 dark:border-[#2c2c2c] pb-2">
@@ -736,7 +773,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
                         <div class="relative w-full md:w-72">
                             <input type="text" id="market-search-input" onkeyup="filterCryptoTable()" placeholder="Search coin..." class="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-xs rounded-lg py-2 pl-9 pr-4 text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary shadow-sm">
@@ -864,96 +900,216 @@
                 </main>
             </div>
             
-            <!-- VIEW 6: STOCK EXCHANGE -->
+            <!-- VIEW 6: STOCK EXCHANGE (Menggunakan Layout ProTrader Terminal dari File Kedua yang Kompatibel Tema Putih & Dark) -->
             <div id="stock-exchange-page" class="page-view">
-                <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-[#121212] text-gray-900 dark:text-white shadow-xl my-6 rounded-2xl border border-gray-200 dark:border-[#2c2c2c] transition-all duration-300">
-                    <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-6 border-b border-gray-200 dark:border-[#2c2c2c] pb-5">
+                <main class="container mx-auto p-4 md:p-6 bg-terminalBg text-gray-200 shadow-2xl my-6 rounded-2xl border border-borderCol transition-all duration-300">
+                    <!-- Top Navigation Bar ProTrader Terminal -->
+                    <div class="bg-panelBg border-b border-borderCol px-6 py-3 flex flex-wrap justify-between items-center rounded-xl mb-6">
                         <div class="flex items-center space-x-3">
-                            <div class="p-3 rounded-xl bg-primary/10 text-primary dark:bg-primary/20 dark:text-sky-400">
-                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                            <div class="bg-neonBlue/10 p-2 rounded-lg border border-neonBlue/30 text-neonBlue">
+                                <i class="fa-solid fa-chart-candlestick text-lg"></i>
                             </div>
                             <div>
-                                <div class="flex items-center space-x-2">
-                                    <span class="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded tracking-wide">GLOBAL TERMINAL</span>
-                                    <span class="text-xs text-emerald-500 dark:text-emerald-400 font-mono flex items-center font-semibold">
-                                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-1.5"></span> LIVE FEED ACTIVE
-                                    </span>
+                                <span class="font-bold tracking-wider text-white text-sm">IDX & GLOBAL <span class="text-neonBlue">EXCHANGE PRO+</span></span>
+                                <div class="flex items-center space-x-2 text-[10px] text-gray-400">
+                                    <span class="inline-block w-2 h-2 rounded-full bg-neonGreen animate-pulse"></span>
+                                    <span>Feed Connected (WebSocket Active)</span>
                                 </div>
-                                <h1 class="text-2xl md:text-3xl font-black mt-1 tracking-tight">Stock Exchange & Major Indices</h1>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Professional multi-region quotes, high-frequency valuation tracker, and real-time exchange rates.</p>
                             </div>
                         </div>
-                        <div class="flex items-center space-x-3 w-full lg:w-auto">
-                            <div class="relative w-full lg:w-72">
-                                <input type="text" id="stock-search-input" onkeyup="filterStockTable()" placeholder="Cari bursa, indeks, atau negara..." class="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-xs rounded-xl py-2.5 pl-10 pr-4 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary shadow-sm">
-                                <svg class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                            </div>
+                        <!-- Quick Exchange Navigation Tabs -->
+                        <div class="flex flex-wrap gap-1 bg-terminalBg p-1 rounded-lg border border-borderCol text-xs mt-2 md:mt-0" id="exchange-tabs">
+                            <button onclick="switchMarket('COMPOSITE')" class="tab-btn px-3 py-1.5 rounded-md font-medium bg-neonBlue text-white transition">IHSG</button>
+                            <button onclick="switchMarket('FOREX')" class="tab-btn px-3 py-1.5 rounded-md font-medium text-gray-400 hover:text-white transition">USD/IDR</button>
+                            <button onclick="switchMarket('COMMODITY')" class="tab-btn px-3 py-1.5 rounded-md font-medium text-gray-400 hover:text-white transition">Gold (XAU)</button>
+                            <button onclick="switchMarket('CRYPTO')" class="tab-btn px-3 py-1.5 rounded-md font-medium text-gray-400 hover:text-white transition">ETH/USD</button>
                         </div>
                     </div>
+
+                    <!-- Top Metric Cards (Grid 4 Kolom) -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl shadow-sm transition-all duration-300 flex flex-col justify-between">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">Total Tracked Indices</span>
-                                <span class="p-1.5 rounded-lg bg-blue-500/10 text-blue-500 dark:text-blue-400 text-xs font-mono">12 Markets</span>
+                        <!-- Card 1 -->
+                        <div class="bg-panelBg p-4 rounded-xl border border-borderCol flex justify-between items-center">
+                            <div>
+                                <p class="text-xs text-gray-400">Volume Transaksi Hari Ini</p>
+                                <h3 class="text-lg font-bold font-mono mt-1" id="metric-vol">Rp 12.4 Triliun</h3>
+                                <span class="text-[10px] text-neonGreen font-semibold"><i class="fa-solid fa-arrow-up"></i> +5.4% dari kemarin</span>
                             </div>
-                            <div class="flex items-baseline justify-between mt-3">
-                                <span class="text-2xl font-black font-mono">12 Active</span>
-                                <span class="text-xs font-bold text-emerald-500 font-mono">100% Synced</span>
+                            <div class="bg-blue-500/10 p-3 rounded-lg text-neonBlue"><i class="fa-solid fa-wallet"></i></div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="bg-panelBg p-4 rounded-xl border border-borderCol flex justify-between items-center">
+                            <div>
+                                <p class="text-xs text-gray-400">Foreign Net Buy</p>
+                                <h3 class="text-lg font-bold font-mono mt-1 text-neonGreen" id="metric-foreign">+Rp 840 Miliar</h3>
+                                <span class="text-[10px] text-gray-400">Pasar Reguler</span>
+                            </div>
+                            <div class="bg-emerald-500/10 p-3 rounded-lg text-neonGreen"><i class="fa-solid fa-globe"></i></div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="bg-panelBg p-4 rounded-xl border border-borderCol flex justify-between items-center">
+                            <div>
+                                <p class="text-xs text-gray-400">Market Sentiment</p>
+                                <h3 class="text-lg font-bold font-mono mt-1 text-neonGreen">Bullish (78%)</h3>
+                                <span class="text-[10px] text-gray-400">Berdasarkan Order Book</span>
+                            </div>
+                            <div class="bg-emerald-500/10 p-3 rounded-lg text-neonGreen"><i class="fa-solid fa-gauge-high"></i></div>
+                        </div>
+                        <!-- Card 4 -->
+                        <div class="bg-panelBg p-4 rounded-xl border border-borderCol flex justify-between items-center">
+                            <div>
+                                <p class="text-xs text-gray-400">Sesi Perdagangan</p>
+                                <h3 class="text-lg font-bold font-mono mt-1 text-yellow-400">Per Session</h3>
+                                <span class="text-[10px] text-gray-400" id="live-clock">16:00:00 WIB</span>
+                            </div>
+                            <div class="bg-yellow-500/10 p-3 rounded-lg text-yellow-400"><i class="fa-solid fa-clock"></i></div>
+                        </div>
+                    </div>
+
+                    <!-- Center Section: Main Chart & Watchlist Table -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                        <!-- Dynamic Main Chart (2 Columns) -->
+                        <div class="lg:col-span-2 bg-panelBg p-5 rounded-xl border border-borderCol flex flex-col justify-between">
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+                                <div>
+                                    <div class="flex items-center space-x-2">
+                                        <h2 id="market-title" class="text-base font-bold text-white">IHSG - Indeks Harga Saham Gabungan</h2>
+                                        <span class="bg-neonBlue/20 text-neonBlue text-[10px] px-2 py-0.5 rounded font-mono">REAL-TIME</span>
+                                    </div>
+                                    <div class="flex items-baseline space-x-2 mt-1">
+                                        <span id="market-price" class="text-2xl font-extrabold font-mono text-white">7,325.40</span>
+                                        <span id="market-change" class="text-xs font-bold font-mono text-neonGreen">+45.20 (+0.62%)</span>
+                                    </div>
+                                </div>
+                                <!-- Timeframe options -->
+                                <div class="flex bg-terminalBg p-1 rounded-lg border border-borderCol text-xs font-mono">
+                                    <button onclick="changeTimeframe('Live')" class="tf-btn px-2.5 py-1 rounded bg-gray-800 text-white shadow">Live</button>
+                                    <button onclick="changeTimeframe('5M')" class="tf-btn px-2.5 py-1 rounded text-gray-400 hover:text-white">5M</button>
+                                    <button onclick="changeTimeframe('1H')" class="tf-btn px-2.5 py-1 rounded text-gray-400 hover:text-white">1H</button>
+                                    <button onclick="changeTimeframe('1D')" class="tf-btn px-2.5 py-1 rounded text-gray-400 hover:text-white">1D</button>
+                                </div>
+                            </div>
+                            <!-- Canvas Wrapper -->
+                            <div class="relative h-80 w-full">
+                                <canvas id="terminalChart"></canvas>
                             </div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl shadow-sm transition-all duration-300 flex flex-col justify-between">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">Top Performing</span>
-                                <span class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-500 dark:text-emerald-400 text-xs font-mono">JKSE / ASX</span>
+                        
+                        <!-- Live Watchlist Table -->
+                        <div class="bg-panelBg p-5 rounded-xl border border-borderCol flex flex-col">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                                    <i class="fa-solid fa-table-list text-neonBlue"></i> Watchlist Aktif
+                                </h3>
+                                <span class="text-[10px] text-gray-400 font-mono">Auto-Refresh (1s)</span>
                             </div>
-                            <div class="flex items-baseline justify-between mt-3">
-                                <span class="text-2xl font-black font-mono text-emerald-500 dark:text-emerald-400">+0.69%</span>
-                                <span class="text-xs font-bold text-emerald-500 font-mono">Bullish Lead</span>
-                            </div>
-                        </div>
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl shadow-sm transition-all duration-300 flex flex-col justify-between">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">Market Sentiment</span>
-                                <span class="p-1.5 rounded-lg bg-amber-500/10 text-amber-500 dark:text-amber-400 text-xs font-mono">Mixed</span>
-                            </div>
-                            <div class="flex items-baseline justify-between mt-3">
-                                <span class="text-2xl font-black font-mono">Balanced</span>
-                                <span class="text-xs font-bold text-amber-500 font-mono">Global Open</span>
-                            </div>
-                        </div>
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl shadow-sm transition-all duration-300 flex flex-col justify-between">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">Exchange Latency</span>
-                                <span class="p-1.5 rounded-lg bg-purple-500/10 text-purple-500 dark:text-purple-400 text-xs font-mono">WebSocket</span>
-                            </div>
-                            <div class="flex items-baseline justify-between mt-3">
-                                <span class="text-2xl font-black font-mono text-purple-600 dark:text-purple-400">&lt; 14ms</span>
-                                <span class="text-xs font-bold text-emerald-500 font-mono">Optimal</span>
+                            
+                            <div class="overflow-x-auto flex-1">
+                                <table class="w-full text-left text-xs">
+                                    <thead>
+                                        <tr class="text-gray-500 border-b border-borderCol">
+                                            <th class="pb-2 font-medium">Instrumen</th>
+                                            <th class="pb-2 text-right font-medium">Bid/Ask</th>
+                                            <th class="pb-2 text-right font-medium">Ubah</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="watchlist-tbody" class="divide-y divide-borderCol/40 font-mono">
+                                        <tr class="hover:bg-gray-800/40 transition cursor-pointer">
+                                            <td class="py-3 font-bold text-gray-200">BBCA <span class="block text-[9px] text-gray-400 font-normal">Bank Central Asia</span></td>
+                                            <td class="py-3 text-right" id="wl-BBCA">10,225</td>
+                                            <td class="py-3 text-right text-neonGreen">+1.25%</td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-800/40 transition cursor-pointer">
+                                            <td class="py-3 font-bold text-gray-200">ASII <span class="block text-[9px] text-gray-400 font-normal">Astra International</span></td>
+                                            <td class="py-3 text-right" id="wl-ASII">5,150</td>
+                                            <td class="py-3 text-right text-neonGreen">+0.80%</td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-800/40 transition cursor-pointer">
+                                            <td class="py-3 font-bold text-gray-200">GOTO <span class="block text-[9px] text-gray-400 font-normal">GoTo Gojek Tokopedia</span></td>
+                                            <td class="py-3 text-right" id="wl-GOTO">68</td>
+                                            <td class="py-3 text-right text-neonRed">-1.45%</td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-800/40 transition cursor-pointer">
+                                            <td class="py-3 font-bold text-gray-200">ANTM <span class="block text-[9px] text-gray-400 font-normal">Aneka Tambang</span></td>
+                                            <td class="py-3 text-right" id="wl-ANTM">1,620</td>
+                                            <td class="py-3 text-right text-neonGreen">+2.53%</td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-800/40 transition cursor-pointer">
+                                            <td class="py-3 font-bold text-gray-200">BMRI <span class="block text-[9px] text-gray-400 font-normal">Bank Mandiri</span></td>
+                                            <td class="py-3 text-right" id="wl-BMRI">6,450</td>
+                                            <td class="py-3 text-right text-neonGreen">+0.39%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-2 text-xs mb-6 overflow-x-auto pb-2">
-                        <button onclick="setStockFilter('all')" id="stock-filter-all" class="px-4 py-2 rounded-xl bg-primary text-white font-bold transition shadow-sm whitespace-nowrap">All Indices</button>
-                        <button onclick="setStockFilter('americas')" id="stock-filter-americas" class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition whitespace-nowrap">Americas</button>
-                        <button onclick="setStockFilter('europe')" id="stock-filter-europe" class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition whitespace-nowrap">Europe</button>
-                        <button onclick="setStockFilter('asiapacific')" id="stock-filter-asiapacific" class="px-4 py-2 rounded-xl bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition whitespace-nowrap">Asia & Pacific</button>
-                    </div>
-                    <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-[#2c2c2c] bg-gray-50/50 dark:bg-[#141414]">
-                        <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
-                            <thead>
-                                <tr class="text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-[#2c2c2c] bg-gray-100 dark:bg-[#1a1a1a]">
-                                    <th class="py-3.5 px-4 font-bold">Index Name</th>
-                                    <th class="py-3.5 px-4 font-bold">Region</th>
-                                    <th class="py-3.5 px-4 text-right font-bold">Last</th>
-                                    <th class="py-3.5 px-4 text-right font-bold">High</th>
-                                    <th class="py-3.5 px-4 text-right font-bold">Low</th>
-                                    <th class="py-3.5 px-4 text-right font-bold">Chg.</th>
-                                    <th class="py-3.5 px-4 text-right font-bold">Chg. %</th>
-                                    <th class="py-3.5 px-4 text-center font-bold">Time</th>
-                                </tr>
-                            </thead>
-                            <tbody id="stock-table-body" class="divide-y divide-gray-200 dark:divide-[#2c2c2c]"></tbody>
-                        </table>
+
+                    <!-- Lower Section (Volatility, Trade Tape, & Volume Bar Charts) -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Horizontal Bar Chart: Market Volatility & Spread Matrix -->
+                        <div class="bg-panelBg p-5 rounded-xl border border-borderCol flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                                        <i class="fa-solid fa-sliders text-neonBlue"></i> Volatilitas & Rentang Spread
+                                    </h3>
+                                    <span class="text-[10px] bg-neonBlue/20 text-neonBlue px-2 py-0.5 rounded font-mono">Live H-Bar</span>
+                                </div>
+                                <p class="text-[11px] text-gray-400 mb-2">Analisis tingkat fluktuasi dan rentang spread instrumen aktif.</p>
+                            </div>
+                            <div class="relative h-40 w-full flex items-center justify-center">
+                                <canvas id="volatilityHBarChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Live Trade Tape (Time & Sales) -->
+                        <div class="bg-panelBg p-5 rounded-xl border border-borderCol flex flex-col">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                                    <i class="fa-solid fa-bolt text-yellow-400"></i> Live Trade Tape (Time & Sales)
+                                </h3>
+                                <span class="text-[10px] text-gray-400 font-mono">Streaming</span>
+                            </div>
+                            <div class="overflow-y-auto max-h-44 pr-1 space-y-2 text-xs font-mono" id="trade-tape">
+                                <div class="flex justify-between items-center bg-gray-800/30 p-1.5 rounded">
+                                    <span class="text-gray-400">16:08:12</span>
+                                    <span class="font-bold text-white">BBCA</span>
+                                    <span class="text-neonGreen">10,225 (+15 lot)</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-gray-800/30 p-1.5 rounded">
+                                    <span class="text-gray-400">16:08:10</span>
+                                    <span class="font-bold text-white">BMRI</span>
+                                    <span class="text-neonGreen">6,450 (+50 lot)</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-gray-800/30 p-1.5 rounded">
+                                    <span class="text-gray-400">16:08:08</span>
+                                    <span class="font-bold text-white">GOTO</span>
+                                    <span class="text-neonRed">68 (-200 lot)</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-gray-800/30 p-1.5 rounded">
+                                    <span class="text-gray-400">16:08:05</span>
+                                    <span class="font-bold text-white">ANTM</span>
+                                    <span class="text-neonGreen">1,620 (+80 lot)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Real-Time Volume & Liquidity Bar Chart -->
+                        <div class="bg-panelBg p-5 rounded-xl border border-borderCol flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                                        <i class="fa-solid fa-chart-column text-neonPurple"></i> Real-Time Volume & Likuiditas
+                                    </h3>
+                                    <span class="text-[10px] bg-neonPurple/20 text-neonPurple px-2 py-0.5 rounded font-mono">Live Bar</span>
+                                </div>
+                                <p class="text-[11px] text-gray-400 mb-3">Distribusi volume transaksi per instrumen secara real-time.</p>
+                            </div>
+                            <div class="relative h-36 w-full">
+                                <canvas id="volumeBarChart"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </main>
             </div>
@@ -1009,7 +1165,6 @@
                 <li><strong>Klik dan Sensasionalisme:</strong> Media atau kreator konten sering memanfaatkan 1% isu tersebut dan membungkusnya dengan judul bombastis (clickbait) demi penonton.</li>
                 </ul>
                 </div>
-
                 `
             },
             "side-1": {
@@ -1062,7 +1217,6 @@
             </tr>
             </tbody>
             </table>
-
                 `
             },
             "side-2": {
@@ -1132,7 +1286,7 @@
                 <h3 class="text-xl font-bold mt-6 mb-3 text-secondary dark:text-white">Tren 1: Banyak Konten, Waktu Singkat</h3>
                 <p>Durasi penggunaan media sosial tidak banyak berubah, tetapi jumlah konten meningkat tajam. Semua orang berlomba mempublikasikan <em>short video</em>, iklan, dan posting baru setiap hari. Ruang perhatian menjadi semakin padat dan kompetitif, di mana kuantitas posting bukan lagi faktor utama, melainkan kualitas dan kemampuan menahan perhatian.</p>
                 <p><strong>Cara beradaptasi:</strong></p>
-                ul class="list-disc pl-5 space-y-1">
+                <ul class="list-disc pl-5 space-y-1">
             <li>Pilih ide konten yang kuat dan relevan.</li>
             <li>Uji beberapa <em>hook</em> dalam 3 detik pertama.</li>
             <li>Gunakan <em>micro-story</em> untuk pesan yang ringkas tapi berkesan.</li>
@@ -1144,9 +1298,9 @@
             <p><strong>Cara beradaptasi:</strong></p>
             <ul class="list-disc pl-5 space-y-1">
             <li>Sisipkan kata kunci di caption, teks di layar, dan subtitle.</li>
-        <li>Buat konten berbentuk jawaban atas pertanyaan populer.</li>
-        <li>Gunakan format perbandingan seperti “Best X untuk Y”.</li>
-        <li>Optimalkan <em>saves</em> dan <em>shares</em> untuk meningkatkan relevansi pencarian.</li>
+            <li>Buat konten berbentuk jawaban atas pertanyaan populer.</li>
+            <li>Gunakan format perbandingan seperti “Best X untuk Y”.</li>
+            <li>Optimalkan <em>saves</em> dan <em>shares</em> untuk meningkatkan relevansi pencarian.</li>
         </ul>
         
         <h3 class="text-xl font-bold mt-6 mb-3 text-secondary dark:text-white">Tren 3: Migrasi ke Private Communities</h3>
@@ -1226,7 +1380,15 @@
         function showProfile() { hideAllPages(); document.getElementById('profile-page').classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
         function showMarkets() { hideAllPages(); document.getElementById('markets-page').classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); renderCryptoTable(); }
         function showPerformanceAnalyst() { hideAllPages(); document.getElementById('performance-analyst-page').classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); initPerformanceChart(); renderPAMatrix(); }
-        function showStockExchange() { hideAllPages(); document.getElementById('stock-exchange-page').classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); renderStockTable(); }
+        function showStockExchange() { 
+            hideAllPages(); 
+            document.getElementById('stock-exchange-page').classList.add('active'); 
+            window.scrollTo({ top: 0, behavior: 'smooth' }); 
+            setTimeout(() => {
+                initTerminalChart();
+                if (typeof initTerminalExtraCharts === 'function') initTerminalExtraCharts();
+            }, 50); 
+        }
         
         function openArticle(articleId) {
             const article = articlesData[articleId];
@@ -1247,6 +1409,7 @@
         function toggleDarkMode() {
             const htmlEl = document.documentElement;
             htmlEl.classList.toggle('dark');
+            htmlEl.classList.toggle('light', !htmlEl.classList.contains('dark'));
             const isDark = htmlEl.classList.contains('dark');
             document.getElementById('theme-icon-light').classList.toggle('hidden', isDark);
             document.getElementById('theme-icon-dark').classList.toggle('hidden', !isDark);
@@ -1271,156 +1434,92 @@
             { rank: 7, name: "Cardano", symbol: "ADA", price: 0.46, h24: 0.9, vol: "$420M", mcap: "$16.3B", chart: "up", watchlist: false },
             { rank: 8, name: "Avalanche", symbol: "AVAX", price: 28.50, h24: -3.1, vol: "$510M", mcap: "$11.2B", chart: "down", watchlist: false }
         ];
-        
         let globalMarketCapsData = [
             { segment: "Total Crypto Market Cap", cap: 2450000000000, h24: 2.4, share: "100.0%", status: "BULLISH" },
-            { segment: "DeFi Market Cap", cap: 98500000000, h24: 4.1, share: "4.02%", status: "BULLISH" },
-            { segment: "Layer-1 Blockchains", cap: 1420000000000, h24: 3.2, share: "57.96%", status: "BULLISH" },
-            { segment: "Stablecoins Total Cap", cap: 165000000000, h24: 0.5, share: "6.73%", status: "STABLE" },
-            { segment: "Meme Tokens Cap", cap: 54000000000, h24: 7.8, share: "2.20%", status: "SURGING" },
-            { segment: "NFT & Gaming Cap", cap: 26000000000, h24: -1.2, share: "1.06%", status: "CORRECTION" }
+            { segment: "Bitcoin (BTC)", cap: 1240000000000, h24: 3.4, share: "50.6%", status: "DOMINANT" },
+            { segment: "Ethereum (ETH)", cap: 4105000000000, h24: -0.8, share: "16.7%", status: "STABLE" },
+            { segment: "Altcoins (Excl. BTC & ETH)", cap: 799500000000, h24: 1.8, share: "32.7%", status: "EXPANDING" }
         ];
-        let stockIndicesData = [
-            { name: "Dow Jones Industrial Average", symbol: "DJI", region: "Americas", last: 52495.80, high: 52620.10, low: 52310.50, change: -77.49, changePct: -0.15 },
-            { name: "S&P 500", symbol: "INX", region: "Americas", last: 7640.92, high: 7665.40, low: 7615.20, change: -15.93, changePct: -0.21 },
-            { name: "Nasdaq Composite", symbol: "IXIC", region: "Americas", last: 26319.76, high: 26450.00, low: 26210.30, change: -13.27, changePct: -0.05 },
-            { name: "DAX Performance-Index", symbol: "GDAXI", region: "Europe", last: 25440.81, high: 25550.00, low: 25380.20, change: -127.75, changePct: -0.50 },
-            { name: "FTSE 100", symbol: "FTSE", region: "Europe", last: 9120.40, high: 9155.80, low: 9095.10, change: 32.10, changePct: 0.35 },
-            { name: "Nikkei 225", symbol: "N225", region: "Asia & Pacific", last: 42180.50, high: 42350.00, low: 42010.20, change: 185.40, changePct: 0.44 },
-            { name: "Jakarta Composite (IHSG)", symbol: "JKSE", region: "Asia & Pacific", last: 7920.40, high: 7950.00, low: 7895.20, change: 54.20, changePct: 0.69 }
-        ];
-        
-        let stockFilter = 'all';
-        function setStockFilter(filterType) {
-            stockFilter = filterType;
-            ['all', 'americas', 'europe', 'asiapacific'].forEach(f => {
-                const btn = document.getElementById(`stock-filter-${f}`);
-                if (btn) {
-                    btn.className = (f === filterType) 
-                        ? "px-4 py-2 rounded-xl bg-primary text-white font-bold transition shadow-sm whitespace-nowrap"
-                        : "px-4 py-2 rounded-xl bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition whitespace-nowrap";
-                }
-            });
-            renderStockTable();
-        }
-        function renderStockTable() {
-            const tbody = document.getElementById('stock-table-body');
+        function renderCryptoTable() {
+            const tbody = document.getElementById('crypto-table-body');
             if (!tbody) return;
-            tbody.innerHTML = '';
-            const searchVal = (document.getElementById('stock-search-input')?.value || '').toLowerCase();
-            let filtered = stockIndicesData.filter(item => {
-                const matchSearch = item.name.toLowerCase().includes(searchVal) || item.symbol.toLowerCase().includes(searchVal) || item.region.toLowerCase().includes(searchVal);
-                if (!matchSearch) return false;
-                if (stockFilter === 'americas') return item.region === 'Americas';
-                if (stockFilter === 'europe') return item.region === 'Europe';
-                if (stockFilter === 'asiapacific') return item.region === 'Asia & Pacific';
+            const searchTerm = (document.getElementById('market-search-input')?.value || '').toLowerCase();
+            let filtered = cryptoData.filter(coin => {
+                const matchesSearch = coin.name.toLowerCase().includes(searchTerm) || coin.symbol.toLowerCase().includes(searchTerm);
+                if (!matchesSearch) return false;
+                if (currentFilter === 'gainers') return coin.h24 > 0;
+                if (currentFilter === 'losers') return coin.h24 < 0;
+                if (currentFilter === 'watchlist') return coin.watchlist;
                 return true;
             });
-            filtered.forEach((item) => {
-                const isUp = item.change >= 0;
-                const chgColor = isUp ? 'text-emerald-500' : 'text-rose-500';
-                const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                const row = document.createElement('tr');
-                row.className = "hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors border-b border-gray-200 dark:border-[#2c2c2c]";
-                row.innerHTML = `
-                    <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">
-                        <div class="flex items-center space-x-2">
-                            <span>${item.name}</span>
-                            <span class="text-gray-500 dark:text-gray-400 font-normal uppercase text-[10px] bg-gray-200 dark:bg-white/5 px-1.5 py-0.5 rounded">${item.symbol}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 text-gray-600 dark:text-gray-300">${item.region}</td>
-                    <td class="py-3 px-4 text-right font-mono font-bold text-gray-900 dark:text-white">${item.last.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-600 dark:text-gray-300">${item.high.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-600 dark:text-gray-300">${item.low.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-                    <td class="py-3 px-4 text-right font-mono font-bold ${chgColor}">${isUp ? '+' : ''}${item.change.toFixed(2)}</td>
-                    <td class="py-3 px-4 text-right font-mono font-bold ${chgColor}">${isUp ? '+' : ''}${item.changePct.toFixed(2)}%</td>
-                    <td class="py-3 px-4 text-center font-mono text-gray-500 dark:text-gray-400 text-[11px]">${timeStr}</td>
+            tbody.innerHTML = filtered.map(coin => {
+                const isPositive = coin.h24 >= 0;
+                const textColor = isPositive ? 'text-emerald-500' : 'text-rose-500';
+                const sign = isPositive ? '+' : '';
+                return `
+                    <tr class="hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors">
+                        <td class="py-3.5 px-4 text-center font-mono text-gray-400">${coin.rank}</td>
+                        <td class="py-3.5 px-4 font-bold flex items-center space-x-2">
+                            <span>${coin.name}</span>
+                            <span class="text-[10px] text-gray-400 font-mono font-normal uppercase">${coin.symbol}</span>
+                        </td>
+                        <td class="py-3.5 px-4 text-right font-mono font-bold">$${coin.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
+                        <td class="py-3.5 px-4 text-right font-mono font-bold ${textColor}">${sign}${coin.h24.toFixed(1)}%</td>
+                        <td class="py-3.5 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${coin.vol}</td>
+                        <td class="py-3.5 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${coin.mcap}</td>
+                        <td class="py-3.5 px-4 text-center">
+                            <span class="text-xs font-mono font-bold ${textColor}">${isPositive ? '📈 Up' : '📉 Down'}</span>
+                        </td>
+                        <td class="py-3.5 px-4 text-center">
+                            <button onclick="toggleWatchlist(${coin.rank})" class="text-gray-400 hover:text-amber-400 transition">
+                                ${coin.watchlist ? '★' : '☆'}
+                            </button>
+                        </td>
+                    </tr>
                 `;
-                tbody.appendChild(row);
-            });
+            }).join('');
         }
-        function filterStockTable() { renderStockTable(); }
-        
-        function setCryptoFilter(filterType) {
-            currentFilter = filterType;
+        function setCryptoFilter(filter) {
+            currentFilter = filter;
             ['all', 'gainers', 'losers', 'watchlist'].forEach(f => {
                 const btn = document.getElementById(`filter-btn-${f}`);
                 if (btn) {
-                    btn.className = (f === filterType) 
-                        ? "px-4 py-1.5 rounded-full bg-primary text-white font-bold transition"
-                        : "px-4 py-1.5 rounded-full bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition";
+                    if (f === filter) {
+                        btn.className = "px-4 py-1.5 rounded-full bg-primary text-white font-bold transition";
+                    } else {
+                        btn.className = "px-4 py-1.5 rounded-full bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition";
+                    }
                 }
             });
             renderCryptoTable();
         }
-        function renderCryptoTable() {
-            const tbody = document.getElementById('crypto-table-body');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-            const searchVal = (document.getElementById('market-search-input')?.value || '').toLowerCase();
-            let filtered = cryptoData.filter(item => {
-                const matchSearch = item.name.toLowerCase().includes(searchVal) || item.symbol.toLowerCase().includes(searchVal);
-                if (!matchSearch) return false;
-                if (currentFilter === 'gainers') return item.h24 > 0;
-                if (currentFilter === 'losers') return item.h24 < 0;
-                if (currentFilter === 'watchlist') return item.watchlist;
-                return true;
-            });
-            filtered.forEach((item) => {
-                const h24Color = item.h24 >= 0 ? 'text-emerald-500' : 'text-rose-500';
-                const row = document.createElement('tr');
-                row.className = "hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors border-b border-gray-200 dark:border-[#2c2c2c]";
-                row.innerHTML = `
-                    <td class="py-3 px-4 text-center font-bold text-gray-500 dark:text-gray-400">${item.rank}</td>
-                    <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">${item.name} <span class="text-gray-400 font-normal">${item.symbol}</span></td>
-                    <td class="py-3 px-4 text-right font-mono font-bold">$${item.price.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-                    <td class="py-3 px-4 text-right font-mono font-bold ${h24Color}">${item.h24 >= 0 ? '+' : ''}${item.h24}%</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-600 dark:text-gray-400">${item.vol}</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-600 dark:text-gray-400">${item.mcap}</td>
-                    <td class="py-3 px-4 text-center">
-                        <span class="text-xs font-mono font-bold ${h24Color}">${item.h24 >= 0 ? 'Bullish Trend' : 'Bearish Trend'}</span>
-                    </td>
-                    <td class="py-3 px-4 text-center">
-                        <button onclick="toggleWatchlist(${item.rank})" class="text-amber-400 hover:scale-110 transition font-bold">${item.watchlist ? '★' : '☆'}</button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
+        function filterCryptoTable() {
+            renderCryptoTable();
         }
         function toggleWatchlist(rank) {
             const coin = cryptoData.find(c => c.rank === rank);
-            if (coin) { coin.watchlist = !coin.watchlist; renderCryptoTable(); }
+            if (coin) {
+                coin.watchlist = !coin.watchlist;
+                renderCryptoTable();
+            }
         }
-        function filterCryptoTable() { renderCryptoTable(); }
-        
         let perfChart = null;
-        let paCategory = 'crypto'; 
-        let txTicksCount = 0;
-        let realTimeLabels = ['10:00', '10:05', '10:10', '10:15', '10:20', '10:25', 'Live'];
-        let realTimeCapData = [2.41, 2.42, 2.43, 2.42, 2.44, 2.445, 2.45];
+        let paCategory = 'crypto';
         function initPerformanceChart() {
             const ctx = document.getElementById('performanceChart')?.getContext('2d');
             if (!ctx) return;
             if (perfChart) perfChart.destroy();
-            let labels = paCategory === 'crypto' ? realTimeLabels : stockIndicesData.map(s => s.symbol);
-            let dataValues = paCategory === 'crypto' ? realTimeCapData : stockIndicesData.map(s => s.last);
-            let chartLabel = paCategory === 'crypto' ? 'Total Global Market Cap (Trillion USD)' : 'Stock Index Value';
             perfChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels,
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'],
                     datasets: [{
-                        label: chartLabel,
-                        data: dataValues,
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                        borderWidth: 3,
+                        label: paCategory === 'crypto' ? 'Crypto Market Cap ($T)' : 'IHSG Index',
+                        data: paCategory === 'crypto' ? [2.38, 2.40, 2.41, 2.43, 2.42, 2.44, 2.45] : [7750, 7780, 7795, 7810, 7800, 7805, 7812],
+                        borderColor: '#0284c7',
+                        backgroundColor: 'rgba(2, 132, 199, 0.1)',
                         fill: true,
-                        tension: 0.35,
-                        pointBackgroundColor: '#10b981',
-                        pointRadius: 4,
-                        pointHoverRadius: 6
+                        tension: 0.4
                     }]
                 },
                 options: {
@@ -1428,104 +1527,337 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 10 } } },
-                        y: { grid: { color: 'rgba(156, 163, 175, 0.1)' }, ticks: { color: '#9ca3af', font: { size: 10 } } }
+                        x: { grid: { display: false } },
+                        y: { grid: { color: 'rgba(156, 163, 175, 0.1)' } }
                     }
                 }
             });
+            startLiveTxStream();
         }
         function switchPAMarketCategory(cat) {
             paCategory = cat;
             document.getElementById('pa-cat-crypto').className = cat === 'crypto' ? "px-3 py-1.5 rounded-lg bg-primary text-white font-bold transition" : "px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 font-bold transition";
             document.getElementById('pa-cat-stocks').className = cat === 'stocks' ? "px-3 py-1.5 rounded-lg bg-primary text-white font-bold transition" : "px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 font-bold transition";
-            document.getElementById('pa-chart-title').innerText = cat === 'crypto' ? "Real-Time Global Market Cap Trend (Crypto)" : "Global Stock Indices Performance Trend";
             
+            document.getElementById('pa-chart-title').innerText = cat === 'crypto' ? 'Real-Time Global Market Cap Trend (Crypto)' : 'Real-Time Global Stock Indices Trend (IHSG)';
             initPerformanceChart();
             renderPAMatrix();
         }
         function renderPAMatrix() {
             const tbody = document.getElementById('pa-market-tbody');
-            const theadTr = document.getElementById('matrix-head');
-            const titleEl = document.getElementById('matrix-title');
-            if (!tbody || !theadTr) return;
-            tbody.innerHTML = '';
-            if (paCategory === 'crypto') {
-                titleEl.innerText = "Global Market Cap Matrix";
-                theadTr.innerHTML = `
-                    <th class="py-3 px-3">Market Segment</th>
-                    <th class="py-3 px-3 text-right">Market Cap (USD)</th>
-                    <th class="py-3 px-3 text-right">24h Change</th>
-                    <th class="py-3 px-3 text-right">Market Share</th>
-                    <th class="py-3 px-3 text-center">Trend Status</th>
+            if (!tbody) return;
+            tbody.innerHTML = globalMarketCapsData.map(item => `
+                <tr class="hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors">
+                    <td class="py-3 px-3 font-bold text-gray-900 dark:text-white">${item.segment}</td>
+                    <td class="py-3 px-3 text-right font-mono font-bold">$${(item.cap / 1e9).toFixed(1)}B</td>
+                    <td class="py-3 px-3 text-right font-mono font-bold ${item.h24 >= 0 ? 'text-emerald-500' : 'text-rose-500'}">${item.h24 >= 0 ? '+' : ''}${item.h24}%</td>
+                    <td class="py-3 px-3 text-right font-mono text-gray-500 dark:text-gray-400">${item.share}</td>
+                    <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-500">${item.status}</span></td>
+                </tr>
+            `).join('');
+        }
+        let txTickCount = 0;
+        let txInterval = null;
+        function startLiveTxStream() {
+            if (txInterval) clearInterval(txInterval);
+            const container = document.getElementById('live-tx-stream');
+            if (!container) return;
+            const pairs = paCategory === 'crypto' ? ['BTC/USDT', 'ETH/USDT', 'SOL/USDT', 'BNB/USDT'] : ['BBRI.JK', 'TLKM.JK', 'NVDA', 'AAPL'];
+            txInterval = setInterval(() => {
+                txTickCount++;
+                document.getElementById('pa-tx-ticks').innerText = txTickCount.toString();
+                const pair = pairs[Math.floor(Math.random() * pairs.length)];
+                const isBuy = Math.random() > 0.45;
+                const price = (Math.random() * 1000 + 100).toFixed(2);
+                const amount = (Math.random() * 5 + 0.1).toFixed(2);
+                const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+                const itemHtml = `
+                    <div class="flex items-center justify-between p-2 rounded bg-white dark:bg-[#121212] border border-gray-200 dark:border-[#2c2c2c] animate-fade-in">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${isBuy ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'}">${isBuy ? 'BUY' : 'SELL'}</span>
+                            <span class="font-bold text-gray-900 dark:text-white">${pair}</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="block font-bold text-gray-900 dark:text-white">$${price}</span>
+                            <span class="text-[10px] text-gray-400">${amount} units &bull; ${time}</span>
+                        </div>
+                    </div>
                 `;
-                globalMarketCapsData.forEach(item => {
-                    const isUp = item.h24 >= 0;
-                    const colorClass = isUp ? 'text-emerald-500' : 'text-rose-500';
-                    const formattedCap = '$' + (item.cap / 1e9).toFixed(2) + 'B';
-                    const row = document.createElement('tr');
-                    row.className = "hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors border-b border-gray-200 dark:border-[#2c2c2c]";
-                    row.innerHTML = `
-                        <td class="py-3 px-3 font-bold text-gray-900 dark:text-white">${item.segment}</td>
-                        <td class="py-3 px-3 text-right font-mono font-bold">${formattedCap}</td>
-                        <td class="py-3 px-3 text-right font-mono font-bold ${colorClass}">${isUp ? '+' : ''}${item.h24}%</td>
-                        <td class="py-3 px-3 text-right font-mono text-gray-600 dark:text-gray-400">${item.share}</td>
-                        <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${isUp ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'}">${item.status}</span></td>
-                    `;
-                    tbody.appendChild(row);
+                container.insertAdjacentHTML('afterbegin', itemHtml);
+                if (container.children.length > 10) {
+                    container.removeChild(container.lastChild);
+                }
+            }, 2500);
+        }
+        let currentCarouselIndex = 0;
+        function setupCarousel() {
+            const list = document.getElementById('terkini-list');
+            const prevBtn = document.getElementById('terkini-prev');
+            const nextBtn = document.getElementById('terkini-next');
+            const dotsContainer = document.getElementById('terkini-dots');
+            if (!list || !prevBtn || !nextBtn || !dotsContainer) return;
+            const items = list.children;
+            const total = items.length;
+            if (total === 0) return;
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < total; i++) {
+                const dot = document.createElement('button');
+                dot.className = `terkini-carousel-dot ${i === 0 ? 'active' : ''}`;
+                dot.onclick = () => goToSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+            function updateCarousel() {
+                list.style.transform = `translate3d(-${currentCarouselIndex * 100}%, 0, 0)`;
+                Array.from(dotsContainer.children).forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === currentCarouselIndex);
                 });
-            } else {
-                titleEl.innerText = "Global Stock Exchange Performance Matrix";
-                theadTr.innerHTML = `
-                    <th class="py-3 px-3">Index Name</th>
-                    <th class="py-3 px-3">Region</th>
-                    <th class="py-3 px-3 text-right">Last Price</th>
-                    <th class="py-3 px-3 text-right">Change (%)</th>
-                    <th class="py-3 px-3 text-center">Status</th>
-                `;
-                stockIndicesData.forEach(item => {
-                    const isUp = item.change >= 0;
-                    const colorClass = isUp ? 'text-emerald-500' : 'text-rose-500';
-                    const row = document.createElement('tr');
-                    row.className = "hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors border-b border-gray-200 dark:border-[#2c2c2c]";
-                    row.innerHTML = `
-                        <td class="py-3 px-3 font-bold text-gray-900 dark:text-white">${item.name} (${item.symbol})</td>
-                        <td class="py-3 px-3 text-gray-600 dark:text-gray-400">${item.region}</td>
-                        <td class="py-3 px-3 text-right font-mono font-bold">${item.last.toLocaleString()}</td>
-                        <td class="py-3 px-3 text-right font-mono font-bold ${colorClass}">${isUp ? '+' : ''}${item.changePct}%</td>
-                        <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${isUp ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'}">${isUp ? 'BULLISH' : 'BEARISH'}</span></td>
-                    `;
-                    tbody.appendChild(row);
+                prevBtn.disabled = currentCarouselIndex === 0;
+                nextBtn.disabled = currentCarouselIndex === total - 1;
+            }
+            function goToSlide(index) {
+                currentCarouselIndex = index;
+                updateCarousel();
+            }
+            prevBtn.onclick = () => {
+                if (currentCarouselIndex > 0) {
+                    currentCarouselIndex--;
+                    updateCarousel();
+                }
+            };
+            nextBtn.onclick = () => {
+                if (currentCarouselIndex < total - 1) {
+                    currentCarouselIndex++;
+                    updateCarousel();
+                }
+            };
+            updateCarousel();
+        }
+        function loadMoreArticles() {
+            alert("Artikel tambahan berhasil dimuat.");
+        }
+
+        // --- SKRIP PROTRADER TERMINAL (FILE KEDUA) DI STOCK EXCHANGE ---
+        const marketDatasets = {
+            'COMPOSITE': { name: 'IHSG - Indeks Harga Saham Gabungan', price: 7325.40, changeText: '+45.20 (+0.62%)', color: '#10b981', history: [7280, 7295, 7290, 7310, 7315, 7325.40] },
+            'FOREX':     { name: 'USD/IDR - US Dollar to Indonesian Rupiah', price: 15450.00, changeText: '-25.00 (-0.16%)', color: '#3b82f6', history: [15480, 15475, 15465, 15460, 15455, 15450] },
+            'COMMODITY': { name: 'XAU/USD - Gold Spot Ounce', price: 2360.50, changeText: '+12.30 (+0.52%)', color: '#fbbf24', history: [2340, 2345, 2350, 2352, 2358, 2360.50] },
+            'CRYPTO':    { name: 'ETH/USD - Ethereum Network', price: 3480.20, changeText: '+110.50 (+3.28%)', color: '#10b981', history: [3350, 3380, 3410, 3440, 3465, 3480.20] }
+        };
+        let activeMarket = 'COMPOSITE';
+        let terminalChart = null;
+        let volumeBarChart = null;
+        let volatilityHBarChart = null;
+
+        function initTerminalChart() {
+            const ctxEl = document.getElementById('terminalChart');
+            if (!ctxEl) return;
+            const ctx = ctxEl.getContext('2d');
+            if (terminalChart) terminalChart.destroy();
+            terminalChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['09:00', '10:00', '11:00', '13:00', '14:00', 'Real-Time'],
+                    datasets: [{
+                        label: activeMarket,
+                        data: marketDatasets[activeMarket].history,
+                        borderColor: marketDatasets[activeMarket].color,
+                        borderWidth: 2,
+                        fill: true,
+                        backgroundColor: function(context) {
+                            const chart = context.chart;
+                            const {ctx, chartArea} = chart;
+                            if (!chartArea) return null;
+                            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+                            gradient.addColorStop(0, 'rgba(16, 185, 129, 0)');
+                            gradient.addColorStop(1, 'rgba(16, 185, 129, 0.2)');
+                            return gradient;
+                        },
+                        tension: 0.35,
+                        pointRadius: 2,
+                        pointBackgroundColor: marketDatasets[activeMarket].color
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(150, 150, 150, 0.1)' }, ticks: { color: '#6b7280', font: { size: 10 } } },
+                        y: { grid: { color: 'rgba(150, 150, 150, 0.1)' }, ticks: { color: '#6b7280', font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // Volume Bar Chart
+            const barCtx = document.getElementById('volumeBarChart')?.getContext('2d');
+            if (barCtx) {
+                if (volumeBarChart) volumeBarChart.destroy();
+                volumeBarChart = new Chart(barCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['BBCA', 'ASII', 'GOTO', 'ANTM', 'BMRI'],
+                        datasets: [{
+                            label: 'Volume (Lot)',
+                            data: [4200, 2800, 9500, 3100, 5300],
+                            backgroundColor: ['#3b82f6', '#10b981', '#ef4444', '#fbbf24', '#8b5cf6'],
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 9 } } },
+                            y: { grid: { color: 'rgba(150, 150, 150, 0.1)' }, ticks: { color: '#6b7280', font: { size: 9 } } }
+                        }
+                    }
+                });
+            }
+
+            // Volatility Horizontal Bar Chart
+            const hBarCtx = document.getElementById('volatilityHBarChart')?.getContext('2d');
+            if (hBarCtx) {
+                if (volatilityHBarChart) volatilityHBarChart.destroy();
+                volatilityHBarChart = new Chart(hBarCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['BBCA', 'ASII', 'GOTO', 'ANTM', 'BMRI'],
+                        datasets: [{
+                            label: 'Volatilitas (%)',
+                            data: [1.8, 2.4, 4.5, 3.1, 2.0],
+                            backgroundColor: '#3b82f6',
+                            borderRadius: 3
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { grid: { color: 'rgba(150, 150, 150, 0.1)' }, ticks: { color: '#6b7280', font: { size: 9 } } },
+                            y: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 9 } } }
+                        }
+                    }
                 });
             }
         }
-        
-        function appendLiveTx() {
-            txTicksCount++;
-            const ticksEl = document.getElementById('pa-tx-ticks');
-            if (ticksEl) ticksEl.innerText = txTicksCount;
-            const streamContainer = document.getElementById('live-tx-stream');
-            if (!streamContainer) return;
-            const coins = ['BTC', 'ETH', 'SOL', 'JKSE', 'DJI', 'BNB'];
-            const types = ['BUY', 'SELL'];
-            const randomCoin = coins[Math.floor(Math.random() * coins.length)];
-            const randomType = types[Math.floor(Math.random() * types.length)];
-            const randomAmount = (Math.random() * 25000 + 500).toFixed(2);
-            const timeNow = new Date().toLocaleTimeString();
-            const colorClass = randomType === 'BUY' ? 'text-emerald-500' : 'text-rose-500';
+
+        function switchMarket(marketKey) {
+            activeMarket = marketKey;
+            const data = marketDatasets[marketKey];
+            const titleEl = document.getElementById('market-title');
+            const priceEl = document.getElementById('market-price');
+            const changeEl = document.getElementById('market-change');
+            if (titleEl) titleEl.innerText = data.name;
+            if (priceEl) priceEl.innerText = data.price.toLocaleString();
+            if (changeEl) changeEl.innerText = data.changeText;
             
-            const div = document.createElement('div');
-            div.className = "flex items-center justify-between border-b border-gray-200 dark:border-[#2c2c2c] pb-1.5 text-[11px]";
-            div.innerHTML = `
-                <span class="text-gray-500">${timeNow}</span>
-                <span class="font-bold ${colorClass}">${randomType} ${randomCoin}</span>
-                <span class="font-mono text-gray-900 dark:text-white">$${Number(randomAmount).toLocaleString()}</span>
-            `;
-            streamContainer.prepend(div);
-            if (streamContainer.children.length > 10) {
-                streamContainer.removeChild(streamContainer.lastChild);
+            document.querySelectorAll('#exchange-tabs .tab-btn').forEach(btn => {
+                btn.classList.remove('bg-neonBlue', 'text-white');
+                btn.classList.add('text-gray-400');
+                if (btn.innerText.includes(marketKey === 'COMPOSITE' ? 'IHSG' : marketKey === 'FOREX' ? 'USD/IDR' : marketKey === 'COMMODITY' ? 'Gold' : 'ETH')) {
+                    btn.classList.add('bg-neonBlue', 'text-white');
+                    btn.classList.remove('text-gray-400');
+                }
+            });
+            if (terminalChart) {
+                terminalChart.data.datasets[0].label = marketKey;
+                terminalChart.data.datasets[0].data = data.history;
+                terminalChart.data.datasets[0].borderColor = data.color;
+                terminalChart.data.datasets[0].pointBackgroundColor = data.color;
+                terminalChart.update();
             }
         }
-        setInterval(appendLiveTx, 2000);
+
+        function changeTimeframe(tf) {
+            document.querySelectorAll('.tf-btn').forEach(btn => {
+                btn.classList.remove('bg-gray-800', 'text-white', 'shadow');
+                btn.classList.add('text-gray-400');
+                if (btn.innerText === tf) {
+                    btn.classList.add('bg-gray-800', 'text-white', 'shadow');
+                    btn.classList.remove('text-gray-400');
+                }
+            });
+        }
+
+        const watchlistPrices = { 'BBCA': 10225, 'ASII': 5150, 'GOTO': 68, 'ANTM': 1620, 'BMRI': 6450 };
+        setInterval(() => {
+            const now = new Date();
+            const timeString = now.toTimeString().split(' ')[0] + ' WIB';
+            const clockEl = document.getElementById('live-clock');
+            if (clockEl) clockEl.innerText = timeString;
+        }, 1000);
+
+        setInterval(() => {
+            let currentObj = marketDatasets[activeMarket];
+            let delta = (Math.random() - 0.49) * (currentObj.price * 0.001);
+            currentObj.price = Math.round((currentObj.price + delta) * 100) / 100;
+            
+            let historyArr = currentObj.history;
+            historyArr.shift();
+            historyArr.push(currentObj.price);
+            const priceEl = document.getElementById('market-price');
+            if (priceEl) priceEl.innerText = currentObj.price.toLocaleString();
+            if (terminalChart) {
+                terminalChart.data.datasets[0].data = historyArr;
+                terminalChart.update('none');
+            }
+            Object.keys(watchlistPrices).forEach(sym => {
+                let changeFactor = (Math.random() - 0.48) * (watchlistPrices[sym] * 0.0015);
+                watchlistPrices[sym] = Math.round((watchlistPrices[sym] + changeFactor) * 100) / 100;
+                const cell = document.getElementById(`wl-${sym}`);
+                if (cell) {
+                    cell.innerText = watchlistPrices[sym].toLocaleString();
+                }
+            });
+
+            if (volumeBarChart) {
+                let currentBarData = volumeBarChart.data.datasets[0].data;
+                for (let i = 0; i < currentBarData.length; i++) {
+                    let randomFluctuation = Math.floor((Math.random() - 0.45) * 300);
+                    currentBarData[i] = Math.max(500, currentBarData[i] + randomFluctuation);
+                }
+                volumeBarChart.update('none');
+            }
+
+            if (volatilityHBarChart) {
+                let currentHBarData = volatilityHBarChart.data.datasets[0].data;
+                for (let i = 0; i < currentHBarData.length; i++) {
+                    let randomVolShift = (Math.random() - 0.48) * 0.2;
+                    currentHBarData[i] = Math.max(1.0, Math.min(6.0, parseFloat((currentHBarData[i] + randomVolShift).toFixed(1))));
+                }
+                volatilityHBarChart.update('none');
+            }
+
+            const symbolsList = Object.keys(watchlistPrices);
+            const randomSym = symbolsList[Math.floor(Math.random() * symbolsList.length)];
+            const randomPrice = watchlistPrices[randomSym];
+            const randomLot = Math.floor(Math.random() * 80) + 5;
+            const isGreen = Math.random() > 0.4;
+            const timeNow = new Date().toTimeString().split(' ')[0];
+            const tapeContainer = document.getElementById('trade-tape');
+            if (tapeContainer) {
+                const newRow = document.createElement('div');
+                newRow.className = "flex justify-between items-center bg-gray-800/30 p-1.5 rounded animate-pulse";
+                newRow.innerHTML = `
+                    <span class="text-gray-400">${timeNow}</span>
+                    <span class="font-bold text-white">${randomSym}</span>
+                    <span class="${isGreen ? 'text-neonGreen' : 'text-neonRed'}">${randomPrice.toLocaleString()} (${isGreen ? '+' : '-'}${randomLot} lot)</span>
+                `;
+                tapeContainer.prepend(newRow);
+                if (tapeContainer.children.length > 20) {
+                    tapeContainer.removeChild(tapeContainer.lastChild);
+                }
+            }
+        }, 1500);
+
+        window.onload = () => {
+            setupCarousel();
+            renderCryptoTable();
+            initTerminalChart();
+        };
     </script>
 </body>
 </html>
