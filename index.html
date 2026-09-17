@@ -22,8 +22,8 @@
                         'secondary': '#212121', 
                         'accent': '#FFD700', 
                         'dark-bg': '#000000',
-                        'dark-surface': '#121212',
-                        'dark-surface-card': '#1a1a1a',
+                        'dark-surface': '#000000',
+                        'dark-surface-card': '#000000',
                         'dark-border': '#2c2c2c',
                         'dark-text': '#f3f4f6',
                         'dark-text-secondary': '#9ca3af',
@@ -286,6 +286,190 @@
         background: #38bdf8;
     }
 </style>
+
+<style id="white-black-theme">
+/* =========================================================
+   BERITA ANGIN — WHITE / BLACK THEME
+   Light  = #ffffff
+   Dark   = #000000
+   ========================================================= */
+
+/* Base surfaces */
+html.light,
+html.light body,
+html.light #root,
+html.light .page-view main,
+html.light #main-header,
+html.light footer {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+}
+
+html.dark,
+html.dark body,
+html.dark #root,
+html.dark .page-view main,
+html.dark #main-header,
+html.dark footer {
+    background-color: #000000 !important;
+    color: #f3f4f6 !important;
+}
+
+/* Tailwind surface utilities */
+html.light .bg-white,
+html.light .bg-gray-50,
+html.light .bg-gray-100,
+html.light .bg-gray-200,
+html.light .bg-dark-surface,
+html.light .bg-dark-surface-card {
+    background-color: #ffffff !important;
+}
+
+html.dark .bg-white,
+html.dark .bg-gray-50,
+html.dark .bg-gray-100,
+html.dark .bg-gray-200,
+html.dark .bg-dark-surface,
+html.dark .bg-dark-surface-card,
+html.dark .bg-black,
+html.dark [class*="dark:bg-[#121212]"],
+html.dark [class*="dark:bg-[#1a1a1a]"],
+html.dark [class*="dark:bg-[#141414]"] {
+    background-color: #000000 !important;
+}
+
+/* All common card/panel/surface components */
+html.light .card,
+html.light .news-card,
+html.light .market-card,
+html.light .stat-card,
+html.light .panel,
+html.light .surface,
+html.light .terminal-card,
+html.light .bg-panelBg,
+html.light .bg-terminalBg {
+    background-color: #ffffff !important;
+}
+
+html.dark .card,
+html.dark .news-card,
+html.dark .market-card,
+html.dark .stat-card,
+html.dark .panel,
+html.dark .surface,
+html.dark .terminal-card,
+html.dark .bg-panelBg,
+html.dark .bg-terminalBg {
+    background-color: #000000 !important;
+}
+
+/* Explicit card-like containers in this document */
+html.dark [class*="rounded"][class*="border"][class*="p-"],
+html.dark [class*="shadow"][class*="rounded"][class*="border"] {
+    background-color: #000000 !important;
+}
+
+/* Carousel cards */
+html.light #terkini-list.terkini-carousel-track > li {
+    background: #ffffff !important;
+}
+html.dark #terkini-list.terkini-carousel-track > li {
+    background: #000000 !important;
+    border-color: #222222 !important;
+}
+
+/* Inputs / controls */
+html.light input,
+html.light textarea,
+html.light select {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+}
+html.dark input,
+html.dark textarea,
+html.dark select {
+    background-color: #000000 !important;
+    color: #f3f4f6 !important;
+    border-color: #222222 !important;
+}
+
+/* Tables */
+html.light table,
+html.light table th,
+html.light table td {
+    background-color: #ffffff;
+}
+html.dark table,
+html.dark table th,
+html.dark table td,
+html.dark table tr,
+html.dark table.article-table tr:nth-child(even) {
+    background-color: #000000 !important;
+}
+html.dark table.article-table th {
+    background-color: #000000 !important;
+}
+
+/* Borders stay neutral; accent borders remain accent-colored. */
+html.dark .border-gray-200,
+html.dark .border-gray-300,
+html.dark .border-gray-400,
+html.dark .border-dark-border,
+html.dark .border-borderCol {
+    border-color: #222222 !important;
+}
+
+/* Neutral hover states must not introduce brown/gray card backgrounds. */
+html.dark .hover\:bg-gray-50:hover,
+html.dark .hover\:bg-gray-100:hover,
+html.dark .hover\:bg-gray-200:hover,
+html.dark .dark\:hover\:bg-dark-surface-card:hover,
+html.dark .dark\:hover\:bg-dark-surface:hover {
+    background-color: #000000 !important;
+}
+
+/* Mobile menu */
+html.light #mobile-menu {
+    background-color: #ffffff !important;
+}
+html.dark #mobile-menu {
+    background-color: #000000 !important;
+}
+
+/* Keep primary/status colors visible instead of flattening them. */
+html.dark .bg-primary,
+html.dark .bg-emerald-500,
+html.dark .bg-rose-500,
+html.dark .bg-red-500,
+html.dark .bg-amber-500,
+html.dark .bg-purple-500 {
+    /* intentionally preserve utility colors */
+}
+
+/* Neutral text */
+html.dark .text-gray-900,
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-slate-700 {
+    color: #f9fafb !important;
+}
+html.dark .text-gray-600,
+html.dark .text-gray-500,
+html.dark .text-slate-600,
+html.dark .text-slate-500 {
+    color: #9ca3af !important;
+}
+
+/* Shadows should remain neutral in either theme. */
+html.dark .shadow,
+html.dark .shadow-sm,
+html.dark .shadow-md,
+html.dark .shadow-lg,
+html.dark .shadow-xl {
+    --tw-shadow-color: rgba(255,255,255,0.06);
+}
+</style>
+
 </head>
 <body class="antialiased">
     <div id="root" class="bg-white dark:bg-dark-bg min-h-screen flex flex-col justify-between">
@@ -631,7 +815,7 @@
             
             <!-- VIEW 4: MARKETS PAGE -->
             <div id="markets-page" class="page-view">
-                <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-[#121212] text-gray-900 dark:text-white shadow-lg my-6 rounded-xl border border-gray-200 dark:border-[#2c2c2c] transition-all duration-300">
+                <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-black text-gray-900 dark:text-white shadow-lg my-6 rounded-xl border border-gray-200 dark:border-[#2c2c2c] transition-all duration-300">
                     <div class="mb-4">
                         <h1 class="text-lg font-bold text-gray-900 dark:text-white">Markets</h1>
                         <p class="text-xs text-gray-500 dark:text-gray-400">Live prices across the assets you're watching.</p>
@@ -659,28 +843,28 @@
                         </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
+                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
                             <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">MarketCap</span>
                             <div class="flex items-baseline justify-between mt-2">
                                 <span id="top-card-mcap" class="text-xl font-black font-mono text-gray-900 dark:text-white">$2.45T</span>
                                 <span id="top-card-mcap-change" class="text-xs font-bold text-emerald-500 font-mono">+2.4%</span>
                             </div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
+                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
                             <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">24h Volume</span>
                             <div class="flex items-baseline justify-between mt-2">
                                 <span id="top-card-vol" class="text-xl font-black font-mono text-gray-900 dark:text-white">$112.8B</span>
                                 <span id="top-card-vol-change" class="text-xs font-bold text-emerald-500 font-mono">+6.1%</span>
                             </div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
+                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
                             <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">BTC Dominance</span>
                             <div class="flex items-baseline justify-between mt-2">
                                 <span id="top-card-dominance" class="text-xl font-black font-mono text-gray-900 dark:text-white">54.1%</span>
                                 <span id="top-card-dominance-change" class="text-xs font-bold text-rose-500 font-mono">-0.4%</span>
                             </div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
+                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
                             <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Fear & Greed</span>
                             <div class="flex items-baseline justify-between mt-2">
                                 <span class="text-xl font-black font-mono text-gray-900 dark:text-white">78 &middot; Greed</span>
@@ -691,7 +875,7 @@
                     <!-- SECTION KOIN YANG SEDANG TREND & DERIVATIVES -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                         <!-- Trending Coins Card -->
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl shadow-sm flex flex-col justify-between">
+                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl shadow-sm flex flex-col justify-between">
                             <div class="flex items-center justify-between mb-3 border-b border-gray-200 dark:border-[#2c2c2c] pb-2">
                                 <h3 class="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white flex items-center space-x-1.5">
                                     <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -700,7 +884,7 @@
                                 <span class="text-[10px] text-gray-500 font-mono">Top Search</span>
                             </div>
                             <div class="space-y-2.5">
-                                <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-[#121212] border border-gray-200 dark:border-[#2c2c2c]">
+                                <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-black border border-gray-200 dark:border-[#2c2c2c]">
                                     <div class="flex items-center space-x-2">
                                         <span class="text-xs font-bold font-mono text-primary">1</span>
                                         <div>
@@ -713,7 +897,7 @@
                                         <span class="text-[10px] text-gray-500">$154.80</span>
                                     </div>
                                 </div>
-                                <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-[#121212] border border-gray-200 dark:border-[#2c2c2c]">
+                                <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-black border border-gray-200 dark:border-[#2c2c2c]">
                                     <div class="flex items-center space-x-2">
                                         <span class="text-xs font-bold font-mono text-primary">2</span>
                                         <div>
@@ -726,7 +910,7 @@
                                         <span class="text-[10px] text-gray-500">$0.13</span>
                                     </div>
                                 </div>
-                                <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-[#121212] border border-gray-200 dark:border-[#2c2c2c]">
+                                <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-black border border-gray-200 dark:border-[#2c2c2c]">
                                     <div class="flex items-center space-x-2">
                                         <span class="text-xs font-bold font-mono text-primary">3</span>
                                         <div>
@@ -742,7 +926,7 @@
                             </div>
                         </div>
                         <!-- Derivatives Market Summary Card -->
-                        <div class="lg:col-span-2 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl shadow-sm flex flex-col justify-between">
+                        <div class="lg:col-span-2 bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl shadow-sm flex flex-col justify-between">
                             <div class="flex items-center justify-between mb-3 border-b border-gray-200 dark:border-[#2c2c2c] pb-2">
                                 <h3 class="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white flex items-center space-x-1.5">
                                     <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
@@ -751,23 +935,23 @@
                                 <span class="text-[10px] text-purple-500 font-mono font-semibold">Open Interest: $64.8B</span>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
-                                <div class="bg-white dark:bg-[#121212] p-3 rounded-lg border border-gray-200 dark:border-[#2c2c2c]">
+                                <div class="bg-white dark:bg-black p-3 rounded-lg border border-gray-200 dark:border-[#2c2c2c]">
                                     <span class="text-[11px] text-gray-500 block">Futures Open Interest</span>
                                     <span class="text-base font-black font-mono text-gray-900 dark:text-white mt-1 block">$52.4B</span>
                                     <span class="text-[10px] text-emerald-500 font-bold">+4.1% (24h)</span>
                                 </div>
-                                <div class="bg-white dark:bg-[#121212] p-3 rounded-lg border border-gray-200 dark:border-[#2c2c2c]">
+                                <div class="bg-white dark:bg-black p-3 rounded-lg border border-gray-200 dark:border-[#2c2c2c]">
                                     <span class="text-[11px] text-gray-500 block">24h Derivatives Vol</span>
                                     <span class="text-base font-black font-mono text-gray-900 dark:text-white mt-1 block">$248.6B</span>
                                     <span class="text-[10px] text-emerald-500 font-bold">+12.5%</span>
                                 </div>
-                                <div class="bg-white dark:bg-[#121212] p-3 rounded-lg border border-gray-200 dark:border-[#2c2c2c]">
+                                <div class="bg-white dark:bg-black p-3 rounded-lg border border-gray-200 dark:border-[#2c2c2c]">
                                     <span class="text-[11px] text-gray-500 block">Long / Short Ratio</span>
                                     <span class="text-base font-black font-mono text-emerald-500 mt-1 block">52.8% / 47.2%</span>
                                     <span class="text-[10px] text-primary font-bold">Bullish Bias</span>
                                 </div>
                             </div>
-                            <div class="text-[11px] text-gray-500 dark:text-gray-400 flex items-center justify-between bg-white dark:bg-[#121212] px-3 py-2 rounded-lg border border-gray-200 dark:border-[#2c2c2c]">
+                            <div class="text-[11px] text-gray-500 dark:text-gray-400 flex items-center justify-between bg-white dark:bg-black px-3 py-2 rounded-lg border border-gray-200 dark:border-[#2c2c2c]">
                                 <span>Total 24h Liquidation: <strong class="text-rose-500 font-mono">$114.2M</strong> (Shorts: $78.4M, Longs: $35.8M)</span>
                                 <span class="text-primary font-bold">Live Data</span>
                             </div>
@@ -775,20 +959,20 @@
                     </div>
                     <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
                         <div class="relative w-full md:w-72">
-                            <input type="text" id="market-search-input" onkeyup="filterCryptoTable()" placeholder="Search coin..." class="w-full bg-gray-50 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-xs rounded-lg py-2 pl-9 pr-4 text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary shadow-sm">
+                            <input type="text" id="market-search-input" onkeyup="filterCryptoTable()" placeholder="Search coin..." class="w-full bg-gray-50 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-xs rounded-lg py-2 pl-9 pr-4 text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary shadow-sm">
                             <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
                         <div class="flex items-center space-x-2 text-xs">
                             <button onclick="setCryptoFilter('all')" id="filter-btn-all" class="px-4 py-1.5 rounded-full bg-primary text-white font-bold transition">All</button>
-                            <button onclick="setCryptoFilter('gainers')" id="filter-btn-gainers" class="px-4 py-1.5 rounded-full bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition">Gainers</button>
-                            <button onclick="setCryptoFilter('losers')" id="filter-btn-losers" class="px-4 py-1.5 rounded-full bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition">Losers</button>
-                            <button onclick="setCryptoFilter('watchlist')" id="filter-btn-watchlist" class="px-4 py-1.5 rounded-full bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition">Watchlist</button>
+                            <button onclick="setCryptoFilter('gainers')" id="filter-btn-gainers" class="px-4 py-1.5 rounded-full bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition">Gainers</button>
+                            <button onclick="setCryptoFilter('losers')" id="filter-btn-losers" class="px-4 py-1.5 rounded-full bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition">Losers</button>
+                            <button onclick="setCryptoFilter('watchlist')" id="filter-btn-watchlist" class="px-4 py-1.5 rounded-full bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition">Watchlist</button>
                         </div>
                     </div>
-                    <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-[#2c2c2c] bg-gray-50/50 dark:bg-[#141414]">
+                    <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-[#2c2c2c] bg-gray-50/50 dark:bg-black">
                         <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
                             <thead>
-                                <tr class="text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-[#2c2c2c] bg-gray-100 dark:bg-[#1a1a1a]">
+                                <tr class="text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-[#2c2c2c] bg-gray-100 dark:bg-black">
                                     <th class="py-3.5 px-4 w-12 text-center">#</th>
                                     <th class="py-3.5 px-4">Name</th>
                                     <th class="py-3.5 px-4 text-right">Price</th>
@@ -807,14 +991,14 @@
             
             <!-- VIEW 5: PERFORMANCE ANALYST PAGE -->
             <div id="performance-analyst-page" class="page-view">
-                <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-[#121212] text-gray-900 dark:text-white shadow-2xl my-6 rounded-xl border border-gray-200 dark:border-[#2c2c2c] transition-all duration-300">
+                <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-black text-gray-900 dark:text-white shadow-2xl my-6 rounded-xl border border-gray-200 dark:border-[#2c2c2c] transition-all duration-300">
                     <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
                         <div>
                             <h1 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Performance Analyst & Live Transactions</h1>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Real-time performance analytics driven by live global market cap movements.</p>
                         </div>
                         <div class="flex items-center space-x-3 text-xs">
-                            <div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-[#121212] border border-gray-300 dark:border-[#2c2c2c] font-mono text-emerald-500 dark:text-emerald-400">
+                            <div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] font-mono text-emerald-500 dark:text-emerald-400">
                                 <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
                                 <span id="pa-live-status">LIVE STREAMING</span>
                             </div>
@@ -822,28 +1006,28 @@
                     </div>
                     
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
+                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
                             <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Total Tracked Volume</span>
                             <div class="flex items-baseline justify-between mt-2">
                                 <span id="pa-total-vol" class="text-xl font-black font-mono text-gray-900 dark:text-white">$45,280.50</span>
                                 <span id="pa-vol-change" class="text-xs font-bold text-emerald-500 font-mono">+14.2%</span>
                             </div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
+                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
                             <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Active Market Pairs</span>
                             <div class="flex items-baseline justify-between mt-2">
                                 <span id="pa-active-pairs" class="text-xl font-black font-mono text-gray-900 dark:text-white">18 Assets</span>
                                 <span class="text-xs font-bold text-emerald-500 font-mono">Synced</span>
                             </div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
+                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
                             <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Average 24h Yield</span>
                             <div class="flex items-baseline justify-between mt-2">
                                 <span id="pa-avg-yield" class="text-xl font-black font-mono text-emerald-600 dark:text-emerald-400">+2.84%</span>
                                 <span class="text-xs font-bold text-emerald-500 font-mono">Bullish</span>
                             </div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
+                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
                             <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Transaction Ticks</span>
                             <div class="flex items-baseline justify-between mt-2">
                                 <span id="pa-tx-ticks" class="text-xl font-black font-mono text-gray-900 dark:text-white">0</span>
@@ -854,10 +1038,10 @@
                     <div class="flex items-center space-x-2 mb-4 text-xs">
                         <span class="text-gray-500 font-bold">Select Market View:</span>
                         <button onclick="switchPAMarketCategory('crypto')" id="pa-cat-crypto" class="px-3 py-1.5 rounded-lg bg-primary text-white font-bold transition">Global Market Cap (Crypto)</button>
-                        <button onclick="switchPAMarketCategory('stocks')" id="pa-cat-stocks" class="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 font-bold transition">Global Stock Indices</button>
+                        <button onclick="switchPAMarketCategory('stocks')" id="pa-cat-stocks" class="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 font-bold transition">Global Stock Indices</button>
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                        <div class="lg:col-span-2 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-5 rounded-2xl flex flex-col justify-between shadow-sm">
+                        <div class="lg:col-span-2 bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-5 rounded-2xl flex flex-col justify-between shadow-sm">
                             <div class="flex items-center justify-between mb-4">
                                 <h3 id="pa-chart-title" class="text-sm font-bold text-gray-900 dark:text-white">Real-Time Global Market Cap Trend (Crypto)</h3>
                                 <div class="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400 font-mono">
@@ -869,7 +1053,7 @@
                                 <canvas id="performanceChart"></canvas>
                             </div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] p-5 rounded-2xl flex flex-col justify-between shadow-sm">
+                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-5 rounded-2xl flex flex-col justify-between shadow-sm">
                             <div>
                                 <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">Live Market Transactions</h3>
                                 <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-3">Streaming live buy/sell ticks across watched market pairs.</p>
@@ -877,7 +1061,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-[#2c2c2c] rounded-2xl p-4 overflow-hidden shadow-sm">
+                    <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] rounded-2xl p-4 overflow-hidden shadow-sm">
                         <div class="flex items-center justify-between mb-4">
                             <h3 id="matrix-title" class="text-sm font-bold text-gray-900 dark:text-white">Global Market Cap Matrix</h3>
                             <span class="text-xs text-gray-500 dark:text-gray-400 font-mono">Auto-synced with Live Global Market Cap</span>
@@ -885,7 +1069,7 @@
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
                                 <thead>
-                                    <tr id="matrix-head" class="text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-[#2c2c2c] bg-gray-100 dark:bg-[#121212]">
+                                    <tr id="matrix-head" class="text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-[#2c2c2c] bg-gray-100 dark:bg-black">
                                         <th class="py-3 px-3">Market Segment</th>
                                         <th class="py-3 px-3 text-right">Market Cap (USD)</th>
                                         <th class="py-3 px-3 text-right">24h Change (%)</th>
@@ -1406,14 +1590,34 @@
         function toggleMobileMenu() {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         }
-        function toggleDarkMode() {
+        function applyTheme(theme) {
             const htmlEl = document.documentElement;
-            htmlEl.classList.toggle('dark');
-            htmlEl.classList.toggle('light', !htmlEl.classList.contains('dark'));
-            const isDark = htmlEl.classList.contains('dark');
-            document.getElementById('theme-icon-light').classList.toggle('hidden', isDark);
-            document.getElementById('theme-icon-dark').classList.toggle('hidden', !isDark);
+            const isDark = theme === 'dark';
+            htmlEl.classList.toggle('dark', isDark);
+            htmlEl.classList.toggle('light', !isDark);
+
+            const lightIcon = document.getElementById('theme-icon-light');
+            const darkIcon = document.getElementById('theme-icon-dark');
+            if (lightIcon) lightIcon.classList.toggle('hidden', isDark);
+            if (darkIcon) darkIcon.classList.toggle('hidden', !isDark);
+
+            try {
+                localStorage.setItem('beritaAnginTheme', isDark ? 'dark' : 'light');
+            } catch (e) {}
         }
+
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.contains('dark');
+            applyTheme(isDark ? 'light' : 'dark');
+        }
+
+        (function initializeTheme() {
+            let savedTheme = 'light';
+            try {
+                savedTheme = localStorage.getItem('beritaAnginTheme') || 'light';
+            } catch (e) {}
+            applyTheme(savedTheme === 'dark' ? 'dark' : 'light');
+        })();
         function updateLiveFrequencyTime() {
             const now = new Date();
             const timeString = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')} WITA`;
@@ -1487,7 +1691,7 @@
                     if (f === filter) {
                         btn.className = "px-4 py-1.5 rounded-full bg-primary text-white font-bold transition";
                     } else {
-                        btn.className = "px-4 py-1.5 rounded-full bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition";
+                        btn.className = "px-4 py-1.5 rounded-full bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition";
                     }
                 }
             });
@@ -1536,8 +1740,8 @@
         }
         function switchPAMarketCategory(cat) {
             paCategory = cat;
-            document.getElementById('pa-cat-crypto').className = cat === 'crypto' ? "px-3 py-1.5 rounded-lg bg-primary text-white font-bold transition" : "px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 font-bold transition";
-            document.getElementById('pa-cat-stocks').className = cat === 'stocks' ? "px-3 py-1.5 rounded-lg bg-primary text-white font-bold transition" : "px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-[#1a1a1a] border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 font-bold transition";
+            document.getElementById('pa-cat-crypto').className = cat === 'crypto' ? "px-3 py-1.5 rounded-lg bg-primary text-white font-bold transition" : "px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 font-bold transition";
+            document.getElementById('pa-cat-stocks').className = cat === 'stocks' ? "px-3 py-1.5 rounded-lg bg-primary text-white font-bold transition" : "px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 font-bold transition";
             
             document.getElementById('pa-chart-title').innerText = cat === 'crypto' ? 'Real-Time Global Market Cap Trend (Crypto)' : 'Real-Time Global Stock Indices Trend (IHSG)';
             initPerformanceChart();
@@ -1572,7 +1776,7 @@
                 const amount = (Math.random() * 5 + 0.1).toFixed(2);
                 const time = new Date().toLocaleTimeString('en-US', { hour12: false });
                 const itemHtml = `
-                    <div class="flex items-center justify-between p-2 rounded bg-white dark:bg-[#121212] border border-gray-200 dark:border-[#2c2c2c] animate-fade-in">
+                    <div class="flex items-center justify-between p-2 rounded bg-white dark:bg-black border border-gray-200 dark:border-[#2c2c2c] animate-fade-in">
                         <div class="flex items-center space-x-2">
                             <span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${isBuy ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'}">${isBuy ? 'BUY' : 'SELL'}</span>
                             <span class="font-bold text-gray-900 dark:text-white">${pair}</span>
