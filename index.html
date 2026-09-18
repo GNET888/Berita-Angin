@@ -33,7 +33,10 @@
                         'neonGreen': '#10b981',
                         'neonRed': '#ef4444',
                         'neonBlue': '#3b82f6',
-                        'neonPurple': '#8b5cf6'
+                        'neonPurple': '#8b5cf6',
+                        'darkbg': '#090d16',
+                        'cardbg': '#111827',
+                        'bordercolor': '#1f2937'
                     }
                 }
             }
@@ -71,7 +74,6 @@
     html.dark .text-slate-500 {
         color: #9ca3af !important;
     }
-
     /* Penyesuaian Dinamis Tema untuk ProTrader Terminal di dalam Stock Exchange */
     html.light #stock-exchange-page main {
         background-color: #f8fafc !important;
@@ -286,14 +288,12 @@
         background: #38bdf8;
     }
 </style>
-
 <style id="white-black-theme">
 /* =========================================================
    BERITA ANGIN — WHITE / BLACK THEME
    Light  = #ffffff
    Dark   = #000000
    ========================================================= */
-
 /* Base surfaces */
 html.light,
 html.light body,
@@ -304,7 +304,6 @@ html.light footer {
     background-color: #ffffff !important;
     color: #111827 !important;
 }
-
 html.dark,
 html.dark body,
 html.dark #root,
@@ -314,7 +313,6 @@ html.dark footer {
     background-color: #000000 !important;
     color: #f3f4f6 !important;
 }
-
 /* Tailwind surface utilities */
 html.light .bg-white,
 html.light .bg-gray-50,
@@ -324,7 +322,6 @@ html.light .bg-dark-surface,
 html.light .bg-dark-surface-card {
     background-color: #ffffff !important;
 }
-
 html.dark .bg-white,
 html.dark .bg-gray-50,
 html.dark .bg-gray-100,
@@ -337,7 +334,6 @@ html.dark [class*="dark:bg-[#1a1a1a]"],
 html.dark [class*="dark:bg-[#141414]"] {
     background-color: #000000 !important;
 }
-
 /* All common card/panel/surface components */
 html.light .card,
 html.light .news-card,
@@ -350,7 +346,6 @@ html.light .bg-panelBg,
 html.light .bg-terminalBg {
     background-color: #ffffff !important;
 }
-
 html.dark .card,
 html.dark .news-card,
 html.dark .market-card,
@@ -362,13 +357,11 @@ html.dark .bg-panelBg,
 html.dark .bg-terminalBg {
     background-color: #000000 !important;
 }
-
 /* Explicit card-like containers in this document */
 html.dark [class*="rounded"][class*="border"][class*="p-"],
 html.dark [class*="shadow"][class*="rounded"][class*="border"] {
     background-color: #000000 !important;
 }
-
 /* Carousel cards */
 html.light #terkini-list.terkini-carousel-track > li {
     background: #ffffff !important;
@@ -377,7 +370,6 @@ html.dark #terkini-list.terkini-carousel-track > li {
     background: #000000 !important;
     border-color: #222222 !important;
 }
-
 /* Inputs / controls */
 html.light input,
 html.light textarea,
@@ -392,7 +384,6 @@ html.dark select {
     color: #f3f4f6 !important;
     border-color: #222222 !important;
 }
-
 /* Tables */
 html.light table,
 html.light table th,
@@ -409,6 +400,43 @@ html.dark table.article-table tr:nth-child(even) {
 html.dark table.article-table th {
     background-color: #000000 !important;
 }
+/* Markets Page Theme Adaptations for White/Black Theme */
+html.light #markets-page main {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+    border-color: #cbd5e1 !important;
+}
+html.light #markets-page .bg-cardbg {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+}
+html.dark #markets-page main,
+html.dark #markets-page .bg-cardbg {
+    background-color: #000000 !important;
+    border-color: #222222 !important;
+    color: #f3f4f6 !important;
+}
+html.light #markets-page .text-gray-100,
+html.light #markets-page .text-gray-200 {
+    color: #111827 !important;
+}
+html.light #markets-page .text-gray-400,
+html.light #markets-page .text-gray-500 {
+    color: #64748b !important;
+}
+html.light #markets-page .bg-gray-800\/40,
+html.light #markets-page .bg-gray-800\/60,
+html.light #markets-page .bg-gray-900\/50 {
+    background-color: rgba(0, 0, 0, 0.03) !important;
+}
+html.dark #markets-page .bg-gray-800\/40,
+html.dark #markets-page .bg-gray-800\/60,
+html.dark #markets-page .bg-gray-900\/50 {
+    background-color: #000000 !important;
+}
+html.dark #markets-page .border-bordercolor {
+    border-color: #222222 !important;
+}
 
 /* Borders stay neutral; accent borders remain accent-colored. */
 html.dark .border-gray-200,
@@ -418,7 +446,6 @@ html.dark .border-dark-border,
 html.dark .border-borderCol {
     border-color: #222222 !important;
 }
-
 /* Neutral hover states must not introduce brown/gray card backgrounds. */
 html.dark .hover\:bg-gray-50:hover,
 html.dark .hover\:bg-gray-100:hover,
@@ -427,7 +454,6 @@ html.dark .dark\:hover\:bg-dark-surface-card:hover,
 html.dark .dark\:hover\:bg-dark-surface:hover {
     background-color: #000000 !important;
 }
-
 /* Mobile menu */
 html.light #mobile-menu {
     background-color: #ffffff !important;
@@ -435,7 +461,6 @@ html.light #mobile-menu {
 html.dark #mobile-menu {
     background-color: #000000 !important;
 }
-
 /* Keep primary/status colors visible instead of flattening them. */
 html.dark .bg-primary,
 html.dark .bg-emerald-500,
@@ -445,7 +470,6 @@ html.dark .bg-amber-500,
 html.dark .bg-purple-500 {
     /* intentionally preserve utility colors */
 }
-
 /* Neutral text */
 html.dark .text-gray-900,
 html.dark .text-slate-900,
@@ -459,7 +483,6 @@ html.dark .text-slate-600,
 html.dark .text-slate-500 {
     color: #9ca3af !important;
 }
-
 /* Shadows should remain neutral in either theme. */
 html.dark .shadow,
 html.dark .shadow-sm,
@@ -469,7 +492,6 @@ html.dark .shadow-xl {
     --tw-shadow-color: rgba(255,255,255,0.06);
 }
 </style>
-
 </head>
 <body class="antialiased">
     <div id="root" class="bg-white dark:bg-dark-bg min-h-screen flex flex-col justify-between">
@@ -553,7 +575,7 @@ html.dark .shadow-xl {
                         <a href="#" onclick="showProfile(); toggleMobileMenu(); return false;" class="text-gray-700 dark:text-dark-text-secondary hover:text-primary px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-dark-surface block w-full">PROFIL</a>
                         <a href="#" onclick="showStockExchange(); toggleMobileMenu(); return false;" class="text-gray-700 dark:text-dark-text-secondary hover:text-primary px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-dark-surface block w-full">STOCK EXCHANGE</a>
                         <a href="#" onclick="showMarkets(); toggleMobileMenu(); return false;" class="text-gray-700 dark:text-dark-text-secondary hover:text-primary px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-dark-surface block w-full">MARKETS</a>
-                        <a href="#" onclick="showPerformanceAnalyst(); toggleMobileMenu(); return false;" class="text-gray-700 dark:text-dark-text-secondary hover:text-primary px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-dark-surface block w-full">PERFORMANCE ANALYST</a>
+                        <a href="#" onclick="showPerformanceAnalyst(); toggleMobileMenu(); return false;" class="text-gray-700 dark:text-dark-text-secondary hover:text-primary px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-dark-surface block w-full">PERFORMANCE ANALYST (Live Market Transactions)</a>
                      </nav>
                 </div>
             </header>
@@ -567,7 +589,7 @@ html.dark .shadow-xl {
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <div class="relative rounded-lg overflow-hidden group cursor-pointer flex flex-col justify-end min-h-[380px]" onclick="openArticle('headline-main')">
                                 <div class="absolute inset-0 overflow-hidden rounded-lg">
-                                    <img src="1111.gif" alt="KM Virgo" class="w-full h-full object-cover transition-transform duration-300 group-hover-image">
+                                    <img src="who am i.jpg" alt="KM Virgo" class="w-full h-full object-cover transition-transform duration-300 group-hover-image">
                                 </div>
                                 <div class="relative z-10 p-6 bg-gradient-to-t from-black/95 via-black/70 to-transparent">
                                     <span class="text-xs font-bold bg-primary text-white px-2.5 py-1 rounded">PERISTIWA</span>
@@ -815,176 +837,218 @@ html.dark .shadow-xl {
             
             <!-- VIEW 4: MARKETS PAGE -->
             <div id="markets-page" class="page-view">
-                <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-black text-gray-900 dark:text-white shadow-lg my-6 rounded-xl border border-gray-200 dark:border-[#2c2c2c] transition-all duration-300">
-                    <div class="mb-4">
-                        <h1 class="text-lg font-bold text-gray-900 dark:text-white">Markets</h1>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Live prices across the assets you're watching.</p>
-                    </div>
-                    
-                    <!-- MARKET STATUS BANNER -->
-                    <div class="bg-gradient-to-r from-primary/10 via-emerald-500/10 to-primary/10 border border-primary/20 p-4 rounded-xl mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
-                        <div class="flex items-center space-x-3">
-                            <div class="p-2.5 rounded-lg bg-emerald-500 text-white font-bold">
-                                <svg class="w-5 h-5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                <main class="max-w-7xl mx-auto px-4 py-6 w-full space-y-6 flex-grow bg-darkbg text-gray-100 rounded-xl my-6 border border-bordercolor shadow-2xl">
+                    <!-- Top KPI Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-cardbg border border-bordercolor p-4 rounded-xl shadow-lg relative overflow-hidden">
+                            <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">Global Market Cap</p>
+                            <div class="flex items-baseline justify-between mt-2">
+                                <h3 id="kpi-market-cap" class="text-2xl font-bold tracking-tight">$2.48 Trillion</h3>
+                                <span id="kpi-cap-change" class="text-xs font-semibold text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/50">+3.42%</span>
                             </div>
+                            <div class="mt-2 text-xs text-gray-500">Updated 24h trailing data</div>
+                        </div>
+                        <div class="bg-cardbg border border-bordercolor p-4 rounded-xl shadow-lg relative overflow-hidden">
+                            <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">24h Trading Volume</p>
+                            <div class="flex items-baseline justify-between mt-2">
+                                <h3 id="kpi-volume" class="text-2xl font-bold tracking-tight">$94.5 Billion</h3>
+                                <span class="text-xs font-semibold text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/50">+5.18%</span>
+                            </div>
+                            <div class="mt-2 text-xs text-gray-500">Global exchange liquidity</div>
+                        </div>
+                        <div class="bg-cardbg border border-bordercolor p-4 rounded-xl shadow-lg relative overflow-hidden">
+                            <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">Bitcoin Dominance</p>
+                            <div class="flex items-baseline justify-between mt-2">
+                                <h3 id="kpi-btc-dominance" class="text-2xl font-bold tracking-tight">54.2%</h3>
+                                <span class="text-xs font-semibold text-red-400 bg-red-950/50 px-2 py-0.5 rounded border border-red-800/50">-0.24%</span>
+                            </div>
+                            <div class="mt-2 text-xs text-gray-500">BTC vs Altcoin market share</div>
+                        </div>
+                        <div class="bg-cardbg border border-bordercolor p-4 rounded-xl shadow-lg relative overflow-hidden">
+                            <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">Market Sentiment</p>
+                            <div class="flex items-baseline justify-between mt-2">
+                                <h3 id="kpi-sentiment" class="text-2xl font-bold text-emerald-400 tracking-tight">74 (Greed)</h3>
+                                <span class="text-xs font-semibold text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/50">Bullish</span>
+                            </div>
+                            <div class="mt-2 text-xs text-gray-500">Crypto Fear & Greed Index</div>
+                        </div>
+                    </div>
+                    <!-- Charts and Extended Asset List Section -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Chart Area (2 Cols) -->
+                        <div class="lg:col-span-2 bg-cardbg border border-bordercolor p-5 rounded-xl shadow-lg flex flex-col justify-between">
+                            <div class="flex justify-between items-center mb-4">
+                                <div>
+                                    <h2 class="font-bold text-base text-gray-200">Global Capital Trend Flow</h2>
+                                    <p class="text-xs text-gray-400">Real-time valuation index movement across major pools (Bar Chart Model)</p>
+                                </div>
+                                <div class="flex space-x-1 bg-gray-800/60 p-1 rounded-lg border border-gray-700 text-xs">
+                                    <button onclick="updateChartTimeframe('1H')" class="px-3 py-1 rounded bg-blue-600 text-white font-medium shadow">1H</button>
+                                    <button onclick="updateChartTimeframe('24H')" class="px-3 py-1 rounded hover:bg-gray-700 text-gray-300">24H</button>
+                                    <button onclick="updateChartTimeframe('7D')" class="px-3 py-1 rounded hover:bg-gray-700 text-gray-300">7D</button>
+                                </div>
+                            </div>
+                            <div class="relative h-72 w-full">
+                                <canvas id="capitalTrendChart"></canvas>
+                            </div>
+                        </div>
+                        <!-- Extended Live Asset List Tracker (1 Col) -->
+                        <div class="bg-cardbg border border-bordercolor p-5 rounded-xl shadow-lg flex flex-col justify-between">
                             <div>
-                                <div class="flex items-center space-x-2">
-                                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">Market Status</span>
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500 text-white">BULLISH TREND</span>
-                                </div>
-                                <h2 class="text-sm font-bold text-gray-900 dark:text-white mt-0.5">Global Liquidity Expanding &bull; Sentiment: Extreme Greed (78)</h2>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-3 text-xs font-mono">
-                            <div class="text-right">
-                                <span class="block text-gray-500 dark:text-gray-400">24h Volatility</span>
-                                <span class="font-bold text-emerald-500">Low &bull; Stable (+2.4%)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
-                            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">MarketCap</span>
-                            <div class="flex items-baseline justify-between mt-2">
-                                <span id="top-card-mcap" class="text-xl font-black font-mono text-gray-900 dark:text-white">$2.45T</span>
-                                <span id="top-card-mcap-change" class="text-xs font-bold text-emerald-500 font-mono">+2.4%</span>
-                            </div>
-                        </div>
-                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
-                            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">24h Volume</span>
-                            <div class="flex items-baseline justify-between mt-2">
-                                <span id="top-card-vol" class="text-xl font-black font-mono text-gray-900 dark:text-white">$112.8B</span>
-                                <span id="top-card-vol-change" class="text-xs font-bold text-emerald-500 font-mono">+6.1%</span>
-                            </div>
-                        </div>
-                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
-                            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">BTC Dominance</span>
-                            <div class="flex items-baseline justify-between mt-2">
-                                <span id="top-card-dominance" class="text-xl font-black font-mono text-gray-900 dark:text-white">54.1%</span>
-                                <span id="top-card-dominance-change" class="text-xs font-bold text-rose-500 font-mono">-0.4%</span>
-                            </div>
-                        </div>
-                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl flex flex-col justify-between shadow-sm">
-                            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Fear & Greed</span>
-                            <div class="flex items-baseline justify-between mt-2">
-                                <span class="text-xl font-black font-mono text-gray-900 dark:text-white">78 &middot; Greed</span>
-                                <span class="text-xs font-bold text-emerald-500 font-mono">+12</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- SECTION KOIN YANG SEDANG TREND & DERIVATIVES -->
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                        <!-- Trending Coins Card -->
-                        <div class="bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl shadow-sm flex flex-col justify-between">
-                            <div class="flex items-center justify-between mb-3 border-b border-gray-200 dark:border-[#2c2c2c] pb-2">
-                                <h3 class="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white flex items-center space-x-1.5">
-                                    <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                    <span>🔥 Koin Sedang Trend</span>
-                                </h3>
-                                <span class="text-[10px] text-gray-500 font-mono">Top Search</span>
-                            </div>
-                            <div class="space-y-2.5">
-                                <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-black border border-gray-200 dark:border-[#2c2c2c]">
-                                    <div class="flex items-center space-x-2">
-                                        <span class="text-xs font-bold font-mono text-primary">1</span>
-                                        <div>
-                                            <span class="font-bold text-xs text-gray-900 dark:text-white block">Solana (SOL)</span>
-                                            <span class="text-[10px] text-gray-500">Layer 1 Ecosystem</span>
+                                <h2 class="font-bold text-base text-gray-200 mb-1">Top Crypto Assets</h2>
+                                <p class="text-xs text-gray-400 mb-4">Live index pricing & market cap ranking</p>
+                                
+                                <div id="crypto-list" class="space-y-2.5 max-h-[310px] overflow-y-auto pr-1">
+                                    <!-- Bitcoin -->
+                                    <div class="flex items-center justify-between p-2 rounded-lg bg-gray-800/40 border border-gray-800">
+                                        <div class="flex items-center space-x-2.5">
+                                            <div class="w-7 h-7 rounded-full bg-amber-500/20 text-amber-500 flex items-center justify-center font-bold text-[10px]">BTC</div>
+                                            <div>
+                                                <div class="font-semibold text-xs">Bitcoin</div>
+                                                <div class="text-[10px] text-gray-400">Rank #1</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div id="price-bitcoin" class="font-mono text-xs font-semibold">Loading...</div>
+                                            <div id="change-bitcoin" class="text-[10px] text-emerald-400">--</div>
                                         </div>
                                     </div>
-                                    <div class="text-right font-mono">
-                                        <span class="text-xs font-bold text-emerald-500 block">+6.2%</span>
-                                        <span class="text-[10px] text-gray-500">$154.80</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-black border border-gray-200 dark:border-[#2c2c2c]">
-                                    <div class="flex items-center space-x-2">
-                                        <span class="text-xs font-bold font-mono text-primary">2</span>
-                                        <div>
-                                            <span class="font-bold text-xs text-gray-900 dark:text-white block">Dogecoin (DOGE)</span>
-                                            <span class="text-[10px] text-gray-500">Meme Coin</span>
+                                    <!-- Ethereum -->
+                                    <div class="flex items-center justify-between p-2 rounded-lg bg-gray-800/40 border border-gray-800">
+                                        <div class="flex items-center space-x-2.5">
+                                            <div class="w-7 h-7 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-[10px]">ETH</div>
+                                            <div>
+                                                <div class="font-semibold text-xs">Ethereum</div>
+                                                <div class="text-[10px] text-gray-400">Rank #2</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div id="price-ethereum" class="font-mono text-xs font-semibold">Loading...</div>
+                                            <div id="change-ethereum" class="text-[10px] text-emerald-400">--</div>
                                         </div>
                                     </div>
-                                    <div class="text-right font-mono">
-                                        <span class="text-xs font-bold text-emerald-500 block">+4.5%</span>
-                                        <span class="text-[10px] text-gray-500">$0.13</span>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-black border border-gray-200 dark:border-[#2c2c2c]">
-                                    <div class="flex items-center space-x-2">
-                                        <span class="text-xs font-bold font-mono text-primary">3</span>
-                                        <div>
-                                            <span class="font-bold text-xs text-gray-900 dark:text-white block">Bitcoin (BTC)</span>
-                                            <span class="text-[10px] text-gray-500">Store of Value</span>
+                                    <!-- Tether -->
+                                    <div class="flex items-center justify-between p-2 rounded-lg bg-gray-800/40 border border-gray-800">
+                                        <div class="flex items-center space-x-2.5">
+                                            <div class="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px]">USDT</div>
+                                            <div>
+                                                <div class="font-semibold text-xs">Tether</div>
+                                                <div class="text-[10px] text-gray-400">Rank #3</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div id="price-tether" class="font-mono text-xs font-semibold">Loading...</div>
+                                            <div id="change-tether" class="text-[10px] text-emerald-400">--</div>
                                         </div>
                                     </div>
-                                    <div class="text-right font-mono">
-                                        <span class="text-xs font-bold text-emerald-500 block">+3.4%</span>
-                                        <span class="text-[10px] text-gray-500">$63,150</span>
+                                    <!-- Binance Coin -->
+                                    <div class="flex items-center justify-between p-2 rounded-lg bg-gray-800/40 border border-gray-800">
+                                        <div class="flex items-center space-x-2.5">
+                                            <div class="w-7 h-7 rounded-full bg-yellow-500/20 text-yellow-400 flex items-center justify-center font-bold text-[10px]">BNB</div>
+                                            <div>
+                                                <div class="font-semibold text-xs">Binance Coin</div>
+                                                <div class="text-[10px] text-gray-400">Rank #4</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div id="price-binancecoin" class="font-mono text-xs font-semibold">Loading...</div>
+                                            <div id="change-binancecoin" class="text-[10px] text-emerald-400">--</div>
+                                        </div>
+                                    </div>
+                                    <!-- Solana -->
+                                    <div class="flex items-center justify-between p-2 rounded-lg bg-gray-800/40 border border-gray-800">
+                                        <div class="flex items-center space-x-2.5">
+                                            <div class="w-7 h-7 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-[10px]">SOL</div>
+                                            <div>
+                                                <div class="font-semibold text-xs">Solana</div>
+                                                <div class="text-[10px] text-gray-400">Rank #5</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div id="price-solana" class="font-mono text-xs font-semibold">Loading...</div>
+                                            <div id="change-solana" class="text-[10px] text-emerald-400">--</div>
+                                        </div>
+                                    </div>
+                                    <!-- Ripple -->
+                                    <div class="flex items-center justify-between p-2 rounded-lg bg-gray-800/40 border border-gray-800">
+                                        <div class="flex items-center space-x-2.5">
+                                            <div class="w-7 h-7 rounded-full bg-slate-500/20 text-slate-300 flex items-center justify-center font-bold text-[10px]">XRP</div>
+                                            <div>
+                                                <div class="font-semibold text-xs">XRP</div>
+                                                <div class="text-[10px] text-gray-400">Rank #6</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div id="price-ripple" class="font-mono text-xs font-semibold">Loading...</div>
+                                            <div id="change-ripple" class="text-[10px] text-emerald-400">--</div>
+                                        </div>
+                                    </div>
+                                    <!-- Cardano -->
+                                    <div class="flex items-center justify-between p-2 rounded-lg bg-gray-800/40 border border-gray-800">
+                                        <div class="flex items-center space-x-2.5">
+                                            <div class="w-7 h-7 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-[10px]">ADA</div>
+                                            <div>
+                                                <div class="font-semibold text-xs">Cardano</div>
+                                                <div class="text-[10px] text-gray-400">Rank #7</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div id="price-cardano" class="font-mono text-xs font-semibold">Loading...</div>
+                                            <div id="change-cardano" class="text-[10px] text-emerald-400">--</div>
+                                        </div>
+                                    </div>
+                                    <!-- Dogecoin -->
+                                    <div class="flex items-center justify-between p-2 rounded-lg bg-gray-800/40 border border-gray-800">
+                                        <div class="flex items-center space-x-2.5">
+                                            <div class="w-7 h-7 rounded-full bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold text-[10px]">DOGE</div>
+                                            <div>
+                                                <div class="font-semibold text-xs">Dogecoin</div>
+                                                <div class="text-[10px] text-gray-400">Rank #8</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div id="price-dogecoin" class="font-mono text-xs font-semibold">Loading...</div>
+                                            <div id="change-dogecoin" class="text-[10px] text-emerald-400">--</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Derivatives Market Summary Card -->
-                        <div class="lg:col-span-2 bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-4 rounded-xl shadow-sm flex flex-col justify-between">
-                            <div class="flex items-center justify-between mb-3 border-b border-gray-200 dark:border-[#2c2c2c] pb-2">
-                                <h3 class="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white flex items-center space-x-1.5">
-                                    <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                                    <span>⚡ Derivatives Markets (Futures & Options)</span>
-                                </h3>
-                                <span class="text-[10px] text-purple-500 font-mono font-semibold">Open Interest: $64.8B</span>
-                            </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
-                                <div class="bg-white dark:bg-black p-3 rounded-lg border border-gray-200 dark:border-[#2c2c2c]">
-                                    <span class="text-[11px] text-gray-500 block">Futures Open Interest</span>
-                                    <span class="text-base font-black font-mono text-gray-900 dark:text-white mt-1 block">$52.4B</span>
-                                    <span class="text-[10px] text-emerald-500 font-bold">+4.1% (24h)</span>
-                                </div>
-                                <div class="bg-white dark:bg-black p-3 rounded-lg border border-gray-200 dark:border-[#2c2c2c]">
-                                    <span class="text-[11px] text-gray-500 block">24h Derivatives Vol</span>
-                                    <span class="text-base font-black font-mono text-gray-900 dark:text-white mt-1 block">$248.6B</span>
-                                    <span class="text-[10px] text-emerald-500 font-bold">+12.5%</span>
-                                </div>
-                                <div class="bg-white dark:bg-black p-3 rounded-lg border border-gray-200 dark:border-[#2c2c2c]">
-                                    <span class="text-[11px] text-gray-500 block">Long / Short Ratio</span>
-                                    <span class="text-base font-black font-mono text-emerald-500 mt-1 block">52.8% / 47.2%</span>
-                                    <span class="text-[10px] text-primary font-bold">Bullish Bias</span>
-                                </div>
-                            </div>
-                            <div class="text-[11px] text-gray-500 dark:text-gray-400 flex items-center justify-between bg-white dark:bg-black px-3 py-2 rounded-lg border border-gray-200 dark:border-[#2c2c2c]">
-                                <span>Total 24h Liquidation: <strong class="text-rose-500 font-mono">$114.2M</strong> (Shorts: $78.4M, Longs: $35.8M)</span>
-                                <span class="text-primary font-bold">Live Data</span>
+                            <div class="mt-4 pt-3 border-t border-bordercolor text-center">
+                                <span id="last-updated" class="text-[11px] text-gray-500 font-mono">Syncing 24/7 stream...</span>
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
-                        <div class="relative w-full md:w-72">
-                            <input type="text" id="market-search-input" onkeyup="filterCryptoTable()" placeholder="Search coin..." class="w-full bg-gray-50 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-xs rounded-lg py-2 pl-9 pr-4 text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-primary shadow-sm">
-                            <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <!-- Real-Time Crypto Index Performance Tracker dengan Ikon -->
+                    <div class="bg-cardbg border border-bordercolor p-5 rounded-xl shadow-lg mt-6">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
+                            <div>
+                                <h2 class="font-bold text-base text-gray-200 flex items-center gap-2">
+                                    <i class="fa-solid fa-chart-line text-neonBlue"></i> Real-Time Crypto Index Performance Tracker
+                                </h2>
+                                <p class="text-xs text-gray-400">Daftar aset kripto diurutkan secara real-time berdasarkan persentase perubahan harga (Gainers / Losers)</p>
+                            </div>
+                            <div class="flex space-x-2 bg-gray-800/60 p-1 rounded-lg border border-gray-700 text-xs">
+                                <button onclick="setCryptoSort('desc')" id="sort-desc-btn" class="px-3 py-1 rounded bg-blue-600 text-white font-medium transition">Top Gainers</button>
+                                <button onclick="setCryptoSort('asc')" id="sort-asc-btn" class="px-3 py-1 rounded text-gray-300 hover:bg-gray-700 transition">Top Losers</button>
+                            </div>
                         </div>
-                        <div class="flex items-center space-x-2 text-xs">
-                            <button onclick="setCryptoFilter('all')" id="filter-btn-all" class="px-4 py-1.5 rounded-full bg-primary text-white font-bold transition">All</button>
-                            <button onclick="setCryptoFilter('gainers')" id="filter-btn-gainers" class="px-4 py-1.5 rounded-full bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition">Gainers</button>
-                            <button onclick="setCryptoFilter('losers')" id="filter-btn-losers" class="px-4 py-1.5 rounded-full bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition">Losers</button>
-                            <button onclick="setCryptoFilter('watchlist')" id="filter-btn-watchlist" class="px-4 py-1.5 rounded-full bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition">Watchlist</button>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
+                                <thead>
+                                    <tr class="text-gray-400 border-b border-bordercolor bg-gray-900/50">
+                                        <th class="py-3 px-4">Aset</th>
+                                        <th class="py-3 px-4 text-right">Harga (USD)</th>
+                                        <th class="py-3 px-4 text-right">Perubahan 24j (%)</th>
+                                        <th class="py-3 px-4 text-right">Status Tren</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="realtime-crypto-tbody" class="divide-y divide-bordercolor/40 font-mono">
+                                    <tr>
+                                        <td colspan="4" class="py-4 text-center text-gray-500">Memuat data real-time crypto...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                    <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-[#2c2c2c] bg-gray-50/50 dark:bg-black">
-                        <table class="w-full text-left border-collapse text-xs whitespace-nowrap">
-                            <thead>
-                                <tr class="text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-[#2c2c2c] bg-gray-100 dark:bg-black">
-                                    <th class="py-3.5 px-4 w-12 text-center">#</th>
-                                    <th class="py-3.5 px-4">Name</th>
-                                    <th class="py-3.5 px-4 text-right">Price</th>
-                                    <th class="py-3.5 px-4 text-right">24h</th>
-                                    <th class="py-3.5 px-4 text-right">Volume (24H)</th>
-                                    <th class="py-3.5 px-4 text-right">Market Cap</th>
-                                    <th class="py-3.5 px-4 text-center">Last 7d</th>
-                                    <th class="py-3.5 px-4 text-center w-12"><span class="sr-only">Star</span></th>
-                                </tr>
-                            </thead>
-                            <tbody id="crypto-table-body" class="divide-y divide-gray-200 dark:divide-[#2c2c2c]"></tbody>
-                        </table>
                     </div>
                 </main>
             </div>
@@ -994,7 +1058,7 @@ html.dark .shadow-xl {
                 <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-black text-gray-900 dark:text-white shadow-2xl my-6 rounded-xl border border-gray-200 dark:border-[#2c2c2c] transition-all duration-300">
                     <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
                         <div>
-                            <h1 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Performance Analyst & Live Transactions</h1>
+                            <h1 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Performance Analyst & Live Market Transactions</h1>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Real-time performance analytics driven by live global market cap movements.</p>
                         </div>
                         <div class="flex items-center space-x-3 text-xs">
@@ -1035,15 +1099,10 @@ html.dark .shadow-xl {
                             </div>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-2 mb-4 text-xs">
-                        <span class="text-gray-500 font-bold">Select Market View:</span>
-                        <button onclick="switchPAMarketCategory('crypto')" id="pa-cat-crypto" class="px-3 py-1.5 rounded-lg bg-primary text-white font-bold transition">Global Market Cap (Crypto)</button>
-                        <button onclick="switchPAMarketCategory('stocks')" id="pa-cat-stocks" class="px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 font-bold transition">Global Stock Indices</button>
-                    </div>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                         <div class="lg:col-span-2 bg-gray-50 dark:bg-black border border-gray-200 dark:border-[#2c2c2c] p-5 rounded-2xl flex flex-col justify-between shadow-sm">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 id="pa-chart-title" class="text-sm font-bold text-gray-900 dark:text-white">Real-Time Global Market Cap Trend (Crypto)</h3>
+                                <h3 id="pa-chart-title" class="text-sm font-bold text-gray-900 dark:text-white">Real-Time Global Market Cap Trend (Crypto) - Modern Bar/Line Model</h3>
                                 <div class="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400 font-mono">
                                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                                     <span>Live Streaming Chart.js</span>
@@ -1084,7 +1143,7 @@ html.dark .shadow-xl {
                 </main>
             </div>
             
-            <!-- VIEW 6: STOCK EXCHANGE (Menggunakan Layout ProTrader Terminal dari File Kedua yang Kompatibel Tema Putih & Dark) -->
+            <!-- VIEW 6: STOCK EXCHANGE -->
             <div id="stock-exchange-page" class="page-view">
                 <main class="container mx-auto p-4 md:p-6 bg-terminalBg text-gray-200 shadow-2xl my-6 rounded-2xl border border-borderCol transition-all duration-300">
                     <!-- Top Navigation Bar ProTrader Terminal -->
@@ -1109,7 +1168,6 @@ html.dark .shadow-xl {
                             <button onclick="switchMarket('CRYPTO')" class="tab-btn px-3 py-1.5 rounded-md font-medium text-gray-400 hover:text-white transition">ETH/USD</button>
                         </div>
                     </div>
-
                     <!-- Top Metric Cards (Grid 4 Kolom) -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                         <!-- Card 1 -->
@@ -1149,7 +1207,6 @@ html.dark .shadow-xl {
                             <div class="bg-yellow-500/10 p-3 rounded-lg text-yellow-400"><i class="fa-solid fa-clock"></i></div>
                         </div>
                     </div>
-
                     <!-- Center Section: Main Chart & Watchlist Table -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                         <!-- Dynamic Main Chart (2 Columns) -->
@@ -1228,7 +1285,6 @@ html.dark .shadow-xl {
                             </div>
                         </div>
                     </div>
-
                     <!-- Lower Section (Volatility, Trade Tape, & Volume Bar Charts) -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <!-- Horizontal Bar Chart: Market Volatility & Spread Matrix -->
@@ -1246,7 +1302,6 @@ html.dark .shadow-xl {
                                 <canvas id="volatilityHBarChart"></canvas>
                             </div>
                         </div>
-
                         <!-- Live Trade Tape (Time & Sales) -->
                         <div class="bg-panelBg p-5 rounded-xl border border-borderCol flex flex-col">
                             <div class="flex justify-between items-center mb-3">
@@ -1278,7 +1333,6 @@ html.dark .shadow-xl {
                                 </div>
                             </div>
                         </div>
-
                         <!-- Real-Time Volume & Liquidity Bar Chart -->
                         <div class="bg-panelBg p-5 rounded-xl border border-borderCol flex flex-col justify-between">
                             <div>
@@ -1562,8 +1616,8 @@ html.dark .shadow-xl {
         }
         function showHome() { hideAllPages(); document.getElementById('home-page').classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
         function showProfile() { hideAllPages(); document.getElementById('profile-page').classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-        function showMarkets() { hideAllPages(); document.getElementById('markets-page').classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); renderCryptoTable(); }
-        function showPerformanceAnalyst() { hideAllPages(); document.getElementById('performance-analyst-page').classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); initPerformanceChart(); renderPAMatrix(); }
+        function showMarkets() { hideAllPages(); document.getElementById('markets-page').classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); fetchLiveMarketData(); fetchRealtimeCryptoTable(); }
+        function showPerformanceAnalyst() { hideAllPages(); document.getElementById('performance-analyst-page').classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); initPerformanceChart(); renderPAMatrix(); startLiveTransactionStream(); }
         function showStockExchange() { 
             hideAllPages(); 
             document.getElementById('stock-exchange-page').classList.add('active'); 
@@ -1595,22 +1649,18 @@ html.dark .shadow-xl {
             const isDark = theme === 'dark';
             htmlEl.classList.toggle('dark', isDark);
             htmlEl.classList.toggle('light', !isDark);
-
             const lightIcon = document.getElementById('theme-icon-light');
             const darkIcon = document.getElementById('theme-icon-dark');
             if (lightIcon) lightIcon.classList.toggle('hidden', isDark);
             if (darkIcon) darkIcon.classList.toggle('hidden', !isDark);
-
             try {
                 localStorage.setItem('beritaAnginTheme', isDark ? 'dark' : 'light');
             } catch (e) {}
         }
-
         function toggleDarkMode() {
             const isDark = document.documentElement.classList.contains('dark');
             applyTheme(isDark ? 'light' : 'dark');
         }
-
         (function initializeTheme() {
             let savedTheme = 'light';
             try {
@@ -1626,127 +1676,169 @@ html.dark .shadow-xl {
         }
         setInterval(updateLiveFrequencyTime, 1000);
         
-        // --- DATA CRYPTO & STOCKS ---
-        let currentFilter = 'all';
-        let cryptoData = [
-            { rank: 1, name: "Bitcoin", symbol: "BTC", price: 63150.20, h24: 3.4, vol: "$28.6B", mcap: "$1.24T", chart: "up", watchlist: false },
-            { rank: 2, name: "Ethereum", symbol: "ETH", price: 3420.50, h24: -0.8, vol: "$16.2B", mcap: "$410.5B", chart: "down", watchlist: true },
-            { rank: 3, name: "BNB", symbol: "BNB", price: 585.40, h24: 1.2, vol: "$1.4B", mcap: "$89.2B", chart: "up", watchlist: false },
-            { rank: 4, name: "Solana", symbol: "SOL", price: 154.80, h24: 6.2, vol: "$3.8B", mcap: "$72.1B", chart: "up", watchlist: false },
-            { rank: 5, name: "XRP", symbol: "XRP", price: 0.58, h24: -1.5, vol: "$980M", mcap: "$32.4B", chart: "down", watchlist: false },
-            { rank: 6, name: "Dogecoin", symbol: "DOGE", price: 0.13, h24: 4.5, vol: "$1.1B", mcap: "$18.9B", chart: "up", watchlist: false },
-            { rank: 7, name: "Cardano", symbol: "ADA", price: 0.46, h24: 0.9, vol: "$420M", mcap: "$16.3B", chart: "up", watchlist: false },
-            { rank: 8, name: "Avalanche", symbol: "AVAX", price: 28.50, h24: -3.1, vol: "$510M", mcap: "$11.2B", chart: "down", watchlist: false }
-        ];
-        let globalMarketCapsData = [
-            { segment: "Total Crypto Market Cap", cap: 2450000000000, h24: 2.4, share: "100.0%", status: "BULLISH" },
-            { segment: "Bitcoin (BTC)", cap: 1240000000000, h24: 3.4, share: "50.6%", status: "DOMINANT" },
-            { segment: "Ethereum (ETH)", cap: 4105000000000, h24: -0.8, share: "16.7%", status: "STABLE" },
-            { segment: "Altcoins (Excl. BTC & ETH)", cap: 799500000000, h24: 1.8, share: "32.7%", status: "EXPANDING" }
-        ];
-        function renderCryptoTable() {
-            const tbody = document.getElementById('crypto-table-body');
-            if (!tbody) return;
-            const searchTerm = (document.getElementById('market-search-input')?.value || '').toLowerCase();
-            let filtered = cryptoData.filter(coin => {
-                const matchesSearch = coin.name.toLowerCase().includes(searchTerm) || coin.symbol.toLowerCase().includes(searchTerm);
-                if (!matchesSearch) return false;
-                if (currentFilter === 'gainers') return coin.h24 > 0;
-                if (currentFilter === 'losers') return coin.h24 < 0;
-                if (currentFilter === 'watchlist') return coin.watchlist;
-                return true;
-            });
-            tbody.innerHTML = filtered.map(coin => {
-                const isPositive = coin.h24 >= 0;
-                const textColor = isPositive ? 'text-emerald-500' : 'text-rose-500';
-                const sign = isPositive ? '+' : '';
-                return `
-                    <tr class="hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors">
-                        <td class="py-3.5 px-4 text-center font-mono text-gray-400">${coin.rank}</td>
-                        <td class="py-3.5 px-4 font-bold flex items-center space-x-2">
-                            <span>${coin.name}</span>
-                            <span class="text-[10px] text-gray-400 font-mono font-normal uppercase">${coin.symbol}</span>
-                        </td>
-                        <td class="py-3.5 px-4 text-right font-mono font-bold">$${coin.price.toLocaleString('en-US', { minimumFractionDigits: 2 })}</td>
-                        <td class="py-3.5 px-4 text-right font-mono font-bold ${textColor}">${sign}${coin.h24.toFixed(1)}%</td>
-                        <td class="py-3.5 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${coin.vol}</td>
-                        <td class="py-3.5 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${coin.mcap}</td>
-                        <td class="py-3.5 px-4 text-center">
-                            <span class="text-xs font-mono font-bold ${textColor}">${isPositive ? '📈 Up' : '📉 Down'}</span>
-                        </td>
-                        <td class="py-3.5 px-4 text-center">
-                            <button onclick="toggleWatchlist(${coin.rank})" class="text-gray-400 hover:text-amber-400 transition">
-                                ${coin.watchlist ? '★' : '☆'}
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-        function setCryptoFilter(filter) {
-            currentFilter = filter;
-            ['all', 'gainers', 'losers', 'watchlist'].forEach(f => {
-                const btn = document.getElementById(`filter-btn-${f}`);
-                if (btn) {
-                    if (f === filter) {
-                        btn.className = "px-4 py-1.5 rounded-full bg-primary text-white font-bold transition";
-                    } else {
-                        btn.className = "px-4 py-1.5 rounded-full bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-bold transition";
-                    }
-                }
-            });
-            renderCryptoTable();
-        }
-        function filterCryptoTable() {
-            renderCryptoTable();
-        }
-        function toggleWatchlist(rank) {
-            const coin = cryptoData.find(c => c.rank === rank);
-            if (coin) {
-                coin.watchlist = !coin.watchlist;
-                renderCryptoTable();
-            }
-        }
-        let perfChart = null;
-        let paCategory = 'crypto';
-        function initPerformanceChart() {
-            const ctx = document.getElementById('performanceChart')?.getContext('2d');
-            if (!ctx) return;
-            if (perfChart) perfChart.destroy();
-            perfChart = new Chart(ctx, {
-                type: 'line',
+        // --- CHART 1: Global Capital Trend Flow diubah menjadi Bar Chart Vertikal Modern ---
+        const capitalCtx = document.getElementById('capitalTrendChart')?.getContext('2d');
+        let capitalChart = null;
+        if (capitalCtx) {
+            const barGrad = capitalCtx.createLinearGradient(0, 0, 0, 250);
+            barGrad.addColorStop(0, '#3b82f6');
+            barGrad.addColorStop(1, '#1d4ed8');
+            capitalChart = new Chart(capitalCtx, {
+                type: 'bar',
                 data: {
-                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'],
+                    labels: ['17:35', '17:36', '17:37', '17:37', '17:37', '17:37', '17:37', '17:37', '17:38'],
                     datasets: [{
-                        label: paCategory === 'crypto' ? 'Crypto Market Cap ($T)' : 'IHSG Index',
-                        data: paCategory === 'crypto' ? [2.38, 2.40, 2.41, 2.43, 2.42, 2.44, 2.45] : [7750, 7780, 7795, 7810, 7800, 7805, 7812],
-                        borderColor: '#0284c7',
-                        backgroundColor: 'rgba(2, 132, 199, 0.1)',
-                        fill: true,
-                        tension: 0.4
+                        label: 'Global Capital Flow Index',
+                        data: [2565, 2568, 2570, 2571, 2562, 2576, 2582, 2589, 2557],
+                        backgroundColor: barGrad,
+                        borderRadius: 6,
+                        borderSkipped: false
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    plugins: {
+                        legend: { display: false }
+                    },
                     scales: {
-                        x: { grid: { display: false } },
-                        y: { grid: { color: 'rgba(156, 163, 175, 0.1)' } }
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#9ca3af', font: { size: 10 } }
+                        },
+                        y: {
+                            grid: { color: 'rgba(31, 41, 55, 0.4)' },
+                            ticks: { color: '#9ca3af', font: { size: 10 } },
+                            min: 2550
+                        }
                     }
                 }
             });
-            startLiveTxStream();
         }
-        function switchPAMarketCategory(cat) {
-            paCategory = cat;
-            document.getElementById('pa-cat-crypto').className = cat === 'crypto' ? "px-3 py-1.5 rounded-lg bg-primary text-white font-bold transition" : "px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 font-bold transition";
-            document.getElementById('pa-cat-stocks').className = cat === 'stocks' ? "px-3 py-1.5 rounded-lg bg-primary text-white font-bold transition" : "px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-black border border-gray-300 dark:border-[#2c2c2c] text-gray-700 dark:text-gray-300 font-bold transition";
-            
-            document.getElementById('pa-chart-title').innerText = cat === 'crypto' ? 'Real-Time Global Market Cap Trend (Crypto)' : 'Real-Time Global Stock Indices Trend (IHSG)';
-            initPerformanceChart();
-            renderPAMatrix();
+        
+        const assetIds = ['bitcoin', 'ethereum', 'tether', 'binancecoin', 'solana', 'ripple', 'cardano', 'dogecoin'];
+        let cryptoTableData = [];
+        let currentCryptoSort = 'desc'; // 'desc' untuk Top Gainers, 'asc' untuk Top Losers
+        async function fetchLiveMarketData() {
+            try {
+                const idsQuery = assetIds.join(',');
+                const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${idsQuery}&vs_currencies=usd&include_24hr_change=true`);
+                const data = await response.json();
+                assetIds.forEach(id => {
+                    if(data[id]) {
+                        const priceEl = document.getElementById(`price-${id}`);
+                        const changeEl = document.getElementById(`change-${id}`);
+                        if(priceEl) priceEl.innerText = `$${data[id].usd.toLocaleString()}`;
+                        if(changeEl) setChange(changeEl, data[id].usd_24h_change);
+                    }
+                });
+                const now = new Date();
+                const lastUpdatedEl = document.getElementById('last-updated');
+                if(lastUpdatedEl) lastUpdatedEl.innerText = `Last Synced: ${now.toLocaleTimeString()}`;
+            } catch (error) {
+                console.error("Gagal memperbarui data live:", error);
+            }
         }
+        async function fetchRealtimeCryptoTable() {
+            try {
+                const idsQuery = assetIds.join(',');
+                const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${idsQuery}&vs_currencies=usd&include_24hr_change=true`);
+                const data = await response.json();
+                
+                cryptoTableData = assetIds.map(id => {
+                    const coinInfo = data[id] || { usd: 0, usd_24h_change: 0 };
+                    return {
+                        id: id,
+                        name: id.toUpperCase(),
+                        price: coinInfo.usd,
+                        change: coinInfo.usd_24h_change || 0
+                    };
+                });
+                renderCryptoTable();
+            } catch (error) {
+                console.error("Gagal memuat tabel crypto real-time:", error);
+            }
+        }
+        function setCryptoSort(order) {
+            currentCryptoSort = order;
+            const descBtn = document.getElementById('sort-desc-btn');
+            const ascBtn = document.getElementById('sort-asc-btn');
+            if(order === 'desc') {
+                descBtn.className = "px-3 py-1 rounded bg-blue-600 text-white font-medium transition";
+                ascBtn.className = "px-3 py-1 rounded text-gray-300 hover:bg-gray-700 transition";
+            } else {
+                ascBtn.className = "px-3 py-1 rounded bg-blue-600 text-white font-medium transition";
+                descBtn.className = "px-3 py-1 rounded text-gray-300 hover:bg-gray-700 transition";
+            }
+            renderCryptoTable();
+        }
+        function renderCryptoTable() {
+            const tbody = document.getElementById('realtime-crypto-tbody');
+            if (!tbody) return;
+            cryptoTableData.sort((a, b) => {
+                if (currentCryptoSort === 'desc') {
+                    return b.change - a.change;
+                } else {
+                    return a.change - b.change;
+                }
+            });
+            tbody.innerHTML = cryptoTableData.map(coin => {
+                const isPositive = coin.change >= 0;
+                const changeClass = isPositive ? 'text-emerald-400 font-semibold' : 'text-red-400 font-semibold';
+                const statusBadge = isPositive 
+                    ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950/50 text-emerald-400 border border-emerald-800/50">BULLISH</span>' 
+                    : '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-950/50 text-red-400 border border-red-800/50">BEARISH</span>';
+                
+                return `
+                    <tr class="hover:bg-gray-800/30 transition-colors">
+                        <td class="py-3 px-4 font-bold text-gray-200 flex items-center space-x-2">
+                            <span class="w-6 h-6 rounded-full bg-primary/20 text-primary flex items-center justify-center text-[10px] font-bold">${coin.name.substring(0,3)}</span>
+                            <span>${coin.name}</span>
+                        </td>
+                        <td class="py-3 px-4 text-right font-mono">$${coin.price.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right font-mono ${changeClass}">${isPositive ? '+' : ''}${coin.change.toFixed(2)}%</td>
+                        <td class="py-3 px-4 text-right">${statusBadge}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        function setChange(el, changeValue) {
+            const formatted = changeValue.toFixed(2) + '%';
+            if(changeValue >= 0) {
+                el.innerText = `+${formatted}`;
+                el.className = "text-[10px] text-emerald-400 font-medium";
+            } else {
+                el.innerText = formatted;
+                el.className = "text-[10px] text-red-400 font-medium";
+            }
+        }
+        function liveStreamSimulation() {
+            if (!capitalChart) return;
+            const now = new Date();
+            const timeLabel = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            const lastVal = capitalChart.data.datasets[0].data[capitalChart.data.datasets[0].data.length - 1];
+            const fluctuation = Math.floor(Math.random() * 5 - 2);
+            const newVal = lastVal + fluctuation;
+            capitalChart.data.labels.push(timeLabel);
+            capitalChart.data.datasets[0].data.push(newVal);
+            if(capitalChart.data.labels.length > 10) {
+                capitalChart.data.labels.shift();
+                capitalChart.data.datasets[0].data.shift();
+            }
+            capitalChart.update('none');
+        }
+        setInterval(fetchLiveMarketData, 15000);
+        setInterval(fetchRealtimeCryptoTable, 15000);
+        setInterval(liveStreamSimulation, 8000);
+        function updateChartTimeframe(tf) {
+            console.log("Timeframe shifted to:", tf);
+        }
+        let globalMarketCapsData = [
+            { segment: "Total Crypto Market Cap", cap: 2450000000000, h24: 2.4, share: "100.0%", status: "BULLISH" },
+            { segment: "Bitcoin (BTC)", cap: 1240000000000, h24: 3.4, share: "50.6%", status: "DOMINANT" },
+            { segment: "Ethereum (ETH)", cap: 410500000000, h24: -0.8, share: "16.7%", status: "STABLE" },
+            { segment: "Altcoins (Excl. BTC & ETH)", cap: 799500000000, h24: 1.8, share: "32.7%", status: "EXPANDING" }
+        ];
         function renderPAMatrix() {
             const tbody = document.getElementById('pa-market-tbody');
             if (!tbody) return;
@@ -1760,39 +1852,92 @@ html.dark .shadow-xl {
                 </tr>
             `).join('');
         }
-        let txTickCount = 0;
+        let perfChart = null;
+        let txTicksCount = 0;
         let txInterval = null;
-        function startLiveTxStream() {
-            if (txInterval) clearInterval(txInterval);
-            const container = document.getElementById('live-tx-stream');
-            if (!container) return;
-            const pairs = paCategory === 'crypto' ? ['BTC/USDT', 'ETH/USDT', 'SOL/USDT', 'BNB/USDT'] : ['BBRI.JK', 'TLKM.JK', 'NVDA', 'AAPL'];
-            txInterval = setInterval(() => {
-                txTickCount++;
-                document.getElementById('pa-tx-ticks').innerText = txTickCount.toString();
-                const pair = pairs[Math.floor(Math.random() * pairs.length)];
-                const isBuy = Math.random() > 0.45;
-                const price = (Math.random() * 1000 + 100).toFixed(2);
-                const amount = (Math.random() * 5 + 0.1).toFixed(2);
-                const time = new Date().toLocaleTimeString('en-US', { hour12: false });
-                const itemHtml = `
-                    <div class="flex items-center justify-between p-2 rounded bg-white dark:bg-black border border-gray-200 dark:border-[#2c2c2c] animate-fade-in">
-                        <div class="flex items-center space-x-2">
-                            <span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${isBuy ? 'bg-emerald-500/10 text-emerald-500' : 'bg-rose-500/10 text-rose-500'}">${isBuy ? 'BUY' : 'SELL'}</span>
-                            <span class="font-bold text-gray-900 dark:text-white">${pair}</span>
-                        </div>
-                        <div class="text-right">
-                            <span class="block font-bold text-gray-900 dark:text-white">$${price}</span>
-                            <span class="text-[10px] text-gray-400">${amount} units &bull; ${time}</span>
-                        </div>
-                    </div>
-                `;
-                container.insertAdjacentHTML('afterbegin', itemHtml);
-                if (container.children.length > 10) {
-                    container.removeChild(container.lastChild);
+        
+        // --- CHART 2: Real-Time Global Market Cap Trend (Crypto) diubah menjadi Bar/Line Chart Kombinasi Futuristis ---
+        function initPerformanceChart() {
+            const ctx = document.getElementById('performanceChart')?.getContext('2d');
+            if (!ctx) return;
+            if (perfChart) perfChart.destroy();
+            const perfGrad = ctx.createLinearGradient(0, 0, 0, 250);
+            perfGrad.addColorStop(0, 'rgba(16, 185, 129, 0.4)');
+            perfGrad.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+            
+            perfChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'],
+                    datasets: [{
+                        type: 'bar',
+                        label: 'Volume Index ($T)',
+                        data: [2.35, 2.38, 2.39, 2.41, 2.40, 2.43, 2.45],
+                        backgroundColor: '#10b981',
+                        borderRadius: 4,
+                        order: 2
+                    }, {
+                        type: 'line',
+                        label: 'Trend Line',
+                        data: [2.38, 2.40, 2.41, 2.43, 2.42, 2.44, 2.45],
+                        borderColor: '#3b82f6',
+                        borderWidth: 3,
+                        backgroundColor: perfGrad,
+                        fill: true,
+                        tension: 0.3,
+                        order: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 10 } } },
+                        y: { grid: { color: 'rgba(156, 163, 175, 0.1)' }, ticks: { color: '#9ca3af', font: { size: 10 } }, min: 2.36 }
+                    }
                 }
-            }, 2500);
+            });
         }
+        
+        function startLiveTransactionStream() {
+            if (txInterval) clearInterval(txInterval);
+            const streamContainer = document.getElementById('live-tx-stream');
+            if (!streamContainer) return;
+            
+            const pairs = ['BTC/USD', 'ETH/USD', 'SOL/USDT', 'XRP/USD', 'BNB/USDT', 'ADA/USD'];
+            const types = ['BUY', 'SELL'];
+            
+            txInterval = setInterval(() => {
+                const now = new Date();
+                const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
+                const pair = pairs[Math.floor(Math.random() * pairs.length)];
+                const type = types[Math.floor(Math.random() * types.length)];
+                const amount = (Math.random() * 5 + 0.1).toFixed(2);
+                const price = (Math.random() * 50000 + 200).toLocaleString('en-US', {maximumFractionDigits: 2});
+                
+                const colorClass = type === 'BUY' ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400';
+                
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between bg-gray-100 dark:bg-[#111111] p-2 rounded border border-gray-200 dark:border-[#222222]';
+                row.innerHTML = `
+                    <span class="text-gray-400">${timeStr}</span>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">${pair}</span>
+                    <span class="${colorClass} font-bold">${type}</span>
+                    <span class="text-gray-600 dark:text-gray-400">${amount} @ $${price}</span>
+                `;
+                
+                streamContainer.prepend(row);
+                if (streamContainer.children.length > 20) {
+                    streamContainer.removeChild(streamContainer.lastChild);
+                }
+                
+                txTicksCount++;
+                const ticksEl = document.getElementById('pa-tx-ticks');
+                if (ticksEl) ticksEl.innerText = txTicksCount.toLocaleString();
+            }, 1500);
+        }
+        
         let currentCarouselIndex = 0;
         function setupCarousel() {
             const list = document.getElementById('terkini-list');
@@ -1839,8 +1984,8 @@ html.dark .shadow-xl {
         function loadMoreArticles() {
             alert("Artikel tambahan berhasil dimuat.");
         }
-
-        // --- SKRIP PROTRADER TERMINAL (FILE KEDUA) DI STOCK EXCHANGE ---
+        
+        // --- SKRIP PROTRADER TERMINAL DI STOCK EXCHANGE ---
         const marketDatasets = {
             'COMPOSITE': { name: 'IHSG - Indeks Harga Saham Gabungan', price: 7325.40, changeText: '+45.20 (+0.62%)', color: '#10b981', history: [7280, 7295, 7290, 7310, 7315, 7325.40] },
             'FOREX':     { name: 'USD/IDR - US Dollar to Indonesian Rupiah', price: 15450.00, changeText: '-25.00 (-0.16%)', color: '#3b82f6', history: [15480, 15475, 15465, 15460, 15455, 15450] },
@@ -1851,7 +1996,6 @@ html.dark .shadow-xl {
         let terminalChart = null;
         let volumeBarChart = null;
         let volatilityHBarChart = null;
-
         function initTerminalChart() {
             const ctxEl = document.getElementById('terminalChart');
             if (!ctxEl) return;
@@ -1891,8 +2035,6 @@ html.dark .shadow-xl {
                     }
                 }
             });
-
-            // Volume Bar Chart
             const barCtx = document.getElementById('volumeBarChart')?.getContext('2d');
             if (barCtx) {
                 if (volumeBarChart) volumeBarChart.destroy();
@@ -1918,8 +2060,6 @@ html.dark .shadow-xl {
                     }
                 });
             }
-
-            // Volatility Horizontal Bar Chart
             const hBarCtx = document.getElementById('volatilityHBarChart')?.getContext('2d');
             if (hBarCtx) {
                 if (volatilityHBarChart) volatilityHBarChart.destroy();
@@ -1947,7 +2087,6 @@ html.dark .shadow-xl {
                 });
             }
         }
-
         function switchMarket(marketKey) {
             activeMarket = marketKey;
             const data = marketDatasets[marketKey];
@@ -1974,7 +2113,6 @@ html.dark .shadow-xl {
                 terminalChart.update();
             }
         }
-
         function changeTimeframe(tf) {
             document.querySelectorAll('.tf-btn').forEach(btn => {
                 btn.classList.remove('bg-gray-800', 'text-white', 'shadow');
@@ -1985,82 +2123,12 @@ html.dark .shadow-xl {
                 }
             });
         }
-
-        const watchlistPrices = { 'BBCA': 10225, 'ASII': 5150, 'GOTO': 68, 'ANTM': 1620, 'BMRI': 6450 };
-        setInterval(() => {
-            const now = new Date();
-            const timeString = now.toTimeString().split(' ')[0] + ' WIB';
-            const clockEl = document.getElementById('live-clock');
-            if (clockEl) clockEl.innerText = timeString;
-        }, 1000);
-
-        setInterval(() => {
-            let currentObj = marketDatasets[activeMarket];
-            let delta = (Math.random() - 0.49) * (currentObj.price * 0.001);
-            currentObj.price = Math.round((currentObj.price + delta) * 100) / 100;
-            
-            let historyArr = currentObj.history;
-            historyArr.shift();
-            historyArr.push(currentObj.price);
-            const priceEl = document.getElementById('market-price');
-            if (priceEl) priceEl.innerText = currentObj.price.toLocaleString();
-            if (terminalChart) {
-                terminalChart.data.datasets[0].data = historyArr;
-                terminalChart.update('none');
-            }
-            Object.keys(watchlistPrices).forEach(sym => {
-                let changeFactor = (Math.random() - 0.48) * (watchlistPrices[sym] * 0.0015);
-                watchlistPrices[sym] = Math.round((watchlistPrices[sym] + changeFactor) * 100) / 100;
-                const cell = document.getElementById(`wl-${sym}`);
-                if (cell) {
-                    cell.innerText = watchlistPrices[sym].toLocaleString();
-                }
-            });
-
-            if (volumeBarChart) {
-                let currentBarData = volumeBarChart.data.datasets[0].data;
-                for (let i = 0; i < currentBarData.length; i++) {
-                    let randomFluctuation = Math.floor((Math.random() - 0.45) * 300);
-                    currentBarData[i] = Math.max(500, currentBarData[i] + randomFluctuation);
-                }
-                volumeBarChart.update('none');
-            }
-
-            if (volatilityHBarChart) {
-                let currentHBarData = volatilityHBarChart.data.datasets[0].data;
-                for (let i = 0; i < currentHBarData.length; i++) {
-                    let randomVolShift = (Math.random() - 0.48) * 0.2;
-                    currentHBarData[i] = Math.max(1.0, Math.min(6.0, parseFloat((currentHBarData[i] + randomVolShift).toFixed(1))));
-                }
-                volatilityHBarChart.update('none');
-            }
-
-            const symbolsList = Object.keys(watchlistPrices);
-            const randomSym = symbolsList[Math.floor(Math.random() * symbolsList.length)];
-            const randomPrice = watchlistPrices[randomSym];
-            const randomLot = Math.floor(Math.random() * 80) + 5;
-            const isGreen = Math.random() > 0.4;
-            const timeNow = new Date().toTimeString().split(' ')[0];
-            const tapeContainer = document.getElementById('trade-tape');
-            if (tapeContainer) {
-                const newRow = document.createElement('div');
-                newRow.className = "flex justify-between items-center bg-gray-800/30 p-1.5 rounded animate-pulse";
-                newRow.innerHTML = `
-                    <span class="text-gray-400">${timeNow}</span>
-                    <span class="font-bold text-white">${randomSym}</span>
-                    <span class="${isGreen ? 'text-neonGreen' : 'text-neonRed'}">${randomPrice.toLocaleString()} (${isGreen ? '+' : '-'}${randomLot} lot)</span>
-                `;
-                tapeContainer.prepend(newRow);
-                if (tapeContainer.children.length > 20) {
-                    tapeContainer.removeChild(tapeContainer.lastChild);
-                }
-            }
-        }, 1500);
-
         window.onload = () => {
             setupCarousel();
-            renderCryptoTable();
+            fetchLiveMarketData();
+            fetchRealtimeCryptoTable();
             initTerminalChart();
+            startLiveTransactionStream();
         };
     </script>
 </body>
