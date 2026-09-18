@@ -1,94 +1,62 @@
-# Berita-Angin
-Berita Terkini
-Berikut adalah ringkasan serta tinjauan lengkap mengenai struktur kode HTML dari portal berita "Berita Angin" yang bersumber dari file terlampir:  
-DOCX
+📚 README: Berita Angin
+"1% Issue 99% Fakta" — Portal Berita, Analisis Makroekonomi, Pasar Modal (IDX & Crypto), serta Jurnalisme Investigasi Terkini.
 
-1. Ringkasan Dokumen & Portal Berita
-Nama Portal: Berita Angin  
-DOCX
+📋 Daftar Isi Tentang Proyek
 
-Slogan: 1% Issue 99% Fakta
+Fitur Utama
+Teknologi yang Digunakan
+Struktur Direktori & Halaman
+Instruksi Penggunaan & Instalasi
+Konfigurasi & Desain Tema
+Kontributor & Profil Pengembang
 
-  
-DOCX
-Tanggal Akses/Berita: Selasa, 15 September 2026  
-DOCX
+🚀 Tentang Proyek
+Berita Angin adalah platform web berita modern dan interaktif yang dirancang untuk menyajikan informasi mendalam, investigasi khusus, serta pelacakan instrumen keuangan global dan pasar modal secara real-time. Proyek ini menggabungkan jurnalisme berkualitas dengan analitik data pasar yang dinamis (seperti IHSG, mata uang, komoditas, dan aset kripto).
 
-Teknologi yang Digunakan:
+✨ Fitur Utama
+Beranda Dinamis & Carousel Terkini: Menampilkan berita utama (headline), sorotan investigasi khusus, dan sistem slider berita interaktif.
+Halaman Artikel Lengkap: Tampilan bacaan mendalam dengan format tipografi profesional, tabel data pendukung, dan ilustrasi visual.
+Profil Profesional & Portofolio: Menampilkan rekam jejak, latar belakang pendidikan, serta spesialisasi tim pengembang dan editor utama.
+Stock Exchange & ProTrader Terminal: Pemantauan data bursa efek (IDX) dan instrumen global secara langsung dengan grafik interaktif berbasis Chart.js.
+Markets & Crypto Index Tracker: Pelacakan kapitalisasi pasar global, Fear & Greed Index, serta daftar peringkat aset kripto (Top Gainers / Top Losers).
+Performance Analyst: Analisis performa berbasis aliran data pasar real-time lengkap dengan simulasi transaksi (live market ticks).
+Mode Gelap / Terang (Dark/Light Mode): Desain adaptif dengan dukungan tema hitam-putih yang bersih dan ramah di mata.
 
-Tailwind CSS (untuk penataan gaya/styling responsif dan dukungan Dark Mode)  
-DOCX
+🛠 Teknologi yang Digunakan
+HTML5 & CSS3 (Struktur dan Desain Dasar)
+Tailwind CSS (Kerangka kerja utilitas CSS melalui CDN)
+Chart.js (Visualisasi grafik tren kapitalisasi pasar dan instrumen finansial)
+FontAwesome & Google Fonts (Inter) (Ikon antarmuka dan tipografi modern)
+JavaScript (Vanilla ES6+) (Logika interaktif, manipulasi DOM, manajemen state halaman, dan pembaruan data real-time)
 
-Chart.js (untuk grafik visualisasi data pasar/crypto interaktif secara real-time)  
-DOCX
+🗂 Struktur Direktori & Halaman
+Aplikasi ini dibangun menggunakan arsitektur Single Page Application (SPA) berbasis View Controller sederhana di dalam satu file utama:
+#home-page : Halaman Beranda & Feed Berita Utama
+#article-page : Halaman Baca Artikel Lengkap
+#profile-page : Halaman Profil & Portofolio Tim
+#markets-page : Halaman Pasar Global & Indeks Kripto
+#performance-analyst-page : Halaman Analisis Performa & Transaksi Langsung
+#stock-exchange-page : Terminal ProTrader Bursa Efek & Finansial
 
-Google Fonts (Inter)
+⚙️ Instruksi Penggunaan & Instalasi
+Karena proyek ini berbasis web frontend statis (HTML/JS/CSS), Anda dapat menjalankannya dengan sangat mudah:
+Clone atau Unduh Repository:
+Unduh file proyek (my wbsite2.docx atau file .html utama) ke komputer lokal Anda.
 
-  
-DOCX
-Vanilla JavaScript (untuk manajemen navigasi halaman tunggal/Single Page App sederhana, konverter mata uang, dan fitur interaktif lainnya)  
-DOCX
+Buka di Browser:
+Klik dua kali pada file HTML utama, atau
+Gunakan ekstensi Live Server di Visual Studio Code untuk pengalaman pengembangan yang optimal.
 
-2. Struktur Utama Halaman (Layout)
-Portal berita ini dirancang dengan sistem multi-tampilan dinamis (Home Page dan Dedicated Article Page) tanpa memuat ulang halaman secara penuh:
+Koneksi Internet:
+Pastikan perangkat Anda terhubung ke internet karena proyek ini memuat pustaka eksternal melalui CDN (Tailwind CSS, Chart.js, FontAwesome, dan Google Fonts).
 
-Header & Navigasi:
+🎨 Konfigurasi & Desain Tema
+Proyek ini mengusung sistem tema adaptif (Light & Dark Mode) dengan palet warna utama:
+Primary Color: #005C9E (Biru Korporat)
+Secondary / Dark Background: #000000 (Mode Hitam Pekat / Clean Dark)
+Accent & Neon Indicators: #10b981 (Hijau/Gain), #ef4444 (Merah/Loss), dan #3b82f6 (Biru/Aksesoris Terminal).
 
-Bar atas menampilkan waktu live zona WITA dan tanggal hari ini.  
-DOCX
-
-Logo utama BERITA ANGIN lengkap dengan menu pencarian dan tombol pengalih mode gelap/terang (Dark/Light Mode).  
-DOCX
-
-Navigasi kategori utama: Peristiwa, Ekonomi, Teknologi, Pasar, Politik, dan Sosial.  
-DOCX
-
-Halaman Utama (Home Page):
-
-Bagian Headline: Menyoroti berita utama investigasi maritim (KM Virgo Transport 8) serta berita pilihan pendukung.  
-DOCX
-
-Feed Berita Terkini: Daftar artikel pilihan dan laporan khusus yang dilengkapi dengan tombol interaktif "Muat Artikel Lainnya".  
-DOCX
-
-Sidebar Samping:
-
-Widget Sorotan Utama (Terpopuler) peringkat 1 sampai 3.  
-DOCX
-
-Widget Bursa & Crypto Live menggunakan Chart.js dengan pembaruan otomatis setiap 3 detik.  
-DOCX
-
-Widget Konverter Kurs Mata Uang Internasional dengan referensi konversi lengkap terhadap Rupiah (IDR).  
-DOCX
-
-Halaman Artikel (Article Page):
-
-Tampilan baca artikel secara mendalam (full-content) yang mencakup kategori, judul, penulis, tanggal, ilustrasi gambar, isi berita, hingga tabel data komoditas dan callout box khusus.  
-DOCX
-
-Footer:
-
-Berisi tautan navigasi cepat, ikon media sosial interaktif (Facebook, Twitter/X, Instagram, GitHub, LinkedIn), serta informasi hak cipta.  
-DOCX
-
-3. Basis Data Artikel & Topik Utama
-File ini memuat 6 konten berita komprehensif yang siap diakses secara dinamis:
-
-Peristiwa & Investigasi: Tragedi Tenggelamnya Kapal Laut KM Virgo Transport 8.  
-DOCX
-
-Ekonomi & Kebijakan: Eskalasi Program Makan Bergizi Gratis (MBG) & Rantai Pasok Pangan.  
-DOCX
-
-Politik & Pemerintahan: Dinamika Internal Kemenkeu: Isu Pencopotan dan Rotasi Strategis.  
-DOCX
-
-Pasar & Makroekonomi: Imbas Makroekonomi: IHSG, Analisis Tren, dan Tabel Fluktuasi Harga Sembako.  
-DOCX
-
-Peristiwa & Bencana: Tanggap Darurat Bencana Banjir Bandang di Aceh Tenggara.  
-DOCX
-
-Sains & Antarika: Keajaiban Angkasa: Konjungsi Bulan Sabit dan Planet Venus.  
-DOCX
+👤 Kontributor & Profil Pengembang
+Lead Editor & Senior Financial Analyst: Achmad Efendi, SE, MM
+Kontak: ven.genioes@gmail.com
+Domisili: Jakarta Pusat, Indonesia
