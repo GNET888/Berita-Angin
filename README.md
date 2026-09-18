@@ -1,62 +1,78 @@
-📚 README: Berita Angin
-"1% Issue 99% Fakta" — Portal Berita, Analisis Makroekonomi, Pasar Modal (IDX & Crypto), serta Jurnalisme Investigasi Terkini.
+BERITA ANGIN
+« 1% Issue, 99% Fakta »
+Portal Berita Independen, Analisis Makroekonomi, Pasar Modal (IDX & Crypto), serta Jurnalisme Investigasi Terkini.
 
-📋 Daftar Isi Tentang Proyek
-
-Fitur Utama
-Teknologi yang Digunakan
-Struktur Direktori & Halaman
-Instruksi Penggunaan & Instalasi
-Konfigurasi & Desain Tema
-Kontributor & Profil Pengembang
-
-🚀 Tentang Proyek
-Berita Angin adalah platform web berita modern dan interaktif yang dirancang untuk menyajikan informasi mendalam, investigasi khusus, serta pelacakan instrumen keuangan global dan pasar modal secara real-time. Proyek ini menggabungkan jurnalisme berkualitas dengan analitik data pasar yang dinamis (seperti IHSG, mata uang, komoditas, dan aset kripto).
+📖 Tentang Proyek
+Berita Angin adalah platform berita berbasis web modern dan interaktif yang dirancang untuk menyajikan jurnalisme investigasi mendalam serta analitik data keuangan global secara real-time. Proyek ini menjembatani kebutuhan informasi masyarakat modern melalui kombinasi narasi jurnalistik berstandar tinggi dan dasbor finansial interaktif untuk pasar modal, komoditas, serta aset digital (kripto).
 
 ✨ Fitur Utama
-Beranda Dinamis & Carousel Terkini: Menampilkan berita utama (headline), sorotan investigasi khusus, dan sistem slider berita interaktif.
-Halaman Artikel Lengkap: Tampilan bacaan mendalam dengan format tipografi profesional, tabel data pendukung, dan ilustrasi visual.
-Profil Profesional & Portofolio: Menampilkan rekam jejak, latar belakang pendidikan, serta spesialisasi tim pengembang dan editor utama.
-Stock Exchange & ProTrader Terminal: Pemantauan data bursa efek (IDX) dan instrumen global secara langsung dengan grafik interaktif berbasis Chart.js.
-Markets & Crypto Index Tracker: Pelacakan kapitalisasi pasar global, Fear & Greed Index, serta daftar peringkat aset kripto (Top Gainers / Top Losers).
-Performance Analyst: Analisis performa berbasis aliran data pasar real-time lengkap dengan simulasi transaksi (live market ticks).
-Mode Gelap / Terang (Dark/Light Mode): Desain adaptif dengan dukungan tema hitam-putih yang bersih dan ramah di mata.
+📰 Dynamic Newsroom & Headline Carousel: Penyajian berita utama (breaking news), laporan investigasi khusus, serta sistem navigasi kategori berita yang responsif.
+📑 Immersive Article Viewer: Format bacaan mendalam (long-form journalism) yang dilengkapi dengan tipografi optimal, tabel data terstruktur, dan elemen visual pendukung.
+📈 ProTrader & Stock Exchange Terminal: Pemantauan instrumen keuangan bursa efek (IDX) secara langsung (live ticks) yang divisualisasikan melalui grafik interaktif Chart.js.
+🪙 Global Markets & Crypto Tracker: Pelacakan kapitalisasi pasar global, Fear & Greed Index, serta daftar peringkat aset kripto (Top Gainers/Losers).
+📊 Performance Analyst: Modul analitik performa portofolio dan pasar dengan simulasi aliran data langsung (live market performance).
+👤 Professional Portfolio & Editorial Team: Transparansi profil, rekam jejak, latar belakang pendidikan, serta spesialisasi dari tim jurnalis dan analis finansial.
+🌓 Adaptive Theme Engine: Fitur peralihan mode Dark dan Light secara mulus untuk kenyamanan visual pembaca.
 
-🛠 Teknologi yang Digunakan
-HTML5 & CSS3 (Struktur dan Desain Dasar)
-Tailwind CSS (Kerangka kerja utilitas CSS melalui CDN)
-Chart.js (Visualisasi grafik tren kapitalisasi pasar dan instrumen finansial)
-FontAwesome & Google Fonts (Inter) (Ikon antarmuka dan tipografi modern)
-JavaScript (Vanilla ES6+) (Logika interaktif, manipulasi DOM, manajemen state halaman, dan pembaruan data real-time)
+🛠️ Stack Teknologi
+Proyek ini dibangun menggunakan arsitektur modern berbasis klien (Single Page Application / SPA frontend-heavy) tanpa ketergantungan framework backend yang kompleks:
+Markup & Styling: HTML5, Tailwind CSS (via CDN)
+Logika & State Management: Vanilla JavaScript (ES6+)
+Visualisasi Data: Chart.js
 
-🗂 Struktur Direktori & Halaman
-Aplikasi ini dibangun menggunakan arsitektur Single Page Application (SPA) berbasis View Controller sederhana di dalam satu file utama:
-#home-page : Halaman Beranda & Feed Berita Utama
-#article-page : Halaman Baca Artikel Lengkap
-#profile-page : Halaman Profil & Portofolio Tim
-#markets-page : Halaman Pasar Global & Indeks Kripto
-#performance-analyst-page : Halaman Analisis Performa & Transaksi Langsung
-#stock-exchange-page : Terminal ProTrader Bursa Efek & Finansial
+Aset & Ikon: FontAwesome, Google Fonts (Inter)
+📂 Struktur Direktori & Arsitektur Halaman
+Aplikasi dikelola menggunakan pendekatan modular di dalam manajemen DOM tunggal:
 
-⚙️ Instruksi Penggunaan & Instalasi
-Karena proyek ini berbasis web frontend statis (HTML/JS/CSS), Anda dapat menjalankannya dengan sangat mudah:
-Clone atau Unduh Repository:
-Unduh file proyek (my wbsite2.docx atau file .html utama) ke komputer lokal Anda.
+Plaintext
+├── index.html                  # Entry point & SPA Container
+├── assets/
+│   ├── css/                    # Kustomisasi style tambahan
+│   └── js/
+│       ├── app.js              # Logika utama router & manajemen view
+│       └── charts.js           # Konfigurasi integrasi Chart.js
+└── README.md                   # Dokumentasi proyek
 
-Buka di Browser:
-Klik dua kali pada file HTML utama, atau
-Gunakan ekstensi Live Server di Visual Studio Code untuk pengalaman pengembangan yang optimal.
+Modul Tampilan (Views):
+#home-page : Beranda utama & sirkulasi berita terbaru.
+#article-page : Halaman baca artikel penuh.
+#markets-page : Indeks pasar global dan bursa kripto.
+#stock-exchange-page : Terminal ProTrader instrumen keuangan.
+#performance-analyst-page : Dasbor analitik performa pasar.
+#profile-page : Direktori profil pengembang dan editor.
 
-Koneksi Internet:
-Pastikan perangkat Anda terhubung ke internet karena proyek ini memuat pustaka eksternal melalui CDN (Tailwind CSS, Chart.js, FontAwesome, dan Google Fonts).
+🚀 Panduan Memulai (Getting Started)
+Ikuti langkah-langkah berikut untuk menjalankan proyek di lingkungan lokal Anda:
+Prasyarat
+Peramban web modern (Google Chrome, Mozilla Firefox, Microsoft Edge, atau Safari).
+Koneksi internet aktif (diperlukan untuk memuat pustaka eksternal seperti Tailwind CSS dan Chart.js via CDN).
 
-🎨 Konfigurasi & Desain Tema
-Proyek ini mengusung sistem tema adaptif (Light & Dark Mode) dengan palet warna utama:
-Primary Color: #005C9E (Biru Korporat)
-Secondary / Dark Background: #000000 (Mode Hitam Pekat / Clean Dark)
-Accent & Neon Indicators: #10b981 (Hijau/Gain), #ef4444 (Merah/Loss), dan #3b82f6 (Biru/Aksesoris Terminal).
+Instalasi & Menjalankan Proyek
+Clone repository ini atau unduh arsip proyek:
+Bash
 
-👤 Kontributor & Profil Pengembang
+git clone https://github.com/username/berita-angin.git
+Buka direktori proyek:
+Bash
+
+cd berita-angin
+Jalankan aplikasi:
+Cukup buka file index.html langsung di peramban web Anda, atau
+Gunakan ekstensi Live Server di Visual Studio Code untuk pengalaman hot-reloading yang optimal.
+
+🎨 Konfigurasi Desain & Palet Warna
+Sistem desain Berita Angin dirancang dengan prinsip keterbacaan tinggi (high legibility):
+Primary Brand Color: #005C9E (Biru Korporat / Otoritas Finansial)
+Dark Background: #000000 & #111827 (Clean Dark Mode)
+
+Accent Indicators:
+Bullish / Gain: #10b981 (Hijau)
+Bearish / Loss: #ef4444 (Merah)
+Terminal Accent: #3b82f6 (Biru Aksen)
+
+👥 Kontributor & Tim Editorial
 Lead Editor & Senior Financial Analyst: Achmad Efendi, SE, MM
-Kontak: ven.genioes@gmail.com
-Domisili: Jakarta Pusat, Indonesia
+Email Kontak: ven.genioes@gmail.com
+Lokasi: Jakarta Pusat, Indonesia
+📄 Lisensi
+Proyek ini didistribusikan di bawah lisensi MIT
