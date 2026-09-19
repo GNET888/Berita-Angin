@@ -255,6 +255,31 @@
     html.dark .terkini-carousel-dot.active {
         background: #38bdf8;
     }
+
+    /* Styling Stock Ticker Berjalan (Marquee) */
+    .stock-ticker-container {
+        overflow: hidden;
+        white-space: nowrap;
+        background: #0b132b;
+        color: #ffffff;
+        border-top: 1px solid #1f293d;
+        border-bottom: 1px solid #1f293d;
+        font-family: monospace;
+        font-size: 12px;
+        padding: 6px 0;
+    }
+    .stock-ticker-track {
+        display: inline-block;
+        white-space: nowrap;
+        animation: tickerAnimation 30s linear infinite;
+    }
+    .stock-ticker-track:hover {
+        animation-play-state: paused;
+    }
+    @keyframes tickerAnimation {
+        0% { transform: translate3d(0, 0, 0); }
+        100% { transform: translate3d(-50%, 0, 0); }
+    }
 </style>
 <style id="white-black-theme">
 html.light,
@@ -422,7 +447,6 @@ html.dark .text-slate-500 {
                             <svg class="w-4 h-4 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                             <span>PROFIL</span>
                         </a>
-                        <!-- Menu Baru: Crypto Market -->
                         <a href="#" onclick="showCryptoMarket(); return false;" class="nav-link text-secondary dark:text-dark-text-secondary hover:text-primary transition pb-1 flex items-center space-x-1.5">
                             <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             <span>CRYPTO MARKET</span>
@@ -540,7 +564,7 @@ html.dark .text-slate-500 {
                                         </div>
                                     </li>
                                      <li class="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4 pb-4 border-b dark:border-dark-border group cursor-pointer" onclick="openArticle('side-1')">
-                                        <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0"><img src="cry.jpg" class="w-full h-full object-cover group-hover-image transition-transform duration-300" alt="MBG"></div>
+                                        <div class="w-full sm:w-40 h-28 sm:h-24 overflow-hidden rounded-md flex-shrink-0"><img src="MBG1.jpg" class="w-full h-full object-cover group-hover-image transition-transform duration-300" alt="MBG"></div>
                                         <div>
                                             <span class="text-xs font-bold text-primary">EKONOMI</span>
                                             <h3 class="text-xl font-bold mt-1 article-title-hover">Desentralisasi</h3>
@@ -701,7 +725,7 @@ html.dark .text-slate-500 {
                 </main>
             </div>
             
-            <!-- VIEW 4: CRYPTO MARKET PAGE (Baru ditambahkan tepat setelah Profil) -->
+            <!-- VIEW 4: CRYPTO MARKET PAGE -->
             <div id="crypto-market-page" class="page-view">
                 <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-dark-surface text-gray-900 dark:text-white shadow-lg my-6 rounded-xl border border-gray-200 dark:border-dark-border transition-all duration-300 space-y-6">
                     <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-2">
@@ -716,7 +740,6 @@ html.dark .text-slate-500 {
                             </div>
                         </div>
                     </div>
-
                     <!-- Ringkasan Kartu Statistik Crypto -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl relative overflow-hidden shadow-sm">
@@ -784,7 +807,6 @@ html.dark .text-slate-500 {
                             <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-400 opacity-80"></div>
                         </div>
                     </div>
-
                     <!-- Grafik Pergerakan Crypto Chart -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-2 bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-5 rounded-xl flex flex-col justify-between shadow-sm">
@@ -806,7 +828,6 @@ html.dark .text-slate-500 {
                                 <canvas id="cryptoMarketChart"></canvas>
                             </div>
                         </div>
-
                         <!-- Order Book / Live Crypto Ticks -->
                         <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-5 rounded-xl flex flex-col shadow-sm">
                             <div class="flex items-center justify-between mb-3">
@@ -825,7 +846,6 @@ html.dark .text-slate-500 {
                             </div>
                         </div>
                     </div>
-
                     <!-- Tabel Daftar Aset Crypto Populer -->
                     <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border rounded-xl overflow-hidden shadow-sm">
                         <div class="p-5 border-b border-gray-200 dark:border-dark-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -953,6 +973,13 @@ html.dark .text-slate-500 {
             
             <!-- VIEW 6: STOCK EXCHANGE -->
             <div id="stock-exchange-page" class="page-view">
+                <!-- FITUR BARU: Stock Ticker / Market Ticker Berjalan di Navigasi Halaman Stock Exchange -->
+                <div class="stock-ticker-container">
+                    <div class="stock-ticker-track" id="stockTickerTrack">
+                        <!-- Data Ticker akan di-generate secara dinamis via JavaScript -->
+                    </div>
+                </div>
+
                 <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-dark-surface text-gray-900 dark:text-white shadow-lg my-6 rounded-xl border border-gray-200 dark:border-dark-border transition-all duration-300 space-y-6">
                     <!-- Market Summary Banner / Tickers -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1241,7 +1268,6 @@ html.dark .text-slate-500 {
                 renderCryptoOrderBook('BTC');
             }, 50);
         }
-
         function showPerformanceAnalyst() { hideAllPages(); document.getElementById('performance-analyst-page').classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); initPerformanceChart(); renderPAMatrix(); startLiveTransactionStream(); }
         
         function showStockExchange() { 
@@ -1252,6 +1278,7 @@ html.dark .text-slate-500 {
                 if (!chartInstance) initChart();
                 renderStockTable();
                 renderOrderBook('IHSG');
+                renderStockTicker();
             }, 50); 
         }
         
@@ -1303,7 +1330,204 @@ html.dark .text-slate-500 {
         }
         setInterval(updateLiveFrequencyTime, 1000);
         
-        // --- SKRIP CRYPTO MARKET PAGE ---
+        // --- DATA SAHAM LQ45 UNTUK TICKER & TABEL ---
+        let stocksData = [
+            { code: 'BBCA', name: 'Bank Central Asia Tbk', price: 9850, change: 1.55, high: 9900, low: 9750, volume: 1420500 },
+            { code: 'BBRI', name: 'Bank Rakyat Indonesia (Persero) Tbk', price: 5125, change: 0.98, high: 5150, low: 5050, volume: 2310400 },
+            { code: 'TLKM', name: 'Telkom Indonesia (Persero) Tbk', price: 3120, change: -0.64, high: 3160, low: 3100, volume: 1890200 },
+            { code: 'ASII', name: 'Astra International Tbk', price: 5025, change: 1.00, high: 5050, low: 4970, volume: 950100 },
+            { code: 'BMRI', name: 'Bank Mandiri (Persero) Tbk', price: 6750, change: 2.27, high: 6800, low: 6650, volume: 1780000 },
+            { code: 'GOTO', name: 'GoTo Gojek Tokopedia Tbk', price: 68, change: -2.86, high: 71, low: 67, volume: 15420000 },
+            { code: 'UNVR', name: 'Unilever Indonesia Tbk', price: 2450, change: -1.21, high: 2490, low: 2440, volume: 620000 },
+            { code: 'ADRO', name: 'Adaro Energy Indonesia Tbk', price: 3410, change: 0.89, high: 3450, low: 3370, volume: 890000 }
+        ];
+
+        // Render Stock Ticker ber-animasi berjalan
+        function renderStockTicker() {
+            const track = document.getElementById('stockTickerTrack');
+            if (!track) return;
+            
+            let htmlContent = '';
+            // Gandakan array agar pergerakan ticker loop mulus tanpa jeda
+            const tickerItems = [...stocksData, ...stocksData];
+            
+            tickerItems.forEach(stock => {
+                const isUp = stock.change >= 0;
+                const colorClass = isUp ? 'text-emerald-400' : 'text-rose-400';
+                const arrowIcon = isUp ? '▲' : '▼';
+                
+                htmlContent += `
+                    <span class="inline-flex items-center space-x-2 mx-4 cursor-pointer hover:opacity-80" onclick="changeChartSymbol('${stock.code}')">
+                        <span class="font-bold text-gray-200">${stock.code}</span>
+                        <span class="text-gray-400">Rp ${stock.price.toLocaleString()}</span>
+                        <span class="${colorClass} font-semibold">${arrowIcon} ${isUp ? '+' : ''}${stock.change}%</span>
+                    </span>
+                    <span class="text-gray-600">|</span>
+                `;
+            });
+            track.innerHTML = htmlContent;
+        }
+
+        let currentStockSymbol = 'IHSG';
+        let chartInstance = null;
+        let chartLabels = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', 'Now'];
+        let chartDataSets = {
+            'IHSG': [7300, 7315, 7320, 7310, 7330, 7325, 7338, 7342.15],
+            'BBCA': [9700, 9750, 9800, 9780, 9820, 9810, 9840, 9850],
+            'TLKM': [3150, 3140, 3135, 3145, 3130, 3125, 3120, 3120],
+            'ASII': [4980, 5000, 4990, 5010, 5020, 5015, 5020, 5025]
+        };
+
+        function initChart() {
+            const ctxEl = document.getElementById('marketChart');
+            if (!ctxEl) return;
+            const ctx = ctxEl.getContext('2d');
+            if (chartInstance) chartInstance.destroy();
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: currentStockSymbol + ' Price',
+                        data: chartDataSets[currentStockSymbol] || chartDataSets['IHSG'],
+                        borderColor: '#0284c7',
+                        backgroundColor: function(context) {
+                            const chart = context.chart;
+                            const {ctx, chartArea} = chart;
+                            if (!chartArea) return null;
+                            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+                            gradient.addColorStop(0, 'rgba(2, 132, 199, 0)');
+                            gradient.addColorStop(1, 'rgba(2, 132, 199, 0.25)');
+                            return gradient;
+                        },
+                        borderWidth: 2.5,
+                        fill: true,
+                        tension: 0.35,
+                        pointRadius: 3,
+                        pointBackgroundColor: '#0284c7'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                            backgroundColor: '#111827',
+                            titleColor: '#ffffff',
+                            bodyColor: '#e5e7eb',
+                            borderColor: '#374151',
+                            borderWidth: 1
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(150, 150, 150, 0.1)' },
+                            ticks: { color: '#9ca3af', font: { size: 10 } }
+                        },
+                        y: {
+                            grid: { color: 'rgba(150, 150, 150, 0.1)' },
+                            ticks: { color: '#9ca3af', font: { size: 10 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        function changeChartSymbol(symbol) {
+            currentStockSymbol = symbol;
+            ['btnIHSG', 'btnBBCA', 'btnTLKM', 'btnASII'].forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) {
+                    if (btn.id === 'btn' + symbol) {
+                        btn.className = 'px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition';
+                    } else {
+                        btn.className = 'px-3 py-1 text-xs font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition';
+                    }
+                }
+            });
+            const titleEl = document.getElementById('activeChartTitle');
+            if (titleEl) titleEl.innerText = symbol === 'IHSG' ? 'Grafik Pergerakan IHSG' : `Grafik Harga Saham ${symbol}`;
+            const tagEl = document.getElementById('selectedStockTag');
+            if (tagEl) tagEl.innerText = symbol;
+            
+            if (chartInstance) {
+                chartInstance.data.datasets[0].label = symbol + ' Price';
+                chartInstance.data.datasets[0].data = chartDataSets[symbol] || chartDataSets['IHSG'];
+                chartInstance.update();
+            }
+            renderOrderBook(symbol);
+        }
+
+        function renderStockTable(dataToRender = stocksData) {
+            const tbody = document.getElementById('stockTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            dataToRender.forEach(stock => {
+                const isPositive = stock.change >= 0;
+                const badgeClass = isPositive ? 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20' : 'text-rose-500 bg-rose-500/10 border-rose-500/20';
+                const icon = isPositive ? 'fa-arrow-up' : 'fa-arrow-down';
+                
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition cursor-pointer group';
+                tr.onclick = () => changeChartSymbol(stock.code);
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-bold text-gray-900 dark:text-white group-hover:text-primary transition">${stock.code}</td>
+                    <td class="py-3 px-4 text-gray-700 dark:text-gray-300">${stock.name}</td>
+                    <td class="py-3 px-4 text-right font-mono text-gray-900 dark:text-white">Rp ${stock.price.toLocaleString()}</td>
+                    <td class="py-3 px-4 text-right">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold border ${badgeClass}">
+                            <i class="fa-solid ${icon} mr-1 text-[9px]"></i> ${isPositive ? '+' : ''}${stock.change}%
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">Rp ${stock.high.toLocaleString()}</td>
+                    <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">Rp ${stock.low.toLocaleString()}</td>
+                    <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${stock.volume.toLocaleString()}</td>
+                    <td class="py-3 px-4 text-center">
+                        <button onclick="event.stopPropagation(); changeChartSymbol('${stock.code}')" class="px-2.5 py-1 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded text-xs font-semibold transition">Analisis</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterStockTable() {
+            const query = document.getElementById('searchStockInput').value.toLowerCase();
+            const filtered = stocksData.filter(s => s.code.toLowerCase().includes(query) || s.name.toLowerCase().includes(query));
+            renderStockTable(filtered);
+        }
+
+        function renderOrderBook(symbol) {
+            const container = document.getElementById('orderBookContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            
+            let basePrice = 5000;
+            const found = stocksData.find(s => s.code === symbol);
+            if (found) basePrice = found.price;
+            else if (symbol === 'IHSG') basePrice = 7342;
+
+            for (let i = 5; i >= 1; i--) {
+                const askPrice = basePrice + (i * 25);
+                const askLots = Math.floor(Math.random() * 500) + 50;
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center text-xs font-mono py-1 px-2 rounded bg-rose-500/5 text-rose-500 border border-rose-500/10';
+                div.innerHTML = `<span>Rp ${askPrice.toLocaleString()}</span><span>${askLots} Lot</span>`;
+                container.appendChild(div);
+            }
+            for (let i = 1; i <= 5; i++) {
+                const bidPrice = basePrice - (i * 25);
+                const bidLots = Math.floor(Math.random() * 600) + 80;
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center text-xs font-mono py-1 px-2 rounded bg-emerald-500/5 text-emerald-500 border border-emerald-500/10';
+                div.innerHTML = `<span>Rp ${bidPrice.toLocaleString()}</span><span>${bidLots} Lot</span>`;
+                container.appendChild(div);
+            }
+        }
+
+        // --- SCRIPT CRYPTO & PERFORMANCE ANALYST ---
         let cryptosData = [
             { symbol: 'BTC', name: 'Bitcoin', price: 64850.20, change: 3.40, cap: 1275000000000, volume: 28400000000 },
             { symbol: 'ETH', name: 'Ethereum', price: 3420.50, change: -0.80, cap: 410500000000, volume: 14100000000 },
@@ -1403,141 +1627,98 @@ html.dark .text-slate-500 {
                         </span>
                     </td>
                     <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">$${(crypto.cap / 1e9).toFixed(1)}B</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-600 dark:text-gray-300">$${(crypto.volume / 1e6).toFixed(1)}M</td>
+                    <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">$${(crypto.volume / 1e9).toFixed(2)}B</td>
                     <td class="py-3 px-4 text-center">
-                        <button onclick="event.stopPropagation(); executeCryptoTrade('${crypto.symbol}', ${crypto.price})" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white text-[11px] font-semibold rounded-lg transition shadow-md shadow-amber-500/20">Trade</button>
+                        <button onclick="event.stopPropagation(); selectCrypto('${crypto.symbol}')" class="px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500 text-amber-500 hover:text-white rounded text-xs font-semibold transition">Pantau</button>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         }
 
-        function renderCryptoOrderBook(symbol) {
-            const container = document.getElementById('cryptoOrderBookContainer');
-            if (!container) return;
-            container.innerHTML = '';
-            const tagEl = document.getElementById('selectedCryptoTag');
-            if (tagEl) tagEl.innerText = symbol + '/USD';
-            let basePrice = cryptosData.find(c => c.symbol === symbol)?.price || 100;
-            
-            for (let i = 1; i <= 5; i++) {
-                let askPrice = basePrice + (i * (basePrice * 0.0005));
-                let askAmt = (Math.random() * 2 + 0.1).toFixed(4);
-                let divAsk = document.createElement('div');
-                divAsk.className = 'flex justify-between items-center px-2 py-1 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400 text-[11px] font-mono';
-                divAsk.innerHTML = `<span>$${askPrice.toFixed(2)}</span><span class="text-gray-500">${askAmt} ${symbol}</span>`;
-                container.appendChild(divAsk);
-            }
-            let divMid = document.createElement('div');
-            divMid.className = 'text-center py-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-y border-gray-200 dark:border-dark-border my-1';
-            divMid.innerHTML = `<span>--- Spot Market (${symbol}) ---</span>`;
-            container.appendChild(divMid);
-            for (let i = 5; i >= 1; i--) {
-                let bidPrice = basePrice - (i * (basePrice * 0.0005));
-                let bidAmt = (Math.random() * 2 + 0.1).toFixed(4);
-                let divBid = document.createElement('div');
-                divBid.className = 'flex justify-between items-center px-2 py-1 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] font-mono';
-                divBid.innerHTML = `<span>$${bidPrice.toFixed(2)}</span><span class="text-gray-500">${bidAmt} ${symbol}</span>`;
-                container.appendChild(divBid);
-            }
+        function filterCryptoTable() {
+            const query = document.getElementById('searchCryptoInput').value.toLowerCase();
+            const filtered = cryptosData.filter(c => c.symbol.toLowerCase().includes(query) || c.name.toLowerCase().includes(query));
+            renderCryptoTable(filtered);
         }
 
         function selectCrypto(symbol) {
             currentCryptoSymbol = symbol;
-            const titleEl = document.getElementById('cryptoChartTitle');
-            if (titleEl) titleEl.innerText = `Grafik Tren Harga ${symbol} (USD)`;
-            
-            ['BTC', 'ETH', 'SOL'].forEach(sym => {
-                const btn = document.getElementById(`btnCrypto${sym}`);
+            ['btnCryptoBTC', 'btnCryptoETH', 'btnCryptoSOL'].forEach(id => {
+                const btn = document.getElementById(id);
                 if (btn) {
-                    if (sym === symbol) {
+                    if (btn.id === 'btnCrypto' + symbol) {
                         btn.className = 'px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition';
                     } else {
                         btn.className = 'px-3 py-1 text-xs font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition';
                     }
                 }
             });
-            if (!cryptoChartDataSets[symbol]) {
-                let base = cryptosData.find(c => c.symbol === symbol)?.price || 100;
-                cryptoChartDataSets[symbol] = [base * 0.98, base * 0.985, base * 0.99, base * 0.992, base * 0.998, base * 1.002, base];
-            }
+            const titleEl = document.getElementById('cryptoChartTitle');
+            if (titleEl) titleEl.innerText = `Grafik Tren Harga ${symbol} (USD)`;
+            const tagEl = document.getElementById('selectedCryptoTag');
+            if (tagEl) tagEl.innerText = symbol + '/USD';
+            
             if (cryptoChartInstance) {
                 cryptoChartInstance.data.datasets[0].label = symbol + '/USD';
-                cryptoChartInstance.data.datasets[0].data = cryptoChartDataSets[symbol];
+                cryptoChartInstance.data.datasets[0].data = cryptoChartDataSets[symbol] || cryptoChartDataSets['BTC'];
                 cryptoChartInstance.update();
             }
             renderCryptoOrderBook(symbol);
         }
 
-        function changeCryptoSymbol(symbol) {
-            selectCrypto(symbol);
-        }
-
-        function filterCryptoTable() {
-            const inputEl = document.getElementById('searchCryptoInput');
-            if (!inputEl) return;
-            const query = inputEl.value.toLowerCase();
-            const filtered = cryptosData.filter(c => c.symbol.toLowerCase().includes(query) || c.name.toLowerCase().includes(query));
-            renderCryptoTable(filtered);
-        }
-
-        function executeCryptoTrade(symbol, price) {
-            showModal("Konfirmasi Order Crypto", `Transaksi instan untuk aset <strong>${symbol}</strong> pada harga <strong>$${price.toLocaleString()}</strong> berhasil diproses.`);
-        }
-
-        // --- SKRIP PERFORMANCE ANALYST ---
-        let globalMarketCapsData = [
-            { segment: "Total Crypto Market Cap", cap: 2450000000000, h24: 2.4, share: "100.0%", status: "BULLISH" },
-            { segment: "Bitcoin (BTC)", cap: 1240000000000, h24: 3.4, share: "50.6%", status: "DOMINANT" },
-            { segment: "Ethereum (ETH)", cap: 410500000000, h24: -0.8, share: "16.7%", status: "STABLE" },
-            { segment: "Altcoins (Excl. BTC & ETH)", cap: 799500000000, h24: 1.8, share: "32.7%", status: "EXPANDING" }
-        ];
-        function renderPAMatrix() {
-            const tbody = document.getElementById('pa-market-tbody');
-            if (!tbody) return;
-            tbody.innerHTML = globalMarketCapsData.map(item => `
-                <tr class="hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition-colors">
-                    <td class="py-3 px-3 font-bold text-gray-900 dark:text-white">${item.segment}</td>
-                    <td class="py-3 px-3 text-right font-mono font-bold">$${(item.cap / 1e9).toFixed(1)}B</td>
-                    <td class="py-3 px-3 text-right font-mono font-bold ${item.h24 >= 0 ? 'text-emerald-500' : 'text-rose-500'}">${item.h24 >= 0 ? '+' : ''}${item.h24}%</td>
-                    <td class="py-3 px-3 text-right font-mono text-gray-500 dark:text-gray-400">${item.share}</td>
-                    <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/10 text-emerald-500">${item.status}</span></td>
-                </tr>
-            `).join('');
-        }
-        let perfChart = null;
-        let txTicksCount = 0;
-        let txInterval = null;
-        
-        function initPerformanceChart() {
-            const ctx = document.getElementById('performanceChart')?.getContext('2d');
-            if (!ctx) return;
-            if (perfChart) perfChart.destroy();
-            const perfGrad = ctx.createLinearGradient(0, 0, 0, 250);
-            perfGrad.addColorStop(0, 'rgba(16, 185, 129, 0.4)');
-            perfGrad.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+        function renderCryptoOrderBook(symbol) {
+            const container = document.getElementById('cryptoOrderBookContainer');
+            if (!container) return;
+            container.innerHTML = '';
             
-            perfChart = new Chart(ctx, {
+            let basePrice = 64850;
+            const found = cryptosData.find(c => c.symbol === symbol);
+            if (found) basePrice = found.price;
+
+            for (let i = 5; i >= 1; i--) {
+                const askPrice = basePrice + (i * 12.5);
+                const askAmount = (Math.random() * 1.5 + 0.1).toFixed(4);
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center text-xs font-mono py-1 px-2 rounded bg-rose-500/5 text-rose-500 border border-rose-500/10';
+                div.innerHTML = `<span>$${askPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}</span><span>${askAmount} ${symbol}</span>`;
+                container.appendChild(div);
+            }
+            for (let i = 1; i <= 5; i++) {
+                const bidPrice = basePrice - (i * 12.5);
+                const bidAmount = (Math.random() * 1.5 + 0.1).toFixed(4);
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center text-xs font-mono py-1 px-2 rounded bg-emerald-500/5 text-emerald-500 border border-emerald-500/10';
+                div.innerHTML = `<span>$${bidPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}</span><span>${bidAmount} ${symbol}</span>`;
+                container.appendChild(div);
+            }
+        }
+
+        // Performance Analyst & Live Transaction Stream
+        let perfChartInstance = null;
+        let txCounter = 0;
+        function initPerformanceChart() {
+            const ctxEl = document.getElementById('performanceChart');
+            if (!ctxEl) return;
+            const ctx = ctxEl.getContext('2d');
+            if (perfChartInstance) perfChartInstance.destroy();
+            perfChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'],
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
                     datasets: [{
-                        type: 'bar',
-                        label: 'Volume Index ($T)',
-                        data: [2.35, 2.38, 2.39, 2.41, 2.40, 2.43, 2.45],
-                        backgroundColor: '#10b981',
-                        borderRadius: 4,
-                        order: 2
-                    }, {
                         type: 'line',
-                        label: 'Trend Line',
-                        data: [2.38, 2.40, 2.41, 2.43, 2.42, 2.44, 2.45],
-                        borderColor: '#3b82f6',
-                        borderWidth: 3,
-                        backgroundColor: perfGrad,
-                        fill: true,
-                        tension: 0.3,
-                        order: 1
+                        label: 'Market Cap Trend ($B)',
+                        data: [1.8, 1.95, 2.1, 2.05, 2.2, 2.35, 2.3, 2.4, 2.45],
+                        borderColor: '#10b981',
+                        borderWidth: 2,
+                        tension: 0.4
+                    }, {
+                        type: 'bar',
+                        label: 'Volume ($B)',
+                        data: [45, 52, 48, 60, 55, 68, 72, 75, 82],
+                        backgroundColor: 'rgba(59, 130, 246, 0.6)',
+                        borderRadius: 4
                     }]
                 },
                 options: {
@@ -1546,317 +1727,80 @@ html.dark .text-slate-500 {
                     plugins: { legend: { display: false } },
                     scales: {
                         x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 10 } } },
-                        y: { grid: { color: 'rgba(156, 163, 175, 0.1)' }, ticks: { color: '#9ca3af', font: { size: 10 } }, min: 2.36 }
+                        y: { grid: { color: 'rgba(150, 150, 150, 0.1)' }, ticks: { color: '#9ca3af', font: { size: 10 } } }
                     }
                 }
             });
         }
-        
+
+        function renderPAMatrix() {
+            const tbody = document.getElementById('pa-market-tbody');
+            if (!tbody) return;
+            tbody.innerHTML = `
+                <tr>
+                    <td class="py-3 px-3 font-bold text-gray-900 dark:text-white">Crypto Market</td>
+                    <td class="py-3 px-3 text-right font-mono">$2,450,000,000,000</td>
+                    <td class="py-3 px-3 text-right font-mono text-emerald-500">+2.10%</td>
+                    <td class="py-3 px-3 text-right font-mono">54.2%</td>
+                    <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-500 font-bold">BULLISH</span></td>
+                </tr>
+                <tr>
+                    <td class="py-3 px-3 font-bold text-gray-900 dark:text-white">IDX Composite (IHSG)</td>
+                    <td class="py-3 px-3 text-right font-mono">$890,400,000,000</td>
+                    <td class="py-3 px-3 text-right font-mono text-emerald-500">+0.84%</td>
+                    <td class="py-3 px-3 text-right font-mono">19.5%</td>
+                    <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-500 font-bold">STABLE</span></td>
+                </tr>
+                <tr>
+                    <td class="py-3 px-3 font-bold text-gray-900 dark:text-white">DeFi Protocols</td>
+                    <td class="py-3 px-3 text-right font-mono">$94,200,000,000</td>
+                    <td class="py-3 px-3 text-right font-mono text-rose-500">-0.45%</td>
+                    <td class="py-3 px-3 text-right font-mono">3.8%</td>
+                    <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/10 text-amber-500 font-bold">NEUTRAL</span></td>
+                </tr>
+            `;
+        }
+
         function startLiveTransactionStream() {
-            if (txInterval) clearInterval(txInterval);
             const streamContainer = document.getElementById('live-tx-stream');
             if (!streamContainer) return;
-            
-            const pairs = ['BTC/USD', 'ETH/USD', 'SOL/USDT', 'XRP/USD', 'BNB/USDT', 'ADA/USD'];
-            const types = ['BUY', 'SELL'];
-            
-            txInterval = setInterval(() => {
-                const now = new Date();
-                const timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
-                const pair = pairs[Math.floor(Math.random() * pairs.length)];
-                const type = types[Math.floor(Math.random() * types.length)];
-                const amount = (Math.random() * 5 + 0.1).toFixed(2);
-                const price = (Math.random() * 50000 + 200).toLocaleString('en-US', {maximumFractionDigits: 2});
-                const colorClass = type === 'BUY' ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400';
-                
-                const row = document.createElement('div');
-                row.className = 'flex items-center justify-between bg-gray-100 dark:bg-[#111111] p-2 rounded border border-gray-200 dark:border-[#222222]';
-                row.innerHTML = `
-                    <span class="text-gray-400">${timeStr}</span>
-                    <span class="font-bold text-gray-800 dark:text-gray-200">${pair}</span>
-                    <span class="${colorClass} font-bold">${type}</span>
-                    <span class="text-gray-600 dark:text-gray-400">${amount} @ $${price}</span>
+            if (window.txInterval) clearInterval(window.txInterval);
+
+            window.txInterval = setInterval(() => {
+                txCounter++;
+                const ticksEl = document.getElementById('pa-tx-ticks');
+                if (ticksEl) ticksEl.innerText = txCounter.toLocaleString();
+
+                const pairs = ['BTC/USD', 'ETH/USD', 'BBCA.JK', 'TLKM.JK', 'SOL/USD'];
+                const types = ['BUY', 'SELL'];
+                const randomPair = pairs[Math.floor(Math.random() * pairs.length)];
+                const randomType = types[Math.floor(Math.random() * types.length)];
+                const randomPrice = (Math.random() * 5000 + 100).toFixed(2);
+                const color = randomType === 'BUY' ? 'text-emerald-500' : 'text-rose-500';
+
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between border-b dark:border-dark-border pb-1 animate-fade-in';
+                div.innerHTML = `
+                    <span class="text-gray-500">[${new Date().toLocaleTimeString()}]</span>
+                    <span class="font-bold text-gray-800 dark:text-gray-200">${randomPair}</span>
+                    <span class="${color} font-bold">${randomType}</span>
+                    <span class="font-mono text-gray-700 dark:text-gray-300">$${randomPrice}</span>
                 `;
-                
-                streamContainer.prepend(row);
-                if (streamContainer.children.length > 20) {
+                streamContainer.insertBefore(div, streamContainer.firstChild);
+                if (streamContainer.children.length > 8) {
                     streamContainer.removeChild(streamContainer.lastChild);
                 }
-                
-                txTicksCount++;
-                const ticksEl = document.getElementById('pa-tx-ticks');
-                if (ticksEl) ticksEl.innerText = txTicksCount.toLocaleString();
-            }, 1500);
+            }, 2000);
         }
-        
-        let currentCarouselIndex = 0;
-        function setupCarousel() {
-            const list = document.getElementById('terkini-list');
-            const prevBtn = document.getElementById('terkini-prev');
-            const nextBtn = document.getElementById('terkini-next');
-            const dotsContainer = document.getElementById('terkini-dots');
-            if (!list || !prevBtn || !nextBtn || !dotsContainer) return;
-            const items = list.children;
-            const total = items.length;
-            if (total === 0) return;
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < total; i++) {
-                const dot = document.createElement('button');
-                dot.className = `terkini-carousel-dot ${i === 0 ? 'active' : ''}`;
-                dot.onclick = () => goToSlide(i);
-                dotsContainer.appendChild(dot);
-            }
-            function updateCarousel() {
-                list.style.transform = `translate3d(-${currentCarouselIndex * 100}%, 0, 0)`;
-                Array.from(dotsContainer.children).forEach((dot, idx) => {
-                    dot.classList.toggle('active', idx === currentCarouselIndex);
-                });
-                prevBtn.disabled = currentCarouselIndex === 0;
-                nextBtn.disabled = currentCarouselIndex === total - 1;
-            }
-            function goToSlide(index) {
-                currentCarouselIndex = index;
-                updateCarousel();
-            }
-            prevBtn.onclick = () => {
-                if (currentCarouselIndex > 0) {
-                    currentCarouselIndex--;
-                    updateCarousel();
-                }
-            };
-            nextBtn.onclick = () => {
-                if (currentCarouselIndex < total - 1) {
-                    currentCarouselIndex++;
-                    updateCarousel();
-                }
-            };
-            updateCarousel();
-        }
-        function loadMoreArticles() {
-            alert("Artikel tambahan berhasil dimuat.");
-        }
-        
-        // --- SKRIP STOCK EXCHANGE ---
-        let stocksData = [
-            { code: 'BBCA', name: 'Bank Central Asia Tbk.', price: 9850, change: 1.55, high: 9900, low: 9725, volume: 1845200 },
-            { code: 'BBRI', name: 'Bank Rakyat Indonesia (Persero)', price: 4920, change: -0.60, high: 5000, low: 4900, volume: 3241000 },
-            { code: 'TLKM', name: 'Telkom Indonesia (Persero) Tbk.', price: 3110, change: 0.97, high: 3130, low: 3080, volume: 2150400 },
-            { code: 'ASII', name: 'Astra International Tbk.', price: 5275, change: 2.30, high: 5300, low: 5150, volume: 1290300 },
-            { code: 'BMRI', name: 'Bank Mandiri (Persero) Tbk.', price: 6725, change: 1.12, high: 6775, low: 6650, volume: 2890000 },
-            { code: 'UNVR', name: 'Unilever Indonesia Tbk.', price: 2450, change: -1.21, high: 2500, low: 2440, volume: 940200 },
-            { code: 'GOTO', name: 'GoTo Gojek Tokopedia Tbk.', price: 72, change: 4.35, high: 74, low: 69, volume: 45890000 },
-            { code: 'ADRO', name: 'Adaro Energy Indonesia Tbk.', price: 2980, change: -0.33, high: 3020, low: 2960, volume: 1540000 }
-        ];
-        let currentSymbol = 'IHSG';
-        let isLiveActive = true;
-        let chartInstance = null;
-        let chartLabels = ['10:00', '10:15', '10:30', '10:45', '11:00', '11:15', '11:30'];
-        let chartDataSets = {
-            'IHSG': [7310, 7318, 7325, 7320, 7335, 7338, 7342.15],
-            'BBCA': [9700, 9750, 9725, 9800, 9780, 9820, 9850],
-            'TLKM': [3060, 3075, 3090, 3085, 3100, 3105, 3110],
-            'ASII': [5150, 5180, 5200, 5220, 5250, 5260, 5275]
-        };
-        function initChart() {
-            const ctxEl = document.getElementById('marketChart');
-            if (!ctxEl) return;
-            const ctx = ctxEl.getContext('2d');
-            if (chartInstance) chartInstance.destroy();
-            chartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: chartLabels,
-                    datasets: [{
-                        label: currentSymbol,
-                        data: chartDataSets[currentSymbol] || chartDataSets['IHSG'],
-                        borderColor: '#005C9E',
-                        backgroundColor: function(context) {
-                            const chart = context.chart;
-                            const {ctx, chartArea} = chart;
-                            if (!chartArea) return null;
-                            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-                            gradient.addColorStop(0, 'rgba(0, 92, 158, 0)');
-                            gradient.addColorStop(1, 'rgba(0, 92, 158, 0.25)');
-                            return gradient;
-                        },
-                        borderWidth: 2.5,
-                        fill: true,
-                        tension: 0.35,
-                        pointRadius: 3,
-                        pointBackgroundColor: '#005C9E'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                            backgroundColor: '#111827',
-                            titleColor: '#ffffff',
-                            bodyColor: '#e5e7eb',
-                            borderColor: '#374151',
-                            borderWidth: 1
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: { color: 'rgba(150, 150, 150, 0.1)' },
-                            ticks: { color: '#9ca3af', font: { size: 10 } }
-                        },
-                        y: {
-                            grid: { color: 'rgba(150, 150, 150, 0.1)' },
-                            ticks: { color: '#9ca3af', font: { size: 10 } }
-                        }
-                    }
-                }
-            });
-        }
-        function renderStockTable(dataToRender = stocksData) {
-            const tbody = document.getElementById('stockTableBody');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-            dataToRender.forEach(stock => {
-                const isPositive = stock.change >= 0;
-                const badgeClass = isPositive ? 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20' : 'text-rose-500 bg-rose-500/10 border-rose-500/20';
-                const icon = isPositive ? 'fa-arrow-up' : 'fa-arrow-down';
-                
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition cursor-pointer group';
-                tr.onclick = () => selectStock(stock.code);
-                tr.innerHTML = `
-                    <td class="py-3 px-4 font-bold text-gray-900 dark:text-white group-hover:text-primary transition">${stock.code}</td>
-                    <td class="py-3 px-4 text-gray-700 dark:text-gray-300">${stock.name}</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-900 dark:text-white">${stock.price.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-right">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold border ${badgeClass}">
-                            <i class="fa-solid ${icon} mr-1 text-[9px]"></i> ${isPositive ? '+' : ''}${stock.change}%
-                        </span>
-                    </td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${stock.high.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${stock.low.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-600 dark:text-gray-300">${stock.volume.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-center">
-                        <button onclick="event.stopPropagation(); executeBuy('${stock.code}', ${stock.price})" class="px-2.5 py-1 bg-primary hover:bg-primary/90 text-white text-[11px] font-semibold rounded-lg transition shadow-md shadow-primary/20">Beli</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-        function renderOrderBook(symbol) {
-            const container = document.getElementById('orderBookContainer');
-            if (!container) return;
-            container.innerHTML = '';
-            const tagEl = document.getElementById('selectedStockTag');
-            if (tagEl) tagEl.innerText = symbol;
-            let basePrice = symbol === 'IHSG' ? 7342 : (stocksData.find(s => s.code === symbol)?.price || 5000);
-            
-            for (let i = 1; i <= 5; i++) {
-                let askPrice = basePrice + (i * 25);
-                let askVol = Math.floor(Math.random() * 500) + 50;
-                let divAsk = document.createElement('div');
-                divAsk.className = 'flex justify-between items-center px-2 py-1 rounded bg-rose-500/10 text-rose-600 dark:text-rose-400 text-[11px] font-mono';
-                divAsk.innerHTML = `<span>${askPrice.toLocaleString()}</span><span class="text-gray-500">${askVol} lot</span>`;
-                container.appendChild(divAsk);
-            }
-            let divMid = document.createElement('div');
-            divMid.className = 'text-center py-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest border-y border-gray-200 dark:border-dark-border my-1';
-            divMid.innerHTML = `<span>--- Harga Pasar (${symbol}) ---</span>`;
-            container.appendChild(divMid);
-            for (let i = 5; i >= 1; i--) {
-                let bidPrice = basePrice - (i * 25);
-                let bidVol = Math.floor(Math.random() * 500) + 50;
-                let divBid = document.createElement('div');
-                divBid.className = 'flex justify-between items-center px-2 py-1 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] font-mono';
-                divBid.innerHTML = `<span>${bidPrice.toLocaleString()}</span><span class="text-gray-500">${bidVol} lot</span>`;
-                container.appendChild(divBid);
-            }
-        }
-        function selectStock(symbol) {
-            currentSymbol = symbol;
-            const titleEl = document.getElementById('activeChartTitle');
-            if (titleEl) titleEl.innerText = `Grafik Pergerakan ${symbol}`;
-            
-            ['IHSG', 'BBCA', 'TLKM', 'ASII'].forEach(sym => {
-                const btn = document.getElementById(`btn${sym}`);
-                if (btn) {
-                    if (sym === symbol) {
-                        btn.className = 'px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition';
-                    } else {
-                        btn.className = 'px-3 py-1 text-xs font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition';
-                    }
-                }
-            });
-            if (!chartDataSets[symbol]) {
-                let base = stocksData.find(s => s.code === symbol)?.price || 5000;
-                chartDataSets[symbol] = [base * 0.98, base * 0.985, base * 0.99, base * 0.992, base * 0.998, base * 1.002, base];
-            }
-            if (chartInstance) {
-                chartInstance.data.datasets[0].label = symbol;
-                chartInstance.data.datasets[0].data = chartDataSets[symbol];
-                chartInstance.update();
-            }
-            renderOrderBook(symbol);
-        }
-        function changeChartSymbol(symbol) {
-            selectStock(symbol);
-        }
-        function filterStockTable() {
-            const inputEl = document.getElementById('searchStockInput');
-            if (!inputEl) return;
-            const query = inputEl.value.toLowerCase();
-            const filtered = stocksData.filter(s => s.code.toLowerCase().includes(query) || s.name.toLowerCase().includes(query));
-            renderStockTable(filtered);
-        }
-        function runRealtimeEngine() {
-            if (!isLiveActive) return;
-            let ihsgEl = document.getElementById('ihsgValue');
-            if (ihsgEl) {
-                let currentIhsg = parseFloat(ihsgEl.innerText.replace(/,/g, ''));
-                let deltaIhsg = (Math.random() - 0.48) * 3.5;
-                let newIhsg = (currentIhsg + deltaIhsg).toFixed(2);
-                ihsgEl.innerText = Number(newIhsg).toLocaleString();
-            }
-            let randomIndex = Math.floor(Math.random() * stocksData.length);
-            let targetStock = stocksData[randomIndex];
-            let priceChangeStep = (Math.random() > 0.5 ? 25 : -25);
-            targetStock.price = Math.max(50, targetStock.price + priceChangeStep);
-            targetStock.change = Number((targetStock.change + (priceChangeStep > 0 ? 0.05 : -0.05)).toFixed(2));
-            targetStock.volume += Math.floor(Math.random() * 1000);
-            renderStockTable();
-            
-            if (chartInstance && chartDataSets[currentSymbol]) {
-                let dataset = chartDataSets[currentSymbol];
-                dataset[dataset.length - 1] = targetStock.price;
-                chartInstance.data.datasets[0].data = dataset;
-                chartInstance.update('none');
-            }
-        }
-        function executeBuy(code, price) {
-            showModal("Konfirmasi Transaksi", `Pesanan beli untuk saham <strong>${code}</strong> di harga <strong>Rp ${price.toLocaleString()}</strong> berhasil dimasukkan ke antrean bursa.`);
-        }
-        function showModal(title, message) {
-            const titleEl = document.getElementById('modalTitle');
-            const msgEl = document.getElementById('modalMessage');
-            const modalEl = document.getElementById('customModal');
-            if (titleEl) titleEl.innerText = title;
-            if (msgEl) msgEl.innerHTML = message;
-            if (modalEl) modalEl.classList.remove('hidden');
-        }
+
         function closeModal() {
-            const modalEl = document.getElementById('customModal');
-            if (modalEl) modalEl.classList.add('hidden');
+            document.getElementById('customModal').classList.add('hidden');
         }
-        window.onload = () => {
-            setupCarousel();
-            initChart();
-            renderStockTable();
-            renderOrderBook('IHSG');
-            setInterval(runRealtimeEngine, 2000);
-        };
+
+        // Jalankan inisialisasi awal ticker saat halaman dimuat
+        document.addEventListener("DOMContentLoaded", () => {
+            renderStockTicker();
+        });
     </script>
 </body>
 </html>
-
