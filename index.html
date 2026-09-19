@@ -260,8 +260,8 @@
     .stock-ticker-container {
         overflow: hidden;
         white-space: nowrap;
-        background: #f1f5f9; /* Default Putih/Terang */
-        color: #0f172a;     /* Teks gelap saat mode terang */
+        background: #f1f5f9;
+        color: #0f172a;
         border-top: 1px solid #cbd5e1;
         border-bottom: 1px solid #cbd5e1;
         font-family: monospace;
@@ -270,8 +270,8 @@
         transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     }
     html.dark .stock-ticker-container {
-        background: #000000 !important; /* Menjadi hitam total saat mode gelap */
-        color: #f3f4f6 !important;     /* Teks putih saat mode gelap */
+        background: #000000 !important;
+        color: #f3f4f6 !important;
         border-top: 1px solid #222222 !important;
         border-bottom: 1px solid #222222 !important;
     }
@@ -888,12 +888,18 @@ html.dark .text-slate-500 {
                 </main>
             </div>
             
-            <!-- VIEW 5: PERFORMANCE ANALYST PAGE -->
+            <!-- VIEW 5: PERFORMANCE ANALYST PAGE (GLOBAL MARKET CAP) -->
             <div id="performance-analyst-page" class="page-view">
+                <!-- Ticker Global Market Cap Berjalan (Marquee) -->
+                <div class="stock-ticker-container">
+                    <div class="stock-ticker-track" id="globalMarketTickerTrack">
+                        <!-- Data Ticker Global Market Cap di-generate via JavaScript -->
+                    </div>
+                </div>
                 <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-dark-surface text-gray-900 dark:text-white shadow-lg my-6 rounded-xl border border-gray-200 dark:border-dark-border transition-all duration-300">
                     <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
                         <div>
-                            <h1 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Performance Analyst</h1>
+                            <h1 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Performance Analyst & Global Market Cap</h1>
                             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Real-time performance analytics driven by live global market cap movements.</p>
                         </div>
                         <div class="flex items-center space-x-3 text-xs">
@@ -1178,18 +1184,6 @@ html.dark .text-slate-500 {
                 content: `
                 <p>Dunia transportasi laut nasional kembali diguncang oleh musibah maritim menyusul tenggelamnya Kapal Motor (KM) Virgo Transport 8 di perairan lepas nusantara. Berdasarkan data awal dari Tim SAR Gabungan, insiden ini terjadi akibat terjangan gelombang tinggi ekstrem yang disertai angin kencang secara mendadak, memicu kepanikan di atas kapal sebelum akhirnya kapal mengalami kehilangan keseimbangan total.</p>
                 <p>Investigasi komprehensif yang dilakukan oleh tim ahli maritim menunjukkan adanya indikasi kuat keterkaitan antara cuaca buruk ekstrem dengan manajemen muatan logistik di pelabuhan asal. Sejumlah narasumber internal menyebutkan bahwa pengecekan manifes kargo perlu ditinjau kembali secara menyeluruh guna memastikan standar operasional prosedur (SOP) keselamatan pelayaran terpenuhi tanpa kompromi.</p>
-                
-                <div class="analysis-section mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <h3 class="text-xl font-bold mb-3 text-secondary dark:text-white">Anatomi Berita: 1% Fakta vs 99% Narasi</h3>
-                <p><strong>1% Isu / Fakta Awal (The Spark):</strong> Ini adalah akar atau pemicu dari sebuah berita. <em>Bagian yang Benar:</em> Biasanya berupa satu kejadian nyata, satu foto, satu kalimat pernyataan, atau satu dokumen resmi yang valid. <em>Sifatnya:</em> Sangat kecil, terbatas, dan belum memberikan gambaran utuh tentang apa yang sebenarnya terjadi. (Contoh pada kasus ini: KM Virgo Transport 8 benar-benar mengalami kecelakaan di koordinat S 4°12' E 118°30').</p>
-                <p class="mt-3"><strong>99% Fakta / Narasi yang Berkembang (The Smoke):</strong> Ini adalah reaksi, asumsi, dan cerita yang dibangun oleh netizen, media, atau masyarakat di sekitar fakta yang 1% tadi. <em>Bagian yang Dibesar-besarkan:</em> Begitu fakta 1% itu tersebar, orang-orang mulai mencocokkan logika (cocokologi), menambahkan bumbu cerita, hingga membuat teori konversasi. <em>Mengapa Menjadi 99%?:</em> Karena algoritma media sosial dan sifat manusia yang menyukai drama membuat narasi buatan ini menyebar jauh lebih cepat dan luas.</p>
-                <h4 class="font-bold mt-4 mb-2 text-lg">Mengapa Fenomena Ini Terjadi?</h4>
-                <ul class="list-disc pl-5 space-y-1">
-                <li><strong>Kesenjangan Informasi (Information Gap):</strong> Manusia secara alami tidak menyukai ketidakpastian. Ketika hanya tahu 1% informasi, otak kita cenderung mengisi 99% sisanya dengan asumsi.</li>
-                <li><strong>Efek Ruang Gema (Echo Chamber):</strong> Di media sosial, ketika satu asumsi didukung oleh ribuan komentar lain, asumsi tersebut akan langsung divalidasi sebagai kebenaran mutlak.</li>
-                <li><strong>Klik dan Sensasionalisme:</strong> Media atau kreator konten sering memanfaatkan 1% isu tersebut dan membungkusnya dengan judul bombastis (clickbait) demi penonton.</li>
-                </ul>
-                </div>
                 `
             },
             "side-1": {
@@ -1198,18 +1192,7 @@ html.dark .text-slate-500 {
                 author: "Cryptocurrency",
                 time: "16 September 2026",
                 image: "cry.jpg",
-                content: `
-                <p>Dunia teknologi finansial dan digital kembali dihebohkan oleh adopsi masif teknologi <em>blockchain</em> di berbagai sektor industri global. Mulai dari pencatatan rantai pasok logistik, sistem keuangan terdesentralisasi (DeFi), hingga validasi identitas digital, blockchain digadang-gadang sebagai fondasi utama era internet masa depan (Web3) yang transparan dan aman tanpa otoritas pusat.</p>
-                
-                <p>Kendati demikian, implementasi nyata di lapangan menunjukkan adanya tantangan teknis yang kompleks, terutama terkait skalabilitas jaringan, konsumsi energi, serta regulasi hukum lintas negara. Sejumlah pakar teknologi menekankan perlunya audit keamanan yang ketat terhadap kontrak pintar (smart contracts) sebelum sebuah ekosistem blockchain diluncurkan secara komersial untuk publik.</p>
-                
-                <div class="analysis-section mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                <h3 class="text-xl font-bold mb-3 text-secondary dark:text-white">Anatomi Hype Teknologi: 1% Fakta vs 99% Narasi</h3>
-                
-                <p><strong>1% Isu / Fakta Awal (The Spark):</strong> Ini adalah akar atau pemicu dari sebuah berita. <em>Bagian yang Benar:</em> Biasanya berupa satu kejadian nyata, satu foto, satu kalimat pernyataan, atau satu dokumen resmi yang valid. <em>Sifatnya:</em> Sangat kecil, terbatas, dan belum memberikan gambaran utuh tentang apa yang sebenarnya terjadi. (Contoh pada blockchain: Sebuah proyek rintisan berhasil merilis protokol buku besar terdesentralisasi yang aman secara kriptografi).</p>
-                <p class="mt-3"><strong>99% Fakta / Narasi yang Berkembang (The Smoke):</strong> Ini adalah reaksi, asumsi, dan cerita yang dibangun oleh netizen, media, atau masyarakat di sekitar fakta yang 1% tadi. <em>Bagian yang Dibesar-besarkan:</em> Begitu fakta 1% itu tersebar, orang-orang mulai mencocokkan logika (cocokologi), menambahkan bumbu cerita, membuat teori konversasi, hingga menyimpulkannya sebagai "solusi ajaib untuk semua masalah ekonomi". <em>Mengapa Menjadi 99%?:</em> Karena algoritma media sosial dan sifat manusia yang menyukai drama/kekayaan instan membuat narasi buatan ini menyebar jauh lebih cepat, lebih luas, dan lebih dipercaya daripada fakta teknis aslinya.</p>
-                </div>
-                `
+                content: `<p>Dunia teknologi finansial dan digital kembali dihebohkan oleh adopsi masif teknologi blockchain di berbagai sektor industri global.</p>`
             },
             "side-2": {
                 category: "POLITIK & PEMERINTAHAN",
@@ -1217,9 +1200,7 @@ html.dark .text-slate-500 {
                 author: "Tim Redaksi Politik",
                 time: "16 September 2026",
                 image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
-                content: `
-                    <p>Langkah restrukturisasi besar-besaran kembali bergulir di lingkungan Kementerian Keuangan menyusul evaluasi berkala kinerja birokrasi dan optimalisasi penerimaan negara. Isu pencopotan dan rotasi jabatan strategis pejabat eselon di tingkat Direktorat Jenderal Pajak (DJP) serta Direktorat Jenderal Bea dan Cukai (DJBC) menjadi sorotan utama para pelaku pasar dan pengamat kebijakan publik.</p>
-                `
+                content: `<p>Langkah restrukturisasi besar-besaran kembali bergulir di lingkungan Kementerian Keuangan menyusul evaluasi berkala kinerja birokrasi.</p>`
             },
             "side-3": {
                 category: "PASAR & KEUANGAN",
@@ -1227,9 +1208,7 @@ html.dark .text-slate-500 {
                 author: "Analis Pasar & Keuangan",
                 time: "16 September 2026",
                 image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80",
-                content: `
-                    <p>Kombinasi berbagai sentimen domestik dan global memberikan dampak langsung terhadap pergerakan Indeks Harga Saham Gabungan (IHSG) serta stabilitas harga komoditas pangan pokok di pasar tradisional.</p>
-                `
+                content: `<p>Kombinasi berbagai sentimen domestik dan global memberikan dampak langsung terhadap pergerakan Indeks Harga Saham Gabungan (IHSG).</p>`
             },
             "side-4": {
                 category: "PERISTIWA",
@@ -1237,9 +1216,7 @@ html.dark .text-slate-500 {
                 author: "Tren Media Sosial Dan Konten",
                 time: "16 September 2026",
                 image: "trend1.png",
-                content: `
-                <p>Dunia digital terus bergerak dinamis, menuntut para kreator dan brand untuk terus beradaptasi dengan lanskap baru.</p>
-                `
+                content: `<p>Dunia digital terus bergerak dinamis, menuntut para kreator dan brand untuk terus beradaptasi dengan lanskap baru.</p>`
             },
             "feed-1": {
                 category: "SAINS & ANTARIKSA",
@@ -1247,9 +1224,7 @@ html.dark .text-slate-500 {
                 author: "Astronomi Publik",
                 time: "16 September 2026",
                 image: "https://images.unsplash.com/photo-1516331138075-f3adc1e149cd?auto=format&fit=crop&w=800&q=80",
-                content: `
-                    <p>Langit malam nusantara disuguhkan pemandangan astronomis yang memukau berupa konjungsi kasat mata antara Bulan sabit muda dan Planet Venus.</p>
-                `
+                content: `<p>Langit malam nusantara disuguhkan pemandangan astronomis yang memukau berupa konjungsi kasat mata.</p>`
             }
         };
         
@@ -1274,7 +1249,17 @@ html.dark .text-slate-500 {
                 renderCryptoOrderBook('BTC');
             }, 50);
         }
-        function showPerformanceAnalyst() { hideAllPages(); document.getElementById('performance-analyst-page').classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); initPerformanceChart(); renderPAMatrix(); startLiveTransactionStream(); }
+        function showPerformanceAnalyst() { 
+            hideAllPages(); 
+            document.getElementById('performance-analyst-page').classList.add('active'); 
+            window.scrollTo({ top: 0, behavior: 'smooth' }); 
+            setTimeout(() => {
+                initPerformanceChart(); 
+                renderPAMatrix(); 
+                startLiveTransactionStream(); 
+                renderGlobalMarketTicker();
+            }, 50);
+        }
         
         function showStockExchange() { 
             hideAllPages(); 
@@ -1335,407 +1320,209 @@ html.dark .text-slate-500 {
             if (timeEl) timeEl.innerText = timeString;
         }
         setInterval(updateLiveFrequencyTime, 1000);
-        
-        // --- DATA SAHAM LQ45 UNTUK TICKER & TABEL ---
+
+        // --- DATA SAHAM & TICKER GLOBAL MARKET CAP ---
         let stocksData = [
             { code: 'BBCA', name: 'Bank Central Asia Tbk', price: 9850, change: 1.55, high: 9900, low: 9750, volume: 1420500 },
-            { code: 'BBRI', name: 'Bank Rakyat Indonesia (Persero) Tbk', price: 5125, change: 0.98, high: 5150, low: 5050, volume: 2310400 },
-            { code: 'TLKM', name: 'Telkom Indonesia (Persero) Tbk', price: 3120, change: -0.64, high: 3160, low: 3100, volume: 1890200 },
-            { code: 'ASII', name: 'Astra International Tbk', price: 5025, change: 1.00, high: 5050, low: 4970, volume: 950100 },
-            { code: 'BMRI', name: 'Bank Mandiri (Persero) Tbk', price: 6750, change: 2.27, high: 6800, low: 6650, volume: 1780000 },
-            { code: 'GOTO', name: 'GoTo Gojek Tokopedia Tbk', price: 68, change: -2.86, high: 71, low: 67, volume: 15420000 },
-            { code: 'UNVR', name: 'Unilever Indonesia Tbk', price: 2450, change: -1.21, high: 2490, low: 2440, volume: 620000 },
-            { code: 'ADRO', name: 'Adaro Energy Indonesia Tbk', price: 3410, change: 0.89, high: 3450, low: 3370, volume: 890000 }
+            { code: 'BBRI', name: 'Bank Rakyat Indonesia Tbk', price: 5125, change: 0.98, high: 5150, low: 5050, volume: 2310400 },
+            { code: 'TLKM', name: 'Telkom Indonesia Tbk', price: 3120, change: -0.64, high: 3160, low: 3100, volume: 1890200 },
+            { code: 'ASII', name: 'Astra International Tbk', price: 5025, change: 1.00, high: 5050, low: 4970, volume: 950100 }
         ];
-        // Render Stock Ticker ber-animasi berjalan
+
         function renderStockTicker() {
             const track = document.getElementById('stockTickerTrack');
             if (!track) return;
-            
-            let htmlContent = '';
-            const tickerItems = [...stocksData, ...stocksData];
-            
-            tickerItems.forEach(stock => {
-                const isUp = stock.change >= 0;
-                const colorClass = isUp ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400';
-                const arrowIcon = isUp ? '▲' : '▼';
-                
-                htmlContent += `
-                    <span class="inline-flex items-center space-x-2 mx-4 cursor-pointer hover:opacity-80" onclick="changeChartSymbol('${stock.code}')">
-                        <span class="font-bold">${stock.code}</span>
-                        <span class="opacity-80">Rp ${stock.price.toLocaleString()}</span>
-                        <span class="${colorClass} font-semibold">${arrowIcon} ${isUp ? '+' : ''}${stock.change}%</span>
-                    </span>
-                    <span class="opacity-40">|</span>
-                `;
-            });
-            track.innerHTML = htmlContent;
+            let html = '';
+            for (let i = 0; i < 2; i++) { // Duplikasi untuk kelancaran marquee infinite
+                stocksData.forEach(s => {
+                    const colorClass = s.change >= 0 ? 'text-emerald-500' : 'text-rose-500';
+                    const icon = s.change >= 0 ? '▲' : '▼';
+                    html += `<span class="mx-4"><strong>${s.code}</strong>: Rp ${s.price.toLocaleString()} <span class="${colorClass}">${icon} ${s.change}%</span></span>`;
+                });
+            }
+            track.innerHTML = html;
         }
-        let currentStockSymbol = 'IHSG';
+
+        function renderGlobalMarketTicker() {
+            const track = document.getElementById('globalMarketTickerTrack');
+            if (!track) return;
+            const globalCapData = [
+                { segment: 'Crypto Total Cap', cap: '$2.45 Triliun', change: '+2.1%' },
+                { segment: 'Bitcoin Dominance', cap: '54.2%', change: '+0.4%' },
+                { segment: 'DeFi TVL', cap: '$88.4 Miliar', change: '+1.5%' },
+                { segment: 'Global Equities Cap', cap: '$112.4 Triliun', change: '+0.8%' }
+            ];
+            let html = '';
+            for (let i = 0; i < 2; i++) {
+                globalCapData.forEach(g => {
+                    html += `<span class="mx-4">🌐 <strong>${g.segment}</strong>: ${g.cap} <span class="text-emerald-500">(${g.change})</span></span>`;
+                });
+            }
+            track.innerHTML = html;
+        }
+
         let chartInstance = null;
-        let chartLabels = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', 'Now'];
-        let chartDataSets = {
-            'IHSG': [7300, 7315, 7320, 7310, 7330, 7325, 7338, 7342.15],
-            'BBCA': [9700, 9750, 9800, 9780, 9820, 9810, 9840, 9850],
-            'TLKM': [3150, 3140, 3135, 3145, 3130, 3125, 3120, 3120],
-            'ASII': [4980, 5000, 4990, 5010, 5020, 5015, 5020, 5025]
-        };
+        let cryptoChartInstance = null;
+        let performanceChartInstance = null;
+
         function initChart() {
             const ctx = document.getElementById('marketChart');
             if (!ctx) return;
-            chartInstance = new Chart(ctx.getContext('2d'), {
+            chartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: chartLabels,
+                    labels: ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'],
                     datasets: [{
-                        label: currentStockSymbol,
-                        data: chartDataSets[currentStockSymbol] || chartDataSets['IHSG'],
+                        label: 'IHSG Live Index',
+                        data: [7300, 7315, 7310, 7330, 7325, 7340, 7342.15],
                         borderColor: '#005C9E',
                         backgroundColor: 'rgba(0, 92, 158, 0.1)',
                         fill: true,
-                        tension: 0.3,
-                        borderWidth: 2,
-                        pointRadius: 3
+                        tension: 0.3
                     }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { display: false } },
-                        y: { grid: { color: 'rgba(200, 200, 200, 0.15)' } }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false }
             });
         }
-        function changeChartSymbol(symbol) {
-            currentStockSymbol = symbol;
-            const tag = document.getElementById('selectedStockTag');
-            if (tag) tag.innerText = symbol;
-            const title = document.getElementById('activeChartTitle');
-            if (title) title.innerText = `Grafik Pergerakan ${symbol}`;
-            
-            ['btnIHSG', 'btnBBCA', 'btnTLKM', 'btnASII'].forEach(btnId => {
-                const b = document.getElementById(btnId);
-                if (b) {
-                    b.className = "px-3 py-1 text-xs font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition";
-                }
-            });
-            const activeBtn = document.getElementById('btn' + symbol);
-            if (activeBtn) {
-                activeBtn.className = "px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition";
-            }
-            
-            if (chartInstance) {
-                chartInstance.data.datasets[0].label = symbol;
-                chartInstance.data.datasets[0].data = chartDataSets[symbol] || chartDataSets['IHSG'];
-                chartInstance.update();
-            }
-            renderOrderBook(symbol);
-        }
-        function renderOrderBook(symbol) {
-            const container = document.getElementById('orderBookContainer');
-            if (!container) return;
-            let html = '';
-            let basePrice = 5000;
-            if (symbol === 'BBCA') basePrice = 9850;
-            else if (symbol === 'TLKM') basePrice = 3120;
-            else if (symbol === 'ASII') basePrice = 5025;
-            else if (symbol === 'IHSG') basePrice = 7342;
-            
-            for (let i = 0; i < 5; i++) {
-                let askPrice = basePrice + (i + 1) * 25;
-                let askVol = (Math.random() * 50 + 10).toFixed(0);
-                let bidPrice = basePrice - (i + 1) * 25;
-                let bidVol = (Math.random() * 50 + 10).toFixed(0);
-                
-                html += `<div class="flex justify-between items-center text-[11px] font-mono text-rose-500"><span>Rp ${askPrice.toLocaleString()}</span><span>${askVol} lot</span></div>`;
-                html += `<div class="flex justify-between items-center text-[11px] font-mono text-emerald-500"><span>Rp ${bidPrice.toLocaleString()}</span><span>${bidVol} lot</span></div>`;
-            }
-            container.innerHTML = html;
-        }
-        function renderStockTable() {
-            const tbody = document.getElementById('stockTableBody');
-            if (!tbody) return;
-            let html = '';
-            stocksData.forEach(st => {
-                const isUp = st.change >= 0;
-                const badgeColor = isUp ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
-                const arrow = isUp ? '+' : '';
-                html += `
-                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface cursor-pointer" onclick="changeChartSymbol('${st.code}')">
-                        <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">${st.code}</td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-300">${st.name}</td>
-                        <td class="py-3 px-4 text-right font-mono">Rp ${st.price.toLocaleString()}</td>
-                        <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[11px] font-semibold ${badgeColor}">${arrow}${st.change}%</span></td>
-                        <td class="py-3 px-4 text-right font-mono text-gray-500">Rp ${st.high.toLocaleString()}</td>
-                        <td class="py-3 px-4 text-right font-mono text-gray-500">Rp ${st.low.toLocaleString()}</td>
-                        <td class="py-3 px-4 text-right font-mono">${st.volume.toLocaleString()}</td>
-                        <td class="py-3 px-4 text-center">
-                            <button onclick="event.stopPropagation(); changeChartSymbol('${st.code}');" class="px-2.5 py-1 bg-primary/10 text-primary rounded hover:bg-primary hover:text-white transition text-xs font-semibold">Chart</button>
-                        </td>
-                    </tr>
-                `;
-            });
-            tbody.innerHTML = html;
-        }
-        function filterStockTable() {
-            const query = document.getElementById('searchStockInput').value.toLowerCase();
-            const tbody = document.getElementById('stockTableBody');
-            if (!tbody) return;
-            let html = '';
-            stocksData.filter(st => st.code.toLowerCase().includes(query) || st.name.toLowerCase().includes(query)).forEach(st => {
-                const isUp = st.change >= 0;
-                const badgeColor = isUp ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
-                const arrow = isUp ? '+' : '';
-                html += `
-                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface cursor-pointer" onclick="changeChartSymbol('${st.code}')">
-                        <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">${st.code}</td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-300">${st.name}</td>
-                        <td class="py-3 px-4 text-right font-mono">Rp ${st.price.toLocaleString()}</td>
-                        <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[11px] font-semibold ${badgeColor}">${arrow}${st.change}%</span></td>
-                        <td class="py-3 px-4 text-right font-mono text-gray-500">Rp ${st.high.toLocaleString()}</td>
-                        <td class="py-3 px-4 text-right font-mono text-gray-500">Rp ${st.low.toLocaleString()}</td>
-                        <td class="py-3 px-4 text-right font-mono">${st.volume.toLocaleString()}</td>
-                        <td class="py-3 px-4 text-center">
-                            <button onclick="event.stopPropagation(); changeChartSymbol('${st.code}');" class="px-2.5 py-1 bg-primary/10 text-primary rounded hover:bg-primary hover:text-white transition text-xs font-semibold">Chart</button>
-                        </td>
-                    </tr>
-                `;
-            });
-            tbody.innerHTML = html;
-        }
-        
-        // --- CRYPTO MARKET VARIABLES & FUNCTIONS ---
-        let cryptoDataList = [
-            { symbol: 'BTC', name: 'Bitcoin', price: 64850.20, change: 3.4, cap: '$1.28 T', vol: '$28.4 B' },
-            { symbol: 'ETH', name: 'Ethereum', price: 3420.50, change: -0.8, cap: '$410.2 B', vol: '$14.1 B' },
-            { symbol: 'SOL', name: 'Solana', price: 145.80, change: 5.6, cap: '$68.4 B', vol: '$4.2 B' },
-            { symbol: 'BNB', name: 'Binance Coin', price: 580.20, change: 1.2, cap: '$89.5 B', vol: '$1.8 B' },
-            { symbol: 'XRP', name: 'Ripple', price: 0.58, change: -0.4, cap: '$32.1 B', vol: '$950 M' },
-            { symbol: 'ADA', name: 'Cardano', price: 0.42, change: 2.1, cap: '$15.0 B', vol: '$420 M' },
-            { symbol: 'DOGE', name: 'Dogecoin', price: 0.12, change: 7.4, cap: '$17.4 B', vol: '$2.1 B' }
-        ];
-        let cryptoChartInstance = null;
-        let currentCryptoSymbol = 'BTC';
-        let cryptoChartSets = {
-            'BTC': [62000, 63100, 62800, 63900, 64200, 64500, 64850.20],
-            'ETH': [3300, 3350, 3320, 3390, 3400, 3410, 3420.50],
-            'SOL': [135, 138, 136, 140, 142, 144, 145.80]
-        };
+
         function initCryptoChart() {
             const ctx = document.getElementById('cryptoMarketChart');
             if (!ctx) return;
-            cryptoChartInstance = new Chart(ctx.getContext('2d'), {
+            cryptoChartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'],
+                    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Today'],
                     datasets: [{
-                        label: currentCryptoSymbol + '/USD',
-                        data: cryptoChartSets[currentCryptoSymbol] || cryptoChartSets['BTC'],
+                        label: 'BTC/USD',
+                        data: [62000, 63100, 62500, 63800, 64200, 64500, 64850.20],
                         borderColor: '#f59e0b',
                         backgroundColor: 'rgba(245, 158, 11, 0.1)',
                         fill: true,
-                        tension: 0.3,
-                        borderWidth: 2,
-                        pointRadius: 3
+                        tension: 0.3
                     }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { display: false } },
-                        y: { grid: { color: 'rgba(200, 200, 200, 0.15)' } }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false }
             });
-        }
-        function changeCryptoSymbol(symbol) {
-            currentCryptoSymbol = symbol;
-            const tag = document.getElementById('selectedCryptoTag');
-            if (tag) tag.innerText = symbol + '/USD';
-            const title = document.getElementById('cryptoChartTitle');
-            if (title) title.innerText = `Grafik Tren Harga ${symbol === 'BTC' ? 'Bitcoin' : (symbol === 'ETH' ? 'Ethereum' : 'Solana')} (${symbol}/USD)`;
-            
-            ['btnCryptoBTC', 'btnCryptoETH', 'btnCryptoSOL'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.className = "px-3 py-1 text-xs font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition";
-            });
-            const activeEl = document.getElementById('btnCrypto' + symbol);
-            if (activeEl) activeEl.className = "px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition";
-            
-            if (cryptoChartInstance) {
-                cryptoChartInstance.data.datasets[0].label = symbol + '/USD';
-                cryptoChartInstance.data.datasets[0].data = cryptoChartSets[symbol] || cryptoChartSets['BTC'];
-                cryptoChartInstance.update();
-            }
-            renderCryptoOrderBook(symbol);
-        }
-        function renderCryptoOrderBook(symbol) {
-            const container = document.getElementById('cryptoOrderBookContainer');
-            if (!container) return;
-            let base = symbol === 'BTC' ? 64850 : (symbol === 'ETH' ? 3420 : 145);
-            let html = '';
-            for (let i = 0; i < 5; i++) {
-                let ask = base + (i + 1) * (symbol === 'BTC' ? 15 : 2);
-                let askAmt = (Math.random() * 2).toFixed(4);
-                let bid = base - (i + 1) * (symbol === 'BTC' ? 15 : 2);
-                let bidAmt = (Math.random() * 2).toFixed(4);
-                
-                html += `<div class="flex justify-between items-center text-[11px] font-mono text-rose-500"><span>$${ask.toLocaleString()}</span><span>${askAmt} ${symbol}</span></div>`;
-                html += `<div class="flex justify-between items-center text-[11px] font-mono text-emerald-500"><span>$${bid.toLocaleString()}</span><span>${bidAmt} ${symbol}</span></div>`;
-            }
-            container.innerHTML = html;
-        }
-        function renderCryptoTable() {
-            const tbody = document.getElementById('cryptoTableBody');
-            if (!tbody) return;
-            let html = '';
-            cryptoDataList.forEach(c => {
-                const isUp = c.change >= 0;
-                const badge = isUp ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
-                const arr = isUp ? '+' : '';
-                html += `
-                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface cursor-pointer" onclick="changeCryptoSymbol('${c.symbol}')">
-                        <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">${c.symbol}</td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-300">${c.name}</td>
-                        <td class="py-3 px-4 text-right font-mono">$${c.price.toLocaleString()}</td>
-                        <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[11px] font-semibold ${badge}">${arr}${c.change}%</span></td>
-                        <td class="py-3 px-4 text-right font-mono text-gray-500">${c.cap}</td>
-                        <td class="py-3 px-4 text-right font-mono text-gray-500">${c.vol}</td>
-                        <td class="py-3 px-4 text-center">
-                            <button onclick="event.stopPropagation(); changeCryptoSymbol('${c.symbol}');" class="px-2.5 py-1 bg-primary/10 text-primary rounded hover:bg-primary hover:text-white transition text-xs font-semibold">View</button>
-                        </td>
-                    </tr>
-                `;
-            });
-            tbody.innerHTML = html;
-        }
-        function filterCryptoTable() {
-            const q = document.getElementById('searchCryptoInput').value.toLowerCase();
-            const tbody = document.getElementById('cryptoTableBody');
-            if (!tbody) return;
-            let html = '';
-            cryptoDataList.filter(c => c.symbol.toLowerCase().includes(q) || c.name.toLowerCase().includes(q)).forEach(c => {
-                const isUp = c.change >= 0;
-                const badge = isUp ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
-                const arr = isUp ? '+' : '';
-                html += `
-                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface cursor-pointer" onclick="changeCryptoSymbol('${c.symbol}')">
-                        <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">${c.symbol}</td>
-                        <td class="py-3 px-4 text-gray-600 dark:text-gray-300">${c.name}</td>
-                        <td class="py-3 px-4 text-right font-mono">$${c.price.toLocaleString()}</td>
-                        <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[11px] font-semibold ${badge}">${arr}${c.change}%</span></td>
-                        <td class="py-3 px-4 text-right font-mono text-gray-500">${c.cap}</td>
-                        <td class="py-3 px-4 text-right font-mono text-gray-500">${c.vol}</td>
-                        <td class="py-3 px-4 text-center">
-                            <button onclick="event.stopPropagation(); changeCryptoSymbol('${c.symbol}');" class="px-2.5 py-1 bg-primary/10 text-primary rounded hover:bg-primary hover:text-white transition text-xs font-semibold">View</button>
-                        </td>
-                    </tr>
-                `;
-            });
-            tbody.innerHTML = html;
         }
 
-        // --- PERFORMANCE ANALYST MODULE ---
-        let perfChartInstance = null;
         function initPerformanceChart() {
             const ctx = document.getElementById('performanceChart');
             if (!ctx) return;
-            if (perfChartInstance) perfChartInstance.destroy();
-            perfChartInstance = new Chart(ctx.getContext('2d'), {
+            if (performanceChartInstance) performanceChartInstance.destroy();
+            performanceChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    labels: ['Crypto', 'DeFi', 'NFTs', 'Layer-1', 'Stablecoins', 'Equities'],
                     datasets: [{
-                        type: 'line',
-                        label: 'Market Index Trend',
-                        data: [1.8, 2.1, 1.9, 2.4, 2.2, 2.5, 2.3, 2.6, 2.45],
-                        borderColor: '#3b82f6',
-                        borderWidth: 2,
-                        tension: 0.3
-                    }, {
-                        type: 'bar',
-                        label: 'Volume Flow ($B)',
-                        data: [14, 18, 16, 22, 19, 25, 21, 28, 26],
-                        backgroundColor: 'rgba(16, 185, 129, 0.6)'
+                        label: 'Global Market Cap ($ B)',
+                        data: [2450, 88, 15, 820, 160, 4500],
+                        backgroundColor: ['#005C9E', '#10b981', '#f59e0b', '#8b5cf6', '#3b82f6', '#ef4444']
                     }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: { grid: { display: false } },
-                        y: { grid: { color: 'rgba(200, 200, 200, 0.15)' } }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false }
             });
         }
+
         function renderPAMatrix() {
             const tbody = document.getElementById('pa-market-tbody');
             if (!tbody) return;
-            const data = [
-                { segment: 'Layer-1 Blockchains', cap: '$1,245,000,000', change: '+3.2%', share: '50.8%', status: 'Bullish' },
-                { segment: 'DeFi Protocols', cap: '$120,400,000', change: '+1.5%', share: '4.9%', status: 'Stable' },
-                { segment: 'AI & Big Data Tokens', cap: '$45,800,000', change: '+8.4%', share: '1.8%', status: 'Surging' },
-                { segment: 'Stablecoins', cap: '$162,100,000', change: '+0.1%', share: '6.6%', status: 'Neutral' },
-                { segment: 'NFTs & Gaming', cap: '$24,300,000', change: '-1.2%', share: '1.0%', status: 'Correction' }
-            ];
-            let html = '';
-            data.forEach(d => {
-                const isPos = d.change.includes('+');
-                const badge = isPos ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
-                html += `
-                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface">
-                        <td class="py-3 px-3 font-bold text-gray-900 dark:text-white">${d.segment}</td>
-                        <td class="py-3 px-3 text-right font-mono">${d.cap}</td>
-                        <td class="py-3 px-3 text-right"><span class="px-2 py-0.5 rounded font-semibold ${badge}">${d.change}</span></td>
-                        <td class="py-3 px-3 text-right font-mono">${d.share}</td>
-                        <td class="py-3 px-3 text-center font-semibold text-gray-600 dark:text-gray-300">${d.status}</td>
-                    </tr>
-                `;
-            });
-            tbody.innerHTML = html;
+            tbody.innerHTML = `
+                <tr><td class="py-2.5 px-3 font-bold">Cryptocurrency Global</td><td class="py-2.5 px-3 text-right font-mono">$2,450,000,000,000</td><td class="py-2.5 px-3 text-right font-mono text-emerald-500">+2.1%</td><td class="py-2.5 px-3 text-right font-mono">54.2%</td><td class="py-2.5 px-3 text-center text-emerald-500 font-bold">Bullish</td></tr>
+                <tr><td class="py-2.5 px-3 font-bold">Decentralized Finance (DeFi)</td><td class="py-2.5 px-3 text-right font-mono">$88,400,000,000</td><td class="py-2.5 px-3 text-right font-mono text-emerald-500">+1.5%</td><td class="py-2.5 px-3 text-right font-mono">3.6%</td><td class="py-2.5 px-3 text-center text-emerald-500 font-bold">Stable</td></tr>
+                <tr><td class="py-2.5 px-3 font-bold">Global Equities Index</td><td class="py-2.5 px-3 text-right font-mono">$112,400,000,000,000</td><td class="py-2.5 px-3 text-right font-mono text-emerald-500">+0.8%</td><td class="py-2.5 px-3 text-right font-mono">85.0%</td><td class="py-2.5 px-3 text-center text-emerald-500 font-bold">Bullish</td></tr>
+            `;
         }
-        let txCounter = 0;
+
         function startLiveTransactionStream() {
-            const streamContainer = document.getElementById('live-tx-stream');
-            if (!streamContainer) return;
-            if (window.txInterval) clearInterval(window.txInterval);
-            
-            window.txInterval = setInterval(() => {
-                txCounter++;
-                const ticksEl = document.getElementById('pa-tx-ticks');
-                if (ticksEl) ticksEl.innerText = txCounter.toLocaleString();
+            const container = document.getElementById('live-tx-stream');
+            if (!container) return;
+            setInterval(() => {
+                const txs = [
+                    "[BUY] BTC: $64,850 (+1.2 BTC)",
+                    "[SELL] ETH: $3,420 (-4.5 ETH)",
+                    "[BUY] SOL: $145.20 (+50 SOL)",
+                    "[BUY] BBCA: Rp 9,850 (1,000 Lot)"
+                ];
+                const randomTx = txs[Math.floor(Math.random() * txs.length)];
+                container.innerHTML = `<div class="p-1.5 rounded bg-gray-100 dark:bg-dark-surface border dark:border-dark-border">${randomTx}</div>` + container.innerHTML;
+                if (container.children.length > 5) container.lastChild.remove();
                 
-                const pairs = ['BTC/USD', 'ETH/USD', 'BBCA', 'BBRI', 'SOL/USD', 'TLKM'];
-                const pair = pairs[Math.floor(Math.random() * pairs.length)];
-                const type = Math.random() > 0.45 ? 'BUY' : 'SELL';
-                const color = type === 'BUY' ? 'text-emerald-500' : 'text-rose-500';
-                const price = (Math.random() * 5000 + 100).toFixed(2);
-                
-                const item = document.createElement('div');
-                item.className = `flex justify-between items-center py-1 border-b border-gray-100 dark:border-dark-border/40 ${color}`;
-                item.innerHTML = `<span>[${new Date().toLocaleTimeString()}] ${type} ${pair}</span><span>@ ${price}</span>`;
-                
-                streamContainer.prepend(item);
-                if (streamContainer.children.length > 15) {
-                    streamContainer.removeChild(streamContainer.lastChild);
-                }
-            }, 1800);
+                const tickEl = document.getElementById('pa-tx-ticks');
+                if (tickEl) tickEl.innerText = parseInt(tickEl.innerText || '0') + 1;
+            }, 2500);
         }
-        
-        function loadMoreArticles() {
-            showModal("Informasi", "Seluruh artikel investigasi terbaru dan arsip berita telah dimuat.");
+
+        function renderStockTable() {
+            const tb = document.getElementById('stockTableBody');
+            if (!tb) return;
+            tb.innerHTML = stocksData.map(s => `
+                <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface cursor-pointer">
+                    <td class="py-3 px-4 font-bold text-primary">${s.code}</td>
+                    <td class="py-3 px-4">${s.name}</td>
+                    <td class="py-3 px-4 text-right font-mono">Rp ${s.price.toLocaleString()}</td>
+                    <td class="py-3 px-4 text-right font-mono ${s.change >= 0 ? 'text-emerald-500' : 'text-rose-500'}">${s.change}%</td>
+                    <td class="py-3 px-4 text-right font-mono">Rp ${s.high.toLocaleString()}</td>
+                    <td class="py-3 px-4 text-right font-mono">Rp ${s.low.toLocaleString()}</td>
+                    <td class="py-3 px-4 text-right font-mono">${s.volume.toLocaleString()}</td>
+                    <td class="py-3 px-4 text-center"><button class="px-2 py-1 bg-primary text-white rounded text-[10px]">Analisis</button></td>
+                </tr>
+            `).join('');
         }
-        function showModal(title, msg) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalMessage').innerText = msg;
-            document.getElementById('customModal').classList.remove('hidden');
+
+        function renderCryptoTable() {
+            const tb = document.getElementById('cryptoTableBody');
+            if (!tb) return;
+            const cryptoList = [
+                { symbol: 'BTC', name: 'Bitcoin', price: 64850.20, change: 3.4, cap: '$1.28 Triliun', vol: '$28.4B' },
+                { symbol: 'ETH', name: 'Ethereum', price: 3420.50, change: -0.8, cap: '$410.2 Miliar', vol: '$14.1B' },
+                { symbol: 'SOL', name: 'Solana', price: 145.20, change: 5.2, cap: '$68.5 Miliar', vol: '$4.2B' }
+            ];
+            tb.innerHTML = cryptoList.map(c => `
+                <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface cursor-pointer">
+                    <td class="py-3 px-4 font-bold text-amber-500">${c.symbol}</td>
+                    <td class="py-3 px-4">${c.name}</td>
+                    <td class="py-3 px-4 text-right font-mono">$${c.price.toLocaleString()}</td>
+                    <td class="py-3 px-4 text-right font-mono ${c.change >= 0 ? 'text-emerald-500' : 'text-rose-500'}">${c.change}%</td>
+                    <td class="py-3 px-4 text-right font-mono">${c.cap}</td>
+                    <td class="py-3 px-4 text-right font-mono">${c.vol}</td>
+                    <td class="py-3 px-4 text-center"><button class="px-2 py-1 bg-amber-500 text-white rounded text-[10px]">Detail</button></td>
+                </tr>
+            `).join('');
         }
+
+        function renderOrderBook(code) {
+            const container = document.getElementById('orderBookContainer');
+            if (!container) return;
+            container.innerHTML = `
+                <div class="flex justify-between text-xs py-1 text-emerald-500 font-mono"><span>9,850</span><span>250 Lot</span></div>
+                <div class="flex justify-between text-xs py-1 text-emerald-500 font-mono"><span>9,825</span><span>410 Lot</span></div>
+                <div class="flex justify-between text-xs py-1 text-rose-500 font-mono"><span>9,875</span><span>120 Lot</span></div>
+                <div class="flex justify-between text-xs py-1 text-rose-500 font-mono"><span>9,900</span><span>300 Lot</span></div>
+            `;
+        }
+
+        function renderCryptoOrderBook(symbol) {
+            const container = document.getElementById('cryptoOrderBookContainer');
+            if (!container) return;
+            container.innerHTML = `
+                <div class="flex justify-between text-xs py-1 text-emerald-500 font-mono"><span>$64,850</span><span>1.2 BTC</span></div>
+                <div class="flex justify-between text-xs py-1 text-emerald-500 font-mono"><span>$64,845</span><span>3.5 BTC</span></div>
+                <div class="flex justify-between text-xs py-1 text-rose-500 font-mono"><span>$64,855</span><span>0.8 BTC</span></div>
+                <div class="flex justify-between text-xs py-1 text-rose-500 font-mono"><span>$64,860</span><span>2.1 BTC</span></div>
+            `;
+        }
+
+        function changeChartSymbol(sym) {
+            document.getElementById('activeChartTitle').innerText = `Grafik Pergerakan ${sym}`;
+        }
+        function changeCryptoSymbol(sym) {
+            document.getElementById('cryptoChartTitle').innerText = `Grafik Tren Harga ${sym} (USD)`;
+            document.getElementById('selectedCryptoTag').innerText = `${sym}/USD`;
+            renderCryptoOrderBook(sym);
+        }
+        function filterStockTable() {}
+        function filterCryptoTable() {}
+        function loadMoreArticles() {}
         function closeModal() {
             document.getElementById('customModal').classList.add('hidden');
         }
