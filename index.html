@@ -255,18 +255,25 @@
     html.dark .terkini-carousel-dot.active {
         background: #38bdf8;
     }
-
-    /* Styling Stock Ticker Berjalan (Marquee) */
+    
+    /* Styling Stock Ticker Berjalan (Marquee) - Menyesuaikan Tema Terang & Gelap */
     .stock-ticker-container {
         overflow: hidden;
         white-space: nowrap;
-        background: #0b132b;
-        color: #ffffff;
-        border-top: 1px solid #1f293d;
-        border-bottom: 1px solid #1f293d;
+        background: #f1f5f9; /* Default Putih/Terang */
+        color: #0f172a;     /* Teks gelap saat mode terang */
+        border-top: 1px solid #cbd5e1;
+        border-bottom: 1px solid #cbd5e1;
         font-family: monospace;
         font-size: 12px;
         padding: 6px 0;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    html.dark .stock-ticker-container {
+        background: #000000 !important; /* Menjadi hitam total saat mode gelap */
+        color: #f3f4f6 !important;     /* Teks putih saat mode gelap */
+        border-top: 1px solid #222222 !important;
+        border-bottom: 1px solid #222222 !important;
     }
     .stock-ticker-track {
         display: inline-block;
@@ -973,13 +980,12 @@ html.dark .text-slate-500 {
             
             <!-- VIEW 6: STOCK EXCHANGE -->
             <div id="stock-exchange-page" class="page-view">
-                <!-- FITUR BARU: Stock Ticker / Market Ticker Berjalan di Navigasi Halaman Stock Exchange -->
+                <!-- Stock Ticker / Market Ticker Berjalan di Navigasi Halaman Stock Exchange -->
                 <div class="stock-ticker-container">
                     <div class="stock-ticker-track" id="stockTickerTrack">
                         <!-- Data Ticker akan di-generate secara dinamis via JavaScript -->
                     </div>
                 </div>
-
                 <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-dark-surface text-gray-900 dark:text-white shadow-lg my-6 rounded-xl border border-gray-200 dark:border-dark-border transition-all duration-300 space-y-6">
                     <!-- Market Summary Banner / Tickers -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1341,33 +1347,30 @@ html.dark .text-slate-500 {
             { code: 'UNVR', name: 'Unilever Indonesia Tbk', price: 2450, change: -1.21, high: 2490, low: 2440, volume: 620000 },
             { code: 'ADRO', name: 'Adaro Energy Indonesia Tbk', price: 3410, change: 0.89, high: 3450, low: 3370, volume: 890000 }
         ];
-
         // Render Stock Ticker ber-animasi berjalan
         function renderStockTicker() {
             const track = document.getElementById('stockTickerTrack');
             if (!track) return;
             
             let htmlContent = '';
-            // Gandakan array agar pergerakan ticker loop mulus tanpa jeda
             const tickerItems = [...stocksData, ...stocksData];
             
             tickerItems.forEach(stock => {
                 const isUp = stock.change >= 0;
-                const colorClass = isUp ? 'text-emerald-400' : 'text-rose-400';
+                const colorClass = isUp ? 'text-emerald-500 dark:text-emerald-400' : 'text-rose-500 dark:text-rose-400';
                 const arrowIcon = isUp ? '▲' : '▼';
                 
                 htmlContent += `
                     <span class="inline-flex items-center space-x-2 mx-4 cursor-pointer hover:opacity-80" onclick="changeChartSymbol('${stock.code}')">
-                        <span class="font-bold text-gray-200">${stock.code}</span>
-                        <span class="text-gray-400">Rp ${stock.price.toLocaleString()}</span>
+                        <span class="font-bold">${stock.code}</span>
+                        <span class="opacity-80">Rp ${stock.price.toLocaleString()}</span>
                         <span class="${colorClass} font-semibold">${arrowIcon} ${isUp ? '+' : ''}${stock.change}%</span>
                     </span>
-                    <span class="text-gray-600">|</span>
+                    <span class="opacity-40">|</span>
                 `;
             });
             track.innerHTML = htmlContent;
         }
-
         let currentStockSymbol = 'IHSG';
         let chartInstance = null;
         let chartLabels = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', 'Now'];
@@ -1377,348 +1380,22 @@ html.dark .text-slate-500 {
             'TLKM': [3150, 3140, 3135, 3145, 3130, 3125, 3120, 3120],
             'ASII': [4980, 5000, 4990, 5010, 5020, 5015, 5020, 5025]
         };
-
         function initChart() {
-            const ctxEl = document.getElementById('marketChart');
-            if (!ctxEl) return;
-            const ctx = ctxEl.getContext('2d');
-            if (chartInstance) chartInstance.destroy();
-            chartInstance = new Chart(ctx, {
+            const ctx = document.getElementById('marketChart');
+            if (!ctx) return;
+            chartInstance = new Chart(ctx.getContext('2d'), {
                 type: 'line',
                 data: {
                     labels: chartLabels,
                     datasets: [{
-                        label: currentStockSymbol + ' Price',
+                        label: currentStockSymbol,
                         data: chartDataSets[currentStockSymbol] || chartDataSets['IHSG'],
-                        borderColor: '#0284c7',
-                        backgroundColor: function(context) {
-                            const chart = context.chart;
-                            const {ctx, chartArea} = chart;
-                            if (!chartArea) return null;
-                            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-                            gradient.addColorStop(0, 'rgba(2, 132, 199, 0)');
-                            gradient.addColorStop(1, 'rgba(2, 132, 199, 0.25)');
-                            return gradient;
-                        },
-                        borderWidth: 2.5,
+                        borderColor: '#005C9E',
+                        backgroundColor: 'rgba(0, 92, 158, 0.1)',
                         fill: true,
-                        tension: 0.35,
-                        pointRadius: 3,
-                        pointBackgroundColor: '#0284c7'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                            backgroundColor: '#111827',
-                            titleColor: '#ffffff',
-                            bodyColor: '#e5e7eb',
-                            borderColor: '#374151',
-                            borderWidth: 1
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: { color: 'rgba(150, 150, 150, 0.1)' },
-                            ticks: { color: '#9ca3af', font: { size: 10 } }
-                        },
-                        y: {
-                            grid: { color: 'rgba(150, 150, 150, 0.1)' },
-                            ticks: { color: '#9ca3af', font: { size: 10 } }
-                        }
-                    }
-                }
-            });
-        }
-
-        function changeChartSymbol(symbol) {
-            currentStockSymbol = symbol;
-            ['btnIHSG', 'btnBBCA', 'btnTLKM', 'btnASII'].forEach(id => {
-                const btn = document.getElementById(id);
-                if (btn) {
-                    if (btn.id === 'btn' + symbol) {
-                        btn.className = 'px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition';
-                    } else {
-                        btn.className = 'px-3 py-1 text-xs font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition';
-                    }
-                }
-            });
-            const titleEl = document.getElementById('activeChartTitle');
-            if (titleEl) titleEl.innerText = symbol === 'IHSG' ? 'Grafik Pergerakan IHSG' : `Grafik Harga Saham ${symbol}`;
-            const tagEl = document.getElementById('selectedStockTag');
-            if (tagEl) tagEl.innerText = symbol;
-            
-            if (chartInstance) {
-                chartInstance.data.datasets[0].label = symbol + ' Price';
-                chartInstance.data.datasets[0].data = chartDataSets[symbol] || chartDataSets['IHSG'];
-                chartInstance.update();
-            }
-            renderOrderBook(symbol);
-        }
-
-        function renderStockTable(dataToRender = stocksData) {
-            const tbody = document.getElementById('stockTableBody');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-            dataToRender.forEach(stock => {
-                const isPositive = stock.change >= 0;
-                const badgeClass = isPositive ? 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20' : 'text-rose-500 bg-rose-500/10 border-rose-500/20';
-                const icon = isPositive ? 'fa-arrow-up' : 'fa-arrow-down';
-                
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition cursor-pointer group';
-                tr.onclick = () => changeChartSymbol(stock.code);
-                tr.innerHTML = `
-                    <td class="py-3 px-4 font-bold text-gray-900 dark:text-white group-hover:text-primary transition">${stock.code}</td>
-                    <td class="py-3 px-4 text-gray-700 dark:text-gray-300">${stock.name}</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-900 dark:text-white">Rp ${stock.price.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-right">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold border ${badgeClass}">
-                            <i class="fa-solid ${icon} mr-1 text-[9px]"></i> ${isPositive ? '+' : ''}${stock.change}%
-                        </span>
-                    </td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">Rp ${stock.high.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">Rp ${stock.low.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">${stock.volume.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-center">
-                        <button onclick="event.stopPropagation(); changeChartSymbol('${stock.code}')" class="px-2.5 py-1 bg-primary/10 hover:bg-primary text-primary hover:text-white rounded text-xs font-semibold transition">Analisis</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function filterStockTable() {
-            const query = document.getElementById('searchStockInput').value.toLowerCase();
-            const filtered = stocksData.filter(s => s.code.toLowerCase().includes(query) || s.name.toLowerCase().includes(query));
-            renderStockTable(filtered);
-        }
-
-        function renderOrderBook(symbol) {
-            const container = document.getElementById('orderBookContainer');
-            if (!container) return;
-            container.innerHTML = '';
-            
-            let basePrice = 5000;
-            const found = stocksData.find(s => s.code === symbol);
-            if (found) basePrice = found.price;
-            else if (symbol === 'IHSG') basePrice = 7342;
-
-            for (let i = 5; i >= 1; i--) {
-                const askPrice = basePrice + (i * 25);
-                const askLots = Math.floor(Math.random() * 500) + 50;
-                const div = document.createElement('div');
-                div.className = 'flex justify-between items-center text-xs font-mono py-1 px-2 rounded bg-rose-500/5 text-rose-500 border border-rose-500/10';
-                div.innerHTML = `<span>Rp ${askPrice.toLocaleString()}</span><span>${askLots} Lot</span>`;
-                container.appendChild(div);
-            }
-            for (let i = 1; i <= 5; i++) {
-                const bidPrice = basePrice - (i * 25);
-                const bidLots = Math.floor(Math.random() * 600) + 80;
-                const div = document.createElement('div');
-                div.className = 'flex justify-between items-center text-xs font-mono py-1 px-2 rounded bg-emerald-500/5 text-emerald-500 border border-emerald-500/10';
-                div.innerHTML = `<span>Rp ${bidPrice.toLocaleString()}</span><span>${bidLots} Lot</span>`;
-                container.appendChild(div);
-            }
-        }
-
-        // --- SCRIPT CRYPTO & PERFORMANCE ANALYST ---
-        let cryptosData = [
-            { symbol: 'BTC', name: 'Bitcoin', price: 64850.20, change: 3.40, cap: 1275000000000, volume: 28400000000 },
-            { symbol: 'ETH', name: 'Ethereum', price: 3420.50, change: -0.80, cap: 410500000000, volume: 14100000000 },
-            { symbol: 'SOL', name: 'Solana', price: 145.80, change: 5.25, cap: 68200000000, volume: 4200000000 },
-            { symbol: 'BNB', name: 'Binance Coin', price: 572.30, change: 1.15, cap: 88500000000, volume: 1100000000 },
-            { symbol: 'XRP', name: 'Ripple', price: 0.58, change: 0.45, cap: 32400000000, volume: 980000000 },
-            { symbol: 'ADA', name: 'Cardano', price: 0.39, change: -1.40, cap: 13900000000, volume: 410000000 },
-            { symbol: 'DOGE', name: 'Dogecoin', price: 0.11, change: 6.80, cap: 16100000000, volume: 1800000000 },
-            { symbol: 'AVAX', name: 'Avalanche', price: 27.40, change: 2.10, cap: 10800000000, volume: 520000000 }
-        ];
-        let currentCryptoSymbol = 'BTC';
-        let cryptoChartInstance = null;
-        let cryptoChartLabels = ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00', 'Now'];
-        let cryptoChartDataSets = {
-            'BTC': [63200, 63800, 63500, 64100, 64300, 64600, 64850.20],
-            'ETH': [3380, 3400, 3390, 3410, 3405, 3418, 3420.50],
-            'SOL': [138, 140, 139, 142, 141, 144, 145.80]
-        };
-
-        function initCryptoChart() {
-            const ctxEl = document.getElementById('cryptoMarketChart');
-            if (!ctxEl) return;
-            const ctx = ctxEl.getContext('2d');
-            if (cryptoChartInstance) cryptoChartInstance.destroy();
-            cryptoChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: cryptoChartLabels,
-                    datasets: [{
-                        label: currentCryptoSymbol + '/USD',
-                        data: cryptoChartDataSets[currentCryptoSymbol] || cryptoChartDataSets['BTC'],
-                        borderColor: '#f59e0b',
-                        backgroundColor: function(context) {
-                            const chart = context.chart;
-                            const {ctx, chartArea} = chart;
-                            if (!chartArea) return null;
-                            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-                            gradient.addColorStop(0, 'rgba(245, 158, 11, 0)');
-                            gradient.addColorStop(1, 'rgba(245, 158, 11, 0.25)');
-                            return gradient;
-                        },
-                        borderWidth: 2.5,
-                        fill: true,
-                        tension: 0.35,
-                        pointRadius: 3,
-                        pointBackgroundColor: '#f59e0b'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                            backgroundColor: '#111827',
-                            titleColor: '#ffffff',
-                            bodyColor: '#e5e7eb',
-                            borderColor: '#374151',
-                            borderWidth: 1
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: { color: 'rgba(150, 150, 150, 0.1)' },
-                            ticks: { color: '#9ca3af', font: { size: 10 } }
-                        },
-                        y: {
-                            grid: { color: 'rgba(150, 150, 150, 0.1)' },
-                            ticks: { color: '#9ca3af', font: { size: 10 } }
-                        }
-                    }
-                }
-            });
-        }
-
-        function renderCryptoTable(dataToRender = cryptosData) {
-            const tbody = document.getElementById('cryptoTableBody');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-            dataToRender.forEach(crypto => {
-                const isPositive = crypto.change >= 0;
-                const badgeClass = isPositive ? 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20' : 'text-rose-500 bg-rose-500/10 border-rose-500/20';
-                const icon = isPositive ? 'fa-arrow-up' : 'fa-arrow-down';
-                
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-gray-100 dark:hover:bg-[#1a1a1a] transition cursor-pointer group';
-                tr.onclick = () => selectCrypto(crypto.symbol);
-                tr.innerHTML = `
-                    <td class="py-3 px-4 font-bold text-gray-900 dark:text-white group-hover:text-primary transition">${crypto.symbol}</td>
-                    <td class="py-3 px-4 text-gray-700 dark:text-gray-300">${crypto.name}</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-900 dark:text-white">$${crypto.price.toLocaleString(undefined, {minimumFractionDigits: 2})}</td>
-                    <td class="py-3 px-4 text-right">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold border ${badgeClass}">
-                            <i class="fa-solid ${icon} mr-1 text-[9px]"></i> ${isPositive ? '+' : ''}${crypto.change}%
-                        </span>
-                    </td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">$${(crypto.cap / 1e9).toFixed(1)}B</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-500 dark:text-gray-400">$${(crypto.volume / 1e9).toFixed(2)}B</td>
-                    <td class="py-3 px-4 text-center">
-                        <button onclick="event.stopPropagation(); selectCrypto('${crypto.symbol}')" class="px-2.5 py-1 bg-amber-500/10 hover:bg-amber-500 text-amber-500 hover:text-white rounded text-xs font-semibold transition">Pantau</button>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function filterCryptoTable() {
-            const query = document.getElementById('searchCryptoInput').value.toLowerCase();
-            const filtered = cryptosData.filter(c => c.symbol.toLowerCase().includes(query) || c.name.toLowerCase().includes(query));
-            renderCryptoTable(filtered);
-        }
-
-        function selectCrypto(symbol) {
-            currentCryptoSymbol = symbol;
-            ['btnCryptoBTC', 'btnCryptoETH', 'btnCryptoSOL'].forEach(id => {
-                const btn = document.getElementById(id);
-                if (btn) {
-                    if (btn.id === 'btnCrypto' + symbol) {
-                        btn.className = 'px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition';
-                    } else {
-                        btn.className = 'px-3 py-1 text-xs font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition';
-                    }
-                }
-            });
-            const titleEl = document.getElementById('cryptoChartTitle');
-            if (titleEl) titleEl.innerText = `Grafik Tren Harga ${symbol} (USD)`;
-            const tagEl = document.getElementById('selectedCryptoTag');
-            if (tagEl) tagEl.innerText = symbol + '/USD';
-            
-            if (cryptoChartInstance) {
-                cryptoChartInstance.data.datasets[0].label = symbol + '/USD';
-                cryptoChartInstance.data.datasets[0].data = cryptoChartDataSets[symbol] || cryptoChartDataSets['BTC'];
-                cryptoChartInstance.update();
-            }
-            renderCryptoOrderBook(symbol);
-        }
-
-        function renderCryptoOrderBook(symbol) {
-            const container = document.getElementById('cryptoOrderBookContainer');
-            if (!container) return;
-            container.innerHTML = '';
-            
-            let basePrice = 64850;
-            const found = cryptosData.find(c => c.symbol === symbol);
-            if (found) basePrice = found.price;
-
-            for (let i = 5; i >= 1; i--) {
-                const askPrice = basePrice + (i * 12.5);
-                const askAmount = (Math.random() * 1.5 + 0.1).toFixed(4);
-                const div = document.createElement('div');
-                div.className = 'flex justify-between items-center text-xs font-mono py-1 px-2 rounded bg-rose-500/5 text-rose-500 border border-rose-500/10';
-                div.innerHTML = `<span>$${askPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}</span><span>${askAmount} ${symbol}</span>`;
-                container.appendChild(div);
-            }
-            for (let i = 1; i <= 5; i++) {
-                const bidPrice = basePrice - (i * 12.5);
-                const bidAmount = (Math.random() * 1.5 + 0.1).toFixed(4);
-                const div = document.createElement('div');
-                div.className = 'flex justify-between items-center text-xs font-mono py-1 px-2 rounded bg-emerald-500/5 text-emerald-500 border border-emerald-500/10';
-                div.innerHTML = `<span>$${bidPrice.toLocaleString(undefined, {minimumFractionDigits: 2})}</span><span>${bidAmount} ${symbol}</span>`;
-                container.appendChild(div);
-            }
-        }
-
-        // Performance Analyst & Live Transaction Stream
-        let perfChartInstance = null;
-        let txCounter = 0;
-        function initPerformanceChart() {
-            const ctxEl = document.getElementById('performanceChart');
-            if (!ctxEl) return;
-            const ctx = ctxEl.getContext('2d');
-            if (perfChartInstance) perfChartInstance.destroy();
-            perfChartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
-                    datasets: [{
-                        type: 'line',
-                        label: 'Market Cap Trend ($B)',
-                        data: [1.8, 1.95, 2.1, 2.05, 2.2, 2.35, 2.3, 2.4, 2.45],
-                        borderColor: '#10b981',
+                        tension: 0.3,
                         borderWidth: 2,
-                        tension: 0.4
-                    }, {
-                        type: 'bar',
-                        label: 'Volume ($B)',
-                        data: [45, 52, 48, 60, 55, 68, 72, 75, 82],
-                        backgroundColor: 'rgba(59, 130, 246, 0.6)',
-                        borderRadius: 4
+                        pointRadius: 3
                     }]
                 },
                 options: {
@@ -1726,81 +1403,342 @@ html.dark .text-slate-500 {
                     maintainAspectRatio: false,
                     plugins: { legend: { display: false } },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 10 } } },
-                        y: { grid: { color: 'rgba(150, 150, 150, 0.1)' }, ticks: { color: '#9ca3af', font: { size: 10 } } }
+                        x: { grid: { display: false } },
+                        y: { grid: { color: 'rgba(200, 200, 200, 0.15)' } }
                     }
                 }
             });
         }
+        function changeChartSymbol(symbol) {
+            currentStockSymbol = symbol;
+            const tag = document.getElementById('selectedStockTag');
+            if (tag) tag.innerText = symbol;
+            const title = document.getElementById('activeChartTitle');
+            if (title) title.innerText = `Grafik Pergerakan ${symbol}`;
+            
+            ['btnIHSG', 'btnBBCA', 'btnTLKM', 'btnASII'].forEach(btnId => {
+                const b = document.getElementById(btnId);
+                if (b) {
+                    b.className = "px-3 py-1 text-xs font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition";
+                }
+            });
+            const activeBtn = document.getElementById('btn' + symbol);
+            if (activeBtn) {
+                activeBtn.className = "px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition";
+            }
+            
+            if (chartInstance) {
+                chartInstance.data.datasets[0].label = symbol;
+                chartInstance.data.datasets[0].data = chartDataSets[symbol] || chartDataSets['IHSG'];
+                chartInstance.update();
+            }
+            renderOrderBook(symbol);
+        }
+        function renderOrderBook(symbol) {
+            const container = document.getElementById('orderBookContainer');
+            if (!container) return;
+            let html = '';
+            let basePrice = 5000;
+            if (symbol === 'BBCA') basePrice = 9850;
+            else if (symbol === 'TLKM') basePrice = 3120;
+            else if (symbol === 'ASII') basePrice = 5025;
+            else if (symbol === 'IHSG') basePrice = 7342;
+            
+            for (let i = 0; i < 5; i++) {
+                let askPrice = basePrice + (i + 1) * 25;
+                let askVol = (Math.random() * 50 + 10).toFixed(0);
+                let bidPrice = basePrice - (i + 1) * 25;
+                let bidVol = (Math.random() * 50 + 10).toFixed(0);
+                
+                html += `<div class="flex justify-between items-center text-[11px] font-mono text-rose-500"><span>Rp ${askPrice.toLocaleString()}</span><span>${askVol} lot</span></div>`;
+                html += `<div class="flex justify-between items-center text-[11px] font-mono text-emerald-500"><span>Rp ${bidPrice.toLocaleString()}</span><span>${bidVol} lot</span></div>`;
+            }
+            container.innerHTML = html;
+        }
+        function renderStockTable() {
+            const tbody = document.getElementById('stockTableBody');
+            if (!tbody) return;
+            let html = '';
+            stocksData.forEach(st => {
+                const isUp = st.change >= 0;
+                const badgeColor = isUp ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
+                const arrow = isUp ? '+' : '';
+                html += `
+                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface cursor-pointer" onclick="changeChartSymbol('${st.code}')">
+                        <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">${st.code}</td>
+                        <td class="py-3 px-4 text-gray-600 dark:text-gray-300">${st.name}</td>
+                        <td class="py-3 px-4 text-right font-mono">Rp ${st.price.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[11px] font-semibold ${badgeColor}">${arrow}${st.change}%</span></td>
+                        <td class="py-3 px-4 text-right font-mono text-gray-500">Rp ${st.high.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right font-mono text-gray-500">Rp ${st.low.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right font-mono">${st.volume.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-center">
+                            <button onclick="event.stopPropagation(); changeChartSymbol('${st.code}');" class="px-2.5 py-1 bg-primary/10 text-primary rounded hover:bg-primary hover:text-white transition text-xs font-semibold">Chart</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+        function filterStockTable() {
+            const query = document.getElementById('searchStockInput').value.toLowerCase();
+            const tbody = document.getElementById('stockTableBody');
+            if (!tbody) return;
+            let html = '';
+            stocksData.filter(st => st.code.toLowerCase().includes(query) || st.name.toLowerCase().includes(query)).forEach(st => {
+                const isUp = st.change >= 0;
+                const badgeColor = isUp ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
+                const arrow = isUp ? '+' : '';
+                html += `
+                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface cursor-pointer" onclick="changeChartSymbol('${st.code}')">
+                        <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">${st.code}</td>
+                        <td class="py-3 px-4 text-gray-600 dark:text-gray-300">${st.name}</td>
+                        <td class="py-3 px-4 text-right font-mono">Rp ${st.price.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[11px] font-semibold ${badgeColor}">${arrow}${st.change}%</span></td>
+                        <td class="py-3 px-4 text-right font-mono text-gray-500">Rp ${st.high.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right font-mono text-gray-500">Rp ${st.low.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right font-mono">${st.volume.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-center">
+                            <button onclick="event.stopPropagation(); changeChartSymbol('${st.code}');" class="px-2.5 py-1 bg-primary/10 text-primary rounded hover:bg-primary hover:text-white transition text-xs font-semibold">Chart</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+        
+        // --- CRYPTO MARKET VARIABLES & FUNCTIONS ---
+        let cryptoDataList = [
+            { symbol: 'BTC', name: 'Bitcoin', price: 64850.20, change: 3.4, cap: '$1.28 T', vol: '$28.4 B' },
+            { symbol: 'ETH', name: 'Ethereum', price: 3420.50, change: -0.8, cap: '$410.2 B', vol: '$14.1 B' },
+            { symbol: 'SOL', name: 'Solana', price: 145.80, change: 5.6, cap: '$68.4 B', vol: '$4.2 B' },
+            { symbol: 'BNB', name: 'Binance Coin', price: 580.20, change: 1.2, cap: '$89.5 B', vol: '$1.8 B' },
+            { symbol: 'XRP', name: 'Ripple', price: 0.58, change: -0.4, cap: '$32.1 B', vol: '$950 M' },
+            { symbol: 'ADA', name: 'Cardano', price: 0.42, change: 2.1, cap: '$15.0 B', vol: '$420 M' },
+            { symbol: 'DOGE', name: 'Dogecoin', price: 0.12, change: 7.4, cap: '$17.4 B', vol: '$2.1 B' }
+        ];
+        let cryptoChartInstance = null;
+        let currentCryptoSymbol = 'BTC';
+        let cryptoChartSets = {
+            'BTC': [62000, 63100, 62800, 63900, 64200, 64500, 64850.20],
+            'ETH': [3300, 3350, 3320, 3390, 3400, 3410, 3420.50],
+            'SOL': [135, 138, 136, 140, 142, 144, 145.80]
+        };
+        function initCryptoChart() {
+            const ctx = document.getElementById('cryptoMarketChart');
+            if (!ctx) return;
+            cryptoChartInstance = new Chart(ctx.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'],
+                    datasets: [{
+                        label: currentCryptoSymbol + '/USD',
+                        data: cryptoChartSets[currentCryptoSymbol] || cryptoChartSets['BTC'],
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        borderWidth: 2,
+                        pointRadius: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { grid: { color: 'rgba(200, 200, 200, 0.15)' } }
+                    }
+                }
+            });
+        }
+        function changeCryptoSymbol(symbol) {
+            currentCryptoSymbol = symbol;
+            const tag = document.getElementById('selectedCryptoTag');
+            if (tag) tag.innerText = symbol + '/USD';
+            const title = document.getElementById('cryptoChartTitle');
+            if (title) title.innerText = `Grafik Tren Harga ${symbol === 'BTC' ? 'Bitcoin' : (symbol === 'ETH' ? 'Ethereum' : 'Solana')} (${symbol}/USD)`;
+            
+            ['btnCryptoBTC', 'btnCryptoETH', 'btnCryptoSOL'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.className = "px-3 py-1 text-xs font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition";
+            });
+            const activeEl = document.getElementById('btnCrypto' + symbol);
+            if (activeEl) activeEl.className = "px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition";
+            
+            if (cryptoChartInstance) {
+                cryptoChartInstance.data.datasets[0].label = symbol + '/USD';
+                cryptoChartInstance.data.datasets[0].data = cryptoChartSets[symbol] || cryptoChartSets['BTC'];
+                cryptoChartInstance.update();
+            }
+            renderCryptoOrderBook(symbol);
+        }
+        function renderCryptoOrderBook(symbol) {
+            const container = document.getElementById('cryptoOrderBookContainer');
+            if (!container) return;
+            let base = symbol === 'BTC' ? 64850 : (symbol === 'ETH' ? 3420 : 145);
+            let html = '';
+            for (let i = 0; i < 5; i++) {
+                let ask = base + (i + 1) * (symbol === 'BTC' ? 15 : 2);
+                let askAmt = (Math.random() * 2).toFixed(4);
+                let bid = base - (i + 1) * (symbol === 'BTC' ? 15 : 2);
+                let bidAmt = (Math.random() * 2).toFixed(4);
+                
+                html += `<div class="flex justify-between items-center text-[11px] font-mono text-rose-500"><span>$${ask.toLocaleString()}</span><span>${askAmt} ${symbol}</span></div>`;
+                html += `<div class="flex justify-between items-center text-[11px] font-mono text-emerald-500"><span>$${bid.toLocaleString()}</span><span>${bidAmt} ${symbol}</span></div>`;
+            }
+            container.innerHTML = html;
+        }
+        function renderCryptoTable() {
+            const tbody = document.getElementById('cryptoTableBody');
+            if (!tbody) return;
+            let html = '';
+            cryptoDataList.forEach(c => {
+                const isUp = c.change >= 0;
+                const badge = isUp ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
+                const arr = isUp ? '+' : '';
+                html += `
+                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface cursor-pointer" onclick="changeCryptoSymbol('${c.symbol}')">
+                        <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">${c.symbol}</td>
+                        <td class="py-3 px-4 text-gray-600 dark:text-gray-300">${c.name}</td>
+                        <td class="py-3 px-4 text-right font-mono">$${c.price.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[11px] font-semibold ${badge}">${arr}${c.change}%</span></td>
+                        <td class="py-3 px-4 text-right font-mono text-gray-500">${c.cap}</td>
+                        <td class="py-3 px-4 text-right font-mono text-gray-500">${c.vol}</td>
+                        <td class="py-3 px-4 text-center">
+                            <button onclick="event.stopPropagation(); changeCryptoSymbol('${c.symbol}');" class="px-2.5 py-1 bg-primary/10 text-primary rounded hover:bg-primary hover:text-white transition text-xs font-semibold">View</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+        function filterCryptoTable() {
+            const q = document.getElementById('searchCryptoInput').value.toLowerCase();
+            const tbody = document.getElementById('cryptoTableBody');
+            if (!tbody) return;
+            let html = '';
+            cryptoDataList.filter(c => c.symbol.toLowerCase().includes(q) || c.name.toLowerCase().includes(q)).forEach(c => {
+                const isUp = c.change >= 0;
+                const badge = isUp ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
+                const arr = isUp ? '+' : '';
+                html += `
+                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface cursor-pointer" onclick="changeCryptoSymbol('${c.symbol}')">
+                        <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">${c.symbol}</td>
+                        <td class="py-3 px-4 text-gray-600 dark:text-gray-300">${c.name}</td>
+                        <td class="py-3 px-4 text-right font-mono">$${c.price.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right"><span class="px-2 py-0.5 rounded text-[11px] font-semibold ${badge}">${arr}${c.change}%</span></td>
+                        <td class="py-3 px-4 text-right font-mono text-gray-500">${c.cap}</td>
+                        <td class="py-3 px-4 text-right font-mono text-gray-500">${c.vol}</td>
+                        <td class="py-3 px-4 text-center">
+                            <button onclick="event.stopPropagation(); changeCryptoSymbol('${c.symbol}');" class="px-2.5 py-1 bg-primary/10 text-primary rounded hover:bg-primary hover:text-white transition text-xs font-semibold">View</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
 
+        // --- PERFORMANCE ANALYST MODULE ---
+        let perfChartInstance = null;
+        function initPerformanceChart() {
+            const ctx = document.getElementById('performanceChart');
+            if (!ctx) return;
+            if (perfChartInstance) perfChartInstance.destroy();
+            perfChartInstance = new Chart(ctx.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                    datasets: [{
+                        type: 'line',
+                        label: 'Market Index Trend',
+                        data: [1.8, 2.1, 1.9, 2.4, 2.2, 2.5, 2.3, 2.6, 2.45],
+                        borderColor: '#3b82f6',
+                        borderWidth: 2,
+                        tension: 0.3
+                    }, {
+                        type: 'bar',
+                        label: 'Volume Flow ($B)',
+                        data: [14, 18, 16, 22, 19, 25, 21, 28, 26],
+                        backgroundColor: 'rgba(16, 185, 129, 0.6)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { grid: { color: 'rgba(200, 200, 200, 0.15)' } }
+                    }
+                }
+            });
+        }
         function renderPAMatrix() {
             const tbody = document.getElementById('pa-market-tbody');
             if (!tbody) return;
-            tbody.innerHTML = `
-                <tr>
-                    <td class="py-3 px-3 font-bold text-gray-900 dark:text-white">Crypto Market</td>
-                    <td class="py-3 px-3 text-right font-mono">$2,450,000,000,000</td>
-                    <td class="py-3 px-3 text-right font-mono text-emerald-500">+2.10%</td>
-                    <td class="py-3 px-3 text-right font-mono">54.2%</td>
-                    <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-500 font-bold">BULLISH</span></td>
-                </tr>
-                <tr>
-                    <td class="py-3 px-3 font-bold text-gray-900 dark:text-white">IDX Composite (IHSG)</td>
-                    <td class="py-3 px-3 text-right font-mono">$890,400,000,000</td>
-                    <td class="py-3 px-3 text-right font-mono text-emerald-500">+0.84%</td>
-                    <td class="py-3 px-3 text-right font-mono">19.5%</td>
-                    <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-500/10 text-emerald-500 font-bold">STABLE</span></td>
-                </tr>
-                <tr>
-                    <td class="py-3 px-3 font-bold text-gray-900 dark:text-white">DeFi Protocols</td>
-                    <td class="py-3 px-3 text-right font-mono">$94,200,000,000</td>
-                    <td class="py-3 px-3 text-right font-mono text-rose-500">-0.45%</td>
-                    <td class="py-3 px-3 text-right font-mono">3.8%</td>
-                    <td class="py-3 px-3 text-center"><span class="px-2 py-0.5 rounded text-[10px] bg-amber-500/10 text-amber-500 font-bold">NEUTRAL</span></td>
-                </tr>
-            `;
+            const data = [
+                { segment: 'Layer-1 Blockchains', cap: '$1,245,000,000', change: '+3.2%', share: '50.8%', status: 'Bullish' },
+                { segment: 'DeFi Protocols', cap: '$120,400,000', change: '+1.5%', share: '4.9%', status: 'Stable' },
+                { segment: 'AI & Big Data Tokens', cap: '$45,800,000', change: '+8.4%', share: '1.8%', status: 'Surging' },
+                { segment: 'Stablecoins', cap: '$162,100,000', change: '+0.1%', share: '6.6%', status: 'Neutral' },
+                { segment: 'NFTs & Gaming', cap: '$24,300,000', change: '-1.2%', share: '1.0%', status: 'Correction' }
+            ];
+            let html = '';
+            data.forEach(d => {
+                const isPos = d.change.includes('+');
+                const badge = isPos ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
+                html += `
+                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface">
+                        <td class="py-3 px-3 font-bold text-gray-900 dark:text-white">${d.segment}</td>
+                        <td class="py-3 px-3 text-right font-mono">${d.cap}</td>
+                        <td class="py-3 px-3 text-right"><span class="px-2 py-0.5 rounded font-semibold ${badge}">${d.change}</span></td>
+                        <td class="py-3 px-3 text-right font-mono">${d.share}</td>
+                        <td class="py-3 px-3 text-center font-semibold text-gray-600 dark:text-gray-300">${d.status}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
         }
-
+        let txCounter = 0;
         function startLiveTransactionStream() {
             const streamContainer = document.getElementById('live-tx-stream');
             if (!streamContainer) return;
             if (window.txInterval) clearInterval(window.txInterval);
-
+            
             window.txInterval = setInterval(() => {
                 txCounter++;
                 const ticksEl = document.getElementById('pa-tx-ticks');
                 if (ticksEl) ticksEl.innerText = txCounter.toLocaleString();
-
-                const pairs = ['BTC/USD', 'ETH/USD', 'BBCA.JK', 'TLKM.JK', 'SOL/USD'];
-                const types = ['BUY', 'SELL'];
-                const randomPair = pairs[Math.floor(Math.random() * pairs.length)];
-                const randomType = types[Math.floor(Math.random() * types.length)];
-                const randomPrice = (Math.random() * 5000 + 100).toFixed(2);
-                const color = randomType === 'BUY' ? 'text-emerald-500' : 'text-rose-500';
-
-                const div = document.createElement('div');
-                div.className = 'flex items-center justify-between border-b dark:border-dark-border pb-1 animate-fade-in';
-                div.innerHTML = `
-                    <span class="text-gray-500">[${new Date().toLocaleTimeString()}]</span>
-                    <span class="font-bold text-gray-800 dark:text-gray-200">${randomPair}</span>
-                    <span class="${color} font-bold">${randomType}</span>
-                    <span class="font-mono text-gray-700 dark:text-gray-300">$${randomPrice}</span>
-                `;
-                streamContainer.insertBefore(div, streamContainer.firstChild);
-                if (streamContainer.children.length > 8) {
+                
+                const pairs = ['BTC/USD', 'ETH/USD', 'BBCA', 'BBRI', 'SOL/USD', 'TLKM'];
+                const pair = pairs[Math.floor(Math.random() * pairs.length)];
+                const type = Math.random() > 0.45 ? 'BUY' : 'SELL';
+                const color = type === 'BUY' ? 'text-emerald-500' : 'text-rose-500';
+                const price = (Math.random() * 5000 + 100).toFixed(2);
+                
+                const item = document.createElement('div');
+                item.className = `flex justify-between items-center py-1 border-b border-gray-100 dark:border-dark-border/40 ${color}`;
+                item.innerHTML = `<span>[${new Date().toLocaleTimeString()}] ${type} ${pair}</span><span>@ ${price}</span>`;
+                
+                streamContainer.prepend(item);
+                if (streamContainer.children.length > 15) {
                     streamContainer.removeChild(streamContainer.lastChild);
                 }
-            }, 2000);
+            }, 1800);
         }
-
+        
+        function loadMoreArticles() {
+            showModal("Informasi", "Seluruh artikel investigasi terbaru dan arsip berita telah dimuat.");
+        }
+        function showModal(title, msg) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = msg;
+            document.getElementById('customModal').classList.remove('hidden');
+        }
         function closeModal() {
             document.getElementById('customModal').classList.add('hidden');
         }
-
-        // Jalankan inisialisasi awal ticker saat halaman dimuat
-        document.addEventListener("DOMContentLoaded", () => {
-            renderStockTicker();
-        });
     </script>
 </body>
 </html>
