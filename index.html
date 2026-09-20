@@ -256,7 +256,7 @@
         background: #38bdf8;
     }
     
-    /* Styling Stock Ticker Berjalan (Marquee) - Menyesuaikan Tema Terang & Gelap */
+    /* Styling Stock/Crypto Ticker Berjalan (Marquee) - Menyesuaikan Tema Terang & Gelap */
     .stock-ticker-container {
         overflow: hidden;
         white-space: nowrap;
@@ -734,6 +734,12 @@ html.dark .text-slate-500 {
             
             <!-- VIEW 4: CRYPTO MARKET PAGE -->
             <div id="crypto-market-page" class="page-view">
+                <!-- Tambahan Crypto Ticker Berjalan (Marquee) di Halaman Crypto Market -->
+                <div class="stock-ticker-container">
+                    <div class="stock-ticker-track" id="cryptoTickerTrack">
+                        <!-- Data Ticker Crypto di-generate secara dinamis via JavaScript -->
+                    </div>
+                </div>
                 <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-dark-surface text-gray-900 dark:text-white shadow-lg my-6 rounded-xl border border-gray-200 dark:border-dark-border transition-all duration-300 space-y-6">
                     <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-2">
                         <div>
@@ -1247,6 +1253,7 @@ html.dark .text-slate-500 {
                 if (!cryptoChartInstance) initCryptoChart();
                 renderCryptoTable();
                 renderCryptoOrderBook('BTC');
+                renderCryptoTicker();
             }, 50);
         }
         function showPerformanceAnalyst() { 
@@ -1320,6 +1327,28 @@ html.dark .text-slate-500 {
             if (timeEl) timeEl.innerText = timeString;
         }
         setInterval(updateLiveFrequencyTime, 1000);
+        
+        // --- DATA CRYPTO & RENDER CRYPTO TICKER ---
+        let cryptosData = [
+            { symbol: 'BTC', name: 'Bitcoin', price: 64850.20, change: 3.4, marketCap: '$1,280,400,000,000', volume: '$28,400,000,000' },
+            { symbol: 'ETH', name: 'Ethereum', price: 3420.50, change: -0.8, marketCap: '$410,200,000,000', volume: '$14,100,000,000' },
+            { symbol: 'SOL', name: 'Solana', price: 145.20, change: 5.2, marketCap: '$68,500,000,000', volume: '$4,200,000,000' },
+            { symbol: 'BNB', name: 'Binance Coin', price: 580.10, change: 1.1, marketCap: '$89,000,000,000', volume: '$1,800,000,000' }
+        ];
+
+        function renderCryptoTicker() {
+            const track = document.getElementById('cryptoTickerTrack');
+            if (!track) return;
+            let html = '';
+            for (let i = 0; i < 2; i++) {
+                cryptosData.forEach(c => {
+                    const colorClass = c.change >= 0 ? 'text-emerald-500' : 'text-rose-500';
+                    const icon = c.change >= 0 ? '▲' : '▼';
+                    html += `<span class="mx-4">🪙 <strong>${c.symbol}/USD</strong>: $${c.price.toLocaleString()} <span class="${colorClass}">${icon} ${c.change}%</span></span>`;
+                });
+            }
+            track.innerHTML = html;
+        }
 
         // --- DATA SAHAM & TICKER GLOBAL MARKET CAP ---
         let stocksData = [
@@ -1328,7 +1357,6 @@ html.dark .text-slate-500 {
             { code: 'TLKM', name: 'Telkom Indonesia Tbk', price: 3120, change: -0.64, high: 3160, low: 3100, volume: 1890200 },
             { code: 'ASII', name: 'Astra International Tbk', price: 5025, change: 1.00, high: 5050, low: 4970, volume: 950100 }
         ];
-
         function renderStockTicker() {
             const track = document.getElementById('stockTickerTrack');
             if (!track) return;
@@ -1342,7 +1370,6 @@ html.dark .text-slate-500 {
             }
             track.innerHTML = html;
         }
-
         function renderGlobalMarketTicker() {
             const track = document.getElementById('globalMarketTickerTrack');
             if (!track) return;
@@ -1360,11 +1387,9 @@ html.dark .text-slate-500 {
             }
             track.innerHTML = html;
         }
-
         let chartInstance = null;
         let cryptoChartInstance = null;
         let performanceChartInstance = null;
-
         function initChart() {
             const ctx = document.getElementById('marketChart');
             if (!ctx) return;
@@ -1384,7 +1409,6 @@ html.dark .text-slate-500 {
                 options: { responsive: true, maintainAspectRatio: false }
             });
         }
-
         function initCryptoChart() {
             const ctx = document.getElementById('cryptoMarketChart');
             if (!ctx) return;
@@ -1404,7 +1428,6 @@ html.dark .text-slate-500 {
                 options: { responsive: true, maintainAspectRatio: false }
             });
         }
-
         function initPerformanceChart() {
             const ctx = document.getElementById('performanceChart');
             if (!ctx) return;
@@ -1422,7 +1445,6 @@ html.dark .text-slate-500 {
                 options: { responsive: true, maintainAspectRatio: false }
             });
         }
-
         function renderPAMatrix() {
             const tbody = document.getElementById('pa-market-tbody');
             if (!tbody) return;
@@ -1432,7 +1454,6 @@ html.dark .text-slate-500 {
                 <tr><td class="py-2.5 px-3 font-bold">Global Equities Index</td><td class="py-2.5 px-3 text-right font-mono">$112,400,000,000,000</td><td class="py-2.5 px-3 text-right font-mono text-emerald-500">+0.8%</td><td class="py-2.5 px-3 text-right font-mono">85.0%</td><td class="py-2.5 px-3 text-center text-emerald-500 font-bold">Bullish</td></tr>
             `;
         }
-
         function startLiveTransactionStream() {
             const container = document.getElementById('live-tx-stream');
             if (!container) return;
@@ -1445,86 +1466,151 @@ html.dark .text-slate-500 {
                 ];
                 const randomTx = txs[Math.floor(Math.random() * txs.length)];
                 container.innerHTML = `<div class="p-1.5 rounded bg-gray-100 dark:bg-dark-surface border dark:border-dark-border">${randomTx}</div>` + container.innerHTML;
-                if (container.children.length > 5) container.lastChild.remove();
-                
-                const tickEl = document.getElementById('pa-tx-ticks');
-                if (tickEl) tickEl.innerText = parseInt(tickEl.innerText || '0') + 1;
-            }, 2500);
+                if (container.children.length > 5) container.removeChild(container.lastChild);
+            }, 3000);
         }
-
-        function renderStockTable() {
-            const tb = document.getElementById('stockTableBody');
-            if (!tb) return;
-            tb.innerHTML = stocksData.map(s => `
-                <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface cursor-pointer">
-                    <td class="py-3 px-4 font-bold text-primary">${s.code}</td>
-                    <td class="py-3 px-4">${s.name}</td>
-                    <td class="py-3 px-4 text-right font-mono">Rp ${s.price.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-right font-mono ${s.change >= 0 ? 'text-emerald-500' : 'text-rose-500'}">${s.change}%</td>
-                    <td class="py-3 px-4 text-right font-mono">Rp ${s.high.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-right font-mono">Rp ${s.low.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-right font-mono">${s.volume.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-center"><button class="px-2 py-1 bg-primary text-white rounded text-[10px]">Analisis</button></td>
-                </tr>
-            `).join('');
-        }
-
         function renderCryptoTable() {
-            const tb = document.getElementById('cryptoTableBody');
-            if (!tb) return;
-            const cryptoList = [
-                { symbol: 'BTC', name: 'Bitcoin', price: 64850.20, change: 3.4, cap: '$1.28 Triliun', vol: '$28.4B' },
-                { symbol: 'ETH', name: 'Ethereum', price: 3420.50, change: -0.8, cap: '$410.2 Miliar', vol: '$14.1B' },
-                { symbol: 'SOL', name: 'Solana', price: 145.20, change: 5.2, cap: '$68.5 Miliar', vol: '$4.2B' }
-            ];
-            tb.innerHTML = cryptoList.map(c => `
-                <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface cursor-pointer">
-                    <td class="py-3 px-4 font-bold text-amber-500">${c.symbol}</td>
-                    <td class="py-3 px-4">${c.name}</td>
-                    <td class="py-3 px-4 text-right font-mono">$${c.price.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-right font-mono ${c.change >= 0 ? 'text-emerald-500' : 'text-rose-500'}">${c.change}%</td>
-                    <td class="py-3 px-4 text-right font-mono">${c.cap}</td>
-                    <td class="py-3 px-4 text-right font-mono">${c.vol}</td>
-                    <td class="py-3 px-4 text-center"><button class="px-2 py-1 bg-amber-500 text-white rounded text-[10px]">Detail</button></td>
-                </tr>
-            `).join('');
+            const tbody = document.getElementById('cryptoTableBody');
+            if (!tbody) return;
+            let html = '';
+            cryptosData.forEach(c => {
+                const badgeClass = c.change >= 0 ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' : 'bg-rose-500/10 text-rose-500 border-rose-500/20';
+                const icon = c.change >= 0 ? 'fa-arrow-up' : 'fa-arrow-down';
+                html += `
+                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface transition cursor-pointer" onclick="changeCryptoSymbol('${c.symbol}')">
+                        <td class="py-3 px-4 font-bold font-mono">${c.symbol}</td>
+                        <td class="py-3 px-4">${c.name}</td>
+                        <td class="py-3 px-4 text-right font-mono">$${c.price.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right font-mono">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium border ${badgeClass}">
+                                <i class="fa-solid ${icon} mr-1 text-[9px]"></i> ${c.change}%
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-right font-mono">${c.marketCap}</td>
+                        <td class="py-3 px-4 text-right font-mono">${c.volume}</td>
+                        <td class="py-3 px-4 text-center">
+                            <button class="px-2.5 py-1 bg-primary/10 text-primary hover:bg-primary hover:text-white rounded text-xs font-semibold transition">Analisis</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
         }
-
-        function renderOrderBook(code) {
-            const container = document.getElementById('orderBookContainer');
-            if (!container) return;
-            container.innerHTML = `
-                <div class="flex justify-between text-xs py-1 text-emerald-500 font-mono"><span>9,850</span><span>250 Lot</span></div>
-                <div class="flex justify-between text-xs py-1 text-emerald-500 font-mono"><span>9,825</span><span>410 Lot</span></div>
-                <div class="flex justify-between text-xs py-1 text-rose-500 font-mono"><span>9,875</span><span>120 Lot</span></div>
-                <div class="flex justify-between text-xs py-1 text-rose-500 font-mono"><span>9,900</span><span>300 Lot</span></div>
-            `;
-        }
-
         function renderCryptoOrderBook(symbol) {
             const container = document.getElementById('cryptoOrderBookContainer');
             if (!container) return;
-            container.innerHTML = `
-                <div class="flex justify-between text-xs py-1 text-emerald-500 font-mono"><span>$64,850</span><span>1.2 BTC</span></div>
-                <div class="flex justify-between text-xs py-1 text-emerald-500 font-mono"><span>$64,845</span><span>3.5 BTC</span></div>
-                <div class="flex justify-between text-xs py-1 text-rose-500 font-mono"><span>$64,855</span><span>0.8 BTC</span></div>
-                <div class="flex justify-between text-xs py-1 text-rose-500 font-mono"><span>$64,860</span><span>2.1 BTC</span></div>
-            `;
+            let html = '';
+            let basePrice = symbol === 'BTC' ? 64850 : symbol === 'ETH' ? 3420 : 145;
+            for (let i = 0; i < 5; i++) {
+                let askPrice = (basePrice + (i + 1) * 1.5).toFixed(2);
+                let askVol = (Math.random() * 2).toFixed(4);
+                html += `<div class="flex justify-between text-rose-500 font-mono text-xs"><span>$${askPrice}</span><span>${askVol} ${symbol}</span></div>`;
+            }
+            html += `<div class="my-1 py-1 border-y border-gray-200 dark:border-dark-border text-center font-bold text-xs text-primary">Spread Market Live</div>`;
+            for (let i = 0; i < 5; i++) {
+                let bidPrice = (basePrice - (i + 1) * 1.5).toFixed(2);
+                let bidVol = (Math.random() * 2).toFixed(4);
+                html += `<div class="flex justify-between text-emerald-500 font-mono text-xs"><span>$${bidPrice}</span><span>${bidVol} ${symbol}</span></div>`;
+            }
+            container.innerHTML = html;
+            document.getElementById('selectedCryptoTag').innerText = `${symbol}/USD`;
         }
-
-        function changeChartSymbol(sym) {
-            document.getElementById('activeChartTitle').innerText = `Grafik Pergerakan ${sym}`;
+        function changeCryptoSymbol(symbol) {
+            renderCryptoOrderBook(symbol);
+            if (cryptoChartInstance) {
+                let newData = symbol === 'BTC' ? [62000, 63100, 62500, 63800, 64200, 64500, 64850.20] :
+                              symbol === 'ETH' ? [3200, 3250, 3300, 3380, 3400, 3410, 3420.50] :
+                              [130, 135, 138, 140, 142, 144, 145.20];
+                cryptoChartInstance.data.datasets[0].label = `${symbol}/USD`;
+                cryptoChartInstance.data.datasets[0].data = newData;
+                cryptoChartInstance.update();
+            }
+            document.getElementById('cryptoChartTitle').innerText = `Grafik Tren Harga ${symbol === 'BTC' ? 'Bitcoin' : symbol === 'ETH' ? 'Ethereum' : 'Solana'} (${symbol}/USD)`;
         }
-        function changeCryptoSymbol(sym) {
-            document.getElementById('cryptoChartTitle').innerText = `Grafik Tren Harga ${sym} (USD)`;
-            document.getElementById('selectedCryptoTag').innerText = `${sym}/USD`;
-            renderCryptoOrderBook(sym);
+        function renderStockTable() {
+            const tbody = document.getElementById('stockTableBody');
+            if (!tbody) return;
+            let html = '';
+            stocksData.forEach(s => {
+                const badgeClass = s.change >= 0 ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' : 'bg-rose-500/10 text-rose-500 border-rose-500/20';
+                const icon = s.change >= 0 ? 'fa-arrow-up' : 'fa-arrow-down';
+                html += `
+                    <tr class="hover:bg-gray-50 dark:hover:bg-dark-surface transition cursor-pointer" onclick="changeChartSymbol('${s.code}')">
+                        <td class="py-3 px-4 font-bold font-mono">${s.code}</td>
+                        <td class="py-3 px-4">${s.name}</td>
+                        <td class="py-3 px-4 text-right font-mono">Rp ${s.price.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right font-mono">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium border ${badgeClass}">
+                                <i class="fa-solid ${icon} mr-1 text-[9px]"></i> ${s.change}%
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-right font-mono">Rp ${s.high.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right font-mono">Rp ${s.low.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-right font-mono">${s.volume.toLocaleString()}</td>
+                        <td class="py-3 px-4 text-center">
+                            <button class="px-2.5 py-1 bg-primary/10 text-primary hover:bg-primary hover:text-white rounded text-xs font-semibold transition">Pantau</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
         }
-        function filterStockTable() {}
-        function filterCryptoTable() {}
-        function loadMoreArticles() {}
+        function renderOrderBook(code) {
+            const container = document.getElementById('orderBookContainer');
+            if (!container) return;
+            let html = '';
+            let basePrice = code === 'IHSG' ? 7342 : code === 'BBCA' ? 9850 : code === 'TLKM' ? 3120 : 5025;
+            for (let i = 0; i < 5; i++) {
+                let askPrice = basePrice + (i + 1) * 25;
+                let askLot = Math.floor(Math.random() * 500) + 50;
+                html += `<div class="flex justify-between text-rose-500 font-mono text-xs"><span>Rp ${askPrice.toLocaleString()}</span><span>${askLot} Lot</span></div>`;
+            }
+            html += `<div class="my-1 py-1 border-y border-gray-200 dark:border-dark-border text-center font-bold text-xs text-primary">Live Market Queue</div>`;
+            for (let i = 0; i < 5; i++) {
+                let bidPrice = basePrice - (i + 1) * 25;
+                let bidLot = Math.floor(Math.random() * 500) + 50;
+                html += `<div class="flex justify-between text-emerald-500 font-mono text-xs"><span>Rp ${bidPrice.toLocaleString()}</span><span>${bidLot} Lot</span></div>`;
+            }
+            container.innerHTML = html;
+            document.getElementById('selectedStockTag').innerText = code;
+        }
+        function changeChartSymbol(code) {
+            renderOrderBook(code);
+            if (chartInstance) {
+                let newData = code === 'IHSG' ? [7300, 7315, 7310, 7330, 7325, 7340, 7342.15] :
+                              code === 'BBCA' ? [9700, 9750, 9725, 9800, 9825, 9840, 9850] :
+                              code === 'TLKM' ? [3100, 3110, 3090, 3115, 3125, 3110, 3120] :
+                              [4950, 4980, 4970, 5000, 5010, 5020, 5025];
+                chartInstance.data.datasets[0].label = `${code} Live Index`;
+                chartInstance.data.datasets[0].data = newData;
+                chartInstance.update();
+            }
+            document.getElementById('activeChartTitle').innerText = `Grafik Pergerakan ${code}`;
+        }
+        function filterStockTable() {
+            const input = document.getElementById('searchStockInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#stockTableBody tr');
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(input) ? '' : 'none';
+            });
+        }
+        function filterCryptoTable() {
+            const input = document.getElementById('searchCryptoInput').value.toLowerCase();
+            const rows = document.querySelectorAll('#cryptoTableBody tr');
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(input) ? '' : 'none';
+            });
+        }
         function closeModal() {
             document.getElementById('customModal').classList.add('hidden');
+        }
+        function loadMoreArticles() {
+            const modal = document.getElementById('customModal');
+            document.getElementById('modalTitle').innerText = 'Muat Artikel Lainnya';
+            document.getElementById('modalMessage').innerText = 'Semua arsip investigasi dan laporan khusus edisi September 2026 telah dimuat sepenuhnya.';
+            modal.classList.remove('hidden');
         }
     </script>
 </body>
