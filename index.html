@@ -1336,7 +1336,6 @@ html.dark .text-slate-500 {
         function loadMoreArticles() {
             alert('Semua berita investigasi dan laporan khusus terkini telah dimuat.');
         }
-
         // Tepat 28 Daftar Saham Aktif (LQ45 Bluechips) dengan Paginasi per Halaman (10 item)
         const stockDataList = [
             { no: 1, code: 'BBCA', name: 'Bank Central Asia Tbk', price: 10150, change: 1.25, mcap: 'Rp 1,250T' },
@@ -1368,7 +1367,6 @@ html.dark .text-slate-500 {
             { no: 27, code: 'HRUM', name: 'Harum Energy Tbk', price: 1240, change: -2.36, mcap: 'Rp 16T' },
             { no: 28, code: 'PTBA', name: 'Bukit Asam Tbk', price: 2620, change: 1.95, mcap: 'Rp 30T' }
         ];
-
         let currentStockPage = 1;
         const stockPerPage = 10;
         let filteredStockData = [...stockDataList];
@@ -1405,23 +1403,26 @@ html.dark .text-slate-500 {
                 `;
                 tbody.appendChild(tr);
             });
-            const totalPages = Math.ceil(filteredStockData.length / stockPerPage) || 1;
+            renderStockPagination();
+        }
+        
+        function renderStockPagination() {
+            const totalPages = Math.ceil(filteredStockData.length / stockPerPage);
             document.getElementById('stockPaginationInfo').innerText = `Menampilkan halaman ${currentStockPage} dari ${totalPages} (${stockPerPage} item per halaman)`;
-            
             const btnContainer = document.getElementById('stockPaginationButtons');
             btnContainer.innerHTML = '';
             for (let i = 1; i <= totalPages; i++) {
-                const b = document.createElement('button');
-                b.className = `px-3 py-1 text-xs font-bold rounded-lg ${i === currentStockPage ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-dark-surface-card text-gray-700 dark:text-gray-300 hover:bg-gray-200'}`;
-                b.innerText = i;
-                b.onclick = () => { currentStockPage = i; renderStockTable(); };
-                btnContainer.appendChild(b);
+                const btn = document.createElement('button');
+                btn.className = `px-3 py-1 text-xs font-bold rounded-lg border transition ${i === currentStockPage ? 'bg-primary text-white border-primary' : 'bg-white dark:bg-dark-surface border-gray-200 dark:border-dark-border text-gray-700 dark:text-gray-300 hover:bg-gray-100'}`;
+                btn.innerText = i;
+                btn.onclick = () => { currentStockPage = i; renderStockTable(); };
+                btnContainer.appendChild(btn);
             }
         }
         
         function filterStockTable() {
             const query = document.getElementById('searchStockInput').value.toLowerCase();
-            filteredStockData = stockDataList.filter(s => s.code.toLowerCase().includes(query) || s.name.toLowerCase().includes(query));
+            filteredStockData = stockDataList.filter(item => item.code.toLowerCase().includes(query) || item.name.toLowerCase().includes(query));
             currentStockPage = 1;
             renderStockTable();
         }
@@ -1430,45 +1431,135 @@ html.dark .text-slate-500 {
             const track = document.getElementById('stockTickerTrack');
             if (!track) return;
             let html = '';
-            stockDataList.slice(0, 15).forEach(s => {
-                const color = s.change >= 0 ? 'text-emerald-500' : 'text-rose-500';
-                html += `<span class="mx-4 font-mono"><strong>${s.code}</strong> Rp ${s.price.toLocaleString()} <span class="${color}">(${s.change >= 0 ? '+' : ''}${s.change}%)</span></span>`;
+            stockDataList.slice(0, 14).forEach(item => {
+                const color = item.change >= 0 ? 'text-emerald-500' : 'text-rose-500';
+                const sign = item.change >= 0 ? '+' : '';
+                html += `<span class="mx-4 font-mono"><strong>${item.code}</strong> Rp ${item.price.toLocaleString()} <span class="${color}">${sign}${item.change}%</span></span>`;
             });
-            track.innerHTML = html + html;
+            track.innerHTML = html + html; // Duplikasi untuk infinite scroll mulus
+        }
+        
+        let marketChartInstance = null;
+        function initStockChart(symbol) {
+            document.querySelectorAll('#stock-exchange-page button[id^="btn"]').forEach(b => b.className = "px-3 py-1 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition");
+            const activeBtn = document.getElementById('btn' + symbol);
+            if (activeBtn) activeBtn.className = "px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition";
+            document.getElementById('activeChartTitle').innerText = `Grafik Pergerakan Real-time (${symbol})`;
+            
+            const ctx = document.getElementById('marketChart').getContext('2d');
+            if (marketChartInstance) marketChartInstance.destroy();
+            
+            let baseVal = symbol === 'IHSG' ? 7340 : (symbol === 'BBCA' ? 10150 : (symbol === 'TLKM' ? 3050 : 5050));
+            let dataPoints = [];
+            let labels = [];
+            for (let i = 15; i >= 0; i--) {
+                let d = new Date();
+                d.setSeconds(d.getSeconds() - i * 5);
+                labels.push(d.toLocaleTimeString());
+                baseVal += (Math.random() - 0.48) * (baseVal * 0.002);
+                dataPoints.push(Math.round(baseVal * 100) / 100);
+            }
+            
+            marketChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: symbol + ' Price (IDR)',
+                        data: dataPoints,
+                        borderColor: '#0284c7',
+                        backgroundColor: (context) => {
+                            const chart = context.chart;
+                            const {ctx, chartArea} = chart;
+                            if (!chartArea) return null;
+                            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+                            gradient.addColorStop(0, 'rgba(2, 132, 199, 0.0)');
+                            gradient.addColorStop(1, 'rgba(2, 132, 199, 0.35)');
+                            return gradient;
+                        },
+                        borderWidth: 2.5,
+                        fill: true,
+                        tension: 0.35,
+                        pointRadius: 2,
+                        pointHoverRadius: 5,
+                        pointBackgroundColor: '#38bdf8'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255, 255, 255, 0.04)' }, ticks: { color: '#9ca3af', font: { size: 10 } } },
+                        y: { grid: { color: 'rgba(255, 255, 255, 0.06)' }, ticks: { color: '#9ca3af', font: { size: 10 } } }
+                    },
+                    animation: { duration: 800 }
+                }
+            });
+        }
+        
+        function changeChartSymbol(symbol) {
+            initStockChart(symbol);
+            renderStockOrderBook(symbol);
+        }
+        
+        function renderStockOrderBook(symbol) {
+            document.getElementById('selectedStockTag').innerText = symbol;
+            const asksContainer = document.getElementById('stockAsksContainer');
+            const bidsContainer = document.getElementById('stockBidsContainer');
+            if (!asksContainer || !bidsContainer) return;
+            
+            let basePrice = symbol === 'IHSG' ? 7340 : (symbol === 'BBCA' ? 10150 : (symbol === 'TLKM' ? 3050 : 5050));
+            document.getElementById('stockCurrentMidPrice').innerText = 'Rp ' + basePrice.toLocaleString();
+            
+            let asksHtml = '';
+            for (let i = 5; i >= 1; i--) {
+                let p = basePrice + i * 25;
+                let lot = Math.floor(Math.random() * 500) + 50;
+                asksHtml += `<div class="grid grid-cols-3 text-[11px] py-0.5"><span class="text-rose-400 font-mono">Rp ${p.toLocaleString()}</span><span class="text-right text-gray-400 font-mono">Ask</span><span class="text-right text-gray-300 font-mono">${lot}</span></div>`;
+            }
+            asksContainer.innerHTML = asksHtml;
+            
+            let bidsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                let p = basePrice - i * 25;
+                let lot = Math.floor(Math.random() * 500) + 50;
+                bidsHtml += `<div class="grid grid-cols-3 text-[11px] py-0.5"><span class="text-emerald-400 font-mono">Rp ${p.toLocaleString()}</span><span class="text-right text-gray-400 font-mono">Bid</span><span class="text-right text-gray-300 font-mono">${lot}</span></div>`;
+            }
+            bidsContainer.innerHTML = bidsHtml;
         }
 
-        // Crypto Data Lengkap 28 Besar dengan Paginasi & Tema Selaras
+        // Tepat 28 Daftar Kripto dengan Paginasi & Grafik Parabolik Interaktif
         const cryptoDataList = [
-            { symbol: 'BTC', name: 'Bitcoin', price: 64850.20, change: 3.40, mcap: '$1.28T', vol: '$28.4B' },
-            { symbol: 'ETH', name: 'Ethereum', price: 3420.50, change: -0.80, mcap: '$410B', vol: '$14.1B' },
-            { symbol: 'SOL', name: 'Solana', price: 145.20, change: 5.82, mcap: '$67B', vol: '$4.2B' },
-            { symbol: 'BNB', name: 'Binance Coin', price: 580.10, change: 1.15, mcap: '$89B', vol: '$1.5B' },
-            { symbol: 'XRP', name: 'XRP', price: 0.58, change: -0.45, mcap: '$32B', vol: '$950M' },
-            { symbol: 'ADA', name: 'Cardano', price: 0.39, change: 2.10, mcap: '$14B', vol: '$320M' },
-            { symbol: 'DOGE', name: 'Dogecoin', price: 0.11, change: 4.85, mcap: '$16B', vol: '$840M' },
-            { symbol: 'AVAX', name: 'Avalanche', price: 26.40, change: 1.90, mcap: '$10.5B', vol: '$410M' },
-            { symbol: 'DOT', name: 'Polkadot', price: 4.85, change: -1.20, mcap: '$6.8B', vol: '$180M' },
-            { symbol: 'LINK', name: 'Chainlink', price: 12.30, change: 3.10, mcap: '$7.4B', vol: '$290M' },
-            { symbol: 'TRX', name: 'TRON', price: 0.13, change: 0.85, mcap: '$11.2B', vol: '$260M' },
-            { symbol: 'MATIC', name: 'Polygon', price: 0.42, change: -2.30, mcap: '$4.1B', vol: '$190M' },
-            { symbol: 'SHIB', name: 'Shiba Inu', price: 0.000014, change: 1.45, mcap: '$8.2B', vol: '$310M' },
-            { symbol: 'LTC', name: 'Litecoin', price: 64.50, change: 0.25, mcap: '$4.8B', vol: '$210M' },
-            { symbol: 'BCH', name: 'Bitcoin Cash', price: 340.20, change: 3.12, mcap: '$6.7B', vol: '$180M' },
-            { symbol: 'NEAR', name: 'NEAR Protocol', price: 4.50, change: 4.10, mcap: '$5.1B', vol: '$240M' },
-            { symbol: 'UNI', name: 'Uniswap', price: 6.80, change: -1.10, mcap: '$4.1B', vol: '$150M' },
-            { symbol: 'ICP', name: 'Internet Computer', price: 8.20, change: 2.05, mcap: '$3.8B', vol: '$95M' },
-            { symbol: 'APT', name: 'Aptos', price: 6.70, change: 6.40, mcap: '$2.9B', vol: '$220M' },
-            { symbol: 'SUI', name: 'Sui', price: 1.55, change: 12.40, mcap: '$3.9B', vol: '$450M' },
-            { symbol: 'ETC', name: 'Ethereum Classic', price: 21.40, change: -0.50, mcap: '$3.1B', vol: '$110M' },
-            { symbol: 'XLM', name: 'Stellar', price: 0.095, change: 0.40, mcap: '$2.8B', vol: '$75M' },
-            { symbol: 'ATOM', name: 'Cosmos', price: 4.30, change: -1.80, mcap: '$1.7B', vol: '$65M' },
-            { symbol: 'RENDER', name: 'Render', price: 5.20, change: 7.10, mcap: '$2.7B', vol: '$190M' },
-            { symbol: 'FIL', name: 'Filecoin', price: 3.80, change: 1.20, mcap: '$2.2B', vol: '$85M' },
-            { symbol: 'HBAR', name: 'Hedera', price: 0.058, change: 2.80, mcap: '$2.1B', vol: '$60M' },
-            { symbol: 'IMX', name: 'Immutable', price: 1.35, change: 3.40, mcap: '$2.0B', vol: '$70M' },
-            { symbol: 'STX', name: 'Stacks', price: 1.65, change: -2.10, mcap: '$2.4B', vol: '$55M' }
+            { no: 1, symbol: 'BTC', name: 'Bitcoin', price: 64850.20, change: 3.40, mcap: '$1.28 Triliun', vol: '$28.4B' },
+            { no: 2, symbol: 'ETH', name: 'Ethereum', price: 3420.50, change: -0.80, mcap: '$410.5B', vol: '$14.1B' },
+            { no: 3, symbol: 'SOL', name: 'Solana', price: 145.20, change: 5.60, mcap: '$67.2B', vol: '$4.8B' },
+            { no: 4, symbol: 'BNB', name: 'Binance Coin', price: 572.30, change: 1.15, mcap: '$88.4B', vol: '$1.2B' },
+            { no: 5, symbol: 'XRP', name: 'Ripple', price: 0.58, change: -0.45, mcap: '$32.1B', vol: '$950M' },
+            { no: 6, symbol: 'ADA', name: 'Cardano', price: 0.38, change: 2.10, mcap: '$13.6B', vol: '$410M' },
+            { no: 7, symbol: 'DOGE', name: 'Dogecoin', price: 0.12, change: 8.40, mcap: '$17.5B', vol: '$2.3B' },
+            { no: 8, symbol: 'AVAX', name: 'Avalanche', price: 25.40, change: -1.20, mcap: '$10.1B', vol: '$380M' },
+            { no: 9, symbol: 'TRX', name: 'Tron', price: 0.14, change: 0.30, mcap: '$12.2B', vol: '$310M' },
+            { no: 10, symbol: 'LINK', name: 'Chainlink', price: 11.50, change: 3.20, mcap: '$6.9B', vol: '$290M' },
+            { no: 11, symbol: 'MATIC', name: 'Polygon', price: 0.42, change: -2.10, mcap: '$4.1B', vol: '$180M' },
+            { no: 12, symbol: 'DOT', name: 'Polkadot', price: 4.35, change: 0.80, mcap: '$6.2B', vol: '$150M' },
+            { no: 13, symbol: 'SHIB', name: 'Shiba Inu', price: 0.0000145, change: 4.20, mcap: '$8.5B', vol: '$520M' },
+            { no: 14, symbol: 'LTC', name: 'Litecoin', price: 65.20, change: 0.50, mcap: '$4.8B', vol: '$220M' },
+            { no: 15, symbol: 'BCH', name: 'Bitcoin Cash', price: 345.00, change: 1.80, mcap: '$6.8B', vol: '$260M' },
+            { no: 16, symbol: 'NEAR', name: 'NEAR Protocol', price: 4.85, change: 6.10, mcap: '$5.3B', vol: '$410M' },
+            { no: 17, symbol: 'UNI', name: 'Uniswap', price: 6.20, change: -0.90, mcap: '$3.7B', vol: '$190M' },
+            { no: 18, symbol: 'APT', name: 'Aptos', price: 6.70, change: 3.40, mcap: '$2.9B', vol: '$240M' },
+            { no: 19, symbol: 'ATOM', name: 'Cosmos', price: 4.20, change: -1.50, mcap: '$1.6B', vol: '$95M' },
+            { no: 20, symbol: 'ICP', name: 'Internet Computer', price: 8.40, change: 2.30, mcap: '$3.9B', vol: '$130M' },
+            { no: 21, symbol: 'XLM', name: 'Stellar', price: 0.095, change: 0.20, mcap: '$2.8B', vol: '$85M' },
+            { no: 22, symbol: 'ETC', name: 'Ethereum Classic', price: 18.50, change: -0.60, mcap: '$2.7B', vol: '$110M' },
+            { no: 23, symbol: 'FIL', name: 'Filecoin', price: 3.60, change: 1.10, mcap: '$2.1B', vol: '$105M' },
+            { no: 24, symbol: 'HBAR', name: 'Hedera', price: 0.055, change: 4.50, mcap: '$2.0B', vol: '$90M' },
+            { no: 25, symbol: 'ARB', name: 'Arbitrum', price: 0.52, change: -1.80, mcap: '$1.8B', vol: '$140M' },
+            { no: 26, symbol: 'SUI', name: 'Sui', price: 1.15, change: 12.40, mcap: '$3.1B', vol: '$820M' },
+            { no: 27, symbol: 'RENDER', name: 'Render', price: 5.40, change: 7.20, mcap: '$2.8B', vol: '$310M' },
+            { no: 28, symbol: 'INJ', name: 'Injective', price: 18.20, change: 4.10, mcap: '$1.7B', vol: '$160M' }
         ];
-
         let currentCryptoPage = 1;
         const cryptoPerPage = 10;
         let filteredCryptoData = [...cryptoDataList];
@@ -1477,7 +1568,7 @@ html.dark .text-slate-500 {
             renderCryptoTable();
             renderCryptoTicker();
             initCryptoChart('SOL');
-            renderCryptoOrderBook('SOL/USD');
+            renderCryptoOrderBook('SOL');
         }
 
         function renderCryptoTable() {
@@ -1493,35 +1584,38 @@ html.dark .text-slate-500 {
                 const icon = item.change >= 0 ? '<i class="fa-solid fa-arrow-up text-[10px] mr-1"></i>' : '<i class="fa-solid fa-arrow-down text-[10px] mr-1"></i>';
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-gray-50 dark:hover:bg-dark-surface-card cursor-pointer transition';
-                tr.onclick = () => { initCryptoChart(item.symbol); renderCryptoOrderBook(item.symbol + '/USD'); };
+                tr.onclick = () => { initCryptoChart(item.symbol); renderCryptoOrderBook(item.symbol); };
                 tr.innerHTML = `
                     <td class="py-3 px-4 font-bold text-gray-900 dark:text-white font-mono">${item.symbol}</td>
                     <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">${item.name}</td>
-                    <td class="py-3 px-4 text-right font-mono font-bold text-gray-900 dark:text-white">$${item.price.toLocaleString()}</td>
+                    <td class="py-3 px-4 text-right font-mono font-bold text-gray-900 dark:text-white">$${item.price >= 1 ? item.price.toLocaleString() : item.price}</td>
                     <td class="py-3 px-4 text-right"><span class="px-2 py-1 rounded text-xs font-bold font-mono ${changeColor}">${icon}${item.change > 0 ? '+' : ''}${item.change}%</span></td>
                     <td class="py-3 px-4 text-right font-mono text-gray-500">${item.mcap}</td>
                     <td class="py-3 px-4 text-right font-mono text-gray-500">${item.vol}</td>
-                    <td class="py-3 px-4 text-center"><button class="px-2.5 py-1 bg-purple-600/10 text-purple-600 font-bold rounded hover:bg-purple-600 hover:text-white transition">Trade</button></td>
+                    <td class="py-3 px-4 text-center"><button class="px-2.5 py-1 bg-purple-500/10 text-purple-500 font-bold rounded hover:bg-purple-600 hover:text-white transition">Analisis</button></td>
                 `;
                 tbody.appendChild(tr);
             });
-            const totalPages = Math.ceil(filteredCryptoData.length / cryptoPerPage) || 1;
+            renderCryptoPagination();
+        }
+
+        function renderCryptoPagination() {
+            const totalPages = Math.ceil(filteredCryptoData.length / cryptoPerPage);
             document.getElementById('cryptoPaginationInfo').innerText = `Menampilkan halaman ${currentCryptoPage} dari ${totalPages} (${cryptoPerPage} item per halaman)`;
-            
             const btnContainer = document.getElementById('cryptoPaginationButtons');
             btnContainer.innerHTML = '';
             for (let i = 1; i <= totalPages; i++) {
-                const b = document.createElement('button');
-                b.className = `px-3 py-1 text-xs font-bold rounded-lg ${i === currentCryptoPage ? 'bg-purple-600 text-white' : 'bg-gray-100 dark:bg-dark-surface-card text-gray-700 dark:text-gray-300 hover:bg-gray-200'}`;
-                b.innerText = i;
-                b.onclick = () => { currentCryptoPage = i; renderCryptoTable(); };
-                btnContainer.appendChild(b);
+                const btn = document.createElement('button');
+                btn.className = `px-3 py-1 text-xs font-bold rounded-lg border transition ${i === currentCryptoPage ? 'bg-purple-600 text-white border-purple-600' : 'bg-white dark:bg-dark-surface border-gray-200 dark:border-dark-border text-gray-700 dark:text-gray-300 hover:bg-gray-100'}`;
+                btn.innerText = i;
+                btn.onclick = () => { currentCryptoPage = i; renderCryptoTable(); };
+                btnContainer.appendChild(btn);
             }
         }
 
         function filterCryptoTable() {
             const query = document.getElementById('searchCryptoInput').value.toLowerCase();
-            filteredCryptoData = cryptoDataList.filter(c => c.symbol.toLowerCase().includes(query) || c.name.toLowerCase().includes(query));
+            filteredCryptoData = cryptoDataList.filter(item => item.symbol.toLowerCase().includes(query) || item.name.toLowerCase().includes(query));
             currentCryptoPage = 1;
             renderCryptoTable();
         }
@@ -1530,54 +1624,148 @@ html.dark .text-slate-500 {
             const track = document.getElementById('cryptoTickerTrack');
             if (!track) return;
             let html = '';
-            cryptoDataList.slice(0, 15).forEach(c => {
-                const color = c.change >= 0 ? 'text-emerald-500' : 'text-rose-500';
-                html += `<span class="mx-4 font-mono"><strong>${c.symbol}</strong> $${c.price.toLocaleString()} <span class="${color}">(${c.change >= 0 ? '+' : ''}${c.change}%)</span></span>`;
+            cryptoDataList.slice(0, 14).forEach(item => {
+                const color = item.change >= 0 ? 'text-emerald-500' : 'text-rose-500';
+                const sign = item.change >= 0 ? '+' : '';
+                html += `<span class="mx-4 font-mono"><strong>${item.symbol}</strong> $${item.price >= 1 ? item.price.toLocaleString() : item.price} <span class="${color}">${sign}${item.change}%</span></span>`;
             });
             track.innerHTML = html + html;
         }
 
-        // Global Market Cap Matrix Data (Tepat 28 Daftar Segmen dengan Paginasi 10 item per halaman)
-        const gmpDataList = [
-            { no: 1, segment: 'DeFi (Decentralized Finance)', mcap: '$98.4B', change: 4.25, dominance: '4.02%', status: 'Bullish' },
-            { no: 2, segment: 'Layer 1 (Smart Contract Platforms)', mcap: '$1.45T', change: 2.10, dominance: '58.4%', status: 'Strong' },
-            { no: 3, segment: 'Layer 2 Scaling Solutions', mcap: '$24.8B', change: 6.80, dominance: '1.01%', status: 'Bullish' },
-            { no: 4, segment: 'Artificial Intelligence (AI & Big Data)', mcap: '$32.5B', change: 8.45, dominance: '1.32%', status: 'Very Bullish' },
-            { no: 5, segment: 'Memes & Community Tokens', mcap: '$48.2B', change: -1.50, dominance: '1.96%', status: 'Consolidation' },
-            { no: 6, segment: 'Gaming & Metaverse', mcap: '$21.9B', change: 1.15, dominance: '0.89%', status: 'Stable' },
-            { no: 7, segment: 'Real World Assets (RWA Tokenization)', mcap: '$11.2B', change: 5.30, dominance: '0.45%', status: 'Bullish' },
-            { no: 8, segment: 'Stablecoins & Digital Fiat', mcap: '$165.4B', change: 0.05, dominance: '6.75%', status: 'Neutral' },
-            { no: 9, segment: 'Privacy Coins (ZKP & Monero)', mcap: '$8.7B', change: -0.90, dominance: '0.35%', status: 'Bearish' },
-            { no: 10, segment: 'Interoperability & Cross-Chain', mcap: '$14.6B', change: 2.40, dominance: '0.60%', status: 'Stable' },
-            { no: 11, segment: 'Liquid Staking Derivatives', mcap: '$42.1B', change: 3.10, dominance: '1.75%', status: 'Bullish' },
-            { no: 12, segment: 'Yield Farming & Vaults', mcap: '$12.3B', change: -0.40, dominance: '0.51%', status: 'Neutral' },
-            { no: 13, segment: 'Centralized Exchange Tokens (CEX)', mcap: '$85.6B', change: 1.20, dominance: '3.55%', status: 'Stable' },
-            { no: 14, segment: 'Decentralized Exchange (DEX)', mcap: '$28.9B', change: 4.15, dominance: '1.20%', status: 'Bullish' },
-            { no: 15, segment: 'Oracle & Data Feeds', mcap: '$15.4B', change: 2.80, dominance: '0.64%', status: 'Bullish' },
-            { no: 16, segment: 'Storage & Decentralized Cloud', mcap: '$9.1B', change: 1.95, dominance: '0.38%', status: 'Stable' },
-            { no: 17, segment: 'NFTs & Digital Collectibles', mcap: '$7.8B', change: -2.40, dominance: '0.32%', status: 'Bearish' },
-            { no: 18, segment: 'Launchpads & Incubators', mcap: '$4.2B', change: 3.60, dominance: '0.17%', status: 'Bullish' },
-            { no: 19, segment: 'SocialFi & Creator Economy', mcap: '$3.5B', change: 5.10, dominance: '0.14%', status: 'Very Bullish' },
-            { no: 20, segment: 'DePIN (Physical Infrastructure Networks)', mcap: '$18.7B', change: 9.20, dominance: '0.78%', status: 'Very Bullish' },
-            { no: 21, segment: 'Zero-Knowledge Rollups (ZK)', mcap: '$13.9B', change: 4.80, dominance: '0.58%', status: 'Bullish' },
-            { no: 22, segment: 'Modular Blockchains', mcap: '$16.2B', change: 6.10, dominance: '0.67%', status: 'Bullish' },
-            { no: 23, segment: 'Account Abstraction & Wallets', mcap: '$5.4B', change: 1.80, dominance: '0.22%', status: 'Stable' },
-            { no: 24, segment: 'Quantum Resistant Protocols', mcap: '$2.1B', change: 12.50, dominance: '0.09%', status: 'Very Bullish' },
-            { no: 25, segment: 'Institutional Treasury Assets', mcap: '$45.0B', change: 0.95, dominance: '1.86%', status: 'Stable' },
-            { no: 26, segment: 'Carbon Credits & Green Crypto', mcap: '$1.8B', change: 2.20, dominance: '0.07%', status: 'Neutral' },
-            { no: 27, segment: 'Cybersecurity & Audit Tokens', mcap: '$3.1B', change: -0.30, dominance: '0.13%', status: 'Neutral' },
-            { no: 28, segment: 'Global Macro Index Tokens', mcap: '$7.5B', change: 1.45, dominance: '0.31%', status: 'Stable' }
-        ];
+        let cryptoChartInstance = null;
+        function initCryptoChart(symbol) {
+            ['BTC', 'ETH', 'SOL'].forEach(s => {
+                const b = document.getElementById('btnCrypto' + s);
+                if (b) b.className = "px-3 py-1 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition";
+            });
+            const activeB = document.getElementById('btnCrypto' + symbol);
+            if (activeB) activeB.className = "px-3 py-1 text-xs font-medium rounded-lg bg-purple-600 text-white transition";
+            document.getElementById('cryptoChartTitle').innerText = `Professional Parabolic Trend (${symbol}/USD)`;
+            document.getElementById('selectedCryptoTag').innerText = symbol + '/USD';
 
+            const ctx = document.getElementById('cryptoMarketChart').getContext('2d');
+            if (cryptoChartInstance) cryptoChartInstance.destroy();
+
+            let baseVal = symbol === 'BTC' ? 64850 : (symbol === 'ETH' ? 3420 : 145.20);
+            let dataPoints = [];
+            let labels = [];
+            for (let i = 20; i >= 0; i--) {
+                let d = new Date();
+                d.setMinutes(d.getMinutes() - i * 3);
+                labels.push(d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
+                baseVal += (Math.random() - 0.47) * (baseVal * 0.008);
+                dataPoints.push(Math.round(baseVal * 100) / 100);
+            }
+
+            cryptoChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: symbol + '/USD Parabolic Wave',
+                        data: dataPoints,
+                        borderColor: '#8b5cf6',
+                        backgroundColor: (context) => {
+                            const chart = context.chart;
+                            const {ctx, chartArea} = chart;
+                            if (!chartArea) return null;
+                            const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+                            gradient.addColorStop(0, 'rgba(139, 92, 246, 0.0)');
+                            gradient.addColorStop(1, 'rgba(139, 92, 246, 0.4)');
+                            return gradient;
+                        },
+                        borderWidth: 2.5,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 2.5,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: '#c084fc'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: 'rgba(255, 255, 255, 0.04)' }, ticks: { color: '#9ca3af', font: { size: 10 } } },
+                        y: { grid: { color: 'rgba(255, 255, 255, 0.06)' }, ticks: { color: '#9ca3af', font: { size: 10 } } }
+                    },
+                    animation: { duration: 900 }
+                }
+            });
+        }
+
+        function changeCryptoSymbol(symbol) {
+            initCryptoChart(symbol);
+            renderCryptoOrderBook(symbol);
+        }
+
+        function renderCryptoOrderBook(symbol) {
+            const asksContainer = document.getElementById('cryptoAsksContainer');
+            const bidsContainer = document.getElementById('cryptoBidsContainer');
+            if (!asksContainer || !bidsContainer) return;
+
+            let basePrice = symbol === 'BTC' ? 64850 : (symbol === 'ETH' ? 3420 : 145.20);
+            document.getElementById('cryptoCurrentMidPrice').innerText = '$' + basePrice.toLocaleString();
+
+            let asksHtml = '';
+            for (let i = 5; i >= 1; i--) {
+                let p = basePrice + i * (basePrice * 0.0005);
+                let size = (Math.random() * 2 + 0.1).toFixed(4);
+                asksHtml += `<div class="grid grid-cols-3 text-[11px] py-0.5"><span class="text-rose-400 font-mono">$${p.toFixed(2)}</span><span class="text-right text-gray-400 font-mono">${size}</span><span class="text-right text-gray-300 font-mono">${(p * size).toFixed(0)}</span></div>`;
+            }
+            asksContainer.innerHTML = asksHtml;
+
+            let bidsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                let p = basePrice - i * (basePrice * 0.0005);
+                let size = (Math.random() * 2 + 0.1).toFixed(4);
+                bidsHtml += `<div class="grid grid-cols-3 text-[11px] py-0.5"><span class="text-emerald-400 font-mono">$${p.toFixed(2)}</span><span class="text-right text-gray-400 font-mono">${size}</span><span class="text-right text-gray-300 font-mono">${(p * size).toFixed(0)}</span></div>`;
+            }
+            bidsContainer.innerHTML = bidsHtml;
+        }
+
+        // Tepat 28 Daftar Global Market Cap / Performance Analyst dengan Paginasi & Grafik Kombinasi Bar/Line Modern
+        const gmpDataList = [
+            { no: 1, segment: 'Layer 1 (Smart Contract)', mcap: '$1.45 Triliun', change: 3.42, dominance: '58.2%', status: 'Bullish' },
+            { no: 2, segment: 'Decentralized Finance (DeFi)', mcap: '$94.2 Miliar', change: 4.15, dominance: '3.8%', status: 'Bullish' },
+            { no: 3, segment: 'Artificial Intelligence (AI & Big Data)', mcap: '$38.5 Miliar', change: 8.90, dominance: '1.5%', status: 'Surging' },
+            { no: 4, segment: 'Meme Coins', mcap: '$52.1 Miliar', change: 12.40, dominance: '2.1%', status: 'Volatile' },
+            { no: 5, segment: 'Layer 2 (Scaling Solutions)', mcap: '$24.8 Miliar', change: -1.20, dominance: '1.0%', status: 'Consolidation' },
+            { no: 6, segment: 'Stablecoins', mcap: '$168.5 Miliar', change: 0.10, dominance: '6.8%', status: 'Stable' },
+            { no: 7, segment: 'Real World Assets (RWA)', mcap: '$8.4 Miliar', change: 5.30, dominance: '0.3%', status: 'Bullish' },
+            { no: 8, segment: 'Gaming & Metaverse', mcap: '$19.2 Miliar', change: -0.85, dominance: '0.8%', status: 'Neutral' },
+            { no: 9, segment: 'Liquid Staking Derivatives', mcap: '$62.1 Miliar', change: 1.80, dominance: '2.5%', status: 'Steady' },
+            { no: 10, segment: 'Privacy Coins', mcap: '$7.5 Miliar', change: -2.40, dominance: '0.3%', status: 'Bearish' },
+            { no: 11, segment: 'Interoperability & Bridges', mcap: '$14.2 Miliar', change: 2.10, dominance: '0.6%', status: 'Bullish' },
+            { no: 12, segment: 'NFTs & Collectibles', mcap: '$5.8 Miliar', change: -3.10, dominance: '0.2%', status: 'Downtrend' },
+            { no: 13, segment: 'Storage & Decentralized Cloud', mcap: '$6.1 Miliar', change: 1.40, dominance: '0.2%', status: 'Steady' },
+            { no: 14, segment: 'Exchange Tokens (CEX)', mcap: '$85.4 Miliar', change: 0.90, dominance: '3.4%', status: 'Neutral' },
+            { no: 15, segment: 'Oracle Networks', mcap: '$11.8 Miliar', change: 3.50, dominance: '0.5%', status: 'Bullish' },
+            { no: 16, segment: 'Zero Knowledge (ZK)', mcap: '$4.2 Miliar', change: 6.70, dominance: '0.2%', status: 'Surging' },
+            { no: 17, segment: 'Yield Farming & Launchpads', mcap: '$3.5 Miliar', change: 1.10, dominance: '0.1%', status: 'Steady' },
+            { no: 18, segment: 'SocialFi & Content Creators', mcap: '$2.1 Miliar', change: 4.80, dominance: '0.1%', status: 'Bullish' },
+            { no: 19, segment: 'DePIN (Physical Infrastructure)', mcap: '$18.9 Miliar', change: 14.20, dominance: '0.7%', status: 'Explosive' },
+            { no: 20, segment: 'Modular Blockchains', mcap: '$9.6 Miliar', change: 7.10, dominance: '0.4%', status: 'Surging' },
+            { no: 21, segment: 'Account Abstraction & Wallets', mcap: '$1.9 Miliar', change: 2.80, dominance: '0.1%', status: 'Bullish' },
+            { no: 22, segment: 'Derivatives & Perpetual DEX', mcap: '$12.4 Miliar', change: 3.90, dominance: '0.5%', status: 'Bullish' },
+            { no: 23, segment: 'Asset Management Protocols', mcap: '$4.8 Miliar', change: 0.50, dominance: '0.2%', status: 'Stable' },
+            { no: 24, segment: 'Quantum Resistant Chains', mcap: '$850 Juta', change: 1.20, dominance: '0.04%', status: 'Stable' },
+            { no: 25, segment: 'Enterprise Blockchain Solutions', mcap: '$5.4 Miliar', change: -0.40, dominance: '0.2%', status: 'Neutral' },
+            { no: 26, segment: 'Green Energy & Carbon Credits', mcap: '$1.2 Miliar', change: 5.60, dominance: '0.05%', status: 'Bullish' },
+            { no: 27, segment: 'Cross-Chain Liquidity Pools', mcap: '$7.3 Miliar', change: 2.20, dominance: '0.3%', status: 'Steady' },
+            { no: 28, segment: 'Autonomous Agent Networks', mcap: '$3.4 Miliar', change: 16.50, dominance: '0.15%', status: 'Explosive' }
+        ];
         let currentGMPPage = 1;
         const gmpPerPage = 10;
         let filteredGMPData = [...gmpDataList];
+        let performanceChartInstance = null;
 
         function initPerformancePage() {
             renderGMPTable();
             renderGlobalMarketTicker();
             initPerformanceChart();
-            renderLiveTxStream();
+            initLiveTxStream();
         }
 
         function renderGMPTable() {
@@ -1587,39 +1775,43 @@ html.dark .text-slate-500 {
             const start = (currentGMPPage - 1) * gmpPerPage;
             const end = start + gmpPerPage;
             const pageItems = filteredGMPData.slice(start, end);
-            
-            pageItems.forEach(item => {
+
+            pageItems.forEach((item, index) => {
+                const globalIdx = start + index + 1;
                 const changeColor = item.change >= 0 ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
                 const icon = item.change >= 0 ? '<i class="fa-solid fa-arrow-up text-[10px] mr-1"></i>' : '<i class="fa-solid fa-arrow-down text-[10px] mr-1"></i>';
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-gray-50 dark:hover:bg-dark-surface-card transition';
                 tr.innerHTML = `
-                    <td class="py-3 px-4 font-mono text-gray-500">${item.no}</td>
+                    <td class="py-3 px-4 font-mono text-gray-500">${globalIdx}</td>
                     <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">${item.segment}</td>
-                    <td class="py-3 px-4 text-right font-mono font-bold text-gray-900 dark:text-white">${item.mcap}</td>
+                    <td class="py-3 px-4 text-right font-mono font-semibold text-gray-900 dark:text-white">${item.mcap}</td>
                     <td class="py-3 px-4 text-right"><span class="px-2 py-1 rounded text-xs font-bold font-mono ${changeColor}">${icon}${item.change > 0 ? '+' : ''}${item.change}%</span></td>
                     <td class="py-3 px-4 text-right font-mono text-gray-500">${item.dominance}</td>
-                    <td class="py-3 px-4 text-center"><span class="px-2.5 py-1 bg-primary/10 text-primary font-bold rounded text-[10px]">${item.status}</span></td>
+                    <td class="py-3 px-4 text-center"><span class="px-2.5 py-1 bg-primary/10 text-primary font-bold rounded text-[10px] uppercase">${item.status}</span></td>
                 `;
                 tbody.appendChild(tr);
             });
-            const totalPages = Math.ceil(filteredGMPData.length / gmpPerPage) || 1;
+            renderGMPPagination();
+        }
+
+        function renderGMPPagination() {
+            const totalPages = Math.ceil(filteredGMPData.length / gmpPerPage);
             document.getElementById('gmpPaginationInfo').innerText = `Menampilkan halaman ${currentGMPPage} dari ${totalPages} (${gmpPerPage} item per halaman)`;
-            
             const btnContainer = document.getElementById('gmpPaginationButtons');
             btnContainer.innerHTML = '';
             for (let i = 1; i <= totalPages; i++) {
-                const b = document.createElement('button');
-                b.className = `px-3 py-1 text-xs font-bold rounded-lg ${i === currentGMPPage ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-dark-surface-card text-gray-700 dark:text-gray-300 hover:bg-gray-200'}`;
-                b.innerText = i;
-                b.onclick = () => { currentGMPPage = i; renderGMPTable(); };
-                btnContainer.appendChild(b);
+                const btn = document.createElement('button');
+                btn.className = `px-3 py-1 text-xs font-bold rounded-lg border transition ${i === currentGMPPage ? 'bg-primary text-white border-primary' : 'bg-white dark:bg-dark-surface border-gray-200 dark:border-dark-border text-gray-700 dark:text-gray-300 hover:bg-gray-100'}`;
+                btn.innerText = i;
+                btn.onclick = () => { currentGMPPage = i; renderGMPTable(); };
+                btnContainer.appendChild(btn);
             }
         }
 
         function filterGMPTable() {
             const query = document.getElementById('searchGMPInput').value.toLowerCase();
-            filteredGMPData = gmpDataList.filter(g => g.segment.toLowerCase().includes(query));
+            filteredGMPData = gmpDataList.filter(item => item.segment.toLowerCase().includes(query) || item.status.toLowerCase().includes(query));
             currentGMPPage = 1;
             renderGMPTable();
         }
@@ -1628,186 +1820,99 @@ html.dark .text-slate-500 {
             const track = document.getElementById('globalMarketTickerTrack');
             if (!track) return;
             let html = '';
-            gmpDataList.slice(0, 15).forEach(g => {
-                const color = g.change >= 0 ? 'text-emerald-500' : 'text-rose-500';
-                html += `<span class="mx-4 font-mono"><strong>${g.segment.split(' ')[0]}</strong> ${g.mcap} <span class="${color}">(${g.change >= 0 ? '+' : ''}${g.change}%)</span></span>`;
+            gmpDataList.slice(0, 14).forEach(item => {
+                const color = item.change >= 0 ? 'text-emerald-500' : 'text-rose-500';
+                const sign = item.change >= 0 ? '+' : '';
+                html += `<span class="mx-4 font-mono"><strong>${item.segment}</strong> ${item.mcap} <span class="${color}">${sign}${item.change}%</span></span>`;
             });
             track.innerHTML = html + html;
         }
 
-        function renderLiveTxStream() {
-            const stream = document.getElementById('live-tx-stream');
-            if (!stream) return;
-            const pairs = ['BTC/USD', 'ETH/USD', 'SOL/USD', 'BBCA', 'BBRI', 'TLKM'];
-            const types = ['BUY', 'SELL'];
-            let html = '';
-            for (let i = 0; i < 6; i++) {
-                const p = pairs[Math.floor(Math.random() * pairs.length)];
-                const t = types[Math.floor(Math.random() * types.length)];
-                const color = t === 'BUY' ? 'text-emerald-400' : 'text-rose-400';
-                const price = Math.floor(Math.random() * 50000 + 1000);
-                html += `<div class="flex justify-between items-center py-1 border-b border-gray-200 dark:border-dark-border">
-                    <span class="text-gray-500">[16:50:2${i}]</span>
-                    <span class="font-bold text-gray-800 dark:text-gray-200">${p}</span>
-                    <span class="${color} font-bold">${t}</span>
-                    <span class="text-gray-900 dark:text-white">$${price.toLocaleString()}</span>
-                </div>`;
-            }
-            stream.innerHTML = html;
-        }
-
-        // Grafik Chart.js Instances
-        let marketChartInstance = null;
-        let cryptoChartInstance = null;
-        let performanceChartInstance = null;
-        function initStockChart(symbol) {
-            document.getElementById('activeChartTitle').innerText = `Pergerakan Harga Saham / Indeks: ${symbol}`;
-            ['btnIHSG', 'btnBBCA', 'btnTLKM', 'btnASII'].forEach(id => {
-                const btn = document.getElementById(id);
-                if (btn) {
-                    btn.className = id === 'btn' + symbol ? 'px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition' : 'px-3 py-1 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition';
-                }
-            });
-            const ctx = document.getElementById('marketChart').getContext('2d');
-            if (marketChartInstance) marketChartInstance.destroy();
-            const dataPoints = symbol === 'IHSG' ? [7300, 7315, 7310, 7330, 7325, 7342] : [10000, 10050, 10020, 10100, 10080, 10150];
-            marketChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['09:00', '10:00', '11:00', '13:00', '14:00', '15:00'],
-                    datasets: [{
-                        label: symbol + ' Realtime Price',
-                        data: dataPoints,
-                        borderColor: '#0284c7',
-                        backgroundColor: 'rgba(2, 132, 199, 0.1)',
-                        borderWidth: 2.5,
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { color: '#1f293d' }, ticks: { color: '#9ca3af', font: { size: 10 } } },
-                        y: { grid: { color: '#1f293d' }, ticks: { color: '#9ca3af', font: { size: 10 } } }
-                    }
-                }
-            });
-        }
-        function changeChartSymbol(symbol) {
-            initStockChart(symbol);
-            renderStockOrderBook(symbol === 'IHSG' ? 'BBCA' : symbol);
-        }
-        function renderStockOrderBook(symbol) {
-            document.getElementById('selectedStockTag').innerText = symbol;
-            const asksContainer = document.getElementById('stockAsksContainer');
-            const bidsContainer = document.getElementById('stockBidsContainer');
-            if (!asksContainer || !bidsContainer) return;
-            let basePrice = symbol === 'BBCA' ? 10150 : (symbol === 'TLKM' ? 3050 : 5050);
-            let asksHtml = '';
-            for (let i = 5; i >= 1; i--) {
-                const p = basePrice + (i * 25);
-                const lot = Math.floor(Math.random() * 500 + 50);
-                asksHtml += `<div class="grid grid-cols-3 text-[11px]"><span class="text-rose-400 font-mono">Rp ${p.toLocaleString()}</span><span class="text-right text-gray-400">Ask</span><span class="text-right font-mono text-gray-300">${lot}</span></div>`;
-            }
-            asksContainer.innerHTML = asksHtml;
-            let bidsHtml = '';
-            for (let i = 1; i <= 5; i++) {
-                const p = basePrice - (i * 25);
-                const lot = Math.floor(Math.random() * 600 + 100);
-                bidsHtml += `<div class="grid grid-cols-3 text-[11px]"><span class="text-emerald-400 font-mono">Rp ${p.toLocaleString()}</span><span class="text-right text-gray-400">Bid</span><span class="text-right font-mono text-gray-300">${lot}</span></div>`;
-            }
-            bidsContainer.innerHTML = bidsHtml;
-            document.getElementById('stockCurrentMidPrice').innerText = `Rp ${basePrice.toLocaleString()}`;
-        }
-        function initCryptoChart(symbol) {
-            document.getElementById('cryptoChartTitle').innerText = `Professional Parabolic Trend (${symbol}/USD)`;
-            ['btnCryptoBTC', 'btnCryptoETH', 'btnCryptoSOL'].forEach(id => {
-                const btn = document.getElementById(id);
-                if (btn) {
-                    btn.className = id === 'btnCrypto' + symbol ? 'px-3 py-1 text-xs font-medium rounded-lg bg-purple-600 text-white transition' : 'px-3 py-1 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition';
-                }
-            });
-            const ctx = document.getElementById('cryptoMarketChart').getContext('2d');
-            if (cryptoChartInstance) cryptoChartInstance.destroy();
-            const prices = symbol === 'BTC' ? [63000, 63500, 64200, 63900, 64400, 64850] : (symbol === 'ETH' ? [3350, 3380, 3400, 3390, 3410, 3420] : [138, 140, 142, 141, 144, 145.2]);
-            cryptoChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['12:00', '14:00', '16:00', '18:00', '20:00', '22:00'],
-                    datasets: [{
-                        label: symbol + '/USD Trend',
-                        data: prices,
-                        borderColor: '#8b5cf6',
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                        borderWidth: 2.5,
-                        fill: true,
-                        tension: 0.35
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { color: '#1f293d' }, ticks: { color: '#9ca3af', font: { size: 10 } } },
-                        y: { grid: { color: '#1f293d' }, ticks: { color: '#9ca3af', font: { size: 10 } } }
-                    }
-                }
-            });
-        }
-        function changeCryptoSymbol(symbol) {
-            initCryptoChart(symbol);
-            renderCryptoOrderBook(symbol + '/USD');
-        }
-        function renderCryptoOrderBook(pair) {
-            document.getElementById('selectedCryptoTag').innerText = pair;
-            const asksContainer = document.getElementById('cryptoAsksContainer');
-            const bidsContainer = document.getElementById('cryptoBidsContainer');
-            if (!asksContainer || !bidsContainer) return;
-            let baseMid = pair.includes('BTC') ? 64850 : (pair.includes('ETH') ? 3420 : 145.2);
-            let asksHtml = '';
-            for (let i = 5; i >= 1; i--) {
-                const p = baseMid + (i * 0.15);
-                const size = (Math.random() * 2).toFixed(4);
-                asksHtml += `<div class="grid grid-cols-3 text-[11px]"><span class="text-rose-400 font-mono">$${p.toFixed(2)}</span><span class="text-right font-mono text-gray-300">${size}</span><span class="text-right font-mono text-gray-500">$${(p * size).toFixed(0)}</span></div>`;
-            }
-            asksContainer.innerHTML = asksHtml;
-            let bidsHtml = '';
-            for (let i = 1; i <= 5; i++) {
-                const p = baseMid - (i * 0.15);
-                const size = (Math.random() * 2).toFixed(4);
-                bidsHtml += `<div class="grid grid-cols-3 text-[11px]"><span class="text-emerald-400 font-mono">$${p.toFixed(2)}</span><span class="text-right font-mono text-gray-300">${size}</span><span class="text-right font-mono text-gray-500">$${(p * size).toFixed(0)}</span></div>`;
-            }
-            bidsContainer.innerHTML = bidsHtml;
-            document.getElementById('cryptoCurrentMidPrice').innerText = `$${baseMid.toFixed(2)}`;
-        }
         function initPerformanceChart() {
             const ctx = document.getElementById('performanceChart').getContext('2d');
             if (performanceChartInstance) performanceChartInstance.destroy();
+
             performanceChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['DeFi', 'Layer 1', 'Layer 2', 'AI & Data', 'Meme', 'Gaming', 'RWA', 'Stable'],
-                    datasets: [{
-                        label: 'Market Cap Volume ($B)',
-                        data: [98, 1450, 24, 32, 48, 21, 11, 165],
-                        backgroundColor: '#005C9E',
-                        borderRadius: 6
-                    }]
+                    labels: ['Layer 1', 'DeFi', 'AI & Data', 'Meme', 'Layer 2', 'Stablecoins', 'RWA', 'Gaming', 'DePIN', 'Modular'],
+                    datasets: [
+                        {
+                            type: 'bar',
+                            label: 'Segment Volume ($B)',
+                            data: [145, 94, 38, 52, 24, 168, 8, 19, 18, 9.6],
+                            backgroundColor: 'rgba(0, 92, 158, 0.75)',
+                            borderColor: '#005C9E',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            yAxisID: 'y'
+                        },
+                        {
+                            type: 'line',
+                            label: '24h Yield (%)',
+                            data: [3.4, 4.1, 8.9, 12.4, -1.2, 0.1, 5.3, -0.85, 14.2, 7.1],
+                            borderColor: '#10b981',
+                            backgroundColor: '#10b981',
+                            borderWidth: 2.5,
+                            tension: 0.3,
+                            yAxisID: 'y1'
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    plugins: { legend: { labels: { color: '#9ca3af', font: { size: 11 } } } },
                     scales: {
-                        x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-                        y: { grid: { color: 'rgba(200,200,200,0.1)' }, ticks: { font: { size: 10 } } }
-                    }
+                        x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 10 } } },
+                        y: { type: 'linear', position: 'left', grid: { color: 'rgba(200, 200, 200, 0.1)' }, ticks: { color: '#9ca3af', font: { size: 10 } } },
+                        y1: { type: 'linear', position: 'right', grid: { display: false }, ticks: { color: '#10b981', font: { size: 10 } } }
+                    },
+                    animation: { duration: 1000 }
                 }
             });
+        }
+
+        let txTickCount = 0;
+        function initLiveTxStream() {
+            const streamContainer = document.getElementById('live-tx-stream');
+            if (!streamContainer) return;
+            streamContainer.innerHTML = '';
+            
+            const pairs = ['BTC/USD', 'ETH/USD', 'SOL/USD', 'BBCA.JK', 'IHSG', 'XRP/USD', 'SUI/USD', 'TLKM.JK'];
+            const types = ['BUY', 'SELL'];
+            
+            for (let i = 0; i < 6; i++) {
+                appendTx(streamContainer, pairs, types);
+            }
+
+            setInterval(() => {
+                appendTx(streamContainer, pairs, types);
+                txTickCount++;
+                document.getElementById('pa-tx-ticks').innerText = txTickCount.toLocaleString();
+            }, 2500);
+        }
+
+        function appendTx(container, pairs, types) {
+            const pair = pairs[Math.floor(Math.random() * pairs.length)];
+            const type = types[Math.floor(Math.random() * types.length)];
+            const price = (Math.random() * 50000 + 100).toFixed(2);
+            const amount = (Math.random() * 5 + 0.1).toFixed(3);
+            const timeStr = new Date().toLocaleTimeString();
+            
+            const colorClass = type === 'BUY' ? 'text-emerald-500' : 'text-rose-500';
+            const div = document.createElement('div');
+            div.className = 'flex items-center justify-between border-b dark:border-dark-border pb-1.5 text-[11px]';
+            div.innerHTML = `
+                <span class="text-gray-400">${timeStr}</span>
+                <span class="font-bold text-gray-900 dark:text-white">${pair}</span>
+                <span class="${colorClass} font-bold">${type}</span>
+                <span class="text-gray-600 dark:text-gray-300">${amount} @ $${price}</span>
+            `;
+            container.prepend(div);
+            if (container.children.length > 10) {
+                container.removeChild(container.lastChild);
+            }
         }
     </script>
 </body>
