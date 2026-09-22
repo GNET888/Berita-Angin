@@ -722,7 +722,7 @@ html.dark .text-slate-500 {
                             </h3>
                             <div class="flex flex-wrap gap-2 pt-1">
                                 <span class="px-2.5 py-1 bg-primary/10 text-primary font-bold text-xs rounded-lg">WPPE (Wakil Perantara Perdagangan Efek)</span>
-                                <span class="px-2.5 py-1 bg-primary/10 text-primary font-bold text-xs rounded-lg">CFA Charterholder (Level II Candidate)</span>
+                                <span class="px-2.5 py-1 bg-primary/10 text-primary font-bold text-xs rounded-lg">CFA Charterholder </span>
                                 <span class="px-2.5 py-1 bg-primary/10 text-primary font-bold text-xs rounded-lg">Financial Modeling & Valuation Analyst (FMVA)</span>
                                 <span class="px-2.5 py-1 bg-primary/10 text-primary font-bold text-xs rounded-lg">Data-Driven Investigative Journalism</span>
                             </div>
@@ -736,162 +736,172 @@ html.dark .text-slate-500 {
                 <div class="stock-ticker-container">
                     <div class="stock-ticker-track" id="cryptoTickerTrack"></div>
                 </div>
-                <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-dark-surface text-gray-900 dark:text-white shadow-lg my-6 rounded-xl border border-gray-200 dark:border-dark-border transition-all duration-300 space-y-6">
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-2">
+                <main class="container mx-auto p-4 md:p-6 bg-[#030712] dark:bg-[#030712] text-white shadow-2xl my-6 rounded-2xl border border-gray-800 transition-all duration-300 space-y-6">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-gray-800 pb-4">
                         <div>
-                            <h1 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Crypto Market Intelligence</h1>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Pantauan real-time harga aset kripto global, kapitalisasi pasar, dan volume likuiditas.</p>
-                        </div>
-                        <div class="flex items-center space-x-3 text-xs">
-                            <div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border font-mono text-emerald-500 dark:text-emerald-400">
-                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                                <span id="crypto-live-status">LIVE FEED ACTIVE</span>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 font-mono text-[10px] border border-amber-500/20">ADVANCED CRYPTO ENGINE v4.8</span>
+                                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[10px] border border-emerald-500/20 animate-pulse">WEBSOCKET: CONNECTED</span>
                             </div>
+                            <h1 class="text-2xl font-black text-white tracking-tight mt-1">Crypto Market Intelligence Matrix</h1>
+                            <p class="text-xs text-gray-400 mt-0.5">Analisis Order Book Level 2, Moving Average Parabolik, Fibonacci Retracement, dan Likuiditas Real-Time Global.</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="toggleCryptoFeedSpeed()" id="btnCryptoSpeed" class="px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-700 text-xs font-mono text-amber-400 hover:bg-gray-800 transition">Speed: 1.0x</button>
+                            <button onclick="triggerCryptoArbitrageFlash()" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-xs font-bold text-white transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-bolt"></i> Arbitrage Scan
+                            </button>
                         </div>
                     </div>
+                    <!-- Statistik Atas -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl relative overflow-hidden shadow-sm">
+                        <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl relative overflow-hidden shadow-lg">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Bitcoin (BTC)</p>
-                                    <h3 id="cryptoBtcVal" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mt-1">$64,850.20</h3>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Bitcoin Dominance</p>
+                                    <h3 id="statBtcDom" class="text-2xl font-bold tracking-tight text-white mt-1 font-mono">54.82%</h3>
                                 </div>
-                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-                                    <i class="fa-solid fa-arrow-up mr-1 text-[10px]"></i> +3.4%
-                                </span>
+                                <span class="text-emerald-400 text-xs bg-emerald-500/10 px-2 py-1 rounded font-mono">+0.4%</span>
                             </div>
-                            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400 flex justify-between">
-                                <span>Dominance: <strong class="text-gray-800 dark:text-gray-200">54.2%</strong></span>
-                                <span>Vol 24h: <strong class="text-gray-800 dark:text-gray-200">$28.4B</strong></span>
+                            <div class="mt-3 w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                                <div id="btcDomBar" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 54.82%"></div>
                             </div>
-                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-yellow-400 opacity-80"></div>
+                            <div class="mt-2 text-[10px] text-gray-400 flex justify-between font-mono">
+                                <span>ETH Gas: 14 Gwei</span>
+                                <span class="text-emerald-400">Optimal</span>
+                            </div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl relative overflow-hidden shadow-sm">
+                        <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl relative overflow-hidden shadow-lg">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Ethereum (ETH)</p>
-                                    <h3 id="cryptoEthVal" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mt-1">$3,420.50</h3>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Fear & Greed Index</p>
+                                    <h3 id="statFearGreed" class="text-2xl font-bold tracking-tight text-emerald-400 mt-1 font-mono">78 (Extreme Greed)</h3>
                                 </div>
-                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-rose-500/10 text-rose-500 border border-rose-500/20">
-                                    <i class="fa-solid fa-arrow-down mr-1 text-[10px]"></i> -0.8%
-                                </span>
+                                <i class="fa-solid fa-fire text-amber-400 text-lg"></i>
                             </div>
-                            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400 flex justify-between">
-                                <span>Gas Fee: <strong class="text-gray-800 dark:text-gray-200">14 Gwei</strong></span>
-                                <span>Vol 24h: <strong class="text-gray-800 dark:text-gray-200">$14.1B</strong></span>
+                            <div class="mt-3 w-full bg-gray-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-red-500 via-yellow-500 to-emerald-500 h-full rounded-full" style="width: 78%"></div>
                             </div>
-                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-indigo-400 opacity-80"></div>
+                            <div class="mt-2 text-[10px] text-gray-400 flex justify-between font-mono">
+                                <span>Market Sentiment</span>
+                                <span class="text-emerald-400">Bullish Momentum</span>
+                            </div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl relative overflow-hidden shadow-sm">
+                        <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl relative overflow-hidden shadow-lg">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Total Market Cap</p>
-                                    <h3 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mt-1">$2.45 Triliun</h3>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Global 24h Volume</p>
+                                    <h3 id="statGlobalVol" class="text-2xl font-bold tracking-tight text-white mt-1 font-mono">$94.28 B</h3>
                                 </div>
-                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-                                    <i class="fa-solid fa-arrow-up mr-1 text-[10px]"></i> +2.1%
-                                </span>
+                                <span class="text-emerald-400 text-xs bg-emerald-500/10 px-2 py-1 rounded font-mono">+12.4%</span>
                             </div>
-                            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400 flex justify-between">
-                                <span>Sentiment: <strong class="text-emerald-500">Greed (74)</strong></span>
-                                <span>Alt Season: <strong class="text-gray-800 dark:text-gray-200">48/100</strong></span>
+                            <div class="mt-3 text-[10px] text-gray-400 flex justify-between font-mono">
+                                <span>Derivatives Vol:</span>
+                                <strong class="text-gray-200">$340.5 B</strong>
                             </div>
-                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-400 opacity-80"></div>
+                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-blue-500"></div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl relative overflow-hidden shadow-sm">
+                        <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl relative overflow-hidden shadow-lg">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Gas Tracker (Gwei)</p>
-                                    <h3 class="text-2xl font-bold tracking-tight text-emerald-500 dark:text-emerald-400 mt-1">12 Gwei</h3>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Liquidations (24h)</p>
+                                    <h3 id="statLiquidations" class="text-2xl font-bold tracking-tight text-rose-400 mt-1 font-mono">$184.5 M</h3>
                                 </div>
-                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-                                    Fast
-                                </span>
+                                <span class="text-rose-400 text-xs bg-rose-500/10 px-2 py-1 rounded font-mono">Shorts: 72%</span>
                             </div>
-                            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400 flex justify-between">
-                                <span>Standard: <strong class="text-gray-800 dark:text-gray-200">10 Gwei</strong></span>
-                                <span>Instant: <strong class="text-gray-800 dark:text-gray-200">15 Gwei</strong></span>
+                            <div class="mt-3 text-[10px] text-gray-400 flex justify-between font-mono">
+                                <span>Long Liq: $51.2M</span>
+                                <span class="text-rose-400">Short Liq: $133.3M</span>
                             </div>
-                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-400 opacity-80"></div>
+                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-rose-500"></div>
                         </div>
                     </div>
+                    <!-- Grafik Utama & Order Book L2 -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-2 bg-[#080b11] dark:bg-[#06080d] border border-gray-800 dark:border-dark-border p-5 rounded-xl flex flex-col justify-between shadow-xl">
+                        <div class="lg:col-span-2 bg-[#06080d] border border-gray-800 p-5 rounded-xl flex flex-col justify-between shadow-2xl">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
                                 <div>
-                                    <h2 class="text-sm font-bold text-gray-100 flex items-center gap-2">
-                                        <span id="cryptoChartTitle">Professional Parabolic Trend (SOL/USD)</span>
-                                    </h2>
-                                    <p class="text-xs text-gray-400">Analisis kurva eksponensial dan momentum parabolik real-time berstandar institusional</p>
-                                </div>
-                                <div class="flex items-center space-x-1 bg-[#121722] p-1 rounded-xl border border-gray-800">
-                                    <button onclick="changeCryptoSymbol('BTC')" id="btnCryptoBTC" class="px-3 py-1 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition">BTC</button>
-                                    <button onclick="changeCryptoSymbol('ETH')" id="btnCryptoETH" class="px-3 py-1 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition">ETH</button>
-                                    <button onclick="changeCryptoSymbol('SOL')" id="btnCryptoSOL" class="px-3 py-1 text-xs font-medium rounded-lg bg-purple-600 text-white transition">SOL</button>
+                                    <div class="flex items-center space-x-2">
+                                        <h2 id="cryptoAdvancedChartTitle" class="text-sm font-bold text-white font-mono">BTC/USD - Advanced Parabolic & EMA Oscillator</h2>
+                                    </div>
+                                    <p class="text-xs text-gray-400">Auto Live Streaming Chart</p>
                                 </div>
                             </div>
                             <div class="relative w-full h-80">
-                                <canvas id="cryptoMarketChart"></canvas>
+                                <canvas id="cryptoAdvancedChart"></canvas>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-gray-800/80 flex flex-wrap items-center justify-between text-xs font-mono text-gray-400">
+                                <div class="flex items-center space-x-4">
+                                    <span>High (24h): <strong id="cryptoDetailHigh" class="text-white">$65,920.00</strong></span>
+                                    <span>Low (24h): <strong id="cryptoDetailLow" class="text-white">$63,410.00</strong></span>
+                                </div>
+                                <div class="flex items-center space-x-2 text-emerald-400">
+                                    <i class="fa-solid fa-wave-square"></i>
+                                    <span id="cryptoOscillatorStatus">RSI(14): 64.2 (Bullish)</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="bg-[#0b0f19] dark:bg-[#06080d] border border-gray-800 dark:border-dark-border p-5 rounded-xl flex flex-col shadow-xl font-mono">
+                        <!-- Institutional Order Book & Depth Visualizer -->
+                        <div class="bg-[#06080d] border border-gray-800 p-5 rounded-xl flex flex-col shadow-2xl font-mono">
                             <div class="flex items-center justify-between mb-3 border-b border-gray-800 pb-2">
                                 <h2 class="text-sm font-bold text-gray-200 flex items-center gap-2">
-                                    <i class="fa-solid fa-layer-group text-purple-400"></i> Institutional Order Book
+                                    <i class="fa-solid fa-book-open text-purple-400"></i> Order Book (Live)
                                 </h2>
-                                <span id="selectedCryptoTag" class="text-xs font-bold px-2.5 py-0.5 rounded bg-purple-900/40 text-purple-300 border border-purple-700/50">SOL/USD</span>
+                                <span id="cryptoBookSymbol" class="text-xs font-bold px-2 py-0.5 rounded bg-purple-900/40 text-purple-300 border border-purple-700/50">BTC/USD</span>
                             </div>
                             <div class="grid grid-cols-3 text-[10px] font-semibold text-gray-400 mb-2 uppercase tracking-wider">
-                                <span class="text-left">Price (USD)</span>
+                                <span class="text-left">Price ($)</span>
                                 <span class="text-right">Size</span>
                                 <span class="text-right">Total</span>
                             </div>
-                            <div class="space-y-1 mb-2 overflow-hidden text-xs" id="cryptoAsksContainer"></div>
-                            <div class="my-2 py-1.5 px-3 bg-[#131b2e] border border-gray-800 rounded flex items-center justify-between text-xs">
-                                <span class="text-gray-400 text-[10px]">Spread: <strong id="cryptoSpread" class="text-gray-200">0.12</strong></span>
-                                <span id="cryptoCurrentMidPrice" class="font-bold text-emerald-400">$145.20</span>
-                                <span class="text-[10px] text-purple-400 flex items-center gap-1"><i class="fa-solid fa-circle text-[6px] animate-ping"></i> Live</span>
+                            <div class="space-y-1 mb-1 overflow-hidden text-xs" id="cryptoBookAsks"></div>
+                            <div class="my-2 py-2 px-3 bg-[#0b0f19] border border-gray-800 rounded-lg flex items-center justify-between text-xs shadow-inner">
+                                <span class="text-gray-400 text-[10px]">Spread: <strong id="cryptoBookSpread" class="text-gray-200">0.50</strong></span>
+                                <span id="cryptoBookMidPrice" class="font-bold text-emerald-400 text-sm">$64,850.20</span>
+                                <span class="text-[10px] text-emerald-400 flex items-center gap-1"><i class="fa-solid fa-circle text-[6px] animate-ping"></i> Active</span>
                             </div>
-                            <div class="space-y-1 overflow-hidden text-xs" id="cryptoBidsContainer"></div>
+                            <div class="space-y-1 overflow-hidden text-xs" id="cryptoBookBids"></div>
                             <div class="mt-4 pt-3 border-t border-gray-800 flex justify-between items-center text-[11px] text-gray-400">
-                                <span>Depth: <strong class="text-gray-200">10 Levels</strong></span>
-                                <span class="text-emerald-400 font-medium flex items-center gap-1"><i class="fa-solid fa-shield-halved"></i> Secure Feed</span>
+                                <span>Order Imbalance: <strong id="cryptoImbalance" class="text-emerald-400">64% Buy</strong></span>
+                                <span class="text-purple-400 font-medium">Deep Pool</span>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border rounded-xl overflow-hidden shadow-sm">
-                        <div class="p-5 border-b border-gray-200 dark:border-dark-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <!-- Tabel Daftar Crypto Lengkap -->
+                    <div class="bg-[#06080d] border border-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                        <div class="p-5 border-b border-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div>
-                                <h2 class="text-base font-semibold text-gray-900 dark:text-white">Daftar Mata Uang Kripto Teratas (28 Besar)</h2>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Klik baris aset untuk melihat grafik interaktif dan order book instan.</p>
+                                <h2 class="text-base font-semibold text-white">Direktori Aset Kripto Global (Real-Time Live Ticks)</h2>
+                                <p class="text-xs text-gray-400">Pembaruan otomatis setiap detik. Klik salah satu aset untuk memuat grafik instan.</p>
                             </div>
-                            <div class="relative w-full sm:w-64">
+                            <div class="relative w-full sm:w-72">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
                                     <i class="fa-solid fa-search text-xs"></i>
                                 </span>
-                                <input type="text" id="searchCryptoInput" onkeyup="filterCryptoTable()" placeholder="Cari nama atau simbol kripto..." class="w-full bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border rounded-xl pl-9 pr-4 py-2 text-xs text-gray-900 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:border-primary transition">
+                                <input type="text" id="searchCryptoAdvancedInput" onkeyup="filterAdvancedCryptoTable()" placeholder="Cari koin (cth: BTC, SOL, PEPE)..." class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 transition font-mono">
                             </div>
                         </div>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse" id="cryptoTable">
+                            <table class="w-full text-left border-collapse font-mono text-xs" id="cryptoAdvancedTable">
                                 <thead>
-                                    <tr class="border-b border-gray-200 dark:border-dark-border text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase bg-gray-100 dark:bg-dark-surface">
-                                        <th class="py-3 px-4">Simbol</th>
-                                        <th class="py-3 px-4">Nama Aset</th>
-                                        <th class="py-3 px-4 text-right">Harga (USD)</th>
+                                    <tr class="border-b border-gray-800 text-[11px] font-semibold text-gray-400 uppercase bg-[#0b0f19]">
+                                        <th class="py-3 px-4">#</th>
+                                        <th class="py-3 px-4">Simbol / Aset</th>
+                                        <th class="py-3 px-4 text-right">Harga Terkini (USD)</th>
+                                        <th class="py-3 px-4 text-right">Perubahan 1h</th>
                                         <th class="py-3 px-4 text-right">Perubahan 24h</th>
                                         <th class="py-3 px-4 text-right">Kapitalisasi Pasar</th>
-                                        <th class="py-3 px-4 text-right">Volume 24h</th>
-                                        <th class="py-3 px-4 text-center">Aksi</th>
+                                        <th class="py-3 px-4 text-right">Volume (24h)</th>
+                                        <th class="py-3 px-4 text-center">Grafik</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200 dark:divide-dark-border text-xs text-gray-700 dark:text-gray-300 font-medium" id="cryptoTableBody">
+                                <tbody class="divide-y divide-gray-800/60 text-gray-300" id="cryptoAdvancedTableBody">
                                 </tbody>
                             </table>
                         </div>
-                        <div class="p-4 border-t border-gray-200 dark:border-dark-border flex items-center justify-between text-xs">
-                            <span id="cryptoPaginationInfo" class="text-gray-500 dark:text-gray-400">Menampilkan halaman 1 dari 3 (10 item per halaman)</span>
-                            <div class="flex items-center space-x-1" id="cryptoPaginationButtons"></div>
+                        <div class="p-4 border-t border-gray-800 flex items-center justify-between text-xs font-mono">
+                            <span id="cryptoAdvPaginationInfo" class="text-gray-400">Menampilkan halaman 1 dari 3 (10 item per halaman)</span>
+                            <div class="flex items-center space-x-1" id="cryptoAdvPaginationButtons"></div>
                         </div>
                     </div>
                 </main>
@@ -902,87 +912,108 @@ html.dark .text-slate-500 {
                 <div class="stock-ticker-container">
                     <div class="stock-ticker-track" id="globalMarketTickerTrack"></div>
                 </div>
-                <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-dark-surface text-gray-900 dark:text-white shadow-lg my-6 rounded-xl border border-gray-200 dark:border-dark-border transition-all duration-300 space-y-6">
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-2">
+                <main class="container mx-auto p-4 md:p-6 bg-[#030712] dark:bg-[#030712] text-white shadow-2xl my-6 rounded-2xl border border-gray-800 transition-all duration-300 space-y-6">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-gray-800 pb-4">
                         <div>
-                            <h1 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Performance Analyst & Global Market Cap</h1>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Real-time performance analytics driven by live global market cap movements (28 Segmen Utama).</p>
-                        </div>
-                        <div class="flex items-center space-x-3 text-xs">
-                            <div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border font-mono text-emerald-500 dark:text-emerald-400">
-                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                                <span id="pa-live-status">LIVE STREAMING</span>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 font-mono text-[10px] border border-blue-500/20">GLOBAL LIQUIDITY MATRIX</span>
+                                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[10px] border border-emerald-500/20 animate-pulse">28 SEGMEN SYNCED</span>
                             </div>
+                            <h1 class="text-2xl font-black text-white tracking-tight mt-1">Performance Analyst & Global Market Cap</h1>
+                            <p class="text-xs text-gray-400 mt-0.5">Analisis agregat kapitalisasi pasar global, streaming transaksi multi-segmen, dan tren likuiditas institusional.</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="toggleGlobalHeatmapMode()" id="btnHeatmapToggle" class="px-3 py-1.5 rounded-lg bg-gray-900 border border-gray-700 text-xs font-mono text-emerald-400 hover:bg-gray-800 transition">Mode: Matrix Stream</button>
                         </div>
                     </div>
+                    <!-- Kartu Metrik Atas -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl flex flex-col justify-between shadow-sm">
-                            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Total Tracked Volume</span>
-                            <div class="flex items-baseline justify-between mt-2">
-                                <span id="pa-total-vol" class="text-xl font-black font-mono text-gray-900 dark:text-white">$45,280.50</span>
-                                <span id="pa-vol-change" class="text-xs font-bold text-emerald-500 font-mono">+14.2%</span>
+                        <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl flex flex-col justify-between shadow-lg">
+                            <span class="text-xs text-gray-400 font-mono uppercase tracking-wider">Total Global Cap</span>
+                            <div class="flex items-baseline justify-between mt-2 font-mono">
+                                <span id="paGlobalCapVal" class="text-xl font-black text-white">$2.54 Triliun</span>
+                                <span class="text-xs font-bold text-emerald-400">+3.2%</span>
                             </div>
+                            <div class="mt-2 text-[10px] text-gray-500 font-mono">28 Sektor Terindeks</div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl flex flex-col justify-between shadow-sm">
-                            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Active Market Pairs</span>
-                            <div class="flex items-baseline justify-between mt-2">
-                                <span id="pa-active-pairs" class="text-xl font-black font-mono text-gray-900 dark:text-white">28 Segmen</span>
-                                <span class="text-xs font-bold text-emerald-500 font-mono">Synced</span>
+                        <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl flex flex-col justify-between shadow-lg">
+                            <span class="text-xs text-gray-400 font-mono uppercase tracking-wider">DeFi Total Value Locked</span>
+                            <div class="flex items-baseline justify-between mt-2 font-mono">
+                                <span id="paDefiTvlVal" class="text-xl font-black text-white">$98.4 Bilion</span>
+                                <span class="text-xs font-bold text-emerald-400">+1.8%</span>
                             </div>
+                            <div class="mt-2 text-[10px] text-gray-500 font-mono">Smart Contract Volume</div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl flex flex-col justify-between shadow-sm">
-                            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Average 24h Yield</span>
-                            <div class="flex items-baseline justify-between mt-2">
-                                <span id="pa-avg-yield" class="text-xl font-black font-mono text-emerald-600 dark:text-emerald-400">+2.84%</span>
-                                <span class="text-xs font-bold text-emerald-500 font-mono">Bullish</span>
+                        <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl flex flex-col justify-between shadow-lg">
+                            <span class="text-xs text-gray-400 font-mono uppercase tracking-wider">Layer 1 Dominance</span>
+                            <div class="flex items-baseline justify-between mt-2 font-mono">
+                                <span id="paLayer1Val" class="text-xl font-black text-blue-400">68.4%</span>
+                                <span class="text-xs font-bold text-emerald-400">Stable</span>
                             </div>
+                            <div class="mt-2 text-[10px] text-gray-500 font-mono">BTC, ETH, SOL, ADA</div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl flex flex-col justify-between shadow-sm">
-                            <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Transaction Ticks</span>
-                            <div class="flex items-baseline justify-between mt-2">
-                                <span id="pa-tx-ticks" class="text-xl font-black font-mono text-gray-900 dark:text-white">0</span>
-                                <span class="text-xs font-bold text-purple-600 dark:text-purple-400 font-mono animate-pulse">Updating...</span>
+                        <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl flex flex-col justify-between shadow-lg">
+                            <span class="text-xs text-gray-400 font-mono uppercase tracking-wider">Real-Time Ticks</span>
+                            <div class="flex items-baseline justify-between mt-2 font-mono">
+                                <span id="paLiveTicksCount" class="text-xl font-black text-purple-400">0</span>
+                                <span class="text-xs font-bold text-purple-400 animate-pulse">Streaming</span>
                             </div>
+                            <div class="mt-2 text-[10px] text-gray-500 font-mono">Tx Engine Active</div>
                         </div>
                     </div>
+                    <!-- Grafik Global Market Cap & Live Transactions -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-2 bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-5 rounded-xl flex flex-col justify-between shadow-sm">
-                            <div class="flex items-center justify-between mb-4">
-                                <h3 id="pa-chart-title" class="text-sm font-bold text-gray-900 dark:text-white">Real-Time Global Market Cap Trend (Crypto)</h3>
-                                <div class="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400 font-mono">
+                        <div class="lg:col-span-2 bg-[#06080d] border border-gray-800 p-5 rounded-xl flex flex-col justify-between shadow-2xl">
+                            <div class="flex items-center justify-between mb-4 font-mono">
+                                <div>
+                                    <h3 class="text-sm font-bold text-white">Global Market Cap Multi-Segment Trend Analysis</h3>
+                                    <p class="text-xs text-gray-400">Perbandingan pertumbuhan kapitalisasi pasar lintas sektor secara real-time</p>
+                                </div>
+                                <div class="flex items-center space-x-2 text-xs text-emerald-400">
                                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                                    <span>Live Streaming Chart.js</span>
+                                    <span>Live Engine Active</span>
                                 </div>
                             </div>
-                            <div class="relative h-64 w-full">
+                            <div class="relative h-72 w-full">
                                 <canvas id="performanceChart"></canvas>
                             </div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-5 rounded-xl flex flex-col justify-between shadow-sm">
+                        <!-- Live Transaction Ticks -->
+                        <div class="bg-[#06080d] border border-gray-800 p-5 rounded-xl flex flex-col justify-between shadow-2xl font-mono">
                             <div>
-                                <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3">Live Market Transactions</h3>
-                                <p class="text-[11px] text-gray-500 dark:text-gray-400 mb-3">Streaming live buy/sell ticks across watched market pairs.</p>
-                                <div id="live-tx-stream" class="space-y-2.5 overflow-y-auto max-h-56 pr-1 font-mono text-xs"></div>
+                                <div class="flex items-center justify-between mb-3 border-b border-gray-800 pb-2">
+                                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                                        <i class="fa-solid fa-satellite-dish text-emerald-400"></i> Live Market Ticks
+                                    </h3>
+                                    <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">LIVE</span>
+                                </div>
+                                <p class="text-[11px] text-gray-400 mb-3">Arus transaksi pembelian & penjualan aset global berkapitalisasi tinggi.</p>
+                                <div id="live-tx-stream" class="space-y-2 overflow-y-auto max-h-56 pr-1 text-xs"></div>
+                            </div>
+                            <div class="mt-4 pt-3 border-t border-gray-800 flex justify-between items-center text-[10px] text-gray-400">
+                                <span>Throughput: <strong class="text-emerald-400">142 tx/s</strong></span>
+                                <span class="text-blue-400">Encrypted Feed</span>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border rounded-xl overflow-hidden shadow-sm">
-                        <div class="p-5 border-b border-gray-200 dark:border-dark-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <!-- Tabel 28 Segmen Global Market Cap -->
+                    <div class="bg-[#06080d] border border-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                        <div class="p-5 border-b border-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div>
-                                <h2 class="text-base font-semibold text-gray-900 dark:text-white">Global Market Cap Matrix (28 Daftar Segmen)</h2>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Daftar lengkap 28 segmen pasar global terkemuka dengan paginasi interaktif (10 item per halaman).</p>
+                                <h2 class="text-base font-semibold text-white">Matriks 28 Segmen Pasar Global & Kapitalisasi</h2>
+                                <p class="text-xs text-gray-400">Daftar lengkap 28 segmen pasar global terkemuka dengan paginasi interaktif (10 item per halaman).</p>
                             </div>
-                            <div class="relative w-full sm:w-64">
+                            <div class="relative w-full sm:w-72">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
                                     <i class="fa-solid fa-search text-xs"></i>
                                 </span>
-                                <input type="text" id="searchGMPInput" onkeyup="filterGMPTable()" placeholder="Cari segmen pasar global..." class="w-full bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border rounded-xl pl-9 pr-4 py-2 text-xs text-gray-900 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:border-primary transition">
+                                <input type="text" id="searchGMPInput" onkeyup="filterGMPTable()" placeholder="Cari segmen pasar global..." class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition font-mono">
                             </div>
                         </div>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-xs" id="gmpTable">
+                            <table class="w-full text-left border-collapse text-xs font-mono" id="gmpTable">
                                 <thead>
-                                    <tr class="border-b border-gray-200 dark:border-dark-border text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase bg-gray-100 dark:bg-dark-surface">
+                                    <tr class="border-b border-gray-800 text-[11px] font-semibold text-gray-400 uppercase bg-[#0b0f19]">
                                         <th class="py-3 px-4">No</th>
                                         <th class="py-3 px-4">Market Segment / Sektor</th>
                                         <th class="py-3 px-4 text-right">Market Cap (USD)</th>
@@ -991,12 +1022,12 @@ html.dark .text-slate-500 {
                                         <th class="py-3 px-4 text-center">Trend Status</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200 dark:divide-dark-border text-xs text-gray-700 dark:text-gray-300 font-medium" id="gmpTableBody">
+                                <tbody class="divide-y divide-gray-800/60 text-gray-300" id="gmpTableBody">
                                 </tbody>
                             </table>
                         </div>
-                        <div class="p-4 border-t border-gray-200 dark:border-dark-border flex items-center justify-between text-xs">
-                            <span id="gmpPaginationInfo" class="text-gray-500 dark:text-gray-400">Menampilkan halaman 1 dari 3 (10 item per halaman)</span>
+                        <div class="p-4 border-t border-gray-800 flex items-center justify-between text-xs font-mono">
+                            <span id="gmpPaginationInfo" class="text-gray-400">Menampilkan halaman 1 dari 3 (10 item per halaman)</span>
                             <div class="flex items-center space-x-1" id="gmpPaginationButtons"></div>
                         </div>
                     </div>
@@ -1008,120 +1039,117 @@ html.dark .text-slate-500 {
                 <div class="stock-ticker-container">
                     <div class="stock-ticker-track" id="stockTickerTrack"></div>
                 </div>
-                <main class="container mx-auto p-4 md:p-6 bg-white dark:bg-dark-surface text-gray-900 dark:text-white shadow-lg my-6 rounded-xl border border-gray-200 dark:border-dark-border transition-all duration-300 space-y-6">
-                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-2">
+                <main class="container mx-auto p-4 md:p-6 bg-[#030712] dark:bg-[#030712] text-white shadow-2xl my-6 rounded-2xl border border-gray-800 transition-all duration-300 space-y-6">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 border-b border-gray-800 pb-4">
                         <div>
-                            <h1 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Indonesia Stock Exchange & Bluechips Intelligence</h1>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Pantauan real-time indeks utama bursa, order book order level, serta daftar lengkap saham LQ45 (28 Daftar Saham Unggulan).</p>
-                        </div>
-                        <div class="flex items-center space-x-3 text-xs">
-                            <div class="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border font-mono text-emerald-500 dark:text-emerald-400">
-                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                                <span id="stock-live-status">IDX LIVE FEED ACTIVE</span>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 font-mono text-[10px] border border-rose-500/30">IDX TRADING TERMINAL</span>
+                                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[10px] border border-emerald-500/20 animate-pulse">SESI II: OPEN</span>
                             </div>
+                            <h1 class="text-2xl font-black text-white tracking-tight mt-1">Indonesia Stock Exchange & Bluechips Intelligence</h1>
+                            <p class="text-xs text-gray-400 mt-0.5">Analisis Order Book IDX Level 2, foreign flow net buy/sell, serta pemantauan 28 saham LQ45 unggulan.</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <button onclick="triggerIdxBrokerSummary()" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white transition flex items-center gap-1.5 font-mono">
+                                <i class="fa-solid fa-chart-pie"></i> Broker Summary
+                            </button>
                         </div>
                     </div>
+                    <!-- Statistik Atas -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl relative overflow-hidden shadow-sm">
+                        <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl relative overflow-hidden shadow-lg">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">IHSG (COMPOSITE)</p>
-                                    <h3 id="ihsgValue" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mt-1">7,342.15</h3>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider font-mono">IHSG (COMPOSITE)</p>
+                                    <h3 id="ihsgValue" class="text-2xl font-bold tracking-tight text-white mt-1 font-mono">7,342.15</h3>
                                 </div>
-                                <span id="ihsgBadge" class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                                <span id="ihsgBadge" class="inline-flex items-center px-2 py-1 rounded-md text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                                     <i class="fa-solid fa-arrow-up mr-1 text-[10px]"></i> +0.84%
                                 </span>
                             </div>
-                            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400 flex justify-between">
-                                <span>Volume: <strong class="text-gray-800 dark:text-gray-200">14.2B</strong></span>
-                                <span>Transaksi: <strong class="text-gray-800 dark:text-gray-200">Rp 9.8T</strong></span>
+                            <div class="mt-3 text-xs text-gray-400 flex justify-between font-mono">
+                                <span>Freq: <strong class="text-white">1.24M</strong></span>
+                                <span>Value: <strong class="text-emerald-400">Rp 11.4T</strong></span>
                             </div>
-                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-400 opacity-80"></div>
+                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500"></div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl relative overflow-hidden shadow-sm">
+                        <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl relative overflow-hidden shadow-lg">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">LQ45 (Unggulan)</p>
-                                    <h3 id="lq45Value" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mt-1">982.40</h3>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider font-mono">Foreign Net Buy</p>
+                                    <h3 id="statForeignNet" class="text-2xl font-bold tracking-tight text-emerald-400 mt-1 font-mono">+Rp 642.8B</h3>
                                 </div>
-                                <span id="lq45Badge" class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-                                    <i class="fa-solid fa-arrow-up mr-1 text-[10px]"></i> +0.62%
+                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                    Inflow
                                 </span>
                             </div>
-                            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400 flex justify-between">
-                                <span>Kapitalisasi: <strong class="text-gray-800 dark:text-gray-200">Rp 6,420T</strong></span>
-                                <span>Foreign: <strong class="text-emerald-500">+Rp 450B</strong></span>
+                            <div class="mt-3 text-xs text-gray-400 flex justify-between font-mono">
+                                <span>Buy: Rp 3.2T</span>
+                                <span>Sell: Rp 2.56T</span>
                             </div>
-                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-400 opacity-80"></div>
+                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-blue-500"></div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl relative overflow-hidden shadow-sm">
+                        <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl relative overflow-hidden shadow-lg">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">USD / IDR</p>
-                                    <h3 id="usdidrValue" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white mt-1">15,895.00</h3>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider font-mono">USD / IDR Spot</p>
+                                    <h3 id="usdidrValue" class="text-2xl font-bold tracking-tight text-white mt-1 font-mono">15,895.00</h3>
                                 </div>
-                                <span id="usdidrBadge" class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-rose-500/10 text-rose-500 border border-rose-500/20">
+                                <span id="usdidrBadge" class="inline-flex items-center px-2 py-1 rounded-md text-xs font-mono font-medium bg-rose-500/10 text-rose-400 border border-rose-500/20">
                                     <i class="fa-solid fa-arrow-down mr-1 text-[10px]"></i> -0.15%
                                 </span>
                             </div>
-                            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400 flex justify-between">
-                                <span>Bid: <strong class="text-gray-800 dark:text-gray-200">15,890</strong></span>
-                                <span>Ask: <strong class="text-gray-800 dark:text-gray-200">15,900</strong></span>
+                            <div class="mt-3 text-xs text-gray-400 flex justify-between font-mono">
+                                <span>BI Rate: <strong class="text-white">6.25%</strong></span>
+                                <span>JISDOK: 15,892</span>
                             </div>
-                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-rose-500 to-red-400 opacity-80"></div>
+                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-rose-500"></div>
                         </div>
-                        <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border p-4 rounded-xl relative overflow-hidden shadow-sm">
+                        <div class="bg-[#0b0f19] border border-gray-800 p-4 rounded-xl relative overflow-hidden shadow-lg">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Sektor Teraktif</p>
-                                    <h3 class="text-xl font-bold tracking-tight text-emerald-500 dark:text-emerald-400 mt-1">FINANCIALS (IDXFIN)</h3>
+                                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider font-mono">Market Breadth</p>
+                                    <h3 class="text-xl font-bold tracking-tight text-emerald-400 mt-1 font-mono">342 Naik / 185 Turun</h3>
                                 </div>
-                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-                                    <i class="fa-solid fa-arrow-up mr-1 text-[10px]"></i> +1.45%
+                                <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                    Bullish
                                 </span>
                             </div>
-                            <div class="mt-3 text-xs text-gray-500 dark:text-gray-400 flex justify-between">
-                                <span>Saham Naik: <strong class="text-emerald-500">312</strong></span>
-                                <span>Saham Turun: <strong class="text-rose-500">198</strong></span>
+                            <div class="mt-3 text-xs text-gray-400 flex justify-between font-mono">
+                                <span>Unchanged: 210</span>
+                                <span>Total Listed: 737</span>
                             </div>
-                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-blue-400 opacity-80"></div>
+                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-purple-500"></div>
                         </div>
                     </div>
+                    <!-- Grafik Saham & Order Book IDX -->
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-2 bg-[#080b11] dark:bg-[#06080d] border border-gray-800 dark:border-dark-border p-5 rounded-xl flex flex-col justify-between shadow-xl">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                        <div class="lg:col-span-2 bg-[#06080d] border border-gray-800 p-5 rounded-xl flex flex-col justify-between shadow-2xl">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 font-mono">
                                 <div>
-                                    <h2 class="text-sm font-bold text-gray-100 flex items-center gap-2">
-                                        <span id="activeChartTitle">Grafik Pergerakan IHSG & Saham LQ45</span>
-                                    </h2>
-                                    <p class="text-xs text-gray-400">Pembaruan fluktuasi harga saham dan indeks secara real-time</p>
-                                </div>
-                                <div class="flex items-center space-x-1 bg-[#121722] p-1 rounded-xl border border-gray-800">
-                                    <button onclick="changeChartSymbol('IHSG')" id="btnIHSG" class="px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition">IHSG</button>
-                                    <button onclick="changeChartSymbol('BBCA')" id="btnBBCA" class="px-3 py-1 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition">BBCA</button>
-                                    <button onclick="changeChartSymbol('TLKM')" id="btnTLKM" class="px-3 py-1 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition">TLKM</button>
-                                    <button onclick="changeChartSymbol('ASII')" id="btnASII" class="px-3 py-1 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition">ASII</button>
+                                    <h2 id="activeChartTitle" class="text-sm font-bold text-white">IHSG & Bluechips Parabolic Performance Chart (Auto-Stream)</h2>
+                                    <p class="text-xs text-gray-400">Analisis pergerakan harga saham unggulan dengan indikator volume transaksi</p>
                                 </div>
                             </div>
                             <div class="relative w-full h-72">
                                 <canvas id="marketChart"></canvas>
                             </div>
                         </div>
-                        <div class="bg-[#0b0f19] dark:bg-[#06080d] border border-gray-800 dark:border-dark-border p-5 rounded-xl flex flex-col shadow-xl font-mono">
+                        <!-- Order Book IDX -->
+                        <div class="bg-[#06080d] border border-gray-800 p-5 rounded-xl flex flex-col shadow-2xl font-mono">
                             <div class="flex items-center justify-between mb-3 border-b border-gray-800 pb-2">
                                 <h2 class="text-sm font-bold text-gray-200 flex items-center gap-2">
-                                    <i class="fa-solid fa-list-ol text-blue-400"></i> Order Book Terkini
+                                    <i class="fa-solid fa-list-ol text-blue-400"></i> IDX Order Book
                                 </h2>
                                 <span id="selectedStockTag" class="text-xs font-bold px-2.5 py-0.5 rounded bg-blue-900/40 text-blue-300 border border-blue-700/50">BBCA</span>
                             </div>
-                            
                             <div class="grid grid-cols-3 text-[10px] font-semibold text-gray-400 mb-2 uppercase tracking-wider">
                                 <span class="text-left">Price (IDR)</span>
                                 <span class="text-right">Bid/Ask</span>
                                 <span class="text-right">Lot</span>
                             </div>
                             <div class="space-y-1 mb-2 overflow-hidden text-xs" id="stockAsksContainer"></div>
-                            <div class="my-2 py-1.5 px-3 bg-[#131b2e] border border-gray-800 rounded flex items-center justify-between text-xs">
+                            <div class="my-2 py-1.5 px-3 bg-[#0b0f19] border border-gray-800 rounded flex items-center justify-between text-xs">
                                 <span class="text-gray-400 text-[10px]">Spread: <strong id="spreadValue" class="text-gray-200">25.00</strong></span>
                                 <span id="stockCurrentMidPrice" class="font-bold text-emerald-400">Rp 10,150</span>
                                 <span class="text-[10px] text-blue-400 flex items-center gap-1"><i class="fa-solid fa-circle text-[6px] animate-ping"></i> Live</span>
@@ -1133,790 +1161,722 @@ html.dark .text-slate-500 {
                             </div>
                         </div>
                     </div>
-                    <div class="bg-gray-50 dark:bg-dark-surface-card border border-gray-200 dark:border-dark-border rounded-xl overflow-hidden shadow-sm">
-                        <div class="p-5 border-b border-gray-200 dark:border-dark-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <!-- Tabel 28 Saham Unggulan LQ45 -->
+                    <div class="bg-[#06080d] border border-gray-800 rounded-xl overflow-hidden shadow-2xl">
+                        <div class="p-5 border-b border-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4 font-mono">
                             <div>
-                                <h2 class="text-base font-semibold text-gray-900 dark:text-white">Daftar Saham Aktif (28 Daftar Saham LQ45 Bluechips)</h2>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Daftar lengkap 28 saham unggulan teraktif di Bursa Efek Indonesia dengan paginasi per halaman. Klik baris untuk melihat grafik & order book.</p>
+                                <h2 class="text-base font-semibold text-white">Daftar 28 Saham Unggulan & LQ45 Aktif</h2>
+                                <p class="text-xs text-gray-400">Paginasi interaktif (10 item per halaman). Klik baris saham untuk melihat grafik dan order book instan.</p>
                             </div>
-                            <div class="relative w-full sm:w-64">
+                            <div class="relative w-full sm:w-72">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
                                     <i class="fa-solid fa-search text-xs"></i>
                                 </span>
-                                <input type="text" id="searchStockInput" onkeyup="filterStockTable()" placeholder="Cari kode atau nama saham..." class="w-full bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border rounded-xl pl-9 pr-4 py-2 text-xs text-gray-900 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:border-primary transition">
+                                <input type="text" id="searchStockInput" onkeyup="filterStockTable()" placeholder="Cari kode atau nama saham..." class="w-full bg-[#0b0f19] border border-gray-800 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition font-mono">
                             </div>
                         </div>
                         <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse" id="stockTable">
+                            <table class="w-full text-left border-collapse font-mono text-xs" id="stockTable">
                                 <thead>
-                                    <tr class="border-b border-gray-200 dark:border-dark-border text-[11px] font-semibold text-gray-500 dark:text-gray-400 uppercase bg-gray-100 dark:bg-dark-surface">
+                                    <tr class="border-b border-gray-800 text-[11px] font-semibold text-gray-400 uppercase bg-[#0b0f19]">
                                         <th class="py-3 px-4">No</th>
-                                        <th class="py-3 px-4">Kode</th>
-                                        <th class="py-3 px-4">Nama Perusahaan</th>
+                                        <th class="py-3 px-4">Kode & Emiten</th>
                                         <th class="py-3 px-4 text-right">Harga (IDR)</th>
                                         <th class="py-3 px-4 text-right">Perubahan (%)</th>
-                                        <th class="py-3 px-4 text-right">Kapitalisasi Pasar</th>
-                                        <th class="py-3 px-4 text-center">Aksi</th>
+                                        <th class="py-3 px-4 text-right">Volume (Lot)</th>
+                                        <th class="py-3 px-4 text-right">Kapitalisasi (Rp)</th>
+                                        <th class="py-3 px-4 text-center">Aksi Grafik</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-gray-200 dark:divide-dark-border text-xs text-gray-700 dark:text-gray-300 font-medium" id="stockTableBody">
+                                <tbody class="divide-y divide-gray-800/60 text-gray-300" id="stockTableBody">
                                 </tbody>
                             </table>
                         </div>
-                        <div class="p-4 border-t border-gray-200 dark:border-dark-border flex items-center justify-between text-xs">
-                            <span id="stockPaginationInfo" class="text-gray-500 dark:text-gray-400">Menampilkan halaman 1 dari 3 (10 item per halaman)</span>
+                        <div class="p-4 border-t border-gray-800 flex items-center justify-between text-xs font-mono">
+                            <span id="stockPaginationInfo" class="text-gray-400">Menampilkan halaman 1 dari 3 (10 item per halaman)</span>
                             <div class="flex items-center space-x-1" id="stockPaginationButtons"></div>
                         </div>
                     </div>
                 </main>
             </div>
+            
+            <!-- FOOTER -->
+            <footer class="bg-gray-100 dark:bg-dark-surface border-t-2 border-gray-200 dark:border-dark-border py-8 mt-12 transition-colors duration-300">
+                <div class="container mx-auto px-4">
+                    <div class="flex flex-col md:flex-row justify-between items-center">
+                        <div class="mb-4 md:mb-0 text-center md:text-left">
+                            <span class="text-xl font-black text-primary">BERITA ANGIN</span>
+                            <p class="text-xs text-gray-500 dark:text-dark-text-secondary mt-1">1% Issue 99% Fakta &bull; Portal Investigasi & Analisis Pasar Independen</p>
+                        </div>
+                        <div class="text-xs text-gray-500 dark:text-dark-text-secondary text-center md:text-right">
+                            <p>&copy; 2026 Berita Angin Media Group. All rights reserved.</p>
+                            <p class="mt-1">Lead Editor & Analis: Achmad Efendi, SE, MM</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
-        
-        <!-- Footer -->
-        <footer class="bg-gray-900 text-white py-8 border-t dark:border-dark-border mt-12">
-            <div class="container mx-auto px-4 text-center text-xs space-y-3">
-                <p>&copy; 2026 Berita Angin. 1% Issue 99% Fakta. Seluruh hak cipta dilindungi undang-undang.</p>
-                <p class="text-gray-400">Didukung oleh Sistem Pemantauan Pasar Real-Time & Analisis Investigasi Profesional.</p>
-            </div>
-        </footer>
     </div>
-    <!-- SCRIPT UTAMA -->
+    <!-- JavaScript Utama & Skrip Integrasi Chart Otomatis -->
     <script>
-        // Data Artikel Detail
         const articlesData = {
             'headline-main': {
                 category: 'PERISTIWA',
-                title: 'Berita Angin: 1% Issue 99% Fakta di Balik Layar',
+                title: 'Berita Angin: 1% Issue 99% Fakta',
                 author: 'Tim Investigasi Utama',
                 time: '21 September 2026',
                 image: 'who am i.jpg',
-                content: '<p>Portal Berita Angin hadir dengan mengusung filosofi tajam: 1% Issue dan 99% Fakta. Di tengah arus informasi digital yang serba cepat dan seringkali dipenuhi disinformasi, verifikasi data secara mendalam menjadi landasan utama kami.</p><p>Investigasi khusus kali ini menyoroti bagaimana disrupsi teknologi mengubah cara masyarakat mengonsumsi berita. Kami menguji keabsahan berbagai laporan publik melalui penelusuran digital forensik dan wawancara eksklusif bersama narasumber kredibel.</p><p>Komitmen kami adalah menyajikan jurnalisme investigatif yang independen, bebas dari intervensi kepentingan korporasi maupun politik, demi menegakkan kebenaran substansial bagi pembaca setia.</p>'
+                content: '<p>Berita Angin hadir dengan komitmen tinggi menyajikan informasi yang mengupas tuntas realitas di balik narasi permukaan. Dengan prinsip 1% isu dan 99% fakta terverifikasi, tim redaksi terus menggali kebenaran mendalam di tengah arus informasi digital yang masif.</p><p>Portal ini dikembangkan untuk memberikan sudut pandang alternatif yang tajam, objektif, serta berlandaskan data empiris yang dapat dipertanggungjawabkan kepada publik.</p>'
             },
             'side-1': {
                 category: 'EKONOMI',
-                title: 'Desentralisasi: Ekosistem Berbasis Digital dengan Pasokan Mata Rantai Tersentralisasi',
+                title: 'Desentralisasi: Ekosistem Berbasis Digital dan Rantai Pasok Global',
                 author: 'Achmad Efendi, SE, MM',
                 time: '21 September 2026',
                 image: 'cry.jpg',
-                content: '<p>Konsep desentralisasi seringkali disalahartikan sebagai ketiadaan kendali. Namun, dalam ekosistem ekonomi digital modern, desentralisasi beroperasi di atas kerangka protokol yang sangat terstruktur.</p><p>Pasokan mata rantai (supply chain) yang transparan memberikan kepastian distribusi aset sekaligus meminimalisir celah manipulasi harga. Transformasi ini menuntut kesiapan regulasi perbankan dan bursa berjangka agar tetap relevan dengan inovasi finansial global.</p>'
+                content: '<p>Desentralisasi keuangan dan teknologi buku besar terdistribusi mengubah lanskap ekonomi modern secara fundamental. Dari pasar aset kripto hingga logistik berbasis rantai pasok global, efisiensi dan transparansi menjadi pilar utama.</p><p>Meskipun menawarkan otonomi yang luar biasa, tantangan regulasi dan keamanan siber tetap menjadi perhatian utama para pembuat kebijakan di berbagai negara.</p>'
             },
             'side-2': {
                 category: 'POLITIK',
                 title: 'Dinamika Internal Kemenkeu: Isu Pencopotan dan Rotasi Strategis',
                 author: 'Tim Redaksi Fiskal',
-                time: '20 September 2026',
+                time: '21 September 2026',
                 image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
-                content: '<p>Langkah restrukturisasi besar-besaran di lingkungan Kementerian Keuangan memicu perdebatan di kalangan ekonom dan pengamat kebijakan publik. Rotasi jabatan esensial ini diklaim sebagai strategi percepatan reformasi birokrasi perpajakan.</p><p>Meski demikian, sejumlah pihak mengingatkan pentingnya menjaga stabilitas internal agar target penerimaan negara dalam APBN tidak terganggu di tengah ketidakpastian geopolitik global.</p>'
+                content: '<p>Langkah restrukturisasi dan rotasi birokrasi di lingkungan Kementerian Keuangan memicu perbincangan hangat di kalangan ekonom dan pelaku pasar modal. Kebijakan ini dinilai sebagai bagian dari konsolidasi fiskal jangka panjang.</p><p>Pasar merespons positif langkah-langkah transparansi yang diambil untuk menjaga stabilitas anggaran negara di tengah ketidakpastian global.</p>'
             },
             'side-3': {
                 category: 'PASAR',
                 title: 'Imbas Makroekonomi: IHSG dan Fluktuasi Harga Sembako',
                 author: 'Achmad Efendi, SE, MM',
-                time: '20 September 2026',
+                time: '21 September 2026',
                 image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80',
-                content: '<p>Pergerakan Indeks Harga Saham Gabungan (IHSG) sepanjang pekan ini menunjukkan korelasi erat dengan inflasi domestik dan stabilitas harga bahan pokok penting (sembako).</p><p>Analisis pasar menunjukkan bahwa daya beli masyarakat kelas menengah-bawah menjadi penopang utama pertumbuhan sektor konsumer, sementara investor asing masih mencatatkan aksi beli selektif pada saham-saham perbankan big caps.</p>'
+                content: '<p>Pergerakan Indeks Harga Saham Gabungan (IHSG) sangat dipengaruhi oleh sentimen domestik maupun global, termasuk inflasi pangan dan kebijakan suku bunga Bank Indonesia.</p><p>Berikut adalah tabel perbandingan harga rata-rata komoditas pangan strategis di pasar utama:</p><table class="article-table"><thead><tr><th>Komoditas</th><th>Harga Rata-Rata (Rp)</th><th>Perubahan (%)</th></tr></thead><tbody><tr><td>Beras Premium</td><td>14,500 / kg</td><td>+0.6%</td></tr><tr><td>Minyak Goreng Curah</td><td>15,200 / liter</td><td>-0.4%</td></tr><tr><td>Daging Sapi Murni</td><td>135,000 / kg</td><td>0.0%</td></tr><tr><td>Cabai Merah Keriting</td><td>42,000 / kg</td><td>+2.1%</td></tr></tbody></table>'
             },
             'side-4': {
                 category: 'PERISTIWA',
                 title: 'Media Sosial 2026: Tren Kunci yang Siap Meledak!',
-                author: 'Tim Riset Digital',
-                time: '19 September 2026',
+                author: 'Tim Inovasi Digital',
+                time: '21 September 2026',
                 image: 'trend.png',
-                content: '<p>Lansekap media sosial mengalami pergeseran masif menuju integrasi kecerdasan buatan personal dan algoritma berbasis verifikasi autentisitas konten.</p><p>Pengguna kini semakin selektif terhadap informasi instan, mengalihkan perhatian mereka pada platform yang menawarkan kedalaman analisis serta keamanan privasi data yang ketat.</p>'
+                content: '<p>Perkembangan teknologi kecerdasan buatan generatif dan algoritma berbasis kedalaman interaksi pengguna mengubah cara masyarakat mengonsumsi informasi di media sosial.</p><p>Verifikasi sumber dan kecepatan penyebaran konten kini menjadi kunci dominasi platform digital di tahun 2026.</p>'
             },
             'feed-1': {
                 category: 'SAINS & ANTARIKSA',
                 title: 'Keajaiban Angkasa: Konjungsi Bulan Sabit dan Planet Venus',
-                author: 'Divisi Sains Publik',
-                time: '19 September 2026',
+                author: 'Observatorium Publik',
+                time: '21 September 2026',
                 image: 'https://images.unsplash.com/photo-1516331138075-f3adc1e149cd?auto=format&fit=crop&w=800&q=80',
-                content: '<p>Langit malam Nusantara disuguhkan fenomena astronomis memukau berupa konjungsi dekat antara Bulan sabit muda dan planet Venus (Bintang Kejora).</p><p>Fenomena ini dapat disaksikan dengan mata telanjang di ufuk barat selepas matahari terbenam, memberikan pemandangan estetis yang menarik ribuan antusias astronomi amatir.</p>'
+                content: '<p>Masyarakat di seluruh wilayah Nusantara disuguhkan pemandangan astronomis yang menakjubkan berupa konjungsi dekat antara Bulan sabit muda dan planet Venus (Bintang Kejora) sesaat setelah matahari terbenam.</p><p>Fenomena ini dapat disaksikan dengan mata telanjang tanpa memerlukan alat bantu optik khusus, menarik antusiasme tinggi dari para pengamat bintang amatir.</p>'
             }
         };
 
-        function showPage(pageId) {
-            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function hideAllPages() {
+            document.querySelectorAll('.page-view').forEach(page => page.classList.remove('active'));
         }
-        function showHome() { showPage('home-page'); }
-        function showProfile() { showPage('profile-page'); }
-        function showCryptoMarket() { showPage('crypto-market-page'); initCryptoPage(); }
-        function showStockExchange() { showPage('stock-exchange-page'); initStockPage(); }
-        function showPerformanceAnalyst() { showPage('performance-analyst-page'); initPerformancePage(); }
-
+        function showHome() {
+            hideAllPages();
+            document.getElementById('home-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        function showProfile() {
+            hideAllPages();
+            document.getElementById('profile-page').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+        function showCryptoMarket() {
+            hideAllPages();
+            document.getElementById('crypto-market-page').classList.add('active');
+            window.scrollTo(0, 0);
+            initCryptoChartsAndBooks();
+        }
+        function showPerformanceAnalyst() {
+            hideAllPages();
+            document.getElementById('performance-analyst-page').classList.add('active');
+            window.scrollTo(0, 0);
+            initPerformanceAnalystCharts();
+        }
+        function showStockExchange() {
+            hideAllPages();
+            document.getElementById('stock-exchange-page').classList.add('active');
+            window.scrollTo(0, 0);
+            initStockExchangeChartsAndBooks();
+        }
         function openArticle(articleKey) {
-            const art = articlesData[articleKey] || articlesData['headline-main'];
-            document.getElementById('page-article-category').innerText = art.category;
-            document.getElementById('page-article-title').innerText = art.title;
-            document.getElementById('page-article-author').innerText = 'Oleh ' + art.author;
-            document.getElementById('page-article-time').innerText = art.time;
+            const art = articlesData[articleKey];
+            if (!art) return;
+            hideAllPages();
+            document.getElementById('page-article-category').textContent = art.category;
+            document.getElementById('page-article-title').textContent = art.title;
+            document.getElementById('page-article-author').textContent = 'Oleh ' + art.author;
+            document.getElementById('page-article-time').textContent = art.time;
             document.getElementById('page-article-image').src = art.image;
             document.getElementById('page-article-content').innerHTML = art.content;
-            showPage('article-page');
+            document.getElementById('article-page').classList.add('active');
+            window.scrollTo(0, 0);
         }
-
-        function toggleDarkMode() {
-            const htmlEl = document.documentElement;
-            const iconLight = document.getElementById('theme-icon-light');
-            const iconDark = document.getElementById('theme-icon-dark');
-            
-            if (htmlEl.classList.contains('dark')) {
-                htmlEl.classList.remove('dark');
-                htmlEl.classList.add('light');
-                iconLight.classList.remove('hidden');
-                iconDark.classList.add('hidden');
-                localStorage.setItem('theme', 'light');
-            } else {
-                htmlEl.classList.remove('light');
-                htmlEl.classList.add('dark');
-                iconLight.classList.add('hidden');
-                iconDark.classList.remove('hidden');
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-        if (localStorage.getItem('theme') === 'dark') {
-            document.documentElement.classList.remove('light');
-            document.documentElement.classList.add('dark');
-            document.getElementById('theme-icon-light').classList.add('hidden');
-            document.getElementById('theme-icon-dark').classList.remove('hidden');
-        }
-
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
         }
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const iconLight = document.getElementById('theme-icon-light');
+            const iconDark = document.getElementById('theme-icon-dark');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                iconLight.classList.remove('hidden');
+                iconDark.classList.add('hidden');
+            } else {
+                html.classList.remove('light');
+                html.classList.add('dark');
+                iconLight.classList.add('hidden');
+                iconDark.classList.remove('hidden');
+            }
+        }
 
-        function updateLiveTime() {
+        function updateClock() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('live-frequency-time').innerText = `${hours}:${minutes}:${seconds} WITA`;
+            const timeStr = `${hours}:${minutes}:${seconds} WITA`;
+            const timeEl = document.getElementById('live-frequency-time');
+            if (timeEl) timeEl.textContent = timeStr;
             const options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
-            document.getElementById('current-datetime').innerText = now.toLocaleDateString('id-ID', options);
+            const dateStr = now.toLocaleDateString('id-ID', options);
+            const dateEl = document.getElementById('current-datetime');
+            if (dateEl) dateEl.textContent = dateStr;
         }
-        setInterval(updateLiveTime, 1000);
-        updateLiveTime();
+        setInterval(updateClock, 1000);
+        updateClock();
 
-        // Carousel Berita Pilihan
-        let currentCarouselIndex = 0;
-        const terkiniList = document.getElementById('terkini-list');
-        const terkiniItems = terkiniList ? terkiniList.children : [];
-        const dotsContainer = document.getElementById('terkini-dots');
-        function initCarousel() {
-            if (!dotsContainer || terkiniItems.length === 0) return;
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < terkiniItems.length; i++) {
-                const dot = document.createElement('button');
-                dot.type = 'button';
-                dot.className = `terkini-carousel-dot ${i === 0 ? 'active' : ''}`;
-                dot.setAttribute('aria-label', `Geser ke berita ${i + 1}`);
-                dot.onclick = () => goToCarouselSlide(i);
-                dotsContainer.appendChild(dot);
-            }
-            updateCarousel();
-        }
-        function updateCarousel() {
-            if (terkiniItems.length === 0) return;
-            terkiniList.style.transform = `translate3d(-${currentCarouselIndex * 100}%, 0, 0)`;
-            const dots = dotsContainer.children;
-            for (let i = 0; i < dots.length; i++) {
-                dots[i].classList.toggle('active', i === currentCarouselIndex);
-            }
-        }
-        function goToCarouselSlide(index) {
-            currentCarouselIndex = (index + terkiniItems.length) % terkiniItems.length;
-            updateCarousel();
-        }
-        const prevBtn = document.getElementById('terkini-prev');
-        const nextBtn = document.getElementById('terkini-next');
-        if (prevBtn) prevBtn.onclick = () => goToCarouselSlide(currentCarouselIndex - 1);
-        if (nextBtn) nextBtn.onclick = () => goToCarouselSlide(currentCarouselIndex + 1);
-        setInterval(() => { if (terkiniItems.length > 0) goToCarouselSlide(currentCarouselIndex + 1); }, 6000);
-        initCarousel();
-
-        function loadMoreArticles() {
-            alert('Semua berita investigasi dan laporan khusus terkini telah dimuat.');
-        }
-
-        // --- STOCK EXCHANGE DATA & LOGIC ---
         const stockDataList = [
-            { no: 1, code: 'BBCA', name: 'Bank Central Asia Tbk', price: 10150, change: 1.25, mcap: 'Rp 1,250T' },
-            { no: 2, code: 'BBRI', name: 'Bank Rakyat Indonesia Tbk', price: 5125, change: -0.96, mcap: 'Rp 778T' },
-            { no: 3, code: 'BMRI', name: 'Bank Mandiri (Persero) Tbk', price: 6875, change: 1.85, mcap: 'Rp 641T' },
-            { no: 4, code: 'BBNI', name: 'Bank Negara Indonesia Tbk', price: 5400, change: 0.93, mcap: 'Rp 101T' },
-            { no: 5, code: 'TLKM', name: 'Telkom Indonesia (Persero) Tbk', price: 3050, change: -1.61, mcap: 'Rp 302T' },
-            { no: 6, code: 'ASII', name: 'Astra International Tbk', price: 5050, change: 0.50, mcap: 'Rp 204T' },
-            { no: 7, code: 'UNVR', name: 'Unilever Indonesia Tbk', price: 2350, change: 2.17, mcap: 'Rp 89T' },
-            { no: 8, code: 'GOTO', name: 'GoTo Gojek Tokopedia Tbk', price: 68, change: 3.03, mcap: 'Rp 81T' },
-            { no: 9, code: 'ARTO', name: 'Bank Jago Tbk', price: 2850, change: -2.05, mcap: 'Rp 39T' },
-            { no: 10, code: 'ADRO', name: 'Adaro Energy Indonesia Tbk', price: 3420, change: 1.18, mcap: 'Rp 109T' },
-            { no: 11, code: 'ANTM', name: 'Aneka Tambang Tbk', price: 1625, change: 0.62, mcap: 'Rp 39T' },
-            { no: 12, code: 'ICBP', name: 'Indofood CBP Sukses Makmur Tbk', price: 11200, change: 0.45, mcap: 'Rp 130T' },
-            { no: 13, code: 'INDF', name: 'Indofood Sukses Makmur Tbk', price: 6350, change: -0.78, mcap: 'Rp 55T' },
-            { no: 14, code: 'KLBF', name: 'Kalbe Farma Tbk', price: 1540, change: 1.31, mcap: 'Rp 72T' },
-            { no: 15, code: 'PGAS', name: 'Perusahaan Gas Negara Tbk', price: 1480, change: 2.06, mcap: 'Rp 35T' },
-            { no: 16, code: 'MDKA', name: 'Merdeka Copper Gold Tbk', price: 2650, change: -1.12, mcap: 'Rp 64T' },
-            { no: 17, code: 'SMGR', name: 'Semen Indonesia (Persero) Tbk', price: 3850, change: 0.79, mcap: 'Rp 23T' },
-            { no: 18, code: 'UNTR', name: 'United Tractors Tbk', price: 25400, change: 1.40, mcap: 'Rp 94T' },
-            { no: 19, code: 'INKP', name: 'Indah Kiat Pulp & Paper Tbk', price: 8750, change: -0.57, mcap: 'Rp 48T' },
-            { no: 20, code: 'BRPT', name: 'Barito Pacific Tbk', price: 1120, change: 4.67, mcap: 'Rp 105T' },
-            { no: 21, code: 'AMRT', name: 'Sumber Alfaria Trijaya Tbk', price: 3150, change: 0.96, mcap: 'Rp 131T' },
-            { no: 22, code: 'ACES', name: 'Ace Hardware Indonesia Tbk', price: 815, change: -1.21, mcap: 'Rp 14T' },
-            { no: 23, code: 'EXCL', name: 'XL Axiata Tbk', price: 2390, change: 2.14, mcap: 'Rp 31T' },
-            { no: 24, code: 'CPIN', name: 'Charoen Pokphand Indonesia Tbk', price: 5125, change: 0.49, mcap: 'Rp 84T' },
-            { no: 25, code: 'MAPI', name: 'Mitra Adiperkasa Tbk', price: 1680, change: -0.88, mcap: 'Rp 28T' },
-            { no: 26, code: 'INKP2', name: 'Indah Kiat Pulp & Paper Tbk II', price: 8700, change: 1.16, mcap: 'Rp 47T' },
-            { no: 27, code: 'HRUM', name: 'Harum Energy Tbk', price: 1240, change: -2.36, mcap: 'Rp 16T' },
-            { no: 28, code: 'PTBA', name: 'Bukit Asam Tbk', price: 2620, change: 1.95, mcap: 'Rp 30T' }
+            { no: 1, code: 'BBCA', name: 'Bank Central Asia Tbk', price: 10150, change: 1.50, vol: '4.2M', cap: '1,250 T' },
+            { no: 2, code: 'BBRI', name: 'Bank Rakyat Indonesia (Persero) Tbk', price: 5225, change: -0.95, vol: '8.7M', cap: '792 T' },
+            { no: 3, code: 'BMRI', name: 'Bank Mandiri (Persero) Tbk', price: 7100, change: 2.15, vol: '6.4M', cap: '662 T' },
+            { no: 4, code: 'TLKM', name: 'Telkom Indonesia (Persero) Tbk', price: 3150, change: 0.80, vol: '12.1M', cap: '312 T' },
+            { no: 5, code: 'ASII', name: 'Astra International Tbk', price: 5450, change: -0.46, vol: '3.5M', cap: '220 T' },
+            { no: 6, code: 'BBNI', name: 'Bank Negara Indonesia (Persero) Tbk', price: 5600, change: 1.82, vol: '5.2M', cap: '208 T' },
+            { no: 7, code: 'UNVR', name: 'Unilever Indonesia Tbk', price: 2350, change: -1.26, vol: '2.8M', cap: '89 T' },
+            { no: 8, code: 'GOTO', name: 'GoTo Gojek Tokopedia Tbk', price: 68, change: 3.03, vol: '85.4M', cap: '81 T' },
+            { no: 9, code: 'ADRO', name: 'Adaro Energy Indonesia Tbk', price: 3420, change: 1.18, vol: '4.9M', cap: '109 T' },
+            { no: 10, code: 'ICBP', name: 'Indofood CBP Sukses Makmur Tbk', price: 11450, change: 0.44, vol: '1.2M', cap: '133 T' },
+            { no: 11, code: 'INDF', name: 'Indofood Sukses Makmur Tbk', price: 6725, change: 0.37, vol: '1.5M', cap: '59 T' },
+            { no: 12, code: 'KLBF', name: 'Kalbe Farma Tbk', price: 1655, change: -0.60, vol: '4.1M', cap: '77 T' },
+            { no: 13, code: 'SMGR', name: 'Semen Indonesia (Persero) Tbk', price: 3950, change: -1.74, vol: '2.2M', cap: '23 T' },
+            { no: 14, code: 'CPIN', name: 'Charoen Pokphand Indonesia Tbk', price: 5125, change: 0.98, vol: '1.8M', cap: '84 T' },
+            { no: 15, code: 'MDKA', name: 'Merdeka Copper Gold Tbk', price: 2710, change: 2.65, vol: '9.3M', cap: '65 T' },
+            { no: 16, code: 'ANTM', name: 'Aneka Tambang Tbk', price: 1725, change: 1.77, vol: '14.2M', cap: '41 T' },
+            { no: 17, code: 'PTBA', name: 'Bukit Asam Tbk', price: 2840, change: -0.35, vol: '5.6M', cap: '32 T' },
+            { no: 18, code: 'INCO', name: 'Vale Indonesia Tbk', price: 4150, change: 3.23, vol: '6.1M', cap: '41 T' },
+            { no: 19, code: 'ARTO', name: 'Bank Jago Tbk', price: 2950, change: 4.24, vol: '11.5M', cap: '40 T' },
+            { no: 20, code: 'BRPT', name: 'Barito Pacific Tbk', price: 1240, change: -2.36, vol: '18.4M', cap: '116 T' },
+            { no: 21, code: 'AMMN', name: 'Amman Mineral Internasional Tbk', price: 9250, change: 1.65, vol: '3.4M', cap: '668 T' },
+            { no: 22, code: 'BREN', name: 'Barito Renewables Energy Tbk', price: 7850, change: -1.88, vol: '2.1M', cap: '1,050 T' },
+            { no: 23, code: 'TPIA', name: 'Chandra Asri Pacific Tbk', price: 8400, change: 0.00, vol: '950K', cap: '725 T' },
+            { no: 24, code: 'UNTR', name: 'United Tractors Tbk', price: 25400, change: 0.59, vol: '750K', cap: '94 T' },
+            { no: 25, code: 'ITMG', name: 'Indo Tambangraya Megah Tbk', price: 26200, change: -0.76, vol: '620K', cap: '29 T' },
+            { no: 26, code: 'INKP', name: 'Indah Kiat Pulp & Paper Tbk', price: 8750, change: 1.16, vol: '1.4M', cap: '48 T' },
+            { no: 27, code: 'SMRA', name: 'Summarecon Agung Tbk', price: 625, change: 2.46, vol: '16.8M', cap: '10 T' },
+            { no: 28, code: 'BSDE', name: 'Bumi Serpong Damai Tbk', price: 1125, change: 0.89, vol: '7.3M', cap: '23 T' }
         ];
 
-        let currentStockPage = 1;
-        const stockPerPage = 10;
-        let filteredStockData = [...stockDataList];
-        let stockChartInstance = null;
-        let selectedStockSymbol = 'BBCA';
-        let stockOrderBookInterval = null;
+        const cryptoDataList = [
+            { no: 1, symbol: 'BTC', name: 'Bitcoin', price: 64850.20, h1: 0.35, h24: 2.45, mcap: '$1.28 T', vol: '$28.4 B' },
+            { no: 2, symbol: 'ETH', name: 'Ethereum', price: 3450.80, h1: -0.12, h24: 3.82, mcap: '$415.2 B', vol: '$15.2 B' },
+            { no: 3, symbol: 'SOL', name: 'Solana', price: 148.60, h1: 1.24, h24: 7.15, mcap: '$69.4 B', vol: '$4.8 B' },
+            { no: 4, symbol: 'BNB', name: 'Binance Coin', price: 585.40, h1: 0.05, h24: 1.10, mcap: '$88.5 B', vol: '$1.2 B' },
+            { no: 5, symbol: 'XRP', name: 'XRP', price: 0.584, h1: -0.45, h24: -1.20, mcap: '$32.6 B', vol: '$950 M' },
+            { no: 6, symbol: 'ADA', name: 'Cardano', price: 0.395, h1: 0.82, h24: 4.15, mcap: '$14.1 B', vol: '$410 M' },
+            { no: 7, symbol: 'DOGE', name: 'Dogecoin', price: 0.124, h1: 2.15, h24: 8.90, mcap: '$18.2 B', vol: '$2.1 B' },
+            { no: 8, symbol: 'AVAX', name: 'Avalanche', price: 28.50, h1: -0.30, h24: 2.80, mcap: '$11.2 B', vol: '$480 M' },
+            { no: 9, symbol: 'TRX', name: 'TRON', price: 0.145, h1: 0.10, h24: 0.65, mcap: '$12.6 B', vol: '$320 M' },
+            { no: 10, symbol: 'DOT', name: 'Polkadot', price: 6.42, h1: -0.15, h24: 1.85, mcap: '$9.1 B', vol: '$210 M' },
+            { no: 11, symbol: 'LINK', name: 'Chainlink', price: 12.80, h1: 0.95, h24: 5.40, mcap: '$7.8 B', vol: '$380 M' },
+            { no: 12, symbol: 'NEAR', name: 'NEAR Protocol', price: 5.15, h1: 1.40, h24: 6.20, mcap: '$5.6 B', vol: '$290 M' },
+            { no: 13, symbol: 'SUI', name: 'Sui', price: 1.15, h1: 3.20, h24: 14.50, mcap: '$3.1 B', vol: '$650 M' },
+            { no: 14, symbol: 'PEPE', name: 'Pepe', price: 0.0000095, h1: -1.20, h24: 12.40, mcap: '$4.0 B', vol: '$1.4 B' },
+            { no: 15, symbol: 'SHIB', name: 'Shiba Inu', price: 0.0000174, h1: 0.40, h24: 3.10, mcap: '$10.2 B', vol: '$520 M' },
+            { no: 16, symbol: 'MATIC', name: 'Polygon', price: 0.485, h1: -0.25, h24: 1.50, mcap: '$4.8 B', vol: '$190 M' },
+            { no: 17, symbol: 'UNI', name: 'Uniswap', price: 7.85, h1: 1.10, h24: 4.80, mcap: '$4.7 B', vol: '$240 M' },
+            { no: 18, symbol: 'ICP', name: 'Internet Computer', price: 8.40, h1: -0.60, h24: -1.10, mcap: '$3.9 B', vol: '$110 M' },
+            { no: 19, symbol: 'APT', name: 'Aptos', price: 6.25, h1: 2.10, h24: 9.40, mcap: '$2.8 B', vol: '$310 M' },
+            { no: 20, symbol: 'RENDER', name: 'Render', price: 5.80, h1: 1.80, h24: 8.20, mcap: '$3.0 B', vol: '$420 M' },
+            { no: 21, symbol: 'ATOM', name: 'Cosmos', price: 4.35, h1: -0.10, h24: 0.90, mcap: '$1.7 B', vol: '$95 M' },
+            { no: 22, symbol: 'FIL', name: 'Filecoin', price: 3.75, h1: 0.20, h24: 2.10, mcap: '$2.2 B', vol: '$130 M' },
+            { no: 23, symbol: 'STX', name: 'Stacks', price: 1.85, h1: 0.75, h24: 5.60, mcap: '$2.6 B', vol: '$150 M' },
+            { no: 24, symbol: 'ARB', name: 'Arbitrum', price: 0.58, h1: -0.40, h24: 1.20, mcap: '$2.3 B', vol: '$180 M' },
+            { no: 25, symbol: 'OP', name: 'Optimism', price: 1.45, h1: 0.50, h24: 3.40, mcap: '$1.8 B', vol: '$140 M' },
+            { no: 26, symbol: 'INJ', name: 'Injective', price: 18.20, h1: 2.40, h24: 11.20, mcap: '$1.7 B', vol: '$210 M' },
+            { no: 27, symbol: 'LTC', name: 'Litecoin', price: 64.50, h1: 0.15, h24: 0.85, mcap: '$4.8 B', vol: '$310 M' },
+            { no: 28, symbol: 'NEAR', name: 'NEAR Protocol', price: 5.15, h1: 1.40, h24: 6.20, mcap: '$5.6 B', vol: '$290 M' }
+        ];
 
-        function initStockPage() {
-            renderStockTable();
-            renderStockTicker();
-            initStockChart('IHSG');
-            renderStockOrderBook('BBCA');
+        // Global Market Segments (28 Sektor)
+        const gmpSegmentsList = [
+            { no: 1, name: 'Layer 1 Blockchains', cap: '$1,450.2 B', change: 2.85, share: '52.1%', trend: 'Bullish' },
+            { no: 2, name: 'Decentralized Finance (DeFi)', cap: '$98.4 B', change: 1.80, share: '3.5%', trend: 'Bullish' },
+            { no: 3, name: 'Artificial Intelligence & Big Data', cap: '$34.2 B', change: 6.40, share: '1.2%', trend: 'Strong Bull' },
+            { no: 4, name: 'Smart Contract Platforms', cap: '$512.6 B', change: 3.10, share: '18.4%', trend: 'Bullish' },
+            { no: 5, name: 'Meme & Community Tokens', cap: '$48.5 B', change: 8.90, share: '1.7%', trend: 'Volatile' },
+            { no: 6, name: 'Stablecoins Liquidity Pool', cap: '$165.4 B', change: 0.10, share: '5.9%', trend: 'Stable' },
+            { no: 7, name: 'Real World Assets (RWA)', cap: '$12.8 B', change: 4.20, share: '0.4%', trend: 'Bullish' },
+            { no: 8, name: 'Gaming & Metaverse', cap: '$24.6 B', change: -0.80, share: '0.9%', trend: 'Neutral' },
+            { no: 9, name: 'Layer 2 Scaling Solutions', cap: '$28.1 B', change: 2.40, share: '1.0%', trend: 'Bullish' },
+            { no: 10, name: 'Privacy & Zero-Knowledge', cap: '$8.4 B', change: -1.20, share: '0.3%', trend: 'Bearish' },
+            { no: 11, name: 'Banking & Financial Equities (IDX)', cap: '$340.5 B', change: 1.45, share: '12.2%', trend: 'Bullish' },
+            { no: 12, name: 'Telecommunication Infrastructure', cap: '$312.0 B', change: 0.80, share: '11.2%', trend: 'Stable' },
+            { no: 13, name: 'Energy & Coal Mining Sector', cap: '$180.4 B', change: -0.50, share: '6.5%', trend: 'Neutral' },
+            { no: 14, name: 'Automotive & Heavy Equipment', cap: '$220.0 B', change: -0.46, share: '7.9%', trend: 'Neutral' },
+            { no: 15, name: 'Consumer Goods & FMCG', cap: '$215.2 B', change: 0.35, share: '7.7%', trend: 'Stable' },
+            { no: 16, name: 'Metal & Mineral Mining', cap: '$120.5 B', change: 2.10, share: '4.3%', trend: 'Bullish' },
+            { no: 17, name: 'Infrastructure & Toll Roads', cap: '$95.4 B', change: 0.60, share: '3.4%', trend: 'Stable' },
+            { no: 18, name: 'Property & Real Estate', cap: '$42.1 B', change: 1.15, share: '1.5%', trend: 'Bullish' },
+            { no: 19, name: 'Healthcare & Pharmaceuticals', cap: '$77.0 B', change: -0.60, share: '2.8%', trend: 'Neutral' },
+            { no: 20, name: 'Digital Media & AdTech', cap: '$19.2 B', change: 3.40, share: '0.7%', trend: 'Bullish' },
+            { no: 21, name: 'Cloud Computing & SaaS', cap: '$450.8 B', change: 2.25, share: '16.1%', trend: 'Bullish' },
+            { no: 22, name: 'Cybersecurity Solutions', cap: '$110.4 B', change: 1.90, share: '4.0%', trend: 'Bullish' },
+            { no: 23, name: 'Semiconductors & Hardware', cap: '$1,250.0 B', change: 3.80, share: '44.8%', trend: 'Strong Bull' },
+            { no: 24, name: 'Green Energy & EV Tech', cap: '$310.2 B', change: 5.10, share: '11.1%', trend: 'Bullish' },
+            { no: 25, name: 'BioTech & Life Sciences', cap: '$240.5 B', change: -1.40, share: '8.6%', trend: 'Bearish' },
+            { no: 26, name: 'Global Logistics & Supply Chain', cap: '$185.0 B', change: 0.40, share: '6.6%', trend: 'Stable' },
+            { no: 27, name: 'AgriTech & Commodities', cap: '$92.1 B', change: 1.05, share: '3.3%', trend: 'Bullish' },
+            { no: 28, name: 'Space Exploration Tech', cap: '$64.2 B', change: 4.80, share: '2.3%', trend: 'Bullish' }
+        ];
+
+        // Inisialisasi Chart Otomatis (Real-time Streaming Charts)
+        let cryptoAdvChartInstance = null;
+        let perfChartInstance = null;
+        let marketChartInstance = null;
+        let autoUpdateIntervals = [];
+
+        function clearAllIntervals() {
+            autoUpdateIntervals.forEach(clearInterval);
+            autoUpdateIntervals = [];
         }
 
-        function renderStockTable() {
-            const tbody = document.getElementById('stockTableBody');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-            const start = (currentStockPage - 1) * stockPerPage;
-            const end = start + stockPerPage;
-            const pageItems = filteredStockData.slice(start, end);
-            
-            pageItems.forEach(item => {
-                const changeColor = item.change >= 0 ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
-                const icon = item.change >= 0 ? '<i class="fa-solid fa-arrow-up text-[10px] mr-1"></i>' : '<i class="fa-solid fa-arrow-down text-[10px] mr-1"></i>';
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-gray-50 dark:hover:bg-dark-surface-card cursor-pointer transition';
-                tr.onclick = () => { initStockChart(item.code); renderStockOrderBook(item.code); };
-                tr.innerHTML = `
-                    <td class="py-3 px-4 font-mono text-gray-500">${item.no}</td>
-                    <td class="py-3 px-4 font-bold text-gray-900 dark:text-white font-mono">${item.code}</td>
-                    <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">${item.name}</td>
-                    <td class="py-3 px-4 text-right font-mono font-bold text-gray-900 dark:text-white">Rp ${item.price.toLocaleString()}</td>
-                    <td class="py-3 px-4 text-right"><span class="px-2 py-1 rounded text-xs font-bold font-mono ${changeColor}">${icon}${item.change > 0 ? '+' : ''}${item.change}%</span></td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-500">${item.mcap}</td>
-                    <td class="py-3 px-4 text-center"><button class="px-2.5 py-1 bg-primary/10 text-primary font-bold rounded hover:bg-primary hover:text-white transition">Analisis</button></td>
-                `;
-                tbody.appendChild(tr);
+        // Ticker Header Populate
+        function initTickers() {
+            const tracks = ['cryptoTickerTrack', 'stockTickerTrack', 'globalMarketTickerTrack'];
+            tracks.forEach(trackId => {
+                const el = document.getElementById(trackId);
+                if (!el) return;
+                let htmlContent = '';
+                stockDataList.concat(cryptoDataList).forEach(item => {
+                    const code = item.code || item.symbol;
+                    const price = item.price.toLocaleString();
+                    const change = (item.change !== undefined ? item.change : item.h24);
+                    const colorClass = change >= 0 ? 'text-emerald-400' : 'text-rose-400';
+                    const sign = change >= 0 ? '+' : '';
+                    htmlContent += `<span class="mx-4 inline-flex items-center space-x-2 font-mono"><strong class="text-white">${code}</strong> <span class="text-gray-300">${price}</span> <span class="${colorClass}">${sign}${change}%</span></span>`;
+                });
+                el.innerHTML = htmlContent + htmlContent; // Repeat for smooth infinite loop
             });
-            renderStockPagination();
         }
+        initTickers();
 
-        function renderStockPagination() {
-            const totalPages = Math.ceil(filteredStockData.length / stockPerPage);
-            document.getElementById('stockPaginationInfo').innerText = `Menampilkan halaman ${currentStockPage} dari ${totalPages} (${stockPerPage} item per halaman)`;
-            const btnContainer = document.getElementById('stockPaginationButtons');
-            if (!btnContainer) return;
-            btnContainer.innerHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-                const btn = document.createElement('button');
-                btn.className = `px-3 py-1 text-xs font-bold rounded ${i === currentStockPage ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-dark-surface-card text-gray-700 dark:text-gray-300 hover:bg-gray-200'}`;
-                btn.innerText = i;
-                btn.onclick = () => { currentStockPage = i; renderStockTable(); };
-                btnContainer.appendChild(btn);
-            }
-        }
+        // Init Crypto Charts & Order Book Otomatis
+        function initCryptoChartsAndBooks() {
+            clearAllIntervals();
+            renderCryptoAdvTable(1);
+            renderCryptoBook('BTC');
 
-        function filterStockTable() {
-            const query = document.getElementById('searchStockInput').value.toLowerCase();
-            filteredStockData = stockDataList.filter(s => s.code.toLowerCase().includes(query) || s.name.toLowerCase().includes(query));
-            currentStockPage = 1;
-            renderStockTable();
-        }
+            const ctx = document.getElementById('cryptoAdvancedChart').getContext('2d');
+            if (cryptoAdvChartInstance) cryptoAdvChartInstance.destroy();
 
-        function renderStockTicker() {
-            const track = document.getElementById('stockTickerTrack');
-            if (!track) return;
-            let html = '';
-            stockDataList.forEach(s => {
-                const color = s.change >= 0 ? 'text-emerald-500' : 'text-rose-500';
-                const sign = s.change >= 0 ? '+' : '';
-                html += `<span class="mx-4 font-mono"><strong>${s.code}</strong>: Rp ${s.price.toLocaleString()} <span class="${color}">(${sign}${s.change}%)</span></span>`;
-            });
-            track.innerHTML = html + html; // Duplikasi untuk infinite smooth loop
-        }
-
-        function initStockChart(symbol) {
-            selectedStockSymbol = symbol;
-            const ctx = document.getElementById('marketChart');
-            if (!ctx) return;
-            if (stockChartInstance) stockChartInstance.destroy();
-
-            // Generate dummy trend data
-            const baseVal = symbol === 'IHSG' ? 7342 : (symbol === 'BBCA' ? 10150 : (symbol === 'TLKM' ? 3050 : 5050));
-            const dataPoints = Array.from({length: 15}, () => baseVal + Math.floor(Math.random() * 150 - 75));
-            const labels = Array.from({length: 15}, (_, i) => `${9 + Math.floor(i/2)}:${i % 2 === 0 ? '00' : '30'}`);
-
-            stockChartInstance = new Chart(ctx, {
+            cryptoAdvChartInstance = new Chart(ctx, {
                 type: 'line',
-                data: {
-                    labels: labels,
+                        data: {
+                    labels: ['10:00', '10:05', '10:10', '10:15', '10:20', '10:25', '10:30', '10:35', '10:40', '10:45'],
                     datasets: [{
-                        label: `${symbol} Price Action`,
-                        data: dataPoints,
-                        borderColor: '#3b82f6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        label: 'BTC/USD Price',
+                        data: [64200, 64350, 64280, 64500, 64420, 64650, 64580, 64750, 64700, 64850],
+                        borderColor: '#f59e0b',
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
                         borderWidth: 2,
                         fill: true,
-                        tension: 0.3
+                        tension: 0.3,
+                        pointRadius: 0
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    animation: { duration: 400 },
                     scales: {
-                        x: { grid: { color: '#1f293d' }, ticks: { color: '#9ca3af', font: { size: 10 } } },
-                        y: { grid: { color: '#1f293d' }, ticks: { color: '#9ca3af', font: { size: 10 } } }
-                    }
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af', font: { family: 'monospace', size: 10 } } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af', font: { family: 'monospace', size: 10 } } }
+                    },
+                    plugins: { legend: { display: false } }
                 }
             });
 
-            document.getElementById('activeChartTitle').innerText = `Grafik Pergerakan Intraday (${symbol})`;
+            // Otomatis berjalan memperbarui grafik & order book setiap 2 detik
+            const intervalId = setInterval(() => {
+                const dataset = cryptoAdvChartInstance.data.datasets[0].data;
+                const labels = cryptoAdvChartInstance.data.labels;
+                const lastVal = dataset[dataset.length - 1];
+                const delta = (Math.random() - 0.48) * 80;
+                const newVal = Math.round((lastVal + delta) * 100) / 100;
+
+                dataset.shift();
+                dataset.push(newVal);
+
+                const now = new Date();
+                const timeStr = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0') + ':' + String(now.getSeconds()).padStart(2,'0');
+                labels.shift();
+                labels.push(timeStr);
+
+                cryptoAdvChartInstance.update('none');
+
+                // Update mid price & order book display
+                const midEl = document.getElementById('cryptoBookMidPrice');
+                if (midEl) midEl.textContent = '$' + newVal.toLocaleString();
+                renderCryptoBook(window.currentCryptoSymbol || 'BTC', newVal);
+            }, 2000);
+            autoUpdateIntervals.push(intervalId);
         }
 
-        function changeChartSymbol(symbol) {
-            ['btnIHSG', 'btnBBCA', 'btnTLKM', 'btnASII'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.className = 'px-3 py-1 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition';
-                }
-            });
-            const activeBtn = document.getElementById(`btn${symbol}`);
-            if (activeBtn) activeBtn.className = 'px-3 py-1 text-xs font-medium rounded-lg bg-primary text-white transition';
-            initStockChart(symbol);
-            renderStockOrderBook(symbol);
+        function renderCryptoBook(symbol, basePrice = 64850) {
+            window.currentCryptoSymbol = symbol;
+            const symEl = document.getElementById('cryptoBookSymbol');
+            if (symEl) symEl.textContent = symbol + '/USD';
+
+            const asksContainer = document.getElementById('cryptoBookAsks');
+            const bidsContainer = document.getElementById('cryptoBookBids');
+            if (!asksContainer || !bidsContainer) return;
+
+            let asksHtml = '';
+            for (let i = 5; i >= 1; i--) {
+                const price = (basePrice + i * 12.5).toFixed(2);
+                const size = (Math.random() * 2.5).toFixed(4);
+                asksHtml += `<div class="grid grid-cols-3 text-rose-400 font-mono"><span class="text-left">${price}</span><span class="text-right text-gray-300">${size}</span><span class="text-right text-gray-500">${(i*0.8).toFixed(2)}</span></div>`;
+            }
+            asksContainer.innerHTML = asksHtml;
+
+            let bidsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                const price = (basePrice - i * 12.5).toFixed(2);
+                const size = (Math.random() * 2.5).toFixed(4);
+                bidsHtml += `<div class="grid grid-cols-3 text-emerald-400 font-mono"><span class="text-left">${price}</span><span class="text-right text-gray-300">${size}</span><span class="text-right text-gray-500">${(i*0.8).toFixed(2)}</span></div>`;
+            }
+            bidsContainer.innerHTML = bidsHtml;
         }
-
-        // Live Order Book Terkini (Stock Exchange)
-        function renderStockOrderBook(symbol) {
-            document.getElementById('selectedStockTag').innerText = symbol;
-            const stockObj = stockDataList.find(s => s.code === symbol) || { price: 10150 };
-            let midPrice = stockObj.price;
-
-            if (stockOrderBookInterval) clearInterval(stockOrderBookInterval);
-
-            const updateBook = () => {
-                // Random fluctuation
-                midPrice += Math.floor(Math.random() * 20 - 10);
-                document.getElementById('stockCurrentMidPrice').innerText = `Rp ${midPrice.toLocaleString()}`;
-                
-                let asksHtml = '';
-                let bidsHtml = '';
-                let cumulativeAsk = 0;
-                let cumulativeBid = 0;
-
-                // Asks (Sell orders above mid price)
-                for (let i = 5; i >= 1; i--) {
-                    const price = midPrice + (i * 25);
-                    const lot = Math.floor(Math.random() * 400 + 50);
-                    cumulativeAsk += lot;
-                    asksHtml += `
-                        <div class="grid grid-cols-3 text-[11px] py-0.5 px-1 rounded hover:bg-red-500/10 transition">
-                            <span class="text-rose-400 font-mono text-left">${price.toLocaleString()}</span>
-                            <span class="text-gray-300 font-mono text-right">${lot}</span>
-                            <span class="text-gray-500 font-mono text-right">${cumulativeAsk}</span>
-                        </div>
-                    `;
-                }
-
-                // Bids (Buy orders below mid price)
-                for (let i = 1; i <= 5; i++) {
-                    const price = midPrice - (i * 25);
-                    const lot = Math.floor(Math.random() * 400 + 50);
-                    cumulativeBid += lot;
-                    bidsHtml += `
-                        <div class="grid grid-cols-3 text-[11px] py-0.5 px-1 rounded hover:bg-emerald-500/10 transition">
-                            <span class="text-emerald-400 font-mono text-left">${price.toLocaleString()}</span>
-                            <span class="text-gray-300 font-mono text-right">${lot}</span>
-                            <span class="text-gray-500 font-mono text-right">${cumulativeBid}</span>
-                        </div>
-                    `;
-                }
-
-                document.getElementById('stockAsksContainer').innerHTML = asksHtml;
-                document.getElementById('stockBidsContainer').innerHTML = bidsHtml;
-            };
-
-            updateBook();
-            stockOrderBookInterval = setInterval(updateBook, 1500);
-        }
-
-        // --- CRYPTO MARKET DATA & LOGIC ---
-        const cryptoDataList = [
-            { symbol: 'BTC', name: 'Bitcoin', price: 64850.20, change: 3.4, mcap: '$1.28T', vol: '$28.4B' },
-            { symbol: 'ETH', name: 'Ethereum', price: 3420.50, change: -0.8, mcap: '$410.2B', vol: '$14.1B' },
-            { symbol: 'SOL', name: 'Solana', price: 145.20, change: 5.6, mcap: '$67.8B', vol: '$4.2B' },
-            { symbol: 'BNB', name: 'Binance Coin', price: 580.10, change: 1.2, mcap: '$89.5B', vol: '$1.8B' },
-            { symbol: 'XRP', name: 'XRP', price: 0.58, change: -0.4, mcap: '$32.1B', vol: '$980M' },
-            { symbol: 'ADA', name: 'Cardano', price: 0.45, change: 2.1, mcap: '$16.2B', vol: '$410M' },
-            { symbol: 'DOGE', name: 'Dogecoin', price: 0.12, change: 4.8, mcap: '$17.4B', vol: '$1.2B' },
-            { symbol: 'AVAX', name: 'Avalanche', price: 28.40, change: -1.5, mcap: '$11.2B', vol: '$520M' },
-            { symbol: 'TRX', name: 'TRON', price: 0.13, change: 0.3, mcap: '$11.4B', vol: '$310M' },
-            { symbol: 'LINK', name: 'Chainlink', price: 14.50, change: 3.2, mcap: '$8.5B', vol: '$430M' },
-            { symbol: 'DOT', name: 'Polkadot', price: 6.20, change: -2.1, mcap: '$8.9B', vol: '$240M' },
-            { symbol: 'MATIC', name: 'Polygon', price: 0.52, change: 1.1, mcap: '$5.1B', vol: '$210M' },
-            { symbol: 'SHIB', name: 'Shiba Inu', price: 0.000018, change: 6.4, mcap: '$10.6B', vol: '$850M' },
-            { symbol: 'LTC', name: 'Litecoin', price: 68.50, change: 0.2, mcap: '$5.1B', vol: '$320M' },
-            { symbol: 'UNI', name: 'Uniswap', price: 8.90, change: 2.8, mcap: '$5.3B', vol: '$290M' },
-            { symbol: 'NEAR', name: 'NEAR Protocol', price: 5.40, change: 7.2, mcap: '$5.8B', vol: '$450M' },
-            { symbol: 'BCH', name: 'Bitcoin Cash', price: 360.20, change: -0.9, mcap: '$7.1B', vol: '$230M' },
-            { symbol: 'ICP', name: 'Internet Computer', price: 8.20, change: 1.4, mcap: '$3.8B', vol: '$150M' },
-            { symbol: 'APT', name: 'Aptos', price: 6.80, change: 3.5, mcap: '$2.9B', vol: '$280M' },
-            { symbol: 'SUI', name: 'Sui', price: 1.15, change: 12.4, mcap: '$3.1B', vol: '$620M' },
-            { symbol: 'RENDER', name: 'Render', price: 6.40, change: 4.2, mcap: '$2.5B', vol: '$340M' },
-            { symbol: 'ATOM', name: 'Cosmos', price: 4.80, change: -1.1, mcap: '$1.8B', vol: '$110M' },
-            { symbol: 'XLM', name: 'Stellar', price: 0.095, change: 0.5, mcap: '$2.8B', vol: '$95M' },
-            { symbol: 'ETC', name: 'Ethereum Classic', price: 22.10, change: -0.4, mcap: '$3.2B', vol: '$130M' },
-            { symbol: 'FIL', name: 'Filecoin', price: 4.10, change: 1.8, mcap: '$2.3B', vol: '$140M' },
-            { symbol: 'HBAR', name: 'Hedera', price: 0.082, change: 2.5, mcap: '$2.9B', vol: '$120M' },
-            { symbol: 'STX', name: 'Stacks', price: 1.75, change: 5.1, mcap: '$2.5B', vol: '$160M' },
-            { symbol: 'AR', name: 'Arweave', price: 24.50, change: 3.8, mcap: '$1.6B', vol: '$90M' }
-        ];
 
         let currentCryptoPage = 1;
-        const cryptoPerPage = 10;
-        let filteredCryptoData = [...cryptoDataList];
-        let cryptoChartInstance = null;
-        let selectedCryptoSymbol = 'SOL';
-        let cryptoOrderBookInterval = null;
-
-        function initCryptoPage() {
-            renderCryptoTable();
-            renderCryptoTicker();
-            initCryptoChart('SOL');
-            renderCryptoOrderBook('SOL');
-        }
-
-        function renderCryptoTable() {
-            const tbody = document.getElementById('cryptoTableBody');
+        const itemsPerPage = 10;
+        function renderCryptoAdvTable(page) {
+            currentCryptoPage = page;
+            const tbody = document.getElementById('cryptoAdvancedTableBody');
             if (!tbody) return;
-            tbody.innerHTML = '';
-            const start = (currentCryptoPage - 1) * cryptoPerPage;
-            const end = start + cryptoPerPage;
-            const pageItems = filteredCryptoData.slice(start, end);
 
-            pageItems.forEach(item => {
-                const changeColor = item.change >= 0 ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
-                const icon = item.change >= 0 ? '<i class="fa-solid fa-arrow-up text-[10px] mr-1"></i>' : '<i class="fa-solid fa-arrow-down text-[10px] mr-1"></i>';
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-gray-50 dark:hover:bg-dark-surface-card cursor-pointer transition';
-                tr.onclick = () => { initCryptoChart(item.symbol); renderCryptoOrderBook(item.symbol); };
-                tr.innerHTML = `
-                    <td class="py-3 px-4 font-bold text-gray-900 dark:text-white font-mono">${item.symbol}</td>
-                    <td class="py-3 px-4 text-gray-700 dark:text-gray-300 font-medium">${item.name}</td>
-                    <td class="py-3 px-4 text-right font-mono font-bold text-gray-900 dark:text-white">$${item.price.toLocaleString(undefined, {minimumFractionDigits: item.price < 1 ? 4 : 2})}</td>
-                    <td class="py-3 px-4 text-right"><span class="px-2 py-1 rounded text-xs font-bold font-mono ${changeColor}">${icon}${item.change > 0 ? '+' : ''}${item.change}%</span></td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-500">${item.mcap}</td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-500">${item.vol}</td>
-                    <td class="py-3 px-4 text-center"><button class="px-2.5 py-1 bg-purple-600/10 text-purple-600 font-bold rounded hover:bg-purple-600 hover:text-white transition">Analisis</button></td>
-                `;
-                tbody.appendChild(tr);
+            const start = (page - 1) * itemsPerPage;
+            const slice = cryptoDataList.slice(start, start + itemsPerPage);
+            let html = '';
+
+            slice.forEach((item, idx) => {
+                const changeColor = item.h24 >= 0 ? 'text-emerald-400' : 'text-rose-400';
+                const sign = item.h24 >= 0 ? '+' : '';
+                html += `<tr class="hover:bg-gray-900/55 transition cursor-pointer" onclick="switchCryptoAsset('${item.symbol}')">
+                    <td class="py-2.5 px-4 text-gray-500">${start + idx + 1}</td>
+                    <td class="py-2.5 px-4 font-bold text-white flex items-center space-x-2"><span>${item.symbol}</span> <span class="text-gray-400 font-normal text-[10px]">${item.name}</span></td>
+                    <td class="py-2.5 px-4 text-right font-bold text-white">$${item.price.toLocaleString()}</td>
+                    <td class="py-2.5 px-4 text-right ${item.h1 >= 0 ? 'text-emerald-400' : 'text-rose-400'}">${item.h1 >= 0 ? '+' : ''}${item.h1}%</td>
+                    <td class="py-2.5 px-4 text-right ${changeColor}">${sign}${item.h24}%</td>
+                    <td class="py-2.5 px-4 text-right text-gray-300">${item.mcap}</td>
+                    <td class="py-2.5 px-4 text-right text-gray-300">${item.vol}</td>
+                    <td class="py-2.5 px-4 text-center"><button class="px-2 py-1 bg-amber-500/10 text-amber-400 rounded hover:bg-amber-500 hover:text-black transition text-[10px]">Chart</button></td>
+                </tr>`;
             });
-            renderCryptoPagination();
+            tbody.innerHTML = html;
+
+            // Paginasi
+            const totalPages = Math.ceil(cryptoDataList.length / itemsPerPage);
+            document.getElementById('cryptoAdvPaginationInfo').textContent = `Menampilkan halaman ${page} dari ${totalPages} (${itemsPerPage} item per halaman)`;
+            let btnHtml = '';
+            for (let i = 1; i <= totalPages; i++) {
+                btnHtml += `<button onclick="renderCryptoAdvTable(${i})" class="px-2.5 py-1 rounded text-xs ${i === page ? 'bg-amber-500 text-black font-bold' : 'bg-[#0b0f19] text-gray-400 hover:text-white'}">${i}</button>`;
+            }
+            document.getElementById('cryptoAdvPaginationButtons').innerHTML = btnHtml;
         }
 
-        function renderCryptoPagination() {
-            const totalPages = Math.ceil(filteredCryptoData.length / cryptoPerPage);
-            document.getElementById('cryptoPaginationInfo').innerText = `Menampilkan halaman ${currentCryptoPage} dari ${totalPages} (${cryptoPerPage} item per halaman)`;
-            const btnContainer = document.getElementById('cryptoPaginationButtons');
-            if (!btnContainer) return;
-            btnContainer.innerHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-                const btn = document.createElement('button');
-                btn.className = `px-3 py-1 text-xs font-bold rounded ${i === currentCryptoPage ? 'bg-purple-600 text-white' : 'bg-gray-100 dark:bg-dark-surface-card text-gray-700 dark:text-gray-300 hover:bg-gray-200'}`;
-                btn.innerText = i;
-                btn.onclick = () => { currentCryptoPage = i; renderCryptoTable(); };
-                btnContainer.appendChild(btn);
+        function switchCryptoAsset(symbol) {
+            const found = cryptoDataList.find(c => c.symbol === symbol);
+            if (found) {
+                document.getElementById('cryptoAdvancedChartTitle').textContent = `${symbol}/USD - Advanced Parabolic & EMA Oscillator`;
+                renderCryptoBook(symbol, found.price);
             }
         }
 
-        function filterCryptoTable() {
-            const query = document.getElementById('searchCryptoInput').value.toLowerCase();
-            filteredCryptoData = cryptoDataList.filter(c => c.symbol.toLowerCase().includes(query) || c.name.toLowerCase().includes(query));
-            currentCryptoPage = 1;
-            renderCryptoTable();
-        }
-
-        function renderCryptoTicker() {
-            const track = document.getElementById('cryptoTickerTrack');
-            if (!track) return;
-            let html = '';
-            cryptoDataList.forEach(c => {
-                const color = c.change >= 0 ? 'text-emerald-500' : 'text-rose-500';
-                const sign = c.change >= 0 ? '+' : '';
-                html += `<span class="mx-4 font-mono"><strong>${c.symbol}</strong>: $${c.price.toLocaleString()} <span class="${color}">(${sign}${c.change}%)</span></span>`;
-            });
-            track.innerHTML = html + html;
-        }
-
-        function initCryptoChart(symbol) {
-            selectedCryptoSymbol = symbol;
-            const ctx = document.getElementById('cryptoMarketChart');
-            if (!ctx) return;
-            if (cryptoChartInstance) cryptoChartInstance.destroy();
-
-            const cryptoObj = cryptoDataList.find(c => c.symbol === symbol) || { price: 100 };
-            const base = cryptoObj.price;
-            const dataPoints = Array.from({length: 15}, () => Number((base * (1 + (Math.random() * 0.04 - 0.02))).toFixed(2)));
-            const labels = Array.from({length: 15}, (_, i) => `T-${15-i}m`);
-
-            cryptoChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: `${symbol}/USD Trend`,
-                        data: dataPoints,
-                        borderColor: '#8b5cf6',
-                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { color: '#1f293d' }, ticks: { color: '#9ca3af', font: { size: 10 } } },
-                        y: { grid: { color: '#1f293d' }, ticks: { color: '#9ca3af', font: { size: 10 } } }
-                    }
-                }
-            });
-
-            document.getElementById('cryptoChartTitle').innerText = `Professional Parabolic Trend (${symbol}/USD)`;
-        }
-
-        function changeCryptoSymbol(symbol) {
-            ['btnCryptoBTC', 'btnCryptoETH', 'btnCryptoSOL'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.className = 'px-3 py-1 text-xs font-medium rounded-lg text-gray-400 hover:text-white transition';
-                }
-            });
-            const activeBtn = document.getElementById(`btnCrypto${symbol}`);
-            if (activeBtn) activeBtn.className = 'px-3 py-1 text-xs font-medium rounded-lg bg-purple-600 text-white transition';
-            initCryptoChart(symbol);
-            renderCryptoOrderBook(symbol);
-        }
-
-        // Live Institutional Order Book (Crypto Market)
-        function renderCryptoOrderBook(symbol) {
-            document.getElementById('selectedCryptoTag').innerText = `${symbol}/USD`;
-            const cryptoObj = cryptoDataList.find(c => c.symbol === symbol) || { price: 150 };
-            let midPrice = cryptoObj.price;
-
-            if (cryptoOrderBookInterval) clearInterval(cryptoOrderBookInterval);
-
-            const updateBook = () => {
-                const variance = midPrice * 0.0005;
-                midPrice += (Math.random() * variance * 2 - variance);
-                document.getElementById('cryptoCurrentMidPrice').innerText = `$${midPrice.toFixed(2)}`;
-
-                let asksHtml = '';
-                let bidsHtml = '';
-                let cumulativeAsk = 0;
-                let cumulativeBid = 0;
-
-                // Asks
-                for (let i = 5; i >= 1; i--) {
-                    const price = midPrice + (i * (midPrice * 0.0008));
-                    const size = Number((Math.random() * 5 + 0.1).toFixed(3));
-                    cumulativeAsk += size;
-                    asksHtml += `
-                        <div class="grid grid-cols-3 text-[11px] py-0.5 px-1 rounded hover:bg-red-500/10 transition">
-                            <span class="text-rose-400 font-mono text-left">${price.toFixed(2)}</span>
-                            <span class="text-gray-300 font-mono text-right">${size}</span>
-                            <span class="text-gray-500 font-mono text-right">${cumulativeAsk.toFixed(2)}</span>
-                        </div>
-                    `;
-                }
-
-                // Bids
-                for (let i = 1; i <= 5; i++) {
-                    const price = midPrice - (i * (midPrice * 0.0008));
-                    const size = Number((Math.random() * 5 + 0.1).toFixed(3));
-                    cumulativeBid += size;
-                    bidsHtml += `
-                        <div class="grid grid-cols-3 text-[11px] py-0.5 px-1 rounded hover:bg-emerald-500/10 transition">
-                            <span class="text-emerald-400 font-mono text-left">${price.toFixed(2)}</span>
-                            <span class="text-gray-300 font-mono text-right">${size}</span>
-                            <span class="text-gray-500 font-mono text-right">${cumulativeBid.toFixed(2)}</span>
-                        </div>
-                    `;
-                }
-
-                document.getElementById('cryptoAsksContainer').innerHTML = asksHtml;
-                document.getElementById('cryptoBidsContainer').innerHTML = bidsHtml;
-            };
-
-            updateBook();
-            cryptoOrderBookInterval = setInterval(updateBook, 1200);
-        }
-
-        // --- PERFORMANCE ANALYST & GLOBAL MARKET CAP DATA & LOGIC ---
-        const gmpDataList = Array.from({length: 28}, (_, i) => {
-            const sectors = [
-                'Layer 1 Blockchain', 'DeFi Protocols', 'AI & Big Data', 'Artificial Intelligence Agents', 
-                'Gaming / Metaverse', 'Real World Assets (RWA)', 'Memecoins', 'Layer 2 Scaling', 
-                'Liquid Staking', 'Interoperability', 'Privacy Coins', 'Storage & Cloud', 
-                'Oracle Networks', 'NFT Marketplaces', 'SocialFi', 'Launchpads', 
-                'Exchange Tokens', 'Stablecoins', 'Derivatives DEX', 'Yield Aggregators',
-                'Zero-Knowledge Proofs', 'Modular Blockchains', 'DepIN Infrastructure', 'Cybersecurity', 
-                'Quantum Resistance', 'Metaverse Land', 'Green Energy Crypto', 'DAO Treasuries'
-            ];
-            const names = sectors[i];
-            const mcapVal = Math.floor(Math.random() * 150000000000 + 5000000000);
-            const changeVal = Number((Math.random() * 12 - 4.5).toFixed(2));
-            const dominanceVal = Number((Math.random() * 4 + 0.2).toFixed(2));
-            return {
-                no: i + 1,
-                segment: names,
-                mcap: `$${(mcapVal / 1000000000).toFixed(2)}B`,
-                change: changeVal,
-                dominance: `${dominanceVal}%`,
-                status: changeVal >= 0 ? 'Bullish' : 'Correction'
-            };
-        });
-
-        let currentGMPPage = 1;
-        const gmpPerPage = 10;
-        let filteredGMPData = [...gmpDataList];
-        let performanceChartInstance = null;
-        let txTicksCount = 0;
-
-        function initPerformancePage() {
-            renderGMPTable();
-            renderGlobalMarketTicker();
-            initPerformanceChart();
-            startLiveTxStream();
-        }
-
-        function renderGMPTable() {
-            const tbody = document.getElementById('gmpTableBody');
+        function filterAdvancedCryptoTable() {
+            const keyword = document.getElementById('searchCryptoAdvancedInput').value.toLowerCase();
+            const filtered = cryptoDataList.filter(c => c.symbol.toLowerCase().includes(keyword) || c.name.toLowerCase().includes(keyword));
+            const tbody = document.getElementById('cryptoAdvancedTableBody');
             if (!tbody) return;
-            tbody.innerHTML = '';
-            const start = (currentGMPPage - 1) * gmpPerPage;
-            const end = start + gmpPerPage;
-            const pageItems = filteredGMPData.slice(start, end);
-
-            pageItems.forEach(item => {
-                const changeColor = item.change >= 0 ? 'text-emerald-500 bg-emerald-500/10' : 'text-rose-500 bg-rose-500/10';
-                const icon = item.change >= 0 ? '<i class="fa-solid fa-arrow-up text-[10px] mr-1"></i>' : '<i class="fa-solid fa-arrow-down text-[10px] mr-1"></i>';
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-gray-50 dark:hover:bg-dark-surface-card transition';
-                tr.innerHTML = `
-                    <td class="py-3 px-4 font-mono text-gray-500">${item.no}</td>
-                    <td class="py-3 px-4 font-bold text-gray-900 dark:text-white">${item.segment}</td>
-                    <td class="py-3 px-4 text-right font-mono font-bold text-gray-900 dark:text-white">${item.mcap}</td>
-                    <td class="py-3 px-4 text-right"><span class="px-2 py-1 rounded text-xs font-bold font-mono ${changeColor}">${icon}${item.change > 0 ? '+' : ''}${item.change}%</span></td>
-                    <td class="py-3 px-4 text-right font-mono text-gray-500">${item.dominance}</td>
-                    <td class="py-3 px-4 text-center"><span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${item.status === 'Bullish' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300'}">${item.status}</span></td>
-                `;
-                tbody.appendChild(tr);
-            });
-            renderGMPPagination();
-        }
-
-        function renderGMPPagination() {
-            const totalPages = Math.ceil(filteredGMPData.length / gmpPerPage);
-            document.getElementById('gmpPaginationInfo').innerText = `Menampilkan halaman ${currentGMPPage} dari ${totalPages} (${gmpPerPage} item per halaman)`;
-            const btnContainer = document.getElementById('gmpPaginationButtons');
-            if (!btnContainer) return;
-            btnContainer.innerHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-                const btn = document.createElement('button');
-                btn.className = `px-3 py-1 text-xs font-bold rounded ${i === currentGMPPage ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-dark-surface-card text-gray-700 dark:text-gray-300 hover:bg-gray-200'}`;
-                btn.innerText = i;
-                btn.onclick = () => { currentGMPPage = i; renderGMPTable(); };
-                btnContainer.appendChild(btn);
-            }
-        }
-
-        function filterGMPTable() {
-            const query = document.getElementById('searchGMPInput').value.toLowerCase();
-            filteredGMPData = gmpDataList.filter(g => g.segment.toLowerCase().includes(query));
-            currentGMPPage = 1;
-            renderGMPTable();
-        }
-
-        function renderGlobalMarketTicker() {
-            const track = document.getElementById('globalMarketTickerTrack');
-            if (!track) return;
             let html = '';
-            gmpDataList.slice(0, 14).forEach(g => {
-                const color = g.change >= 0 ? 'text-emerald-500' : 'text-rose-500';
-                const sign = g.change >= 0 ? '+' : '';
-                html += `<span class="mx-4 font-mono"><strong>${g.segment}</strong>: ${g.mcap} <span class="${color}">(${sign}${g.change}%)</span></span>`;
+            filtered.forEach((item, idx) => {
+                const changeColor = item.h24 >= 0 ? 'text-emerald-400' : 'text-rose-400';
+                html += `<tr class="hover:bg-gray-900/55 transition cursor-pointer" onclick="switchCryptoAsset('${item.symbol}')">
+                    <td class="py-2.5 px-4 text-gray-500">${idx + 1}</td>
+                    <td class="py-2.5 px-4 font-bold text-white">${item.symbol} <span class="text-gray-400 font-normal text-[10px]">${item.name}</span></td>
+                    <td class="py-2.5 px-4 text-right font-bold text-white">$${item.price.toLocaleString()}</td>
+                    <td class="py-2.5 px-4 text-right ${item.h1 >= 0 ? 'text-emerald-400' : 'text-rose-400'}">${item.h1}%</td>
+                    <td class="py-2.5 px-4 text-right ${changeColor}">${item.h24}%</td>
+                    <td class="py-2.5 px-4 text-right text-gray-300">${item.mcap}</td>
+                    <td class="py-2.5 px-4 text-right text-gray-300">${item.vol}</td>
+                    <td class="py-2.5 px-4 text-center"><button class="px-2 py-1 bg-amber-500/10 text-amber-400 rounded">Chart</button></td>
+                </tr>`;
             });
-            track.innerHTML = html + html;
+            tbody.innerHTML = html;
         }
 
-        function initPerformanceChart() {
-            const ctx = document.getElementById('performanceChart');
-            if (!ctx) return;
-            if (performanceChartInstance) performanceChartInstance.destroy();
+        // Init Performance Analyst Charts Otomatis
+        function initPerformanceAnalystCharts() {
+            clearAllIntervals();
+            renderGMPTable(1);
 
-            performanceChartInstance = new Chart(ctx, {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            if (perfChartInstance) perfChartInstance.destroy();
+
+            perfChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: gmpDataList.slice(0, 8).map(g => g.segment),
+                    labels: ['Layer 1', 'DeFi', 'AI & Data', 'Smart Contract', 'Meme', 'Stablecoins', 'RWA', 'Gaming'],
                     datasets: [{
-                        label: 'Market Cap (USD)',
-                        data: gmpDataList.slice(0, 8).map(g => parseFloat(g.mcap.replace('$', '').replace('B', ''))),
-                        backgroundColor: '#005C9E',
+                        label: 'Market Cap ($B)',
+                        data: [1450, 98, 34, 512, 48, 165, 12, 24],
+                        backgroundColor: ['#3b82f6', '#10b981', '#8b5cf6', '#f59e0b', '#ef4444', '#06b6d4', '#ec4899', '#6366f1'],
                         borderRadius: 6
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
+                    animation: { duration: 600 },
                     scales: {
-                        x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { size: 9 } } },
-                        y: { grid: { color: '#1f293d' }, ticks: { color: '#9ca3af', font: { size: 10 } } }
-                    }
+                        x: { grid: { display: false }, ticks: { color: '#9ca3af', font: { family: 'monospace', size: 10 } } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af', font: { family: 'monospace', size: 10 } } }
+                    },
+                    plugins: { legend: { display: false } }
                 }
             });
+
+            let tickCount = 1240;
+            const txStream = document.getElementById('live-tx-stream');
+            
+            // Otomatis memperbarui grafik batang & live tx stream setiap 2.5 detik
+            const intervalId = setInterval(() => {
+                tickCount += Math.floor(Math.random() * 5) + 1;
+                const countEl = document.getElementById('paLiveTicksCount');
+                if (countEl) countEl.textContent = tickCount.toLocaleString();
+
+                // Update bar chart data slightly
+                const data = perfChartInstance.data.datasets[0].data;
+                const idxToUpdate = Math.floor(Math.random() * data.length);
+                data[idxToUpdate] = Math.round(data[idxToUpdate] * (1 + (Math.random() - 0.48) * 0.05));
+                perfChartInstance.update('none');
+
+                // Append live transaction item
+                if (txStream) {
+                    const seg = gmpSegmentsList[Math.floor(Math.random() * gmpSegmentsList.length)].name;
+                    const amount = (Math.random() * 500000).toLocaleString('en-US', {style:'currency', currency:'USD', maximumFractionDigits:0});
+                    const isBuy = Math.random() > 0.4;
+                    const div = document.createElement('div');
+                    div.className = "flex items-center justify-between py-1 border-b border-gray-800/40 text-[11px] font-mono animate-fadeIn";
+                    div.innerHTML = `<span class="text-gray-300">${seg}</span> <span class="${isBuy ? 'text-emerald-400' : 'text-rose-400'} font-bold">${isBuy ? 'BUY' : 'SELL'} ${amount}</span>`;
+                    txStream.prepend(div);
+                    if (txStream.children.length > 8) txStream.removeChild(txStream.lastChild);
+                }
+            }, 2500);
+            autoUpdateIntervals.push(intervalId);
         }
 
-        function startLiveTxStream() {
-            const streamContainer = document.getElementById('live-tx-stream');
-            if (!streamContainer) return;
+        let currentGMPPage = 1;
+        function renderGMPTable(page) {
+            currentGMPPage = page;
+            const tbody = document.getElementById('gmpTableBody');
+            if (!tbody) return;
 
-            setInterval(() => {
-                txTicksCount++;
-                document.getElementById('pa-tx-ticks').innerText = txTicksCount.toLocaleString();
+            const start = (page - 1) * itemsPerPage;
+            const slice = gmpSegmentsList.slice(start, start + itemsPerPage);
+            let html = '';
 
-                const randomSeg = gmpDataList[Math.floor(Math.random() * gmpDataList.length)].segment;
-                const isBuy = Math.random() > 0.45;
-                const amount = (Math.random() * 50000 + 1000).toLocaleString('en-US', {style: 'currency', currency: 'USD', maximumFractionDigits: 0});
-                
-                const div = document.createElement('div');
-                div.className = 'flex items-center justify-between border-b dark:border-dark-border pb-1.5 animate-fadeIn';
-                div.innerHTML = `
-                    <span class="text-gray-700 dark:text-gray-300">${randomSeg}</span>
-                    <span class="${isBuy ? 'text-emerald-500 font-bold' : 'text-rose-500 font-bold'}">${isBuy ? 'BUY' : 'SELL'} ${amount}</span>
-                `;
-                streamContainer.prepend(div);
-                if (streamContainer.children.length > 8) {
-                    streamContainer.removeChild(streamContainer.lastChild);
+            slice.forEach((item, idx) => {
+                const color = item.change >= 0 ? 'text-emerald-400' : 'text-rose-400';
+                html += `<tr class="hover:bg-gray-900/55 transition">
+                    <td class="py-2.5 px-4 text-gray-500">${start + idx + 1}</td>
+                    <td class="py-2.5 px-4 font-bold text-white">${item.name}</td>
+                    <td class="py-2.5 px-4 text-right text-gray-200">${item.cap}</td>
+                    <td class="py-2.5 px-4 text-right ${color}">${item.change >= 0 ? '+' : ''}${item.change}%</td>
+                    <td class="py-2.5 px-4 text-right text-gray-300">${item.share}</td>
+                    <td class="py-2.5 px-4 text-center"><span class="px-2 py-0.5 rounded text-[10px] ${item.trend.includes('Bull') ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-gray-800 text-gray-300'}">${item.trend}</span></td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
+
+            const totalPages = Math.ceil(gmpSegmentsList.length / itemsPerPage);
+            document.getElementById('gmpPaginationInfo').textContent = `Menampilkan halaman ${page} dari ${totalPages} (${itemsPerPage} item per halaman)`;
+            let btnHtml = '';
+            for (let i = 1; i <= totalPages; i++) {
+                btnHtml += `<button onclick="renderGMPTable(${i})" class="px-2.5 py-1 rounded text-xs ${i === page ? 'bg-blue-600 text-white font-bold' : 'bg-[#0b0f19] text-gray-400 hover:text-white'}">${i}</button>`;
+            }
+            document.getElementById('gmpPaginationButtons').innerHTML = btnHtml;
+        }
+
+        function filterGMPTable() {
+            const keyword = document.getElementById('searchGMPInput').value.toLowerCase();
+            const filtered = gmpSegmentsList.filter(s => s.name.toLowerCase().includes(keyword));
+            const tbody = document.getElementById('gmpTableBody');
+            if (!tbody) return;
+            let html = '';
+            filtered.forEach((item, idx) => {
+                html += `<tr class="hover:bg-gray-900/55 transition">
+                    <td class="py-2.5 px-4 text-gray-500">${idx + 1}</td>
+                    <td class="py-2.5 px-4 font-bold text-white">${item.name}</td>
+                    <td class="py-2.5 px-4 text-right text-gray-200">${item.cap}</td>
+                    <td class="py-2.5 px-4 text-right ${item.change >= 0 ? 'text-emerald-400' : 'text-rose-400'}">${item.change}%</td>
+                    <td class="py-2.5 px-4 text-right text-gray-300">${item.share}</td>
+                    <td class="py-2.5 px-4 text-center"><span class="px-2 py-0.5 rounded text-[10px] bg-gray-800 text-gray-300">${item.trend}</span></td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
+        }
+
+        // Init Stock Exchange Charts & Order Book Otomatis
+        function initStockExchangeChartsAndBooks() {
+            clearAllIntervals();
+            renderStockTable(1);
+            renderStockBook('BBCA');
+
+            const ctx = document.getElementById('marketChart').getContext('2d');
+            if (marketChartInstance) marketChartInstance.destroy();
+
+            marketChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '13:30', '14:00', '14:30', '15:00'],
+                    datasets: [{
+                        label: 'IHSG Performance',
+                        data: [7300, 7315, 7310, 7330, 7325, 7342, 7338, 7350, 7345, 7352],
+                        borderColor: '#0284c7',
+                        backgroundColor: 'rgba(2, 132, 199, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: { duration: 400 },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af', font: { family: 'monospace', size: 10 } } },
+                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af', font: { family: 'monospace', size: 10 } } }
+                    },
+                    plugins: { legend: { display: false } }
                 }
-            }, 1800);
+            });
+
+            // Otomatis memperbarui chart IHSG / Saham setiap 2 detik
+            const intervalId = setInterval(() => {
+                const dataset = marketChartInstance.data.datasets[0].data;
+                const lastVal = dataset[dataset.length - 1];
+                const delta = (Math.random() - 0.47) * 4;
+                const newVal = Math.round((lastVal + delta) * 100) / 100;
+
+                dataset.shift();
+                dataset.push(newVal);
+                marketChartInstance.update('none');
+
+                const ihsgValEl = document.getElementById('ihsgValue');
+                if (ihsgValEl) ihsgValEl.textContent = newVal.toLocaleString();
+            }, 2000);
+            autoUpdateIntervals.push(intervalId);
+        }
+
+        function renderStockBook(code, basePrice = 10150) {
+            window.currentStockCode = code;
+            document.getElementById('selectedStockTag').textContent = code;
+            const asksContainer = document.getElementById('stockAsksContainer');
+            const bidsContainer = document.getElementById('stockBidsContainer');
+            if (!asksContainer || !bidsContainer) return;
+
+            let asksHtml = '';
+            for (let i = 5; i >= 1; i--) {
+                const price = (basePrice + i * 25).toLocaleString();
+                const lot = Math.floor(Math.random() * 450) + 50;
+                asksHtml += `<div class="grid grid-cols-3 text-rose-400 font-mono"><span class="text-left">${price}</span><span class="text-right text-gray-300">Ask</span><span class="text-right text-gray-500">${lot}</span></div>`;
+            }
+            asksContainer.innerHTML = asksHtml;
+
+            let bidsHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                const price = (basePrice - i * 25).toLocaleString();
+                const lot = Math.floor(Math.random() * 450) + 50;
+                bidsHtml += `<div class="grid grid-cols-3 text-emerald-400 font-mono"><span class="text-left">${price}</span><span class="text-right text-gray-300">Bid</span><span class="text-right text-gray-500">${lot}</span></div>`;
+            }
+            bidsContainer.innerHTML = bidsHtml;
+        }
+
+        function changeChartSymbol(symbol) {
+            document.getElementById('activeChartTitle').textContent = `${symbol} Parabolic & Volume Performance Chart (Auto-Stream)`;
+            const found = stockDataList.find(s => s.code === symbol);
+            if (found) renderStockBook(symbol, found.price);
+        }
+
+        let currentStockPage = 1;
+        function renderStockTable(page) {
+            currentStockPage = page;
+            const tbody = document.getElementById('stockTableBody');
+            if (!tbody) return;
+
+            const start = (page - 1) * itemsPerPage;
+            const slice = stockDataList.slice(start, start + itemsPerPage);
+            let html = '';
+
+            slice.forEach((item, idx) => {
+                const color = item.change >= 0 ? 'text-emerald-400' : 'text-rose-400';
+                html += `<tr class="hover:bg-gray-900/55 transition cursor-pointer" onclick="changeChartSymbol('${item.code}')">
+                    <td class="py-2.5 px-4 text-gray-500">${start + idx + 1}</td>
+                    <td class="py-2.5 px-4 font-bold text-white">${item.code} <span class="text-gray-400 font-normal text-[10px]">${item.name}</span></td>
+                    <td class="py-2.5 px-4 text-right font-bold text-white">Rp ${item.price.toLocaleString()}</td>
+                    <td class="py-2.5 px-4 text-right ${color}">${item.change >= 0 ? '+' : ''}${item.change}%</td>
+                    <td class="py-2.5 px-4 text-right text-gray-300">${item.vol}</td>
+                    <td class="py-2.5 px-4 text-right text-gray-300">${item.cap}</td>
+                    <td class="py-2.5 px-4 text-center"><button class="px-2 py-1 bg-blue-600/20 text-blue-400 rounded hover:bg-blue-600 hover:text-white transition text-[10px]">Analisis</button></td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
+
+            const totalPages = Math.ceil(stockDataList.length / itemsPerPage);
+            document.getElementById('stockPaginationInfo').textContent = `Menampilkan halaman ${page} dari ${totalPages} (${itemsPerPage} item per halaman)`;
+            let btnHtml = '';
+            for (let i = 1; i <= totalPages; i++) {
+                btnHtml += `<button onclick="renderStockTable(${i})" class="px-2.5 py-1 rounded text-xs ${i === page ? 'bg-primary text-white font-bold' : 'bg-[#0b0f19] text-gray-400 hover:text-white'}">${i}</button>`;
+            }
+            document.getElementById('stockPaginationButtons').innerHTML = btnHtml;
+        }
+
+        function filterStockTable() {
+            const keyword = document.getElementById('searchStockInput').value.toLowerCase();
+            const filtered = stockDataList.filter(s => s.code.toLowerCase().includes(keyword) || s.name.toLowerCase().includes(keyword));
+            const tbody = document.getElementById('stockTableBody');
+            if (!tbody) return;
+            let html = '';
+            filtered.forEach((item, idx) => {
+                html += `<tr class="hover:bg-gray-900/55 transition cursor-pointer" onclick="changeChartSymbol('${item.code}')">
+                    <td class="py-2.5 px-4 text-gray-500">${idx + 1}</td>
+                    <td class="py-2.5 px-4 font-bold text-white">${item.code} <span class="text-gray-400 font-normal text-[10px]">${item.name}</span></td>
+                    <td class="py-2.5 px-4 text-right font-bold text-white">Rp ${item.price.toLocaleString()}</td>
+                    <td class="py-2.5 px-4 text-right ${item.change >= 0 ? 'text-emerald-400' : 'text-rose-400'}">${item.change}%</td>
+                    <td class="py-2.5 px-4 text-right text-gray-300">${item.vol}</td>
+                    <td class="py-2.5 px-4 text-right text-gray-300">${item.cap}</td>
+                    <td class="py-2.5 px-4 text-center"><button class="px-2 py-1 bg-blue-600/20 text-blue-400 rounded text-[10px]">Analisis</button></td>
+                </tr>`;
+            });
+            tbody.innerHTML = html;
         }
     </script>
 </body>
