@@ -1469,35 +1469,30 @@
             const btn = document.getElementById('stock-ticks-toggle');
             if(btn) btn.innerText = isStockTicksPaused ? 'RESUME' : 'PAUSE';
         }
-        // Inisialisasi Chart.js Lengkap
-        function initCharts() {
-            // 1. Crypto Index Chart
+
+        // Deklarasi Variabel Instance Chart Global
+        let cryptoIndexChartInstance = null;
+        let intradayTelemetryChartInstance = null;
+        let globalMarketChartInstance = null;
+
+        // Inisialisasi Seluruh Chart
+        function initAllCharts() {
+            // 1. Chart Crypto Market (Live Crypto Index Tracker)
             const ctxCrypto = document.getElementById('cryptoIndexChart');
             if (ctxCrypto) {
-                new Chart(ctxCrypto.getContext('2d'), {
+                cryptoIndexChartInstance = new Chart(ctxCrypto.getContext('2d'), {
                     type: 'line',
                     data: {
-                        labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Sekarang'],
-                        datasets: [{ data: [65100, 65800, 66200, 65900, 66800, 67100, 67420], borderColor: '#38BDF8', backgroundColor: 'rgba(56, 189, 248, 0.1)', borderWidth: 2, fill: true, tension: 0.4 }]
-                    },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.05)' } } } }
-                });
-            }
-            // 2. Intraday Telemetry Chart (Stock Exchange)
-            const ctxIntraday = document.getElementById('intradayTelemetryChart');
-            if (ctxIntraday) {
-                new Chart(ctxIntraday.getContext('2d'), {
-                    type: 'line',
-                    data: {
-                        labels: ['09:30', '10:00', '11:00', '12:00', '13:00', '14:00', '16:00'],
+                        labels: ['10:00', '10:10', '10:20', '10:30', '10:40', '10:50', '11:00'],
                         datasets: [{
-                            label: 'NVDA Telemetry',
-                            data: [224.5, 226.2, 225.8, 227.4, 228.1, 228.5, 228.87],
-                            borderColor: '#4F46E5',
-                            backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                            borderWidth: 2,
+                            label: 'Crypto Composite Index ($)',
+                            data: [67100, 67250, 67180, 67320, 67290, 67390, 67420],
+                            borderColor: '#10B981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
                             fill: true,
-                            tension: 0.3
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointRadius: 2
                         }]
                     },
                     options: {
@@ -1505,24 +1500,29 @@
                         maintainAspectRatio: false,
                         plugins: { legend: { display: false } },
                         scales: {
-                            x: { grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { color: '#888', font: { family: 'monospace', size: 10 } } },
-                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#888', font: { family: 'monospace', size: 10 } } }
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9CA3AF', font: { size: 10 } } },
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9CA3AF', font: { size: 10 } } }
                         }
                     }
                 });
             }
-            // 3. Global Market Bar Chart
-            const ctxGlobal = document.getElementById('globalMarketChart');
-            if (ctxGlobal) {
-                new Chart(ctxGlobal.getContext('2d'), {
-                    type: 'bar',
+
+            // 2. Chart Stock Exchange (Intraday Telemetry Stream)
+            const ctxStock = document.getElementById('intradayTelemetryChart');
+            if (ctxStock) {
+                intradayTelemetryChartInstance = new Chart(ctxStock.getContext('2d'), {
+                    type: 'line',
                     data: {
-                        labels: ['Amerika Serikat', 'Eropa (Stoxx)', 'Jepang (Nikkei)', 'Asia Tenggara', 'Komoditas Global', 'Kripto Komposit'],
+                        labels: ['09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30'],
                         datasets: [{
-                            label: 'Performa Likuiditas (%)',
-                            data: [3.4, 1.8, 4.2, 2.1, -0.8, 5.6],
-                            backgroundColor: ['#4F46E5', '#38BDF8', '#10B981', '#F59E0B', '#EF4444', '#EC4899'],
-                            borderRadius: 6
+                            label: 'NVDA Intraday Feed',
+                            data: [225.5, 226.8, 226.1, 227.4, 227.9, 228.2, 228.87],
+                            borderColor: '#4F46E5',
+                            backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            borderWidth: 2,
+                            pointRadius: 2
                         }]
                     },
                     options: {
@@ -1530,31 +1530,100 @@
                         maintainAspectRatio: false,
                         plugins: { legend: { display: false } },
                         scales: {
-                            x: { grid: { display: false }, ticks: { color: '#aaa', font: { size: 11 } } },
-                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#aaa', font: { size: 11 } } }
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9CA3AF', font: { size: 10 } } },
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9CA3AF', font: { size: 10 } } }
+                        }
+                    }
+                });
+            }
+
+            // 3. Chart Global Market
+            const ctxGlobal = document.getElementById('globalMarketChart');
+            if (ctxGlobal) {
+                globalMarketChartInstance = new Chart(ctxGlobal.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'],
+                        datasets: [{
+                            label: 'Indeks Likuiditas Global ($B)',
+                            data: [1020, 1045, 1035, 1060, 1055, 1080, 1084],
+                            borderColor: '#38BDF8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointRadius: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9CA3AF', font: { size: 10 } } },
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9CA3AF', font: { size: 10 } } }
                         }
                     }
                 });
             }
         }
-        // Inisialisasi awal saat halaman dimuat
-        document.addEventListener('DOMContentLoaded', () => {
+
+        // Fungsi Auto Update untuk Seluruh Grafik Secara Real-Time (Crypto, Stock, Global Market)
+        function startAutomaticChartUpdates() {
+            setInterval(() => {
+                const nowTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+                // 1. Update Crypto Index Chart
+                if (cryptoIndexChartInstance) {
+                    const labels = cryptoIndexChartInstance.data.labels;
+                    const data = cryptoIndexChartInstance.data.datasets[0].data;
+                    labels.shift();
+                    labels.push(nowTime);
+                    data.shift();
+                    const lastVal = data[data.length - 1];
+                    const newVal = Math.round((lastVal + (Math.random() - 0.48) * 30) * 100) / 100;
+                    data.push(newVal);
+                    cryptoIndexChartInstance.update('none');
+                    const indexValEl = document.getElementById('live-index-val');
+                    if (indexValEl) indexValEl.innerText = `$${newVal.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
+                }
+
+                // 2. Update Intraday Stock Chart
+                if (intradayTelemetryChartInstance) {
+                    const stockLabels = intradayTelemetryChartInstance.data.labels;
+                    const stockData = intradayTelemetryChartInstance.data.datasets[0].data;
+                    stockLabels.shift();
+                    stockLabels.push(nowTime);
+                    stockData.shift();
+                    const lastStockVal = stockData[stockData.length - 1];
+                    const newStockVal = Math.round((lastStockVal + (Math.random() - 0.49) * 0.5) * 100) / 100;
+                    stockData.push(newStockVal);
+                    intradayTelemetryChartInstance.update('none');
+                }
+
+                // 3. Update Global Market Chart
+                if (globalMarketChartInstance) {
+                    const globalLabels = globalMarketChartInstance.data.labels;
+                    const globalData = globalMarketChartInstance.data.datasets[0].data;
+                    globalLabels.shift();
+                    globalLabels.push(nowTime);
+                    globalData.shift();
+                    const lastGlobalVal = globalData[globalData.length - 1];
+                    const newGlobalVal = parseFloat((lastGlobalVal + (Math.random() - 0.48) * 3).toFixed(2));
+                    globalData.push(newGlobalVal);
+                    globalMarketChartInstance.update('none');
+                }
+
+            }, 2000);
+        }
+
+        // Jalankan inisialisasi awal dan auto-update saat halaman dimuat
+        window.addEventListener('DOMContentLoaded', () => {
             renderCryptoTable();
-            renderStockTable(stockDirectory28);
+            renderStockTable();
             renderGlobalMarketTable();
-            initCharts();
-            
-            // Inisialisasi ticker awal
-            const marqueeContainer = document.getElementById('live-ticks-ticker');
-            if(marqueeContainer) {
-                marqueeContainer.innerHTML = `
-                    <div class="flex items-center space-x-2"><span class="font-bold text-white">BTC/USDT</span><span class="text-emerald-400">$67,420.50</span></div>
-                    <div class="flex items-center space-x-2"><span class="font-bold text-white">ETH/USDT</span><span class="text-emerald-400">$3,520.10</span></div>
-                    <div class="flex items-center space-x-2"><span class="font-bold text-white">NVDA</span><span class="text-emerald-400">$228.87</span></div>
-                    <div class="flex items-center space-x-2"><span class="font-bold text-white">S&P 500</span><span class="text-emerald-400">5,584.20</span></div>
-                    <div class="flex items-center space-x-2"><span class="font-bold text-white">GOLD</span><span class="text-emerald-400">$2,385.40</span></div>
-                `;
-            }
+            initAllCharts();
+            startAutomaticChartUpdates();
         });
     </script>
 </body>
