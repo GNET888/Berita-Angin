@@ -822,18 +822,18 @@
                 </div>
             </div>
             
-            <!-- Bagian Bawah Stock Exchange: Direktori Saham & AI Sentiment -->
+            <!-- Bagian Bawah Stock Exchange: Direktori Saham (Kiri) & Stock Sector Distribution (Kanan Sejajar) -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
                 
-                <!-- Kolom Kiri: U.S. Stock Directory & Fundamental Matrix (12 Halaman) -->
-                <div class="lg:col-span-2 bg-card-dark rounded-2xl border border-card-border overflow-hidden shadow-xl p-5 space-y-4">
+                <!-- Kolom Kiri (2 Kolom): U.S. Stock Directory & Fundamental Matrix (5 Halaman, 10 Baris per Halaman) -->
+                <div class="lg:col-span-2 bg-card-dark rounded-2xl border border-card-border overflow-hidden shadow-xl p-6 space-y-5">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-card-border pb-4">
                         <div>
                             <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
                                 <i class="fa-solid fa-building-columns text-brand-accent"></i>
-                                <span>U.S. STOCK DIRECTORY & FUNDAMENTAL MATRIX (12 HALAMAN)</span>
+                                <span>U.S. STOCK DIRECTORY & FUNDAMENTAL MATRIX (5 HALAMAN)</span>
                             </h3>
-                            <p class="text-xs text-gray-400 mt-0.5">Indexed equities across NYSE & NASDAQ exchanges with extended 12-page telemetry.</p>
+                            <p class="text-xs text-gray-400 mt-0.5">Indexed equities across NYSE & NASDAQ exchanges with 10 rows telemetry per page.</p>
                         </div>
                         <div class="relative w-full sm:w-64">
                             <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
@@ -843,46 +843,108 @@
                         </div>
                     </div>
                     
-                    <div class="overflow-x-auto">
+                    <div class="overflow-x-auto min-h-[340px]">
                         <table class="w-full text-left border-collapse">
                             <thead>
                                 <tr class="border-b border-card-border text-gray-400 text-[11px] uppercase bg-black/50 font-mono">
-                                    <th class="py-3 px-4">SYMBOL</th>
-                                    <th class="py-3 px-4">COMPANY</th>
-                                    <th class="py-3 px-4">SECTOR</th>
-                                    <th class="py-3 px-4 text-right">PRICE ($)</th>
-                                    <th class="py-3 px-4 text-right">CHANGE (%)</th>
-                                    <th class="py-3 px-4 text-right">MARKET CAP</th>
-                                    <th class="py-3 px-4 text-center">ACTION</th>
+                                    <th class="py-3.5 px-4">SYMBOL</th>
+                                    <th class="py-3.5 px-4">COMPANY</th>
+                                    <th class="py-3.5 px-4">SECTOR</th>
+                                    <th class="py-3.5 px-4 text-right">PRICE ($)</th>
+                                    <th class="py-3.5 px-4 text-right">CHANGE (%)</th>
+                                    <th class="py-3.5 px-4 text-right">MARKET CAP</th>
+                                    <th class="py-3.5 px-4 text-center">ACTION</th>
                                 </tr>
                             </thead>
                             <tbody id="stock-table-body" class="divide-y divide-card-border text-gray-200 text-xs font-mono"></tbody>
                         </table>
                     </div>
                     
-                    <div class="flex flex-col sm:flex-row items-center justify-between pt-2 text-xs text-gray-400 gap-2">
-                        <span id="stock-pagination-info">Showing 1-4 of 48 entries (Page 1 of 12)</span>
+                    <div class="flex flex-col sm:flex-row items-center justify-between pt-3 border-t border-card-border text-xs text-gray-400 gap-2">
+                        <span id="stock-pagination-info">Showing 1-10 of 50 entries (Page 1 of 5)</span>
                         <div class="flex items-center space-x-1 overflow-x-auto py-1" id="stock-pagination-controls">
-                            <button onclick="changeStockPage(currentStockPage - 1)" class="px-2 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">Prev</button>
+                            <button onclick="changeStockPage(currentStockPage - 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">Prev</button>
                             <button onclick="changeStockPage(1)" id="stock-page-1-btn" class="px-2.5 py-1 bg-brand-primary text-white rounded font-bold text-[10px]">1</button>
                             <button onclick="changeStockPage(2)" id="stock-page-2-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">2</button>
                             <button onclick="changeStockPage(3)" id="stock-page-3-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">3</button>
                             <button onclick="changeStockPage(4)" id="stock-page-4-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">4</button>
                             <button onclick="changeStockPage(5)" id="stock-page-5-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">5</button>
-                            <button onclick="changeStockPage(6)" id="stock-page-6-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">6</button>
-                            <button onclick="changeStockPage(7)" id="stock-page-7-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">7</button>
-                            <button onclick="changeStockPage(8)" id="stock-page-8-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">8</button>
-                            <button onclick="changeStockPage(9)" id="stock-page-9-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">9</button>
-                            <button onclick="changeStockPage(10)" id="stock-page-10-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">10</button>
-                            <button onclick="changeStockPage(11)" id="stock-page-11-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">11</button>
-                            <button onclick="changeStockPage(12)" id="stock-page-12-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">12</button>
-                            <button onclick="changeStockPage(currentStockPage + 1)" class="px-2 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">Next</button>
+                            <button onclick="changeStockPage(currentStockPage + 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">Next</button>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Kolom Kanan: AI Sentiment & Live Ticks -->
+                <!-- Kolom Kanan (1 Kolom): Stock Sector Distribution & Live Streamed Ticks Sejajar di Samping Kanan -->
                 <div class="space-y-6">
+                    <!-- ⚡ STOCK SECTOR DISTRIBUTION -->
+                    <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
+                        <div class="flex items-center justify-between border-b border-card-border pb-3">
+                            <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-1.5">
+                                <i class="fa-solid fa-pie-chart text-brand-accent"></i>
+                                <span>STOCK SECTOR DISTRIBUTION</span>
+                            </h3>
+                            <span class="px-2 py-0.5 rounded bg-brand-primary/10 border border-brand-primary/30 text-brand-accent text-[10px] font-mono font-bold">LIVE</span>
+                        </div>
+                        <div class="space-y-2 font-mono text-[11px]">
+                            <div class="flex justify-between items-center bg-black/40 p-2 rounded-lg border border-card-border">
+                                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#4F46E5] inline-block"></span><span class="text-gray-300">Semiconductor & Tech</span></span>
+                                <span class="font-bold text-white">35%</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-black/40 p-2 rounded-lg border border-card-border">
+                                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#10B981] inline-block"></span><span class="text-gray-300">Financial Services</span></span>
+                                <span class="font-bold text-white">22%</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-black/40 p-2 rounded-lg border border-card-border">
+                                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#F59E0B] inline-block"></span><span class="text-gray-300">Healthcare & Biotech</span></span>
+                                <span class="font-bold text-white">18%</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-black/40 p-2 rounded-lg border border-card-border">
+                                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#38BDF8] inline-block"></span><span class="text-gray-300">Consumer & Retail</span></span>
+                                <span class="font-bold text-white">15%</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-black/40 p-2 rounded-lg border border-card-border">
+                                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#EC4899] inline-block"></span><span class="text-gray-300">Energy & Industrials</span></span>
+                                <span class="font-bold text-white">10%</span>
+                            </div>
+                        </div>
+                        <div class="relative h-48 w-full bg-black/50 border border-card-border rounded-xl p-2 flex items-center justify-center">
+                            <canvas id="stockSectorPieChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- LIVE STREAMED TICKS -->
+                    <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl terminal-glow font-mono space-y-3">
+                        <div class="flex items-center justify-between border-b border-card-border pb-3 text-xs">
+                            <div class="flex items-center space-x-2">
+                                <span class="relative flex h-2 w-2">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                </span>
+                                <span class="font-bold text-emerald-400 uppercase tracking-wider">LIVE STREAMED TICKS</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-[10px]">
+                                <span class="px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">● LIVE</span>
+                                <button id="stock-ticks-toggle" type="button" onclick="toggleStockLiveTicks()" class="px-2 py-0.5 rounded bg-black border border-card-border text-gray-300 hover:text-white transition">PAUSE</button>
+                            </div>
+                        </div>
+                        
+                        <div class="overflow-x-auto max-h-40 overflow-y-auto">
+                            <table class="w-full text-left text-[11px]">
+                                <thead class="sticky top-0 bg-card-dark z-10">
+                                    <tr class="text-gray-500 border-b border-card-border uppercase tracking-wider">
+                                        <th class="py-2 pr-2">TIME</th>
+                                        <th class="py-2 px-2">SYM</th>
+                                        <th class="py-2 px-2 text-right">PRICE</th>
+                                        <th class="py-2 px-2 text-right">SIZE</th>
+                                        <th class="py-2 pl-2 text-right">EXCH</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stock-live-ticks-body" class="divide-y divide-card-border/70"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- AI SENTIMENT -->
                     <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl terminal-glow font-mono space-y-4">
                         <div class="flex items-center justify-between border-b border-card-border pb-3 text-xs">
                             <span class="font-bold text-purple-400 uppercase tracking-wider flex items-center space-x-1.5">
@@ -903,46 +965,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="p-3 bg-black/60 border border-card-border rounded-xl space-y-2">
-                                <p class="text-gray-200 font-sans text-xs leading-relaxed">Semiconductor Supply Chain Stabilizes Amid Rising Enterprise Demand</p>
-                                <div class="flex items-center justify-between pt-1 border-t border-card-border/60 text-[10px]">
-                                    <span class="text-gray-500">MacroPulse</span>
-                                    <div class="flex items-center space-x-2">
-                                        <span class="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold border border-emerald-500/20">Bullish</span>
-                                        <span class="text-brand-accent">CONF: 89.1%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl terminal-glow font-mono space-y-3">
-                        <div class="flex items-center justify-between border-b border-card-border pb-3 text-xs">
-                            <div class="flex items-center space-x-2">
-                                <span class="relative flex h-2 w-2">
-                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                                </span>
-                                <span class="font-bold text-emerald-400 uppercase tracking-wider">LIVE STREAMED TICKS</span>
-                            </div>
-                            <div class="flex items-center space-x-2 text-[10px]">
-                                <span class="px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">● LIVE</span>
-                                <button id="stock-ticks-toggle" type="button" onclick="toggleStockLiveTicks()" class="px-2 py-0.5 rounded bg-black border border-card-border text-gray-300 hover:text-white transition">PAUSE</button>
-                            </div>
-                        </div>
-                        
-                        <div class="overflow-x-auto max-h-48 overflow-y-auto">
-                            <table class="w-full text-left text-[11px]">
-                                <thead class="sticky top-0 bg-card-dark z-10">
-                                    <tr class="text-gray-500 border-b border-card-border uppercase tracking-wider">
-                                        <th class="py-2 pr-2">TIME</th>
-                                        <th class="py-2 px-2">SYM</th>
-                                        <th class="py-2 px-2 text-right">PRICE</th>
-                                        <th class="py-2 px-2 text-right">SIZE</th>
-                                        <th class="py-2 pl-2 text-right">EXCH</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="stock-live-ticks-body" class="divide-y divide-card-border/70"></tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -1016,48 +1038,104 @@
                 </div>
             </div>
             
-            <!-- Tabel Direktori Global -->
-            <div class="bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-xl space-y-4">
-                <div class="p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-card-border">
-                    <div>
-                        <h3 class="text-base font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-                            <i class="fa-solid fa-chart-line text-brand-accent"></i>
-                            <span>28 DIREKTORI INDEKS & KOMODITAS GLOBAL UTAMA</span>
-                        </h3>
-                        <p class="text-xs text-gray-400 mt-0.5">Daftar lengkap 28 indeks bursa saham internasional, komoditas energi, logam mulia, dan nilai tukar.</p>
+            <!-- LAYOUT UTAMA: Tabel Direktori Global (Kiri) & MACRO ASSET DISTRIBUTION (Bar Chart Otomatis) + REAL-TIME ORDER BOOK VISUALIZER & TICK MINI CHART (Samping Kanan) -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+                
+                <!-- Kolom Kiri (2 Kolom): Tabel 28 Direktori Indeks & Komoditas Global Utama -->
+                <div class="lg:col-span-2 bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-xl space-y-4">
+                    <div class="p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-card-border">
+                        <div>
+                            <h3 class="text-base font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+                                <i class="fa-solid fa-chart-line text-brand-accent"></i>
+                                <span>28 DIREKTORI INDEKS & KOMODITAS GLOBAL UTAMA</span>
+                            </h3>
+                            <p class="text-xs text-gray-400 mt-0.5">Daftar lengkap 28 indeks bursa saham internasional, komoditas energi, logam mulia, dan nilai tukar.</p>
+                        </div>
+                        <div class="relative w-full sm:w-64">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 text-xs">
+                                <i class="fa-solid fa-search"></i>
+                            </span>
+                            <input type="text" id="global-market-search" oninput="filterGlobalMarketDirectory()" placeholder="Cari indeks atau komoditas..." class="w-full bg-black border border-card-border rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-brand-accent">
+                        </div>
                     </div>
-                    <div class="relative w-full sm:w-64">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 text-xs">
-                            <i class="fa-solid fa-search"></i>
-                        </span>
-                        <input type="text" id="global-market-search" oninput="filterGlobalMarketDirectory()" placeholder="Cari indeks atau komoditas..." class="w-full bg-black border border-card-border rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-brand-accent">
+                    
+                    <div class="overflow-x-auto pb-2">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-card-border text-gray-400 text-xs uppercase tracking-wider bg-black/50">
+                                    <th class="py-3 px-6">INDÉKS / ASET</th>
+                                    <th class="py-3 px-6">KAWASAN / WILAYAH</th>
+                                    <th class="py-3 px-6">KATEGORI</th>
+                                    <th class="py-3 px-6 text-right">NILAI TERKINI</th>
+                                    <th class="py-3 px-6 text-right">PERUBAHAN 24J</th>
+                                    <th class="py-3 px-6 text-center">STATUS SESI</th>
+                                </tr>
+                            </thead>
+                            <tbody id="global-market-table-body" class="divide-y divide-card-border text-gray-200 text-sm"></tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="flex items-center justify-between px-6 py-4 border-t border-card-border bg-black/40 text-xs">
+                        <span id="global-pagination-info" class="text-gray-400">Menampilkan 1-10 dari 28 direktori</span>
+                        <div class="flex items-center space-x-1" id="global-pagination-controls">
+                            <button onclick="changeGlobalPage(globalCurrentPage - 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">Prev</button>
+                            <button onclick="changeGlobalPage(1)" id="global-page-1-btn" class="px-2.5 py-1 bg-brand-primary text-white rounded font-bold">1</button>
+                            <button onclick="changeGlobalPage(2)" id="global-page-2-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">2</button>
+                            <button onclick="changeGlobalPage(3)" id="global-page-3-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">3</button>
+                            <button onclick="changeGlobalPage(globalCurrentPage + 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">Next</button>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="overflow-x-auto pb-2">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="border-b border-card-border text-gray-400 text-xs uppercase tracking-wider bg-black/50">
-                                <th class="py-3 px-6">INDÉKS / ASET</th>
-                                <th class="py-3 px-6">KAWASAN / WILAYAH</th>
-                                <th class="py-3 px-6">KATEGORI</th>
-                                <th class="py-3 px-6 text-right">NILAI TERKINI</th>
-                                <th class="py-3 px-6 text-right">PERUBAHAN 24J</th>
-                                <th class="py-3 px-6 text-center">STATUS SESI</th>
-                            </tr>
-                        </thead>
-                        <tbody id="global-market-table-body" class="divide-y divide-card-border text-gray-200 text-sm"></tbody>
-                    </table>
-                </div>
-                
-                <div class="flex items-center justify-between px-6 py-4 border-t border-card-border bg-black/40 text-xs">
-                    <span id="global-pagination-info" class="text-gray-400">Menampilkan 1-10 dari 28 direktori</span>
-                    <div class="flex items-center space-x-1" id="global-pagination-controls">
-                        <button onclick="changeGlobalPage(globalCurrentPage - 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">Prev</button>
-                        <button onclick="changeGlobalPage(1)" id="global-page-1-btn" class="px-2.5 py-1 bg-brand-primary text-white rounded font-bold">1</button>
-                        <button onclick="changeGlobalPage(2)" id="global-page-2-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">2</button>
-                        <button onclick="changeGlobalPage(3)" id="global-page-3-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">3</button>
-                        <button onclick="changeGlobalPage(globalCurrentPage + 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">Next</button>
+                <!-- Kolom Kanan (1 Kolom): MACRO ASSET DISTRIBUTION (MODEL BAR CHART OTOMATIS) & ORDER BOOK -->
+                <div class="space-y-6">
+                    <!-- ⚡ MACRO ASSET DISTRIBUTION (Bar Chart dengan Auto-Update Real-time) -->
+                    <div class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4">
+                        <div class="flex items-center justify-between border-b border-card-border pb-3">
+                            <h3 class="text-base font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+                                <i class="fa-solid fa-chart-column text-brand-accent"></i>
+                                <span>MACRO ASSET DISTRIBUTION</span>
+                            </h3>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 text-[10px] animate-pulse">● LIVE UPDATE</span>
+                        </div>
+                        <p class="text-xs text-gray-400">Proporsi alokasi likuiditas makro global per sektor instrumen dengan pembaruan otomatis.</p>
+                        <div class="relative h-52 w-full">
+                            <canvas id="macroAssetBarChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- REAL-TIME ORDER BOOK VISUALIZER & TICK MINI CHART -->
+                    <div class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4 terminal-glow">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-card-border pb-3 gap-2">
+                            <div>
+                                <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+                                    <i class="fa-solid fa-wave-square text-brand-accent"></i>
+                                    <span>ORDER BOOK VISUALIZER & TICK MINI CHART</span>
+                                </h3>
+                                <p class="text-[10px] text-gray-400 mt-0.5">Visualisasi kedalaman likuiditas & grafik tick mini.</p>
+                            </div>
+                            <span class="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono rounded-lg">99.4%</span>
+                        </div>
+                        <div class="space-y-3">
+                            <!-- Mini Order Book -->
+                            <div class="bg-black/50 p-3 rounded-xl border border-card-border space-y-2 font-mono text-xs">
+                                <div class="flex justify-between text-[11px] text-gray-400 font-bold border-b border-card-border pb-1">
+                                    <span>GLOBAL BID / ASK</span>
+                                    <span class="text-emerald-400">SPREAD: 0.04</span>
+                                </div>
+                                <div id="global-mini-orderbook" class="space-y-1 max-h-24 overflow-y-auto">
+                                    <!-- Diisi JS -->
+                                </div>
+                            </div>
+                            <!-- Mini Tick Chart -->
+                            <div class="bg-black/50 p-3 rounded-xl border border-card-border space-y-2">
+                                <div class="flex justify-between text-[11px] text-gray-400 font-bold border-b border-card-border pb-1 font-mono">
+                                    <span>GLOBAL TICK STREAM</span>
+                                    <span class="text-brand-accent">HIGH</span>
+                                </div>
+                                <div class="relative h-24 w-full">
+                                    <canvas id="globalMiniTickChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1260,85 +1338,73 @@
             document.getElementById('crypto-last-updated').innerText = 'Terakhir diperbarui: Baru saja';
         }
         
-        // Stock Directory 48 Data & 12 Pages
+        // Stock Directory 50 Data & 5 Pages (10 baris per halaman)
         const stockDirectoryPages = {
             1: [
                 { symbol: 'NVDA', name: 'NVIDIA Corporation', sector: 'Semiconductor', price: 228.87, change: '+2.45%', mktCap: '$3.12T' },
                 { symbol: 'AAPL', name: 'Apple Inc.', sector: 'Consumer Electronics', price: 224.23, change: '+0.85%', mktCap: '$3.41T' },
                 { symbol: 'MSFT', name: 'Microsoft Corporation', sector: 'Software & Cloud', price: 445.60, change: '+1.15%', mktCap: '$3.32T' },
-                { symbol: 'AMZN', name: 'Amazon.com, Inc.', sector: 'E-Commerce & Cloud', price: 186.50, change: '-0.40%', mktCap: '$1.94T' }
-            ],
-            2: [
+                { symbol: 'AMZN', name: 'Amazon.com, Inc.', sector: 'E-Commerce & Cloud', price: 186.50, change: '-0.40%', mktCap: '$1.94T' },
                 { symbol: 'GOOGL', name: 'Alphabet Inc.', sector: 'Internet Services', price: 178.90, change: '+1.30%', mktCap: '$2.21T' },
                 { symbol: 'META', name: 'Meta Platforms, Inc.', sector: 'Social Media & AI', price: 512.40, change: '+3.10%', mktCap: '$1.30T' },
                 { symbol: 'TSLA', name: 'Tesla, Inc.', sector: 'EV & Clean Energy', price: 248.30, change: '-1.85%', mktCap: '$789B' },
-                { symbol: 'AMD', name: 'Advanced Micro Devices', sector: 'Semiconductor', price: 156.70, change: '+4.20%', mktCap: '$253B' }
-            ],
-            3: [
+                { symbol: 'AMD', name: 'Advanced Micro Devices', sector: 'Semiconductor', price: 156.70, change: '+4.20%', mktCap: '$253B' },
                 { symbol: 'NFLX', name: 'Netflix, Inc.', sector: 'Entertainment', price: 685.20, change: '+1.65%', mktCap: '$295B' },
-                { symbol: 'INTC', name: 'Intel Corporation', sector: 'Semiconductor', price: 21.40, change: '-2.10%', mktCap: '$91B' },
-                { symbol: 'PYPL', name: 'PayPal Holdings', sector: 'Financial Tech', price: 68.30, change: '+0.45%', mktCap: '$72B' },
-                { symbol: 'UBER', name: 'Uber Technologies', sector: 'Transportation Tech', price: 74.50, change: '+2.10%', mktCap: '$156B' }
+                { symbol: 'INTC', name: 'Intel Corporation', sector: 'Semiconductor', price: 21.40, change: '-2.10%', mktCap: '$91B' }
             ],
-            4: [
+            2: [
+                { symbol: 'PYPL', name: 'PayPal Holdings', sector: 'Financial Tech', price: 68.30, change: '+0.45%', mktCap: '$72B' },
+                { symbol: 'UBER', name: 'Uber Technologies', sector: 'Transportation Tech', price: 74.50, change: '+2.10%', mktCap: '$156B' },
                 { symbol: 'JPM', name: 'JPMorgan Chase & Co.', sector: 'Banking', price: 210.10, change: '+0.50%', mktCap: '$602B' },
                 { symbol: 'V', name: 'Visa Inc.', sector: 'Financial Services', price: 275.40, change: '+0.30%', mktCap: '$560B' },
                 { symbol: 'WMT', name: 'Walmart Inc.', sector: 'Retail', price: 72.80, change: '+0.90%', mktCap: '$584B' },
-                { symbol: 'DIS', name: 'The Walt Disney Company', sector: 'Entertainment', price: 95.20, change: '-0.75%', mktCap: '$174B' }
-            ],
-            5: [
+                { symbol: 'DIS', name: 'The Walt Disney Company', sector: 'Entertainment', price: 95.20, change: '-0.75%', mktCap: '$174B' },
                 { symbol: 'BAC', name: 'Bank of America Corp.', sector: 'Banking', price: 39.80, change: '+0.40%', mktCap: '$312B' },
                 { symbol: 'XOM', name: 'Exxon Mobil Corporation', sector: 'Energy / Oil', price: 114.50, change: '-0.60%', mktCap: '$458B' },
                 { symbol: 'CVX', name: 'Chevron Corporation', sector: 'Energy / Oil', price: 148.20, change: '-0.25%', mktCap: '$276B' },
                 { symbol: 'KO', name: 'The Coca-Cola Company', sector: 'Consumer Goods', price: 68.40, change: '+0.35%', mktCap: '$294B' }
             ],
-            6: [
+            3: [
                 { symbol: 'PEP', name: 'PepsiCo, Inc.', sector: 'Consumer Goods', price: 172.30, change: '+0.15%', mktCap: '$237B' },
                 { symbol: 'PFE', name: 'Pfizer Inc.', sector: 'Healthcare', price: 28.50, change: '-1.10%', mktCap: '$161B' },
                 { symbol: 'JNJ', name: 'Johnson & Johnson', sector: 'Healthcare', price: 162.40, change: '+0.55%', mktCap: '$391B' },
-                { symbol: 'ABBV', name: 'AbbVie Inc.', sector: 'Healthcare', price: 195.80, change: '+1.20%', mktCap: '$346B' }
-            ],
-            7: [
+                { symbol: 'ABBV', name: 'AbbVie Inc.', sector: 'Healthcare', price: 195.80, change: '+1.20%', mktCap: '$346B' },
                 { symbol: 'TMO', name: 'Thermo Fisher Scientific', sector: 'Healthcare Science', price: 580.10, change: '+0.80%', mktCap: '$224B' },
                 { symbol: 'COST', name: 'Costco Wholesale Corp.', sector: 'Retail', price: 890.50, change: '+1.45%', mktCap: '$394B' },
                 { symbol: 'AVGO', name: 'Broadcom Inc.', sector: 'Semiconductor', price: 165.20, change: '+2.90%', mktCap: '$770B' },
-                { symbol: 'CSCO', name: 'Cisco Systems, Inc.', sector: 'Networking', price: 48.90, change: '-0.30%', mktCap: '$198B' }
-            ],
-            8: [
+                { symbol: 'CSCO', name: 'Cisco Systems, Inc.', sector: 'Networking', price: 48.90, change: '-0.30%', mktCap: '$198B' },
                 { symbol: 'ADBE', name: 'Adobe Inc.', sector: 'Software', price: 535.40, change: '-1.25%', mktCap: '$240B' },
-                { symbol: 'CRM', name: 'Salesforce, Inc.', sector: 'Cloud Software', price: 254.80, change: '+0.70%', mktCap: '$246B' },
-                { symbol: 'QCOM', name: 'QUALCOMM Incorporated', sector: 'Semiconductor', price: 172.60, change: '+1.80%', mktCap: '$192B' },
-                { symbol: 'TXN', name: 'Texas Instruments', sector: 'Semiconductor', price: 198.40, change: '+0.40%', mktCap: '$180B' }
+                { symbol: 'CRM', name: 'Salesforce, Inc.', sector: 'Cloud Software', price: 254.80, change: '+0.70%', mktCap: '$246B' }
             ],
-            9: [
+            4: [
+                { symbol: 'QCOM', name: 'QUALCOMM Incorporated', sector: 'Semiconductor', price: 172.60, change: '+1.80%', mktCap: '$192B' },
+                { symbol: 'TXN', name: 'Texas Instruments', sector: 'Semiconductor', price: 198.40, change: '+0.40%', mktCap: '$180B' },
                 { symbol: 'ACN', name: 'Accenture plc', sector: 'IT Services', price: 335.20, change: '+0.60%', mktCap: '$210B' },
                 { symbol: 'LIN', name: 'Linde plc', sector: 'Chemicals', price: 450.10, change: '+0.20%', mktCap: '$218B' },
                 { symbol: 'NKE', name: 'NIKE, Inc.', sector: 'Apparel & Retail', price: 82.40, change: '-1.50%', mktCap: '$124B' },
-                { symbol: 'MCD', name: 'McDonald\'s Corporation', sector: 'Restaurants', price: 295.60, change: '+0.45%', mktCap: '$213B' }
-            ],
-            10: [
+                { symbol: 'MCD', name: 'McDonald\'s Corporation', sector: 'Restaurants', price: 295.60, change: '+0.45%', mktCap: '$213B' },
                 { symbol: 'IBM', name: 'International Business Machines', sector: 'Technology', price: 212.80, change: '+1.10%', mktCap: '$196B' },
                 { symbol: 'SBUX', name: 'Starbucks Corporation', sector: 'Restaurants', price: 94.20, change: '-0.80%', mktCap: '$106B' },
                 { symbol: 'GE', name: 'GE Aerospace', sector: 'Industrial Aerospace', price: 175.40, change: '+2.30%', mktCap: '$189B' },
                 { symbol: 'CAT', name: 'Caterpillar Inc.', sector: 'Industrial Heavy', price: 362.50, change: '+1.05%', mktCap: '$184B' }
             ],
-            11: [
+            5: [
                 { symbol: 'BA', name: 'The Boeing Company', sector: 'Aerospace', price: 168.40, change: '-2.40%', mktCap: '$104B' },
                 { symbol: 'HON', name: 'Honeywell International', sector: 'Industrial Conglomerate', price: 205.30, change: '+0.30%', mktCap: '$134B' },
                 { symbol: 'UPS', name: 'United Parcel Service', sector: 'Logistics', price: 135.20, change: '-0.50%', mktCap: '$116B' },
-                { symbol: 'T', name: 'AT&T Inc.', sector: 'Telecommunications', price: 20.40, change: '+0.75%', mktCap: '$146B' }
-            ],
-            12: [
+                { symbol: 'T', name: 'AT&T Inc.', sector: 'Telecommunications', price: 20.40, change: '+0.75%', mktCap: '$146B' },
                 { symbol: 'VZ', name: 'Verizon Communications', sector: 'Telecommunications', price: 42.10, change: '+0.40%', mktCap: '$178B' },
                 { symbol: 'NEE', name: 'NextEra Energy, Inc.', sector: 'Utilities', price: 78.50, change: '+1.25%', mktCap: '$162B' },
                 { symbol: 'LOW', name: 'Lowe\'s Companies, Inc.', sector: 'Retail', price: 252.30, change: '+0.90%', mktCap: '$144B' },
-                { symbol: 'BLK', name: 'BlackRock, Inc.', sector: 'Financial Management', price: 890.10, change: '+1.60%', mktCap: '$134B' }
+                { symbol: 'BLK', name: 'BlackRock, Inc.', sector: 'Financial Management', price: 890.10, change: '+1.60%', mktCap: '$134B' },
+                { symbol: 'SPGI', name: 'S&P Global Inc.', sector: 'Financial Research', price: 510.20, change: '+0.80%', mktCap: '$155B' },
+                { symbol: 'MDT', name: 'Medtronic plc', sector: 'Healthcare Devices', price: 88.30, change: '-0.20%', mktCap: '$115B' }
             ]
         };
-        let stockDirectory48 = stockDirectoryPages[1];
+        let stockDirectory50 = stockDirectoryPages[1];
         let currentStockPage = 1;
         
-        function renderStockTable(filteredList = stockDirectory48) {
+        function renderStockTable(filteredList = stockDirectory50) {
             const tbody = document.getElementById('stock-table-body');
             if (!tbody) return;
             tbody.innerHTML = filteredList.map(stk => `
@@ -1362,10 +1428,10 @@
             document.getElementById('stock-pagination-info').innerText = `Showing search results (${filtered.length} entries)`;
         }
         function changeStockPage(pageNum) {
-            if (pageNum < 1 || pageNum > 12) return;
+            if (pageNum < 1 || pageNum > 5) return;
             currentStockPage = pageNum;
-            stockDirectory48 = stockDirectoryPages[pageNum];
-            for (let i = 1; i <= 12; i++) {
+            stockDirectory50 = stockDirectoryPages[pageNum];
+            for (let i = 1; i <= 5; i++) {
                 const btn = document.getElementById(`stock-page-${i}-btn`);
                 if (btn) {
                     if (i === pageNum) {
@@ -1375,10 +1441,10 @@
                     }
                 }
             }
-            renderStockTable(stockDirectory48);
-            const startIdx = (pageNum - 1) * 4 + 1;
-            const endIdx = startIdx + stockDirectory48.length - 1;
-            document.getElementById('stock-pagination-info').innerText = `Showing ${startIdx}-${endIdx} of 48 entries (Page ${pageNum} of 12)`;
+            renderStockTable(stockDirectory50);
+            const startIdx = (pageNum - 1) * 10 + 1;
+            const endIdx = startIdx + stockDirectory50.length - 1;
+            document.getElementById('stock-pagination-info').innerText = `Showing ${startIdx}-${endIdx} of 50 entries (Page ${pageNum} of 5)`;
         }
         function setStockChartPeriod(period) {
             document.querySelectorAll('.stock-period-btn').forEach(btn => {
@@ -1497,6 +1563,16 @@
             }
             if (document.getElementById('orderbook-asks')) document.getElementById('orderbook-asks').innerHTML = asks;
             if (document.getElementById('orderbook-bids')) document.getElementById('orderbook-bids').innerHTML = bids;
+            // Update Global Mini Orderbook
+            let miniAsks = '', miniBids = '';
+            for (let i = 3; i >= 1; i--) {
+                miniAsks += `<div class="flex justify-between text-rose-400"><span>Ask $${(5584 + i*2).toFixed(2)}</span><span>12.4k</span></div>`;
+            }
+            for (let i = 1; i <= 3; i++) {
+                miniBids += `<div class="flex justify-between text-emerald-400"><span>Bid $${(5584 - i*2).toFixed(2)}</span><span>15.1k</span></div>`;
+            }
+            const globalMiniOb = document.getElementById('global-mini-orderbook');
+            if (globalMiniOb) globalMiniOb.innerHTML = miniAsks + `<div class="text-center font-bold text-white border-y border-card-border py-0.5">S&P 500 Index Spot</div>` + miniBids;
         }
         setInterval(updateOrderBookData, 1500);
         let isCryptoTicksPaused = false;
@@ -1556,6 +1632,10 @@
         let cryptoIndexChartInstance = null;
         let intradayTelemetryChartInstance = null;
         let globalMarketChartInstance = null;
+        let macroBarChartInstance = null;
+        let globalMiniTickChartInstance = null;
+        let stockSectorPieChartInstance = null; // ⚡ Instance Chart Stock Sector Distribution
+        
         // Inisialisasi Seluruh Chart
         function initAllCharts() {
             // 1. Chart Crypto Market (Live Crypto Index Tracker)
@@ -1616,7 +1696,33 @@
                     }
                 });
             }
-            // 3. Chart Global Market
+            // ⚡ 3. Stock Sector Distribution Pie Chart
+            const ctxStockSector = document.getElementById('stockSectorPieChart');
+            if (ctxStockSector) {
+                stockSectorPieChartInstance = new Chart(ctxStockSector.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Semiconductor & Tech', 'Financial Services', 'Healthcare & Biotech', 'Consumer & Retail', 'Energy & Industrials'],
+                        datasets: [{
+                            data: [35, 22, 18, 15, 10],
+                            backgroundColor: ['#4F46E5', '#10B981', '#F59E0B', '#38BDF8', '#EC4899'],
+                            borderWidth: 2,
+                            borderColor: '#121212'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: '#9CA3AF', font: { size: 10 } }
+                            }
+                        }
+                    }
+                });
+            }
+            // 4. Chart Global Market
             const ctxGlobal = document.getElementById('globalMarketChart');
             if (ctxGlobal) {
                 globalMarketChartInstance = new Chart(ctxGlobal.getContext('2d'), {
@@ -1645,12 +1751,67 @@
                     }
                 });
             }
+            // 5. Macro Asset Distribution BAR CHART
+            const ctxMacroBar = document.getElementById('macroAssetBarChart');
+            if (ctxMacroBar) {
+                macroBarChartInstance = new Chart(ctxMacroBar.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: ['Equities', 'Crypto', 'Commodities', 'Bonds / Cash'],
+                        datasets: [{
+                            label: 'Alokasi (%)',
+                            data: [45, 20, 15, 20],
+                            backgroundColor: ['#4F46E5', '#10B981', '#F59E0B', '#38BDF8'],
+                            borderRadius: 6,
+                            borderSkipped: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: { grid: { display: false }, ticks: { color: '#9CA3AF', font: { size: 10 } } },
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9CA3AF', font: { size: 10 } }, max: 60 }
+                        }
+                    }
+                });
+            }
+            // 6. Global Mini Tick Chart
+            const ctxMiniTick = document.getElementById('globalMiniTickChart');
+            if (ctxMiniTick) {
+                globalMiniTickChartInstance = new Chart(ctxMiniTick.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['1', '2', '3', '4', '5', '6', '7', '8'],
+                        datasets: [{
+                            data: [5580, 5582, 5581, 5585, 5583, 5586, 5584, 5587],
+                            borderColor: '#38BDF8',
+                            backgroundColor: 'rgba(56, 189, 248, 0.05)',
+                            fill: true,
+                            tension: 0.2,
+                            borderWidth: 1.5,
+                            pointRadius: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { display: false },
+                            y: { display: false }
+                        }
+                    }
+                });
+            }
         }
-        // Fungsi Auto Update untuk Seluruh Grafik Secara Real-Time (Crypto, Stock, Global Market)
+        // Fungsi Auto Update untuk Seluruh Grafik Secara Real-Time
         function startAutomaticChartUpdates() {
             setInterval(() => {
                 const nowTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                // 1. Update Crypto Index Chart
                 if (cryptoIndexChartInstance) {
                     const labels = cryptoIndexChartInstance.data.labels;
                     const data = cryptoIndexChartInstance.data.datasets[0].data;
@@ -1664,7 +1825,6 @@
                     const indexValEl = document.getElementById('live-index-val');
                     if (indexValEl) indexValEl.innerText = `$${newVal.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
                 }
-                // 2. Update Intraday Stock Chart
                 if (intradayTelemetryChartInstance) {
                     const stockLabels = intradayTelemetryChartInstance.data.labels;
                     const stockData = intradayTelemetryChartInstance.data.datasets[0].data;
@@ -1676,7 +1836,6 @@
                     stockData.push(newStockVal);
                     intradayTelemetryChartInstance.update('none');
                 }
-                // 3. Update Global Market Chart
                 if (globalMarketChartInstance) {
                     const globalLabels = globalMarketChartInstance.data.labels;
                     const globalData = globalMarketChartInstance.data.datasets[0].data;
@@ -1687,6 +1846,21 @@
                     const newGlobalVal = parseFloat((lastGlobalVal + (Math.random() - 0.48) * 3).toFixed(2));
                     globalData.push(newGlobalVal);
                     globalMarketChartInstance.update('none');
+                }
+                if (macroBarChartInstance) {
+                    const barData = macroBarChartInstance.data.datasets[0].data;
+                    barData[0] = Math.max(30, Math.min(55, barData[0] + (Math.random() - 0.5) * 1.5));
+                    barData[1] = Math.max(10, Math.min(30, barData[1] + (Math.random() - 0.5) * 1.2));
+                    barData[2] = Math.max(10, Math.min(25, barData[2] + (Math.random() - 0.5) * 1.0));
+                    barData[3] = Math.max(10, Math.min(30, barData[3] + (Math.random() - 0.5) * 1.2));
+                    macroBarChartInstance.update('none');
+                }
+                if (globalMiniTickChartInstance) {
+                    const miniData = globalMiniTickChartInstance.data.datasets[0].data;
+                    miniData.shift();
+                    const lastMini = miniData[miniData.length - 1];
+                    miniData.push(parseFloat((lastMini + (Math.random() - 0.48) * 2).toFixed(2)));
+                    globalMiniTickChartInstance.update('none');
                 }
             }, 2000);
         }
