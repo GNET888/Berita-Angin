@@ -133,30 +133,30 @@
                     <button id="mobile-menu-btn" class="md:hidden focus:outline-none p-2 text-gray-300 hover:text-white transition-colors" aria-label="Buka Menu Sidebar">
                         <i class="fa-solid fa-bars text-xl"></i>
                     </button>
-                    <a href="#" class="flex items-center space-x-2.5 nav-link flex-shrink-0" data-page="home">
+                    <a href="#home" class="flex items-center space-x-2.5 nav-link flex-shrink-0" data-page="home">
                         <span class="font-bold text-base sm:text-lg text-white tracking-tight">Berita Angin</span>
                     </a>
                 </div>
                 
                 <!-- Navigasi Desktop (Dengan Ikon) -->
                 <div class="hidden md:flex items-center justify-center flex-1 space-x-5 lg:space-x-6 text-sm lg:text-base font-medium">
-                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="home">
+                    <a href="#home" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="home">
                         <i class="fa-solid fa-house text-brand-accent text-xs"></i>
                         <span>Beranda</span>
                     </a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="profile">
+                    <a href="#profile" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="profile">
                         <i class="fa-solid fa-user-gear text-brand-accent text-xs"></i>
                         <span>Profile</span>
                     </a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="crypto-market">
+                    <a href="#crypto-market" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="crypto-market">
                         <i class="fa-solid fa-chart-line text-brand-accent text-xs"></i>
                         <span>Crypto Market</span>
                     </a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="stock-exchange">
+                    <a href="#stock-exchange" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="stock-exchange">
                         <i class="fa-solid fa-building-columns text-brand-accent text-xs"></i>
                         <span>Stock Exchange</span>
                     </a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="global-market">
+                    <a href="#global-market" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="global-market">
                         <i class="fa-solid fa-globe text-brand-accent text-xs"></i>
                         <span>Global Market</span>
                     </a>
@@ -184,23 +184,23 @@
                     </button>
                 </div>
                 <nav class="space-y-1.5 text-sm font-medium">
-                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="home">
+                    <a href="#home" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="home">
                         <i class="fa-solid fa-house w-5 text-brand-accent"></i>
                         <span>Beranda</span>
                     </a>
-                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="profile">
+                    <a href="#profile" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="profile">
                         <i class="fa-solid fa-user-gear w-5 text-brand-accent"></i>
                         <span>Profile & Portofolio</span>
                     </a>
-                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="crypto-market">
+                    <a href="#crypto-market" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="crypto-market">
                         <i class="fa-solid fa-chart-line w-5 text-brand-accent"></i>
                         <span>Crypto Market</span>
                     </a>
-                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="stock-exchange">
+                    <a href="#stock-exchange" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="stock-exchange">
                         <i class="fa-solid fa-building-columns w-5 text-brand-accent"></i>
                         <span>Stock Exchange</span>
                     </a>
-                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="global-market">
+                    <a href="#global-market" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="global-market">
                         <i class="fa-solid fa-globe w-5 text-brand-accent"></i>
                         <span>Global Market</span>
                     </a>
@@ -216,39 +216,98 @@
         
         <!-- 1. Halaman Beranda -->
         <section id="page-home" class="page active space-y-10">
-            <div class="bg-card-dark border border-card-border rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
-                <div class="absolute -right-20 -top-20 w-80 h-80 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
-                
-                <div class="space-y-6 max-w-xl relative z-10">
-                    <div class="inline-flex items-center space-x-2 bg-brand-accent/10 border border-brand-accent/30 px-3.5 py-1.5 rounded-full">
-                        <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
-                        <span class="text-xs font-semibold text-brand-accent tracking-wide uppercase">Platform Berita & Pasar Web3 Terpadu</span>
-                    </div>
-                    <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-                        Pusat Informasi Keuangan & <span class="hero-gradient-text">Evolusi Digital</span>
-                    </h1>
-                    <p class="text-gray-300 text-sm sm:text-base font-light leading-relaxed">
-                        Dapatkan wawasan terkini seputar pergerakan aset kripto, bursa saham global, dan analisis mendalam berbasis teknologi terdesentralisasi.
-                    </p>
-                    <div class="flex flex-wrap gap-3 pt-2">
-                        <button class="nav-link bg-brand-primary hover:bg-brand-primary-light text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow-lg active:scale-95 flex items-center space-x-2" data-page="crypto-market">
-                            <i class="fa-solid fa-chart-line"></i>
-                            <span>Jelajahi Market</span>
-                        </button>
-                        <button class="nav-link bg-neutral-900 border border-card-border hover:bg-neutral-800 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all active:scale-95 flex items-center space-x-2" data-page="global-market">
-                            <i class="fa-solid fa-globe"></i>
-                            <span>Global Market</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="relative z-10 w-full md:w-auto flex justify-center">
-                    <div class="relative w-64 h-64 sm:w-80 sm:h-80 rounded-2xl overflow-hidden border-2 border-brand-accent/40 shadow-2xl group">
-                        <img src="profil.jpg" alt="Featured Profile" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80'">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4">
-                            <span class="text-xs text-brand-accent font-semibold">Chief Executive Officer</span>
-                            <span class="text-white font-bold text-sm">Achmad Efendi, SE, MM</span>
+            
+            <!-- ⚡ FITUR BARU: SLIDER ARTIKEL OTOMATIS (AUTO SLIDER) -->
+            <div class="bg-card-dark border border-card-border rounded-3xl overflow-hidden shadow-2xl relative">
+                <div id="hero-slider-container" class="relative w-full h-[380px] sm:h-[440px]">
+                    
+                    <!-- Slide 1 -->
+                    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-100 flex flex-col md:flex-row items-center justify-between p-6 sm:p-10 gap-8">
+                        <div class="absolute -right-20 -top-20 w-80 h-80 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="space-y-6 max-w-xl relative z-10">
+                            <div class="inline-flex items-center space-x-2 bg-brand-accent/10 border border-brand-accent/30 px-3.5 py-1.5 rounded-full">
+                                <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
+                                <span class="text-xs font-semibold text-brand-accent tracking-wide uppercase">Featured Article #1</span>
+                            </div>
+                            <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                                Evolusi Keuangan Digital dan <span class="hero-gradient-text">Peran Strategis Web3</span>
+                            </h1>
+                            <p class="text-gray-300 text-xs sm:text-sm font-light leading-relaxed line-clamp-2">
+                                Mengenal lebih dekat bagaimana teknologi desentralisasi mengembalikan kepemilikan data penuh kepada pengguna secara transparan.
+                            </p>
+                            <div class="flex flex-wrap gap-3 pt-1">
+                                <button onclick="openArticle('evolusi-web3')" class="bg-brand-primary hover:bg-brand-primary-light text-white font-semibold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition-all shadow-lg flex items-center space-x-2">
+                                    <i class="fa-solid fa-book-open"></i>
+                                    <span>Baca Artikel Selengkapnya</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="relative z-10 w-full md:w-auto flex justify-center flex-shrink-0">
+                            <div class="relative w-56 h-56 sm:w-72 sm:h-72 rounded-2xl overflow-hidden border-2 border-brand-accent/40 shadow-2xl">
+                                <img src="1.jpg" alt="Evolusi Web3" class="w-full h-full object-cover">
+                            </div>
                         </div>
                     </div>
+                    <!-- Slide 2 -->
+                    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0 pointer-events-none flex flex-col md:flex-row items-center justify-between p-6 sm:p-10 gap-8">
+                        <div class="absolute -right-20 -top-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="space-y-6 max-w-xl relative z-10">
+                            <div class="inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 rounded-full">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                                <span class="text-xs font-semibold text-emerald-400 tracking-wide uppercase">Featured Article #2</span>
+                            </div>
+                            <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                                Analisis Pergerakan Pasar Kripto & <span class="text-emerald-400">Sentimen Global</span>
+                            </h1>
+                            <p class="text-gray-300 text-xs sm:text-sm font-light leading-relaxed line-clamp-2">
+                                Pantauan langsung aset digital utama sebagai indikator selera risiko investor ritel maupun institusi global di tahun ini.
+                            </p>
+                            <div class="flex flex-wrap gap-3 pt-1">
+                                <button onclick="openArticle('analisis-crypto')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition-all shadow-lg flex items-center space-x-2">
+                                    <i class="fa-solid fa-book-open"></i>
+                                    <span>Baca Artikel Selengkapnya</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="relative z-10 w-full md:w-auto flex justify-center flex-shrink-0">
+                            <div class="relative w-56 h-56 sm:w-72 sm:h-72 rounded-2xl overflow-hidden border-2 border-emerald-500/40 shadow-2xl">
+                                <img src="2.jpg" alt="Crypto Market" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0 pointer-events-none flex flex-col md:flex-row items-center justify-between p-6 sm:p-10 gap-8">
+                        <div class="absolute -right-20 -top-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="space-y-6 max-w-xl relative z-10">
+                            <div class="inline-flex items-center space-x-2 bg-purple-500/10 border border-purple-500/30 px-3.5 py-1.5 rounded-full">
+                                <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
+                                <span class="text-xs font-semibold text-purple-400 tracking-wide uppercase">Featured Article #3</span>
+                            </div>
+                            <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                                Korelasi Bursa Saham Konvensional & <span class="text-purple-400">Pasar Kripto</span>
+                            </h1>
+                            <p class="text-gray-300 text-xs sm:text-sm font-light leading-relaxed line-clamp-2">
+                                Mengkaji hubungan erat antara indeks bursa global seperti S&P 500 dengan dinamika aset teknologi berbasis blockchain.
+                            </p>
+                            <div class="flex flex-wrap gap-3 pt-1">
+                                <button onclick="openArticle('korelasi-saham')" class="bg-purple-600 hover:bg-purple-500 text-white font-semibold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition-all shadow-lg flex items-center space-x-2">
+                                    <i class="fa-solid fa-book-open"></i>
+                                    <span>Baca Artikel Selengkapnya</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="relative z-10 w-full md:w-auto flex justify-center flex-shrink-0">
+                            <div class="relative w-56 h-56 sm:w-72 sm:h-72 rounded-2xl overflow-hidden border-2 border-purple-500/40 shadow-2xl">
+                                <img src="3.jpg" alt="Stock & Macro" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Indikator Navigasi Slider (Dots) -->
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-20">
+                    <button onclick="currentSlide(0)" class="slider-dot w-3 h-3 rounded-full bg-brand-accent transition-all" aria-label="Slide 1"></button>
+                    <button onclick="currentSlide(1)" class="slider-dot w-3 h-3 rounded-full bg-neutral-700 transition-all" aria-label="Slide 2"></button>
+                    <button onclick="currentSlide(2)" class="slider-dot w-3 h-3 rounded-full bg-neutral-700 transition-all" aria-label="Slide 3"></button>
                 </div>
             </div>
             <!-- Grid Highlight Statistik Cepat -->
@@ -288,7 +347,6 @@
                         <span class="text-xs font-semibold text-brand-accent uppercase tracking-wider">Galeri Wawasan & Artikel</span>
                         <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Artikel Pilihan Keuangan Digital</h2>
                     </div>
-                    <p class="text-sm text-gray-400 mt-2 md:mt-0">Gerakkan kursor di atas kartu untuk melihat efek animasi 3D interaktif</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-2">
@@ -541,12 +599,13 @@
                 </div>
             </div>
         </section>
+        
         <!-- 3. Halaman Crypto Market -->
         <section id="page-crypto-market" class="page space-y-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h1 class="text-3xl font-bold text-white">Crypto Market Real-Time</h1>
-                    <p class="text-sm text-gray-400 mt-1">Pantau harga, volume, grafik indeks online otomatis, dan buku order BTC/USDT terkini beserta fitur utilities.</p>
+                    <p class="text-sm text-gray-400 mt-1">Pantau harga, volume, grafik indeks online otomatis, buku order, serta fitur Market Derivatif, Fear & Greed Index, dan Altcoin Season Index.</p>
                 </div>
                 <div class="flex items-center space-x-3 w-full md:w-auto">
                     <!-- Search Input -->
@@ -710,6 +769,87 @@
                     </div>
                 </div>
             </div>
+            <!-- ⚡ FITUR BARU DIPOSISIKAN DI BAWAH FITUR ASET DAN LIVE STREAMING TICKS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+                <!-- 1. Market Derivatif Card -->
+                <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-card-border pb-3">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 rounded-xl bg-brand-primary/20 text-brand-accent flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-chart-pie"></i>
+                            </div>
+                            <h3 class="text-sm font-bold text-white">Market Derivatif</h3>
+                        </div>
+                        <span class="text-[10px] px-2 py-0.5 rounded bg-brand-primary/20 text-brand-accent font-mono font-bold">PERP</span>
+                    </div>
+                    <div class="space-y-2 text-xs font-mono">
+                        <div class="flex justify-between items-center text-gray-400">
+                            <span>Open Interest (BTC):</span>
+                            <span id="deriv-oi" class="text-white font-bold">$34.2B (+2.4%)</span>
+                        </div>
+                        <div class="flex justify-between items-center text-gray-400">
+                            <span>Funding Rate:</span>
+                            <span id="deriv-fr" class="text-emerald-400 font-bold">+0.0102%</span>
+                        </div>
+                        <div class="flex justify-between items-center text-gray-400">
+                            <span>24h Liquidations:</span>
+                            <span id="deriv-liq" class="text-rose-400 font-bold">$142.5M (Long)</span>
+                        </div>
+                    </div>
+                    <div class="relative h-28 w-full bg-black/50 border border-card-border rounded-xl p-1.5">
+                        <canvas id="derivativeMiniChart"></canvas>
+                    </div>
+                </div>
+                <!-- 2. Fear and Greed Index Card -->
+                <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-card-border pb-3">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-gauge-high"></i>
+                            </div>
+                            <h3 class="text-sm font-bold text-white">Fear & Greed Index</h3>
+                        </div>
+                        <span id="fng-badge" class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono font-bold">GREED (74)</span>
+                    </div>
+                    <div class="space-y-2 text-xs font-mono">
+                        <div class="flex justify-between items-center text-gray-400">
+                            <span>Sentimen Hari Ini:</span>
+                            <span class="text-white font-bold">74 / 100</span>
+                        </div>
+                        <div class="flex justify-between items-center text-gray-400">
+                            <span>Kemarin: 72 (Greed)</span>
+                            <span class="text-gray-400">Minggu Lalu: 65</span>
+                        </div>
+                    </div>
+                    <div class="relative h-28 w-full bg-black/50 border border-card-border rounded-xl p-1.5">
+                        <canvas id="fearGreedMiniChart"></canvas>
+                    </div>
+                </div>
+                <!-- 3. Altcoin Season Index Card -->
+                <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-card-border pb-3">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">
+                                <i class="fa-solid fa-coins"></i>
+                            </div>
+                            <h3 class="text-sm font-bold text-white">Altcoin Season Index</h3>
+                        </div>
+                        <span id="alt-badge" class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 font-mono font-bold">ALT SEASON (78)</span>
+                    </div>
+                    <div class="space-y-2 text-xs font-mono">
+                        <div class="flex justify-between items-center text-gray-400">
+                            <span>Indeks Altcoin:</span>
+                            <span class="text-white font-bold">78 / 100</span>
+                        </div>
+                        <div class="flex justify-between items-center text-gray-400">
+                            <span>Kriteria: 75+ dari Top 50 koin outperform BTC</span>
+                        </div>
+                    </div>
+                    <div class="relative h-28 w-full bg-black/50 border border-card-border rounded-xl p-1.5">
+                        <canvas id="altcoinSeasonMiniChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </section>
         <!-- 4. Halaman Stock Exchange -->
         <section id="page-stock-exchange" class="page space-y-6">
@@ -831,7 +971,7 @@
                         <div>
                             <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
                                 <i class="fa-solid fa-building-columns text-brand-accent"></i>
-                                <span>U.S. STOCK DIRECTORY & FUNDAMENTAL MATRIX (5 HALAMAN)</span>
+                                <span>U.S. STOCK DIRECTORY & FUNDAMENTAL MATRIX</span>
                             </h3>
                             <p class="text-xs text-gray-400 mt-0.5">Indexed equities across NYSE & NASDAQ exchanges with 10 rows telemetry per page.</p>
                         </div>
@@ -911,7 +1051,6 @@
                             <canvas id="stockSectorPieChart"></canvas>
                         </div>
                     </div>
-
                     <!-- LIVE STREAMED TICKS -->
                     <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl terminal-glow font-mono space-y-3">
                         <div class="flex items-center justify-between border-b border-card-border pb-3 text-xs">
@@ -980,7 +1119,9 @@
                 </div>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Global Market Overview Grid (Kini mencakup Makro, Crypto Market, & Stock Exchange) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- 1. Kapitalisasi Pasar Global -->
                 <div class="bg-card-dark border border-card-border p-5 rounded-2xl shadow-xl flex items-center justify-between">
                     <div>
                         <span class="text-[11px] text-gray-400 uppercase tracking-wider block">NILAI KAPITALISASI PASAR GLOBAL</span>
@@ -991,34 +1132,26 @@
                         <i class="fa-solid fa-globe"></i>
                     </div>
                 </div>
+                <!-- 5. Integrasi Data Crypto Market (Total Kap. Crypto & Dominasi) -->
                 <div class="bg-card-dark border border-card-border p-5 rounded-2xl shadow-xl flex items-center justify-between">
                     <div>
-                        <span class="text-[11px] text-gray-400 uppercase tracking-wider block">INDEKS DOLAR (DXY)</span>
-                        <h4 class="text-xl font-extrabold text-white mt-1">104.25</h4>
-                        <span class="text-[11px] text-rose-400 font-medium inline-block mt-1">-0.35% (Bearish)</span>
+                        <span class="text-[11px] text-gray-400 uppercase tracking-wider block">TOTAL CRYPTO MARKET CAP</span>
+                        <h4 class="text-xl font-extrabold text-white mt-1">$2.48 Triliun</h4>
+                        <span class="text-[11px] text-emerald-400 font-medium inline-block mt-1">Dominasi BTC: 56.4%</span>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-base">
-                        <i class="fa-solid fa-dollar-sign"></i>
+                        <i class="fa-solid fa-chart-line"></i>
                     </div>
                 </div>
+                <!-- 6. Integrasi Data Stock Exchange (Volume NYSE & NASDAQ) -->
                 <div class="bg-card-dark border border-card-border p-5 rounded-2xl shadow-xl flex items-center justify-between">
                     <div>
-                        <span class="text-[11px] text-gray-400 uppercase tracking-wider block">HARGA EMAS (SPOT)</span>
-                        <h4 class="text-xl font-extrabold text-white mt-1">$2,385.40</h4>
-                        <span class="text-[11px] text-emerald-400 font-medium inline-block mt-1">+0.92% (Safe Haven)</span>
+                        <span class="text-[11px] text-gray-400 uppercase tracking-wider block">US STOCK EXCHANGE VOLUME</span>
+                        <h4 class="text-xl font-extrabold text-white mt-1">14.2 Miliar Saham</h4>
+                        <span class="text-[11px] text-brand-accent font-medium inline-block mt-1">NYSE & NASDAQ Live</span>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-base">
-                        <i class="fa-solid fa-coins"></i>
-                    </div>
-                </div>
-                <div class="bg-card-dark border border-card-border p-5 rounded-2xl shadow-xl flex items-center justify-between">
-                    <div>
-                        <span class="text-[11px] text-gray-400 uppercase tracking-wider block">MINYAK MENTAH (WTI)</span>
-                        <h4 class="text-xl font-extrabold text-white mt-1">$78.20</h4>
-                        <span class="text-[11px] text-rose-400 font-medium inline-block mt-1">-1.15%</span>
-                    </div>
-                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-base">
-                        <i class="fa-solid fa-oil-well"></i>
+                    <div class="w-10 h-10 rounded-xl bg-brand-primary/10 text-brand-accent flex items-center justify-center text-base">
+                        <i class="fa-solid fa-building-columns"></i>
                     </div>
                 </div>
             </div>
@@ -1189,6 +1322,42 @@
                 content: `<p>Seiring dengan semakin matangnya industri aset digital, interaksi antara bursa saham konvensional seperti S&P 500 dan teknologi blockchain semakin menarik untuk diamati.</p><p>Faktor suku bunga bank sentral dan ekspektasi inflasi menjadi katalis utama yang menggerakkan kedua instrumen investasi ini secara simultan.</p>`
             }
         };
+        // ⚡ LOGIKA SLIDER OTOMATIS ARTIKEL DI BERANDA
+        let currentSlideIndex = 0;
+        const slides = document.getElementsByClassName('hero-slide');
+        const dots = document.getElementsByClassName('slider-dot');
+        function showSlide(index) {
+            if (!slides.length) return;
+            if (index >= slides.length) currentSlideIndex = 0;
+            if (index < 0) currentSlideIndex = slides.length - 1;
+            
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('opacity-100', 'pointer-events-auto');
+                slides[i].classList.add('opacity-0', 'pointer-events-none');
+                if (dots[i]) {
+                    dots[i].classList.remove('bg-brand-accent');
+                    dots[i].classList.add('bg-neutral-700');
+                }
+            }
+            slides[currentSlideIndex].classList.remove('opacity-0', 'pointer-events-none');
+            slides[currentSlideIndex].classList.add('opacity-100', 'pointer-events-auto');
+            if (dots[currentSlideIndex]) {
+                dots[currentSlideIndex].classList.remove('bg-neutral-700');
+                dots[currentSlideIndex].classList.add('bg-brand-accent');
+            }
+        }
+        function nextSlide() {
+            currentSlideIndex++;
+            showSlide(currentSlideIndex);
+        }
+        function currentSlide(index) {
+            currentSlideIndex = index;
+            showSlide(currentSlideIndex);
+        }
+        // Jalankan interval perpindahan slide otomatis setiap 4 detik
+        setInterval(() => {
+            nextSlide();
+        }, 4000);
         function showModal(title, message) {
             document.getElementById('modal-title').innerText = title;
             document.getElementById('modal-message').innerText = message;
@@ -1217,19 +1386,38 @@
         }
         if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', () => toggleSidebar(true));
         if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', () => toggleSidebar(false));
+        
+        // Navigasi halaman dengan memperbarui URL Hash agar tampilan saat dibuka/di-refresh akurat
+        function switchPage(targetPageName) {
+            pages.forEach(page => page.classList.remove('active'));
+            toggleSidebar(false);
+            const targetPage = document.getElementById('page-' + targetPageName);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetPageName = link.getAttribute('data-page');
-                pages.forEach(page => page.classList.remove('active'));
-                toggleSidebar(false);
-                const targetPage = document.getElementById('page-' + targetPageName);
-                if (targetPage) {
-                    targetPage.classList.add('active');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
+                window.location.hash = targetPageName;
+                switchPage(targetPageName);
             });
         });
+
+        // Deteksi URL saat pertama kali dibuka atau hash berubah
+        function handleInitialRouting() {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && document.getElementById('page-' + hash)) {
+                switchPage(hash);
+            } else {
+                switchPage('home');
+            }
+        }
+        window.addEventListener('hashchange', handleInitialRouting);
+
         function openArticle(key) {
             const article = articlesData[key];
             if (!article) return;
@@ -1244,9 +1432,8 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         function goBackToHome() {
-            pages.forEach(page => page.classList.remove('active'));
-            document.getElementById('page-home').classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.location.hash = 'home';
+            switchPage('home');
         }
         
         // Data 28 Crypto Aset Dibagi Menjadi 3 Halaman (10, 10, 8 item)
@@ -1621,7 +1808,7 @@
                 if(marqueeContainer.children.length > 15) marqueeContainer.firstElementChild.remove();
             }
         }
-        setInterval(appendLiveTick, 1200);
+        setInterval(appendLiveTick, 500);
         let isStockTicksPaused = false;
         function toggleStockLiveTicks() {
             isStockTicksPaused = !isStockTicksPaused;
@@ -1634,10 +1821,88 @@
         let globalMarketChartInstance = null;
         let macroBarChartInstance = null;
         let globalMiniTickChartInstance = null;
-        let stockSectorPieChartInstance = null; // ⚡ Instance Chart Stock Sector Distribution
+        let stockSectorPieChartInstance = null; 
+        let derivativeMiniChartInstance = null;
+        let fearGreedMiniChartInstance = null;
+        let altcoinSeasonMiniChartInstance = null;
         
         // Inisialisasi Seluruh Chart
         function initAllCharts() {
+            // ⚡ Inisialisasi Chart Mini Market Derivatif
+            const ctxDeriv = document.getElementById('derivativeMiniChart');
+            if (ctxDeriv) {
+                derivativeMiniChartInstance = new Chart(ctxDeriv.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['1', '2', '3', '4', '5', '6', '7'],
+                        datasets: [{
+                            data: [33.5, 33.8, 33.9, 34.0, 34.1, 34.15, 34.2],
+                            borderColor: '#4F46E5',
+                            backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { x: { display: false }, y: { display: false } }
+                    }
+                });
+            }
+            // ⚡ Inisialisasi Chart Mini Fear & Greed Index
+            const ctxFng = document.getElementById('fearGreedMiniChart');
+            if (ctxFng) {
+                fearGreedMiniChartInstance = new Chart(ctxFng.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['1', '2', '3', '4', '5', '6', '7'],
+                        datasets: [{
+                            data: [68, 70, 69, 71, 73, 72, 74],
+                            borderColor: '#F59E0B',
+                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { x: { display: false }, y: { display: false } }
+                    }
+                });
+            }
+            // ⚡ Inisialisasi Chart Mini Altcoin Season Index
+            const ctxAlt = document.getElementById('altcoinSeasonMiniChart');
+            if (ctxAlt) {
+                altcoinSeasonMiniChartInstance = new Chart(ctxAlt.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: ['1', '2', '3', '4', '5', '6', '7'],
+                        datasets: [{
+                            data: [72, 74, 73, 75, 76, 77, 78],
+                            borderColor: '#EC4899',
+                            backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            borderWidth: 2,
+                            pointRadius: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { x: { display: false }, y: { display: false } }
+                    }
+                });
+            }
             // 1. Chart Crypto Market (Live Crypto Index Tracker)
             const ctxCrypto = document.getElementById('cryptoIndexChart');
             if (ctxCrypto) {
@@ -1696,11 +1961,11 @@
                     }
                 });
             }
-            // ⚡ 3. Stock Sector Distribution Pie Chart
+            // ⚡ 3. Stock Sector Distribution Rose Chart
             const ctxStockSector = document.getElementById('stockSectorPieChart');
             if (ctxStockSector) {
                 stockSectorPieChartInstance = new Chart(ctxStockSector.getContext('2d'), {
-                    type: 'doughnut',
+                    type: 'polarArea',
                     data: {
                         labels: ['Semiconductor & Tech', 'Financial Services', 'Healthcare & Biotech', 'Consumer & Retail', 'Energy & Industrials'],
                         datasets: [{
@@ -1713,10 +1978,23 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        animation: { duration: 850, animateRotate: true, animateScale: true },
+                        scales: {
+                            r: {
+                                grid: { color: 'rgba(255,255,255,0.10)' },
+                                angleLines: { color: 'rgba(255,255,255,0.10)' },
+                                ticks: { display: false, backdropColor: 'transparent' }
+                            }
+                        },
                         plugins: {
                             legend: {
                                 position: 'bottom',
-                                labels: { color: '#9CA3AF', font: { size: 10 } }
+                                labels: { color: '#9CA3AF', font: { size: 10 }, padding: 12 }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: (context) => ` ${context.label}: ${context.raw}%`
+                                }
                             }
                         }
                     }
@@ -1812,6 +2090,39 @@
         function startAutomaticChartUpdates() {
             setInterval(() => {
                 const nowTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                
+                // Update Derivatif Mini Chart
+                if (derivativeMiniChartInstance) {
+                    const dData = derivativeMiniChartInstance.data.datasets[0].data;
+                    dData.shift();
+                    const lastD = dData[dData.length - 1];
+                    dData.push(parseFloat((lastD + (Math.random() - 0.48) * 0.1).toFixed(2)));
+                    derivativeMiniChartInstance.update('none');
+                    const oiEl = document.getElementById('deriv-oi');
+                    if(oiEl) oiEl.innerText = `$${dData[dData.length-1]}B (+2.4%)`;
+                }
+                // Update Fear & Greed Mini Chart
+                if (fearGreedMiniChartInstance) {
+                    const fData = fearGreedMiniChartInstance.data.datasets[0].data;
+                    fData.shift();
+                    const lastF = fData[fData.length - 1];
+                    const newF = Math.max(10, Math.min(90, Math.round(lastF + (Math.random() - 0.5) * 2)));
+                    fData.push(newF);
+                    fearGreedMiniChartInstance.update('none');
+                    const fBadge = document.getElementById('fng-badge');
+                    if(fBadge) fBadge.innerText = `GREED (${newF})`;
+                }
+                // Update Altcoin Season Mini Chart
+                if (altcoinSeasonMiniChartInstance) {
+                    const aData = altcoinSeasonMiniChartInstance.data.datasets[0].data;
+                    aData.shift();
+                    const lastA = aData[aData.length - 1];
+                    const newA = Math.max(10, Math.min(95, Math.round(lastA + (Math.random() - 0.5) * 1.5)));
+                    aData.push(newA);
+                    altcoinSeasonMiniChartInstance.update('none');
+                    const aBadge = document.getElementById('alt-badge');
+                    if(aBadge) aBadge.innerText = `ALT SEASON (${newA})`;
+                }
                 if (cryptoIndexChartInstance) {
                     const labels = cryptoIndexChartInstance.data.labels;
                     const data = cryptoIndexChartInstance.data.datasets[0].data;
@@ -1862,6 +2173,14 @@
                     miniData.push(parseFloat((lastMini + (Math.random() - 0.48) * 2).toFixed(2)));
                     globalMiniTickChartInstance.update('none');
                 }
+                // Pembaruan otomatis distribusi sektor (simulasi dinamis).
+                if (stockSectorPieChartInstance) {
+                    const sectorValues = stockSectorPieChartInstance.data.datasets[0].data;
+                    const nextValues = sectorValues.map(v => Math.max(5, v + (Math.random() - 0.5) * 1.2));
+                    const total = nextValues.reduce((sum, v) => sum + v, 0);
+                    stockSectorPieChartInstance.data.datasets[0].data = nextValues.map(v => +(v / total * 100).toFixed(1));
+                    stockSectorPieChartInstance.update('none');
+                }
             }, 2000);
         }
         // Jalankan inisialisasi awal dan auto-update saat halaman dimuat
@@ -1871,6 +2190,7 @@
             renderGlobalMarketTable();
             initAllCharts();
             startAutomaticChartUpdates();
+            handleInitialRouting(); // Memastikan URL hash langsung membaca view yang tepat saat dibuka
         });
     </script>
 </body>
