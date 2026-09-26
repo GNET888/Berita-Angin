@@ -853,7 +853,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 2. Pemantau Gas Fee Jaringan Real-Time -->
+                    <!-- 2. Pemantau Gas Fee Jaringan Real-Time — AREA CHART -->
                     <div class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4 flex flex-col justify-between h-full">
                         <div>
                             <div class="flex items-center justify-between border-b border-card-border pb-3">
@@ -864,41 +864,53 @@
                                 <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 text-[10px] animate-pulse">● LIVE</span>
                             </div>
                             <p class="text-xs text-gray-400 mt-2">Pantauan biaya transaksi jaringan utama untuk optimasi eksekusi smart contract & transfer.</p>
-                            <div class="space-y-2.5 font-mono text-xs mt-4">
-                                <div class="flex items-center justify-between p-3 bg-black/50 border border-card-border rounded-xl">
-                                    <div class="flex items-center space-x-2">
-                                        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
-                                        <span class="font-bold text-white">Ethereum (Mainnet)</span>
+
+                            <!-- Area Chart -->
+                            <div class="mt-4 rounded-2xl border border-card-border bg-black/50 p-3 sm:p-4">
+                                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                                    <div class="flex items-center gap-3 text-[10px] font-mono">
+                                        <span class="flex items-center gap-1.5 text-blue-300"><span class="w-2 h-2 rounded-full bg-blue-500"></span>Ethereum</span>
+                                        <span class="flex items-center gap-1.5 text-purple-300"><span class="w-2 h-2 rounded-full bg-purple-500"></span>Polygon</span>
+                                        <span class="flex items-center gap-1.5 text-emerald-300"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Arbitrum</span>
                                     </div>
-                                    <div class="text-right">
-                                        <span id="gas-eth" class="text-emerald-400 font-bold">18 Gwei</span>
-                                        <span class="text-[10px] text-gray-400 block">~ $0.85 (Transfer)</span>
-                                    </div>
+                                    <span id="gas-chart-updated" class="text-[10px] text-gray-500 font-mono">Auto update: --</span>
                                 </div>
-                                <div class="flex items-center justify-between p-3 bg-black/50 border border-card-border rounded-xl">
-                                    <div class="flex items-center space-x-2">
-                                        <span class="w-2 h-2 rounded-full bg-purple-500"></span>
-                                        <span class="font-bold text-white">Polygon (PoS)</span>
-                                    </div>
-                                    <div class="text-right">
-                                        <span id="gas-polygon" class="text-emerald-400 font-bold">32 Gwei</span>
-                                        <span class="text-[10px] text-gray-400 block">~ $0.01 (Transfer)</span>
-                                    </div>
+                                <div class="relative h-64 sm:h-72 w-full">
+                                    <canvas id="gasFeeAreaChart"></canvas>
                                 </div>
-                                <div class="flex items-center justify-between p-3 bg-black/50 border border-card-border rounded-xl">
-                                    <div class="flex items-center space-x-2">
-                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                                        <span class="font-bold text-white">Arbitrum (L2)</span>
+                            </div>
+
+                            <!-- Nilai Gas Fee Saat Ini -->
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 font-mono text-xs mt-3">
+                                <div class="p-3 bg-black/50 border border-blue-500/20 rounded-xl">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <span class="text-gray-400">Ethereum</span>
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
                                     </div>
-                                    <div class="text-right">
-                                        <span id="gas-arb" class="text-emerald-400 font-bold">0.1 Gwei</span>
-                                        <span class="text-[10px] text-gray-400 block">~ $0.002 (Transfer)</span>
+                                    <span id="gas-eth" class="text-emerald-400 font-bold text-sm">18 Gwei</span>
+                                    <span class="text-[10px] text-gray-500 block mt-0.5">~ $0.85 (Transfer)</span>
+                                </div>
+                                <div class="p-3 bg-black/50 border border-purple-500/20 rounded-xl">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <span class="text-gray-400">Polygon</span>
+                                        <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
                                     </div>
+                                    <span id="gas-polygon" class="text-emerald-400 font-bold text-sm">32 Gwei</span>
+                                    <span class="text-[10px] text-gray-500 block mt-0.5">~ $0.01 (Transfer)</span>
+                                </div>
+                                <div class="p-3 bg-black/50 border border-emerald-500/20 rounded-xl">
+                                    <div class="flex items-center justify-between gap-2">
+                                        <span class="text-gray-400">Arbitrum</span>
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                    </div>
+                                    <span id="gas-arb" class="text-emerald-400 font-bold text-sm">0.1 Gwei</span>
+                                    <span class="text-[10px] text-gray-500 block mt-0.5">~ $0.002 (Transfer)</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-[10px] text-gray-500 text-right mt-4 pt-2 border-t border-card-border">
-                            Diperbarui secara real-time via RPC Node Network
+                        <div class="text-[10px] text-gray-500 text-right mt-4 pt-2 border-t border-card-border flex items-center justify-between gap-3">
+                            <span>Diperbarui otomatis melalui feed gas fee halaman.</span>
+                            <span id="gas-feed-status" class="text-emerald-400 font-mono">● ACTIVE</span>
                         </div>
                     </div>
                 </div>
@@ -2607,6 +2619,255 @@
                 }
             }, 2000);
         }
+
+        // ============================================================
+        // PEMANTAU GAS FEE — AREA CHART OTOMATIS
+        // Mempertahankan ID gas-eth / gas-polygon / gas-arb
+        // agar kompatibel dengan fungsi halaman yang sudah ada.
+        // ============================================================
+        let gasFeeAreaChart = null;
+        let gasFeeHistory = {
+            labels: [],
+            eth: [],
+            polygon: [],
+            arb: []
+        };
+        let gasFeeTimer = null;
+
+        function clampGas(value, min, max) {
+            return Math.min(max, Math.max(min, value));
+        }
+
+        function formatGwei(value) {
+            if (value < 1) return value.toFixed(2);
+            return value.toFixed(1);
+        }
+
+        function createGasFeeAreaChart() {
+            const canvas = document.getElementById('gasFeeAreaChart');
+            if (!canvas || typeof Chart === 'undefined') return;
+
+            if (gasFeeAreaChart) {
+                gasFeeAreaChart.destroy();
+                gasFeeAreaChart = null;
+            }
+
+            const ctx = canvas.getContext('2d');
+
+            const ethGradient = ctx.createLinearGradient(0, 0, 0, 280);
+            ethGradient.addColorStop(0, 'rgba(59, 130, 246, 0.34)');
+            ethGradient.addColorStop(1, 'rgba(59, 130, 246, 0.02)');
+
+            const polygonGradient = ctx.createLinearGradient(0, 0, 0, 280);
+            polygonGradient.addColorStop(0, 'rgba(168, 85, 247, 0.28)');
+            polygonGradient.addColorStop(1, 'rgba(168, 85, 247, 0.02)');
+
+            const arbGradient = ctx.createLinearGradient(0, 0, 0, 280);
+            arbGradient.addColorStop(0, 'rgba(16, 185, 129, 0.24)');
+            arbGradient.addColorStop(1, 'rgba(16, 185, 129, 0.02)');
+
+            gasFeeAreaChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: gasFeeHistory.labels,
+                    datasets: [
+                        {
+                            label: 'Ethereum',
+                            data: gasFeeHistory.eth,
+                            borderColor: '#3B82F6',
+                            backgroundColor: ethGradient,
+                            fill: true,
+                            tension: 0.38,
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            pointHoverRadius: 4
+                        },
+                        {
+                            label: 'Polygon',
+                            data: gasFeeHistory.polygon,
+                            borderColor: '#A855F7',
+                            backgroundColor: polygonGradient,
+                            fill: true,
+                            tension: 0.38,
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            pointHoverRadius: 4
+                        },
+                        {
+                            label: 'Arbitrum',
+                            data: gasFeeHistory.arb,
+                            borderColor: '#10B981',
+                            backgroundColor: arbGradient,
+                            fill: true,
+                            tension: 0.38,
+                            borderWidth: 2,
+                            pointRadius: 0,
+                            pointHoverRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 500,
+                        easing: 'linear'
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#090909',
+                            borderColor: '#222222',
+                            borderWidth: 1,
+                            titleColor: '#F9FAFB',
+                            bodyColor: '#D1D5DB',
+                            padding: 10,
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${formatGwei(context.parsed.y)} Gwei`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255,255,255,0.035)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#6B7280',
+                                font: { size: 9 },
+                                maxTicksLimit: 8
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255,255,255,0.055)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#6B7280',
+                                font: { size: 9 },
+                                callback: function(value) {
+                                    return `${value} Gwei`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function seedGasFeeHistory() {
+            const now = Date.now();
+            let eth = 18;
+            let polygon = 32;
+            let arb = 0.10;
+
+            gasFeeHistory = { labels: [], eth: [], polygon: [], arb: [] };
+
+            for (let i = 23; i >= 0; i--) {
+                eth = clampGas(eth + (Math.random() - 0.48) * 3.2, 8, 42);
+                polygon = clampGas(polygon + (Math.random() - 0.48) * 4.8, 10, 58);
+                arb = clampGas(arb + (Math.random() - 0.48) * 0.035, 0.03, 0.25);
+
+                gasFeeHistory.labels.push(
+                    new Date(now - i * 60000).toLocaleTimeString('id-ID', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    })
+                );
+                gasFeeHistory.eth.push(Number(eth.toFixed(2)));
+                gasFeeHistory.polygon.push(Number(polygon.toFixed(2)));
+                gasFeeHistory.arb.push(Number(arb.toFixed(3)));
+            }
+        }
+
+        function updateGasFeeAreaChart() {
+            const chart = gasFeeAreaChart;
+            if (!chart) return;
+
+            const currentEth = Number(
+                clampGas(
+                    (gasFeeHistory.eth.at(-1) || 18) + (Math.random() - 0.48) * 2.8,
+                    8,
+                    45
+                ).toFixed(2)
+            );
+
+            const currentPolygon = Number(
+                clampGas(
+                    (gasFeeHistory.polygon.at(-1) || 32) + (Math.random() - 0.48) * 4.2,
+                    10,
+                    60
+                ).toFixed(2)
+            );
+
+            const currentArb = Number(
+                clampGas(
+                    (gasFeeHistory.arb.at(-1) || 0.10) + (Math.random() - 0.48) * 0.03,
+                    0.03,
+                    0.25
+                ).toFixed(3)
+            );
+
+            const timeLabel = new Date().toLocaleTimeString('id-ID', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            chart.data.labels.push(timeLabel);
+            chart.data.datasets[0].data.push(currentEth);
+            chart.data.datasets[1].data.push(currentPolygon);
+            chart.data.datasets[2].data.push(currentArb);
+
+            // Simpan maksimum 30 titik agar grafik tetap ringan.
+            if (chart.data.labels.length > 30) {
+                chart.data.labels.shift();
+                chart.data.datasets.forEach(ds => ds.data.shift());
+            }
+
+            chart.update('none');
+
+            const ethEl = document.getElementById('gas-eth');
+            const polygonEl = document.getElementById('gas-polygon');
+            const arbEl = document.getElementById('gas-arb');
+            const updatedEl = document.getElementById('gas-chart-updated');
+
+            if (ethEl) ethEl.textContent = `${formatGwei(currentEth)} Gwei`;
+            if (polygonEl) polygonEl.textContent = `${formatGwei(currentPolygon)} Gwei`;
+            if (arbEl) arbEl.textContent = `${formatGwei(currentArb)} Gwei`;
+            if (updatedEl) updatedEl.textContent = `Auto update: ${timeLabel}`;
+        }
+
+        function startGasFeeAutoUpdate() {
+            if (gasFeeTimer) clearInterval(gasFeeTimer);
+
+            seedGasFeeHistory();
+            createGasFeeAreaChart();
+
+            // Pergerakan otomatis setiap 2 detik.
+            gasFeeTimer = setInterval(() => {
+                const page2 = document.getElementById('crypto-subpage-2');
+                if (page2 && !page2.classList.contains('hidden')) {
+                    if (!gasFeeAreaChart) createGasFeeAreaChart();
+                    updateGasFeeAreaChart();
+                }
+            }, 2000);
+
+            // Isi nilai awal saat halaman pertama kali dibuka.
+            if (gasFeeAreaChart) updateGasFeeAreaChart();
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
             renderCryptoTable();
             renderStockTable();
@@ -2615,6 +2876,7 @@
             startAutomaticChartUpdates();
             convertCurrency();
             calculateCryptoPnL();
+            startGasFeeAutoUpdate();
         });
     </script>
 </body>
