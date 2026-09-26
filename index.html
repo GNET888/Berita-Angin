@@ -120,7 +120,10 @@
         </div>
         <div class="overflow-hidden whitespace-nowrap pl-28">
             <div id="live-ticks-ticker" class="animate-marquee flex items-center space-x-8 text-gray-300">
-                <!-- Diisi oleh JS -->
+                <div class="flex items-center space-x-2"><span class="font-bold text-white">BTC/USDT</span><span class="text-emerald-400">$67,420.50</span></div>
+                <div class="flex items-center space-x-2"><span class="font-bold text-white">ETH/USDT</span><span class="text-emerald-400">$3,520.10</span></div>
+                <div class="flex items-center space-x-2"><span class="font-bold text-white">NVDA</span><span class="text-emerald-400">$228.87</span></div>
+                <div class="flex items-center space-x-2"><span class="font-bold text-white">SOL/USDT</span><span class="text-emerald-400">$182.40</span></div>
             </div>
         </div>
     </div>
@@ -128,35 +131,33 @@
     <header class="bg-pure-black/90 backdrop-blur-md sticky top-0 z-40 border-b border-card-border">
         <nav class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <div class="flex justify-between items-center h-16">
-                <!-- Sisi Kiri: Tombol Menu Mobile & Logo -->
                 <div class="flex items-center space-x-3">
                     <button id="mobile-menu-btn" class="md:hidden focus:outline-none p-2 text-gray-300 hover:text-white transition-colors" aria-label="Buka Menu Sidebar">
                         <i class="fa-solid fa-bars text-xl"></i>
                     </button>
-                    <a href="#home" class="flex items-center space-x-2.5 nav-link flex-shrink-0" data-page="home">
+                    <a href="#" class="flex items-center space-x-2.5 nav-link flex-shrink-0" data-page="home">
                         <span class="font-bold text-base sm:text-lg text-white tracking-tight">Berita Angin</span>
                     </a>
                 </div>
                 
-                <!-- Navigasi Desktop (Dengan Ikon) -->
                 <div class="hidden md:flex items-center justify-center flex-1 space-x-5 lg:space-x-6 text-sm lg:text-base font-medium">
-                    <a href="#home" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="home">
+                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="home">
                         <i class="fa-solid fa-house text-brand-accent text-xs"></i>
                         <span>Beranda</span>
                     </a>
-                    <a href="#profile" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="profile">
+                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="profile">
                         <i class="fa-solid fa-user-gear text-brand-accent text-xs"></i>
                         <span>Profile</span>
                     </a>
-                    <a href="#crypto-market" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="crypto-market">
+                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="crypto-market">
                         <i class="fa-solid fa-chart-line text-brand-accent text-xs"></i>
                         <span>Crypto Market</span>
                     </a>
-                    <a href="#stock-exchange" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="stock-exchange">
+                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="stock-exchange">
                         <i class="fa-solid fa-building-columns text-brand-accent text-xs"></i>
                         <span>Stock Exchange</span>
                     </a>
-                    <a href="#global-market" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="global-market">
+                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="global-market">
                         <i class="fa-solid fa-globe text-brand-accent text-xs"></i>
                         <span>Global Market</span>
                     </a>
@@ -184,23 +185,23 @@
                     </button>
                 </div>
                 <nav class="space-y-1.5 text-sm font-medium">
-                    <a href="#home" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="home">
+                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="home">
                         <i class="fa-solid fa-house w-5 text-brand-accent"></i>
                         <span>Beranda</span>
                     </a>
-                    <a href="#profile" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="profile">
+                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="profile">
                         <i class="fa-solid fa-user-gear w-5 text-brand-accent"></i>
                         <span>Profile & Portofolio</span>
                     </a>
-                    <a href="#crypto-market" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="crypto-market">
+                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="crypto-market">
                         <i class="fa-solid fa-chart-line w-5 text-brand-accent"></i>
                         <span>Crypto Market</span>
                     </a>
-                    <a href="#stock-exchange" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="stock-exchange">
+                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="stock-exchange">
                         <i class="fa-solid fa-building-columns w-5 text-brand-accent"></i>
                         <span>Stock Exchange</span>
                     </a>
-                    <a href="#global-market" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="global-market">
+                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="global-market">
                         <i class="fa-solid fa-globe w-5 text-brand-accent"></i>
                         <span>Global Market</span>
                     </a>
@@ -216,98 +217,39 @@
         
         <!-- 1. Halaman Beranda -->
         <section id="page-home" class="page active space-y-10">
-            
-            <!-- ⚡ FITUR BARU: SLIDER ARTIKEL OTOMATIS (AUTO SLIDER) -->
-            <div class="bg-card-dark border border-card-border rounded-3xl overflow-hidden shadow-2xl relative">
-                <div id="hero-slider-container" class="relative w-full h-[380px] sm:h-[440px]">
-                    
-                    <!-- Slide 1 -->
-                    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-100 flex flex-col md:flex-row items-center justify-between p-6 sm:p-10 gap-8">
-                        <div class="absolute -right-20 -top-20 w-80 h-80 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
-                        <div class="space-y-6 max-w-xl relative z-10">
-                            <div class="inline-flex items-center space-x-2 bg-brand-accent/10 border border-brand-accent/30 px-3.5 py-1.5 rounded-full">
-                                <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
-                                <span class="text-xs font-semibold text-brand-accent tracking-wide uppercase">Featured Article #1</span>
-                            </div>
-                            <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                                Evolusi Keuangan Digital dan <span class="hero-gradient-text">Peran Strategis Web3</span>
-                            </h1>
-                            <p class="text-gray-300 text-xs sm:text-sm font-light leading-relaxed line-clamp-2">
-                                Mengenal lebih dekat bagaimana teknologi desentralisasi mengembalikan kepemilikan data penuh kepada pengguna secara transparan.
-                            </p>
-                            <div class="flex flex-wrap gap-3 pt-1">
-                                <button onclick="openArticle('evolusi-web3')" class="bg-brand-primary hover:bg-brand-primary-light text-white font-semibold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition-all shadow-lg flex items-center space-x-2">
-                                    <i class="fa-solid fa-book-open"></i>
-                                    <span>Baca Artikel Selengkapnya</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="relative z-10 w-full md:w-auto flex justify-center flex-shrink-0">
-                            <div class="relative w-56 h-56 sm:w-72 sm:h-72 rounded-2xl overflow-hidden border-2 border-brand-accent/40 shadow-2xl">
-                                <img src="1.jpg" alt="Evolusi Web3" class="w-full h-full object-cover">
-                            </div>
-                        </div>
+            <div class="bg-card-dark border border-card-border rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="absolute -right-20 -top-20 w-80 h-80 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="space-y-6 max-w-xl relative z-10">
+                    <div class="inline-flex items-center space-x-2 bg-brand-accent/10 border border-brand-accent/30 px-3.5 py-1.5 rounded-full">
+                        <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
+                        <span class="text-xs font-semibold text-brand-accent tracking-wide uppercase">Platform Berita & Pasar Web3 Terpadu</span>
                     </div>
-                    <!-- Slide 2 -->
-                    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0 pointer-events-none flex flex-col md:flex-row items-center justify-between p-6 sm:p-10 gap-8">
-                        <div class="absolute -right-20 -top-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                        <div class="space-y-6 max-w-xl relative z-10">
-                            <div class="inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/30 px-3.5 py-1.5 rounded-full">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                                <span class="text-xs font-semibold text-emerald-400 tracking-wide uppercase">Featured Article #2</span>
-                            </div>
-                            <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                                Analisis Pergerakan Pasar Kripto & <span class="text-emerald-400">Sentimen Global</span>
-                            </h1>
-                            <p class="text-gray-300 text-xs sm:text-sm font-light leading-relaxed line-clamp-2">
-                                Pantauan langsung aset digital utama sebagai indikator selera risiko investor ritel maupun institusi global di tahun ini.
-                            </p>
-                            <div class="flex flex-wrap gap-3 pt-1">
-                                <button onclick="openArticle('analisis-crypto')" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition-all shadow-lg flex items-center space-x-2">
-                                    <i class="fa-solid fa-book-open"></i>
-                                    <span>Baca Artikel Selengkapnya</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="relative z-10 w-full md:w-auto flex justify-center flex-shrink-0">
-                            <div class="relative w-56 h-56 sm:w-72 sm:h-72 rounded-2xl overflow-hidden border-2 border-emerald-500/40 shadow-2xl">
-                                <img src="2.jpg" alt="Crypto Market" class="w-full h-full object-cover">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Slide 3 -->
-                    <div class="hero-slide absolute inset-0 transition-opacity duration-1000 opacity-0 pointer-events-none flex flex-col md:flex-row items-center justify-between p-6 sm:p-10 gap-8">
-                        <div class="absolute -right-20 -top-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                        <div class="space-y-6 max-w-xl relative z-10">
-                            <div class="inline-flex items-center space-x-2 bg-purple-500/10 border border-purple-500/30 px-3.5 py-1.5 rounded-full">
-                                <span class="w-2 h-2 rounded-full bg-purple-400 animate-ping"></span>
-                                <span class="text-xs font-semibold text-purple-400 tracking-wide uppercase">Featured Article #3</span>
-                            </div>
-                            <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                                Korelasi Bursa Saham Konvensional & <span class="text-purple-400">Pasar Kripto</span>
-                            </h1>
-                            <p class="text-gray-300 text-xs sm:text-sm font-light leading-relaxed line-clamp-2">
-                                Mengkaji hubungan erat antara indeks bursa global seperti S&P 500 dengan dinamika aset teknologi berbasis blockchain.
-                            </p>
-                            <div class="flex flex-wrap gap-3 pt-1">
-                                <button onclick="openArticle('korelasi-saham')" class="bg-purple-600 hover:bg-purple-500 text-white font-semibold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition-all shadow-lg flex items-center space-x-2">
-                                    <i class="fa-solid fa-book-open"></i>
-                                    <span>Baca Artikel Selengkapnya</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="relative z-10 w-full md:w-auto flex justify-center flex-shrink-0">
-                            <div class="relative w-56 h-56 sm:w-72 sm:h-72 rounded-2xl overflow-hidden border-2 border-purple-500/40 shadow-2xl">
-                                <img src="3.jpg" alt="Stock & Macro" class="w-full h-full object-cover">
-                            </div>
-                        </div>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                        Pusat Informasi Keuangan & <span class="hero-gradient-text">Evolusi Digital</span>
+                    </h1>
+                    <p class="text-gray-300 text-sm sm:text-base font-light leading-relaxed">
+                        Dapatkan wawasan terkini seputar pergerakan aset kripto, bursa saham global, dan analisis mendalam berbasis teknologi terdesentralisasi.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button class="nav-link bg-brand-primary hover:bg-brand-primary-light text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow-lg active:scale-95 flex items-center space-x-2" data-page="crypto-market">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>Jelajahi Market</span>
+                        </button>
+                        <button class="nav-link bg-neutral-900 border border-card-border hover:bg-neutral-800 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all active:scale-95 flex items-center space-x-2" data-page="global-market">
+                            <i class="fa-solid fa-globe"></i>
+                            <span>Global Market</span>
+                        </button>
                     </div>
                 </div>
-                <!-- Indikator Navigasi Slider (Dots) -->
-                <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-20">
-                    <button onclick="currentSlide(0)" class="slider-dot w-3 h-3 rounded-full bg-brand-accent transition-all" aria-label="Slide 1"></button>
-                    <button onclick="currentSlide(1)" class="slider-dot w-3 h-3 rounded-full bg-neutral-700 transition-all" aria-label="Slide 2"></button>
-                    <button onclick="currentSlide(2)" class="slider-dot w-3 h-3 rounded-full bg-neutral-700 transition-all" aria-label="Slide 3"></button>
+                <div class="relative z-10 w-full md:w-auto flex justify-center">
+                    <div class="relative w-64 h-64 sm:w-80 sm:h-80 rounded-2xl overflow-hidden border-2 border-brand-accent/40 shadow-2xl group">
+                        <img src="profil.jpg" alt="Featured Profile" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4">
+                            <span class="text-xs text-brand-accent font-semibold">Chief Executive Officer</span>
+                            <span class="text-white font-bold text-sm">Achmad Efendi, SE, MM</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- Grid Highlight Statistik Cepat -->
@@ -340,87 +282,98 @@
                     </div>
                 </div>
             </div>
-            <!-- Bagian Galeri Artikel -->
+            <!-- Bagian Galeri Artikel & Auto Slide Artikel Berjalan Otomatis -->
             <div class="space-y-8 pt-4">
                 <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-card-border pb-4">
                     <div>
                         <span class="text-xs font-semibold text-brand-accent uppercase tracking-wider">Galeri Wawasan & Artikel</span>
                         <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Artikel Pilihan Keuangan Digital</h2>
                     </div>
+                    <div class="flex items-center space-x-3 mt-2 md:mt-0">
+                        <span class="text-xs text-gray-400">Auto-Slide Berjalan Otomatis</span>
+                        <div class="flex space-x-1.5" id="article-slider-dots">
+                            <button onclick="currentSlide(0)" class="w-3 h-3 rounded-full bg-brand-accent transition-all" aria-label="Slide 1"></button>
+                            <button onclick="currentSlide(1)" class="w-3 h-3 rounded-full bg-neutral-700 transition-all" aria-label="Slide 2"></button>
+                            <button onclick="currentSlide(2)" class="w-3 h-3 rounded-full bg-neutral-700 transition-all" aria-label="Slide 3"></button>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-2">
-                    <!-- Card Artikel 1 -->
-                    <div class="perspective-container">
-                        <article onclick="openArticle('evolusi-web3')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
-                            <div class="h-56 overflow-hidden relative">
-                                <img src="1.jpg" alt="Evolusi Web3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                                <span class="absolute top-3 left-3 bg-brand-primary/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Web3 & DeFi</span>
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
-                                <div>
-                                    <h3 class="text-lg font-bold text-white group-hover:text-brand-accent transition-colors line-clamp-2">
-                                        Evolusi Keuangan Digital dan Peran Strategis Web3
-                                    </h3>
-                                    <p class="text-gray-400 text-sm mt-2 line-clamp-3 font-light">
-                                        Mengenal lebih dekat bagaimana teknologi desentralisasi mengembalikan kepemilikan data penuh kepada pengguna secara transparan.
-                                    </p>
+                <!-- Container Slider Artikel -->
+                <div id="article-auto-slider" class="relative overflow-hidden rounded-2xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-2">
+                        <!-- Card Artikel 1 -->
+                        <div class="perspective-container article-slide-item">
+                            <article onclick="openArticle('evolusi-web3')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
+                                <div class="h-56 overflow-hidden relative">
+                                    <img src="1.jpg" alt="Evolusi Web3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                                    <span class="absolute top-3 left-3 bg-brand-primary/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Web3 & DeFi</span>
                                 </div>
-                                <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
-                                    <span><i class="fa-regular fa-clock mr-1"></i> 5 Menit Baca</span>
-                                    <span class="text-brand-accent font-medium">Berita Angin Team</span>
+                                <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                                    <div>
+                                        <h3 class="text-lg font-bold text-white group-hover:text-brand-accent transition-colors line-clamp-2">
+                                            Evolusi Keuangan Digital dan Peran Strategis Web3
+                                        </h3>
+                                        <p class="text-gray-400 text-sm mt-2 line-clamp-3 font-light">
+                                            Mengenal lebih dekat bagaimana teknologi desentralisasi mengembalikan kepemilikan data penuh kepada pengguna secara transparan.
+                                        </p>
+                                    </div>
+                                    <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
+                                        <span><i class="fa-regular fa-clock mr-1"></i> 5 Menit Baca</span>
+                                        <span class="text-brand-accent font-medium">Berita Angin Team</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
-                    </div>
-                    <!-- Card Artikel 2 -->
-                    <div class="perspective-container">
-                        <article onclick="openArticle('analisis-crypto')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
-                            <div class="h-56 overflow-hidden relative">
-                                <img src="2.jpg" alt="Crypto Market" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                                <span class="absolute top-3 left-3 bg-emerald-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Crypto Market</span>
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
-                                <div>
-                                    <h3 class="text-lg font-bold text-white group-hover:text-brand-accent transition-colors line-clamp-2">
-                                        Analisis Pergerakan Pasar Kripto & Sentimen Global
-                                    </h3>
-                                    <p class="text-gray-400 text-sm mt-2 line-clamp-3 font-light">
-                                        Pantauan langsung aset digital utama sebagai indikator selera risiko investor ritel maupun institusi global di tahun ini.
-                                    </p>
+                            </article>
+                        </div>
+                        <!-- Card Artikel 2 -->
+                        <div class="perspective-container article-slide-item">
+                            <article onclick="openArticle('analisis-crypto')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
+                                <div class="h-56 overflow-hidden relative">
+                                    <img src="2.jpg" alt="Crypto Market" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                                    <span class="absolute top-3 left-3 bg-emerald-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Crypto Market</span>
                                 </div>
-                                <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
-                                    <span><i class="fa-regular fa-clock mr-1"></i> 4 Menit Baca</span>
-                                    <span class="text-brand-accent font-medium">Berita Angin Team</span>
+                                <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                                    <div>
+                                        <h3 class="text-lg font-bold text-white group-hover:text-brand-accent transition-colors line-clamp-2">
+                                            Analisis Pergerakan Pasar Kripto & Sentimen Global
+                                        </h3>
+                                        <p class="text-gray-400 text-sm mt-2 line-clamp-3 font-light">
+                                            Pantauan langsung aset digital utama sebagai indikator selera risiko investor ritel maupun institusi global di tahun ini.
+                                        </p>
+                                    </div>
+                                    <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
+                                        <span><i class="fa-regular fa-clock mr-1"></i> 4 Menit Baca</span>
+                                        <span class="text-brand-accent font-medium">Berita Angin Team</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
-                    </div>
-                    <!-- Card Artikel 3 -->
-                    <div class="perspective-container">
-                        <article onclick="openArticle('korelasi-saham')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
-                            <div class="h-56 overflow-hidden relative">
-                                <img src="3.jpg" alt="Stock Exchange" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                                <span class="absolute top-3 left-3 bg-purple-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Stock & Macro</span>
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
-                                <div>
-                                    <h3 class="text-lg font-bold text-white group-hover:text-brand-accent transition-colors line-clamp-2">
-                                        Korelasi Bursa Saham Konvensional & Pasar Kripto
-                                    </h3>
-                                    <p class="text-gray-400 text-sm mt-2 line-clamp-3 font-light">
-                                        Mengkaji hubungan erat antara indeks bursa global seperti S&P 500 dengan dinamika aset teknologi berbasis blockchain.
-                                    </p>
+                            </article>
+                        </div>
+                        <!-- Card Artikel 3 -->
+                        <div class="perspective-container article-slide-item">
+                            <article onclick="openArticle('korelasi-saham')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
+                                <div class="h-56 overflow-hidden relative">
+                                    <img src="3.jpg" alt="Stock Exchange" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                                    <span class="absolute top-3 left-3 bg-purple-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Stock & Macro</span>
                                 </div>
-                                <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
-                                    <span><i class="fa-regular fa-clock mr-1"></i> 6 Menit Baca</span>
-                                    <span class="text-brand-accent font-medium">Berita Angin Team</span>
+                                <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                                    <div>
+                                        <h3 class="text-lg font-bold text-white group-hover:text-brand-accent transition-colors line-clamp-2">
+                                            Korelasi Bursa Saham Konvensional & Pasar Kripto
+                                        </h3>
+                                        <p class="text-gray-400 text-sm mt-2 line-clamp-3 font-light">
+                                            Mengkaji hubungan erat antara indeks bursa global seperti S&P 500 dengan dinamika aset teknologi berbasis blockchain.
+                                        </p>
+                                    </div>
+                                    <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
+                                        <span><i class="fa-regular fa-clock mr-1"></i> 6 Menit Baca</span>
+                                        <span class="text-brand-accent font-medium">Berita Angin Team</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
+                            </article>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -458,9 +411,14 @@
                 </div>
                 <div class="bg-card-dark border border-card-border rounded-2xl p-6 sm:p-10 space-y-6 text-gray-300 font-light leading-relaxed text-base sm:text-lg" id="detail-content"></div>
                 <div class="border-t border-card-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div class="flex items-center space-x-2 text-sm text-gray-400">
+                    <div class="flex items-center space-x-3 text-sm text-gray-400">
                         <span>Bagikan artikel ini:</span>
-                        <button onclick="shareArticle()" class="bg-card-dark border border-card-border hover:bg-neutral-800 text-white p-2.5 rounded-lg transition-all"><i class="fa-solid fa-share-nodes"></i></button>
+                        <div class="flex items-center space-x-2">
+                            <a id="share-whatsapp" href="#" target="_blank" class="w-9 h-9 bg-card-dark border border-card-border hover:bg-emerald-600 hover:text-white text-emerald-400 rounded-lg flex items-center justify-center transition-all" title="Bagikan ke WhatsApp"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+                            <a id="share-twitter" href="#" target="_blank" class="w-9 h-9 bg-card-dark border border-card-border hover:bg-blue-500 hover:text-white text-sky-400 rounded-lg flex items-center justify-center transition-all" title="Bagikan ke Twitter / X"><i class="fa-brands fa-x-twitter text-sm"></i></a>
+                            <a id="share-facebook" href="#" target="_blank" class="w-9 h-9 bg-card-dark border border-card-border hover:bg-blue-600 hover:text-white text-blue-500 rounded-lg flex items-center justify-center transition-all" title="Bagikan ke Facebook"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+                            <a id="share-linkedin" href="#" target="_blank" class="w-9 h-9 bg-card-dark border border-card-border hover:bg-blue-700 hover:text-white text-blue-400 rounded-lg flex items-center justify-center transition-all" title="Bagikan ke LinkedIn"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
+                        </div>
                     </div>
                     <button onclick="goBackToHome()" class="bg-brand-primary hover:bg-brand-primary-light text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-all shadow-lg">
                         Baca Artikel Lainnya
@@ -493,10 +451,10 @@
                             Spesialis pengembangan arsitektur dApp, keamanan protokol DeFi, dan analisis kuantitatif pasar aset digital global dengan pengalaman lebih dari 6 tahun.
                         </p>
                         <div class="pt-4 border-t border-card-border flex justify-center space-x-4">
-                            <a href="#" class="w-9 h-9 bg-black border border-card-border rounded-full flex items-center justify-center text-gray-300 hover:text-brand-accent hover:border-brand-accent transition-colors"><i class="fa-brands fa-github text-sm"></i></a>
-                            <a href="#" class="w-9 h-9 bg-black border border-card-border rounded-full flex items-center justify-center text-gray-300 hover:text-brand-accent hover:border-brand-accent transition-colors"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
-                            <a href="#" class="w-9 h-9 bg-black border border-card-border rounded-full flex items-center justify-center text-gray-300 hover:text-brand-accent hover:border-brand-accent transition-colors"><i class="fa-brands fa-x-twitter text-sm"></i></a>
-                            <a href="#" class="w-9 h-9 bg-black border border-card-border rounded-full flex items-center justify-center text-gray-300 hover:text-brand-accent hover:border-brand-accent transition-colors"><i class="fa-solid fa-envelope text-sm"></i></a>
+                            <a href="https://github.com" target="_blank" class="w-9 h-9 bg-black border border-card-border rounded-full flex items-center justify-center text-gray-300 hover:text-brand-accent hover:border-brand-accent transition-colors" title="GitHub"><i class="fa-brands fa-github text-sm"></i></a>
+                            <a href="https://linkedin.com" target="_blank" class="w-9 h-9 bg-black border border-card-border rounded-full flex items-center justify-center text-gray-300 hover:text-brand-accent hover:border-brand-accent transition-colors" title="LinkedIn"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
+                            <a href="https://twitter.com" target="_blank" class="w-9 h-9 bg-black border border-card-border rounded-full flex items-center justify-center text-gray-300 hover:text-brand-accent hover:border-brand-accent transition-colors" title="X (Twitter)"><i class="fa-brands fa-x-twitter text-sm"></i></a>
+                            <a href="mailto:ven.genioes@gmail.com" class="w-9 h-9 bg-black border border-card-border rounded-full flex items-center justify-center text-gray-300 hover:text-brand-accent hover:border-brand-accent transition-colors" title="Email"><i class="fa-solid fa-envelope text-sm"></i></a>
                         </div>
                     </div>
                     <!-- Keahlian & Keterampilan -->
@@ -600,12 +558,12 @@
             </div>
         </section>
         
-        <!-- 3. Halaman Crypto Market -->
+        <!-- 3. Halaman Crypto Market (Dipecah Menjadi 2 Sub-Halaman dengan Sisi Kiri & Kanan Sejajar) -->
         <section id="page-crypto-market" class="page space-y-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h1 class="text-3xl font-bold text-white">Crypto Market Real-Time</h1>
-                    <p class="text-sm text-gray-400 mt-1">Pantau harga, volume, grafik indeks online otomatis, buku order, serta fitur Market Derivatif, Fear & Greed Index, dan Altcoin Season Index.</p>
+                    <p class="text-sm text-gray-400 mt-1">Pantau harga, volume, grafik indeks online otomatis, dan buku order BTC/USDT terkini beserta fitur utilities.</p>
                 </div>
                 <div class="flex items-center space-x-3 w-full md:w-auto">
                     <!-- Search Input -->
@@ -622,235 +580,263 @@
                     </button>
                 </div>
             </div>
-            
-            <!-- Live Crypto Index Tracker -->
-            <div class="grid grid-cols-1 lg:grid-cols-1 gap-6 items-start">
-                <div class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-card-border pb-4 gap-2">
-                        <div>
-                            <div class="flex items-center space-x-2">
-                                <h3 class="text-lg font-bold text-white">Live Crypto Index Tracker</h3>
-                                <span class="flex h-2 w-2 relative">
-                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                                </span>
-                            </div>
-                            <p class="text-xs text-gray-400 mt-0.5">Grafik pergerakan indeks nilai pasar komposit secara real-time online.</p>
-                        </div>
-                        <div class="flex items-center space-x-2 bg-black/40 border border-card-border px-3 py-1.5 rounded-xl text-xs font-mono">
-                            <span class="text-gray-400">Indeks Komposit:</span>
-                            <span id="live-index-val" class="text-emerald-400 font-bold">$67,420.50</span>
-                        </div>
-                    </div>
-                    <div class="relative h-60 w-full">
-                        <canvas id="cryptoIndexChart"></canvas>
-                    </div>
+
+            <!-- Tombol Navigasi Sub-Halaman Crypto Market (Halaman 1 & Halaman 2) -->
+            <div class="flex items-center justify-between bg-card-dark border border-card-border p-3 rounded-xl">
+                <div class="flex items-center space-x-2 text-xs font-medium text-gray-300">
+                    <span class="text-brand-accent font-bold">Navigasi Halaman Crypto:</span>
+                    <span id="crypto-subpage-indicator" class="px-2 py-0.5 rounded bg-brand-primary/20 text-brand-accent">Halaman 1 dari 2</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button onclick="switchCryptoSubPage(1)" id="crypto-sub-btn-1" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition">1</button>
+                    <button onclick="switchCryptoSubPage(2)" id="crypto-sub-btn-2" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition">2</button>
                 </div>
             </div>
-            <!-- LAYOUT UTAMA: Tabel Aset Kripto & Order Book -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-                
-                <!-- Kolom Kiri: Tabel Aset Kripto -->
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between bg-card-dark border border-card-border px-4 py-3 rounded-xl text-xs">
-                        <div class="flex items-center space-x-2">
-                            <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                            <span class="text-emerald-400 font-medium">Live Data Feed (28 Aset)</span>
-                        </div>
-                        <span id="crypto-last-updated" class="text-gray-400">Terakhir diperbarui: Baru saja</span>
-                    </div>
-                    
-                    <div class="bg-card-dark rounded-2xl border border-card-border overflow-hidden shadow-xl">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="border-b border-card-border text-gray-400 text-xs uppercase tracking-wider bg-black/50">
-                                        <th class="py-4 px-6">#</th>
-                                        <th class="py-4 px-6">Aset</th>
-                                        <th class="py-4 px-6 text-right">Harga (USD)</th>
-                                        <th class="py-4 px-6 text-right">Perubahan 24j</th>
-                                        <th class="py-4 px-6 text-right">Volume 24j</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="crypto-table-body" class="divide-y divide-card-border text-gray-200 text-sm">
-                                    <!-- Diisi via JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="flex items-center justify-between px-6 py-4 border-t border-card-border bg-black/40 text-xs">
-                            <span id="crypto-pagination-info" class="text-gray-400">Menampilkan 1-10 dari 28 aset</span>
-                            <div class="flex items-center space-x-1" id="crypto-pagination-controls">
-                                <button onclick="changeCryptoPage(cryptoCurrentPage - 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">Prev</button>
-                                <button onclick="changeCryptoPage(1)" id="crypto-page-1-btn" class="px-2.5 py-1 bg-brand-primary text-white rounded font-bold">1</button>
-                                <button onclick="changeCryptoPage(2)" id="crypto-page-2-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">2</button>
-                                <button onclick="changeCryptoPage(3)" id="crypto-page-3-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">3</button>
-                                <button onclick="changeCryptoPage(cryptoCurrentPage + 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">Next</button>
+            
+            <!-- SUB-HALAMAN 1: Live Index, Tabel Kripto, Order Book, Live Ticks -->
+            <div id="crypto-subpage-1" class="crypto-subpage space-y-6">
+                <!-- Live Crypto Index Tracker -->
+                <div class="grid grid-cols-1 lg:grid-cols-1 gap-6 items-start">
+                    <div class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-card-border pb-4 gap-2">
+                            <div>
+                                <div class="flex items-center space-x-2">
+                                    <h3 class="text-lg font-bold text-white">Live Crypto Index Tracker</h3>
+                                    <span class="flex h-2 w-2 relative">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                    </span>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-0.5">Grafik pergerakan indeks nilai pasar komposit secara real-time online.</p>
                             </div>
+                            <div class="flex items-center space-x-2 bg-black/40 border border-card-border px-3 py-1.5 rounded-xl text-xs font-mono">
+                                <span class="text-gray-400">Indeks Komposit:</span>
+                                <span id="live-index-val" class="text-emerald-400 font-bold">$67,420.50</span>
+                            </div>
+                        </div>
+                        <div class="relative h-60 w-full">
+                            <canvas id="cryptoIndexChart"></canvas>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Kolom Kanan: Order Book & Live Streaming Ticks -->
-                <div class="space-y-6">
-                    <!-- 1. Modul Order Book -->
-                    <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
-                        <div class="flex items-center justify-between border-b border-card-border pb-3">
+
+                <!-- LAYOUT UTAMA: Tabel Aset Kripto & Order Book (Sejajar Kiri dan Kanan) -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                    
+                    <!-- Kolom Kiri: Tabel Aset Kripto -->
+                    <div class="space-y-4 flex flex-col h-full">
+                        <div class="flex items-center justify-between bg-card-dark border border-card-border px-4 py-3 rounded-xl text-xs">
                             <div class="flex items-center space-x-2">
-                                <span class="font-bold text-white text-sm">ORDER BOOK</span>
-                                <span class="bg-brand-primary/20 text-brand-accent text-[10px] font-semibold px-2 py-0.5 rounded">BTC/USDT</span>
+                                <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                                <span class="text-emerald-400 font-medium">Live Data Feed (28 Aset)</span>
                             </div>
-                            <span class="text-xs text-emerald-400 font-mono animate-pulse">● Live Stream</span>
+                            <span id="crypto-last-updated" class="text-gray-400">Terakhir diperbarui: Baru saja</span>
                         </div>
                         
-                        <div class="flex items-center justify-between bg-black/50 p-2 rounded-xl border border-card-border text-xs">
-                            <div class="flex items-center space-x-1">
-                                <span class="text-gray-400 text-[10px]">Grup:</span>
-                                <select id="ob-grouping" onchange="changeOrderBookGrouping()" class="bg-black text-white border border-card-border rounded px-1.5 py-0.5 text-[11px] focus:outline-none">
-                                    <option value="0.01">0.01</option>
-                                    <option value="0.1" selected>0.1</option>
-                                    <option value="1">1.0</option>
-                                    <option value="10">10</option>
-                                </select>
+                        <div class="bg-card-dark rounded-2xl border border-card-border overflow-hidden shadow-xl flex-grow flex flex-col justify-between">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="border-b border-card-border text-gray-400 text-xs uppercase tracking-wider bg-black/50">
+                                            <th class="py-4 px-6">#</th>
+                                            <th class="py-4 px-6">Aset</th>
+                                            <th class="py-4 px-6 text-right">Harga (USD)</th>
+                                            <th class="py-4 px-6 text-right">Perubahan 24j</th>
+                                            <th class="py-4 px-6 text-right">Volume 24j</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="crypto-table-body" class="divide-y divide-card-border text-gray-200 text-sm">
+                                        <!-- Diisi via JS -->
+                                    </tbody>
+                                </table>
                             </div>
-                            <button onclick="exportOrderBookData()" class="text-brand-accent hover:underline flex items-center space-x-1 text-[11px]">
-                                <i class="fa-solid fa-download"></i>
-                                <span>Ekspor Data</span>
-                            </button>
-                        </div>
-                        <div class="grid grid-cols-3 text-[11px] font-medium text-gray-400 uppercase">
-                            <span>Harga (USDT)</span>
-                            <span class="text-right">Jumlah (BTC)</span>
-                            <span class="text-right">Total</span>
-                        </div>
-                        
-                        <div id="orderbook-asks" class="space-y-1 font-mono text-xs max-h-36 overflow-y-auto"></div>
-                        
-                        <div class="py-2.5 my-1 bg-black border-y border-card-border text-center flex items-center justify-between px-3">
-                            <span id="orderbook-mid-price" class="text-base font-bold text-emerald-400 font-mono">$67,420.50</span>
-                            <span class="text-[11px] text-gray-400">Spread: <span id="ob-spread">0.12</span></span>
-                        </div>
-                        
-                        <div id="orderbook-bids" class="space-y-1 font-mono text-xs max-h-36 overflow-y-auto"></div>
-                    </div>
-                    <!-- 2. Modul LIVE STREAMING TICKS -->
-                    <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl terminal-glow font-mono">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-card-border pb-3">
-                            <div class="flex items-center space-x-2">
-                                <span class="relative flex h-2.5 w-2.5">
-                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                                </span>
-                                <div>
-                                    <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider">LIVE STREAMING TICKS</h3>
-                                    <p class="text-[10px] text-gray-500 mt-0.5">Streaming transaksi crypto secara lokal dengan pembaruan otomatis.</p>
+                            <div class="flex items-center justify-between px-6 py-4 border-t border-card-border bg-black/40 text-xs mt-auto">
+                                <span id="crypto-pagination-info" class="text-gray-400">Menampilkan 1-10 dari 28 aset</span>
+                                <div class="flex items-center space-x-1" id="crypto-pagination-controls">
+                                    <button onclick="changeCryptoPage(cryptoCurrentPage - 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">Prev</button>
+                                    <button onclick="changeCryptoPage(1)" id="crypto-page-1-btn" class="px-2.5 py-1 bg-brand-primary text-white rounded font-bold">1</button>
+                                    <button onclick="changeCryptoPage(2)" id="crypto-page-2-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">2</button>
+                                    <button onclick="changeCryptoPage(3)" id="crypto-page-3-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">3</button>
+                                    <button onclick="changeCryptoPage(cryptoCurrentPage + 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">Next</button>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-2 text-[10px]">
-                                <span class="px-2 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">● LIVE FEED</span>
-                                <span id="crypto-tick-count" class="px-2 py-1 rounded-lg bg-black border border-card-border text-gray-400">0 TICKS</span>
-                                <button id="crypto-ticks-toggle" type="button" onclick="toggleCryptoLiveTicks()" class="px-2.5 py-1 rounded-lg bg-black border border-card-border text-gray-300 hover:text-white hover:border-brand-accent transition">PAUSE</button>
-                            </div>
                         </div>
-                        <div class="overflow-x-auto max-h-40 overflow-y-auto mt-3">
-                            <table class="w-full text-left text-[11px]">
-                                <thead class="sticky top-0 bg-card-dark z-10">
-                                    <tr class="text-gray-500 border-b border-card-border uppercase tracking-wider">
-                                        <th class="py-2 pr-3">Time</th>
-                                        <th class="py-2 px-3">Pair</th>
-                                        <th class="py-2 px-3 text-right">Price</th>
-                                        <th class="py-2 px-3 text-right">Size</th>
-                                        <th class="py-2 px-3 text-right">Side</th>
-                                        <th class="py-2 pl-3 text-right">Venue</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="crypto-live-ticks-body" class="divide-y divide-card-border/70"></tbody>
-                            </table>
+                    </div>
+                    
+                    <!-- Kolom Kanan: Order Book & Live Streaming Ticks (Sejajar Kiri dan Kanan) -->
+                    <div class="space-y-6 flex flex-col h-full">
+                        <!-- 1. Modul Order Book -->
+                        <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
+                            <div class="flex items-center justify-between border-b border-card-border pb-3">
+                                <div class="flex items-center space-x-2">
+                                    <span class="font-bold text-white text-sm">ORDER BOOK</span>
+                                    <span class="bg-brand-primary/20 text-brand-accent text-[10px] font-semibold px-2 py-0.5 rounded">BTC/USDT</span>
+                                </div>
+                                <span class="text-xs text-emerald-400 font-mono animate-pulse">● Live Stream</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between bg-black/50 p-2 rounded-xl border border-card-border text-xs">
+                                <div class="flex items-center space-x-1">
+                                    <span class="text-gray-400 text-[10px]">Grup:</span>
+                                    <select id="ob-grouping" onchange="changeOrderBookGrouping()" class="bg-black text-white border border-card-border rounded px-1.5 py-0.5 text-[11px] focus:outline-none">
+                                        <option value="0.01">0.01</option>
+                                        <option value="0.1" selected>0.1</option>
+                                        <option value="1">1.0</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <button onclick="exportOrderBookData()" class="text-brand-accent hover:underline flex items-center space-x-1 text-[11px]">
+                                    <i class="fa-solid fa-download"></i>
+                                    <span>Ekspor Data</span>
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-3 text-[11px] font-medium text-gray-400 uppercase">
+                                <span>Harga (USDT)</span>
+                                <span class="text-right">Jumlah (BTC)</span>
+                                <span class="text-right">Total</span>
+                            </div>
+                            
+                            <div id="orderbook-asks" class="space-y-1 font-mono text-xs max-h-32 overflow-y-auto"></div>
+                            
+                            <div class="py-2.5 my-1 bg-black border-y border-card-border text-center flex items-center justify-between px-3">
+                                <span id="orderbook-mid-price" class="text-base font-bold text-emerald-400 font-mono">$67,420.50</span>
+                                <span class="text-[11px] text-gray-400">Spread: <span id="ob-spread">0.12</span></span>
+                            </div>
+                            
+                            <div id="orderbook-bids" class="space-y-1 font-mono text-xs max-h-32 overflow-y-auto"></div>
+                        </div>
+
+                        <!-- 2. Modul LIVE STREAMING TICKS -->
+                        <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl terminal-glow font-mono flex-grow">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-card-border pb-3">
+                                <div class="flex items-center space-x-2">
+                                    <span class="relative flex h-2.5 w-2.5">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                                    </span>
+                                    <div>
+                                        <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider">LIVE STREAMING TICKS</h3>
+                                        <p class="text-[10px] text-gray-500 mt-0.5">Streaming transaksi crypto secara lokal dengan pembaruan otomatis.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2 text-[10px]">
+                                    <span class="px-2 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">● LIVE FEED</span>
+                                    <span id="crypto-tick-count" class="px-2 py-1 rounded-lg bg-black border border-card-border text-gray-400">0 TICKS</span>
+                                    <button id="crypto-ticks-toggle" type="button" onclick="toggleCryptoLiveTicks()" class="px-2.5 py-1 rounded-lg bg-black border border-card-border text-gray-300 hover:text-white hover:border-brand-accent transition">PAUSE</button>
+                                </div>
+                            </div>
+                            <div class="overflow-x-auto max-h-36 overflow-y-auto mt-3">
+                                <table class="w-full text-left text-[11px]">
+                                    <thead class="sticky top-0 bg-card-dark z-10">
+                                        <tr class="text-gray-500 border-b border-card-border uppercase tracking-wider">
+                                            <th class="py-2 pr-3">Time</th>
+                                            <th class="py-2 px-3">Pair</th>
+                                            <th class="py-2 px-3 text-right">Price</th>
+                                            <th class="py-2 px-3 text-right">Size</th>
+                                            <th class="py-2 px-3 text-right">Side</th>
+                                            <th class="py-2 pl-3 text-right">Venue</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="crypto-live-ticks-body" class="divide-y divide-card-border/70"></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- ⚡ FITUR BARU DIPOSISIKAN DI BAWAH FITUR ASET DAN LIVE STREAMING TICKS -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
-                <!-- 1. Market Derivatif Card -->
-                <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
-                    <div class="flex items-center justify-between border-b border-card-border pb-3">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-8 h-8 rounded-xl bg-brand-primary/20 text-brand-accent flex items-center justify-center text-sm">
-                                <i class="fa-solid fa-chart-pie"></i>
+
+            <!-- SUB-HALAMAN 2: Kalkulator PnL & Pemantau Gas Fee Real-Time (Sejajar Kiri dan Kanan) -->
+            <div id="crypto-subpage-2" class="crypto-subpage space-y-6 hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+                    <!-- 1. Kalkulator Profit / Loss (PnL) Kripto -->
+                    <div class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4 flex flex-col justify-between h-full">
+                        <div>
+                            <div class="flex items-center justify-between border-b border-card-border pb-3">
+                                <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+                                    <i class="fa-solid fa-calculator text-brand-accent"></i>
+                                    <span>Kalkulator Profit / Loss (PnL) Kripto</span>
+                                </h3>
+                                <span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded font-mono">Simulasi Trading</span>
                             </div>
-                            <h3 class="text-sm font-bold text-white">Market Derivatif</h3>
-                        </div>
-                        <span class="text-[10px] px-2 py-0.5 rounded bg-brand-primary/20 text-brand-accent font-mono font-bold">PERP</span>
-                    </div>
-                    <div class="space-y-2 text-xs font-mono">
-                        <div class="flex justify-between items-center text-gray-400">
-                            <span>Open Interest (BTC):</span>
-                            <span id="deriv-oi" class="text-white font-bold">$34.2B (+2.4%)</span>
-                        </div>
-                        <div class="flex justify-between items-center text-gray-400">
-                            <span>Funding Rate:</span>
-                            <span id="deriv-fr" class="text-emerald-400 font-bold">+0.0102%</span>
-                        </div>
-                        <div class="flex justify-between items-center text-gray-400">
-                            <span>24h Liquidations:</span>
-                            <span id="deriv-liq" class="text-rose-400 font-bold">$142.5M (Long)</span>
-                        </div>
-                    </div>
-                    <div class="relative h-28 w-full bg-black/50 border border-card-border rounded-xl p-1.5">
-                        <canvas id="derivativeMiniChart"></canvas>
-                    </div>
-                </div>
-                <!-- 2. Fear and Greed Index Card -->
-                <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
-                    <div class="flex items-center justify-between border-b border-card-border pb-3">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm">
-                                <i class="fa-solid fa-gauge-high"></i>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                                <div class="space-y-1">
+                                    <label class="block text-xs text-gray-400">Harga Beli (USD)</label>
+                                    <input type="number" id="pnl-buy-price" value="65000" oninput="calculateCryptoPnL()" class="w-full bg-black border border-card-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono">
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="block text-xs text-gray-400">Harga Jual / Target (USD)</label>
+                                    <input type="number" id="pnl-sell-price" value="70000" oninput="calculateCryptoPnL()" class="w-full bg-black border border-card-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono">
+                                </div>
+                                <div class="space-y-1 sm:col-span-2">
+                                    <label class="block text-xs text-gray-400">Jumlah Aset (Koin)</label>
+                                    <input type="number" id="pnl-amount" value="0.5" step="0.01" oninput="calculateCryptoPnL()" class="w-full bg-black border border-card-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono">
+                                </div>
                             </div>
-                            <h3 class="text-sm font-bold text-white">Fear & Greed Index</h3>
                         </div>
-                        <span id="fng-badge" class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-mono font-bold">GREED (74)</span>
-                    </div>
-                    <div class="space-y-2 text-xs font-mono">
-                        <div class="flex justify-between items-center text-gray-400">
-                            <span>Sentimen Hari Ini:</span>
-                            <span class="text-white font-bold">74 / 100</span>
-                        </div>
-                        <div class="flex justify-between items-center text-gray-400">
-                            <span>Kemarin: 72 (Greed)</span>
-                            <span class="text-gray-400">Minggu Lalu: 65</span>
-                        </div>
-                    </div>
-                    <div class="relative h-28 w-full bg-black/50 border border-card-border rounded-xl p-1.5">
-                        <canvas id="fearGreedMiniChart"></canvas>
-                    </div>
-                </div>
-                <!-- 3. Altcoin Season Index Card -->
-                <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
-                    <div class="flex items-center justify-between border-b border-card-border pb-3">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm">
-                                <i class="fa-solid fa-coins"></i>
+                        <div class="p-4 bg-black/60 border border-card-border rounded-xl flex items-center justify-between font-mono mt-6">
+                            <div>
+                                <span class="text-xs text-gray-400 block">Estimasi Keuntungan / Kerugian:</span>
+                                <span id="pnl-result-amount" class="text-lg font-bold text-emerald-400">+$2,500.00</span>
                             </div>
-                            <h3 class="text-sm font-bold text-white">Altcoin Season Index</h3>
-                        </div>
-                        <span id="alt-badge" class="text-[10px] px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 font-mono font-bold">ALT SEASON (78)</span>
-                    </div>
-                    <div class="space-y-2 text-xs font-mono">
-                        <div class="flex justify-between items-center text-gray-400">
-                            <span>Indeks Altcoin:</span>
-                            <span class="text-white font-bold">78 / 100</span>
-                        </div>
-                        <div class="flex justify-between items-center text-gray-400">
-                            <span>Kriteria: 75+ dari Top 50 koin outperform BTC</span>
+                            <div class="text-right">
+                                <span class="text-xs text-gray-400 block">Persentase (ROI):</span>
+                                <span id="pnl-result-roi" class="text-base font-bold text-emerald-400">+7.69%</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="relative h-28 w-full bg-black/50 border border-card-border rounded-xl p-1.5">
-                        <canvas id="altcoinSeasonMiniChart"></canvas>
+
+                    <!-- 2. Pemantau Gas Fee Jaringan Real-Time -->
+                    <div class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4 flex flex-col justify-between h-full">
+                        <div>
+                            <div class="flex items-center justify-between border-b border-card-border pb-3">
+                                <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+                                    <i class="fa-solid fa-gas-pump text-brand-accent"></i>
+                                    <span>Pemantau Gas Fee Jaringan Real-Time</span>
+                                </h3>
+                                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 text-[10px] animate-pulse">● LIVE</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-2">Pantauan biaya transaksi jaringan utama untuk optimasi eksekusi smart contract & transfer.</p>
+                            <div class="space-y-2.5 font-mono text-xs mt-4">
+                                <div class="flex items-center justify-between p-3 bg-black/50 border border-card-border rounded-xl">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                                        <span class="font-bold text-white">Ethereum (Mainnet)</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span id="gas-eth" class="text-emerald-400 font-bold">18 Gwei</span>
+                                        <span class="text-[10px] text-gray-400 block">~ $0.85 (Transfer)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-black/50 border border-card-border rounded-xl">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                                        <span class="font-bold text-white">Polygon (PoS)</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span id="gas-polygon" class="text-emerald-400 font-bold">32 Gwei</span>
+                                        <span class="text-[10px] text-gray-400 block">~ $0.01 (Transfer)</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-black/50 border border-card-border rounded-xl">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                        <span class="font-bold text-white">Arbitrum (L2)</span>
+                                    </div>
+                                    <div class="text-right">
+                                        <span id="gas-arb" class="text-emerald-400 font-bold">0.1 Gwei</span>
+                                        <span class="text-[10px] text-gray-400 block">~ $0.002 (Transfer)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-[10px] text-gray-500 text-right mt-4 pt-2 border-t border-card-border">
+                            Diperbarui secara real-time via RPC Node Network
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
+
         <!-- 4. Halaman Stock Exchange -->
         <section id="page-stock-exchange" class="page space-y-6">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -962,93 +948,121 @@
                 </div>
             </div>
             
-            <!-- Bagian Bawah Stock Exchange: Direktori Saham (Kiri) & Stock Sector Distribution (Kanan Sejajar) -->
+            <!-- Bagian Bawah Stock Exchange: Direktori Saham (Kiri) & CURRENCY CONVERTER Menempel Di Bawahnya -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
                 
-                <!-- Kolom Kiri (2 Kolom): U.S. Stock Directory & Fundamental Matrix (5 Halaman, 10 Baris per Halaman) -->
-                <div class="lg:col-span-2 bg-card-dark rounded-2xl border border-card-border overflow-hidden shadow-xl p-6 space-y-5">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-card-border pb-4">
-                        <div>
+                <!-- Kolom Kiri (2 Kolom): U.S. Stock Directory & Fundamental Matrix (5 Halaman) + CURRENCY CONVERTER -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-card-dark rounded-2xl border border-card-border overflow-hidden shadow-xl p-6 space-y-5">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-card-border pb-4">
+                            <div>
+                                <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
+                                    <i class="fa-solid fa-building-columns text-brand-accent"></i>
+                                    <span>U.S. STOCK DIRECTORY & FUNDAMENTAL MATRIX (5 HALAMAN)</span>
+                                </h3>
+                                <p class="text-xs text-gray-400 mt-0.5">Indexed equities across NYSE & NASDAQ exchanges with 10 rows telemetry per page.</p>
+                            </div>
+                            <div class="relative w-full sm:w-64">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
+                                    <i class="fa-solid fa-search text-xs"></i>
+                                </span>
+                                <input type="text" id="stock-search-input" oninput="filterStockDirectory()" placeholder="Filter symbol or name..." class="w-full bg-black border border-card-border rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-brand-accent">
+                            </div>
+                        </div>
+                        
+                        <div class="overflow-x-auto min-h-[340px]">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b border-card-border text-gray-400 text-[11px] uppercase bg-black/50 font-mono">
+                                        <th class="py-3.5 px-4">SYMBOL</th>
+                                        <th class="py-3.5 px-4">COMPANY</th>
+                                        <th class="py-3.5 px-4">SECTOR</th>
+                                        <th class="py-3.5 px-4 text-right">PRICE ($)</th>
+                                        <th class="py-3.5 px-4 text-right">CHANGE (%)</th>
+                                        <th class="py-3.5 px-4 text-right">MARKET CAP</th>
+                                        <th class="py-3.5 px-4 text-center">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stock-table-body" class="divide-y divide-card-border text-gray-200 text-xs font-mono"></tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row items-center justify-between pt-3 border-t border-card-border text-xs text-gray-400 gap-2">
+                            <span id="stock-pagination-info">Showing 1-10 of 50 entries (Page 1 of 5)</span>
+                            <div class="flex items-center space-x-1 overflow-x-auto py-1" id="stock-pagination-controls">
+                                <button onclick="changeStockPage(currentStockPage - 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">Prev</button>
+                                <button onclick="changeStockPage(1)" id="stock-page-1-btn" class="px-2.5 py-1 bg-brand-primary text-white rounded font-bold text-[10px]">1</button>
+                                <button onclick="changeStockPage(2)" id="stock-page-2-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">2</button>
+                                <button onclick="changeStockPage(3)" id="stock-page-3-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">3</button>
+                                <button onclick="changeStockPage(4)" id="stock-page-4-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">4</button>
+                                <button onclick="changeStockPage(5)" id="stock-page-5-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">5</button>
+                                <button onclick="changeStockPage(currentStockPage + 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ⚡ CURRENCY CONVERTER (KONVERSI NILAI UANG) - Diposisikan Menempel di Sini -->
+                    <div class="bg-card-dark rounded-2xl border border-card-border p-6 shadow-xl space-y-4">
+                        <div class="flex items-center justify-between border-b border-card-border pb-3">
                             <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-                                <i class="fa-solid fa-building-columns text-brand-accent"></i>
-                                <span>U.S. STOCK DIRECTORY & FUNDAMENTAL MATRIX</span>
+                                <i class="fa-solid fa-money-bill-transfer text-brand-accent"></i>
+                                <span>Currency Converter (Konversi Nilai Uang)</span>
                             </h3>
-                            <p class="text-xs text-gray-400 mt-0.5">Indexed equities across NYSE & NASDAQ exchanges with 10 rows telemetry per page.</p>
+                            <span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded font-mono">Real-time Rates</span>
                         </div>
-                        <div class="relative w-full sm:w-64">
-                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
-                                <i class="fa-solid fa-search text-xs"></i>
-                            </span>
-                            <input type="text" id="stock-search-input" oninput="filterStockDirectory()" placeholder="Filter symbol or name..." class="w-full bg-black border border-card-border rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-brand-accent">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                            <div class="space-y-1">
+                                <label class="block text-xs text-gray-400">Jumlah & Mata Uang Asal</label>
+                                <div class="flex">
+                                    <input type="number" id="converter-amount" value="100" oninput="convertCurrency()" class="w-full bg-black border border-card-border rounded-l-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono">
+                                    <select id="converter-from" onchange="convertCurrency()" class="bg-neutral-900 border-y border-r border-card-border rounded-r-xl px-3 py-2 text-xs text-white focus:outline-none">
+                                        <option value="USD" selected>USD ($)</option>
+                                        <option value="IDR">IDR (Rp)</option>
+                                        <option value="EUR">EUR (€)</option>
+                                        <option value="GBP">GBP (£)</option>
+                                        <option value="SGD">SGD (S$)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex justify-center items-center pt-2 md:pt-5">
+                                <button onclick="swapCurrencies()" class="w-9 h-9 rounded-full bg-black border border-card-border hover:bg-neutral-800 text-brand-accent flex items-center justify-center transition" title="Tukar Mata Uang">
+                                    <i class="fa-solid fa-right-left text-xs"></i>
+                                </button>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-xs text-gray-400">Hasil & Mata Uang Tujuan</label>
+                                <div class="flex">
+                                    <input type="text" id="converter-result" readonly class="w-full bg-black border border-card-border rounded-l-xl px-3 py-2 text-sm text-emerald-400 font-bold font-mono" value="Rp 1.620.000">
+                                    <select id="converter-to" onchange="convertCurrency()" class="bg-neutral-900 border-y border-r border-card-border rounded-r-xl px-3 py-2 text-xs text-white focus:outline-none">
+                                        <option value="USD">USD ($)</option>
+                                        <option value="IDR" selected>IDR (Rp)</option>
+                                        <option value="EUR">EUR (€)</option>
+                                        <option value="GBP">GBP (£)</option>
+                                        <option value="SGD">SGD (S$)</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="overflow-x-auto min-h-[340px]">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="border-b border-card-border text-gray-400 text-[11px] uppercase bg-black/50 font-mono">
-                                    <th class="py-3.5 px-4">SYMBOL</th>
-                                    <th class="py-3.5 px-4">COMPANY</th>
-                                    <th class="py-3.5 px-4">SECTOR</th>
-                                    <th class="py-3.5 px-4 text-right">PRICE ($)</th>
-                                    <th class="py-3.5 px-4 text-right">CHANGE (%)</th>
-                                    <th class="py-3.5 px-4 text-right">MARKET CAP</th>
-                                    <th class="py-3.5 px-4 text-center">ACTION</th>
-                                </tr>
-                            </thead>
-                            <tbody id="stock-table-body" class="divide-y divide-card-border text-gray-200 text-xs font-mono"></tbody>
-                        </table>
-                    </div>
-                    
-                    <div class="flex flex-col sm:flex-row items-center justify-between pt-3 border-t border-card-border text-xs text-gray-400 gap-2">
-                        <span id="stock-pagination-info">Showing 1-10 of 50 entries (Page 1 of 5)</span>
-                        <div class="flex items-center space-x-1 overflow-x-auto py-1" id="stock-pagination-controls">
-                            <button onclick="changeStockPage(currentStockPage - 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">Prev</button>
-                            <button onclick="changeStockPage(1)" id="stock-page-1-btn" class="px-2.5 py-1 bg-brand-primary text-white rounded font-bold text-[10px]">1</button>
-                            <button onclick="changeStockPage(2)" id="stock-page-2-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">2</button>
-                            <button onclick="changeStockPage(3)" id="stock-page-3-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">3</button>
-                            <button onclick="changeStockPage(4)" id="stock-page-4-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">4</button>
-                            <button onclick="changeStockPage(5)" id="stock-page-5-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">5</button>
-                            <button onclick="changeStockPage(currentStockPage + 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">Next</button>
+                        <div class="text-[11px] text-gray-400 flex items-center justify-between pt-1 border-t border-card-border/60">
+                            <span>Kurs Referensi: 1 USD = Rp 16.200 | 1 EUR = 1.08 USD | 1 GBP = 1.28 USD | 1 SGD = 0.76 USD</span>
+                            <span class="text-emerald-400">● Updated</span>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Kolom Kanan (1 Kolom): Stock Sector Distribution & Live Streamed Ticks Sejajar di Samping Kanan -->
+                <!-- Kolom Kanan (1 Kolom): Stock Sector Distribution (FineReport Bar Chart Style) & Live Streamed Ticks -->
                 <div class="space-y-6">
-                    <!-- ⚡ STOCK SECTOR DISTRIBUTION -->
+                    <!-- ⚡ STOCK SECTOR DISTRIBUTION (FineReport Bar Chart Style) -->
                     <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
                         <div class="flex items-center justify-between border-b border-card-border pb-3">
                             <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-1.5">
-                                <i class="fa-solid fa-pie-chart text-brand-accent"></i>
+                                <i class="fa-solid fa-chart-bar text-brand-accent"></i>
                                 <span>STOCK SECTOR DISTRIBUTION</span>
                             </h3>
-                            <span class="px-2 py-0.5 rounded bg-brand-primary/10 border border-brand-primary/30 text-brand-accent text-[10px] font-mono font-bold">LIVE</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 text-[10px] animate-pulse">● LIVE AUTO</span>
                         </div>
-                        <div class="space-y-2 font-mono text-[11px]">
-                            <div class="flex justify-between items-center bg-black/40 p-2 rounded-lg border border-card-border">
-                                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#4F46E5] inline-block"></span><span class="text-gray-300">Semiconductor & Tech</span></span>
-                                <span class="font-bold text-white">35%</span>
-                            </div>
-                            <div class="flex justify-between items-center bg-black/40 p-2 rounded-lg border border-card-border">
-                                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#10B981] inline-block"></span><span class="text-gray-300">Financial Services</span></span>
-                                <span class="font-bold text-white">22%</span>
-                            </div>
-                            <div class="flex justify-between items-center bg-black/40 p-2 rounded-lg border border-card-border">
-                                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#F59E0B] inline-block"></span><span class="text-gray-300">Healthcare & Biotech</span></span>
-                                <span class="font-bold text-white">18%</span>
-                            </div>
-                            <div class="flex justify-between items-center bg-black/40 p-2 rounded-lg border border-card-border">
-                                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#38BDF8] inline-block"></span><span class="text-gray-300">Consumer & Retail</span></span>
-                                <span class="font-bold text-white">15%</span>
-                            </div>
-                            <div class="flex justify-between items-center bg-black/40 p-2 rounded-lg border border-card-border">
-                                <span class="flex items-center space-x-1.5"><span class="w-2.5 h-2.5 rounded-full bg-[#EC4899] inline-block"></span><span class="text-gray-300">Energy & Industrials</span></span>
-                                <span class="font-bold text-white">10%</span>
-                            </div>
-                        </div>
-                        <div class="relative h-48 w-full bg-black/50 border border-card-border rounded-xl p-2 flex items-center justify-center">
-                            <canvas id="stockSectorPieChart"></canvas>
+                        <p class="text-[11px] text-gray-400">Analisis komparatif kapitalisasi sektor saham berbasis grafik horizontal FineReport dengan pembaruan otomatis.</p>
+                        <div class="relative h-60 w-full bg-black/50 border border-card-border rounded-xl p-3">
+                            <canvas id="stockSectorBarChart"></canvas>
                         </div>
                     </div>
                     <!-- LIVE STREAMED TICKS -->
@@ -1119,9 +1133,7 @@
                 </div>
             </div>
             
-            <!-- Global Market Overview Grid (Kini mencakup Makro, Crypto Market, & Stock Exchange) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- 1. Kapitalisasi Pasar Global -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="bg-card-dark border border-card-border p-5 rounded-2xl shadow-xl flex items-center justify-between">
                     <div>
                         <span class="text-[11px] text-gray-400 uppercase tracking-wider block">NILAI KAPITALISASI PASAR GLOBAL</span>
@@ -1132,26 +1144,34 @@
                         <i class="fa-solid fa-globe"></i>
                     </div>
                 </div>
-                <!-- 5. Integrasi Data Crypto Market (Total Kap. Crypto & Dominasi) -->
                 <div class="bg-card-dark border border-card-border p-5 rounded-2xl shadow-xl flex items-center justify-between">
                     <div>
-                        <span class="text-[11px] text-gray-400 uppercase tracking-wider block">TOTAL CRYPTO MARKET CAP</span>
-                        <h4 class="text-xl font-extrabold text-white mt-1">$2.48 Triliun</h4>
-                        <span class="text-[11px] text-emerald-400 font-medium inline-block mt-1">Dominasi BTC: 56.4%</span>
+                        <span class="text-[11px] text-gray-400 uppercase tracking-wider block">INDEKS DOLAR (DXY)</span>
+                        <h4 class="text-xl font-extrabold text-white mt-1">104.25</h4>
+                        <span class="text-[11px] text-rose-400 font-medium inline-block mt-1">-0.35% (Bearish)</span>
                     </div>
                     <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-base">
-                        <i class="fa-solid fa-chart-line"></i>
+                        <i class="fa-solid fa-dollar-sign"></i>
                     </div>
                 </div>
-                <!-- 6. Integrasi Data Stock Exchange (Volume NYSE & NASDAQ) -->
                 <div class="bg-card-dark border border-card-border p-5 rounded-2xl shadow-xl flex items-center justify-between">
                     <div>
-                        <span class="text-[11px] text-gray-400 uppercase tracking-wider block">US STOCK EXCHANGE VOLUME</span>
-                        <h4 class="text-xl font-extrabold text-white mt-1">14.2 Miliar Saham</h4>
-                        <span class="text-[11px] text-brand-accent font-medium inline-block mt-1">NYSE & NASDAQ Live</span>
+                        <span class="text-[11px] text-gray-400 uppercase tracking-wider block">HARGA EMAS (SPOT)</span>
+                        <h4 class="text-xl font-extrabold text-white mt-1">$2,385.40</h4>
+                        <span class="text-[11px] text-emerald-400 font-medium inline-block mt-1">+0.92% (Safe Haven)</span>
                     </div>
-                    <div class="w-10 h-10 rounded-xl bg-brand-primary/10 text-brand-accent flex items-center justify-center text-base">
-                        <i class="fa-solid fa-building-columns"></i>
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-base">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                </div>
+                <div class="bg-card-dark border border-card-border p-5 rounded-2xl shadow-xl flex items-center justify-between">
+                    <div>
+                        <span class="text-[11px] text-gray-400 uppercase tracking-wider block">MINYAK MENTAH (WTI)</span>
+                        <h4 class="text-xl font-extrabold text-white mt-1">$78.20</h4>
+                        <span class="text-[11px] text-rose-400 font-medium inline-block mt-1">-1.15%</span>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-base">
+                        <i class="fa-solid fa-oil-well"></i>
                     </div>
                 </div>
             </div>
@@ -1219,9 +1239,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- Kolom Kanan (1 Kolom): MACRO ASSET DISTRIBUTION (MODEL BAR CHART OTOMATIS) & ORDER BOOK -->
+                <!-- Kolom Kanan (1 Kolom): MACRO ASSET DISTRIBUTION & ORDER BOOK -->
                 <div class="space-y-6">
-                    <!-- ⚡ MACRO ASSET DISTRIBUTION (Bar Chart dengan Auto-Update Real-time) -->
                     <div class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4">
                         <div class="flex items-center justify-between border-b border-card-border pb-3">
                             <h3 class="text-base font-bold text-white uppercase tracking-wider flex items-center space-x-2">
@@ -1248,17 +1267,13 @@
                             <span class="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono rounded-lg">99.4%</span>
                         </div>
                         <div class="space-y-3">
-                            <!-- Mini Order Book -->
                             <div class="bg-black/50 p-3 rounded-xl border border-card-border space-y-2 font-mono text-xs">
                                 <div class="flex justify-between text-[11px] text-gray-400 font-bold border-b border-card-border pb-1">
                                     <span>GLOBAL BID / ASK</span>
                                     <span class="text-emerald-400">SPREAD: 0.04</span>
                                 </div>
-                                <div id="global-mini-orderbook" class="space-y-1 max-h-24 overflow-y-auto">
-                                    <!-- Diisi JS -->
-                                </div>
+                                <div id="global-mini-orderbook" class="space-y-1 max-h-24 overflow-y-auto"></div>
                             </div>
-                            <!-- Mini Tick Chart -->
                             <div class="bg-black/50 p-3 rounded-xl border border-card-border space-y-2">
                                 <div class="flex justify-between text-[11px] text-gray-400 font-bold border-b border-card-border pb-1 font-mono">
                                     <span>GLOBAL TICK STREAM</span>
@@ -1322,41 +1337,114 @@
                 content: `<p>Seiring dengan semakin matangnya industri aset digital, interaksi antara bursa saham konvensional seperti S&P 500 dan teknologi blockchain semakin menarik untuk diamati.</p><p>Faktor suku bunga bank sentral dan ekspektasi inflasi menjadi katalis utama yang menggerakkan kedua instrumen investasi ini secara simultan.</p>`
             }
         };
-        // ⚡ LOGIKA SLIDER OTOMATIS ARTIKEL DI BERANDA
-        let currentSlideIndex = 0;
-        const slides = document.getElementsByClassName('hero-slide');
-        const dots = document.getElementsByClassName('slider-dot');
-        function showSlide(index) {
-            if (!slides.length) return;
-            if (index >= slides.length) currentSlideIndex = 0;
-            if (index < 0) currentSlideIndex = slides.length - 1;
-            
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].classList.remove('opacity-100', 'pointer-events-auto');
-                slides[i].classList.add('opacity-0', 'pointer-events-none');
-                if (dots[i]) {
-                    dots[i].classList.remove('bg-brand-accent');
-                    dots[i].classList.add('bg-neutral-700');
+        let currentArticleSlide = 0;
+        const articleSlides = [
+            `
+            <div class="perspective-container article-slide-item">
+                <article onclick="openArticle('evolusi-web3')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="1.jpg" alt="Evolusi Web3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=600&auto=format&fit=crop&q=80'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-brand-primary/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Web3 & DeFi</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-brand-accent transition-colors line-clamp-2">
+                                Evolusi Keuangan Digital dan Peran Strategis Web3
+                            </h3>
+                            <p class="text-gray-400 text-sm mt-2 line-clamp-3 font-light">
+                                Mengenal lebih dekat bagaimana teknologi desentralisasi mengembalikan kepemilikan data penuh kepada pengguna secara transparan.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
+                            <span><i class="fa-regular fa-clock mr-1"></i> 5 Menit Baca</span>
+                            <span class="text-brand-accent font-medium">Berita Angin Team</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            `,
+            `
+            <div class="perspective-container article-slide-item">
+                <article onclick="openArticle('analisis-crypto')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="2.jpg" alt="Crypto Market" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop&q=80'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-emerald-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Crypto Market</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-brand-accent transition-colors line-clamp-2">
+                                Analisis Pergerakan Pasar Kripto & Sentimen Global
+                            </h3>
+                            <p class="text-gray-400 text-sm mt-2 line-clamp-3 font-light">
+                                Pantauan langsung aset digital utama sebagai indikator selera risiko investor ritel maupun institusi global di tahun ini.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
+                            <span><i class="fa-regular fa-clock mr-1"></i> 4 Menit Baca</span>
+                            <span class="text-brand-accent font-medium">Berita Angin Team</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            `,
+            `
+            <div class="perspective-container article-slide-item">
+                <article onclick="openArticle('korelasi-saham')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="3.jpg" alt="Stock Exchange" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&auto=format&fit=crop&q=80'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-purple-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Stock & Macro</span>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-white group-hover:text-brand-accent transition-colors line-clamp-2">
+                                Korelasi Bursa Saham Konvensional & Pasar Kripto
+                            </h3>
+                            <p class="text-gray-400 text-sm mt-2 line-clamp-3 font-light">
+                                Mengkaji hubungan erat antara indeks bursa global seperti S&P 500 dengan dinamika aset teknologi berbasis blockchain.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
+                            <span><i class="fa-regular fa-clock mr-1"></i> 6 Menit Baca</span>
+                            <span class="text-brand-accent font-medium">Berita Angin Team</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            `
+        ];
+        function updateArticleSlider(index) {
+            currentArticleSlide = index;
+            const sliderContainer = document.getElementById('article-auto-slider');
+            if (sliderContainer) {
+                let htmlContent = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-2 transition-all duration-500">';
+                for (let i = 0; i < 3; i++) {
+                    let slideIndex = (currentArticleSlide + i) % articleSlides.length;
+                    htmlContent += articleSlides[slideIndex];
+                }
+                htmlContent += '</div>';
+                sliderContainer.innerHTML = htmlContent;
+            }
+            const dotsContainer = document.getElementById('article-slider-dots');
+            if (dotsContainer) {
+                const buttons = dotsContainer.getElementsByTagName('button');
+                for (let i = 0; i < buttons.length; i++) {
+                    if (i === currentArticleSlide) {
+                        buttons[i].className = "w-3 h-3 rounded-full bg-brand-accent transition-all";
+                    } else {
+                        buttons[i].className = "w-3 h-3 rounded-full bg-neutral-700 transition-all";
+                    }
                 }
             }
-            slides[currentSlideIndex].classList.remove('opacity-0', 'pointer-events-none');
-            slides[currentSlideIndex].classList.add('opacity-100', 'pointer-events-auto');
-            if (dots[currentSlideIndex]) {
-                dots[currentSlideIndex].classList.remove('bg-neutral-700');
-                dots[currentSlideIndex].classList.add('bg-brand-accent');
-            }
-        }
-        function nextSlide() {
-            currentSlideIndex++;
-            showSlide(currentSlideIndex);
         }
         function currentSlide(index) {
-            currentSlideIndex = index;
-            showSlide(currentSlideIndex);
+            updateArticleSlider(index);
         }
-        // Jalankan interval perpindahan slide otomatis setiap 4 detik
         setInterval(() => {
-            nextSlide();
+            currentArticleSlide = (currentArticleSlide + 1) % articleSlides.length;
+            updateArticleSlider(currentArticleSlide);
         }, 4000);
         function showModal(title, message) {
             document.getElementById('modal-title').innerText = title;
@@ -1367,6 +1455,7 @@
             document.getElementById('custom-modal').classList.add('opacity-0', 'pointer-events-none');
         }
         function shareArticle() {
+            navigator.clipboard.writeText(window.location.href);
             showModal('Bagikan Artikel', 'Tautan artikel berhasil disalin ke papan klip!');
         }
         const navLinks = document.querySelectorAll('.nav-link');
@@ -1386,37 +1475,41 @@
         }
         if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', () => toggleSidebar(true));
         if (closeSidebarBtn) closeSidebarBtn.addEventListener('click', () => toggleSidebar(false));
-        
-        // Navigasi halaman dengan memperbarui URL Hash agar tampilan saat dibuka/di-refresh akurat
-        function switchPage(targetPageName) {
-            pages.forEach(page => page.classList.remove('active'));
-            toggleSidebar(false);
-            const targetPage = document.getElementById('page-' + targetPageName);
-            if (targetPage) {
-                targetPage.classList.add('active');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const targetPageName = link.getAttribute('data-page');
-                window.location.hash = targetPageName;
-                switchPage(targetPageName);
+                pages.forEach(page => page.classList.remove('active'));
+                toggleSidebar(false);
+                const targetPage = document.getElementById('page-' + targetPageName);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             });
         });
 
-        // Deteksi URL saat pertama kali dibuka atau hash berubah
-        function handleInitialRouting() {
-            const hash = window.location.hash.replace('#', '');
-            if (hash && document.getElementById('page-' + hash)) {
-                switchPage(hash);
+        // Fungsi Switch Sub-Halaman Crypto Market (2 Halaman)
+        function switchCryptoSubPage(subPageNum) {
+            const subpages = document.querySelectorAll('.crypto-subpage');
+            subpages.forEach(sp => sp.classList.add('hidden'));
+            
+            const targetSub = document.getElementById(`crypto-subpage-${subPageNum}`);
+            if(targetSub) targetSub.classList.remove('hidden');
+
+            document.getElementById('crypto-subpage-indicator').innerText = `Halaman ${subPageNum} dari 2`;
+
+            const btn1 = document.getElementById('crypto-sub-btn-1');
+            const btn2 = document.getElementById('crypto-sub-btn-2');
+
+            if (subPageNum === 1) {
+                btn1.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition";
+                btn2.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition";
             } else {
-                switchPage('home');
+                btn2.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition";
+                btn1.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition";
             }
         }
-        window.addEventListener('hashchange', handleInitialRouting);
 
         function openArticle(key) {
             const article = articlesData[key];
@@ -1427,16 +1520,23 @@
             document.getElementById('detail-author').innerText = article.author;
             document.getElementById('detail-image').src = article.image;
             document.getElementById('detail-content').innerHTML = article.content;
+            
+            const pageUrl = encodeURIComponent(window.location.href);
+            const pageTitle = encodeURIComponent(article.title);
+            document.getElementById('share-whatsapp').href = `https://api.whatsapp.com/send?text=${pageTitle}%20-%20${pageUrl}`;
+            document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?text=${pageTitle}&url=${pageUrl}`;
+            document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
+            document.getElementById('share-linkedin').href = `https://www.linkedin.com/shareArticle?mini=true&url=${pageUrl}&title=${pageTitle}`;
             pages.forEach(page => page.classList.remove('active'));
             document.getElementById('page-article-detail').classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         function goBackToHome() {
-            window.location.hash = 'home';
-            switchPage('home');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById('page-home').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         
-        // Data 28 Crypto Aset Dibagi Menjadi 3 Halaman (10, 10, 8 item)
         const cryptoPagesData = {
             1: [
                 { market_cap_rank: 1, name: 'Bitcoin', symbol: 'btc', current_price: 67420.50, price_change_percentage_24h: 3.45, total_volume: 32400000000, image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' },
@@ -1525,76 +1625,103 @@
             document.getElementById('crypto-last-updated').innerText = 'Terakhir diperbarui: Baru saja';
         }
         
-        // Stock Directory 50 Data & 5 Pages (10 baris per halaman)
-        const stockDirectoryPages = {
-            1: [
-                { symbol: 'NVDA', name: 'NVIDIA Corporation', sector: 'Semiconductor', price: 228.87, change: '+2.45%', mktCap: '$3.12T' },
-                { symbol: 'AAPL', name: 'Apple Inc.', sector: 'Consumer Electronics', price: 224.23, change: '+0.85%', mktCap: '$3.41T' },
-                { symbol: 'MSFT', name: 'Microsoft Corporation', sector: 'Software & Cloud', price: 445.60, change: '+1.15%', mktCap: '$3.32T' },
-                { symbol: 'AMZN', name: 'Amazon.com, Inc.', sector: 'E-Commerce & Cloud', price: 186.50, change: '-0.40%', mktCap: '$1.94T' },
-                { symbol: 'GOOGL', name: 'Alphabet Inc.', sector: 'Internet Services', price: 178.90, change: '+1.30%', mktCap: '$2.21T' },
-                { symbol: 'META', name: 'Meta Platforms, Inc.', sector: 'Social Media & AI', price: 512.40, change: '+3.10%', mktCap: '$1.30T' },
-                { symbol: 'TSLA', name: 'Tesla, Inc.', sector: 'EV & Clean Energy', price: 248.30, change: '-1.85%', mktCap: '$789B' },
-                { symbol: 'AMD', name: 'Advanced Micro Devices', sector: 'Semiconductor', price: 156.70, change: '+4.20%', mktCap: '$253B' },
-                { symbol: 'NFLX', name: 'Netflix, Inc.', sector: 'Entertainment', price: 685.20, change: '+1.65%', mktCap: '$295B' },
-                { symbol: 'INTC', name: 'Intel Corporation', sector: 'Semiconductor', price: 21.40, change: '-2.10%', mktCap: '$91B' }
-            ],
-            2: [
-                { symbol: 'PYPL', name: 'PayPal Holdings', sector: 'Financial Tech', price: 68.30, change: '+0.45%', mktCap: '$72B' },
-                { symbol: 'UBER', name: 'Uber Technologies', sector: 'Transportation Tech', price: 74.50, change: '+2.10%', mktCap: '$156B' },
-                { symbol: 'JPM', name: 'JPMorgan Chase & Co.', sector: 'Banking', price: 210.10, change: '+0.50%', mktCap: '$602B' },
-                { symbol: 'V', name: 'Visa Inc.', sector: 'Financial Services', price: 275.40, change: '+0.30%', mktCap: '$560B' },
-                { symbol: 'WMT', name: 'Walmart Inc.', sector: 'Retail', price: 72.80, change: '+0.90%', mktCap: '$584B' },
-                { symbol: 'DIS', name: 'The Walt Disney Company', sector: 'Entertainment', price: 95.20, change: '-0.75%', mktCap: '$174B' },
-                { symbol: 'BAC', name: 'Bank of America Corp.', sector: 'Banking', price: 39.80, change: '+0.40%', mktCap: '$312B' },
-                { symbol: 'XOM', name: 'Exxon Mobil Corporation', sector: 'Energy / Oil', price: 114.50, change: '-0.60%', mktCap: '$458B' },
-                { symbol: 'CVX', name: 'Chevron Corporation', sector: 'Energy / Oil', price: 148.20, change: '-0.25%', mktCap: '$276B' },
-                { symbol: 'KO', name: 'The Coca-Cola Company', sector: 'Consumer Goods', price: 68.40, change: '+0.35%', mktCap: '$294B' }
-            ],
-            3: [
-                { symbol: 'PEP', name: 'PepsiCo, Inc.', sector: 'Consumer Goods', price: 172.30, change: '+0.15%', mktCap: '$237B' },
-                { symbol: 'PFE', name: 'Pfizer Inc.', sector: 'Healthcare', price: 28.50, change: '-1.10%', mktCap: '$161B' },
-                { symbol: 'JNJ', name: 'Johnson & Johnson', sector: 'Healthcare', price: 162.40, change: '+0.55%', mktCap: '$391B' },
-                { symbol: 'ABBV', name: 'AbbVie Inc.', sector: 'Healthcare', price: 195.80, change: '+1.20%', mktCap: '$346B' },
-                { symbol: 'TMO', name: 'Thermo Fisher Scientific', sector: 'Healthcare Science', price: 580.10, change: '+0.80%', mktCap: '$224B' },
-                { symbol: 'COST', name: 'Costco Wholesale Corp.', sector: 'Retail', price: 890.50, change: '+1.45%', mktCap: '$394B' },
-                { symbol: 'AVGO', name: 'Broadcom Inc.', sector: 'Semiconductor', price: 165.20, change: '+2.90%', mktCap: '$770B' },
-                { symbol: 'CSCO', name: 'Cisco Systems, Inc.', sector: 'Networking', price: 48.90, change: '-0.30%', mktCap: '$198B' },
-                { symbol: 'ADBE', name: 'Adobe Inc.', sector: 'Software', price: 535.40, change: '-1.25%', mktCap: '$240B' },
-                { symbol: 'CRM', name: 'Salesforce, Inc.', sector: 'Cloud Software', price: 254.80, change: '+0.70%', mktCap: '$246B' }
-            ],
-            4: [
-                { symbol: 'QCOM', name: 'QUALCOMM Incorporated', sector: 'Semiconductor', price: 172.60, change: '+1.80%', mktCap: '$192B' },
-                { symbol: 'TXN', name: 'Texas Instruments', sector: 'Semiconductor', price: 198.40, change: '+0.40%', mktCap: '$180B' },
-                { symbol: 'ACN', name: 'Accenture plc', sector: 'IT Services', price: 335.20, change: '+0.60%', mktCap: '$210B' },
-                { symbol: 'LIN', name: 'Linde plc', sector: 'Chemicals', price: 450.10, change: '+0.20%', mktCap: '$218B' },
-                { symbol: 'NKE', name: 'NIKE, Inc.', sector: 'Apparel & Retail', price: 82.40, change: '-1.50%', mktCap: '$124B' },
-                { symbol: 'MCD', name: 'McDonald\'s Corporation', sector: 'Restaurants', price: 295.60, change: '+0.45%', mktCap: '$213B' },
-                { symbol: 'IBM', name: 'International Business Machines', sector: 'Technology', price: 212.80, change: '+1.10%', mktCap: '$196B' },
-                { symbol: 'SBUX', name: 'Starbucks Corporation', sector: 'Restaurants', price: 94.20, change: '-0.80%', mktCap: '$106B' },
-                { symbol: 'GE', name: 'GE Aerospace', sector: 'Industrial Aerospace', price: 175.40, change: '+2.30%', mktCap: '$189B' },
-                { symbol: 'CAT', name: 'Caterpillar Inc.', sector: 'Industrial Heavy', price: 362.50, change: '+1.05%', mktCap: '$184B' }
-            ],
-            5: [
-                { symbol: 'BA', name: 'The Boeing Company', sector: 'Aerospace', price: 168.40, change: '-2.40%', mktCap: '$104B' },
-                { symbol: 'HON', name: 'Honeywell International', sector: 'Industrial Conglomerate', price: 205.30, change: '+0.30%', mktCap: '$134B' },
-                { symbol: 'UPS', name: 'United Parcel Service', sector: 'Logistics', price: 135.20, change: '-0.50%', mktCap: '$116B' },
-                { symbol: 'T', name: 'AT&T Inc.', sector: 'Telecommunications', price: 20.40, change: '+0.75%', mktCap: '$146B' },
-                { symbol: 'VZ', name: 'Verizon Communications', sector: 'Telecommunications', price: 42.10, change: '+0.40%', mktCap: '$178B' },
-                { symbol: 'NEE', name: 'NextEra Energy, Inc.', sector: 'Utilities', price: 78.50, change: '+1.25%', mktCap: '$162B' },
-                { symbol: 'LOW', name: 'Lowe\'s Companies, Inc.', sector: 'Retail', price: 252.30, change: '+0.90%', mktCap: '$144B' },
-                { symbol: 'BLK', name: 'BlackRock, Inc.', sector: 'Financial Management', price: 890.10, change: '+1.60%', mktCap: '$134B' },
-                { symbol: 'SPGI', name: 'S&P Global Inc.', sector: 'Financial Research', price: 510.20, change: '+0.80%', mktCap: '$155B' },
-                { symbol: 'MDT', name: 'Medtronic plc', sector: 'Healthcare Devices', price: 88.30, change: '-0.20%', mktCap: '$115B' }
-            ]
-        };
-        let stockDirectory50 = stockDirectoryPages[1];
-        let currentStockPage = 1;
+        // Logika Kalkulator PnL Kripto
+        function calculateCryptoPnL() {
+            const buyPrice = parseFloat(document.getElementById('pnl-buy-price').value) || 0;
+            const sellPrice = parseFloat(document.getElementById('pnl-sell-price').value) || 0;
+            const amount = parseFloat(document.getElementById('pnl-amount').value) || 0;
+            
+            const totalBuy = buyPrice * amount;
+            const totalSell = sellPrice * amount;
+            const profitLoss = totalSell - totalBuy;
+            const roi = totalBuy > 0 ? (profitLoss / totalBuy) * 100 : 0;
+            
+            const resAmountEl = document.getElementById('pnl-result-amount');
+            const resRoiEl = document.getElementById('pnl-result-roi');
+            
+            if (profitLoss >= 0) {
+                resAmountEl.className = "text-lg font-bold text-emerald-400";
+                resRoiEl.className = "text-base font-bold text-emerald-400";
+                resAmountEl.innerText = `+$${profitLoss.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                resRoiEl.innerText = `+${roi.toFixed(2)}%`;
+            } else {
+                resAmountEl.className = "text-lg font-bold text-rose-400";
+                resRoiEl.className = "text-base font-bold text-rose-400";
+                resAmountEl.innerText = `-$${Math.abs(profitLoss).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                resRoiEl.innerText = `${roi.toFixed(2)}%`;
+            }
+        }
         
-        function renderStockTable(filteredList = stockDirectory50) {
+        const allStockDirectory = [
+            { symbol: 'NVDA', name: 'NVIDIA Corporation', sector: 'Semiconductor', price: 228.87, change: '+2.45%', mktCap: '$3.12T' },
+            { symbol: 'AAPL', name: 'Apple Inc.', sector: 'Consumer Electronics', price: 224.23, change: '+0.85%', mktCap: '$3.41T' },
+            { symbol: 'MSFT', name: 'Microsoft Corporation', sector: 'Software & Cloud', price: 445.60, change: '+1.15%', mktCap: '$3.32T' },
+            { symbol: 'AMZN', name: 'Amazon.com, Inc.', sector: 'E-Commerce & Cloud', price: 186.50, change: '-0.40%', mktCap: '$1.94T' },
+            { symbol: 'GOOGL', name: 'Alphabet Inc.', sector: 'Internet Services', price: 178.90, change: '+1.30%', mktCap: '$2.21T' },
+            { symbol: 'META', name: 'Meta Platforms, Inc.', sector: 'Social Media & AI', price: 512.40, change: '+3.10%', mktCap: '$1.30T' },
+            { symbol: 'TSLA', name: 'Tesla, Inc.', sector: 'EV & Clean Energy', price: 248.30, change: '-1.85%', mktCap: '$789B' },
+            { symbol: 'AMD', name: 'Advanced Micro Devices', sector: 'Semiconductor', price: 156.70, change: '+4.20%', mktCap: '$253B' },
+            { symbol: 'NFLX', name: 'Netflix, Inc.', sector: 'Entertainment', price: 685.20, change: '+1.65%', mktCap: '$295B' },
+            { symbol: 'INTC', name: 'Intel Corporation', sector: 'Semiconductor', price: 21.40, change: '-2.10%', mktCap: '$91B' },
+            
+            { symbol: 'PYPL', name: 'PayPal Holdings', sector: 'Financial Tech', price: 68.30, change: '+0.45%', mktCap: '$72B' },
+            { symbol: 'UBER', name: 'Uber Technologies', sector: 'Transportation Tech', price: 74.50, change: '+2.10%', mktCap: '$156B' },
+            { symbol: 'JPM', name: 'JPMorgan Chase & Co.', sector: 'Banking', price: 210.10, change: '+0.50%', mktCap: '$602B' },
+            { symbol: 'V', name: 'Visa Inc.', sector: 'Financial Services', price: 275.40, change: '+0.30%', mktCap: '$560B' },
+            { symbol: 'WMT', name: 'Walmart Inc.', sector: 'Retail', price: 72.80, change: '+0.90%', mktCap: '$584B' },
+            { symbol: 'DIS', name: 'The Walt Disney Company', sector: 'Entertainment', price: 95.20, change: '-0.75%', mktCap: '$174B' },
+            { symbol: 'BAC', name: 'Bank of America Corp.', sector: 'Banking', price: 39.80, change: '+0.40%', mktCap: '$312B' },
+            { symbol: 'XOM', name: 'Exxon Mobil Corporation', sector: 'Energy / Oil', price: 114.50, change: '-0.60%', mktCap: '$458B' },
+            { symbol: 'CVX', name: 'Chevron Corporation', sector: 'Energy / Oil', price: 148.20, change: '-0.25%', mktCap: '$276B' },
+            { symbol: 'KO', name: 'The Coca-Cola Company', sector: 'Consumer Goods', price: 68.40, change: '+0.35%', mktCap: '$294B' },
+            
+            { symbol: 'PEP', name: 'PepsiCo, Inc.', sector: 'Consumer Goods', price: 172.30, change: '+0.15%', mktCap: '$237B' },
+            { symbol: 'PFE', name: 'Pfizer Inc.', sector: 'Healthcare', price: 28.50, change: '-1.10%', mktCap: '$161B' },
+            { symbol: 'JNJ', name: 'Johnson & Johnson', sector: 'Healthcare', price: 162.40, change: '+0.55%', mktCap: '$391B' },
+            { symbol: 'ABBV', name: 'AbbVie Inc.', sector: 'Healthcare', price: 195.80, change: '+1.20%', mktCap: '$346B' },
+            { symbol: 'TMO', name: 'Thermo Fisher Scientific', sector: 'Healthcare Science', price: 580.10, change: '+0.80%', mktCap: '$224B' },
+            { symbol: 'COST', name: 'Costco Wholesale Corp.', sector: 'Retail', price: 890.50, change: '+1.45%', mktCap: '$394B' },
+            { symbol: 'AVGO', name: 'Broadcom Inc.', sector: 'Semiconductor', price: 165.20, change: '+2.90%', mktCap: '$770B' },
+            { symbol: 'CSCO', name: 'Cisco Systems, Inc.', sector: 'Networking', price: 48.90, change: '-0.30%', mktCap: '$198B' },
+            { symbol: 'ADBE', name: 'Adobe Inc.', sector: 'Software', price: 535.40, change: '-1.25%', mktCap: '$240B' },
+            { symbol: 'CRM', name: 'Salesforce, Inc.', sector: 'Cloud Software', price: 254.80, change: '+0.70%', mktCap: '$246B' },
+            
+            { symbol: 'QCOM', name: 'QUALCOMM Incorporated', sector: 'Semiconductor', price: 172.60, change: '+1.80%', mktCap: '$192B' },
+            { symbol: 'TXN', name: 'Texas Instruments', sector: 'Semiconductor', price: 198.40, change: '+0.40%', mktCap: '$180B' },
+            { symbol: 'ACN', name: 'Accenture plc', sector: 'IT Services', price: 335.20, change: '+0.60%', mktCap: '$210B' },
+            { symbol: 'LIN', name: 'Linde plc', sector: 'Chemicals', price: 450.10, change: '+0.20%', mktCap: '$218B' },
+            { symbol: 'NKE', name: 'NIKE, Inc.', sector: 'Apparel & Retail', price: 82.40, change: '-1.50%', mktCap: '$124B' },
+            { symbol: 'MCD', name: 'McDonald\'s Corporation', sector: 'Restaurants', price: 295.60, change: '+0.45%', mktCap: '$213B' },
+            { symbol: 'IBM', name: 'International Business Machines', sector: 'Technology', price: 212.80, change: '+1.10%', mktCap: '$196B' },
+            { symbol: 'SBUX', name: 'Starbucks Corporation', sector: 'Restaurants', price: 94.20, change: '-0.80%', mktCap: '$106B' },
+            { symbol: 'GE', name: 'GE Aerospace', sector: 'Industrial Aerospace', price: 175.40, change: '+2.30%', mktCap: '$189B' },
+            { symbol: 'CAT', name: 'Caterpillar Inc.', sector: 'Industrial Heavy', price: 362.50, change: '+1.05%', mktCap: '$184B' },
+            
+            { symbol: 'BA', name: 'The Boeing Company', sector: 'Aerospace', price: 168.40, change: '-2.40%', mktCap: '$104B' },
+            { symbol: 'HON', name: 'Honeywell International', sector: 'Industrial Conglomerate', price: 205.30, change: '+0.30%', mktCap: '$134B' },
+            { symbol: 'UPS', name: 'United Parcel Service', sector: 'Logistics', price: 135.20, change: '-0.50%', mktCap: '$116B' },
+            { symbol: 'T', name: 'AT&T Inc.', sector: 'Telecommunications', price: 20.40, change: '+0.75%', mktCap: '$146B' },
+            { symbol: 'VZ', name: 'Verizon Communications', sector: 'Telecommunications', price: 42.10, change: '+0.40%', mktCap: '$178B' },
+            { symbol: 'NEE', name: 'NextEra Energy, Inc.', sector: 'Utilities', price: 78.50, change: '+1.25%', mktCap: '$162B' },
+            { symbol: 'LOW', name: 'Lowe\'s Companies, Inc.', sector: 'Retail', price: 252.30, change: '+0.90%', mktCap: '$144B' },
+            { symbol: 'BLK', name: 'BlackRock, Inc.', sector: 'Financial Management', price: 890.10, change: '+1.60%', mktCap: '$134B' },
+            { symbol: 'SPGI', name: 'S&P Global Inc.', sector: 'Financial Research', price: 510.20, change: '+0.80%', mktCap: '$155B' },
+            { symbol: 'MDT', name: 'Medtronic plc', sector: 'Healthcare Devices', price: 88.30, change: '-0.20%', mktCap: '$115B' }
+        ];
+        let currentStockPage = 1;
+        const stockItemsPerPage = 10;
+        let filteredStockData = allStockDirectory;
+        function renderStockTable(listToRender = filteredStockData) {
             const tbody = document.getElementById('stock-table-body');
             if (!tbody) return;
-            tbody.innerHTML = filteredList.map(stk => `
+            const totalItems = listToRender.length;
+            const totalPages = Math.ceil(totalItems / stockItemsPerPage) || 1;
+            if (currentStockPage > totalPages) currentStockPage = totalPages;
+            if (currentStockPage < 1) currentStockPage = 1;
+            const startIndex = (currentStockPage - 1) * stockItemsPerPage;
+            const endIndex = startIndex + stockItemsPerPage;
+            const pageData = listToRender.slice(startIndex, endIndex);
+            tbody.innerHTML = pageData.map(stk => `
                 <tr class="hover:bg-neutral-900 transition-colors">
                     <td class="py-3 px-4 font-bold text-white">${stk.symbol}</td>
                     <td class="py-3 px-4 text-gray-300">${stk.name}</td>
@@ -1605,33 +1732,40 @@
                     <td class="py-3 px-4 text-center"><button onclick="tradeStock('${stk.symbol}')" class="bg-brand-primary hover:bg-brand-primary-light text-white px-3 py-1 rounded text-[10px] font-sans font-semibold transition">Trade</button></td>
                 </tr>
             `).join('');
-        }
-        function filterStockDirectory() {
-            const query = document.getElementById('stock-search-input').value.toLowerCase();
-            let allStocks = [];
-            Object.values(stockDirectoryPages).forEach(arr => allStocks = allStocks.concat(arr));
-            const filtered = allStocks.filter(s => s.symbol.toLowerCase().includes(query) || s.name.toLowerCase().includes(query) || s.sector.toLowerCase().includes(query));
-            renderStockTable(filtered);
-            document.getElementById('stock-pagination-info').innerText = `Showing search results (${filtered.length} entries)`;
-        }
-        function changeStockPage(pageNum) {
-            if (pageNum < 1 || pageNum > 5) return;
-            currentStockPage = pageNum;
-            stockDirectory50 = stockDirectoryPages[pageNum];
+            const infoEl = document.getElementById('stock-pagination-info');
+            if (infoEl) {
+                if (totalItems === 0) {
+                    infoEl.innerText = `Tidak ada entri ditemukan`;
+                } else {
+                    infoEl.innerText = `Showing ${startIndex + 1}-${Math.min(endIndex, totalItems)} of ${totalItems} entries (Page ${currentStockPage} of ${totalPages})`;
+                }
+            }
             for (let i = 1; i <= 5; i++) {
                 const btn = document.getElementById(`stock-page-${i}-btn`);
                 if (btn) {
-                    if (i === pageNum) {
+                    if (i === currentStockPage) {
                         btn.className = "px-2.5 py-1 bg-brand-primary text-white rounded font-bold text-[10px]";
                     } else {
                         btn.className = "px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]";
                     }
                 }
             }
-            renderStockTable(stockDirectory50);
-            const startIdx = (pageNum - 1) * 10 + 1;
-            const endIdx = startIdx + stockDirectory50.length - 1;
-            document.getElementById('stock-pagination-info').innerText = `Showing ${startIdx}-${endIdx} of 50 entries (Page ${pageNum} of 5)`;
+        }
+        function filterStockDirectory() {
+            const query = document.getElementById('stock-search-input').value.toLowerCase();
+            filteredStockData = allStockDirectory.filter(s => 
+                s.symbol.toLowerCase().includes(query) || 
+                s.name.toLowerCase().includes(query) || 
+                s.sector.toLowerCase().includes(query)
+            );
+            currentStockPage = 1;
+            renderStockTable(filteredStockData);
+        }
+        function changeStockPage(pageNum) {
+            const totalPages = Math.ceil(filteredStockData.length / stockItemsPerPage) || 1;
+            if (pageNum < 1 || pageNum > totalPages) return;
+            currentStockPage = pageNum;
+            renderStockTable(filteredStockData);
         }
         function setStockChartPeriod(period) {
             document.querySelectorAll('.stock-period-btn').forEach(btn => {
@@ -1646,7 +1780,48 @@
         function tradeStock(symbol, type='BUY') {
             showModal('Eksekusi Order Saham', `Order ${type} untuk ${symbol} berhasil dikirim ke bursa.`);
         }
-        // Global Market Directory
+        
+        const exchangeRatesToUSD = {
+            USD: 1.0,
+            IDR: 0.00006173,
+            EUR: 1.08,
+            GBP: 1.28,
+            SGD: 0.76
+        };
+        function convertCurrency() {
+            const amountInput = document.getElementById('converter-amount').value;
+            const fromCurr = document.getElementById('converter-from').value;
+            const toCurr = document.getElementById('converter-to').value;
+            const resultField = document.getElementById('converter-result');
+            if (!amountInput || isNaN(amountInput)) {
+                resultField.value = '0';
+                return;
+            }
+            const amountInUSD = parseFloat(amountInput) * exchangeRatesToUSD[fromCurr];
+            const finalAmount = amountInUSD / exchangeRatesToUSD[toCurr];
+            let formattedResult = '';
+            if (toCurr === 'IDR') {
+                formattedResult = 'Rp ' + finalAmount.toLocaleString('id-ID', { maximumFractionDigits: 2 });
+            } else if (toCurr === 'USD') {
+                formattedResult = '$ ' + finalAmount.toLocaleString('en-US', { maximumFractionDigits: 2 });
+            } else if (toCurr === 'EUR') {
+                formattedResult = '€ ' + finalAmount.toLocaleString('de-DE', { maximumFractionDigits: 2 });
+            } else if (toCurr === 'GBP') {
+                formattedResult = '£ ' + finalAmount.toLocaleString('en-GB', { maximumFractionDigits: 2 });
+            } else if (toCurr === 'SGD') {
+                formattedResult = 'S$ ' + finalAmount.toLocaleString('en-SG', { maximumFractionDigits: 2 });
+            }
+            resultField.value = formattedResult;
+        }
+        function swapCurrencies() {
+            const fromSelect = document.getElementById('converter-from');
+            const toSelect = document.getElementById('converter-to');
+            const temp = fromSelect.value;
+            fromSelect.value = toSelect.value;
+            toSelect.value = temp;
+            convertCurrency();
+        }
+        
         const globalMarketDirectory28 = [
             { name: 'S&P 500', region: 'Amerika Serikat', category: 'Ekuitas / Saham', value: '5,584.20', change: '+0.75%', status: 'Buka' },
             { name: 'NASDAQ Composite', region: 'Amerika Serikat', category: 'Ekuitas Teknologi', value: '17,820.50', change: '+1.10%', status: 'Buka' },
@@ -1734,7 +1909,7 @@
             globalCurrentPage = 1;
             renderGlobalMarketTable();
         }
-        // Live Ticks & Orderbook Simulation
+        
         let lastBtcPrice = 67420.50;
         function updateOrderBookData() {
             lastBtcPrice += (Math.random() - 0.48) * 15;
@@ -1750,7 +1925,7 @@
             }
             if (document.getElementById('orderbook-asks')) document.getElementById('orderbook-asks').innerHTML = asks;
             if (document.getElementById('orderbook-bids')) document.getElementById('orderbook-bids').innerHTML = bids;
-            // Update Global Mini Orderbook
+            
             let miniAsks = '', miniBids = '';
             for (let i = 3; i >= 1; i--) {
                 miniAsks += `<div class="flex justify-between text-rose-400"><span>Ask $${(5584 + i*2).toFixed(2)}</span><span>12.4k</span></div>`;
@@ -1800,110 +1975,29 @@
             }
             const countEl = document.getElementById('crypto-tick-count');
             if(countEl) countEl.innerText = `${tickCounter} TICKS`;
-            // Ticker Marquee Header
             const marqueeContainer = document.getElementById('live-ticks-ticker');
-            if(marqueeContainer && tickCounter % 3 === 0) {
+            if(marqueeContainer) {
                 const item = `<div class="flex items-center space-x-2"><span class="font-bold text-white">${pair}</span><span class="${sideClass}">$${price}</span></div>`;
                 marqueeContainer.insertAdjacentHTML('beforeend', item);
-                if(marqueeContainer.children.length > 15) marqueeContainer.firstElementChild.remove();
+                if(marqueeContainer.children.length > 25) marqueeContainer.firstElementChild.remove();
             }
         }
-        setInterval(appendLiveTick, 500);
+        setInterval(appendLiveTick, 1200);
         let isStockTicksPaused = false;
         function toggleStockLiveTicks() {
             isStockTicksPaused = !isStockTicksPaused;
             const btn = document.getElementById('stock-ticks-toggle');
             if(btn) btn.innerText = isStockTicksPaused ? 'RESUME' : 'PAUSE';
         }
-        // Deklarasi Variabel Instance Chart Global
+        
         let cryptoIndexChartInstance = null;
         let intradayTelemetryChartInstance = null;
         let globalMarketChartInstance = null;
         let macroBarChartInstance = null;
         let globalMiniTickChartInstance = null;
-        let stockSectorPieChartInstance = null; 
-        let derivativeMiniChartInstance = null;
-        let fearGreedMiniChartInstance = null;
-        let altcoinSeasonMiniChartInstance = null;
+        let stockSectorBarChartInstance = null; // Bar Chart FineReport
         
-        // Inisialisasi Seluruh Chart
         function initAllCharts() {
-            // ⚡ Inisialisasi Chart Mini Market Derivatif
-            const ctxDeriv = document.getElementById('derivativeMiniChart');
-            if (ctxDeriv) {
-                derivativeMiniChartInstance = new Chart(ctxDeriv.getContext('2d'), {
-                    type: 'line',
-                    data: {
-                        labels: ['1', '2', '3', '4', '5', '6', '7'],
-                        datasets: [{
-                            data: [33.5, 33.8, 33.9, 34.0, 34.1, 34.15, 34.2],
-                            borderColor: '#4F46E5',
-                            backgroundColor: 'rgba(79, 70, 229, 0.1)',
-                            fill: true,
-                            tension: 0.3,
-                            borderWidth: 2,
-                            pointRadius: 0
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: { x: { display: false }, y: { display: false } }
-                    }
-                });
-            }
-            // ⚡ Inisialisasi Chart Mini Fear & Greed Index
-            const ctxFng = document.getElementById('fearGreedMiniChart');
-            if (ctxFng) {
-                fearGreedMiniChartInstance = new Chart(ctxFng.getContext('2d'), {
-                    type: 'line',
-                    data: {
-                        labels: ['1', '2', '3', '4', '5', '6', '7'],
-                        datasets: [{
-                            data: [68, 70, 69, 71, 73, 72, 74],
-                            borderColor: '#F59E0B',
-                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                            fill: true,
-                            tension: 0.3,
-                            borderWidth: 2,
-                            pointRadius: 0
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: { x: { display: false }, y: { display: false } }
-                    }
-                });
-            }
-            // ⚡ Inisialisasi Chart Mini Altcoin Season Index
-            const ctxAlt = document.getElementById('altcoinSeasonMiniChart');
-            if (ctxAlt) {
-                altcoinSeasonMiniChartInstance = new Chart(ctxAlt.getContext('2d'), {
-                    type: 'line',
-                    data: {
-                        labels: ['1', '2', '3', '4', '5', '6', '7'],
-                        datasets: [{
-                            data: [72, 74, 73, 75, 76, 77, 78],
-                            borderColor: '#EC4899',
-                            backgroundColor: 'rgba(236, 72, 153, 0.1)',
-                            fill: true,
-                            tension: 0.3,
-                            borderWidth: 2,
-                            pointRadius: 0
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: { x: { display: false }, y: { display: false } }
-                    }
-                });
-            }
-            // 1. Chart Crypto Market (Live Crypto Index Tracker)
             const ctxCrypto = document.getElementById('cryptoIndexChart');
             if (ctxCrypto) {
                 cryptoIndexChartInstance = new Chart(ctxCrypto.getContext('2d'), {
@@ -1932,7 +2026,6 @@
                     }
                 });
             }
-            // 2. Chart Stock Exchange (Intraday Telemetry Stream)
             const ctxStock = document.getElementById('intradayTelemetryChart');
             if (ctxStock) {
                 intradayTelemetryChartInstance = new Chart(ctxStock.getContext('2d'), {
@@ -1961,46 +2054,43 @@
                     }
                 });
             }
-            // ⚡ 3. Stock Sector Distribution Rose Chart
-            const ctxStockSector = document.getElementById('stockSectorPieChart');
-            if (ctxStockSector) {
-                stockSectorPieChartInstance = new Chart(ctxStockSector.getContext('2d'), {
-                    type: 'polarArea',
+            
+            // ⚡ 3. Stock Sector Distribution Bar Chart (Gaya FineReport - Horizontal Bar Chart)
+            const ctxStockSectorBar = document.getElementById('stockSectorBarChart');
+            if (ctxStockSectorBar) {
+                stockSectorBarChartInstance = new Chart(ctxStockSectorBar.getContext('2d'), {
+                    type: 'bar',
                     data: {
-                        labels: ['Semiconductor & Tech', 'Financial Services', 'Healthcare & Biotech', 'Consumer & Retail', 'Energy & Industrials'],
+                        labels: ['Semiconductor', 'Financial', 'Healthcare', 'Consumer', 'Energy'],
                         datasets: [{
+                            label: 'Alokasi Sektor (%)',
                             data: [35, 22, 18, 15, 10],
                             backgroundColor: ['#4F46E5', '#10B981', '#F59E0B', '#38BDF8', '#EC4899'],
-                            borderWidth: 2,
-                            borderColor: '#121212'
+                            borderRadius: 4,
+                            borderSkipped: false
                         }]
                     },
                     options: {
+                        indexAxis: 'y', // Bar chart horizontal gaya FineReport
                         responsive: true,
                         maintainAspectRatio: false,
-                        animation: { duration: 850, animateRotate: true, animateScale: true },
-                        scales: {
-                            r: {
-                                grid: { color: 'rgba(255,255,255,0.10)' },
-                                angleLines: { color: 'rgba(255,255,255,0.10)' },
-                                ticks: { display: false, backdropColor: 'transparent' }
-                            }
-                        },
                         plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: { color: '#9CA3AF', font: { size: 10 }, padding: 12 }
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: { 
+                                grid: { color: 'rgba(255,255,255,0.05)' }, 
+                                ticks: { color: '#9CA3AF', font: { size: 10 } },
+                                max: 45
                             },
-                            tooltip: {
-                                callbacks: {
-                                    label: (context) => ` ${context.label}: ${context.raw}%`
-                                }
+                            y: { 
+                                grid: { display: false }, 
+                                ticks: { color: '#E5E7EB', font: { size: 10, weight: '500' } } 
                             }
                         }
                     }
                 });
             }
-            // 4. Chart Global Market
             const ctxGlobal = document.getElementById('globalMarketChart');
             if (ctxGlobal) {
                 globalMarketChartInstance = new Chart(ctxGlobal.getContext('2d'), {
@@ -2029,7 +2119,6 @@
                     }
                 });
             }
-            // 5. Macro Asset Distribution BAR CHART
             const ctxMacroBar = document.getElementById('macroAssetBarChart');
             if (ctxMacroBar) {
                 macroBarChartInstance = new Chart(ctxMacroBar.getContext('2d'), {
@@ -2057,7 +2146,6 @@
                     }
                 });
             }
-            // 6. Global Mini Tick Chart
             const ctxMiniTick = document.getElementById('globalMiniTickChart');
             if (ctxMiniTick) {
                 globalMiniTickChartInstance = new Chart(ctxMiniTick.getContext('2d'), {
@@ -2086,42 +2174,18 @@
                 });
             }
         }
-        // Fungsi Auto Update untuk Seluruh Grafik Secara Real-Time
         function startAutomaticChartUpdates() {
             setInterval(() => {
                 const nowTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 
-                // Update Derivatif Mini Chart
-                if (derivativeMiniChartInstance) {
-                    const dData = derivativeMiniChartInstance.data.datasets[0].data;
-                    dData.shift();
-                    const lastD = dData[dData.length - 1];
-                    dData.push(parseFloat((lastD + (Math.random() - 0.48) * 0.1).toFixed(2)));
-                    derivativeMiniChartInstance.update('none');
-                    const oiEl = document.getElementById('deriv-oi');
-                    if(oiEl) oiEl.innerText = `$${dData[dData.length-1]}B (+2.4%)`;
-                }
-                // Update Fear & Greed Mini Chart
-                if (fearGreedMiniChartInstance) {
-                    const fData = fearGreedMiniChartInstance.data.datasets[0].data;
-                    fData.shift();
-                    const lastF = fData[fData.length - 1];
-                    const newF = Math.max(10, Math.min(90, Math.round(lastF + (Math.random() - 0.5) * 2)));
-                    fData.push(newF);
-                    fearGreedMiniChartInstance.update('none');
-                    const fBadge = document.getElementById('fng-badge');
-                    if(fBadge) fBadge.innerText = `GREED (${newF})`;
-                }
-                // Update Altcoin Season Mini Chart
-                if (altcoinSeasonMiniChartInstance) {
-                    const aData = altcoinSeasonMiniChartInstance.data.datasets[0].data;
-                    aData.shift();
-                    const lastA = aData[aData.length - 1];
-                    const newA = Math.max(10, Math.min(95, Math.round(lastA + (Math.random() - 0.5) * 1.5)));
-                    aData.push(newA);
-                    altcoinSeasonMiniChartInstance.update('none');
-                    const aBadge = document.getElementById('alt-badge');
-                    if(aBadge) aBadge.innerText = `ALT SEASON (${newA})`;
+                // Pembaruan otomatis untuk Stock Sector Distribution Bar Chart
+                if (stockSectorBarChartInstance) {
+                    const sectorData = stockSectorBarChartInstance.data.datasets[0].data;
+                    for (let i = 0; i < sectorData.length; i++) {
+                        let fluctuation = (Math.random() - 0.49) * 1.2;
+                        sectorData[i] = Math.max(8, Math.min(40, parseFloat((sectorData[i] + fluctuation).toFixed(1))));
+                    }
+                    stockSectorBarChartInstance.update('none');
                 }
                 if (cryptoIndexChartInstance) {
                     const labels = cryptoIndexChartInstance.data.labels;
@@ -2173,24 +2237,16 @@
                     miniData.push(parseFloat((lastMini + (Math.random() - 0.48) * 2).toFixed(2)));
                     globalMiniTickChartInstance.update('none');
                 }
-                // Pembaruan otomatis distribusi sektor (simulasi dinamis).
-                if (stockSectorPieChartInstance) {
-                    const sectorValues = stockSectorPieChartInstance.data.datasets[0].data;
-                    const nextValues = sectorValues.map(v => Math.max(5, v + (Math.random() - 0.5) * 1.2));
-                    const total = nextValues.reduce((sum, v) => sum + v, 0);
-                    stockSectorPieChartInstance.data.datasets[0].data = nextValues.map(v => +(v / total * 100).toFixed(1));
-                    stockSectorPieChartInstance.update('none');
-                }
             }, 2000);
         }
-        // Jalankan inisialisasi awal dan auto-update saat halaman dimuat
         window.addEventListener('DOMContentLoaded', () => {
             renderCryptoTable();
             renderStockTable();
             renderGlobalMarketTable();
             initAllCharts();
             startAutomaticChartUpdates();
-            handleInitialRouting(); // Memastikan URL hash langsung membaca view yang tepat saat dibuka
+            convertCurrency();
+            calculateCryptoPnL();
         });
     </script>
 </body>
