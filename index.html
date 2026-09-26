@@ -105,7 +105,15 @@
         .terminal-glow {
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.08);
         }
-    </style>
+    
+  .mini-change-cell{display:flex;align-items:center;justify-content:flex-end;gap:9px;min-width:130px}
+  .mini-spark{display:inline-block;width:76px;height:27px;flex:0 0 76px;position:relative;overflow:hidden}
+  .mini-spark svg{width:100%;height:100%;overflow:visible}
+  .mini-spark polyline{fill:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:160;stroke-dashoffset:160;animation:sparkDraw 1.8s ease-in-out infinite alternate}
+  .mini-spark.up polyline{stroke:#34d399}.mini-spark.down polyline{stroke:#fb7185}
+  @keyframes sparkDraw{to{stroke-dashoffset:0}}
+
+ </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
     
@@ -580,78 +588,28 @@
                     </button>
                 </div>
             </div>
-            <!-- WIDGET BARU: STATUS PASAR & DOMINASI, ALTCOIN SEASON INDEX, KAPITALISASI PASAR GLOBAL, DERIVATIVES OPEN INT. -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- 1. Status Pasar & Dominasi -->
-                <div class="bg-card-dark border border-card-border p-5 rounded-2xl shadow-xl space-y-3">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold">Status Pasar & Dominasi</span>
-                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center text-xs text-gray-300 mb-1">
-                            <span>BTC Dominance</span>
-                            <span id="stat-btc-dom" class="font-mono font-bold text-white">56.4%</span>
-                        </div>
-                        <div class="w-full bg-neutral-900 rounded-full h-1.5 overflow-hidden">
-                            <div id="bar-btc-dom" class="bg-brand-accent h-full rounded-full transition-all duration-500" style="width: 56.4%;"></div>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-center text-[11px] text-gray-400 pt-1 border-t border-card-border">
-                        <span>ETH Dominance: <strong class="text-white">16.2%</strong></span>
-                        <span class="text-emerald-400 font-semibold">Bullish 🟢</span>
-                    </div>
-                </div>
-                <!-- 2. Altcoin Season Index -->
-                <div class="bg-card-dark border border-card-border p-5 rounded-2xl shadow-xl space-y-3">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold">Altcoin Season Index</span>
-                        <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 font-bold text-[10px]">INDEX: 68</span>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center text-xs text-gray-300 mb-1">
-                            <span>Progress (Target 75)</span>
-                            <span class="font-mono font-bold text-purple-400">68 / 100</span>
-                        </div>
-                        <div class="w-full bg-neutral-900 rounded-full h-1.5 overflow-hidden">
-                            <div class="bg-purple-500 h-full rounded-full" style="width: 68%;"></div>
-                    </div>
-                    </div>
-                    <div class="flex justify-between items-center text-[11px] text-gray-400 pt-1 border-t border-card-border">
-                        <span>Status: <strong class="text-purple-300">Altcoin Season</strong></span>
-                        <span class="text-brand-accent font-mono animate-pulse">● Auto</span>
-                    </div>
-                </div>
-                <!-- 3. Kapitalisasi Pasar Global -->
-                <div class="bg-card-dark border border-card-border p-5 rounded-2xl shadow-xl space-y-3">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold">Kapitalisasi Pasar Global</span>
-                        <span class="text-emerald-400 text-xs font-bold">+2.4%</span>
-                    </div>
-                    <div>
-                        <h4 id="stat-global-mcap" class="text-xl font-extrabold text-white font-mono">$2.45 Triliun</h4>
-                        <span class="text-[11px] text-gray-400 block mt-0.5">Vol 24j: <strong class="text-white">$85.4 Miliar</strong></span>
-                    </div>
-                    <div class="flex items-center justify-between text-[11px] text-gray-400 pt-1 border-t border-card-border">
-                        <span>28 Aset Terindeks</span>
-                        <span class="text-emerald-400">Real-Time Sync</span>
-                    </div>
-                </div>
-                <!-- 4. Derivatives (Open Interest) -->
-                <div class="bg-card-dark border border-card-border p-5 rounded-2xl shadow-xl space-y-3">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[11px] text-gray-400 uppercase tracking-wider font-semibold">Derivatives (Open Int.)</span>
-                        <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-mono border border-emerald-500/20">Funding +0.012%</span>
-                    </div>
-                    <div>
-                        <h4 id="stat-open-interest" class="text-xl font-extrabold text-white font-mono">$34.2 Miliar</h4>
-                        <span class="text-[11px] text-emerald-400 block mt-0.5">+4.1% (24 Jam Terakhir)</span>
-                    </div>
-                    <div class="flex items-center justify-between text-[11px] text-gray-400 pt-1 border-t border-card-border">
-                        <span>Long/Short Ratio: <strong class="text-emerald-400">1.24</strong></span>
-                        <span class="text-brand-accent animate-pulse">● Live</span>
-                    </div>
-                </div>
+            <!-- Compact auto-moving market mini charts -->
+            <div class="grid grid-cols-2 xl:grid-cols-4 gap-3" id="market-mini-widgets">
+              <div class="bg-card-dark border border-card-border rounded-xl p-4">
+                <div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">STATUS PASAR & DOMINASI</span><span class="text-emerald-400 text-xs">● LIVE</span></div>
+                <div class="flex justify-between items-end mt-2"><div><div class="text-xs text-gray-400">BTC Dominance</div><strong id="stat-btc-dom" class="text-lg text-white">56.4%</strong></div><span class="text-[10px] text-gray-500">ETH 16.2%</span></div>
+                <div class="h-12 mt-2"><canvas id="mini-btc-chart"></canvas></div>
+              </div>
+              <div class="bg-card-dark border border-card-border rounded-xl p-4">
+                <div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">ALTCOIN SEASON INDEX</span><span class="text-purple-400 text-xs">AUTO</span></div>
+                <div class="flex justify-between items-end mt-2"><strong id="mini-alt-value" class="text-lg text-white">68 / 100</strong><span class="text-[10px] text-gray-500">Target 75</span></div>
+                <div class="h-12 mt-2"><canvas id="mini-alt-chart"></canvas></div>
+              </div>
+              <div class="bg-card-dark border border-card-border rounded-xl p-4">
+                <div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">KAPITALISASI PASAR GLOBAL</span><span class="text-emerald-400 text-xs">● LIVE</span></div>
+                <div class="mt-2"><strong id="stat-global-mcap" class="text-lg text-white">$2.45 T</strong><div class="text-[10px] text-gray-500">Volume 24j $85.4 Miliar</div></div>
+                <div class="h-12 mt-2"><canvas id="mini-mcap-chart"></canvas></div>
+              </div>
+              <div class="bg-card-dark border border-card-border rounded-xl p-4">
+                <div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">DERIVATIVES (OPEN INT.)</span><span class="text-cyan-400 text-xs">● LIVE</span></div>
+                <div class="mt-2"><strong id="stat-open-interest" class="text-lg text-white">$34.2 B</strong><div class="text-[10px] text-gray-500">Funding +0.012% • L/S 1.24</div></div>
+                <div class="h-12 mt-2"><canvas id="mini-oi-chart"></canvas></div>
+              </div>
             </div>
             <!-- Tombol Navigasi Sub-Halaman Crypto Market (Halaman 1 & Halaman 2) -->
             <div class="flex items-center justify-between bg-card-dark border border-card-border p-3 rounded-xl">
@@ -1120,6 +1078,17 @@
         </section>
         <!-- 4. Halaman Stock Exchange -->
         <section id="page-stock-exchange" class="page space-y-6">
+            <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-card-border pb-3">
+                <div><h2 class="text-lg font-bold text-white uppercase tracking-wide">Overview Market</h2><p class="text-xs text-gray-400">Ringkasan pergerakan pasar saham dengan grafik mini yang bergerak otomatis.</p></div>
+                <span class="text-xs text-emerald-400"><i class="fa-solid fa-circle animate-pulse mr-1"></i> AUTO UPDATE</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="bg-black/50 border border-card-border rounded-xl p-4"><div class="text-[10px] text-gray-400 uppercase">NASDAQ Composite</div><div class="flex justify-between items-end"><strong id="ov-nasdaq" class="text-xl text-white">18,420.60</strong><span class="text-xs text-emerald-400">+0.82%</span></div><div class="h-16 mt-2"><canvas id="overview-nasdaq"></canvas></div></div>
+                <div class="bg-black/50 border border-card-border rounded-xl p-4"><div class="text-[10px] text-gray-400 uppercase">S&P 500</div><div class="flex justify-between items-end"><strong id="ov-sp" class="text-xl text-white">5,842.30</strong><span class="text-xs text-emerald-400">+0.46%</span></div><div class="h-16 mt-2"><canvas id="overview-sp"></canvas></div></div>
+                <div class="bg-black/50 border border-card-border rounded-xl p-4"><div class="text-[10px] text-gray-400 uppercase">Dow Jones</div><div class="flex justify-between items-end"><strong id="ov-dow" class="text-xl text-white">42,160.80</strong><span class="text-xs text-rose-400">−0.18%</span></div><div class="h-16 mt-2"><canvas id="overview-dow"></canvas></div></div>
+              </div>
+            </div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Kolom Kiri: Intraday Telemetry Stream -->
                 <div class="lg:col-span-2 bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl terminal-glow font-mono space-y-3">
@@ -1875,7 +1844,7 @@
                         <span class="font-bold text-white">${coin.name}</span>
                     </td>
                     <td class="py-3 px-6 text-right font-mono font-bold text-white">$${coin.current_price.toLocaleString()}</td>
-                    <td class="py-3 px-6 text-right font-mono ${coin.price_change_percentage_24h >= 0 ? 'text-emerald-400' : 'text-rose-400'}">${coin.price_change_percentage_24h >= 0 ? '+' : ''}${coin.price_change_percentage_24h.toFixed(2)}%</td>
+                    <td class="py-2 px-3 text-right"><div class="mini-change-cell"><span class="font-mono font-semibold ${coin.price_change_percentage_24h >= 0 ? 'text-emerald-400' : 'text-rose-400'}">${coin.price_change_percentage_24h >= 0 ? '+' : ''}${coin.price_change_percentage_24h.toFixed(2)}%</span><span class="mini-spark ${coin.price_change_percentage_24h >= 0 ? 'up' : 'down'}" data-spark="crypto"></span></div></td>
                     <td class="py-3 px-6 text-right font-mono text-gray-300 text-xs">$${(coin.total_volume/1e6).toFixed(1)}M</td>
                 </tr>
             `).join('');
@@ -2090,7 +2059,7 @@
                     <td class="py-3 px-4 text-gray-300">${stk.name}</td>
                     <td class="py-3 px-4 text-gray-400 text-[11px]">${stk.sector}</td>
                     <td class="py-3 px-4 text-right font-bold text-white">$${stk.price.toFixed(2)}</td>
-                    <td class="py-3 px-4 text-right ${stk.change.includes('+') ? 'text-emerald-400' : 'text-rose-400'}">${stk.change}</td>
+                    <td class="py-2 px-3 text-right"><div class="mini-change-cell"><span class="${stk.change.includes('+') ? 'text-emerald-400' : 'text-rose-400'} font-semibold">${stk.change}</span><span class="mini-spark ${stk.change.includes('+') ? 'up' : 'down'}" data-spark="stock"></span></div></td>
                     <td class="py-3 px-4 text-right text-gray-300">${stk.mktCap}</td>
                     <td class="py-3 px-4 text-center"><button onclick="tradeStock('${stk.symbol}')" class="bg-brand-primary hover:bg-brand-primary-light text-white px-3 py-1 rounded text-[10px] font-sans font-semibold transition">Trade</button></td>
                 </tr>
@@ -2236,7 +2205,7 @@
                     <td class="py-3 px-6 text-gray-400 text-xs">${item.region}</td>
                     <td class="py-3 px-6 text-gray-300 text-xs">${item.category}</td>
                     <td class="py-3 px-6 font-mono font-medium text-right text-white">${item.value}</td>
-                    <td class="py-3 px-6 font-mono font-medium text-right ${item.change.includes('+') ? 'text-emerald-400' : 'text-rose-400'}">${item.change}</td>
+                    <td class="py-2 px-3 text-right"><div class="mini-change-cell"><span class="font-mono font-semibold ${item.change.includes('+') ? 'text-emerald-400' : 'text-rose-400'}">${item.change}</span><span class="mini-spark ${item.change.includes('+') ? 'up' : 'down'}" data-spark="global"></span></div></td>
                     <td class="py-3 px-6 text-center">
                         <span class="px-2.5 py-1 rounded-full text-[10px] font-semibold ${item.status === 'Buka' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-neutral-800 text-gray-400 border border-card-border'}">${item.status}</span>
                     </td>
@@ -2872,12 +2841,43 @@
             renderCryptoTable();
             renderStockTable();
             renderGlobalMarketTable();
+
+const miniChartInstances={};
+function makeMiniChart(id,base,color){const el=document.getElementById(id);if(!el||typeof Chart==='undefined')return;const data=Array.from({length:24},(_,i)=>base*(1+Math.sin(i*.7)*.006+Math.cos(i*.31)*.003));miniChartInstances[id]=new Chart(el,{type:'line',data:{labels:data.map((_,i)=>i),datasets:[{data,borderColor:color,borderWidth:1.8,pointRadius:0,tension:.35,fill:true,backgroundColor:color+'22'}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}});}
+function initAutoMiniCharts(){[['mini-btc-chart',56.4,'#38BDF8'],['mini-alt-chart',68,'#A78BFA'],['mini-mcap-chart',2.45,'#10B981'],['mini-oi-chart',34.2,'#22D3EE'],['overview-nasdaq',18420,'#10B981'],['overview-sp',5842,'#38BDF8'],['overview-dow',42160,'#F87171']].forEach(a=>makeMiniChart(...a));}
+function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{const a=c.data.datasets[0].data,last=a[a.length-1];a.push(Math.max(0,last*(1+(Math.random()-.49)*.004)));a.shift();c.update('none');});['ov-nasdaq','ov-sp','ov-dow'].forEach(id=>{const e=document.getElementById(id);if(e){const n=parseFloat(e.textContent.replace(/[^0-9.]/g,''));if(Number.isFinite(n))e.textContent=(n*(1+(Math.random()-.49)*.001)).toLocaleString('en-US',{maximumFractionDigits:2});}});}
             initAllCharts();
+            initAutoMiniCharts();
+            setInterval(updateAutoMiniCharts, 1800);
             startAutomaticChartUpdates();
             convertCurrency();
             calculateCryptoPnL();
             startGasFeeAutoUpdate();
         });
     </script>
+
+<script>
+(function(){
+ function paintMiniSparks(){
+  document.querySelectorAll('.mini-spark').forEach((el)=>{
+   const positive=el.classList.contains('up');
+   let y=positive?19:5;
+   const pts=[];
+   for(let i=0;i<12;i++){
+    y+=(Math.random()-0.48)*(positive?-2.3:2.3);
+    y=Math.max(3,Math.min(24,y));
+    pts.push((i*7)+','+y.toFixed(1));
+   }
+   const color=positive?'#34d399':'#fb7185';
+   el.innerHTML='<svg viewBox="0 0 77 27" preserveAspectRatio="none"><polyline style="stroke:'+color+'" points="'+pts.join(' ')+'"/></svg>';
+  });
+ }
+ document.addEventListener('DOMContentLoaded',()=>{
+  paintMiniSparks();
+  setInterval(paintMiniSparks,1800);
+ });
+})();
+</script>
+
 </body>
 </html>
