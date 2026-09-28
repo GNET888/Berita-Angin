@@ -609,7 +609,7 @@
               </div>
               <div class="bg-card-dark border border-card-border rounded-xl p-4">
                 <div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">DERIVATIVES (OPEN INT.)</span><span class="text-cyan-400 text-xs">● LIVE</span></div>
-                <div class="mt-2"><strong id="stat-open-interest" class="text-lg text-white">$34.2 B</strong><div class="text-[10px] text-gray-500">Funding +0.012% · L/S 1.24</div></div>
+                <div class="mt-2"><strong id="stat-open-interest" class="text-lg text-white">$34.2 B</strong><div class="text-[10px] text-gray-500">Funding +0.012% • L/S 1.24</div></div>
                 <div class="h-12 mt-2"><canvas id="mini-oi-chart"></canvas></div>
               </div>
             </div>
@@ -1105,13 +1105,13 @@
                         <span class="px-2 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">CANDLESTICK</span>
                         <span class="px-2 py-1 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-300">OHLC</span>
                         <span class="px-2 py-1 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-300">VOLUME</span>
-                        <span class="text-gray-500">Candlestick otomatis · update real-time simulasi</span>
+                        <span class="text-gray-500">Candlestick otomatis • update real-time simulasi</span>
                     </div>
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center text-[11px] text-gray-400 pt-1 gap-1">
-                        <span>Status: <span id="intraday-telemetry-status" class="text-white font-bold">AUTO · 0 Ticks</span></span>
+                        <span>Status: <span id="intraday-telemetry-status" class="text-white font-bold">AUTO • 0 Ticks</span></span>
                         <span class="text-emerald-400 flex items-center space-x-1">
                             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span id="intraday-telemetry-feed">Candlestick Feed Online</span><span class="text-gray-600 hidden sm:inline">·</span><span id="intraday-telemetry-time">--:--:--</span>
+                            <span id="intraday-telemetry-feed">Candlestick Feed Online</span><span class="text-gray-600 hidden sm:inline">•</span><span id="intraday-telemetry-time">--:--:--</span>
                         </span>
                     </div>
                 </div>
@@ -1310,7 +1310,7 @@
                             </h3>
                             <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 text-[10px] animate-pulse">● LIVE AUTO</span>
                         </div>
-                        <p class="text-[11px] text-gray-400">Analisis komparatif kapitalisasi sektor saham berbasis grafik horizontal FineReport dengan pembaruan otomatis.</p>
+                        <p class="text-[11px] text-gray-400">The Sector Bell Curve: zona oversold, buy, sell, dan overbought dengan pergerakan otomatis. Data ilustratif, bukan feed bursa terverifikasi.</p>
                         <div class="relative h-60 w-full bg-black/50 border border-card-border rounded-xl p-3">
                             <canvas id="stockSectorBarChart"></canvas>
                         </div>
@@ -1425,12 +1425,12 @@
                     </div>
                 </div>
             </div>
-            <!-- Grafik Indeks Likuiditas & Komposit Pasar Global -->
+            <!-- Grafik Global (World) Monetary Supply M2 -->
             <div class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-card-border pb-4 gap-2">
                     <div>
                         <h3 class="text-lg font-bold text-white">Indeks Likuiditas & Komposit Pasar Global</h3>
-                        <p class="text-xs text-gray-400 mt-0.5">Perbandingan performa likuiditas makro lintas kawasan ekonomi utama.</p>
+                        <p class="text-xs text-gray-400 mt-0.5">Tren agregat suplai uang M2 global dan kawasan ekonomi utama. Visual diperbarui otomatis; data ilustratif jika feed eksternal belum tersambung.</p>
                     </div>
                     <div class="flex items-center space-x-2 text-xs">
                         <span class="px-3 py-1 bg-black border border-card-border rounded-lg text-brand-accent font-mono">Real-time Macro Feed</span>
@@ -1499,7 +1499,7 @@
                             </h3>
                             <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 text-[10px] animate-pulse">● LIVE UPDATE</span>
                         </div>
-                        <p class="text-xs text-gray-400">Scatter plot distribusi aset makro berdasarkan sektor</p>
+                        <p class="text-xs text-gray-400">Scatter plot distribusi aset makro berdasarkan sektor dengan pembaruan otomatis setiap 2 detik.</p>
                         <div class="relative h-52 w-full">
                             <canvas id="macroAssetBarChart"></canvas>
                         </div>
@@ -2253,15 +2253,7 @@
             if (document.getElementById('orderbook-asks')) document.getElementById('orderbook-asks').innerHTML = asks;
             if (document.getElementById('orderbook-bids')) document.getElementById('orderbook-bids').innerHTML = bids;
             
-            let miniAsks = '', miniBids = '';
-            for (let i = 3; i >= 1; i--) {
-                miniAsks += `<div class="flex justify-between text-rose-400"><span>Ask $${(5584 + i*2).toFixed(2)}</span><span>12.4k</span></div>`;
-            }
-            for (let i = 1; i <= 3; i++) {
-                miniBids += `<div class="flex justify-between text-emerald-400"><span>Bid $${(5584 - i*2).toFixed(2)}</span><span>15.1k</span></div>`;
-            }
-            const globalMiniOb = document.getElementById('global-mini-orderbook');
-            if (globalMiniOb) globalMiniOb.innerHTML = miniAsks + `<div class="text-center font-bold text-white border-y border-card-border py-0.5">S&P 500 Index Spot</div>` + miniBids;
+            /* Mini order book global kini digerakkan oleh modul LIVE MODULE di bagian bawah halaman. */
         }
         setInterval(updateOrderBookData, 1500);
         let isCryptoTicksPaused = false;
@@ -2366,8 +2358,8 @@
                     const statusEl = document.getElementById('intraday-telemetry-status');
                     const feedEl = document.getElementById('intraday-telemetry-feed');
                     const timeEl = document.getElementById('intraday-telemetry-time');
-                    if (statusEl) statusEl.textContent = `AUTO · ${this.ticks.toLocaleString('id-ID')} Ticks`;
-                    if (feedEl) feedEl.textContent = `Candlestick Feed Online · ${this.period}`;
+                    if (statusEl) statusEl.textContent = `AUTO • ${this.ticks.toLocaleString('id-ID')} Ticks`;
+                    if (feedEl) feedEl.textContent = `Candlestick Feed Online • ${this.period}`;
                     if (timeEl) timeEl.textContent = new Date(this.last).toLocaleTimeString('id-ID', {
                         hour: '2-digit', minute: '2-digit', second: '2-digit'
                     });
@@ -2416,7 +2408,7 @@
                     this.grid(left, volumeTop, right, volumeBottom);
                     ctx.fillStyle = '#34D399';
                     ctx.font = '700 10px ui-monospace, SFMono-Regular, Menlo, monospace';
-                    ctx.fillText('CANDLESTICK · ' + this.period + ' · AUTO', 10, 16);
+                    ctx.fillText('CANDLESTICK • ' + this.period + ' • AUTO', 10, 16);
                     ctx.fillStyle = '#64748B';
                     ctx.font = '9px ui-monospace, SFMono-Regular, Menlo, monospace';
                     ctx.fillText('INTRADAY TELEMETRY STREAM', 10, h - 7);
@@ -2703,7 +2695,7 @@
                                 pointHoverRadius: 10
                             },
                             {
-                                label: 'Bond',
+                                label: 'Bond /Cash',
                                 data: [{x: 10, y: 24}],
                                 backgroundColor: '#F59E0B',
                                 borderColor: '#FBBF24',
@@ -2733,7 +2725,7 @@
                                 callbacks: {
                                     label: function(context) {
                                         const p = context.raw;
-                                        return `${context.dataset.label}: X ${p.x.toFixed(1)} · Y ${p.y.toFixed(1)}`;
+                                        return `${context.dataset.label}: X ${p.x.toFixed(1)} • Y ${p.y.toFixed(1)}`;
                                     }
                                 }
                             }
@@ -3154,6 +3146,251 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   setInterval(paintMiniSparks,1800);
  });
 })();
+</script>
+
+<script>
+/* Chart redesign: Global M2 supply + Sector Bell Curve.
+   Auto animation uses illustrative values; connect a verified provider for genuine live market data. */
+(function(){
+  const palette={cyan:'#38bdf8',blue:'#818cf8',green:'#34d399',red:'#fb7185',amber:'#fbbf24',purple:'#c084fc',grid:'rgba(148,163,184,.12)',text:'#9ca3af'};
+  function commonOptions(yTitle){
+    return {responsive:true,maintainAspectRatio:false,animation:{duration:650},
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{labels:{color:'#d1d5db',usePointStyle:true,boxWidth:8,padding:16}},
+        tooltip:{backgroundColor:'#09090b',borderColor:'#27272a',borderWidth:1,titleColor:'#fff',bodyColor:'#d1d5db'}},
+      scales:{x:{ticks:{color:palette.text,maxRotation:0},grid:{color:palette.grid}},
+        y:{ticks:{color:palette.text},grid:{color:palette.grid},title:{display:true,text:yTitle,color:palette.text}}}};
+  }
+  function initCharts(){
+    if(!window.Chart) return;
+    const m2Canvas=document.getElementById('globalMarketChart');
+    if(m2Canvas){
+      const old=Chart.getChart(m2Canvas); if(old) old.destroy();
+      const labels=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+      const datasets=[
+        {label:'World M2 (indeks)',data:[100,100.8,101.4,102.2,102.8,103.7,104.1,105.0,105.8,106.2,107.1,108.0],borderColor:palette.cyan,backgroundColor:'rgba(56,189,248,.12)',fill:true,tension:.38,borderWidth:2.5,pointRadius:0},
+        {label:'Amerika Utara',data:[100,100.5,101.0,101.7,102.1,102.8,103.1,103.8,104.2,104.9,105.3,106.0],borderColor:palette.blue,backgroundColor:'transparent',fill:false,tension:.38,borderWidth:2,pointRadius:0},
+        {label:'Eropa',data:[100,100.3,100.9,101.2,101.8,102.1,102.6,103.0,103.4,103.8,104.2,104.7],borderColor:palette.purple,fill:false,tension:.38,borderWidth:2,pointRadius:0},
+        {label:'Asia Pasifik',data:[100,101.0,101.8,102.4,103.3,104.0,104.8,105.5,106.3,107.0,107.8,108.6],borderColor:palette.green,fill:false,tension:.38,borderWidth:2,pointRadius:0}
+      ];
+      const opt=commonOptions('Indeks M2 (basis 100)');
+      opt.plugins.tooltip.callbacks={label:c=>c.dataset.label+': '+Number(c.parsed.y).toFixed(1)};
+      window.globalMarketChartInstance=new Chart(m2Canvas,{type:'line',data:{labels,datasets},options:opt});
+    }
+    const sectorCanvas=document.getElementById('stockSectorBarChart');
+    if(sectorCanvas){
+      const old=Chart.getChart(sectorCanvas); if(old) old.destroy();
+      const xs=Array.from({length:61},(_,i)=>-3+i*.1);
+      const bell=(mu,sigma,scale)=>xs.map(x=>({x:+x.toFixed(2),y:+(scale*Math.exp(-Math.pow(x-mu,2)/(2*sigma*sigma))).toFixed(3)}));
+      const datasets=[
+        {label:'Oversold',data:bell(-2.05,.48,1),borderColor:palette.red,backgroundColor:'rgba(251,113,133,.10)',fill:true,tension:.35,pointRadius:0,borderWidth:2},
+        {label:'Buy',data:bell(-.95,.62,.86),borderColor:palette.green,backgroundColor:'rgba(52,211,153,.08)',fill:true,tension:.35,pointRadius:0,borderWidth:2},
+        {label:'Sell',data:bell(.95,.62,.86),borderColor:palette.amber,backgroundColor:'rgba(251,191,36,.08)',fill:true,tension:.35,pointRadius:0,borderWidth:2},
+        {label:'Overbought',data:bell(2.05,.48,1),borderColor:palette.purple,backgroundColor:'rgba(192,132,252,.10)',fill:true,tension:.35,pointRadius:0,borderWidth:2}
+      ];
+      const opt=commonOptions('Intensitas relatif');
+      opt.scales.x={type:'linear',min:-3,max:3,grid:{color:palette.grid},ticks:{color:palette.text,stepSize:1,callback:v=>v===-2?'Oversold':v===-1?'Buy':v===1?'Sell':v===2?'Overbought':v}};
+      opt.plugins.legend.position='bottom';
+      window.stockSectorBarChartInstance=new Chart(sectorCanvas,{type:'line',data:{datasets},options:opt});
+    }
+  }
+  function tick(){
+    const m=window.globalMarketChartInstance;
+    if(m){m.data.datasets.forEach((ds,i)=>{const a=ds.data; const last=a[a.length-1]; a.push(+(last+(Math.random()-.46)*.35).toFixed(2));a.shift();});m.update('none');}
+    const s=window.stockSectorBarChartInstance;
+    if(s){const shift=(Math.random()-.5)*.12;s.data.datasets.forEach((ds,i)=>{const mu=[-2.05,-.95,.95,2.05][i]+shift;ds.data=ds.data.map(p=>({x:p.x,y:+((i===0||i===3?1:.86)*Math.exp(-Math.pow(p.x-mu,2)/(2*Math.pow(i===0||i===3?.48:.62,2)))).toFixed(3)}));});s.update('none');}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{initCharts();setInterval(tick,2500);},700));
+  else setTimeout(()=>{initCharts();setInterval(tick,2500);},700);
+})();
+</script>
+
+<script>
+/* ============================================================
+   LIVE MODULE — MACRO ASSET DISTRIBUTION + ORDER BOOK VISUALIZER & TICK MINI CHART
+   Berjalan otomatis & mandiri (tidak bergantung pada urutan init chart lain).
+   Hanya menyentuh elemen: #macroAssetBarChart, #global-mini-orderbook, #globalMiniTickChart.
+   Data = simulasi ilustratif sampai feed pasar nyata tersambung.
+   ============================================================ */
+(function () {
+  'use strict';
+  if (window.__liveMacroObModule) return;
+  window.__liveMacroObModule = true;
+
+  var PAGE_ID = 'page-global-market';
+  var BASE = 5584;               // acuan S&P 500 Index Spot (sama dengan tampilan awal)
+  var TICKS = 40;                // jumlah titik pada tick mini chart
+  var LEVELS = 3;                // kedalaman order book (bid & ask)
+
+  function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+  function fmt(n, d) { return Number(n).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); }
+  function pageVisible() { var p = document.getElementById(PAGE_ID); return !!p && p.classList.contains('active'); }
+  function safe(fn) { return function () { try { fn.apply(null, arguments); } catch (e) { console.warn('[live-module]', e); } }; }
+
+  /* ---------- 1. MACRO ASSET DISTRIBUTION (scatter, bergerak tiap 2 detik) ---------- */
+  var macroChart = null;
+  var macroRanges = [
+    { minX: 30, maxX: 42, minY: 62, maxY: 82 },
+    { minX: 17, maxX: 29, minY: 45, maxY: 63 },
+    { minX: 11, maxX: 21, minY: 30, maxY: 47 },
+    { minX: 7,  maxX: 16, minY: 16, maxY: 34 }
+  ];
+
+  function initMacro() {
+    var cv = document.getElementById('macroAssetBarChart');
+    if (!cv || !window.Chart) return;
+    macroChart = Chart.getChart(cv);
+    if (macroChart) {
+      // Ambil alih chart yang sudah dibuat halaman, agar tidak ada dua penggerak sekaligus.
+      try { macroBarChartInstance = null; } catch (e) {}
+    } else {
+      var mk = function (label, x, y, bg, bd) {
+        return { label: label, data: [{ x: x, y: y }], backgroundColor: bg, borderColor: bd, pointRadius: 7, pointHoverRadius: 10 };
+      };
+      macroChart = new Chart(cv.getContext('2d'), {
+        type: 'scatter',
+        data: { datasets: [
+          mk('Equities', 35, 72, '#4F46E5', '#818CF8'),
+          mk('Crypto', 22, 54, '#10B981', '#34D399'),
+          mk('communities', 15, 38, '#38BDF8', '#7DD3FC'),
+          mk('Bond /Cash', 10, 24, '#F59E0B', '#FBBF24')
+        ] },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: {
+            legend: { display: true, position: 'bottom', labels: { color: '#CBD5E1', boxWidth: 10, boxHeight: 10, padding: 12, font: { size: 9 } } },
+            tooltip: { enabled: true, callbacks: { label: function (c) { return c.dataset.label + ': X ' + c.raw.x.toFixed(1) + ' • Y ' + c.raw.y.toFixed(1); } } }
+          },
+          scales: {
+            x: { min: 0, max: 50, title: { display: true, text: 'Macro allocation (%)', color: '#9CA3AF', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9CA3AF', font: { size: 9 } } },
+            y: { min: 0, max: 100, title: { display: true, text: 'Relative macro signal', color: '#9CA3AF', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9CA3AF', font: { size: 9 } } }
+          }
+        }
+      });
+    }
+    // Animasi halus agar perpindahan titik terlihat bergerak
+    macroChart.options.animation = { duration: 900, easing: 'easeInOutQuad' };
+  }
+
+  function stepMacro() {
+    if (!macroChart) { initMacro(); if (!macroChart) return; }
+    macroChart.data.datasets.forEach(function (ds, i) {
+      var r = macroRanges[i % macroRanges.length], p = ds.data[0];
+      var cx = (r.minX + r.maxX) / 2, cy = (r.minY + r.maxY) / 2;
+      p.x = clamp(p.x + rnd(-1.6, 1.6) + (cx - p.x) * 0.06, r.minX, r.maxX);
+      p.y = clamp(p.y + rnd(-3.0, 3.0) + (cy - p.y) * 0.06, r.minY, r.maxY);
+    });
+    if (pageVisible()) macroChart.update();
+  }
+
+  /* ---------- 2. TICK MINI CHART + ORDER BOOK VISUALIZER (tiap 1 detik) ---------- */
+  var tickChart = null;
+  var mid = BASE, prevMid = BASE;
+  var askSizes = [], bidSizes = [];
+  for (var i = 0; i < LEVELS; i++) { askSizes.push(rnd(8, 18)); bidSizes.push(rnd(8, 18)); }
+
+  function initTick() {
+    var cv = document.getElementById('globalMiniTickChart');
+    if (!cv || !window.Chart) return;
+    tickChart = Chart.getChart(cv);
+    if (tickChart) {
+      var old = tickChart.data.datasets[0].data;
+      var last = parseFloat(old[old.length - 1]);
+      if (isFinite(last)) mid = last;
+      try { globalMiniTickChartInstance = null; } catch (e) {}
+    }
+    // Riwayat awal berupa random-walk yang berakhir di harga sekarang
+    var hist = [mid];
+    for (var k = 1; k < TICKS; k++) hist.unshift(clamp(hist[0] + rnd(-1.4, 1.4), BASE - 45, BASE + 45));
+    if (!tickChart) {
+      tickChart = new Chart(cv.getContext('2d'), {
+        type: 'line',
+        data: { labels: hist.map(function (_, n) { return String(n + 1); }),
+                datasets: [{ data: hist, borderColor: '#38BDF8', backgroundColor: 'rgba(56, 189, 248, 0.05)', fill: true, tension: 0.2, borderWidth: 1.5, pointRadius: 1 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } }
+      });
+    } else {
+      var ds = tickChart.data.datasets[0];
+      ds.data.length = 0; tickChart.data.labels.length = 0;
+      hist.forEach(function (v, n) { ds.data.push(v); tickChart.data.labels.push(String(n + 1)); });
+    }
+    tickChart.options.animation = { duration: 350 };
+  }
+
+  function row(side, price, size, maxSize) {
+    var isAsk = side === 'ask';
+    var pct = Math.round((size / maxSize) * 100);
+    var rgb = isAsk ? '244,63,94' : '16,185,129';
+    return '<div class="flex justify-between ' + (isAsk ? 'text-rose-400' : 'text-emerald-400') + ' px-1 rounded-sm"' +
+           ' style="background:linear-gradient(to left,rgba(' + rgb + ',.20) ' + pct + '%,transparent ' + pct + '%);transition:background .6s">' +
+           '<span>' + (isAsk ? 'Ask' : 'Bid') + ' $' + fmt(price, 2) + '</span><span>' + size.toFixed(1) + 'k</span></div>';
+  }
+
+  function renderOrderBook(spread) {
+    var ob = document.getElementById('global-mini-orderbook');
+    if (!ob) return;
+    var bestAsk = mid + spread / 2, bestBid = mid - spread / 2;
+    var maxSize = Math.max.apply(null, askSizes.concat(bidSizes));
+    var html = '';
+    for (var a = LEVELS - 1; a >= 0; a--) html += row('ask', bestAsk + a * 0.5, askSizes[a], maxSize);
+    var up = mid >= prevMid;
+    html += '<div class="text-center font-bold border-y border-card-border py-0.5 ' + (up ? 'text-emerald-300' : 'text-rose-300') + '">' +
+            'S&P 500 Index Spot • ' + fmt(mid, 2) + ' ' + (up ? '▲' : '▼') + '</div>';
+    for (var b = 0; b < LEVELS; b++) html += row('bid', bestBid - b * 0.5, bidSizes[b], maxSize);
+    ob.innerHTML = html;
+    var head = ob.previousElementSibling;                       // baris "GLOBAL BID / ASK … SPREAD"
+    if (head && head.lastElementChild) head.lastElementChild.textContent = 'SPREAD: ' + spread.toFixed(2);
+  }
+
+  function stepBookAndTicks() {
+    if (!tickChart) initTick();
+    prevMid = mid;
+    mid = clamp(mid + rnd(-1.6, 1.6) + (BASE - mid) * 0.01, BASE - 45, BASE + 45);
+    var spread = rnd(0.02, 0.10);
+    for (var i = 0; i < LEVELS; i++) {
+      askSizes[i] = clamp(askSizes[i] + rnd(-2.5, 2.5), 3, 26);
+      bidSizes[i] = clamp(bidSizes[i] + rnd(-2.5, 2.5), 3, 26);
+    }
+    if (tickChart) {
+      var ds = tickChart.data.datasets[0];
+      ds.data.push(parseFloat(mid.toFixed(2))); ds.data.shift();
+      var rising = ds.data[ds.data.length - 1] >= ds.data[0];
+      ds.borderColor = rising ? '#34D399' : '#FB7185';
+      ds.backgroundColor = rising ? 'rgba(52,211,153,0.07)' : 'rgba(251,113,133,0.07)';
+    }
+    if (!pageVisible()) return;                                 // hemat CPU saat halaman lain dibuka
+    renderOrderBook(spread);
+    if (tickChart) {
+      tickChart.update();
+      var cv = tickChart.canvas, tag = cv.parentElement && cv.parentElement.previousElementSibling;
+      if (tag && tag.lastElementChild) tag.lastElementChild.textContent = 'HIGH ' + fmt(Math.max.apply(null, tickChart.data.datasets[0].data), 2);
+    }
+  }
+
+  /* ---------- Pastikan ukuran chart benar saat halaman baru dibuka ---------- */
+  function refreshOnShow() {
+    setTimeout(safe(function () {
+      if (!pageVisible()) return;
+      if (macroChart) macroChart.resize();
+      if (tickChart) tickChart.resize();
+      stepBookAndTicks();
+    }), 120);
+  }
+
+  function start() {
+    safe(initMacro)(); safe(initTick)();
+    safe(stepBookAndTicks)();
+    setInterval(safe(stepBookAndTicks), 1000);
+    setInterval(safe(stepMacro), 2000);
+    document.addEventListener('click', function (e) {
+      if (e.target && e.target.closest && e.target.closest('.nav-link')) refreshOnShow();
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(start, 0); });
+  else setTimeout(start, 0);
+})();
+
 </script>
 </body>
 </html>
