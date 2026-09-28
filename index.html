@@ -17,7 +17,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- Muat Font Awesome untuk ikon pendukung -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -108,7 +107,6 @@
         .terminal-glow {
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.08);
         }
-    
   .mini-change-cell{display:flex;align-items:center;justify-content:flex-end;gap:9px;min-width:130px}
   .mini-spark{display:inline-block;width:76px;height:27px;flex:0 0 76px;position:relative;overflow:hidden}
   .mini-spark svg{width:100%;height:100%;overflow:visible}
@@ -118,7 +116,6 @@
  </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
-    
     <!-- ⚡ LIVE STREAMING TICKS TICKER BAR -->
     <div class="bg-card-dark border-b border-card-border py-2 text-xs overflow-hidden z-40 relative">
         <div class="flex items-center space-x-2 px-4 absolute left-0 top-0 bottom-0 bg-card-dark z-10 border-r border-card-border shadow-md">
@@ -149,7 +146,6 @@
                         <span class="font-bold text-base sm:text-lg text-white tracking-tight">Berita Angin</span>
                     </a>
                 </div>
-                
                 <div class="hidden md:flex items-center justify-center flex-1 space-x-5 lg:space-x-6 text-sm lg:text-base font-medium">
                     <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="home">
                         <i class="fa-solid fa-house text-brand-accent text-xs"></i>
@@ -235,12 +231,10 @@
     </div>
     <!-- Konten Dinamis Berdasarkan Halaman -->
     <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10">
-        
         <!-- 1. Halaman Beranda -->
         <section id="page-home" class="page active space-y-10">
             <div class="bg-card-dark border border-card-border rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
                 <div class="absolute -right-20 -top-20 w-80 h-80 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
-                
                 <div class="space-y-6 max-w-xl relative z-10">
                     <div class="inline-flex items-center space-x-2 bg-brand-accent/10 border border-brand-accent/30 px-3.5 py-1.5 rounded-full">
                         <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
@@ -319,7 +313,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <!-- Container Slider Artikel -->
                 <div id="article-auto-slider" class="relative overflow-hidden rounded-2xl">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-2">
@@ -578,7 +571,6 @@
                 </div>
             </div>
         </section>
-        
         <!-- 3. Halaman Crypto Market -->
         <section id="page-crypto-market" class="page space-y-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -646,7 +638,6 @@
                     <button onclick="switchCryptoSubPage(2)" id="crypto-sub-btn-2" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition">2</button>
                 </div>
             </div>
-            
             <!-- SUB-HALAMAN 1: Live Index, Tabel Kripto, Order Book, Live Ticks -->
             <div id="crypto-subpage-1" class="crypto-subpage space-y-6">
                 <!-- Live Crypto Index Tracker -->
@@ -681,7 +672,6 @@
                 </div>
                 <!-- LAYOUT UTAMA: Tabel Aset Kripto & Order Book (Sejajar Kiri dan Kanan) -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-                    
                     <!-- Kolom Kiri: Tabel Aset Kripto -->
                     <div class="space-y-4 flex flex-col h-full">
                         <div class="flex items-center justify-between bg-card-dark border border-card-border px-4 py-3 rounded-xl text-xs">
@@ -691,7 +681,6 @@
                             </div>
                             <span id="crypto-last-updated" class="text-gray-400">Terakhir diperbarui: Baru saja</span>
                         </div>
-                        
                         <div class="bg-card-dark rounded-2xl border border-card-border overflow-hidden shadow-xl flex-grow flex flex-col justify-between">
                             <div class="overflow-x-auto">
                                 <table class="w-full text-left border-collapse">
@@ -721,7 +710,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <!-- Kolom Kanan: Order Book & Live Streaming Ticks (Sejajar Kiri dan Kanan) -->
                     <div class="space-y-6 flex flex-col h-full">
                         <!-- 1. Modul Order Book -->
@@ -733,7 +721,6 @@
                                 </div>
                                 <span class="text-xs text-emerald-400 font-mono animate-pulse">● Live Stream</span>
                             </div>
-                            
                             <div class="flex items-center justify-between bg-black/50 p-2 rounded-xl border border-card-border text-xs">
                                 <div class="flex items-center space-x-1">
                                     <span class="text-gray-400 text-[10px]">Grup:</span>
@@ -754,14 +741,11 @@
                                 <span class="text-right">Jumlah (BTC)</span>
                                 <span class="text-right">Total</span>
                             </div>
-                            
                             <div id="orderbook-asks" class="space-y-1 font-mono text-xs max-h-32 overflow-y-auto"></div>
-                            
                             <div class="py-2.5 my-1 bg-black border-y border-card-border text-center flex items-center justify-between px-3">
                                 <span id="orderbook-mid-price" class="text-base font-bold text-emerald-400 font-mono">$67,420.50</span>
                                 <span class="text-[11px] text-gray-400">Spread: <span id="ob-spread">0.12</span></span>
                             </div>
-                            
                             <div id="orderbook-bids" class="space-y-1 font-mono text-xs max-h-32 overflow-y-auto"></div>
                         </div>
                         <!-- 2. Modul LIVE STREAMING TICKS -->
@@ -903,7 +887,6 @@
                 <!-- ⚡ 3. MODUL TAMBAHAN DI HALAMAN 2: WEB3 E-WALLET & MULTI-CHAIN VAULT -->
                 <div class="bg-card-dark border border-emerald-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden mt-6">
                     <div class="absolute -right-16 -top-16 w-56 h-56 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-                    
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-card-border pb-4 relative z-10">
                         <div class="flex items-center space-x-3">
                             <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl shadow-inner">
@@ -1167,12 +1150,10 @@
                                 <span class="text-right">850</span>
                                 <span class="text-right text-gray-400">1,150</span>
                             </div>
-                            
                             <div class="py-2 my-1 bg-black border-y border-card-border text-center font-bold text-emerald-400 text-sm flex justify-between px-3 items-center">
                                 <span>$228.87</span>
                                 <span class="text-[10px] text-gray-400 uppercase font-sans tracking-wider px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">● SECURE</span>
                             </div>
-                            
                             <div class="grid grid-cols-3 text-emerald-400 py-1 px-1 bg-emerald-500/5 rounded">
                                 <span>228.86</span>
                                 <span class="text-right">2,400</span>
@@ -1208,7 +1189,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="grid grid-cols-2 gap-3 pt-3 border-t border-card-border">
                         <button onclick="tradeStock('NVDA', 'BUY')" class="bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 rounded-xl text-xs font-bold transition shadow-lg flex items-center justify-center space-x-1">
                             <span>BUY (BID)</span>
@@ -1219,10 +1199,8 @@
                     </div>
                 </div>
             </div>
-            
             <!-- Bagian Bawah Stock Exchange: Direktori Saham (Kiri) & CURRENCY CONVERTER Menempel Di Bawahnya -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-                
                 <!-- Kolom Kiri (2 Kolom): U.S. Stock Directory & Fundamental Matrix (5 Halaman) + CURRENCY CONVERTER -->
                 <div class="lg:col-span-2 space-y-6">
                     <div class="bg-card-dark rounded-2xl border border-card-border overflow-hidden shadow-xl p-6 space-y-5">
@@ -1241,7 +1219,6 @@
                                 <input type="text" id="stock-search-input" oninput="filterStockDirectory()" placeholder="Filter symbol or name..." class="w-full bg-black border border-card-border rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-brand-accent">
                             </div>
                         </div>
-                        
                         <div class="overflow-x-auto min-h-[340px]">
                             <table class="w-full text-left border-collapse">
                                 <thead>
@@ -1258,7 +1235,6 @@
                                 <tbody id="stock-table-body" class="divide-y divide-card-border text-gray-200 text-xs font-mono"></tbody>
                             </table>
                         </div>
-                        
                         <div class="flex flex-col sm:flex-row items-center justify-between pt-3 border-t border-card-border text-xs text-gray-400 gap-2">
                             <span id="stock-pagination-info">Showing 1-10 of 50 entries (Page 1 of 5)</span>
                             <div class="flex items-center space-x-1 overflow-x-auto py-1" id="stock-pagination-controls">
@@ -1320,7 +1296,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <!-- Kolom Kanan (1 Kolom): Stock Sector Distribution (FineReport Bar Chart Style) & Live Streamed Ticks -->
                 <div class="space-y-6">
                     <!-- STOCK SECTOR DISTRIBUTION (FineReport Bar Chart Style) -->
@@ -1352,7 +1327,6 @@
                                 <button id="stock-ticks-toggle" type="button" onclick="toggleStockLiveTicks()" class="px-2 py-0.5 rounded bg-black border border-card-border text-gray-300 hover:text-white transition">PAUSE</button>
                             </div>
                         </div>
-                        
                         <div class="overflow-x-auto max-h-40 overflow-y-auto">
                             <table class="w-full text-left text-[11px]">
                                 <thead class="sticky top-0 bg-card-dark z-10">
@@ -1368,7 +1342,6 @@
                             </table>
                         </div>
                     </div>
-                    
                     <!-- AI SENTIMENT -->
                     <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl terminal-glow font-mono space-y-4">
                         <div class="flex items-center justify-between border-b border-card-border pb-3 text-xs">
@@ -1378,7 +1351,6 @@
                             </span>
                             <span class="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30">SCORE: .992</span>
                         </div>
-                        
                         <div class="space-y-3 text-xs">
                             <div class="p-3 bg-black/60 border border-card-border rounded-xl space-y-2">
                                 <p class="text-gray-200 font-sans text-xs leading-relaxed">NVIDIA Expands AI Infrastructure Partnership with Global Cloud Providers</p>
@@ -1395,7 +1367,6 @@
                 </div>
             </div>
         </section>
-        
         <!-- 5. Halaman Global Market (2 sub-halaman) -->
         <section id="page-global-market" class="page space-y-6">
             <style>.gm-spark{width:76px;height:27px;display:block;flex:0 0 76px}.gm-chip{padding:4px 12px;border-radius:999px;border:1px solid #222;background:#000;color:#d1d5db;font-size:11px;font-weight:600;cursor:pointer;transition:.15s}.gm-chip:hover{border-color:#38BDF8;color:#fff}.gm-chip.on{background:#4F46E5;border-color:#4F46E5;color:#fff}.gm-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #1c1c1c;font-size:12px}.gm-row:last-child{border-bottom:0}</style>
@@ -1416,15 +1387,12 @@
                     <span id="gm-sub-ind" class="px-2 py-0.5 rounded bg-brand-primary/20 text-brand-accent">Halaman 1 dari 2</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button data-gm-sub="1" data-gm-tab="1" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition">1 • Likuiditas & Makro</button>
-                    <button data-gm-sub="2" data-gm-tab="2" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition">2 • Direktori & Analitik</button>
+                    <button data-gm-sub="1" data-gm-tab="1" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition">1 · Likuiditas & Makro</button>
+                    <button data-gm-sub="2" data-gm-tab="2" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition">2 · Direktori & Analitik</button>
                 </div>
             </div>
-
-            <!-- SUB-HALAMAN 1: KPI, Indeks Likuiditas, Komponen Likuiditas Makro -->
-            <div id="gm-sub-1" class="gm-sub space-y-6">
-                <div id="gm-kpis" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"></div>
-                <!-- Indeks Likuiditas & Komposit Pasar Global (versi profesional, otomatis) -->
+            <!-- SUB-HALAMAN 1: KPI, Indeks Likuiditas, Komponen Likuiditas Makro (tata letak dock) -->
+            <div id="gm-sub-1" class="gm-sub">
             <style>
               .liq-btn{padding:4px 10px;border:1px solid #222;background:#000;border-radius:8px;color:#e5e7eb;font-size:11px;cursor:pointer;transition:.15s;white-space:nowrap}
               .liq-btn:hover{border-color:#38BDF8;color:#fff}.liq-btn.on{background:#4F46E5;border-color:#4F46E5;color:#fff}
@@ -1444,6 +1412,41 @@
               .mlc-row{display:flex;align-items:center;gap:8px;font-size:11px;padding:5px 0;border-bottom:1px solid #1c1c1c}
               .mlc-row:last-child{border-bottom:0}
             </style>
+<style>
+/* ===== Tata letak profesional Likuiditas & Makro: panel berdekatan dengan jarak rapi ===== */
+#gm-sub-1{--gm1-gap:12px}
+#gm-sub-1 .gm1-dock{display:flex;flex-direction:column;gap:var(--gm1-gap)}
+#gm-sub-1 .gm1-kpis{display:grid;gap:var(--gm1-gap);grid-template-columns:repeat(2,minmax(0,1fr))}
+#gm-sub-1 .gm1-kpis>div{padding:12px 16px;border-radius:14px}
+#gm-sub-1 .gm1-kpis h4{font-size:18px}
+#gm-sub-1 .gm1-row{display:grid;gap:var(--gm1-gap);grid-template-columns:minmax(0,1fr);align-items:stretch}
+#gm-sub-1 .gm1-side{display:flex;flex-direction:column;gap:var(--gm1-gap);min-width:0}
+#gm-sub-1 .gm1-side>*{flex:1 1 auto}
+#gm-sub-1 .gm1-charts{display:grid;gap:var(--gm1-gap);grid-template-columns:minmax(0,1fr)}
+#gm-sub-1 #mlc-section{display:flex;flex-direction:column;gap:var(--gm1-gap)}
+#gm-sub-1 .gm1-bar{background:#0a0a0a;border:1px solid #222;border-radius:14px;padding:10px 16px}
+#gm-sub-1 .gm1-bar h3{font-size:15px}
+#gm-sub-1 #liq-pro-card,#gm-sub-1 .mlc-panel{border-radius:14px;padding:16px;margin:0}
+#gm-sub-1 #liq-pro-card{padding:18px}
+#gm-sub-1 #mlc-grid{padding:0;display:flex;flex-direction:column;min-width:0}
+#gm-sub-1 #mlc-grid>.overflow-x-auto{flex:1 1 auto;max-height:440px!important}
+#gm-sub-1 #mlc-alerts{max-height:260px!important}
+@media (min-width:1024px){
+  #gm-sub-1 .gm1-kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
+  #gm-sub-1 .gm1-charts{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (min-width:1280px){
+  #gm-sub-1 .gm1-row{grid-template-columns:minmax(0,8fr) minmax(0,4fr)}
+}
+#gm-sub-1 .gm1-row.gm1-full{grid-template-columns:minmax(0,1fr)!important}
+#gm-sub-1 .gm1-bottom{display:grid;gap:var(--gm1-gap);grid-template-columns:minmax(0,1fr);align-items:stretch}
+#gm-sub-1 .gm1-bottom>.mlc-panel{min-width:0}
+@media (min-width:768px){#gm-sub-1 .gm1-bottom{grid-template-columns:repeat(2,minmax(0,1fr))}}
+#liq-pro-card:fullscreen{overflow:auto;padding:24px}
+</style>
+            <div class="gm1-dock">
+                <div id="gm-kpis" class="gm1-kpis"></div>
+                <div class="gm1-row">
             <div id="liq-pro-card" class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4">
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between border-b border-card-border pb-4 gap-3">
                     <div>
@@ -1483,24 +1486,7 @@
                     </div>
                 </div>
             </div>
-
-            <!-- KOMPONEN LIKUIDITAS MAKRO (aktif & otomatis) -->
-            <div id="mlc-section" class="space-y-4">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                    <div>
-                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-droplet text-brand-accent"></i>Komponen Likuiditas Makro</h3>
-                        <p class="text-xs text-gray-400 mt-0.5">Pemantau otomatis sumber & penyerap likuiditas.</p>
-                    </div>
-                    <div class="flex flex-wrap items-center gap-2 text-xs">
-                        <div id="mlc-filter" class="flex gap-1"><button class="liq-btn on" data-f="all">Semua</button><button class="liq-btn" data-f="src">Sumber ▲</button><button class="liq-btn" data-f="sink">Penyerap ▼</button></div>
-                        <div id="mlc-ivs" class="flex gap-1"><button class="liq-btn" data-iv="1000">1 dtk</button><button class="liq-btn on" data-iv="2000">2 dtk</button><button class="liq-btn" data-iv="5000">5 dtk</button></div>
-                        <button id="mlc-pause" class="liq-btn"><i class="fa-solid fa-pause"></i> Jeda</button>
-                        <span id="mlc-upd" class="px-3 py-1 bg-black border border-card-border rounded-lg text-gray-400 font-mono">--:--:--</span>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 items-start">
-                    <div id="mlc-grid" class="xl:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
-                    <div class="space-y-4">
+                    <div class="gm1-side">
                         <div class="mlc-panel text-center">
                             <div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold text-left">Skor Likuiditas Komposit</div>
                             <canvas id="mlc-gauge" width="240" height="140" class="mx-auto"></canvas>
@@ -1515,18 +1501,73 @@
                             <div class="flex justify-between text-[10px] text-gray-400"><span><b class="text-emerald-400">■</b> Bersih</span><span><b class="text-amber-400">■</b> TGA</span><span><b class="text-rose-400">■</b> RRP</span></div>
                             <div class="flex justify-between text-[11px] border-t border-card-border pt-2"><span class="text-gray-400">Neraca G3 (Fed+ECB+BoJ)</span><b id="mlc-g3" class="text-white font-mono">--</b></div>
                         </div>
+                    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-regular fa-calendar text-brand-accent"></i> Kalender Bank Sentral <span class="normal-case text-gray-600">(ilustratif)</span></div><div id="mlc-cal"></div></div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-regular fa-calendar text-brand-accent"></i> Kalender Bank Sentral <span class="normal-case text-gray-600">(ilustratif)</span></div><div id="mlc-cal"></div></div>
+                <!-- KOMPONEN LIKUIDITAS MAKRO (aktif & otomatis) -->
+                <div id="mlc-section">
+                <div class="gm1-bar flex flex-col md:flex-row md:items-center justify-between gap-3">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-droplet text-brand-accent"></i>Komponen Likuiditas Makro</h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Pemantau otomatis sumber & penyerap likuiditas.</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 text-xs">
+                        <div id="mlc-filter" class="flex gap-1"><button class="liq-btn on" data-f="all">Semua</button><button class="liq-btn" data-f="src">Sumber ▲</button><button class="liq-btn" data-f="sink">Penyerap ▼</button></div>
+                        <div id="mlc-ivs" class="flex gap-1"><button class="liq-btn" data-iv="1000">1 dtk</button><button class="liq-btn on" data-iv="2000">2 dtk</button><button class="liq-btn" data-iv="5000">5 dtk</button></div>
+                        <button id="mlc-pause" class="liq-btn"><i class="fa-solid fa-pause"></i> Jeda</button>
+                        <span id="mlc-upd" class="px-3 py-1 bg-black border border-card-border rounded-lg text-gray-400 font-mono">--:--:--</span>
+                    </div>
+                </div>
+                    <style>
+  .mlc-tbl{width:100%;border-collapse:collapse;font-size:12px}
+  .mlc-tbl thead th{position:sticky;top:0;background:#0a0a0a;color:#9ca3af;font-size:10px;letter-spacing:.06em;text-transform:uppercase;text-align:left;padding:10px 12px;border-bottom:1px solid #222;white-space:nowrap;user-select:none}
+  .mlc-tbl thead th[data-k]{cursor:pointer}.mlc-tbl thead th[data-k]:hover{color:#38BDF8}
+  .mlc-tbl thead th.asc::after{content:' ▲';color:#38BDF8}.mlc-tbl thead th.desc::after{content:' ▼';color:#38BDF8}
+  .mlc-tbl tbody td{padding:9px 12px;border-bottom:1px solid #1c1c1c;vertical-align:middle;white-space:nowrap}
+  .mlc-tbl tbody tr:nth-child(even){background:rgba(255,255,255,.015)}
+  .mlc-tbl tbody tr:hover{background:rgba(56,189,248,.07)}
+  .mlc-tbl tfoot td{padding:9px 12px;font-size:11px;color:#9ca3af;background:#0a0a0a}
+  .mlc-badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:700}
+  .mlc-cb{position:relative;height:6px;min-width:90px;background:#1f1f1f;border-radius:4px}
+  .mlc-cb::before{content:'';position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:#444}
+  .mlc-cb i{position:absolute;top:0;height:100%;border-radius:4px;transition:all .5s}
+  .mlc-in{background:#000;border:1px solid #222;border-radius:8px;color:#e5e7eb;font-size:11px;padding:5px 10px;outline:0;width:170px}
+  .mlc-in:focus{border-color:#38BDF8}
+</style>
+                    <div class="gm1-row gm1-full">
+<div id="mlc-grid" class="xl:col-span-2 mlc-panel !p-0 overflow-hidden">
+    <div class="flex flex-wrap items-center justify-between gap-2 p-3 border-b border-card-border">
+        <div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold"><i class="fa-solid fa-table text-brand-accent"></i> Tabel Komponen Likuiditas <span id="mlc-cnt" class="normal-case text-gray-500 font-mono"></span></div>
+        <div class="flex items-center gap-2">
+            <input id="mlc-q" class="mlc-in" type="search" placeholder="Cari komponen…" autocomplete="off">
+            <button id="mlc-csv" class="liq-btn"><i class="fa-solid fa-file-csv"></i> CSV</button>
+        </div>
+    </div>
+    <div class="overflow-x-auto" style="max-height:520px;overflow-y:auto">
+        <table id="mlc-table" class="mlc-tbl">
+            <thead><tr>
+                <th data-k="i">#</th><th data-k="n">Komponen</th><th data-k="e">Jenis</th>
+                <th data-k="x" style="text-align:right">Nilai</th><th data-k="d" style="text-align:right">Δ Sesi</th>
+                <th>Tren</th><th data-k="k">Status</th><th data-k="k">Kontribusi</th>
+            </tr></thead>
+            <tbody id="mlc-tb"></tbody>
+            <tfoot><tr><td colspan="8" id="mlc-tf">--</td></tr></tfoot>
+        </table>
+    </div>
+</div>
+                    </div>
+                    <div class="gm1-charts">
+    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-line text-brand-accent"></i> Likuiditas Bersih AS vs Neraca Fed <span class="normal-case text-gray-600">(live, $T)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-net"></canvas></div></div>
+    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-bar text-brand-accent"></i> Kontribusi per Komponen <span class="normal-case text-gray-600">(+ menambah / − menyerap)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-imp"></canvas></div></div>
+    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-gauge-high text-brand-accent"></i> Riwayat Skor Komposit <span class="normal-case text-gray-600">(garis putus = batas rezim)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-sc"></canvas></div></div>
+                    </div>
+                    <div class="gm1-bottom">
                     <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-link text-brand-accent"></i> Korelasi 30H dg Likuiditas Bersih</div><div id="mlc-corr"></div></div>
                     <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-bell text-brand-accent"></i> Peringatan Otomatis</div><div id="mlc-alerts" class="max-h-44 overflow-y-auto"></div></div>
+                    </div>
                 </div>
             </div>
-
-            
             </div>
-
             <!-- SUB-HALAMAN 2: Direktori 28 aset, Macro Distribution, Order Book, Sesi, Movers, Valas -->
             <div id="gm-sub-2" class="gm-sub space-y-6 hidden">
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 items-start">
@@ -1605,7 +1646,6 @@
                         </div>
                     </div>
                 </div>
-
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl"><h3 class="text-sm font-bold text-white uppercase tracking-wider mb-2"><i class="fa-regular fa-clock text-brand-accent"></i> Sesi Pasar Dunia</h3><div id="gm-sessions"></div></div>
@@ -1615,7 +1655,6 @@
             </div>
         </section>
     </main>
-    
     <!-- Custom Notification Modal -->
     <div id="custom-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-200">
         <div class="bg-card-dark border border-card-border rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl space-y-4 text-center">
@@ -1638,12 +1677,10 @@
             </div>
         </div>
     </div>
-    
     <!-- Footer -->
     <footer class="border-t border-card-border bg-black mt-12 py-6 text-center text-gray-500 text-sm">
         <p>&copy; 2026 Berita Angin 1% Issue 99% Fact. Seluruh hak cipta dilindungi undang-undang.</p>
     </footer>
-    
     <!-- Script Interaktif & Logika -->
     <script>
         const articlesData = {
@@ -1830,7 +1867,6 @@
         function switchCryptoSubPage(subPageNum) {
             const subpages = document.querySelectorAll('.crypto-subpage');
             subpages.forEach(sp => sp.classList.add('hidden'));
-            
             const targetSub = document.getElementById(`crypto-subpage-${subPageNum}`);
             if(targetSub) targetSub.classList.remove('hidden');
             document.getElementById('crypto-subpage-indicator').innerText = `Halaman ${subPageNum} dari 2`;
@@ -1853,7 +1889,6 @@
             document.getElementById('detail-author').innerText = article.author;
             document.getElementById('detail-image').src = article.image;
             document.getElementById('detail-content').innerHTML = article.content;
-            
             const pageUrl = encodeURIComponent(window.location.href);
             const pageTitle = encodeURIComponent(article.title);
             document.getElementById('share-whatsapp').href = `https://api.whatsapp.com/send?text=${pageTitle}%20-%20${pageUrl}`;
@@ -1869,7 +1904,6 @@
             document.getElementById('page-home').classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        
         const cryptoPagesData = {
             1: [
                 { market_cap_rank: 1, name: 'Bitcoin', symbol: 'btc', current_price: 67420.50, price_change_percentage_24h: 3.45, total_volume: 32400000000, image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' },
@@ -1957,21 +1991,17 @@
             changeCryptoPage(cryptoCurrentPage);
             document.getElementById('crypto-last-updated').innerText = 'Terakhir diperbarui: Baru saja';
         }
-        
         // Logika Kalkulator PnL Kripto
         function calculateCryptoPnL() {
             const buyPrice = parseFloat(document.getElementById('pnl-buy-price').value) || 0;
             const sellPrice = parseFloat(document.getElementById('pnl-sell-price').value) || 0;
             const amount = parseFloat(document.getElementById('pnl-amount').value) || 0;
-            
             const totalBuy = buyPrice * amount;
             const totalSell = sellPrice * amount;
             const profitLoss = totalSell - totalBuy;
             const roi = totalBuy > 0 ? (profitLoss / totalBuy) * 100 : 0;
-            
             const resAmountEl = document.getElementById('pnl-result-amount');
             const resRoiEl = document.getElementById('pnl-result-roi');
-            
             if (profitLoss >= 0) {
                 resAmountEl.className = "text-lg font-bold text-emerald-400";
                 resRoiEl.className = "text-base font-bold text-emerald-400";
@@ -2051,7 +2081,6 @@
         function openAirdropClaimModal() {
             showModal('Klaim Airdrop Web3', 'Selamat! Dompet Anda memenuhi syarat untuk mengklaim 150 token governance Berita Angin ($ANGIN).');
         }
-        
         const allStockDirectory = [
             { symbol: 'NVDA', name: 'NVIDIA Corporation', sector: 'Semiconductor', price: 228.87, change: '+2.45%', mktCap: '$3.12T' },
             { symbol: 'AAPL', name: 'Apple Inc.', sector: 'Consumer Electronics', price: 224.23, change: '+0.85%', mktCap: '$3.41T' },
@@ -2063,7 +2092,6 @@
             { symbol: 'AMD', name: 'Advanced Micro Devices', sector: 'Semiconductor', price: 156.70, change: '+4.20%', mktCap: '$253B' },
             { symbol: 'NFLX', name: 'Netflix, Inc.', sector: 'Entertainment', price: 685.20, change: '+1.65%', mktCap: '$295B' },
             { symbol: 'INTC', name: 'Intel Corporation', sector: 'Semiconductor', price: 21.40, change: '-2.10%', mktCap: '$91B' },
-            
             { symbol: 'PYPL', name: 'PayPal Holdings', sector: 'Financial Tech', price: 68.30, change: '+0.45%', mktCap: '$72B' },
             { symbol: 'UBER', name: 'Uber Technologies', sector: 'Transportation Tech', price: 74.50, change: '+2.10%', mktCap: '$156B' },
             { symbol: 'JPM', name: 'JPMorgan Chase & Co.', sector: 'Banking', price: 210.10, change: '+0.50%', mktCap: '$602B' },
@@ -2074,7 +2102,6 @@
             { symbol: 'XOM', name: 'Exxon Mobil Corporation', sector: 'Energy / Oil', price: 114.50, change: '-0.60%', mktCap: '$458B' },
             { symbol: 'CVX', name: 'Chevron Corporation', sector: 'Energy / Oil', price: 148.20, change: '-0.25%', mktCap: '$276B' },
             { symbol: 'KO', name: 'The Coca-Cola Company', sector: 'Consumer Goods', price: 68.40, change: '+0.35%', mktCap: '$294B' },
-            
             { symbol: 'PEP', name: 'PepsiCo, Inc.', sector: 'Consumer Goods', price: 172.30, change: '+0.15%', mktCap: '$237B' },
             { symbol: 'PFE', name: 'Pfizer Inc.', sector: 'Healthcare', price: 28.50, change: '-1.10%', mktCap: '$161B' },
             { symbol: 'JNJ', name: 'Johnson & Johnson', sector: 'Healthcare', price: 162.40, change: '+0.55%', mktCap: '$391B' },
@@ -2085,7 +2112,6 @@
             { symbol: 'CSCO', name: 'Cisco Systems, Inc.', sector: 'Networking', price: 48.90, change: '-0.30%', mktCap: '$198B' },
             { symbol: 'ADBE', name: 'Adobe Inc.', sector: 'Software', price: 535.40, change: '-1.25%', mktCap: '$240B' },
             { symbol: 'CRM', name: 'Salesforce, Inc.', sector: 'Cloud Software', price: 254.80, change: '+0.70%', mktCap: '$246B' },
-            
             { symbol: 'QCOM', name: 'QUALCOMM Incorporated', sector: 'Semiconductor', price: 172.60, change: '+1.80%', mktCap: '$192B' },
             { symbol: 'TXN', name: 'Texas Instruments', sector: 'Semiconductor', price: 198.40, change: '+0.40%', mktCap: '$180B' },
             { symbol: 'ACN', name: 'Accenture plc', sector: 'IT Services', price: 335.20, change: '+0.60%', mktCap: '$210B' },
@@ -2096,7 +2122,6 @@
             { symbol: 'SBUX', name: 'Starbucks Corporation', sector: 'Restaurants', price: 94.20, change: '-0.80%', mktCap: '$106B' },
             { symbol: 'GE', name: 'GE Aerospace', sector: 'Industrial Aerospace', price: 175.40, change: '+2.30%', mktCap: '$189B' },
             { symbol: 'CAT', name: 'Caterpillar Inc.', sector: 'Industrial Heavy', price: 362.50, change: '+1.05%', mktCap: '$184B' },
-            
             { symbol: 'BA', name: 'The Boeing Company', sector: 'Aerospace', price: 168.40, change: '-2.40%', mktCap: '$104B' },
             { symbol: 'HON', name: 'Honeywell International', sector: 'Industrial Conglomerate', price: 205.30, change: '+0.30%', mktCap: '$134B' },
             { symbol: 'UPS', name: 'United Parcel Service', sector: 'Logistics', price: 135.20, change: '-0.50%', mktCap: '$116B' },
@@ -2183,7 +2208,6 @@
         function tradeStock(symbol, type='BUY') {
             showModal('Eksekusi Order Saham', `Order ${type} untuk ${symbol} berhasil dikirim ke bursa.`);
         }
-        
         const exchangeRatesToUSD = {
             USD: 1.0,
             IDR: 0.00006173,
@@ -2224,7 +2248,6 @@
             toSelect.value = temp;
             convertCurrency();
         }
-        
         const globalMarketDirectory28 = [
             { name: 'S&P 500', region: 'Amerika Serikat', category: 'Ekuitas / Saham', value: '5,584.20', change: '+0.75%', status: 'Buka' },
             { name: 'NASDAQ Composite', region: 'Amerika Serikat', category: 'Ekuitas Teknologi', value: '17,820.50', change: '+1.10%', status: 'Buka' },
@@ -2258,7 +2281,6 @@
         let globalCurrentPage = 1;
         const globalItemsPerPage = 10;
         let filteredGlobalData = globalMarketDirectory28;
-        
         function renderGlobalMarketTable() {
             const tbody = document.getElementById('global-market-table-body');
             if (!tbody) return;
@@ -2269,7 +2291,6 @@
             const startIndex = (globalCurrentPage - 1) * globalItemsPerPage;
             const endIndex = startIndex + globalItemsPerPage;
             const currentData = filteredGlobalData.slice(startIndex, endIndex);
-            
             tbody.innerHTML = currentData.map(item => `
                 <tr class="hover:bg-neutral-900 transition-colors">
                     <td class="py-3 px-6 font-bold text-white">${item.name}</td>
@@ -2282,9 +2303,7 @@
                     </td>
                 </tr>
             `).join('');
-            
             document.getElementById('global-pagination-info').innerText = `Menampilkan ${startIndex + 1}-${Math.min(endIndex, totalItems)} dari ${totalItems} direktori`;
-            
             for (let i = 1; i <= 3; i++) {
                 const btn = document.getElementById(`global-page-${i}-btn`);
                 if (btn) {
@@ -2312,13 +2331,11 @@
             globalCurrentPage = 1;
             renderGlobalMarketTable();
         }
-        
         let lastBtcPrice = 67420.50;
         function updateOrderBookData() {
             lastBtcPrice += (Math.random() - 0.48) * 15;
             const mid = document.getElementById('orderbook-mid-price');
             if (mid) mid.innerText = `$${lastBtcPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
-            
             let asks = '', bids = '';
             for (let i = 5; i >= 1; i--) {
                 asks += `<div class="grid grid-cols-3 text-rose-400 px-1"><span>$${(lastBtcPrice + i*5).toFixed(2)}</span><span class="text-right">1.25</span><span class="text-right text-gray-400">${(i*1.25).toFixed(2)}</span></div>`;
@@ -2328,7 +2345,6 @@
             }
             if (document.getElementById('orderbook-asks')) document.getElementById('orderbook-asks').innerHTML = asks;
             if (document.getElementById('orderbook-bids')) document.getElementById('orderbook-bids').innerHTML = bids;
-            
             /* Mini order book global kini digerakkan oleh modul LIVE MODULE di bagian bawah halaman. */
         }
         setInterval(updateOrderBookData, 1500);
@@ -2384,14 +2400,12 @@
             const btn = document.getElementById('stock-ticks-toggle');
             if(btn) btn.innerText = isStockTicksPaused ? 'RESUME' : 'PAUSE';
         }
-        
         let cryptoIndexChartInstance = null;
         let intradayTelemetryChartInstance = null;
         let globalMarketChartInstance = null;
         let macroBarChartInstance = null;
         let globalMiniTickChartInstance = null;
         let stockSectorBarChartInstance = null; // Bar Chart FineReport
-        
         function createIntradayTelemetryRenderer(canvas) {
             const ctx = canvas.getContext('2d');
             const state = {
@@ -2866,7 +2880,6 @@
         function startAutomaticChartUpdates() {
             setInterval(() => {
                 const nowTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                
                 if (stockSectorBarChartInstance) {
                     const sectorData = stockSectorBarChartInstance.data.datasets[0].data;
                     for (let i = 0; i < sectorData.length; i++) {
@@ -2896,7 +2909,6 @@
                     const newVal = close;
                     const indexValEl = document.getElementById('live-index-val');
                     if (indexValEl) indexValEl.innerText = `$${newVal.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
-                    
                 }
                 if (intradayTelemetryChartInstance) {
                     intradayTelemetryChartInstance.updateTick();
@@ -2921,11 +2933,9 @@
                         { minX: 11, maxX: 21, minY: 30, maxY: 47 },
                         { minX: 7,  maxX: 16, minY: 16, maxY: 34 }
                     ];
-
                     macroBarChartInstance.data.datasets.forEach((dataset, i) => {
                         const point = dataset.data[0];
                         const range = scatterRanges[i];
-
                         point.x = Math.max(
                             range.minX,
                             Math.min(range.maxX, point.x + (Math.random() - 0.5) * 1.4)
@@ -2935,7 +2945,6 @@
                             Math.min(range.maxY, point.y + (Math.random() - 0.5) * 2.4)
                         );
                     });
-
                     macroBarChartInstance.update('none');
                 }
                 if (globalMiniTickChartInstance) {
@@ -3206,7 +3215,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
  });
 })();
 </script>
-
 <script>
 /* Chart redesign: Global M2 supply + Sector Bell Curve.
    Auto animation uses illustrative values; connect a verified provider for genuine live market data. */
@@ -3247,7 +3255,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   else setTimeout(()=>{initCharts();setInterval(tick,2500);},700);
 })();
 </script>
-
 <script>
 /* ============================================================
    LIVE MODULE — MACRO ASSET DISTRIBUTION + ORDER BOOK VISUALIZER & TICK MINI CHART
@@ -3259,18 +3266,15 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   'use strict';
   if (window.__liveMacroObModule) return;
   window.__liveMacroObModule = true;
-
   var PAGE_ID = 'page-global-market';
   var BASE = 5584;               // acuan S&P 500 Index Spot (sama dengan tampilan awal)
   var TICKS = 40;                // jumlah titik pada tick mini chart
   var LEVELS = 3;                // kedalaman order book (bid & ask)
-
   function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
   function rnd(a, b) { return a + Math.random() * (b - a); }
   function fmt(n, d) { return Number(n).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); }
   function pageVisible() { var p = document.getElementById(PAGE_ID); return !!p && p.classList.contains('active'); }
   function safe(fn) { return function () { try { fn.apply(null, arguments); } catch (e) { console.warn('[live-module]', e); } }; }
-
   /* ---------- 1. MACRO ASSET DISTRIBUTION (scatter, bergerak tiap 2 detik) ---------- */
   var macroChart = null;
   var macroRanges = [
@@ -3279,7 +3283,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     { minX: 11, maxX: 21, minY: 30, maxY: 47 },
     { minX: 7,  maxX: 16, minY: 16, maxY: 34 }
   ];
-
   function initMacro() {
     var cv = document.getElementById('macroAssetBarChart');
     if (!cv || !window.Chart) return;
@@ -3315,7 +3318,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     // Animasi halus agar perpindahan titik terlihat bergerak
     macroChart.options.animation = { duration: 900, easing: 'easeInOutQuad' };
   }
-
   function stepMacro() {
     if (!macroChart) { initMacro(); if (!macroChart) return; }
     macroChart.data.datasets.forEach(function (ds, i) {
@@ -3326,13 +3328,11 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     });
     if (pageVisible()) macroChart.update();
   }
-
   /* ---------- 2. TICK MINI CHART + ORDER BOOK VISUALIZER (tiap 1 detik) ---------- */
   var tickChart = null;
   var mid = BASE, prevMid = BASE;
   var askSizes = [], bidSizes = [];
   for (var i = 0; i < LEVELS; i++) { askSizes.push(rnd(8, 18)); bidSizes.push(rnd(8, 18)); }
-
   function initTick() {
     var cv = document.getElementById('globalMiniTickChart');
     if (!cv || !window.Chart) return;
@@ -3360,7 +3360,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     }
     tickChart.options.animation = { duration: 350 };
   }
-
   function row(side, price, size, maxSize) {
     var isAsk = side === 'ask';
     var pct = Math.round((size / maxSize) * 100);
@@ -3369,7 +3368,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
            ' style="background:linear-gradient(to left,rgba(' + rgb + ',.20) ' + pct + '%,transparent ' + pct + '%);transition:background .6s">' +
            '<span>' + (isAsk ? 'Ask' : 'Bid') + ' $' + fmt(price, 2) + '</span><span>' + size.toFixed(1) + 'k</span></div>';
   }
-
   function renderOrderBook(spread) {
     var ob = document.getElementById('global-mini-orderbook');
     if (!ob) return;
@@ -3379,13 +3377,12 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     for (var a = LEVELS - 1; a >= 0; a--) html += row('ask', bestAsk + a * 0.5, askSizes[a], maxSize);
     var up = mid >= prevMid;
     html += '<div class="text-center font-bold border-y border-card-border py-0.5 ' + (up ? 'text-emerald-300' : 'text-rose-300') + '">' +
-            'S&P 500 Index Spot • ' + fmt(mid, 2) + ' ' + (up ? '▲' : '▼') + '</div>';
+            'S&P 500 Index Spot · ' + fmt(mid, 2) + ' ' + (up ? '▲' : '▼') + '</div>';
     for (var b = 0; b < LEVELS; b++) html += row('bid', bestBid - b * 0.5, bidSizes[b], maxSize);
     ob.innerHTML = html;
     var head = ob.previousElementSibling;                       // baris "GLOBAL BID / ASK … SPREAD"
     if (head && head.lastElementChild) head.lastElementChild.textContent = 'SPREAD: ' + spread.toFixed(2);
   }
-
   function stepBookAndTicks() {
     if (!tickChart) initTick();
     prevMid = mid;
@@ -3410,7 +3407,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       if (tag && tag.lastElementChild) tag.lastElementChild.textContent = 'HIGH ' + fmt(Math.max.apply(null, tickChart.data.datasets[0].data), 2);
     }
   }
-
   /* ---------- Pastikan ukuran chart benar saat halaman baru dibuka ---------- */
   function refreshOnShow() {
     setTimeout(safe(function () {
@@ -3420,7 +3416,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       stepBookAndTicks();
     }), 120);
   }
-
   function start() {
     safe(initMacro)(); safe(initTick)();
     safe(stepBookAndTicks)();
@@ -3433,7 +3428,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(start, 0); });
   else setTimeout(start, 0);
 })();
-
 </script>
 <script>
 /* ============================================================
@@ -3453,11 +3447,9 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   var walk = function (v, base, step, pull, lo, hi) { return clamp(v + rnd(-step, step) + (base - v) * pull, lo, hi); };
   var visible = function () { var p = $(PAGE); return !!p && p.classList.contains('active'); };
   var safe = function (f) { return function () { try { f(); } catch (e) { console.warn('[crypto-cards]', e); } }; };
-
   var S = { btc: 56.4, eth: 16.2, stb: 7.1, alt: 68, mcap: 2.45, vol: 85.4, oi: 34.2, fund: 0.012, ls: 1.24 };
   var mcapH = [], volH = [], oiH = [], m = S.mcap, o = S.oi;
   for (var i = 0; i < N; i++) { mcapH.unshift(m); volH.unshift(S.vol * rnd(.75, 1.25)); oiH.unshift(o); m = walk(m, 2.45, .02, .05, 2.3, 2.6); o = walk(o, 34.2, .25, .05, 32, 36.5); }
-
   var tip = { backgroundColor: '#09090b', borderColor: '#27272a', borderWidth: 1, titleColor: '#fff', bodyColor: '#d1d5db', padding: 6, displayColors: false };
   function base(extra) {
     var c = { responsive: true, maintainAspectRatio: false, animation: { duration: 800, easing: 'easeOutQuart' }, plugins: { legend: { display: false }, tooltip: tip } };
@@ -3470,7 +3462,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     return new Chart(cv.getContext('2d'), cfg);
   }
   function others() { return Math.max(0, 100 - S.btc - S.eth - S.stb); }
-
   /* Gauge: plugin jarum */
   var needle = { id: 'needle', afterDatasetsDraw: function (chart) {
     var a = chart.getDatasetMeta(0).data[0]; if (!a) return;
@@ -3479,7 +3470,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(a.x + Math.cos(ang) * r, a.y + Math.sin(ang) * r); ctx.stroke();
     ctx.beginPath(); ctx.arc(a.x, a.y, 4, 0, 6.2832); ctx.fill(); ctx.restore();
   } };
-
   var cRing, cGauge, cMcap, cOI;
   function build() {
     if (!cRing) cRing = mk('mini-btc-chart', { type: 'doughnut',
@@ -3504,14 +3494,12 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       options: base({ scales: { x: { display: false }, y: { display: true, min: 32, max: 36.5, ticks: { display: false }, grid: { color: 'rgba(255,255,255,.06)' }, border: { display: false } } },
         plugins: { legend: { display: false }, tooltip: Object.assign({}, tip, { callbacks: { label: function (c) { return 'OI: $' + c.parsed.y.toFixed(2) + ' B'; } } }) } }) });
   }
-
   function tween(ch, to) {
     var from = ch.$v, t0 = performance.now();
     (function f(t) { var k = clamp((t - t0) / 800, 0, 1); ch.$v = from + (to - from) * (1 - Math.pow(1 - k, 3)); ch.draw(); if (k < 1) requestAnimationFrame(f); })(t0);
   }
   function txt(id, v) { var e = $(id); if (e) e.textContent = v; }
   function delta(id, pct, color) { var e = $(id); if (!e) return; e.textContent = (pct >= 0 ? '▲ ' : '▼ ') + Math.abs(pct).toFixed(2) + '%'; e.className = 'text-[10px] font-mono ' + (pct >= 0 ? color : 'text-rose-400'); }
-
   function step() {
     build();
     S.btc = walk(S.btc, 56.4, .25, .08, 54.5, 58.5); S.eth = walk(S.eth, 16.2, .15, .08, 15, 17.5); S.stb = walk(S.stb, 7.1, .08, .08, 6.3, 8);
@@ -3519,7 +3507,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     S.mcap = walk(S.mcap, 2.45, .02, .04, 2.3, 2.6); S.vol = walk(S.vol, 85.4, 2.5, .08, 60, 110);
     S.oi = walk(S.oi, 34.2, .28, .04, 32.3, 36.3); S.fund = walk(S.fund, .012, .003, .1, -.02, .04); S.ls = walk(S.ls, 1.24, .03, .08, .9, 1.6);
     mcapH.push(S.mcap); mcapH.shift(); volH.push(S.vol); volH.shift(); oiH.push(S.oi); oiH.shift();
-
     txt('stat-btc-dom', S.btc.toFixed(1) + '%'); txt('leg-btc', S.btc.toFixed(1) + '%'); txt('leg-eth', S.eth.toFixed(1) + '%');
     txt('leg-stb', S.stb.toFixed(1) + '%'); txt('leg-oth', others().toFixed(1) + '%');
     var z = S.alt >= 75 ? ['Altcoin Season', '#A78BFA'] : S.alt <= 25 ? ['Bitcoin Season', '#F59E0B'] : ['Neutral', '#9CA3AF'];
@@ -3529,7 +3516,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     txt('stat-open-interest', '$' + S.oi.toFixed(1) + ' B');
     txt('oi-sub', 'Funding ' + (S.fund >= 0 ? '+' : '') + S.fund.toFixed(3) + '% • L/S ' + S.ls.toFixed(2));
     delta('oi-delta', (oiH[N - 1] / oiH[0] - 1) * 100, 'text-cyan-400');
-
     if (!visible()) { if (cGauge) cGauge.$v = S.alt; return; }
     if (cRing) { cRing.data.datasets[0].data = [S.btc, S.eth, S.stb, others()]; cRing.update(); }
     if (cGauge) tween(cGauge, S.alt);
@@ -3538,7 +3524,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     if (cOI) { var l2 = Math.min.apply(null, oiH), h2 = Math.max.apply(null, oiH), p2 = (h2 - l2) * .3 + .05;
       cOI.options.scales.y.min = l2 - p2; cOI.options.scales.y.max = h2 + p2; cOI.update(); }
   }
-
   function start() {
     safe(step)(); setInterval(safe(step), 2000);
     document.addEventListener('click', function (e) {
@@ -3550,7 +3535,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(start, 0); });
   else setTimeout(start, 0);
 })();
-
 </script>
 <script>
 /* ============================================================
@@ -3579,7 +3563,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   var visible = function () { var p = $(PAGE); return !!p && p.classList.contains('active') && !document.hidden; };
   var safe = function (f) { return function () { try { f.apply(null, arguments); } catch (e) { console.warn('[liquidity]', e); } }; };
   var sg = function (v, d) { return (v >= 0 ? '+' : '') + v.toFixed(d); };
-
   var now = new Date(), dates = [], B = [[], [], []], ph = rnd(0, 6.28), lim = 1, i, r;
   for (i = 0; i < N; i++) {
     var d = new Date(now.getFullYear(), now.getMonth() - (N - 1 - i), 1);
@@ -3589,7 +3572,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   }
   var D = [[], [], []], bal = [];
   for (i = 0; i < N; i++) { for (r = 0; r < 3; r++) D[r].push(B[r][i]); bal.push(+(B[0][i] + B[1][i] + B[2][i]).toFixed(3)); }
-
   function compose(t) {
     var mx = 0, s0 = N - st.K;
     for (var i = 0; i < N; i++) {
@@ -3604,12 +3586,10 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     var need = mx > 1.5 ? 2 : mx > 1 ? 1.5 : 1; if (need > lim) lim = need;
   }
   compose(0);
-
   function showTick(i) {
     var s = N - st.K; if (i === N - 1) return true; if (i < s) return false;
     var step = Math.max(2, Math.round(st.K / 6)); return (i - s) % step === 0 && (N - 1 - i) >= step / 2;
   }
-
   var deco = { id: 'liqDeco', afterDatasetsDraw: function (ch) {
     var c = ch.ctx, a = ch.chartArea, y0 = ch.scales.y.getPixelForValue(0), tt = performance.now() / 1000;
     c.save();
@@ -3632,7 +3612,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     c.font = '600 10px Inter, system-ui, sans-serif'; c.fillText(st.paused ? '❚❚ JEDA' : '● LIVE', a.right - 52, 10);
     c.restore();
   } };
-
   var chart = null, lastK = 0;
   function applyMode() {
     if (!chart) return;
@@ -3680,7 +3659,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     if (st.mode !== 'bar') applyMode();
     st.vis.forEach(function (v, i) { chart.setDatasetVisibility(i, v); });
   }
-
   /* --- KPI, panel kawasan, peta panas --- */
   var heat = [];
   function kpi() {
@@ -3707,7 +3685,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     }
     e = $('liq-updated'); if (e) { var t = new Date(); e.textContent = 'Update ' + pad(t.getHours()) + ':' + pad(t.getMinutes()) + ':' + pad(t.getSeconds()); }
   }
-
   function frame(force) {
     if (!chart || Chart.getChart($('globalMarketChart')) !== chart) { build(); if (!chart) return; }
     if (!visible()) return;
@@ -3754,7 +3731,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     });
     if (rg) REG.forEach(function (g, r) {
       var dv = document.createElement('div'); dv.className = 'liq-kpi';
-      dv.innerHTML = '<span>' + g.name + '</span><b id="liq-rv' + r + '">--</b><div class="liq-bar"><i id="liq-rs' + r + '" style="background:' + g.ln + ';width:0"></i></div><small>Pangsa <span id="liq-rp' + r + '"></span> • rata-rata 3B <span id="liq-ra' + r + '"></span></small>';
+      dv.innerHTML = '<span>' + g.name + '</span><b id="liq-rv' + r + '">--</b><div class="liq-bar"><i id="liq-rs' + r + '" style="background:' + g.ln + ';width:0"></i></div><small>Pangsa <span id="liq-rp' + r + '"></span> · rata-rata 3B <span id="liq-ra' + r + '"></span></small>';
       rg.appendChild(dv);
     });
     if (ht) for (var k = 0; k < 36; k++) { var c = document.createElement('i'); ht.appendChild(c); heat.push(c); }
@@ -3763,7 +3740,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     var fs = $('liq-fs'); if (fs) fs.onclick = function () { var el = $('liq-pro-card'); try { if (document.fullscreenElement) document.exitFullscreen(); else if (el.requestFullscreen) el.requestFullscreen(); } catch (e) {} };
     document.addEventListener('fullscreenchange', function () { var w = $('liq-wrap'); if (w) w.style.height = document.fullscreenElement ? 'max(300px, calc(100vh - 400px))' : '360px'; setTimeout(function () { if (chart) chart.resize(); }, 100); });
   }
-
   function start() {
     safe(ui)();
     safe(function () { frame(true); })();
@@ -3779,9 +3755,10 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
 </script>
 <script>
 /* ============================================================
-   LIVE MODULE — KOMPONEN LIKUIDITAS MAKRO
-   9 komponen (sumber & penyerap likuiditas) + skor komposit, likuiditas bersih AS, kalender bank sentral,
-   korelasi, dan peringatan otomatis. Hanya menyentuh elemen #mlc-*. Data = simulasi ilustratif.
+   LIVE MODULE — KOMPONEN LIKUIDITAS MAKRO (v2: tabel otomatis + grafik pendukung)
+   Tabel dapat diurutkan, dicari, difilter, diekspor CSV; 3 grafik Chart.js otomatis
+   (Likuiditas Bersih vs Neraca Fed, kontribusi komponen, riwayat skor). Hanya menyentuh elemen #mlc-*.
+   Data = simulasi ilustratif.
    ============================================================ */
 (function () {
   'use strict';
@@ -3792,49 +3769,66 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
   var rnd = function (a, b) { return a + Math.random() * (b - a); };
   var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
-  var clock = function () { var d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()); };
+  var clockAt = function (ms) { var d = new Date(ms); return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()); };
+  var clock = function () { return clockAt(Date.now()); };
   var vis = function () { var p = $(PAGE); return !!p && p.classList.contains('active') && !document.hidden; };
   var safe = function (f) { return function () { try { f.apply(null, arguments); } catch (e) { console.warn('[macro-liq]', e); } }; };
-
   var C = [
     { id: 'fed', n: 'Neraca Fed (WALCL)', s: 'Federal Reserve', u: 'T', b: 6.72, r: .0012, d: 3, e: 1, ic: 'fa-building-columns' },
-    { id: 'rrp', n: 'Reverse Repo (RRP)', s: 'NY Fed • semalam', u: 'T', b: 0.35, r: .02, d: 3, e: -1, ic: 'fa-rotate' },
+    { id: 'rrp', n: 'Reverse Repo (RRP)', s: 'NY Fed · semalam', u: 'T', b: 0.35, r: .02, d: 3, e: -1, ic: 'fa-rotate' },
     { id: 'tga', n: 'Kas Treasury (TGA)', s: 'US Treasury', u: 'T', b: 0.78, r: .012, d: 3, e: -1, ic: 'fa-vault' },
     { id: 'ecb', n: 'Neraca ECB', s: 'European Central Bank', u: 'T', b: 6.31, r: .001, d: 3, e: 1, ic: 'fa-euro-sign' },
     { id: 'boj', n: 'Neraca BoJ', s: 'Bank of Japan', u: 'T', b: 4.85, r: .0015, d: 3, e: 1, ic: 'fa-yen-sign' },
     { id: 'm2', n: 'Suplai Uang M2 AS', s: 'Federal Reserve', u: 'T', b: 21.5, r: .0006, d: 3, e: 1, ic: 'fa-money-bill-trend-up' },
     { id: 'ust', n: 'Imbal Hasil UST 10Y', s: 'US Treasury', u: '%', b: 4.25, r: .006, d: 3, e: -1, ic: 'fa-percent' },
     { id: 'dxy', n: 'Indeks Dolar (DXY)', s: 'ICE Futures', u: '', b: 104.25, r: .0018, d: 2, e: -1, ic: 'fa-dollar-sign' },
-    { id: 'stb', n: 'Suplai Stablecoin', s: 'Kripto • USDT+USDC', u: 'B', b: 165, r: .0025, d: 1, e: 1, ic: 'fa-coins' }
+    { id: 'stb', n: 'Suplai Stablecoin', s: 'Kripto · USDT+USDC', u: 'B', b: 165, r: .0025, d: 1, e: 1, ic: 'fa-coins' }
   ];
-  var st = { iv: 2000, paused: false, f: 'all', score: 50, shown: 50, reg: '' };
-  var alerts = [];
+  var st = { iv: 2000, paused: false, f: 'all', q: '', sk: 'i', sd: 1, score: 50, shown: 50, reg: '' };
+  var alerts = [], H = { t: [], net: [], fed: [], sc: [] }, CH = {};
   function step(c) { c.p = c.x; c.x = c.x + (c.b - c.x) * .05 + rnd(-1, 1) * c.b * c.r; }
-  C.forEach(function (c) { c.x = c.b * (1 + rnd(-c.r, c.r) * 2); c.h = []; for (var i = 0; i < 40; i++) { step(c); c.h.push(c.x); } c.o = c.x; });
+  C.forEach(function (c, i) { c.i = i; c.k = 0; c.dp = 0; c.x = c.b * (1 + rnd(-c.r, c.r) * 2); c.h = []; for (var j = 0; j < 40; j++) { step(c); c.h.push(c.x); } c.o = c.x; });
   var G = function (id) { return C.filter(function (c) { return c.id === id; })[0]; };
   function fm(c, v) {
     var s = v.toLocaleString('en-US', { minimumFractionDigits: c.d, maximumFractionDigits: c.d });
     return c.u === 'T' ? '$' + s + 'T' : c.u === 'B' ? '$' + s + 'B' : c.u === '%' ? s + '%' : s;
   }
-  function cardHtml(c) {
-    return '<div class="mlc-card" id="mlc-c-' + c.id + '" data-e="' + (c.e > 0 ? 'src' : 'sink') + '">' +
-      '<div class="flex items-start justify-between gap-2"><div class="min-w-0"><div class="text-[10px] uppercase tracking-wider text-gray-400 truncate">' + c.s + '</div>' +
-      '<div class="text-sm font-semibold text-white truncate">' + c.n + '</div></div><div class="mlc-ic"><i class="fa-solid ' + c.ic + '"></i></div></div>' +
-      '<div class="flex items-end justify-between mt-2"><b id="mlc-v-' + c.id + '" class="text-xl font-extrabold text-white font-mono"></b><span id="mlc-d-' + c.id + '" class="text-[11px] font-mono"></span></div>' +
-      '<canvas id="mlc-s-' + c.id + '" width="160" height="38" class="w-full mt-2" style="height:38px"></canvas>' +
-      '<div id="mlc-i-' + c.id + '" class="text-[10px] mt-1"></div></div>';
+  function scoreFrom(get) { var mz = 0; C.forEach(function (c) { mz += c.e * (get(c) - c.b) / (c.b * c.r * 1.85); }); return clamp(50 + 60 * mz / C.length, 3, 97); }
+  (function () { var f = G('fed'), r = G('rrp'), t = G('tga'), now = Date.now(); for (var i = 0; i < 40; i++) { H.t.push(clockAt(now - (39 - i) * 2000)); H.fed.push(+f.h[i].toFixed(3)); H.net.push(+(f.h[i] - r.h[i] - t.h[i]).toFixed(3)); H.sc.push(+scoreFrom(function (c) { return c.h[i]; }).toFixed(1)); } })();
+
+  /* ---------- Tabel ---------- */
+  function rowHtml(c) {
+    return '<tr id="mlc-r-' + c.id + '"><td class="text-gray-500 font-mono" id="mlc-no-' + c.id + '"></td>' +
+      '<td><div class="flex items-center gap-2"><div class="mlc-ic"><i class="fa-solid ' + c.ic + '"></i></div><div class="min-w-0"><div class="font-semibold text-white">' + c.n + '</div><div class="text-[10px] text-gray-500">' + c.s + '</div></div></div></td>' +
+      '<td><span class="mlc-badge" style="' + (c.e > 0 ? 'background:rgba(52,211,153,.12);color:#34d399' : 'background:rgba(251,113,133,.12);color:#fb7185') + '">' + (c.e > 0 ? 'Sumber ▲' : 'Penyerap ▼') + '</span></td>' +
+      '<td class="text-right"><b id="mlc-v-' + c.id + '" class="font-mono text-white"></b></td>' +
+      '<td class="text-right font-mono" id="mlc-d-' + c.id + '"></td><td id="mlc-s-' + c.id + '"></td>' +
+      '<td><span id="mlc-i-' + c.id + '" class="mlc-badge"></span></td>' +
+      '<td><div class="mlc-cb"><i id="mlc-k-' + c.id + '"></i></div></td></tr>';
   }
-  function spark(c, col) {
-    var cv = $('mlc-s-' + c.id); if (!cv) return;
-    var g = cv.getContext('2d'), w = cv.width, h = cv.height, a = c.h, mn = Math.min.apply(null, a), mx = Math.max.apply(null, a), rg = (mx - mn) || 1, ly = 0;
-    g.clearRect(0, 0, w, h);
-    var gr = g.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, col + '55'); gr.addColorStop(1, col + '00');
-    g.beginPath();
-    a.forEach(function (v, i) { var x = i / (a.length - 1) * (w - 6) + 2, y = h - 4 - (v - mn) / rg * (h - 10); ly = y; if (i) g.lineTo(x, y); else g.moveTo(x, y); });
-    g.strokeStyle = col; g.lineWidth = 1.8; g.lineJoin = 'round'; g.stroke();
-    g.lineTo(w - 4, h); g.lineTo(2, h); g.closePath(); g.fillStyle = gr; g.fill();
-    g.beginPath(); g.arc(w - 4, ly, 2.6, 0, 6.2832); g.fillStyle = col; g.fill();
+  function sparkSvg(c, col) {
+    var a = c.h, mn = Math.min.apply(null, a), mx = Math.max.apply(null, a), rg = (mx - mn) || 1, w = 90, h = 26;
+    var pts = a.map(function (v, i) { return (i / (a.length - 1) * w).toFixed(1) + ',' + (h - 3 - (v - mn) / rg * (h - 6)).toFixed(1); }).join(' ');
+    var ly = h - 3 - (a[a.length - 1] - mn) / rg * (h - 6);
+    return '<svg viewBox="0 0 ' + w + ' ' + h + '" width="90" height="26"><polyline points="' + pts + '" fill="none" stroke="' + col + '" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/><circle cx="' + w + '" cy="' + ly.toFixed(1) + '" r="2.4" fill="' + col + '"/></svg>';
   }
+  function match(c) {
+    return (st.f === 'all' || (c.e > 0 ? 'src' : 'sink') === st.f) && (!st.q || (c.n + ' ' + c.s).toLowerCase().indexOf(st.q) > -1);
+  }
+  function keyOf(c) { return st.sk === 'n' ? c.n : st.sk === 'e' ? c.e : st.sk === 'x' ? c.x : st.sk === 'd' ? c.dp : st.sk === 'k' ? c.k : c.i; }
+  function layout() {
+    var tb = $('mlc-tb'); if (!tb) return;
+    var shown = C.filter(match).sort(function (p, q) { var A = keyOf(p), B = keyOf(q); return (A > B ? 1 : A < B ? -1 : 0) * st.sd; });
+    C.forEach(function (c) { var r = $('mlc-r-' + c.id); if (r) r.style.display = match(c) ? '' : 'none'; });
+    shown.forEach(function (c, i) { var r = $('mlc-r-' + c.id); if (r) { tb.appendChild(r); var n = $('mlc-no-' + c.id); if (n) n.textContent = i + 1; } });
+    var el = $('mlc-cnt'); if (el) el.textContent = '· ' + shown.length + ' / ' + C.length + ' komponen';
+    Array.prototype.forEach.call(document.querySelectorAll('#mlc-table thead th[data-k]'), function (th) {
+      th.classList.remove('asc', 'desc');
+      if (th.getAttribute('data-k') === st.sk) th.classList.add(st.sd > 0 ? 'asc' : 'desc');
+    });
+  }
+
+  /* ---------- Panel lama (dipertahankan) ---------- */
   function pushAlert(txt, col) {
     alerts.unshift({ t: clock(), x: txt, c: col }); if (alerts.length > 8) alerts.pop();
     var el = $('mlc-alerts'); if (!el) return;
@@ -3870,16 +3864,52 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     g.textAlign = 'center'; g.fillStyle = '#fff'; g.font = '800 24px Inter, sans-serif'; g.fillText(Math.round(st.shown), cx, cy - R * .38);
     g.fillStyle = '#6b7280'; g.font = '10px Inter, sans-serif'; g.textAlign = 'left'; g.fillText('0', cx - R - 4, cy + 12); g.textAlign = 'right'; g.fillText('100', cx + R + 4, cy + 12);
   }
+
+  /* ---------- Grafik Chart.js ---------- */
+  function mkCharts() {
+    if (CH.made || !window.Chart) return; CH.made = true;
+    var grid = 'rgba(255,255,255,.06)', tk = '#6b7280';
+    function opt(legend, extra) {
+      var o = { responsive: true, maintainAspectRatio: false, animation: false, interaction: { mode: 'index', intersect: false },
+        plugins: { legend: { display: legend, labels: { color: '#9ca3af', boxWidth: 10, font: { size: 10 } } } },
+        scales: { x: { ticks: { color: tk, maxTicksLimit: 5, font: { size: 9 } }, grid: { color: grid } }, y: { ticks: { color: tk, font: { size: 9 } }, grid: { color: grid } } } };
+      if (extra) extra(o); return o;
+    }
+    var a = $('mlc-ch-net'), b = $('mlc-ch-imp'), c = $('mlc-ch-sc');
+    if (a) CH.net = new Chart(a, { type: 'line', data: { labels: H.t.slice(), datasets: [
+      { label: 'Likuiditas Bersih AS', data: H.net.slice(), borderColor: '#38BDF8', backgroundColor: 'rgba(56,189,248,.12)', fill: true, borderWidth: 2, pointRadius: 0, tension: .35 },
+      { label: 'Neraca Fed', data: H.fed.slice(), borderColor: '#818CF8', borderWidth: 1.6, borderDash: [4, 3], pointRadius: 0, tension: .35 }] }, options: opt(true) });
+    if (b) CH.imp = new Chart(b, { type: 'bar', data: { labels: C.map(function (x) { return x.n.replace(/ \(.*\)/, ''); }), datasets: [{ data: C.map(function () { return 0; }), backgroundColor: C.map(function () { return '#94a3b8'; }), borderRadius: 3 }] },
+      options: opt(false, function (o) { o.indexAxis = 'y'; o.scales.y.ticks.font = { size: 9 }; o.scales.x.min = -1; o.scales.x.max = 1; }) });
+    if (c) CH.sc = new Chart(c, { type: 'line', data: { labels: H.t.slice(), datasets: [
+      { label: 'Skor', data: H.sc.slice(), borderColor: '#fbbf24', backgroundColor: 'rgba(251,191,36,.12)', fill: true, borderWidth: 2, pointRadius: 0, tension: .35 },
+      { label: 'Ekspansif ≥62', data: H.t.map(function () { return 62; }), borderColor: '#34d399', borderDash: [5, 4], borderWidth: 1, pointRadius: 0 },
+      { label: 'Ketat ≤38', data: H.t.map(function () { return 38; }), borderColor: '#fb7185', borderDash: [5, 4], borderWidth: 1, pointRadius: 0 }] },
+      options: opt(true, function (o) { o.scales.y.min = 0; o.scales.y.max = 100; }) });
+  }
+  function updCharts() {
+    if (!CH.made) return;
+    if (CH.net) { CH.net.data.labels = H.t.slice(); CH.net.data.datasets[0].data = H.net.slice(); CH.net.data.datasets[1].data = H.fed.slice(); CH.net.update('none'); }
+    if (CH.imp) { var d = CH.imp.data.datasets[0]; d.data = C.map(function (x) { return +clamp(x.k, -1, 1).toFixed(2); }); d.backgroundColor = C.map(function (x) { return x.k > .02 ? '#34d399' : x.k < -.02 ? '#fb7185' : '#94a3b8'; }); CH.imp.update('none'); }
+    if (CH.sc) { CH.sc.data.labels = H.t.slice(); CH.sc.data.datasets[0].data = H.sc.slice(); CH.sc.data.datasets[1].data = H.t.map(function () { return 62; }); CH.sc.data.datasets[2].data = H.t.map(function () { return 38; }); CH.sc.update('none'); }
+  }
+
+  /* ---------- Render & siklus otomatis ---------- */
   function render() {
-    var el;
+    var el, nSrc = 0, nSink = 0, nNeu = 0;
     C.forEach(function (c) {
       var dp = (c.x / c.o - 1) * 100, dead = Math.abs(c.x - c.o) / c.o < c.r * .25, imp = dead ? 0 : c.e * (c.x > c.o ? 1 : -1);
+      c.dp = dp; c.k = c.e * (c.x - c.b) / (c.b * c.r * 1.85);
+      imp > 0 ? nSrc++ : imp < 0 ? nSink++ : nNeu++;
       var col = imp > 0 ? '#34d399' : imp < 0 ? '#fb7185' : '#94a3b8', v = $('mlc-v-' + c.id);
       if (v) { v.textContent = fm(c, c.x); v.classList.remove('mlc-fu', 'mlc-fd'); void v.offsetWidth; v.classList.add(c.x >= c.p ? 'mlc-fu' : 'mlc-fd'); }
-      if ((el = $('mlc-d-' + c.id))) { el.textContent = (dp >= 0 ? '▲ +' : '▼ ') + dp.toFixed(2) + '%'; el.style.color = col; }
-      if ((el = $('mlc-i-' + c.id))) { el.textContent = imp > 0 ? '▲ Menambah likuiditas' : imp < 0 ? '▼ Menyerap likuiditas' : '● Netral vs awal sesi'; el.style.color = col; }
-      spark(c, col);
+      if ((el = $('mlc-d-' + c.id))) { el.textContent = (dp >= 0 ? '▲ +' : '▼ ') + dp.toFixed(2) + '%'; el.style.color = dp >= 0 ? '#34d399' : '#fb7185'; }
+      if ((el = $('mlc-s-' + c.id))) el.innerHTML = sparkSvg(c, col);
+      if ((el = $('mlc-i-' + c.id))) { el.textContent = imp > 0 ? 'Menambah' : imp < 0 ? 'Menyerap' : 'Netral'; el.style.color = col; el.style.background = col + '1f'; }
+      if ((el = $('mlc-k-' + c.id))) { var w = clamp(c.k, -1, 1) * 50; el.style.background = col; el.style.left = (w >= 0 ? 50 : 50 + w) + '%'; el.style.width = Math.abs(w) + '%'; }
     });
+    layout();
+    if ((el = $('mlc-tf'))) el.innerHTML = 'Menambah likuiditas: <b class="text-emerald-400">' + nSrc + '</b> &nbsp;·&nbsp; Menyerap: <b class="text-rose-400">' + nSink + '</b> &nbsp;·&nbsp; Netral: <b class="text-gray-300">' + nNeu + '</b> &nbsp;·&nbsp; Klik judul kolom untuk mengurutkan';
     var fed = G('fed'), rrp = G('rrp'), tga = G('tga'), net = fed.x - rrp.x - tga.x, net0 = fed.o - rrp.o - tga.o, nd = (net / net0 - 1) * 100;
     if ((el = $('mlc-net'))) el.textContent = '$' + net.toFixed(3) + 'T';
     if ((el = $('mlc-netd'))) { el.textContent = (nd >= 0 ? '▲ +' : '▼ ') + nd.toFixed(2) + '%'; el.style.color = nd >= 0 ? '#34d399' : '#fb7185'; }
@@ -3887,8 +3917,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     if ((el = $('mlc-bt'))) el.style.width = (tga.x / fed.x * 100).toFixed(1) + '%';
     if ((el = $('mlc-br'))) el.style.width = (rrp.x / fed.x * 100).toFixed(1) + '%';
     if ((el = $('mlc-g3'))) el.textContent = '$' + (fed.x + G('ecb').x + G('boj').x).toFixed(2) + 'T';
-    var mz = 0; C.forEach(function (c) { mz += c.e * (c.x - c.b) / (c.b * c.r * 1.85); }); mz /= C.length;
-    st.score = clamp(50 + 60 * mz, 3, 97);
+    st.score = scoreFrom(function (c) { return c.x; });
     var rg = st.score >= 62 ? ['EKSPANSIF', '#34d399', 'Kondisi likuiditas longgar — mendukung aset berisiko'] : st.score <= 38 ? ['KETAT', '#fb7185', 'Likuiditas mengetat — tekanan pada aset berisiko'] : ['NETRAL', '#fbbf24', 'Sumber & penyerap likuiditas relatif seimbang'];
     if ((el = $('mlc-regime'))) { el.textContent = rg[0]; el.style.color = rg[1]; }
     if ((el = $('mlc-regime-d'))) el.textContent = rg[2];
@@ -3897,6 +3926,9 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     CORR.forEach(function (q) { q.v = clamp(q.v + rnd(-.025, .025) + (q.b - q.v) * .1, -.95, .95); });
     corrRender();
     if ((el = $('mlc-upd'))) el.textContent = 'Update ' + clock();
+    H.t.push(clock()); H.net.push(+net.toFixed(3)); H.fed.push(+fed.x.toFixed(3)); H.sc.push(+st.score.toFixed(1));
+    if (H.t.length > 60) { H.t.shift(); H.net.shift(); H.fed.shift(); H.sc.shift(); }
+    if (vis()) { mkCharts(); updCharts(); }
   }
   function tick() {
     var fired = false;
@@ -3909,13 +3941,22 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     });
     render();
   }
-  function applyFilter() {
-    C.forEach(function (c) { var el = $('mlc-c-' + c.id); if (el) el.style.display = (st.f === 'all' || el.getAttribute('data-e') === st.f) ? '' : 'none'; });
+  function exportCsv() {
+    var rows = [['Komponen', 'Sumber', 'Jenis', 'Nilai', 'Delta sesi (%)', 'Kontribusi']];
+    C.forEach(function (c) { rows.push([c.n, c.s, c.e > 0 ? 'Sumber' : 'Penyerap', fm(c, c.x), c.dp.toFixed(3), c.k.toFixed(3)]); });
+    var txt = rows.map(function (r) { return r.map(function (x) { return '"' + String(x).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+    var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([txt], { type: 'text/csv' })); a.download = 'komponen-likuiditas-makro.csv';
+    document.body.appendChild(a); a.click(); a.remove();
   }
   function wire() {
-    var grid = $('mlc-grid'); if (grid) grid.innerHTML = C.map(cardHtml).join('');
+    var tb = $('mlc-tb'); if (tb) tb.innerHTML = C.map(rowHtml).join('');
+    Array.prototype.forEach.call(document.querySelectorAll('#mlc-table thead th[data-k]'), function (th) {
+      th.onclick = function () { var k = th.getAttribute('data-k'); if (st.sk === k) st.sd = -st.sd; else { st.sk = k; st.sd = 1; } layout(); };
+    });
+    var q = $('mlc-q'); if (q) q.oninput = function () { st.q = q.value.trim().toLowerCase(); layout(); };
+    var cv = $('mlc-csv'); if (cv) cv.onclick = exportCsv;
     var f = $('mlc-filter'); if (f) Array.prototype.forEach.call(f.children, function (b) {
-      b.onclick = function () { st.f = b.getAttribute('data-f'); Array.prototype.forEach.call(f.children, function (x) { x.classList.remove('on'); }); b.classList.add('on'); applyFilter(); };
+      b.onclick = function () { st.f = b.getAttribute('data-f'); Array.prototype.forEach.call(f.children, function (x) { x.classList.remove('on'); }); b.classList.add('on'); layout(); };
     });
     var iv = $('mlc-ivs'); if (iv) Array.prototype.forEach.call(iv.children, function (b) {
       b.onclick = function () { st.iv = +b.getAttribute('data-iv'); Array.prototype.forEach.call(iv.children, function (x) { x.classList.remove('on'); }); b.classList.add('on'); };
@@ -3946,7 +3987,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   'use strict';
   if (window.__liveIndexCards) return;
   window.__liveIndexCards = true;
-
   var PAGE = 'page-stock-exchange', H = 80, SHOW = 60, CN = 30, PER = 8;
   var UP = '#10B981', DN = '#EF4444';
   var $ = function (id) { return document.getElementById(id); };
@@ -3957,13 +3997,11 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   var visible = function () { var p = $(PAGE); return !!p && p.classList.contains('active') && !document.hidden; };
   var safe = function (f) { return function () { try { f(); } catch (e) { console.warn('[index-cards]', e); } }; };
   var tip = { backgroundColor: '#09090b', borderColor: '#27272a', borderWidth: 1, titleColor: '#fff', bodyColor: '#d1d5db', padding: 6, displayColors: false };
-
   var IX = [
     { key: 'nasdaq', id: 'ov-nasdaq', cv: 'overview-nasdaq', start: 18420.60, prev: 18420.60 / 1.0082, vol: .0007, kind: 'area' },
     { key: 'sp',     id: 'ov-sp',     cv: 'overview-sp',     start: 5842.30,  prev: 5842.30 / 1.0046,  vol: .0005, kind: 'candle' },
     { key: 'dow',    id: 'ov-dow',    cv: 'overview-dow',    start: 42160.80, prev: 42160.80 / .9982,  vol: .0004, kind: 'band' }
   ];
-
   function step(x, p) { return clamp(p * (1 + rnd(-1, 1) * x.vol + (x.start - p) / x.start * .015), x.start * .985, x.start * 1.015); }
   function seed(x) {
     var n = x.kind === 'candle' ? CN * PER : H, a = [], p = x.start, i, t = Date.now();
@@ -3977,7 +4015,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     }
   }
   IX.forEach(seed);
-
   function tick(x) {
     var p = x.px = step(x, x.px), now = hms(new Date());
     x.hi = Math.max(x.hi, p); x.lo = Math.min(x.lo, p);
@@ -3986,7 +4023,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       if (++x.cn >= PER) { x.cn = 0; x.cd.push({ o: p, h: p, l: p, c: p, t: now }); x.cd.shift(); }
     } else { x.h.push(p); x.h.shift(); x.t.push(now); x.t.shift(); }
   }
-
   /* garis penutupan sebelumnya (prev close) */
   function prevPlugin(x) { return { id: 'prev_' + x.key, afterDatasetsDraw: function (ch) {
     var a = ch.chartArea, y = ch.scales.y.getPixelForValue(x.prev); if (!(y > a.top && y < a.bottom)) return;
@@ -4005,7 +4041,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     for (var k in extra) o.plugins.tooltip = Object.assign({}, tip, extra[k]);
     return { options: o, plugins: plugins };
   }
-
   function build(x) {
     var cv = $(x.cv); if (!cv || !window.Chart) return;
     var old = Chart.getChart(cv); if (old) old.destroy();
@@ -4033,7 +4068,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     }
     x.chart = new Chart(cv.getContext('2d'), cfg);
   }
-
   function avg(a, i, w) { var s = 0, n = 0; for (var k = Math.max(0, i - w + 1); k <= i; k++) { s += a[k]; n++; } return s / n; }
   function paint(x) {
     var ch = x.chart, ds = ch.data.datasets, y = ch.options.scales.y, lo, hi, pad;
@@ -4056,7 +4090,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     pad = (hi - lo) * .12 + x.start * .0001; y.min = lo - pad; y.max = hi + pad;
     ch.update('none');
   }
-
   function text(x) {
     var chg = (x.px / x.prev - 1) * 100; x.up = chg >= 0;
     var v = $(x.id), c = $(x.id + '-chg'), r = $(x.id + '-rng');
@@ -4064,7 +4097,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     if (c) { c.textContent = (chg >= 0 ? '+' : '−') + Math.abs(chg).toFixed(2) + '%'; c.className = 'text-xs ' + (chg >= 0 ? 'text-emerald-400' : 'text-rose-400'); }
     if (r) r.textContent = 'H ' + fmt(x.hi) + ' • L ' + fmt(x.lo);
   }
-
   function run() {
     var vis = visible();
     IX.forEach(function (x) {
@@ -4103,7 +4135,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   var esc = function (s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
   var safe = function (f) { return function () { try { f.apply(null, arguments); } catch (e) { console.warn('[global-market]', e); } }; };
   var pageOn = function () { var p = $(PAGE); return !!p && p.classList.contains('active'); };
-
   function isOpen(k) {
     if (k === 'cx') return true;
     var d = new Date(), w = d.getUTCDay(); if (w === 0 || w === 6) return false;
@@ -4138,7 +4169,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     var pts = a.map(function (v, i) { return (i / (a.length - 1) * 76).toFixed(1) + ',' + (24 - (v - mn) / g * 21).toFixed(1); }).join(' ');
     return '<svg class="gm-spark" viewBox="0 0 76 27" preserveAspectRatio="none"><polyline points="' + pts + '" fill="none" stroke="' + col + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
-
   /* --- KPI (sub-halaman 1) --- */
   var KPI = [
     ['mc', 'NILAI KAPITALISASI PASAR GLOBAL', mc, 'fa-globe', 'bg-brand-primary/10 text-brand-accent', function () { return ' dari kemarin'; }],
@@ -4158,7 +4188,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       if (s) s.innerHTML = spark(x);
     });
   }
-
   /* --- Tabel direktori (sub-halaman 2) --- */
   var q = '', grp = 'all', page = 1, PER = 10;
   function row(x) {
@@ -4176,7 +4205,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     for (var i = 1; i <= tp; i++) pg += '<button data-p="' + i + '" class="px-2.5 py-1 rounded ' + (i === page ? 'bg-brand-primary text-white font-bold' : 'bg-black border border-card-border hover:bg-neutral-800 text-white') + '">' + i + '</button>';
     $('gm-pg').innerHTML = pg + '<button data-p="' + (page + 1) + '" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white">Next</button>';
   }
-
   /* --- Panel pendukung --- */
   var SES = [['New York (NYSE)', 'us', -4], ['London (LSE)', 'eu', 1], ['Frankfurt (XETRA)', 'eu', 2], ['Tokyo (TSE)', 'jp', 9], ['Hong Kong (HKEX)', 'cn', 8], ['Sydney (ASX)', 'au', 10], ['Jakarta (IDX)', 'id', 7]];
   function side() {
@@ -4193,7 +4221,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     var e = $('gm-open'), t = new Date(); if (e) e.textContent = items.filter(function (x) { return isOpen(x.mk); }).length + ' / ' + items.length + ' buka';
     if ((e = $('gm-clock'))) e.textContent = '● LIVE ' + pd(t.getHours()) + ':' + pd(t.getMinutes()) + ':' + pd(t.getSeconds());
   }
-
   /* --- sub-halaman & navigasi --- */
   var cur = 1, ACT = 'px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition', INA = 'px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition';
   function draw() { if (cur === 1) kpis(); else { table(); side(); } head(); }
