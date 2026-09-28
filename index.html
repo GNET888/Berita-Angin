@@ -609,7 +609,7 @@
               </div>
               <div class="bg-card-dark border border-card-border rounded-xl p-4">
                 <div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">DERIVATIVES (OPEN INT.)</span><span class="text-cyan-400 text-xs">● LIVE</span></div>
-                <div class="mt-2"><strong id="stat-open-interest" class="text-lg text-white">$34.2 B</strong><div class="text-[10px] text-gray-500">Funding +0.012% · L/S 1.24</div></div>
+                <div class="mt-2"><strong id="stat-open-interest" class="text-lg text-white">$34.2 B</strong><div class="text-[10px] text-gray-500">Funding +0.012% • L/S 1.24</div></div>
                 <div class="h-12 mt-2"><canvas id="mini-oi-chart"></canvas></div>
               </div>
             </div>
@@ -1105,13 +1105,13 @@
                         <span class="px-2 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">CANDLESTICK</span>
                         <span class="px-2 py-1 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-300">OHLC</span>
                         <span class="px-2 py-1 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-300">VOLUME</span>
-                        <span class="text-gray-500">Candlestick otomatis · update real-time simulasi</span>
+                        <span class="text-gray-500">Candlestick otomatis • update real-time simulasi</span>
                     </div>
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center text-[11px] text-gray-400 pt-1 gap-1">
-                        <span>Status: <span id="intraday-telemetry-status" class="text-white font-bold">AUTO · 0 Ticks</span></span>
+                        <span>Status: <span id="intraday-telemetry-status" class="text-white font-bold">AUTO • 0 Ticks</span></span>
                         <span class="text-emerald-400 flex items-center space-x-1">
                             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            <span id="intraday-telemetry-feed">Candlestick Feed Online</span><span class="text-gray-600 hidden sm:inline">·</span><span id="intraday-telemetry-time">--:--:--</span>
+                            <span id="intraday-telemetry-feed">Candlestick Feed Online</span><span class="text-gray-600 hidden sm:inline">•</span><span id="intraday-telemetry-time">--:--:--</span>
                         </span>
                     </div>
                 </div>
@@ -1494,12 +1494,12 @@
                     <div class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4">
                         <div class="flex items-center justify-between border-b border-card-border pb-3">
                             <h3 class="text-base font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-                                <i class="fa-solid fa-chart-column text-brand-accent"></i>
+                                <i class="fa-solid fa-braille text-brand-accent"></i>
                                 <span>MACRO ASSET DISTRIBUTION</span>
                             </h3>
                             <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 text-[10px] animate-pulse">● LIVE UPDATE</span>
                         </div>
-                        <p class="text-xs text-gray-400">Proporsi alokasi likuiditas makro global per sektor instrumen dengan pembaruan otomatis.</p>
+                        <p class="text-xs text-gray-400">Scatter plot distribusi aset makro berdasarkan sektor dengan pembaruan otomatis setiap 2 detik.</p>
                         <div class="relative h-52 w-full">
                             <canvas id="macroAssetBarChart"></canvas>
                         </div>
@@ -2366,8 +2366,8 @@
                     const statusEl = document.getElementById('intraday-telemetry-status');
                     const feedEl = document.getElementById('intraday-telemetry-feed');
                     const timeEl = document.getElementById('intraday-telemetry-time');
-                    if (statusEl) statusEl.textContent = `AUTO · ${this.ticks.toLocaleString('id-ID')} Ticks`;
-                    if (feedEl) feedEl.textContent = `Candlestick Feed Online · ${this.period}`;
+                    if (statusEl) statusEl.textContent = `AUTO • ${this.ticks.toLocaleString('id-ID')} Ticks`;
+                    if (feedEl) feedEl.textContent = `Candlestick Feed Online • ${this.period}`;
                     if (timeEl) timeEl.textContent = new Date(this.last).toLocaleTimeString('id-ID', {
                         hour: '2-digit', minute: '2-digit', second: '2-digit'
                     });
@@ -2416,7 +2416,7 @@
                     this.grid(left, volumeTop, right, volumeBottom);
                     ctx.fillStyle = '#34D399';
                     ctx.font = '700 10px ui-monospace, SFMono-Regular, Menlo, monospace';
-                    ctx.fillText('CANDLESTICK · ' + this.period + ' · AUTO', 10, 16);
+                    ctx.fillText('CANDLESTICK • ' + this.period + ' • AUTO', 10, 16);
                     ctx.fillStyle = '#64748B';
                     ctx.font = '9px ui-monospace, SFMono-Regular, Menlo, monospace';
                     ctx.fillText('INTRADAY TELEMETRY STREAM', 10, h - 7);
@@ -2667,29 +2667,102 @@
                     }
                 });
             }
-            const ctxMacroBar = document.getElementById('macroAssetBarChart');
-            if (ctxMacroBar) {
-                macroBarChartInstance = new Chart(ctxMacroBar.getContext('2d'), {
-                    type: 'bar',
+            // ============================================================
+            // MACRO ASSET DISTRIBUTION — SCATTER PLOT
+            // Empat sektor: Semi conductor, Financial, Consumer, Energy.
+            // Setiap titik bergerak otomatis agar visual tetap hidup.
+            // ============================================================
+            const ctxMacroScatter = document.getElementById('macroAssetBarChart');
+            if (ctxMacroScatter) {
+                macroBarChartInstance = new Chart(ctxMacroScatter.getContext('2d'), {
+                    type: 'scatter',
                     data: {
-                        labels: ['Equities', 'Crypto', 'Commodities', 'Bonds / Cash'],
-                        datasets: [{
-                            label: 'Alokasi (%)',
-                            data: [45, 20, 15, 20],
-                            backgroundColor: ['#4F46E5', '#10B981', '#F59E0B', '#38BDF8'],
-                            borderRadius: 6,
-                            borderSkipped: false
-                        }]
+                        datasets: [
+                            {
+                                label: 'Equities',
+                                data: [{x: 35, y: 72}],
+                                backgroundColor: '#4F46E5',
+                                borderColor: '#818CF8',
+                                pointRadius: 7,
+                                pointHoverRadius: 10
+                            },
+                            {
+                                label: 'Crypto',
+                                data: [{x: 22, y: 54}],
+                                backgroundColor: '#10B981',
+                                borderColor: '#34D399',
+                                pointRadius: 7,
+                                pointHoverRadius: 10
+                            },
+                            {
+                                label: 'communities',
+                                data: [{x: 15, y: 38}],
+                                backgroundColor: '#38BDF8',
+                                borderColor: '#7DD3FC',
+                                pointRadius: 7,
+                                pointHoverRadius: 10
+                            },
+                            {
+                                label: 'Bond /Cash',
+                                data: [{x: 10, y: 24}],
+                                backgroundColor: '#F59E0B',
+                                borderColor: '#FBBF24',
+                                pointRadius: 7,
+                                pointHoverRadius: 10
+                            }
+                        ]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        animation: { duration: 500 },
                         plugins: {
-                            legend: { display: false }
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                labels: {
+                                    color: '#CBD5E1',
+                                    boxWidth: 10,
+                                    boxHeight: 10,
+                                    padding: 12,
+                                    font: { size: 9 }
+                                }
+                            },
+                            tooltip: {
+                                enabled: true,
+                                callbacks: {
+                                    label: function(context) {
+                                        const p = context.raw;
+                                        return `${context.dataset.label}: X ${p.x.toFixed(1)} • Y ${p.y.toFixed(1)}`;
+                                    }
+                                }
+                            }
                         },
                         scales: {
-                            x: { grid: { display: false }, ticks: { color: '#9CA3AF', font: { size: 10 } } },
-                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9CA3AF', font: { size: 10 } }, max: 60 }
+                            x: {
+                                min: 0,
+                                max: 50,
+                                title: {
+                                    display: true,
+                                    text: 'Macro allocation (%)',
+                                    color: '#9CA3AF',
+                                    font: { size: 9 }
+                                },
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: '#9CA3AF', font: { size: 9 } }
+                            },
+                            y: {
+                                min: 0,
+                                max: 100,
+                                title: {
+                                    display: true,
+                                    text: 'Relative macro signal',
+                                    color: '#9CA3AF',
+                                    font: { size: 9 }
+                                },
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                ticks: { color: '#9CA3AF', font: { size: 9 } }
+                            }
                         }
                     }
                 });
@@ -2789,11 +2862,29 @@
                     globalMarketChartInstance.update('none');
                 }
                 if (macroBarChartInstance) {
-                    const barData = macroBarChartInstance.data.datasets[0].data;
-                    barData[0] = Math.max(30, Math.min(55, barData[0] + (Math.random() - 0.5) * 1.5));
-                    barData[1] = Math.max(10, Math.min(30, barData[1] + (Math.random() - 0.5) * 1.2));
-                    barData[2] = Math.max(10, Math.min(25, barData[2] + (Math.random() - 0.5) * 1.0));
-                    barData[3] = Math.max(10, Math.min(30, barData[3] + (Math.random() - 0.5) * 1.2));
+                    // Gerakkan empat titik secara otomatis tanpa mengubah
+                    // struktur/fungsi chart lain pada halaman.
+                    const scatterRanges = [
+                        { minX: 30, maxX: 42, minY: 62, maxY: 82 },
+                        { minX: 17, maxX: 29, minY: 45, maxY: 63 },
+                        { minX: 11, maxX: 21, minY: 30, maxY: 47 },
+                        { minX: 7,  maxX: 16, minY: 16, maxY: 34 }
+                    ];
+
+                    macroBarChartInstance.data.datasets.forEach((dataset, i) => {
+                        const point = dataset.data[0];
+                        const range = scatterRanges[i];
+
+                        point.x = Math.max(
+                            range.minX,
+                            Math.min(range.maxX, point.x + (Math.random() - 0.5) * 1.4)
+                        );
+                        point.y = Math.max(
+                            range.minY,
+                            Math.min(range.maxY, point.y + (Math.random() - 0.5) * 2.4)
+                        );
+                    });
+
                     macroBarChartInstance.update('none');
                 }
                 if (globalMiniTickChartInstance) {
