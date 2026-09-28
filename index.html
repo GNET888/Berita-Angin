@@ -594,23 +594,34 @@
             <div class="grid grid-cols-2 xl:grid-cols-4 gap-3" id="market-mini-widgets">
               <div class="bg-card-dark border border-card-border rounded-xl p-4">
                 <div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">STATUS PASAR & DOMINASI</span><span class="text-emerald-400 text-xs">● LIVE</span></div>
-                <div class="flex justify-between items-end mt-2"><div><div class="text-xs text-gray-400">BTC Dominance</div><strong id="stat-btc-dom" class="text-lg text-white">56.4%</strong></div><span class="text-[10px] text-gray-500">ETH 16.2%</span></div>
-                <div class="h-12 mt-2"><canvas id="mini-btc-chart"></canvas></div>
+                <div class="flex items-center gap-3 mt-2">
+                  <div class="relative w-24 h-24 flex-shrink-0"><canvas id="mini-btc-chart"></canvas></div>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-xs text-gray-400">BTC Dominance</div>
+                    <strong id="stat-btc-dom" class="text-lg text-white">56.4%</strong>
+                    <div class="mt-1 space-y-0.5 text-[10px] text-gray-400 font-mono">
+                      <div class="flex justify-between"><span><i class="inline-block w-1.5 h-1.5 rounded-full mr-1" style="background:#F7931A"></i>BTC</span><span id="leg-btc">56.4%</span></div>
+                      <div class="flex justify-between"><span><i class="inline-block w-1.5 h-1.5 rounded-full mr-1" style="background:#627EEA"></i>ETH</span><span id="leg-eth">16.2%</span></div>
+                      <div class="flex justify-between"><span><i class="inline-block w-1.5 h-1.5 rounded-full mr-1" style="background:#26A17B"></i>Stable</span><span id="leg-stb">7.1%</span></div>
+                      <div class="flex justify-between"><span><i class="inline-block w-1.5 h-1.5 rounded-full mr-1" style="background:#64748B"></i>Lainnya</span><span id="leg-oth">20.3%</span></div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="bg-card-dark border border-card-border rounded-xl p-4">
                 <div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">ALTCOIN SEASON INDEX</span><span class="text-purple-400 text-xs">AUTO</span></div>
-                <div class="flex justify-between items-end mt-2"><strong id="mini-alt-value" class="text-lg text-white">68 / 100</strong><span class="text-[10px] text-gray-500">Target 75</span></div>
-                <div class="h-12 mt-2"><canvas id="mini-alt-chart"></canvas></div>
+                <div class="flex justify-between items-end mt-2"><div><strong id="mini-alt-value" class="text-lg text-white">68 / 100</strong><div id="alt-zone" class="text-[10px] text-gray-400">Neutral</div></div><span class="text-[10px] text-gray-500">Target 75</span></div>
+                <div class="relative h-24 mt-1"><canvas id="mini-alt-chart"></canvas></div>
               </div>
               <div class="bg-card-dark border border-card-border rounded-xl p-4">
                 <div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">KAPITALISASI PASAR GLOBAL</span><span class="text-emerald-400 text-xs">● LIVE</span></div>
-                <div class="mt-2"><strong id="stat-global-mcap" class="text-lg text-white">$2.45 T</strong><div class="text-[10px] text-gray-500">Volume 24j $85.4 Miliar</div></div>
-                <div class="h-12 mt-2"><canvas id="mini-mcap-chart"></canvas></div>
+                <div class="mt-2 flex justify-between items-end"><div><strong id="stat-global-mcap" class="text-lg text-white">$2.45 T</strong><div id="mcap-vol" class="text-[10px] text-gray-500">Volume 24j $85.4 Miliar</div></div><span id="mcap-delta" class="text-[10px] font-mono text-emerald-400">▲ 0.00%</span></div>
+                <div class="relative h-24 mt-1"><canvas id="mini-mcap-chart"></canvas></div>
               </div>
               <div class="bg-card-dark border border-card-border rounded-xl p-4">
                 <div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">DERIVATIVES (OPEN INT.)</span><span class="text-cyan-400 text-xs">● LIVE</span></div>
-                <div class="mt-2"><strong id="stat-open-interest" class="text-lg text-white">$34.2 B</strong><div class="text-[10px] text-gray-500">Funding +0.012% • L/S 1.24</div></div>
-                <div class="h-12 mt-2"><canvas id="mini-oi-chart"></canvas></div>
+                <div class="mt-2 flex justify-between items-end"><div><strong id="stat-open-interest" class="text-lg text-white">$34.2 B</strong><div id="oi-sub" class="text-[10px] text-gray-500">Funding +0.012% • L/S 1.24</div></div><span id="oi-delta" class="text-[10px] font-mono text-cyan-400">▲ 0.00%</span></div>
+                <div class="relative h-24 mt-1"><canvas id="mini-oi-chart"></canvas></div>
               </div>
             </div>
             <!-- Tombol Navigasi Sub-Halaman Crypto Market (Halaman 1 & Halaman 2) -->
@@ -1084,9 +1095,9 @@
                 <span class="text-xs text-emerald-400"><i class="fa-solid fa-circle animate-pulse mr-1"></i> AUTO UPDATE</span>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div class="bg-black/50 border border-card-border rounded-xl p-4"><div class="text-[10px] text-gray-400 uppercase">NASDAQ Composite</div><div class="flex justify-between items-end"><strong id="ov-nasdaq" class="text-xl text-white">18,420.60</strong><span class="text-xs text-emerald-400">+0.82%</span></div><div class="h-16 mt-2"><canvas id="overview-nasdaq"></canvas></div></div>
-                <div class="bg-black/50 border border-card-border rounded-xl p-4"><div class="text-[10px] text-gray-400 uppercase">S&P 500</div><div class="flex justify-between items-end"><strong id="ov-sp" class="text-xl text-white">5,842.30</strong><span class="text-xs text-emerald-400">+0.46%</span></div><div class="h-16 mt-2"><canvas id="overview-sp"></canvas></div></div>
-                <div class="bg-black/50 border border-card-border rounded-xl p-4"><div class="text-[10px] text-gray-400 uppercase">Dow Jones</div><div class="flex justify-between items-end"><strong id="ov-dow" class="text-xl text-white">42,160.80</strong><span class="text-xs text-rose-400">−0.18%</span></div><div class="h-16 mt-2"><canvas id="overview-dow"></canvas></div></div>
+                <div class="bg-black/50 border border-card-border rounded-xl p-4"><div class="flex justify-between items-center"><div class="text-[10px] text-gray-400 uppercase">NASDAQ Composite</div><span class="text-[9px] text-gray-500 uppercase tracking-wider">Area • SMA 5</span></div><div class="flex justify-between items-end"><strong id="ov-nasdaq" class="text-xl text-white">18,420.60</strong><span id="ov-nasdaq-chg" class="text-xs text-emerald-400">+0.82%</span></div><div id="ov-nasdaq-rng" class="text-[10px] text-gray-500 font-mono">H – • L –</div><div class="relative h-32 mt-2"><canvas id="overview-nasdaq"></canvas></div></div>
+                <div class="bg-black/50 border border-card-border rounded-xl p-4"><div class="flex justify-between items-center"><div class="text-[10px] text-gray-400 uppercase">S&P 500</div><span class="text-[9px] text-gray-500 uppercase tracking-wider">Candlestick</span></div><div class="flex justify-between items-end"><strong id="ov-sp" class="text-xl text-white">5,842.30</strong><span id="ov-sp-chg" class="text-xs text-emerald-400">+0.46%</span></div><div id="ov-sp-rng" class="text-[10px] text-gray-500 font-mono">H – • L –</div><div class="relative h-32 mt-2"><canvas id="overview-sp"></canvas></div></div>
+                <div class="bg-black/50 border border-card-border rounded-xl p-4"><div class="flex justify-between items-center"><div class="text-[10px] text-gray-400 uppercase">Dow Jones</div><span class="text-[9px] text-gray-500 uppercase tracking-wider">Channel • ±2σ</span></div><div class="flex justify-between items-end"><strong id="ov-dow" class="text-xl text-white">42,160.80</strong><span id="ov-dow-chg" class="text-xs text-rose-400">−0.18%</span></div><div id="ov-dow-rng" class="text-[10px] text-gray-500 font-mono">H – • L –</div><div class="relative h-32 mt-2"><canvas id="overview-dow"></canvas></div></div>
               </div>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -1430,7 +1441,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-card-border pb-4 gap-2">
                     <div>
                         <h3 class="text-lg font-bold text-white">Indeks Likuiditas & Komposit Pasar Global</h3>
-                        <p class="text-xs text-gray-400 mt-0.5">Tren agregat suplai uang M2 global dan kawasan ekonomi utama. Visual diperbarui otomatis; data ilustratif jika feed eksternal belum tersambung.</p>
+                        <p class="text-xs text-gray-400 mt-0.5">Kontribusi perubahan suplai uang M2 global per kawasan (batang, US$ Triliun/bulan: teal = ekspansi, kuning = kontraksi) dan saldo bersih komposit (garis putih). Visual diperbarui otomatis; data ilustratif jika feed eksternal belum tersambung.</p>
                     </div>
                     <div class="flex items-center space-x-2 text-xs">
                         <span class="px-3 py-1 bg-black border border-card-border rounded-lg text-brand-accent font-mono">Real-time Macro Feed</span>
@@ -2821,23 +2832,6 @@
                     const indexValEl = document.getElementById('live-index-val');
                     if (indexValEl) indexValEl.innerText = `$${newVal.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
                     
-                    const btcDomEl = document.getElementById('stat-btc-dom');
-                    if (btcDomEl) {
-                        let domVal = (56.4 + (Math.random() - 0.5) * 0.2).toFixed(1);
-                        btcDomEl.innerText = domVal + '%';
-                        const barDom = document.getElementById('bar-btc-dom');
-                        if (barDom) barDom.style.width = domVal + '%';
-                    }
-                    const mcapEl = document.getElementById('stat-global-mcap');
-                    if (mcapEl) {
-                        let mcapVal = (2.45 + (Math.random() - 0.48) * 0.02).toFixed(2);
-                        mcapEl.innerText = `$${mcapVal} Triliun`;
-                    }
-                    const oiEl = document.getElementById('stat-open-interest');
-                    if (oiEl) {
-                        let oiVal = (34.2 + (Math.random() - 0.48) * 0.1).toFixed(1);
-                        oiEl.innerText = `$${oiVal} Miliar`;
-                    }
                 }
                 if (intradayTelemetryChartInstance) {
                     intradayTelemetryChartInstance.updateTick();
@@ -3114,8 +3108,8 @@
             renderGlobalMarketTable();
 const miniChartInstances={};
 function makeMiniChart(id,base,color){const el=document.getElementById(id);if(!el||typeof Chart==='undefined')return;const data=Array.from({length:24},(_,i)=>base*(1+Math.sin(i*.7)*.006+Math.cos(i*.31)*.003));miniChartInstances[id]=new Chart(el,{type:'line',data:{labels:data.map((_,i)=>i),datasets:[{data,borderColor:color,borderWidth:1.8,pointRadius:0,tension:.35,fill:true,backgroundColor:color+'22'}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}});}
-function initAutoMiniCharts(){[['mini-btc-chart',56.4,'#38BDF8'],['mini-alt-chart',68,'#A78BFA'],['mini-mcap-chart',2.45,'#10B981'],['mini-oi-chart',34.2,'#22D3EE'],['overview-nasdaq',18420,'#10B981'],['overview-sp',5842,'#38BDF8'],['overview-dow',42160,'#F87171']].forEach(a=>makeMiniChart(...a));}
-function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{const a=c.data.datasets[0].data,last=a[a.length-1];a.push(Math.max(0,last*(1+(Math.random()-.49)*.004)));a.shift();c.update('none');});['ov-nasdaq','ov-sp','ov-dow'].forEach(id=>{const e=document.getElementById(id);if(e){const n=parseFloat(e.textContent.replace(/[^0-9.]/g,''));if(Number.isFinite(n))e.textContent=(n*(1+(Math.random()-.49)*.001)).toLocaleString('en-US',{maximumFractionDigits:2});}});}
+function initAutoMiniCharts(){[].forEach(a=>makeMiniChart(...a));}
+function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{const a=c.data.datasets[0].data,last=a[a.length-1];a.push(Math.max(0,last*(1+(Math.random()-.49)*.004)));a.shift();c.update('none');});}
             initAllCharts();
             initAutoMiniCharts();
             setInterval(updateAutoMiniCharts, 1800);
@@ -3163,20 +3157,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   }
   function initCharts(){
     if(!window.Chart) return;
-    const m2Canvas=document.getElementById('globalMarketChart');
-    if(m2Canvas){
-      const old=Chart.getChart(m2Canvas); if(old) old.destroy();
-      const labels=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-      const datasets=[
-        {label:'World M2 (indeks)',data:[100,100.8,101.4,102.2,102.8,103.7,104.1,105.0,105.8,106.2,107.1,108.0],borderColor:palette.cyan,backgroundColor:'rgba(56,189,248,.12)',fill:true,tension:.38,borderWidth:2.5,pointRadius:0},
-        {label:'Amerika Utara',data:[100,100.5,101.0,101.7,102.1,102.8,103.1,103.8,104.2,104.9,105.3,106.0],borderColor:palette.blue,backgroundColor:'transparent',fill:false,tension:.38,borderWidth:2,pointRadius:0},
-        {label:'Eropa',data:[100,100.3,100.9,101.2,101.8,102.1,102.6,103.0,103.4,103.8,104.2,104.7],borderColor:palette.purple,fill:false,tension:.38,borderWidth:2,pointRadius:0},
-        {label:'Asia Pasifik',data:[100,101.0,101.8,102.4,103.3,104.0,104.8,105.5,106.3,107.0,107.8,108.6],borderColor:palette.green,fill:false,tension:.38,borderWidth:2,pointRadius:0}
-      ];
-      const opt=commonOptions('Indeks M2 (basis 100)');
-      opt.plugins.tooltip.callbacks={label:c=>c.dataset.label+': '+Number(c.parsed.y).toFixed(1)};
-      window.globalMarketChartInstance=new Chart(m2Canvas,{type:'line',data:{labels,datasets},options:opt});
-    }
     const sectorCanvas=document.getElementById('stockSectorBarChart');
     if(sectorCanvas){
       const old=Chart.getChart(sectorCanvas); if(old) old.destroy();
@@ -3195,8 +3175,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     }
   }
   function tick(){
-    const m=window.globalMarketChartInstance;
-    if(m){m.data.datasets.forEach((ds,i)=>{const a=ds.data; const last=a[a.length-1]; a.push(+(last+(Math.random()-.46)*.35).toFixed(2));a.shift();});m.update('none');}
     const s=window.stockSectorBarChartInstance;
     if(s){const shift=(Math.random()-.5)*.12;s.data.datasets.forEach((ds,i)=>{const mu=[-2.05,-.95,.95,2.05][i]+shift;ds.data=ds.data.map(p=>({x:p.x,y:+((i===0||i===3?1:.86)*Math.exp(-Math.pow(p.x-mu,2)/(2*Math.pow(i===0||i===3?.48:.62,2)))).toFixed(3)}));});s.update('none');}
   }
@@ -3336,7 +3314,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     for (var a = LEVELS - 1; a >= 0; a--) html += row('ask', bestAsk + a * 0.5, askSizes[a], maxSize);
     var up = mid >= prevMid;
     html += '<div class="text-center font-bold border-y border-card-border py-0.5 ' + (up ? 'text-emerald-300' : 'text-rose-300') + '">' +
-            'S&P 500 Index Spot • ' + fmt(mid, 2) + ' ' + (up ? '▲' : '▼') + '</div>';
+            'S&P 500 Index Spot · ' + fmt(mid, 2) + ' ' + (up ? '▲' : '▼') + '</div>';
     for (var b = 0; b < LEVELS; b++) html += row('bid', bestBid - b * 0.5, bidSizes[b], maxSize);
     ob.innerHTML = html;
     var head = ob.previousElementSibling;                       // baris "GLOBAL BID / ASK … SPREAD"
@@ -3391,6 +3369,412 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   else setTimeout(start, 0);
 })();
 
+</script>
+<script>
+/* ============================================================
+   LIVE MODULE — STATUS PASAR & DOMINASI • ALTCOIN SEASON INDEX •
+   KAPITALISASI PASAR GLOBAL • DERIVATIVES (OPEN INT.)
+   Empat desain berbeda: cincin dominasi, gauge jarum, area+volume, kolom arah OI.
+   Otomatis tiap 2 detik. Data = simulasi ilustratif sampai feed nyata tersambung.
+   ============================================================ */
+(function () {
+  'use strict';
+  if (window.__liveCryptoCards) return;
+  window.__liveCryptoCards = true;
+  var N = 30, PAGE = 'page-crypto-market';
+  var $ = function (id) { return document.getElementById(id); };
+  var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
+  var rnd = function (a, b) { return a + Math.random() * (b - a); };
+  var walk = function (v, base, step, pull, lo, hi) { return clamp(v + rnd(-step, step) + (base - v) * pull, lo, hi); };
+  var visible = function () { var p = $(PAGE); return !!p && p.classList.contains('active'); };
+  var safe = function (f) { return function () { try { f(); } catch (e) { console.warn('[crypto-cards]', e); } }; };
+
+  var S = { btc: 56.4, eth: 16.2, stb: 7.1, alt: 68, mcap: 2.45, vol: 85.4, oi: 34.2, fund: 0.012, ls: 1.24 };
+  var mcapH = [], volH = [], oiH = [], m = S.mcap, o = S.oi;
+  for (var i = 0; i < N; i++) { mcapH.unshift(m); volH.unshift(S.vol * rnd(.75, 1.25)); oiH.unshift(o); m = walk(m, 2.45, .02, .05, 2.3, 2.6); o = walk(o, 34.2, .25, .05, 32, 36.5); }
+
+  var tip = { backgroundColor: '#09090b', borderColor: '#27272a', borderWidth: 1, titleColor: '#fff', bodyColor: '#d1d5db', padding: 6, displayColors: false };
+  function base(extra) {
+    var c = { responsive: true, maintainAspectRatio: false, animation: { duration: 800, easing: 'easeOutQuart' }, plugins: { legend: { display: false }, tooltip: tip } };
+    for (var k in extra) c[k] = extra[k];
+    return c;
+  }
+  function mk(id, cfg) {
+    var cv = $(id); if (!cv || !window.Chart) return null;
+    var old = Chart.getChart(cv); if (old) old.destroy();
+    return new Chart(cv.getContext('2d'), cfg);
+  }
+  function others() { return Math.max(0, 100 - S.btc - S.eth - S.stb); }
+
+  /* Gauge: plugin jarum */
+  var needle = { id: 'needle', afterDatasetsDraw: function (chart) {
+    var a = chart.getDatasetMeta(0).data[0]; if (!a) return;
+    var ctx = chart.ctx, ang = Math.PI + (clamp(chart.$v || 0, 0, 100) / 100) * Math.PI, r = a.outerRadius * .9;
+    ctx.save(); ctx.strokeStyle = '#F9FAFB'; ctx.fillStyle = '#F9FAFB'; ctx.lineWidth = 2; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(a.x + Math.cos(ang) * r, a.y + Math.sin(ang) * r); ctx.stroke();
+    ctx.beginPath(); ctx.arc(a.x, a.y, 4, 0, 6.2832); ctx.fill(); ctx.restore();
+  } };
+
+  var cRing, cGauge, cMcap, cOI;
+  function build() {
+    if (!cRing) cRing = mk('mini-btc-chart', { type: 'doughnut',
+      data: { labels: ['BTC', 'ETH', 'Stablecoin', 'Lainnya'], datasets: [{ data: [S.btc, S.eth, S.stb, others()], backgroundColor: ['#F7931A', '#627EEA', '#26A17B', '#64748B'], borderWidth: 0, spacing: 2, borderRadius: 3 }] },
+      options: base({ cutout: '72%', plugins: { legend: { display: false }, tooltip: Object.assign({}, tip, { callbacks: { label: function (c) { return c.label + ': ' + c.parsed.toFixed(1) + '%'; } } }) } }) });
+    if (!cGauge) { cGauge = mk('mini-alt-chart', { type: 'doughnut', plugins: [needle],
+      data: { labels: ['Bitcoin Season', 'Neutral', 'Altcoin Season'], datasets: [{ data: [25, 50, 25], backgroundColor: ['#F59E0B', '#334155', '#A78BFA'], borderWidth: 0, spacing: 2 }] },
+      options: base({ rotation: -90, circumference: 180, cutout: '68%', layout: { padding: { bottom: 4 } } }) });
+      if (cGauge) cGauge.$v = S.alt; }
+    if (!cMcap) cMcap = mk('mini-mcap-chart', { type: 'line',
+      data: { labels: mcapH.map(function (_, i) { return i; }), datasets: [
+        { type: 'bar', label: 'Volume', data: volH, yAxisID: 'v', backgroundColor: 'rgba(148,163,184,.25)', borderRadius: 1, barPercentage: .9, categoryPercentage: 1, order: 2 },
+        { label: 'Mcap', data: mcapH, yAxisID: 'y', borderColor: '#10B981', borderWidth: 2, tension: .4, fill: true, order: 1,
+          pointRadius: function (c) { return c.dataIndex === N - 1 ? 3.5 : 0; }, pointBackgroundColor: '#34D399',
+          backgroundColor: function (c) { var a = c.chart.chartArea; if (!a) return 'rgba(16,185,129,.15)'; var g = c.chart.ctx.createLinearGradient(0, a.top, 0, a.bottom); g.addColorStop(0, 'rgba(16,185,129,.35)'); g.addColorStop(1, 'rgba(16,185,129,0)'); return g; } }
+      ] },
+      options: base({ interaction: { mode: 'index', intersect: false }, scales: { x: { display: false }, v: { display: false, min: 0, max: 400 }, y: { display: false, beginAtZero: false } },
+        plugins: { legend: { display: false }, tooltip: Object.assign({}, tip, { callbacks: { label: function (c) { return c.dataset.label + ': ' + (c.dataset.label === 'Mcap' ? '$' + c.parsed.y.toFixed(2) + ' T' : '$' + c.parsed.y.toFixed(1) + ' B'); } } }) } }) });
+    if (!cOI) cOI = mk('mini-oi-chart', { type: 'bar',
+      data: { labels: oiH.map(function (_, i) { return i; }), datasets: [{ label: 'Open Interest', data: oiH, borderRadius: 2, barPercentage: .8, categoryPercentage: 1,
+        backgroundColor: function (c) { var i = c.dataIndex; return i > 0 && oiH[i] < oiH[i - 1] ? '#FB7185' : '#22D3EE'; } }] },
+      options: base({ scales: { x: { display: false }, y: { display: true, min: 32, max: 36.5, ticks: { display: false }, grid: { color: 'rgba(255,255,255,.06)' }, border: { display: false } } },
+        plugins: { legend: { display: false }, tooltip: Object.assign({}, tip, { callbacks: { label: function (c) { return 'OI: $' + c.parsed.y.toFixed(2) + ' B'; } } }) } }) });
+  }
+
+  function tween(ch, to) {
+    var from = ch.$v, t0 = performance.now();
+    (function f(t) { var k = clamp((t - t0) / 800, 0, 1); ch.$v = from + (to - from) * (1 - Math.pow(1 - k, 3)); ch.draw(); if (k < 1) requestAnimationFrame(f); })(t0);
+  }
+  function txt(id, v) { var e = $(id); if (e) e.textContent = v; }
+  function delta(id, pct, color) { var e = $(id); if (!e) return; e.textContent = (pct >= 0 ? '▲ ' : '▼ ') + Math.abs(pct).toFixed(2) + '%'; e.className = 'text-[10px] font-mono ' + (pct >= 0 ? color : 'text-rose-400'); }
+
+  function step() {
+    build();
+    S.btc = walk(S.btc, 56.4, .25, .08, 54.5, 58.5); S.eth = walk(S.eth, 16.2, .15, .08, 15, 17.5); S.stb = walk(S.stb, 7.1, .08, .08, 6.3, 8);
+    S.alt = walk(S.alt, 68, 2.2, .06, 30, 92);
+    S.mcap = walk(S.mcap, 2.45, .02, .04, 2.3, 2.6); S.vol = walk(S.vol, 85.4, 2.5, .08, 60, 110);
+    S.oi = walk(S.oi, 34.2, .28, .04, 32.3, 36.3); S.fund = walk(S.fund, .012, .003, .1, -.02, .04); S.ls = walk(S.ls, 1.24, .03, .08, .9, 1.6);
+    mcapH.push(S.mcap); mcapH.shift(); volH.push(S.vol); volH.shift(); oiH.push(S.oi); oiH.shift();
+
+    txt('stat-btc-dom', S.btc.toFixed(1) + '%'); txt('leg-btc', S.btc.toFixed(1) + '%'); txt('leg-eth', S.eth.toFixed(1) + '%');
+    txt('leg-stb', S.stb.toFixed(1) + '%'); txt('leg-oth', others().toFixed(1) + '%');
+    var z = S.alt >= 75 ? ['Altcoin Season', '#A78BFA'] : S.alt <= 25 ? ['Bitcoin Season', '#F59E0B'] : ['Neutral', '#9CA3AF'];
+    txt('mini-alt-value', Math.round(S.alt) + ' / 100'); txt('alt-zone', z[0]); var ze = $('alt-zone'); if (ze) ze.style.color = z[1];
+    txt('stat-global-mcap', '$' + S.mcap.toFixed(2) + ' T'); txt('mcap-vol', 'Volume 24j $' + S.vol.toFixed(1) + ' Miliar');
+    delta('mcap-delta', (mcapH[N - 1] / mcapH[0] - 1) * 100, 'text-emerald-400');
+    txt('stat-open-interest', '$' + S.oi.toFixed(1) + ' B');
+    txt('oi-sub', 'Funding ' + (S.fund >= 0 ? '+' : '') + S.fund.toFixed(3) + '% • L/S ' + S.ls.toFixed(2));
+    delta('oi-delta', (oiH[N - 1] / oiH[0] - 1) * 100, 'text-cyan-400');
+
+    if (!visible()) { if (cGauge) cGauge.$v = S.alt; return; }
+    if (cRing) { cRing.data.datasets[0].data = [S.btc, S.eth, S.stb, others()]; cRing.update(); }
+    if (cGauge) tween(cGauge, S.alt);
+    if (cMcap) { var lo = Math.min.apply(null, mcapH), hi = Math.max.apply(null, mcapH), pad = (hi - lo) * .25 + .005;
+      cMcap.options.scales.y.min = lo - pad; cMcap.options.scales.y.max = hi + pad; cMcap.options.scales.v.max = Math.max.apply(null, volH) * 4; cMcap.update(); }
+    if (cOI) { var l2 = Math.min.apply(null, oiH), h2 = Math.max.apply(null, oiH), p2 = (h2 - l2) * .3 + .05;
+      cOI.options.scales.y.min = l2 - p2; cOI.options.scales.y.max = h2 + p2; cOI.update(); }
+  }
+
+  function start() {
+    safe(step)(); setInterval(safe(step), 2000);
+    document.addEventListener('click', function (e) {
+      if (e.target && e.target.closest && e.target.closest('.nav-link')) setTimeout(safe(function () {
+        if (!visible()) return; [cRing, cGauge, cMcap, cOI].forEach(function (c) { if (c) c.resize(); }); step();
+      }), 120);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(start, 0); });
+  else setTimeout(start, 0);
+})();
+
+</script>
+<script>
+/* ============================================================
+   LIVE MODULE — INDEKS LIKUIDITAS & KOMPOSIT PASAR GLOBAL
+   Batang divergen (ekspansi ▲ teal / kontraksi ▼ kuning) per kawasan + garis putih saldo bersih.
+   Gerak otomatis: gelombang berjalan di seluruh batang (~12 fps), revisi data tiap 2 detik,
+   penanda LIVE berdenyut di ujung garis. Data = simulasi ilustratif sampai feed nyata tersambung.
+   ============================================================ */
+(function () {
+  'use strict';
+  if (window.__liveGlobalLiquidity) return;
+  window.__liveGlobalLiquidity = true;
+
+  var N = 84, PAGE = 'page-global-market';
+  var MON = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'Mei', 'Jun.', 'Jul.', 'Agu.', 'Sep.', 'Okt.', 'Nov.', 'Des.'];
+  var REG = [
+    { name: 'Amerika Utara', up: '#0a7d78', dn: '#ffee00' },
+    { name: 'Eropa',         up: '#2ee6df', dn: '#8a8510' },
+    { name: 'Asia Pasifik',  up: '#0c5f5b', dn: '#5c5a0c' }
+  ];
+  var W = [0.50, 0.28, 0.22];
+  var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
+  var rnd = function (a, b) { return a + Math.random() * (b - a); };
+  var visible = function () { var p = document.getElementById(PAGE); return !!p && p.classList.contains('active') && !document.hidden; };
+  var safe = function (f) { return function () { try { f(); } catch (e) { console.warn('[liquidity]', e); } }; };
+
+  /* --- data dasar: 84 bulan terakhir (US$ Triliun / bulan) --- */
+  var now = new Date(), dates = [], B = [[], [], []], ph = rnd(0, 6.28);
+  for (var i = 0; i < N; i++) {
+    var d = new Date(now.getFullYear(), now.getMonth() - (N - 1 - i), 1);
+    dates.push({ m: d.getMonth(), y: d.getFullYear() });
+    var g = 0.30 + 0.55 * Math.sin(6.2832 * i / 52 + ph) + 0.18 * Math.sin(6.2832 * i / 17) + rnd(-.08, .08);
+    for (var r = 0; r < 3; r++) B[r].push(+clamp(W[r] * g * 1.9 + rnd(-.06, .06), -.75, .75).toFixed(3));
+  }
+  /* --- data tampilan (dasar + gelombang) --- */
+  var D = [[], [], []], bal = [], lim = 1;
+  for (i = 0; i < N; i++) { for (r = 0; r < 3; r++) D[r].push(B[r][i]); bal.push(+(B[0][i] + B[1][i] + B[2][i]).toFixed(3)); }
+
+  function compose(t) {
+    var mx = 0;
+    for (var i = 0; i < N; i++) {
+      var s = 0, p = 0, n = 0;
+      for (var r = 0; r < 3; r++) {
+        var v = B[r][i] + 0.11 * W[r] * 2 * Math.sin(i * 0.33 - t * 1.5 + r * 0.9) + 0.03 * Math.sin(i * 0.9 + t * 2.3);
+        D[r][i] = +v.toFixed(4); s += v; if (v >= 0) p += v; else n -= v;
+      }
+      bal[i] = +s.toFixed(4); mx = Math.max(mx, p, n, Math.abs(s));
+    }
+    var need = mx > 1.5 ? 2 : mx > 1 ? 1.5 : 1; if (need > lim) lim = need;   // skala hanya melebar, tidak berkedip
+  }
+  compose(0);
+
+  /* --- dekorasi kanvas: garis nol, label, legenda, penanda LIVE berdenyut --- */
+  var deco = { id: 'liqDeco', afterDatasetsDraw: function (ch) {
+    var c = ch.ctx, a = ch.chartArea, y0 = ch.scales.y.getPixelForValue(0), tt = performance.now() / 1000;
+    c.save();
+    c.strokeStyle = '#ffffff'; c.lineWidth = 1; c.beginPath(); c.moveTo(a.left, Math.round(y0) + .5); c.lineTo(a.right, Math.round(y0) + .5); c.stroke();
+    c.font = '500 12px Inter, system-ui, sans-serif'; c.textBaseline = 'middle'; c.fillStyle = '#f3f4f6';
+    c.fillText('Ekspansi', 2, y0 - 16); c.fillText('Kontraksi', 2, y0 + 18);
+    c.fillStyle = '#9ca3af'; c.font = '9px sans-serif'; c.fillText('▲', 6, y0 - 4); c.fillText('▼', 6, y0 + 6);
+    var x = 2, y = 10;
+    c.strokeStyle = '#fff'; c.lineWidth = 2; c.beginPath(); c.moveTo(x, y + 5); c.lineTo(x + 10, y - 5); c.stroke();
+    c.fillStyle = '#f9fafb'; c.font = '600 12px Inter, system-ui, sans-serif'; c.fillText('Komposit Global', x + 16, y); x += 16 + c.measureText('Komposit Global').width + 18;
+    c.font = '11px Inter, system-ui, sans-serif';
+    REG.forEach(function (g) {
+      c.fillStyle = g.up; c.fillRect(x, y - 5, 8, 5); c.fillStyle = g.dn; c.fillRect(x, y, 8, 5);
+      c.fillStyle = '#9ca3af'; c.fillText(g.name, x + 13, y); x += 13 + c.measureText(g.name).width + 14;
+    });
+    var pt = ch.getDatasetMeta(3) && ch.getDatasetMeta(3).data[N - 1];      // ujung garis saldo
+    if (pt) {
+      var pulse = 0.5 + 0.5 * Math.sin(tt * 4), val = bal[N - 1];
+      c.fillStyle = 'rgba(52,211,153,' + (0.35 * (1 - pulse)).toFixed(2) + ')'; c.beginPath(); c.arc(pt.x, pt.y, 5 + 7 * pulse, 0, 6.2832); c.fill();
+      c.fillStyle = '#ffffff'; c.beginPath(); c.arc(pt.x, pt.y, 3.5, 0, 6.2832); c.fill();
+      c.font = '600 11px Inter, system-ui, sans-serif'; c.textAlign = 'right'; c.fillStyle = val >= 0 ? '#5eead4' : '#fde047';
+      c.fillText((val >= 0 ? '+' : '') + val.toFixed(2) + ' T', pt.x - 8, clamp(pt.y + (val >= 0 ? -12 : 12), a.top + 6, a.bottom - 6));
+      c.textAlign = 'left';
+    }
+    c.fillStyle = 'rgba(52,211,153,' + (0.6 + 0.4 * Math.sin(tt * 4)).toFixed(2) + ')'; c.font = '600 10px Inter, system-ui, sans-serif';
+    c.fillText('● LIVE', a.right - 46, y);
+    c.restore();
+  } };
+
+  var chart = null;
+  function build() {
+    var cv = document.getElementById('globalMarketChart');
+    if (!cv || !window.Chart) return;
+    var old = Chart.getChart(cv); if (old) old.destroy();
+    try { globalMarketChartInstance = null; } catch (e) {}
+    var wrap = cv.parentElement;
+    if (wrap) { wrap.style.background = '#000'; wrap.style.borderRadius = '12px'; wrap.style.height = '340px'; wrap.style.padding = '8px 12px'; }
+    var bars = REG.map(function (g, r) {
+      return { type: 'bar', label: g.name, data: D[r], stack: 's', yAxisID: 'y', order: 2, barPercentage: .72, categoryPercentage: 1, borderWidth: 0,
+        backgroundColor: function (c) { return c.raw >= 0 ? g.up : g.dn; } };
+    });
+    var line = { type: 'line', label: 'Saldo bersih (komposit)', data: bal, yAxisID: 'y2', order: 1, borderColor: '#ffffff', borderWidth: 2.5, tension: .3, pointRadius: 0, pointHoverRadius: 4, fill: false };
+    chart = new Chart(cv.getContext('2d'), {
+      type: 'bar', plugins: [deco],
+      data: { labels: dates.map(function (d) { return MON[d.m] + ' ' + d.y; }), datasets: bars.concat([line]) },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false,
+        layout: { padding: { left: 64, top: 28 } }, interaction: { mode: 'index', intersect: false },
+        plugins: { legend: { display: false }, tooltip: { backgroundColor: '#09090b', borderColor: '#27272a', borderWidth: 1, titleColor: '#fff', bodyColor: '#d1d5db',
+          callbacks: { label: function (c) { var v = c.parsed.y; return c.dataset.label + ': ' + (v >= 0 ? '+' : '') + v.toFixed(2) + ' T'; } } } },
+        scales: {
+          x: { stacked: true, offset: true, border: { display: false },
+            grid: { drawOnChartArea: false, drawTicks: true, tickLength: 7, color: 'transparent', tickColor: function (c) { return (c.index === 0 || c.index === N - 1) ? '#9ca3af' : 'transparent'; } },
+            ticks: { autoSkip: false, maxRotation: 0, color: '#e5e7eb', font: { size: 12 },
+              callback: function (v, i) { return (i === 0 || i === N - 1) ? [MON[dates[i].m], String(dates[i].y)] : ''; } } },
+          y: { stacked: true, position: 'right', min: -lim, max: lim, border: { display: false }, grid: { display: false },
+            ticks: { stepSize: .5, color: '#e5e7eb', font: { size: 12 }, padding: 8,
+              callback: function (v) { if (Math.abs(v) < 1e-9) return '0'; var s = Math.abs(v) % 1 === 0 ? String(Math.abs(v)) : Math.abs(v).toFixed(1); return Math.abs(v - this.max) < 1e-9 ? '$' + s + 'T' : s; } } },
+          y2: { display: false, min: -lim, max: lim }
+        }
+      }
+    });
+  }
+
+  function frame() {                                   // ±12 fps, hanya saat halaman terlihat
+    if (!chart || Chart.getChart(document.getElementById('globalMarketChart')) !== chart) { build(); if (!chart) return; }
+    if (!visible()) return;
+    compose(performance.now() / 1000);
+    var o = chart.options.scales; o.y.min = -lim; o.y.max = lim; o.y2.min = -lim; o.y2.max = lim;
+    chart.update('none');
+  }
+  function revise() {                                  // tiap 2 detik: revisi data 6 bulan terakhir (yang terbaru paling besar)
+    for (var k = 0; k < 6; k++) {
+      var i = N - 1 - k, a = (6 - k) / 6;
+      for (var r = 0; r < 3; r++) B[r][i] = +clamp(B[r][i] + rnd(-.07, .07) * a - B[r][i] * .03 * a, -.85, .85).toFixed(3);
+    }
+  }
+
+  function start() {
+    safe(frame)();
+    setInterval(safe(frame), 80);
+    setInterval(safe(revise), 2000);
+    document.addEventListener('click', function (e) {
+      if (e.target && e.target.closest && e.target.closest('.nav-link')) setTimeout(safe(function () { if (visible() && chart) { chart.resize(); frame(); } }), 120);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(start, 0); });
+  else setTimeout(start, 0);
+})();
+</script>
+<script>
+/* ============================================================
+   LIVE MODULE — OVERVIEW MARKET: NASDAQ COMPOSITE • S&P 500 • DOW JONES
+   Tiga desain berbeda: Area + SMA (NASDAQ), Candlestick (S&P 500), Channel ±2σ (Dow Jones).
+   Bergerak otomatis tiap 1 detik. Data = simulasi ilustratif sampai feed pasar nyata tersambung.
+   ============================================================ */
+(function () {
+  'use strict';
+  if (window.__liveIndexCards) return;
+  window.__liveIndexCards = true;
+
+  var PAGE = 'page-stock-exchange', H = 80, SHOW = 60, CN = 30, PER = 8;
+  var UP = '#10B981', DN = '#EF4444';
+  var $ = function (id) { return document.getElementById(id); };
+  var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
+  var rnd = function (a, b) { return a + Math.random() * (b - a); };
+  var fmt = function (n) { return n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+  var hms = function (d) { return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2) + ':' + ('0' + d.getSeconds()).slice(-2); };
+  var visible = function () { var p = $(PAGE); return !!p && p.classList.contains('active') && !document.hidden; };
+  var safe = function (f) { return function () { try { f(); } catch (e) { console.warn('[index-cards]', e); } }; };
+  var tip = { backgroundColor: '#09090b', borderColor: '#27272a', borderWidth: 1, titleColor: '#fff', bodyColor: '#d1d5db', padding: 6, displayColors: false };
+
+  var IX = [
+    { key: 'nasdaq', id: 'ov-nasdaq', cv: 'overview-nasdaq', start: 18420.60, prev: 18420.60 / 1.0082, vol: .0007, kind: 'area' },
+    { key: 'sp',     id: 'ov-sp',     cv: 'overview-sp',     start: 5842.30,  prev: 5842.30 / 1.0046,  vol: .0005, kind: 'candle' },
+    { key: 'dow',    id: 'ov-dow',    cv: 'overview-dow',    start: 42160.80, prev: 42160.80 / .9982,  vol: .0004, kind: 'band' }
+  ];
+
+  function step(x, p) { return clamp(p * (1 + rnd(-1, 1) * x.vol + (x.start - p) / x.start * .015), x.start * .985, x.start * 1.015); }
+  function seed(x) {
+    var n = x.kind === 'candle' ? CN * PER : H, a = [], p = x.start, i, t = Date.now();
+    for (i = 0; i < n; i++) { a.unshift(p); p = clamp(p * (1 + rnd(-1, 1) * x.vol * 1.3), x.start * .988, x.start * 1.012); }
+    x.px = x.start; x.hi = Math.max.apply(null, a); x.lo = Math.min.apply(null, a); x.cn = 0; x.chart = null;
+    if (x.kind === 'candle') {
+      x.cd = [];
+      for (i = 0; i < CN; i++) { var s = a.slice(i * PER, i * PER + PER); x.cd.push({ o: s[0], h: Math.max.apply(null, s), l: Math.min.apply(null, s), c: s[PER - 1], t: hms(new Date(t - (CN - i) * PER * 1000)) }); }
+    } else {
+      x.h = a; x.t = a.map(function (_, i) { return hms(new Date(t - (n - 1 - i) * 1000)); });
+    }
+  }
+  IX.forEach(seed);
+
+  function tick(x) {
+    var p = x.px = step(x, x.px), now = hms(new Date());
+    x.hi = Math.max(x.hi, p); x.lo = Math.min(x.lo, p);
+    if (x.kind === 'candle') {
+      var c = x.cd[x.cd.length - 1]; c.c = p; c.h = Math.max(c.h, p); c.l = Math.min(c.l, p);
+      if (++x.cn >= PER) { x.cn = 0; x.cd.push({ o: p, h: p, l: p, c: p, t: now }); x.cd.shift(); }
+    } else { x.h.push(p); x.h.shift(); x.t.push(now); x.t.shift(); }
+  }
+
+  /* garis penutupan sebelumnya (prev close) */
+  function prevPlugin(x) { return { id: 'prev_' + x.key, afterDatasetsDraw: function (ch) {
+    var a = ch.chartArea, y = ch.scales.y.getPixelForValue(x.prev); if (!(y > a.top && y < a.bottom)) return;
+    var c = ch.ctx; c.save(); c.setLineDash([3, 3]); c.strokeStyle = 'rgba(156,163,175,.55)'; c.lineWidth = 1;
+    c.beginPath(); c.moveTo(a.left, y); c.lineTo(a.right, y); c.stroke(); c.setLineDash([]);
+    c.fillStyle = '#9ca3af'; c.font = '9px Inter, sans-serif'; c.fillText('PC', a.left + 2, y - 3); c.restore();
+  } }; }
+  function grad(ch, rgb) { var a = ch.chartArea; if (!a) return 'rgba(' + rgb + ',.15)'; var g = ch.ctx.createLinearGradient(0, a.top, 0, a.bottom); g.addColorStop(0, 'rgba(' + rgb + ',.38)'); g.addColorStop(1, 'rgba(' + rgb + ',0)'); return g; }
+  function axes() {
+    return { x: { grid: { display: false }, border: { display: false }, ticks: { color: '#6b7280', font: { size: 9 }, maxTicksLimit: 4, maxRotation: 0 } },
+             y: { position: 'right', grid: { color: 'rgba(255,255,255,.05)' }, border: { display: false }, ticks: { color: '#6b7280', font: { size: 9 }, maxTicksLimit: 4, callback: function (v) { return v.toLocaleString('en-US', { maximumFractionDigits: 0 }); } } } };
+  }
+  function base(x, plugins, extra) {
+    var o = { responsive: true, maintainAspectRatio: false, animation: false, layout: { padding: { top: 4 } }, interaction: { mode: 'index', intersect: false },
+              plugins: { legend: { display: false }, tooltip: tip }, scales: axes() };
+    for (var k in extra) o.plugins.tooltip = Object.assign({}, tip, extra[k]);
+    return { options: o, plugins: plugins };
+  }
+
+  function build(x) {
+    var cv = $(x.cv); if (!cv || !window.Chart) return;
+    var old = Chart.getChart(cv); if (old) old.destroy();
+    var cfg, lbl = function (c) { return c.dataset.label + ': ' + fmt(c.parsed.y); };
+    var dot = function (c) { return c.dataIndex === SHOW - 1 ? 3.5 : 0; };
+    if (x.kind === 'area') {
+      var b = base(x, [prevPlugin(x)], { t: { callbacks: { label: lbl } } });
+      cfg = { type: 'line', plugins: b.plugins, options: b.options, data: { labels: [], datasets: [
+        { label: 'NASDAQ', data: [], borderColor: UP, borderWidth: 2, tension: .35, fill: true, pointRadius: dot, pointBackgroundColor: '#fff', backgroundColor: function (c) { return grad(c.chart, x.up === false ? '239,68,68' : '16,185,129'); } },
+        { label: 'SMA 5', data: [], borderColor: '#FBBF24', borderWidth: 1.2, borderDash: [4, 3], tension: .35, pointRadius: 0, fill: false } ] } };
+    } else if (x.kind === 'candle') {
+      var b2 = base(x, [prevPlugin(x)], { t: { filter: function (i) { return i.datasetIndex === 1; }, displayColors: false, callbacks: { title: function (a) { return x.cd[a[0].dataIndex].t; },
+        label: function (c) { var k = x.cd[c.dataIndex]; return ['O ' + fmt(k.o), 'H ' + fmt(k.h), 'L ' + fmt(k.l), 'C ' + fmt(k.c)]; } } } });
+      var col = function (c) { var k = x.cd[c.dataIndex]; return k && k.c >= k.o ? UP : DN; };
+      cfg = { type: 'bar', plugins: b2.plugins, options: b2.options, data: { labels: [], datasets: [
+        { label: 'Wick', data: [], grouped: false, barThickness: 1.5, backgroundColor: col, borderSkipped: false, order: 2 },
+        { label: 'Body', data: [], grouped: false, barPercentage: .75, categoryPercentage: .9, backgroundColor: col, borderSkipped: false, order: 1 } ] } };
+    } else {
+      var b3 = base(x, [prevPlugin(x)], { t: { callbacks: { label: lbl } } });
+      cfg = { type: 'line', plugins: b3.plugins, options: b3.options, data: { labels: [], datasets: [
+        { label: 'Upper', data: [], borderColor: 'rgba(129,140,248,.65)', borderWidth: 1, pointRadius: 0, tension: .3, fill: '+1', backgroundColor: 'rgba(129,140,248,.12)' },
+        { label: 'Lower', data: [], borderColor: 'rgba(129,140,248,.65)', borderWidth: 1, pointRadius: 0, tension: .3, fill: false },
+        { label: 'SMA 20', data: [], borderColor: '#94A3B8', borderWidth: 1, borderDash: [4, 3], pointRadius: 0, tension: .3, fill: false },
+        { label: 'Dow Jones', data: [], borderColor: DN, borderWidth: 2, tension: .3, pointRadius: dot, pointBackgroundColor: '#fff', fill: false } ] } };
+    }
+    x.chart = new Chart(cv.getContext('2d'), cfg);
+  }
+
+  function avg(a, i, w) { var s = 0, n = 0; for (var k = Math.max(0, i - w + 1); k <= i; k++) { s += a[k]; n++; } return s / n; }
+  function paint(x) {
+    var ch = x.chart, ds = ch.data.datasets, y = ch.options.scales.y, lo, hi, pad;
+    if (x.kind === 'area') {
+      var d = x.h.slice(-SHOW); ch.data.labels = x.t.slice(-SHOW); ds[0].data = d; ds[1].data = d.map(function (_, i) { return avg(d, i, 5); });
+      ds[0].borderColor = x.up ? UP : DN; lo = Math.min.apply(null, d); hi = Math.max.apply(null, d);
+    } else if (x.kind === 'candle') {
+      lo = Math.min.apply(null, x.cd.map(function (k) { return k.l; })); hi = Math.max.apply(null, x.cd.map(function (k) { return k.h; }));
+      var eps = (hi - lo) * .01 + 1e-6;
+      ch.data.labels = x.cd.map(function (k) { return k.t; });
+      ds[0].data = x.cd.map(function (k) { return [k.l, k.h]; });
+      ds[1].data = x.cd.map(function (k) { var a = Math.min(k.o, k.c), b = Math.max(k.o, k.c); return b - a < eps ? [a, a + eps] : [a, b]; });
+    } else {
+      var up = [], lw = [], mid = [];
+      for (var i = H - SHOW; i < H; i++) { var w = x.h.slice(i - 19, i + 1), m = w.reduce(function (s, v) { return s + v; }, 0) / w.length,
+        sd = Math.sqrt(w.reduce(function (s, v) { return s + (v - m) * (v - m); }, 0) / w.length); up.push(m + 2 * sd); lw.push(m - 2 * sd); mid.push(m); }
+      ch.data.labels = x.t.slice(-SHOW); ds[0].data = up; ds[1].data = lw; ds[2].data = mid; ds[3].data = x.h.slice(-SHOW);
+      ds[3].borderColor = x.up ? UP : DN; lo = Math.min.apply(null, lw); hi = Math.max.apply(null, up);
+    }
+    pad = (hi - lo) * .12 + x.start * .0001; y.min = lo - pad; y.max = hi + pad;
+    ch.update('none');
+  }
+
+  function text(x) {
+    var chg = (x.px / x.prev - 1) * 100; x.up = chg >= 0;
+    var v = $(x.id), c = $(x.id + '-chg'), r = $(x.id + '-rng');
+    if (v) v.textContent = fmt(x.px);
+    if (c) { c.textContent = (chg >= 0 ? '+' : '−') + Math.abs(chg).toFixed(2) + '%'; c.className = 'text-xs ' + (chg >= 0 ? 'text-emerald-400' : 'text-rose-400'); }
+    if (r) r.textContent = 'H ' + fmt(x.hi) + ' • L ' + fmt(x.lo);
+  }
+
+  function run() {
+    var vis = visible();
+    IX.forEach(function (x) {
+      tick(x); text(x);
+      if (!x.chart || Chart.getChart($(x.cv)) !== x.chart) build(x);
+      if (x.chart && vis) paint(x);
+    });
+  }
+  function start() {
+    safe(run)(); setInterval(safe(run), 1000);
+    document.addEventListener('click', function (e) {
+      if (e.target && e.target.closest && e.target.closest('.nav-link')) setTimeout(safe(function () { if (!visible()) return; IX.forEach(function (x) { if (x.chart) { x.chart.resize(); paint(x); } }); }), 120);
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(start, 0); });
+  else setTimeout(start, 0);
+})();
 </script>
 </body>
 </html>
