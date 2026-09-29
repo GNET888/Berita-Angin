@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Berita Angin - 1% Issue 99% Fact</title>
+    <script>(function(){try{if(localStorage.getItem('ba-theme')==='light'){var h=document.documentElement;h.classList.remove('dark');h.classList.add('light');}}catch(e){}})();</script>
     <!-- Muat Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Muat Chart.js untuk Grafik Indeks Real-Time -->
@@ -114,6 +115,80 @@
   .mini-spark.up polyline{stroke:#34d399}.mini-spark.down polyline{stroke:#fb7185}
   @keyframes sparkDraw{to{stroke-dashoffset:0}}
  </style>
+
+<style id="theme-css">
+/* ===== Tombol toggle tema ===== */
+.tt{position:relative;display:inline-flex;align-items:center;width:58px;height:30px;border-radius:999px;border:1px solid #222;background:#121212;cursor:pointer;padding:0;flex:0 0 58px;transition:background .3s,border-color .3s}
+.tt:hover{border-color:#38BDF8}.tt:focus-visible{outline:2px solid #38BDF8;outline-offset:2px}
+.tt-knob{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#38BDF8,#4F46E5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;transition:transform .3s,background .3s}
+.tt-sun{display:none}
+html.theme-anim *{transition:background-color .35s,border-color .35s,color .25s!important}
+/* ===== TEMA TERANG ===== */
+html.light{color-scheme:light}html.dark{color-scheme:dark}
+html.light .tt{background:#e2e8f0;border-color:#cbd5e1}
+html.light .tt-knob{transform:translateX(28px);background:linear-gradient(135deg,#fbbf24,#f59e0b)}
+html.light .tt-sun{display:inline}html.light .tt-moon{display:none}
+html.light body[class]{background:#f1f5f9!important;color:#0f172a!important}
+html.light [class*="bg-pure-black/"]{background-color:rgba(255,255,255,.92)!important}
+html.light .bg-card-dark,html.light .bg-deep-gray{background-color:#fff!important}
+html.light .bg-black,html.light [class*="bg-black/4"],html.light [class*="bg-black/5"]{background-color:#f8fafc!important}
+html.light .bg-neutral-900{background-color:#f1f5f9!important}
+html.light .bg-neutral-800{background-color:#e2e8f0!important}
+html.light .bg-neutral-700{background-color:#cbd5e1!important}
+html.light [class*="hover:bg-neutral"]:hover,html.light [class*="hover:bg-card-dark"]:hover{background-color:#e2e8f0!important}
+html.light [class*="bg-gradient-to-br"][class*="from-black"]:not(.absolute){background-image:linear-gradient(to bottom right,#fff,#f1f5f9)!important}
+html.light [class*="border-card-border"]{border-color:#dbe3ee!important}
+html.light [class*="divide-card-border"]>*{border-color:#dbe3ee!important}
+html.light .border-black{border-color:#fff!important}
+html.light .text-white,html.light [class*="hover:text-white"]:hover{color:#0f172a!important}
+html.light .text-gray-100,html.light .text-gray-200,html.light .text-gray-300{color:#1e293b!important}
+html.light .text-gray-400{color:#475569!important}
+html.light .text-gray-500{color:#64748b!important}
+html.light .text-gray-600{color:#94a3b8!important}
+html.light .text-brand-accent{color:#0284c7!important}
+html.light .text-emerald-300,html.light .text-emerald-400{color:#059669!important}
+html.light .text-rose-400{color:#e11d48!important}
+html.light .text-amber-400{color:#b45309!important}
+html.light .text-purple-300,html.light .text-purple-400{color:#7c3aed!important}
+html.light .text-cyan-400{color:#0e7490!important}
+html.light .text-sky-300{color:#0369a1!important}
+html.light .text-blue-400{color:#2563eb!important}
+html.light .bg-brand-primary.text-white,html.light .bg-brand-primary .text-white,html.light [class*="bg-brand-primary/9"].text-white,html.light .bg-emerald-500.text-white,html.light .bg-emerald-600.text-white,html.light [class*="bg-emerald-600/"].text-white,html.light .bg-rose-500.text-white,html.light .bg-rose-600.text-white,html.light .bg-blue-500.text-white,html.light .bg-blue-600.text-white,html.light .bg-blue-700.text-white,html.light .bg-amber-500.text-white,html.light .bg-amber-600.text-white,html.light [class*="bg-purple-600/"].text-white,html.light .bg-purple-600.text-white,html.light .liq-btn.on,html.light .gm-chip.on{color:#fff!important}
+html.light .absolute[class*="from-black"] .text-white{color:#fff!important}
+html.light .absolute[class*="from-black"] .text-brand-accent{color:#38BDF8!important}
+html.light canvas{filter:invert(1) hue-rotate(180deg)}
+html.light ::placeholder{color:#94a3b8!important}
+html.light select option{background:#fff;color:#0f172a}
+html.light ::-webkit-scrollbar-track{background:#f1f5f9}
+html.light ::-webkit-scrollbar-thumb{background:#cbd5e1}
+html.light ::-webkit-scrollbar-thumb:hover{background:#94a3b8}
+html.light .card-3d:hover{box-shadow:0 20px 40px -14px rgba(2,132,199,.22),0 0 24px rgba(79,70,229,.08)}
+/* komponen kustom bawaan halaman Global Market */
+html.light .gm-chip,html.light .liq-btn{background:#fff!important;border-color:#cbd5e1!important;color:#334155!important}
+html.light .gm-chip.on,html.light .liq-btn.on{background:#4F46E5!important;border-color:#4F46E5!important}
+html.light .gm-row,html.light .mlc-row{border-bottom-color:#e2e8f0!important}
+html.light .liq-kpi{background:#f8fafc!important;border-color:#dbe3ee!important}
+html.light .liq-kpi>b{color:#0f172a!important}
+html.light .liq-kpi>span,html.light .liq-kpi small{color:#64748b!important}
+html.light .liq-bar,html.light .liq-heat i,html.light .mlc-cb,html.light [style*="#1f1f1f"]{background:#e2e8f0!important}
+html.light .mlc-cb::before{background:#94a3b8!important}
+html.light .mlc-panel,html.light .mlc-card{background:#fff!important;border-color:#dbe3ee!important}
+html.light .mlc-tbl thead th,html.light .mlc-tbl tfoot td{background:#f1f5f9!important;color:#64748b!important;border-bottom-color:#dbe3ee!important}
+html.light .mlc-tbl tbody td{border-bottom-color:#e2e8f0!important}
+html.light .mlc-tbl tbody tr:nth-child(even){background:rgba(15,23,42,.025)!important}
+html.light .mlc-in{background:#fff!important;border-color:#cbd5e1!important;color:#0f172a!important}
+html.light #gm-sub-1 .gm1-bar{background:#f8fafc!important;border-color:#dbe3ee!important}
+</style>
+
+<style id="stock-live-css">
+@keyframes l2addA{from{background-color:rgba(244,63,94,.5)}to{background-color:transparent}}
+@keyframes l2addB{from{background-color:rgba(16,185,129,.5)}to{background-color:transparent}}
+.l2-add-a{animation:l2addA .9s ease-out}.l2-add-b{animation:l2addB .9s ease-out}
+.tm-ind{cursor:pointer;transition:opacity .2s}.tm-ind.off{opacity:.35}
+#intradayTelemetryChart{cursor:crosshair;touch-action:pan-y}
+html.light #intradayTelemetryChart,html.light #depth-map-canvas{filter:none!important}
+html.light [class*="bg-black/6"],html.light [class*="bg-black/7"]{background-color:#f8fafc!important}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
     <!-- ⚡ LIVE STREAMING TICKS TICKER BAR -->
@@ -176,6 +251,11 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="flex items-center ml-3 flex-shrink-0">
+                    <button id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Ganti tema terang atau gelap" title="Ganti tema (Terang / Gelap)" class="tt">
+                        <span class="tt-knob"><i class="fa-solid fa-moon tt-moon"></i><i class="fa-solid fa-sun tt-sun"></i></span>
+                    </button>
                 </div>
             </div>
         </nav>
@@ -541,6 +621,48 @@
                             <div class="bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
                                 <span class="text-xs text-gray-400 block">Email Utama</span>
                                 <span class="text-white font-medium">ven.genioes@gmail.com</span>
+                            </div>
+                            <div class="bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                <span class="text-xs text-gray-400 block">Jabatan</span>
+                                <span class="text-white font-medium">CEO Berita Angin</span>
+                            </div>
+                            <div class="bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                <span class="text-xs text-gray-400 block">Pendidikan Terakhir</span>
+                                <span class="text-white font-medium">S2 Manajemen (MM)</span>
+                            </div>
+                            <div class="bg-black/40 border border-card-border rounded-xl p-4 sm:col-span-2 space-y-1">
+                                <span class="text-xs text-gray-400 block">Bidang Keahlian & Pengalaman</span>
+                                <span class="text-white font-medium">Arsitektur dApp, keamanan protokol DeFi, dan analisis kuantitatif pasar aset digital global &mdash; lebih dari 6 tahun</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Riwayat Pendidikan & Pengalaman -->
+                    <div class="bg-card-dark border border-card-border rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
+                        <h3 class="text-lg font-bold text-white border-b border-card-border pb-4 flex items-center space-x-2">
+                            <i class="fa-solid fa-graduation-cap text-brand-accent"></i>
+                            <span>Riwayat Pendidikan & Pengalaman</span>
+                        </h3>
+                        <div class="space-y-4 text-sm">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-user-graduate text-brand-accent text-xs"></i></div>
+                                <div class="flex-1 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Magister Manajemen (MM)</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded">S2</span></div>
+                                    <p class="text-xs text-gray-400 font-light">Manajemen strategis, keuangan, dan kepemimpinan bisnis.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-book-open text-brand-accent text-xs"></i></div>
+                                <div class="flex-1 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Sarjana Ekonomi (SE)</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded">S1</span></div>
+                                    <p class="text-xs text-gray-400 font-light">Dasar ekonomi, pasar modal, dan analisis keuangan.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-purple-500/20 flex items-center justify-center"><i class="fa-solid fa-briefcase text-purple-400 text-xs"></i></div>
+                                <div class="flex-1 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">CEO &mdash; Berita Angin</h4><span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Saat ini</span></div>
+                                    <p class="text-xs text-gray-400 font-light">Memimpin platform berita dan analitik Web3, kripto, saham, dan pasar global (1% Issue 99% Fact).</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1096,21 +1218,46 @@
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Kolom Kiri: Intraday Telemetry Stream (Dibuat Responsive & Flexible di Desktop/Mobile) -->
-                <div class="lg:col-span-2 bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl terminal-glow font-mono space-y-3 w-full overflow-hidden">
+                <div id="intraday-telemetry-card" class="lg:col-span-2 bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl terminal-glow font-mono space-y-3 w-full overflow-hidden">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-card-border pb-3">
                         <div class="flex items-center space-x-2">
                             <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping flex-shrink-0"></span>
                             <span class="text-xs font-bold text-brand-accent uppercase tracking-wider">INTRADAY TELEMETRY STREAM</span>
+                            <span class="text-[10px] text-gray-400">NVDA &bull; NASDAQ</span>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-1.5 text-[10px]">
+                            <button type="button" data-period="1D" onclick="setStockChartPeriod('1D')" class="stock-period-btn px-2.5 py-1 rounded-lg bg-brand-primary text-white font-bold">1D</button>
+                            <button type="button" data-period="1W" onclick="setStockChartPeriod('1W')" class="stock-period-btn px-2.5 py-1 rounded-lg bg-black border border-card-border text-gray-400">1W</button>
+                            <button type="button" data-period="1M" onclick="setStockChartPeriod('1M')" class="stock-period-btn px-2.5 py-1 rounded-lg bg-black border border-card-border text-gray-400">1M</button>
+                            <button type="button" data-period="1Y" onclick="setStockChartPeriod('1Y')" class="stock-period-btn px-2.5 py-1 rounded-lg bg-black border border-card-border text-gray-400">1Y</button>
+                            <button id="tm-auto-btn" type="button" class="px-2.5 py-1 rounded-lg bg-black border border-card-border text-emerald-400 font-bold" title="Jeda / lanjutkan aliran data otomatis">&#9679; AUTO ON</button>
                         </div>
                     </div>
-                    <div class="relative h-[280px] sm:h-[360px] w-full bg-black/85 border border-card-border rounded-xl p-2 overflow-hidden">
+                    <div class="relative h-[300px] sm:h-[380px] w-full bg-black/50 border border-card-border rounded-xl p-1 overflow-hidden">
                         <canvas id="intradayTelemetryChart" class="w-full h-full" aria-label="Grafik Candlestick Intraday Telemetry Stream otomatis"></canvas>
+                    </div>
+                    <div id="tm-metrics" class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-2 text-[10px]">
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">Last</div><div id="tm-last" class="text-white font-bold text-xs truncate">--</div></div>
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">Change</div><div id="tm-chg" class="text-white font-bold text-xs truncate">--</div></div>
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">Open</div><div id="tm-open" class="text-white font-bold text-xs truncate">--</div></div>
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">High</div><div id="tm-high" class="text-white font-bold text-xs truncate">--</div></div>
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">Low</div><div id="tm-low" class="text-white font-bold text-xs truncate">--</div></div>
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">VWAP</div><div id="tm-vwap" class="text-white font-bold text-xs truncate">--</div></div>
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">Volume</div><div id="tm-vol" class="text-white font-bold text-xs truncate">--</div></div>
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">RSI 14</div><div id="tm-rsi" class="text-white font-bold text-xs truncate">--</div></div>
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">ATR 14</div><div id="tm-atr" class="text-white font-bold text-xs truncate">--</div></div>
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">Volatility</div><div id="tm-vola" class="text-white font-bold text-xs truncate">--</div></div>
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">Ticks / s</div><div id="tm-tps" class="text-white font-bold text-xs truncate">--</div></div>
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">Signal</div><div id="tm-sig" class="text-white font-bold text-xs truncate">--</div></div>
                     </div>
                     <div class="flex flex-wrap items-center gap-2 text-[10px] font-mono">
                         <span class="px-2 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">CANDLESTICK</span>
                         <span class="px-2 py-1 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-300">OHLC</span>
                         <span class="px-2 py-1 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-300">VOLUME</span>
-                        <span class="text-gray-500">Candlestick otomatis • update real-time simulasi</span>
+                        <button type="button" data-ind="sma" class="tm-ind px-2 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400">SMA 9</button>
+                        <button type="button" data-ind="ema" class="tm-ind px-2 py-1 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-400">EMA 21</button>
+                        <button type="button" data-ind="vwap" class="tm-ind px-2 py-1 rounded-lg bg-sky-500/10 border border-sky-500/30 text-sky-300">VWAP</button>
+                        <span class="text-gray-500">Otomatis real-time &bull; arahkan kursor untuk crosshair</span>
                     </div>
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center text-[11px] text-gray-400 pt-1 gap-1">
                         <span>Status: <span id="intraday-telemetry-status" class="text-white font-bold">AUTO • 0 Ticks</span></span>
@@ -1131,8 +1278,8 @@
                             <span class="text-gray-400 text-[10px]">NYSE</span>
                         </div>
                         <div class="flex justify-between items-center py-2 text-[11px] border-b border-card-border/60">
-                            <span class="text-gray-400">SPREAD <span class="text-white font-bold">$0.02 (0.009%)</span></span>
-                            <span class="text-emerald-400 font-bold">75% BUY PRESSURE</span>
+                            <span class="text-gray-400">SPREAD <span id="l2-spread" class="text-white font-bold">$0.02 (0.009%)</span></span>
+                            <span id="l2-pressure" class="text-emerald-400 font-bold">75% BUY PRESSURE</span>
                         </div>
                         <div class="grid grid-cols-3 text-[10px] text-gray-500 uppercase pt-2 pb-1">
                             <span>PRICE ($)</span>
@@ -1140,30 +1287,12 @@
                             <span class="text-right">TOTAL</span>
                         </div>
                         <div class="space-y-1 text-xs">
-                            <div class="grid grid-cols-3 text-rose-400 py-1 px-1 bg-rose-500/5 rounded">
-                                <span>228.90</span>
-                                <span class="text-right">1,200</span>
-                                <span class="text-right text-gray-400">2,350</span>
-                            </div>
-                            <div class="grid grid-cols-3 text-rose-400 py-1 px-1 bg-rose-500/5 rounded">
-                                <span>228.88</span>
-                                <span class="text-right">850</span>
-                                <span class="text-right text-gray-400">1,150</span>
-                            </div>
+                            <div id="l2-asks" class="space-y-1"></div>
                             <div class="py-2 my-1 bg-black border-y border-card-border text-center font-bold text-emerald-400 text-sm flex justify-between px-3 items-center">
-                                <span>$228.87</span>
-                                <span class="text-[10px] text-gray-400 uppercase font-sans tracking-wider px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">● SECURE</span>
+                                <span id="l2-mid">$228.87</span>
+                                <span id="l2-secure" class="text-[10px] text-gray-400 uppercase font-sans tracking-wider px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">&#9679; SECURE</span>
                             </div>
-                            <div class="grid grid-cols-3 text-emerald-400 py-1 px-1 bg-emerald-500/5 rounded">
-                                <span>228.86</span>
-                                <span class="text-right">2,400</span>
-                                <span class="text-right text-gray-400">2,400</span>
-                            </div>
-                            <div class="grid grid-cols-3 text-emerald-400 py-1 px-1 bg-emerald-500/5 rounded">
-                                <span>228.84</span>
-                                <span class="text-right">1,650</span>
-                                <span class="text-right text-gray-400">4,050</span>
-                            </div>
+                            <div id="l2-bids" class="space-y-1"></div>
                         </div>
                         <!-- UTILITIES: DEPTH MAP & GUARD : ON FEATURE -->
                         <div class="mt-4 p-3 bg-black/70 border border-card-border rounded-xl space-y-2.5">
@@ -1172,19 +1301,26 @@
                                     <i class="fa-solid fa-shield-halved"></i>
                                     <span>UTILITIES: DEPTH MAP</span>
                                 </span>
-                                <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 text-[10px] animate-pulse">GUARD : ON</span>
+                                <span id="guard-badge" class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30 text-[10px] animate-pulse">GUARD : ON</span>
+                            </div>
+                            <div class="relative h-28 w-full rounded-lg border border-card-border bg-black/50 overflow-hidden">
+                                <canvas id="depth-map-canvas" class="w-full h-full" aria-label="Depth map bid dan ask otomatis"></canvas>
                             </div>
                             <div class="space-y-1.5 text-[10px] text-gray-300">
                                 <div class="flex justify-between items-center">
                                     <span class="text-gray-400">Liquidity Wall Shield:</span>
-                                    <span class="text-emerald-400 font-bold">ACTIVE (99.8%)</span>
+                                    <span id="dm-shield" class="text-emerald-400 font-bold">ACTIVE (99.8%)</span>
                                 </div>
                                 <div class="w-full bg-neutral-900 rounded-full h-1.5 overflow-hidden">
-                                    <div class="bg-emerald-500 h-full rounded-full" style="width: 85%;"></div>
+                                    <div id="dm-shield-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 85%;"></div>
                                 </div>
                                 <div class="flex justify-between items-center pt-0.5">
                                     <span class="text-gray-400">Slippage Protector:</span>
-                                    <span class="text-white">Max 0.05%</span>
+                                    <span id="dm-slip" class="text-white">Max 0.05%</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-400">Largest Wall:</span>
+                                    <span id="dm-wall" class="text-white">--</span>
                                 </div>
                             </div>
                         </div>
@@ -1249,25 +1385,34 @@
                         </div>
                     </div>
                     <!-- CURRENCY CONVERTER (KONVERSI NILAI UANG) - Diposisikan Menempel di Sini -->
-                    <div class="bg-card-dark rounded-2xl border border-card-border p-6 shadow-xl space-y-4">
-                        <div class="flex items-center justify-between border-b border-card-border pb-3">
+                    <div id="currency-converter-card" class="bg-card-dark rounded-2xl border border-card-border p-6 shadow-xl space-y-4">
+                        <div class="flex items-center justify-between border-b border-card-border pb-3 gap-2">
                             <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
                                 <i class="fa-solid fa-money-bill-transfer text-brand-accent"></i>
                                 <span>Currency Converter (Konversi Nilai Uang)</span>
                             </h3>
-                            <span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded font-mono">Real-time Rates</span>
+                            <span id="converter-badge" class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded font-mono whitespace-nowrap">Kurs Referensi</span>
                         </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                        <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center">
                             <div class="space-y-1">
                                 <label class="block text-xs text-gray-400">Jumlah & Mata Uang Asal</label>
                                 <div class="flex">
-                                    <input type="number" id="converter-amount" value="100" oninput="convertCurrency()" class="w-full bg-black border border-card-border rounded-l-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono">
+                                    <input type="number" id="converter-amount" value="100" min="0" oninput="convertCurrency()" class="w-full min-w-0 bg-black border border-card-border rounded-l-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono">
                                     <select id="converter-from" onchange="convertCurrency()" class="bg-neutral-900 border-y border-r border-card-border rounded-r-xl px-3 py-2 text-xs text-white focus:outline-none">
                                         <option value="USD" selected>USD ($)</option>
                                         <option value="IDR">IDR (Rp)</option>
                                         <option value="EUR">EUR (€)</option>
                                         <option value="GBP">GBP (£)</option>
                                         <option value="SGD">SGD (S$)</option>
+                                        <option value="JPY">JPY (¥)</option>
+                                        <option value="MYR">MYR (RM)</option>
+                                        <option value="AUD">AUD (A$)</option>
+                                        <option value="CNY">CNY (CN¥)</option>
+                                        <option value="KRW">KRW (₩)</option>
+                                        <option value="HKD">HKD (HK$)</option>
+                                        <option value="THB">THB (฿)</option>
+                                        <option value="SAR">SAR (SR)</option>
+                                        <option value="CHF">CHF (CHF)</option>
                                     </select>
                                 </div>
                             </div>
@@ -1279,20 +1424,29 @@
                             <div class="space-y-1">
                                 <label class="block text-xs text-gray-400">Hasil & Mata Uang Tujuan</label>
                                 <div class="flex">
-                                    <input type="text" id="converter-result" readonly class="w-full bg-black border border-card-border rounded-l-xl px-3 py-2 text-sm text-emerald-400 font-bold font-mono" value="Rp 1.620.000">
+                                    <input type="text" id="converter-result" readonly class="w-full min-w-0 bg-black border border-card-border rounded-l-xl px-3 py-2 text-sm text-emerald-400 font-bold font-mono" value="Rp 1.620.000">
                                     <select id="converter-to" onchange="convertCurrency()" class="bg-neutral-900 border-y border-r border-card-border rounded-r-xl px-3 py-2 text-xs text-white focus:outline-none">
                                         <option value="USD">USD ($)</option>
                                         <option value="IDR" selected>IDR (Rp)</option>
                                         <option value="EUR">EUR (€)</option>
                                         <option value="GBP">GBP (£)</option>
                                         <option value="SGD">SGD (S$)</option>
+                                        <option value="JPY">JPY (¥)</option>
+                                        <option value="MYR">MYR (RM)</option>
+                                        <option value="AUD">AUD (A$)</option>
+                                        <option value="CNY">CNY (CN¥)</option>
+                                        <option value="KRW">KRW (₩)</option>
+                                        <option value="HKD">HKD (HK$)</option>
+                                        <option value="THB">THB (฿)</option>
+                                        <option value="SAR">SAR (SR)</option>
+                                        <option value="CHF">CHF (CHF)</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-[11px] text-gray-400 flex items-center justify-between pt-1 border-t border-card-border/60">
-                            <span>Kurs Referensi: 1 USD = Rp 16.200 | 1 EUR = 1.08 USD | 1 GBP = 1.28 USD | 1 SGD = 0.76 USD</span>
-                            <span class="text-emerald-400">● Updated</span>
+                        <div class="text-[11px] text-gray-400 flex flex-wrap items-center justify-between gap-1 pt-1 border-t border-card-border/60">
+                            <span id="converter-rate-info">Kurs Referensi: 1 USD = Rp 16.200 IDR</span>
+                            <span id="converter-status" class="text-emerald-400">● Updated</span>
                         </div>
                     </div>
                 </div>
@@ -2209,36 +2363,53 @@
             showModal('Eksekusi Order Saham', `Order ${type} untuk ${symbol} berhasil dikirim ke bursa.`);
         }
         const exchangeRatesToUSD = {
-            USD: 1.0,
-            IDR: 0.00006173,
-            EUR: 1.08,
-            GBP: 1.28,
-            SGD: 0.76
+            USD: 1.0, IDR: 0.00006173, EUR: 1.08, GBP: 1.28, SGD: 0.76,
+            JPY: 0.0064, MYR: 0.21, AUD: 0.66, CNY: 0.138, KRW: 0.00072,
+            HKD: 0.128, THB: 0.028, SAR: 0.2667, CHF: 1.12
         };
+        const currencyMeta = {
+            USD: ['$', 'en-US'], IDR: ['Rp', 'id-ID'], EUR: ['€', 'de-DE'], GBP: ['£', 'en-GB'], SGD: ['S$', 'en-SG'],
+            JPY: ['¥', 'ja-JP'], MYR: ['RM', 'en-US'], AUD: ['A$', 'en-AU'], CNY: ['CN¥', 'en-US'], KRW: ['₩', 'ko-KR'],
+            HKD: ['HK$', 'en-US'], THB: ['฿', 'en-US'], SAR: ['SR', 'en-US'], CHF: ['CHF', 'de-CH']
+        };
+        function formatCurrencyValue(value, code) {
+            const m = currencyMeta[code] || [code, 'en-US'];
+            return m[0] + ' ' + value.toLocaleString(m[1], { maximumFractionDigits: 2 });
+        }
         function convertCurrency() {
             const amountInput = document.getElementById('converter-amount').value;
             const fromCurr = document.getElementById('converter-from').value;
             const toCurr = document.getElementById('converter-to').value;
             const resultField = document.getElementById('converter-result');
+            const rateInfo = document.getElementById('converter-rate-info');
+            const unitRate = exchangeRatesToUSD[fromCurr] / exchangeRatesToUSD[toCurr];
+            if (rateInfo) {
+                rateInfo.textContent = 'Kurs: 1 ' + fromCurr + ' = ' + formatCurrencyValue(unitRate, toCurr) + ' ' + toCurr;
+            }
             if (!amountInput || isNaN(amountInput)) {
                 resultField.value = '0';
                 return;
             }
-            const amountInUSD = parseFloat(amountInput) * exchangeRatesToUSD[fromCurr];
-            const finalAmount = amountInUSD / exchangeRatesToUSD[toCurr];
-            let formattedResult = '';
-            if (toCurr === 'IDR') {
-                formattedResult = 'Rp ' + finalAmount.toLocaleString('id-ID', { maximumFractionDigits: 2 });
-            } else if (toCurr === 'USD') {
-                formattedResult = '$ ' + finalAmount.toLocaleString('en-US', { maximumFractionDigits: 2 });
-            } else if (toCurr === 'EUR') {
-                formattedResult = '€ ' + finalAmount.toLocaleString('de-DE', { maximumFractionDigits: 2 });
-            } else if (toCurr === 'GBP') {
-                formattedResult = '£ ' + finalAmount.toLocaleString('en-GB', { maximumFractionDigits: 2 });
-            } else if (toCurr === 'SGD') {
-                formattedResult = 'S$ ' + finalAmount.toLocaleString('en-SG', { maximumFractionDigits: 2 });
+            const finalAmount = parseFloat(amountInput) * unitRate;
+            resultField.value = formatCurrencyValue(finalAmount, toCurr);
+        }
+        async function loadLiveRates() {
+            const status = document.getElementById('converter-status');
+            const badge = document.getElementById('converter-badge');
+            try {
+                const res = await fetch('https://open.er-api.com/v6/latest/USD');
+                const data = await res.json();
+                if (data && data.result === 'success' && data.rates) {
+                    Object.keys(exchangeRatesToUSD).forEach(function (c) {
+                        if (data.rates[c]) exchangeRatesToUSD[c] = 1 / data.rates[c];
+                    });
+                    if (status) status.textContent = '● Live • ' + new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                    if (badge) badge.textContent = 'Live Rates';
+                    convertCurrency();
+                }
+            } catch (err) {
+                if (status) status.textContent = '● Kurs referensi (offline)';
             }
-            resultField.value = formattedResult;
         }
         function swapCurrencies() {
             const fromSelect = document.getElementById('converter-from');
@@ -2408,191 +2579,206 @@
         let stockSectorBarChartInstance = null; // Bar Chart FineReport
         function createIntradayTelemetryRenderer(canvas) {
             const ctx = canvas.getContext('2d');
+            const CFG = { '1D': { vol: 0.42, bucket: 3000 }, '1W': { vol: 0.68, bucket: 5000 }, '1M': { vol: 1.05, bucket: 8000 }, '1Y': { vol: 1.65, bucket: 12000 } };
+            const MAXC = 60;
+            const $ = id => document.getElementById(id);
+            const avg = a => a.reduce((x, y) => x + y, 0) / (a.length || 1);
+            window.stockLive = window.stockLive || { price: 228.87 };
             const state = {
-                period: '1D',
-                price: 228.87,
-                candles: [],
-                volumes: [],
-                timestamps: [],
-                ticks: 0,
-                last: Date.now(),
-                updateTick() {
-                    const previous = this.candles.length ? this.candles[this.candles.length - 1].c : this.price;
-                    const volatility = this.period === '1D' ? 0.42 : this.period === '1W' ? 0.68 : this.period === '1M' ? 1.05 : 1.65;
-                    const open = previous;
-                    const impulse = (Math.random() - 0.48) * volatility;
-                    const close = Math.max(1, open + impulse);
-                    const wickUp = Math.random() * volatility * 0.9;
-                    const wickDown = Math.random() * volatility * 0.9;
-                    const high = Math.max(open, close) + wickUp;
-                    const low = Math.max(0.01, Math.min(open, close) - wickDown);
-                    const volume = 10 + Math.random() * 28 + Math.abs(close - open) * 12;
-                    this.price = close;
-                    this.candles.push({ x: Date.now(), o: open, h: high, l: low, c: close });
-                    this.volumes.push(volume);
-                    this.timestamps.push(Date.now());
-                    this.ticks += 1;
-                    if (this.candles.length > 54) this.candles.shift();
-                    if (this.volumes.length > 54) this.volumes.shift();
-                    if (this.timestamps.length > 54) this.timestamps.shift();
-                    this.last = Date.now();
-                    this.draw();
-                    this.updateStatus();
+                period: '1D', price: 228.87, candles: [], ticks: 0, tickTimes: [], auto: true,
+                ind: { sma: true, ema: true, vwap: true }, hover: -1, hoverY: 0, last: Date.now(),
+                sessionOpen: 228.87, sHigh: 228.87, sLow: 228.87, cumPV: 0, cumV: 0, geo: null,
+                advance(ts) {
+                    const cfg = CFG[this.period];
+                    let cur = this.candles[this.candles.length - 1];
+                    if (!cur || ts - cur.x >= cfg.bucket) {
+                        cur = { x: ts, o: this.price, h: this.price, l: this.price, c: this.price, v: 0, vw: this.price };
+                        this.candles.push(cur);
+                        if (this.candles.length > MAXC) this.candles.shift();
+                    }
+                    const drift = (Math.random() - 0.5) * cfg.vol * 0.34 + (this.sessionOpen - this.price) * 0.004;
+                    this.price = Math.max(1, this.price + drift);
+                    cur.c = this.price; cur.h = Math.max(cur.h, this.price); cur.l = Math.min(cur.l, this.price);
+                    const tv = 1 + Math.random() * 9 + Math.abs(drift) * 30;
+                    cur.v += tv; this.cumPV += this.price * tv; this.cumV += tv; cur.vw = this.cumPV / this.cumV;
+                    this.sHigh = Math.max(this.sHigh, this.price); this.sLow = Math.min(this.sLow, this.price);
                 },
+                seed() {
+                    const cfg = CFG[this.period], endPrice = this.price, n = MAXC - 1, now = Date.now();
+                    this.candles = []; this.cumPV = 0; this.cumV = 0;
+                    this.price = endPrice + (Math.random() - 0.5) * cfg.vol * 3;
+                    this.sessionOpen = this.price; this.sHigh = this.sLow = this.price;
+                    for (let i = 0; i < n; i++) for (let k = 0; k < 6; k++) this.advance(now - (n - i) * cfg.bucket + k * (cfg.bucket / 6));
+                    const shift = endPrice - this.price;
+                    this.candles.forEach(c => { c.o += shift; c.h += shift; c.l += shift; c.c += shift; c.vw += shift; });
+                    this.price = endPrice; this.sessionOpen += shift; this.sHigh += shift; this.sLow += shift; this.cumPV += shift * this.cumV;
+                },
+                step() {
+                    const now = Date.now();
+                    this.advance(now);
+                    this.ticks += 1; this.tickTimes.push(now);
+                    while (this.tickTimes.length && now - this.tickTimes[0] > 5000) this.tickTimes.shift();
+                    this.last = now;
+                    window.stockLive.price = this.price; window.stockLive.open = this.sessionOpen; window.stockLive.period = this.period;
+                    this.draw(); this.updatePanel();
+                },
+                updateTick() { this.step(); },
                 setPeriod(period) {
-                    this.period = period;
-                    this.draw();
-                    this.updateStatus();
+                    if (!CFG[period]) return;
+                    this.period = period; this.hover = -1;
+                    this.seed(); this.draw(); this.updatePanel();
                 },
-                updateStatus() {
-                    const statusEl = document.getElementById('intraday-telemetry-status');
-                    const feedEl = document.getElementById('intraday-telemetry-feed');
-                    const timeEl = document.getElementById('intraday-telemetry-time');
-                    if (statusEl) statusEl.textContent = `AUTO • ${this.ticks.toLocaleString('id-ID')} Ticks`;
-                    if (feedEl) feedEl.textContent = `Candlestick Feed Online • ${this.period}`;
-                    if (timeEl) timeEl.textContent = new Date(this.last).toLocaleTimeString('id-ID', {
-                        hour: '2-digit', minute: '2-digit', second: '2-digit'
-                    });
+                updatePanel() {
+                    const cs = this.candles; if (!cs.length) return;
+                    const closes = cs.map(c => c.c), n = closes.length;
+                    const chg = this.price - this.sessionOpen, pct = chg / this.sessionOpen * 100;
+                    const rsiN = 14; let g = 0, l = 0;
+                    for (let i = Math.max(1, n - rsiN); i < n; i++) { const d = closes[i] - closes[i - 1]; if (d > 0) g += d; else l -= d; }
+                    const rsi = l === 0 ? (g === 0 ? 50 : 100) : 100 - 100 / (1 + g / l);
+                    let atr = 0, atrN = 0;
+                    for (let i = Math.max(1, n - 14); i < n; i++) { atr += Math.max(cs[i].h - cs[i].l, Math.abs(cs[i].h - cs[i - 1].c), Math.abs(cs[i].l - cs[i - 1].c)); atrN++; }
+                    atr = atrN ? atr / atrN : 0;
+                    const rets = []; for (let i = Math.max(1, n - 20); i < n; i++) rets.push(Math.log(closes[i] / closes[i - 1]));
+                    const mu = avg(rets), sd = Math.sqrt(avg(rets.map(r => (r - mu) * (r - mu))));
+                    const sma = n >= 9 ? avg(closes.slice(-9)) : this.price;
+                    let ema = closes[0]; const k = 2 / 22; for (let i = 1; i < n; i++) ema = closes[i] * k + ema * (1 - k);
+                    const sig = sma > ema && rsi >= 50 ? 'BULLISH' : (sma < ema && rsi < 50 ? 'BEARISH' : 'NEUTRAL');
+                    const tps = this.tickTimes.length / 5;
+                    const tint = (id, text, dir) => { const el = $(id); if (!el) return; el.textContent = text;
+                        el.classList.remove('text-white', 'text-emerald-400', 'text-rose-400', 'text-amber-400');
+                        el.classList.add(dir > 0 ? 'text-emerald-400' : dir < 0 ? 'text-rose-400' : dir === 0 ? 'text-white' : 'text-amber-400'); };
+                    tint('tm-last', '$' + this.price.toFixed(2), chg >= 0 ? 1 : -1);
+                    tint('tm-chg', (chg >= 0 ? '+' : '') + chg.toFixed(2) + ' (' + (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%)', chg >= 0 ? 1 : -1);
+                    tint('tm-open', this.sessionOpen.toFixed(2), 0);
+                    tint('tm-high', this.sHigh.toFixed(2), 1);
+                    tint('tm-low', this.sLow.toFixed(2), -1);
+                    tint('tm-vwap', (this.cumPV / (this.cumV || 1)).toFixed(2), this.price >= this.cumPV / (this.cumV || 1) ? 1 : -1);
+                    tint('tm-vol', Math.round(this.cumV * 1000).toLocaleString('en-US'), 0);
+                    tint('tm-rsi', rsi.toFixed(1), rsi >= 70 ? -1 : rsi <= 30 ? 1 : 0);
+                    tint('tm-atr', atr.toFixed(3), 0);
+                    tint('tm-vola', (sd * 100).toFixed(3) + '%', 0);
+                    tint('tm-tps', tps.toFixed(1), 0);
+                    tint('tm-sig', sig, sig === 'BULLISH' ? 1 : sig === 'BEARISH' ? -1 : 2);
+                    const statusEl = $('intraday-telemetry-status'), feedEl = $('intraday-telemetry-feed'), timeEl = $('intraday-telemetry-time');
+                    if (statusEl) statusEl.textContent = (this.auto ? 'AUTO' : 'PAUSED') + ' • ' + this.ticks.toLocaleString('id-ID') + ' Ticks';
+                    if (feedEl) feedEl.textContent = 'Candlestick Feed ' + (this.auto ? 'Online' : 'Paused') + ' • ' + this.period;
+                    if (timeEl) timeEl.textContent = new Date(this.last).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 },
                 resize() {
                     const rect = canvas.getBoundingClientRect();
                     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-                    const width = Math.max(280, rect.width || 900);
-                    const height = Math.max(250, rect.height || 360);
-                    canvas.width = Math.floor(width * dpr);
-                    canvas.height = Math.floor(height * dpr);
+                    const width = Math.max(280, rect.width || 900), height = Math.max(250, rect.height || 360);
+                    canvas.width = Math.floor(width * dpr); canvas.height = Math.floor(height * dpr);
                     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
                     this.draw();
                 },
-                grid(left, top, right, bottom) {
-                    ctx.strokeStyle = 'rgba(255,255,255,.055)';
-                    ctx.lineWidth = 1;
-                    for (let i = 1; i < 6; i++) {
-                        const y = top + (bottom - top) * i / 6;
-                        ctx.beginPath();
-                        ctx.moveTo(left, y);
-                        ctx.lineTo(right, y);
-                        ctx.stroke();
-                    }
-                    for (let i = 1; i < 9; i++) {
-                        const x = left + (right - left) * i / 9;
-                        ctx.beginPath();
-                        ctx.moveTo(x, top);
-                        ctx.lineTo(x, bottom);
-                        ctx.stroke();
-                    }
+                colors() {
+                    return document.documentElement.classList.contains('light')
+                        ? { bg: '#ffffff', grid: 'rgba(15,23,42,.07)', axis: '#64748b', text: '#0f172a', dim: '#94a3b8', up: '#059669', dn: '#e11d48', upA: 'rgba(5,150,105,.85)', dnA: 'rgba(225,29,72,.85)', upV: 'rgba(5,150,105,.25)', dnV: 'rgba(225,29,72,.25)', live: '#0284c7', tag: '#ffffff', cross: 'rgba(15,23,42,.35)', box: '#f8fafc', sma: '#d97706', ema: '#7c3aed', vwap: '#0284c7' }
+                        : { bg: '#050505', grid: 'rgba(255,255,255,.055)', axis: '#94A3B8', text: '#E2E8F0', dim: '#64748B', up: '#34D399', dn: '#FB7185', upA: 'rgba(52,211,153,.82)', dnA: 'rgba(251,113,133,.82)', upV: 'rgba(52,211,153,.26)', dnV: 'rgba(251,113,133,.26)', live: '#38BDF8', tag: '#001018', cross: 'rgba(148,163,184,.5)', box: '#0a0a0a', sma: '#FBBF24', ema: '#C084FC', vwap: '#38BDF8' };
                 },
                 draw() {
-                    const w = canvas.clientWidth || 900;
-                    const h = canvas.clientHeight || 360;
-                    ctx.clearRect(0, 0, w, h);
-                    ctx.fillStyle = '#050505';
-                    ctx.fillRect(0, 0, w, h);
-                    const left = 45;
-                    const right = w - 45;
-                    const top = 34;
-                    const priceBottom = Math.max(180, h - 76);
-                    const volumeTop = priceBottom + 18;
-                    const volumeBottom = h - 22;
-                    this.grid(left, top, right, priceBottom);
-                    this.grid(left, volumeTop, right, volumeBottom);
-                    ctx.fillStyle = '#34D399';
-                    ctx.font = '700 10px ui-monospace, SFMono-Regular, Menlo, monospace';
-                    ctx.fillText('CANDLESTICK • ' + this.period + ' • AUTO', 10, 16);
-                    ctx.fillStyle = '#64748B';
-                    ctx.font = '9px ui-monospace, SFMono-Regular, Menlo, monospace';
-                    ctx.fillText('INTRADAY TELEMETRY STREAM', 10, h - 7);
-                    if (!this.candles.length) return;
-                    const visible = this.candles.slice(-54);
-                    const visibleVolumes = this.volumes.slice(-visible.length);
-                    const values = visible.flatMap(c => [c.h, c.l]);
-                    const min = Math.min(...values);
-                    const max = Math.max(...values);
-                    const span = Math.max(0.01, max - min);
-                    const xStep = (right - left) / visible.length;
-                    const bodyWidth = Math.max(2, Math.min(10, xStep * 0.62));
-                    const toY = value => priceBottom - ((value - min) / span) * (priceBottom - top);
-                    const maxVol = Math.max(...visibleVolumes, 1);
-                    visible.forEach((candle, i) => {
-                        const x = left + i * xStep + xStep * 0.5;
-                        const openY = toY(candle.o);
-                        const closeY = toY(candle.c);
-                        const highY = toY(candle.h);
-                        const lowY = toY(candle.l);
-                        const up = candle.c >= candle.o;
-                        const stroke = up ? '#34D399' : '#FB7185';
-                        ctx.strokeStyle = stroke;
-                        ctx.lineWidth = 1.25;
-                        ctx.beginPath();
-                        ctx.moveTo(x, highY);
-                        ctx.lineTo(x, lowY);
-                        ctx.stroke();
-                        const bodyTop = Math.min(openY, closeY);
-                        const bodyHeight = Math.max(2, Math.abs(closeY - openY));
-                        ctx.fillStyle = up ? 'rgba(52,211,153,.82)' : 'rgba(251,113,133,.82)';
-                        ctx.fillRect(x - bodyWidth / 2, bodyTop, bodyWidth, bodyHeight);
-                        ctx.strokeStyle = stroke;
-                        ctx.strokeRect(
-                            x - bodyWidth / 2 + 0.5,
-                            bodyTop + 0.5,
-                            Math.max(1, bodyWidth - 1),
-                            Math.max(1, bodyHeight - 1)
-                        );
-                        const barHeight = Math.max(2, (visibleVolumes[i] / maxVol) * (volumeBottom - volumeTop));
-                        ctx.fillStyle = up ? 'rgba(52,211,153,.26)' : 'rgba(251,113,133,.26)';
-                        ctx.fillRect(x - bodyWidth / 2, volumeBottom - barHeight, bodyWidth, barHeight);
-                    });
-                    ctx.fillStyle = '#94A3B8';
-                    ctx.font = '9px ui-monospace, monospace';
-                    ctx.fillText(max.toFixed(2), right + 2, top + 3);
-                    ctx.fillText(min.toFixed(2), right + 2, priceBottom);
-                    ctx.fillStyle = '#64748B';
-                    ctx.fillText('VOL', right + 2, volumeTop + 10);
-                    const lastCandle = visible[visible.length - 1];
-                    const lastY = toY(lastCandle.c);
-                    ctx.strokeStyle = 'rgba(56,189,248,.75)';
-                    ctx.setLineDash([4, 4]);
-                    ctx.beginPath();
-                    ctx.moveTo(left, lastY);
-                    ctx.lineTo(right, lastY);
-                    ctx.stroke();
-                    ctx.setLineDash([]);
-                    ctx.fillStyle = '#38BDF8';
-                    ctx.fillRect(right - 45, lastY - 8, 45, 16);
-                    ctx.fillStyle = '#001018';
-                    ctx.font = '700 9px ui-monospace, monospace';
-                    ctx.fillText(lastCandle.c.toFixed(2), right - 42, lastY + 3);
-                    const liveX = left + (visible.length - 0.5) * xStep;
-                    ctx.fillStyle = '#34D399';
-                    ctx.beginPath();
-                    ctx.arc(liveX, lastY, 3.2, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.fillStyle = '#64748B';
-                    ctx.font = '8px ui-monospace, monospace';
-                    const timeLabels = Math.min(4, visible.length);
-                    for (let i = 0; i < timeLabels; i++) {
-                        const idx = Math.floor(i * (visible.length - 1) / Math.max(1, timeLabels - 1));
-                        const x = left + idx * xStep + xStep * 0.5;
-                        const stamp = visible[idx].x;
-                        ctx.fillText(new Date(stamp).toLocaleTimeString('id-ID', {
-                            hour: '2-digit', minute: '2-digit'
-                        }), x - 12, volumeBottom + 13);
+                    if (canvas.offsetParent === null) return;
+                    const w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return;
+                    const C = this.colors(), cs = this.candles, n = cs.length, MONO = 'ui-monospace, SFMono-Regular, Menlo, monospace';
+                    ctx.clearRect(0, 0, w, h); ctx.fillStyle = C.bg; ctx.fillRect(0, 0, w, h);
+                    const left = 10, right = w - 54, top = 44, volH = Math.max(38, h * 0.15), volBottom = h - 20, volTop = volBottom - volH, priceBottom = volTop - 12;
+                    ctx.font = '700 10px ' + MONO; ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+                    ctx.fillStyle = C.up; ctx.fillText('CANDLESTICK • ' + this.period + ' • ' + (this.auto ? 'AUTO' : 'PAUSED'), left, 14);
+                    if (w > 560) {
+                        let lx = right - 190;
+                        [['SMA9', C.sma, this.ind.sma], ['EMA21', C.ema, this.ind.ema], ['VWAP', C.vwap, this.ind.vwap]].forEach(t => {
+                            if (!t[2]) return; ctx.fillStyle = t[1]; ctx.fillText('— ' + t[0], lx, 14); lx += ctx.measureText('— ' + t[0]).width + 14; });
                     }
-                    ctx.fillStyle = '#CBD5E1';
-                    ctx.font = '700 9px ui-monospace, monospace';
-                    ctx.fillText(`O ${lastCandle.o.toFixed(2)}`, left, 28);
-                    ctx.fillText(`H ${lastCandle.h.toFixed(2)}`, left + 75, 28);
-                    ctx.fillText(`L ${lastCandle.l.toFixed(2)}`, left + 150, 28);
-                    ctx.fillText(`C ${lastCandle.c.toFixed(2)}`, left + 225, 28);
+                    if (!n) return;
+                    let min = Infinity, max = -Infinity; cs.forEach(c => { min = Math.min(min, c.l); max = Math.max(max, c.h); });
+                    const pad = (max - min) * 0.08 || 0.05; min -= pad; max += pad;
+                    const span = max - min, toY = v => priceBottom - ((v - min) / span) * (priceBottom - top);
+                    const slot = (right - left) / MAXC, off = MAXC - n, xAt = i => left + (off + i + 0.5) * slot;
+                    this.geo = { left, right, slot, off, top, priceBottom };
+                    ctx.lineWidth = 1; ctx.strokeStyle = C.grid; ctx.fillStyle = C.axis; ctx.font = '9px ' + MONO;
+                    for (let i = 0; i <= 5; i++) {
+                        const y = top + (priceBottom - top) * i / 5;
+                        ctx.beginPath(); ctx.moveTo(left, y); ctx.lineTo(right, y); ctx.stroke();
+                        ctx.fillText((max - span * i / 5).toFixed(2), right + 4, y + 3);
+                    }
+                    for (let i = 1; i < 9; i++) { const x = left + (right - left) * i / 9; ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, volBottom); ctx.stroke(); }
+                    ctx.beginPath(); ctx.moveTo(left, volTop); ctx.lineTo(right, volTop); ctx.stroke();
+                    ctx.fillStyle = C.dim; ctx.fillText('VOL', right + 4, volTop + 10);
+                    const maxVol = Math.max(...cs.map(c => c.v), 1), bw = Math.max(2, Math.min(10, slot * 0.62));
+                    cs.forEach((c, i) => {
+                        const x = xAt(i), up = c.c >= c.o, col = up ? C.up : C.dn;
+                        ctx.strokeStyle = col; ctx.lineWidth = 1.25;
+                        ctx.beginPath(); ctx.moveTo(x, toY(c.h)); ctx.lineTo(x, toY(c.l)); ctx.stroke();
+                        const yo = toY(c.o), yc = toY(c.c), bt = Math.min(yo, yc), bh = Math.max(2, Math.abs(yc - yo));
+                        ctx.fillStyle = up ? C.upA : C.dnA; ctx.fillRect(x - bw / 2, bt, bw, bh);
+                        ctx.strokeRect(x - bw / 2 + 0.5, bt + 0.5, Math.max(1, bw - 1), Math.max(1, bh - 1));
+                        const vh = Math.max(2, (c.v / maxVol) * (volBottom - volTop - 4));
+                        ctx.fillStyle = up ? C.upV : C.dnV; ctx.fillRect(x - bw / 2, volBottom - vh, bw, vh);
+                    });
+                    const line = (arr, col, dash) => {
+                        ctx.strokeStyle = col; ctx.lineWidth = 1.4; ctx.setLineDash(dash || []); ctx.beginPath(); let started = false;
+                        arr.forEach((v, i) => { if (v == null) return; const x = xAt(i), y = toY(v); if (!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y); });
+                        ctx.stroke(); ctx.setLineDash([]); };
+                    const closes = cs.map(c => c.c);
+                    if (this.ind.sma) line(closes.map((_, i) => i < 8 ? null : avg(closes.slice(i - 8, i + 1))), C.sma);
+                    if (this.ind.ema) { const k = 2 / 22, e = []; closes.forEach((c, i) => e.push(i ? c * k + e[i - 1] * (1 - k) : c)); line(e, C.ema); }
+                    if (this.ind.vwap) line(cs.map(c => c.vw), C.vwap, [5, 3]);
+                    if (this.sessionOpen > min && this.sessionOpen < max) {
+                        const yo = toY(this.sessionOpen); ctx.strokeStyle = C.dim; ctx.setLineDash([2, 4]); ctx.lineWidth = 1;
+                        ctx.beginPath(); ctx.moveTo(left, yo); ctx.lineTo(right, yo); ctx.stroke(); ctx.setLineDash([]);
+                    }
+                    const lc = cs[n - 1], ly = toY(lc.c);
+                    ctx.strokeStyle = C.live; ctx.globalAlpha = 0.75; ctx.setLineDash([4, 4]); ctx.beginPath(); ctx.moveTo(left, ly); ctx.lineTo(right, ly); ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha = 1;
+                    ctx.fillStyle = C.live; ctx.fillRect(right + 1, ly - 8, 52, 16);
+                    ctx.fillStyle = C.tag; ctx.font = '700 9px ' + MONO; ctx.fillText(lc.c.toFixed(2), right + 5, ly + 3);
+                    ctx.fillStyle = C.up; ctx.beginPath(); ctx.arc(xAt(n - 1), ly, 3.2, 0, Math.PI * 2); ctx.fill();
+                    ctx.fillStyle = C.dim; ctx.font = '8px ' + MONO;
+                    const labels = w < 480 ? 3 : 5;
+                    for (let i = 0; i < labels; i++) {
+                        const idx = Math.floor(i * (n - 1) / Math.max(1, labels - 1));
+                        ctx.fillText(new Date(cs[idx].x).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }), Math.min(xAt(idx) - 18, right - 40), volBottom + 13);
+                    }
+                    const hc = this.hover >= 0 && this.hover < n ? cs[this.hover] : lc, hd = hc.c - hc.o;
+                    const parts = [['O ' + hc.o.toFixed(2), C.text], ['H ' + hc.h.toFixed(2), C.text], ['L ' + hc.l.toFixed(2), C.text], ['C ' + hc.c.toFixed(2), C.text],
+                        [(hd >= 0 ? '+' : '') + hd.toFixed(2) + ' (' + (hd / hc.o * 100).toFixed(2) + '%)', hd >= 0 ? C.up : C.dn], ['V ' + (hc.v * 1000 / 1000).toFixed(1) + 'K', C.axis]];
+                    ctx.font = '700 9px ' + MONO; let px = left;
+                    parts.forEach(p => { ctx.fillStyle = p[1]; ctx.fillText(p[0], px, 32); px += ctx.measureText(p[0]).width + 10; });
+                    if (this.hover >= 0 && this.hover < n) {
+                        const hx = xAt(this.hover); ctx.strokeStyle = C.cross; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+                        ctx.beginPath(); ctx.moveTo(hx, top); ctx.lineTo(hx, volBottom); ctx.stroke();
+                        if (this.hoverY >= top && this.hoverY <= priceBottom) {
+                            ctx.beginPath(); ctx.moveTo(left, this.hoverY); ctx.lineTo(right, this.hoverY); ctx.stroke();
+                            ctx.setLineDash([]); ctx.fillStyle = C.axis; ctx.fillRect(right + 1, this.hoverY - 8, 52, 16);
+                            ctx.fillStyle = C.bg; ctx.font = '700 9px ' + MONO; ctx.fillText((min + (priceBottom - this.hoverY) / (priceBottom - top) * span).toFixed(2), right + 5, this.hoverY + 3);
+                        }
+                        ctx.setLineDash([]);
+                    }
                 }
             };
-            for (let i = 0; i < 42; i++) state.updateTick();
-            state.resize();
+            const setHover = (cx, cy) => {
+                const g = state.geo; if (!g) return; const r = canvas.getBoundingClientRect(), x = cx - r.left;
+                const idx = Math.floor((x - g.left) / g.slot) - g.off;
+                state.hover = (x >= g.left && x <= g.right && idx >= 0 && idx < state.candles.length) ? idx : -1;
+                state.hoverY = cy - r.top; state.draw();
+            };
+            canvas.addEventListener('mousemove', e => setHover(e.clientX, e.clientY));
+            canvas.addEventListener('mouseleave', () => { state.hover = -1; state.draw(); });
+            canvas.addEventListener('touchstart', e => { if (e.touches[0]) setHover(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+            canvas.addEventListener('touchmove', e => { if (e.touches[0]) setHover(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+            canvas.addEventListener('touchend', () => { state.hover = -1; state.draw(); }, { passive: true });
+            const autoBtn = $('tm-auto-btn');
+            const paintAuto = () => { if (!autoBtn) return; autoBtn.innerHTML = state.auto ? '&#9679; AUTO ON' : '&#10074;&#10074; PAUSED';
+                autoBtn.classList.toggle('text-emerald-400', state.auto); autoBtn.classList.toggle('text-amber-400', !state.auto); };
+            if (autoBtn) autoBtn.addEventListener('click', () => { state.auto = !state.auto; paintAuto(); state.draw(); state.updatePanel(); });
+            document.querySelectorAll('.tm-ind').forEach(b => b.addEventListener('click', () => {
+                const key = b.getAttribute('data-ind'); state.ind[key] = !state.ind[key]; b.classList.toggle('off', !state.ind[key]); state.draw(); }));
+            state.seed(); state.resize(); state.updatePanel();
+            window.stockLive.price = state.price;
+            setInterval(() => { if (state.auto && !document.hidden) state.step(); }, 300);
             window.addEventListener('resize', () => state.resize(), { passive: true });
-            if (typeof ResizeObserver !== 'undefined') {
-                const observer = new ResizeObserver(() => state.resize());
-                observer.observe(canvas.parentElement || canvas);
-            }
+            if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => state.resize()).observe(canvas.parentElement || canvas);
+            if (typeof MutationObserver !== 'undefined') new MutationObserver(() => state.draw()).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
             return state;
         }
         function initAllCharts() {
@@ -2910,9 +3096,7 @@
                     const indexValEl = document.getElementById('live-index-val');
                     if (indexValEl) indexValEl.innerText = `$${newVal.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
                 }
-                if (intradayTelemetryChartInstance) {
-                    intradayTelemetryChartInstance.updateTick();
-                }
+                /* Intraday Telemetry kini berjalan otomatis lewat timer internalnya sendiri. */
                 if (globalMarketChartInstance) {
                     const globalLabels = globalMarketChartInstance.data.labels;
                     const globalData = globalMarketChartInstance.data.datasets[0].data;
@@ -4254,6 +4438,126 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(start, 0); });
   else setTimeout(start, 0);
+})();
+</script>
+<script id="stock-book-depth">
+(function () {
+  'use strict';
+  var N = 12, LVL = 5, ORDER = 20000, SLIP_MAX = 0.05;
+  var $ = function (id) { return document.getElementById(id); };
+  var rnd = function (a, b) { return a + Math.random() * (b - a); };
+  var r50 = function (x) { return Math.min(9000, Math.max(100, Math.round(x / 50) * 50)); };
+  var fmt = function (n) { return Math.round(n).toLocaleString('en-US'); };
+  var bidSz = [], askSz = [], bias = 0.5, prevMid = 0, model = null;
+  for (var i = 0; i < N; i++) { bidSz.push(r50(rnd(500, 2600) * (1 + i * 0.12))); askSz.push(r50(rnd(500, 2600) * (1 + i * 0.12))); }
+  function livePrice() { return (window.stockLive && window.stockLive.price) || 228.87; }
+  function row(side, lv, cum, max, added) {
+    var pct = Math.min(100, cum / max * 100).toFixed(0), a = side === 'a';
+    return '<div class="grid grid-cols-3 ' + (a ? 'text-rose-400' : 'text-emerald-400') + ' py-1 px-1 rounded ' + (added ? (a ? 'l2-add-a' : 'l2-add-b') : '') +
+      '" style="background:linear-gradient(to left,rgba(' + (a ? '244,63,94' : '16,185,129') + ',.16) ' + pct + '%,transparent ' + pct + '%)"><span>' + lv.p.toFixed(2) +
+      '</span><span class="text-right">' + fmt(lv.s) + (added ? ' <b>+</b>' : '') + '</span><span class="text-right text-gray-400">' + fmt(cum) + '</span></div>';
+  }
+  function walk(levels, qty) {
+    var rem = qty, cost = 0;
+    for (var j = 0; j < levels.length && rem > 0; j++) { var t = Math.min(rem, levels[j].s); cost += t * levels[j].p; rem -= t; }
+    if (rem > 0) cost += rem * (levels[levels.length - 1].p + 0.02);
+    return cost / qty;
+  }
+  function step() {
+    var asksEl = $('l2-asks'), bidsEl = $('l2-bids');
+    if (!asksEl || !bidsEl || asksEl.offsetParent === null || document.hidden) return;
+    var price = livePrice(), i, prevB = bidSz.slice(), prevA = askSz.slice();
+    bias = Math.max(0.3, Math.min(0.7, bias + rnd(-0.04, 0.04)));
+    for (i = 0; i < N; i++) {
+      var base = 1400 * (1 + i * 0.14);
+      bidSz[i] = r50(bidSz[i] * 0.7 + base * (0.5 + bias) * 0.3 * rnd(0.6, 1.4) + (Math.random() < 0.1 ? rnd(300, 1200) : 0));
+      askSz[i] = r50(askSz[i] * 0.7 + base * (1.5 - bias) * 0.3 * rnd(0.6, 1.4) + (Math.random() < 0.1 ? rnd(300, 1200) : 0));
+    }
+    var ts = Math.random() < 0.55 ? 2 : (Math.random() < 0.6 ? 1 : 3);
+    var bestBid = Math.round((price - 0.005 * ts) * 100) / 100, bestAsk = Math.round((bestBid + 0.01 * ts) * 100) / 100;
+    var bids = [], asks = [], cumB = [], cumA = [], cb = 0, ca = 0;
+    for (i = 0; i < N; i++) {
+      bids.push({ p: bestBid - i * 0.01, s: bidSz[i], add: bidSz[i] - prevB[i] > 500 });
+      asks.push({ p: bestAsk + i * 0.01, s: askSz[i], add: askSz[i] - prevA[i] > 500 });
+      cb += bidSz[i]; ca += askSz[i]; cumB.push(cb); cumA.push(ca);
+    }
+    var max5 = Math.max(cumB[LVL - 1], cumA[LVL - 1]), h = '', k;
+    for (k = LVL - 1; k >= 0; k--) h += row('a', asks[k], cumA[k], max5, asks[k].add);
+    asksEl.innerHTML = h; h = '';
+    for (k = 0; k < LVL; k++) h += row('b', bids[k], cumB[k], max5, bids[k].add);
+    bidsEl.innerHTML = h;
+    var mid = (bestBid + bestAsk) / 2, up = mid >= prevMid; prevMid = mid;
+    var midEl = $('l2-mid'); if (midEl) { midEl.textContent = '$' + price.toFixed(2); midEl.parentNode.classList.toggle('text-emerald-400', up); midEl.parentNode.classList.toggle('text-rose-400', !up); }
+    var spr = bestAsk - bestBid, sprEl = $('l2-spread'); if (sprEl) sprEl.textContent = '$' + spr.toFixed(2) + ' (' + (spr / mid * 100).toFixed(3) + '%)';
+    var pb = cumB[LVL - 1] / (cumB[LVL - 1] + cumA[LVL - 1]), pEl = $('l2-pressure');
+    if (pEl) { var buy = pb >= 0.5; pEl.textContent = Math.round((buy ? pb : 1 - pb) * 100) + '% ' + (buy ? 'BUY' : 'SELL') + ' PRESSURE';
+      pEl.classList.toggle('text-emerald-400', buy); pEl.classList.toggle('text-rose-400', !buy); }
+    var totB = cumB[N - 1], totA = cumA[N - 1];
+    var shield = Math.max(0, Math.min(100, 100 - Math.abs(totB - totA) / (totB + totA) * 60));
+    var slip = Math.max((walk(asks, ORDER) - bestAsk) / bestAsk * 100, (bestBid - walk(bids, ORDER)) / bestBid * 100);
+    var ok = slip <= SLIP_MAX && shield >= 60;
+    var sh = $('dm-shield'); if (sh) { sh.textContent = (ok ? 'ACTIVE (' : 'THIN (') + shield.toFixed(1) + '%)'; sh.className = (ok ? 'text-emerald-400' : 'text-amber-400') + ' font-bold'; }
+    var bar = $('dm-shield-bar'); if (bar) { bar.style.width = shield.toFixed(0) + '%'; bar.className = (ok ? 'bg-emerald-500' : 'bg-amber-500') + ' h-full rounded-full transition-all duration-500'; }
+    var sl = $('dm-slip'); if (sl) sl.textContent = 'Est. ' + slip.toFixed(3) + '% / Max ' + SLIP_MAX.toFixed(2) + '% (' + fmt(ORDER) + ' sh)';
+    var gb = $('guard-badge'); if (gb) { gb.textContent = ok ? 'GUARD : ON' : 'GUARD : ALERT';
+      gb.className = 'px-2 py-0.5 rounded font-bold border text-[10px] animate-pulse ' + (ok ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-amber-500/20 text-amber-400 border-amber-500/30'); }
+    var sc = $('l2-secure'); if (sc) { sc.innerHTML = ok ? '&#9679; SECURE' : '&#9679; THIN BOOK';
+      sc.className = 'text-[10px] uppercase font-sans tracking-wider px-2 py-0.5 rounded border ' + (ok ? 'text-gray-400 bg-emerald-500/10 border-emerald-500/20' : 'text-amber-400 bg-amber-500/10 border-amber-500/30'); }
+    var wall = null; bids.forEach(function (l) { if (!wall || l.s > wall.s) wall = { s: l.s, p: l.p, side: 'BID' }; });
+    asks.forEach(function (l) { if (!wall || l.s > wall.s) wall = { s: l.s, p: l.p, side: 'ASK' }; });
+    var we = $('dm-wall'); if (we) { we.textContent = wall.side + ' ' + wall.p.toFixed(2) + ' • ' + fmt(wall.s); we.className = (wall.side === 'BID' ? 'text-emerald-400' : 'text-rose-400') + ' font-bold'; }
+    model = { bids: bids, asks: asks, cumB: cumB, cumA: cumA, mid: mid, wall: wall };
+    drawDepth();
+  }
+  function drawDepth() {
+    var cv = $('depth-map-canvas'); if (!cv || !model || cv.offsetParent === null) return;
+    var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (cv.width !== Math.floor(w * dpr) || cv.height !== Math.floor(h * dpr)) { cv.width = Math.floor(w * dpr); cv.height = Math.floor(h * dpr); }
+    var c = cv.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h);
+    var light = document.documentElement.classList.contains('light');
+    var G = light ? { bg: '#ffffff', up: '#059669', dn: '#e11d48', upF: 'rgba(5,150,105,.20)', dnF: 'rgba(225,29,72,.20)', txt: '#475569', mid: '#0284c7' }
+                  : { bg: '#050505', up: '#34D399', dn: '#FB7185', upF: 'rgba(52,211,153,.22)', dnF: 'rgba(251,113,133,.22)', txt: '#94A3B8', mid: '#38BDF8' };
+    c.fillStyle = G.bg; c.fillRect(0, 0, w, h);
+    var B = model.bids, A = model.asks, pmin = B[N - 1].p, pmax = A[N - 1].p, base = h - 14, topY = 12;
+    var cmax = Math.max(model.cumB[N - 1], model.cumA[N - 1]) * 1.08;
+    var X = function (p) { return 4 + (p - pmin) / (pmax - pmin) * (w - 8); }, Y = function (v) { return base - v / cmax * (base - topY); };
+    function area(L, cum, col, fill) {
+      c.beginPath(); c.moveTo(X(L[0].p), base);
+      for (var i = 0; i < N; i++) { c.lineTo(X(L[i].p), Y(cum[i])); if (i < N - 1) c.lineTo(X(L[i + 1].p), Y(cum[i])); }
+      c.lineTo(X(L[N - 1].p), base); c.closePath(); c.fillStyle = fill; c.fill();
+      c.beginPath(); c.moveTo(X(L[0].p), Y(cum[0]));
+      for (var j = 0; j < N; j++) { c.lineTo(X(L[j].p), Y(cum[j])); if (j < N - 1) c.lineTo(X(L[j + 1].p), Y(cum[j])); }
+      c.strokeStyle = col; c.lineWidth = 1.6; c.stroke();
+    }
+    area(B, model.cumB, G.up, G.upF); area(A, model.cumA, G.dn, G.dnF);
+    var mx = X(model.mid); c.strokeStyle = G.mid; c.setLineDash([3, 3]); c.lineWidth = 1; c.beginPath(); c.moveTo(mx, topY - 4); c.lineTo(mx, base); c.stroke(); c.setLineDash([]);
+    var wl = model.wall, wx = X(wl.p); c.strokeStyle = wl.side === 'BID' ? G.up : G.dn; c.globalAlpha = 0.6; c.setLineDash([2, 3]);
+    c.beginPath(); c.moveTo(wx, topY); c.lineTo(wx, base); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
+    c.font = '8px ui-monospace, Menlo, monospace'; c.fillStyle = G.txt; c.textAlign = 'left'; c.fillText(pmin.toFixed(2), 4, h - 3);
+    c.textAlign = 'right'; c.fillText(pmax.toFixed(2), w - 4, h - 3); c.textAlign = 'center'; c.fillStyle = G.mid; c.fillText(model.mid.toFixed(2), mx, h - 3);
+    c.textAlign = 'left'; c.fillStyle = G.txt; c.fillText('BID ' + fmt(model.cumB[N - 1]), 4, 9); c.textAlign = 'right'; c.fillText('ASK ' + fmt(model.cumA[N - 1]), w - 4, 9);
+  }
+  window.addEventListener('resize', drawDepth, { passive: true });
+  if (typeof MutationObserver !== 'undefined') new MutationObserver(drawDepth).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  setTimeout(step, 400); setInterval(step, 800);
+})();
+</script>
+<script>
+(function () {
+  var root = document.documentElement, KEY = 'ba-theme';
+  var btn = document.getElementById('theme-toggle');
+  function apply(mode, save) {
+    root.classList.add('theme-anim');
+    root.classList.remove('dark', 'light');
+    root.classList.add(mode);
+    if (btn) { btn.setAttribute('aria-checked', mode === 'light' ? 'true' : 'false'); btn.title = mode === 'light' ? 'Beralih ke tema gelap' : 'Beralih ke tema terang'; }
+    if (save) { try { localStorage.setItem(KEY, mode); } catch (e) {} }
+    setTimeout(function () { root.classList.remove('theme-anim'); }, 450);
+  }
+  apply(root.classList.contains('light') ? 'light' : 'dark', false);
+  if (btn) btn.addEventListener('click', function () { apply(root.classList.contains('light') ? 'dark' : 'light', true); });
+  if (typeof loadLiveRates === 'function') loadLiveRates();
 })();
 </script>
 </body>
