@@ -220,15 +220,23 @@ html.light body .bg-card-dark,html.light body .bg-deep-gray,html.light body .mlc
 html.light body [class*="from-black/80"][class*="to-deep-gray"]{background-image:none!important;background-color:rgba(255,255,255,var(--card-al))!important}
 html.light body div[class*="border-card-border"].bg-black,html.light body div[class*="border-card-border"][class*="bg-black/"],html.light body div[class*="border-card-border"].bg-neutral-900,html.light body .liq-kpi{background-color:rgba(248,250,252,var(--tile-al))!important}
 /* tetap solid: jendela modal/menu samping (overlay) dan header tabel sticky agar baris tidak tembus saat scroll */
-html.dark .fixed .bg-card-dark,html.dark .fixed .bg-deep-gray,html.dark thead.bg-card-dark{background-color:#121212}
+html.dark .fixed .bg-card-dark,html.dark .fixed .bg-deep-gray{background-color:#121212}
 html.dark .fixed div[class*="border-card-border"].bg-black,html.dark .fixed div[class*="border-card-border"][class*="bg-black/"],html.dark .fixed div[class*="border-card-border"].bg-neutral-900{background-color:#000}
-html.light body .fixed .bg-card-dark,html.light body .fixed .bg-deep-gray,html.light body thead.bg-card-dark{background-color:#fff!important}
+html.light body .fixed .bg-card-dark,html.light body .fixed .bg-deep-gray{background-color:#fff!important}
 html.light body .fixed div[class*="border-card-border"].bg-black,html.light body .fixed div[class*="border-card-border"][class*="bg-black/"],html.light body .fixed div[class*="border-card-border"].bg-neutral-900{background-color:#f8fafc!important}
 /* Kartu Live Crypto Index Tracker & Intraday Telemetry Stream: wadah grafik bening */
 html.dark #intraday-telemetry-card,html.dark #crypto-subpage-1>div:first-child>div.bg-card-dark{background-color:rgba(18,18,18,.16)}
 html.dark #intraday-telemetry-card div.bg-black\/50,html.dark #crypto-subpage-1 div.bg-black\/40{background-color:rgba(0,0,0,.06)}
 html.light body #intraday-telemetry-card,html.light body #crypto-subpage-1>div:first-child>div.bg-card-dark{background-color:rgba(255,255,255,.3)!important}
 html.light body #intraday-telemetry-card div.bg-black\/50,html.light body #crypto-subpage-1 div.bg-black\/40{background-color:rgba(248,250,252,.18)!important}
+/* Sisa elemen hitam -> transparan: panel berborder biru, lencana, baris header tabel, footer */
+html.dark div.bg-black\/50[class*="border-blue-500"],html.dark span.bg-black[class*="border-card-border"],html.dark tr.bg-black\/50,html.dark footer.bg-black{background-color:rgba(0,0,0,var(--tile-a))}
+html.light body div.bg-black\/50[class*="border-blue-500"],html.light body span.bg-black[class*="border-card-border"],html.light body tr.bg-black\/50,html.light body footer.bg-black{background-color:rgba(248,250,252,var(--tile-al))!important}
+html.dark .fixed div.bg-black\/50[class*="border-blue-500"],html.dark .fixed span.bg-black[class*="border-card-border"]{background-color:#000}
+html.light body .fixed div.bg-black\/50[class*="border-blue-500"],html.light body .fixed span.bg-black[class*="border-card-border"]{background-color:#f8fafc!important}
+/* header tabel sticky: kaca buram tipis agar baris yang di-scroll tetap terbaca */
+html.dark thead.bg-card-dark,html.dark .mlc-tbl thead th,html.dark .mlc-tbl tfoot td{background-color:rgba(10,10,10,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+html.light body thead.bg-card-dark,html.light body .mlc-tbl thead th,html.light body .mlc-tbl tfoot td{background-color:rgba(241,245,249,.6)!important;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 @media print{#bg3d{display:none}}
 </style>
 </head>
@@ -3876,7 +3884,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     var old = Chart.getChart(cv); if (old) old.destroy();
     try { globalMarketChartInstance = null; } catch (e) {}
     var wrap = cv.parentElement;
-    if (wrap) { wrap.style.background = '#000'; wrap.style.borderRadius = '12px'; wrap.style.padding = '8px 12px'; }
+    if (wrap) { wrap.style.background = 'transparent'; wrap.style.borderRadius = '12px'; wrap.style.padding = '8px 12px'; }
     var bars = REG.map(function (g, r) {
       return { type: 'bar', label: g.name, data: D[r], stack: 's', yAxisID: 'y', order: 2, barPercentage: .72, categoryPercentage: 1, borderWidth: 0,
         backgroundColor: function (c) { return c.raw >= 0 ? g.up : g.dn; } };
@@ -4580,7 +4588,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     var light = document.documentElement.classList.contains('light');
     var G = light ? { bg: '#ffffff', up: '#059669', dn: '#e11d48', upF: 'rgba(5,150,105,.20)', dnF: 'rgba(225,29,72,.20)', txt: '#475569', mid: '#0284c7' }
                   : { bg: '#050505', up: '#34D399', dn: '#FB7185', upF: 'rgba(52,211,153,.22)', dnF: 'rgba(251,113,133,.22)', txt: '#94A3B8', mid: '#38BDF8' };
-    c.fillStyle = G.bg; c.fillRect(0, 0, w, h);
+    /* latar kanvas depth map dibiarkan transparan */
     var B = model.bids, A = model.asks, pmin = B[N - 1].p, pmax = A[N - 1].p, base = h - 14, topY = 12;
     var cmax = Math.max(model.cumB[N - 1], model.cumA[N - 1]) * 1.08;
     var X = function (p) { return 4 + (p - pmin) / (pmax - pmin) * (w - 8); }, Y = function (v) { return base - v / cmax * (base - topY); };
