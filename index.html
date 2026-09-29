@@ -187,10 +187,53 @@ html.light #gm-sub-1 .gm1-bar{background:#f8fafc!important;border-color:#dbe3ee!
 .tm-ind{cursor:pointer;transition:opacity .2s}.tm-ind.off{opacity:.35}
 #intradayTelemetryChart{cursor:crosshair;touch-action:pan-y}
 html.light #intradayTelemetryChart,html.light #depth-map-canvas{filter:none!important}
+html.light #cryptoIndexPro{filter:none!important}
 html.light [class*="bg-black/6"],html.light [class*="bg-black/7"]{background-color:#f8fafc!important}
+</style>
+<style id="stk-ico-style">
+.stk-ico{position:relative;width:26px;height:26px;flex:0 0 26px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 1px 2px rgba(0,0,0,.35)}
+.stk-ico b{font:800 8px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.03em}
+.stk-ico img{position:absolute;inset:0;width:100%;height:100%;padding:3px;box-sizing:border-box;background:#fff;object-fit:contain}
+.stk-sym{display:flex;align-items:center;gap:.6rem}
+</style>
+<script id="stk-ico-js">
+/* Ikon perusahaan otomatis: logo dari domain resmi; bila gagal dimuat, tampil lencana ticker berwarna merek. */
+(function(){
+  var D={"NVDA": "nvidia.com", "AAPL": "apple.com", "MSFT": "microsoft.com", "AMZN": "amazon.com", "GOOGL": "google.com", "META": "meta.com", "TSLA": "tesla.com", "AMD": "amd.com", "NFLX": "netflix.com", "INTC": "intel.com", "PYPL": "paypal.com", "UBER": "uber.com", "JPM": "jpmorganchase.com", "V": "visa.com", "WMT": "walmart.com", "DIS": "disney.com", "BAC": "bankofamerica.com", "XOM": "exxonmobil.com", "CVX": "chevron.com", "KO": "coca-colacompany.com", "PEP": "pepsico.com", "PFE": "pfizer.com", "JNJ": "jnj.com", "ABBV": "abbvie.com", "TMO": "thermofisher.com", "COST": "costco.com", "AVGO": "broadcom.com", "CSCO": "cisco.com", "ADBE": "adobe.com", "CRM": "salesforce.com", "QCOM": "qualcomm.com", "TXN": "ti.com", "ACN": "accenture.com", "LIN": "linde.com", "NKE": "nike.com", "MCD": "mcdonalds.com", "IBM": "ibm.com", "SBUX": "starbucks.com", "GE": "geaerospace.com", "CAT": "caterpillar.com", "BA": "boeing.com", "HON": "honeywell.com", "UPS": "ups.com", "T": "att.com", "VZ": "verizon.com", "NEE": "nexteraenergy.com", "LOW": "lowes.com", "BLK": "blackrock.com", "SPGI": "spglobal.com", "MDT": "medtronic.com"}, C={"NVDA": "#76B900", "AAPL": "#555B66", "MSFT": "#00A4EF", "AMZN": "#FF9900", "GOOGL": "#4285F4", "META": "#0866FF", "TSLA": "#E82127", "AMD": "#ED1C24", "NFLX": "#E50914", "INTC": "#0071C5", "PYPL": "#003087", "UBER": "#276EF1", "JPM": "#0B4EA2", "V": "#1A1F71", "WMT": "#0071CE", "DIS": "#113CCF", "BAC": "#E31837", "XOM": "#ED1B2D", "CVX": "#0054A4", "KO": "#F40009", "PEP": "#004B93", "PFE": "#0093D0", "JNJ": "#D51900", "ABBV": "#071D49", "TMO": "#E4002B", "COST": "#E31837", "AVGO": "#CC092F", "CSCO": "#049FD9", "ADBE": "#FA0F00", "CRM": "#00A1E0", "QCOM": "#3253DC", "TXN": "#CC0000", "ACN": "#A100FF", "LIN": "#0067B1", "NKE": "#F36F21", "MCD": "#DA291C", "IBM": "#1F70C1", "SBUX": "#00704A", "GE": "#0B5FA5", "CAT": "#D9A400", "BA": "#1D439C", "HON": "#E4002B", "UPS": "#5A3A1B", "T": "#009FDB", "VZ": "#CD040B", "NEE": "#0079C1", "LOW": "#004990", "BLK": "#3C3C3C", "SPGI": "#D71920", "MDT": "#0072BC"};
+  window.stkIcon=function(sym){
+    var t=String(sym||'').toUpperCase(), d=D[t];
+    return '<span class="stk-ico" style="background:'+(C[t]||'#475569')+'"><b>'+t.slice(0,4)+'</b>'+
+      (d?'<img src="https://www.google.com/s2/favicons?domain='+d+'&sz=64" alt="Logo '+t+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">':'')+'</span>';
+  };
+})();
+</script>
+<style id="bg3d-style">
+/* Latar 3D animasi (canvas fixed di belakang seluruh konten) */
+#bg3d{position:fixed;left:0;top:0;width:100%;height:100%;z-index:-1;pointer-events:none;display:block}
+html.light #bg3d{filter:none!important}
+/* ===== KARTU TRANSPARAN — atur --card-a (kartu utama) dan --tile-a (panel dalam); 0 = bening penuh, 1 = solid ===== */
+:root{--card-a:.28;--tile-a:.14;--card-al:.45;--tile-al:.30}
+html.dark .bg-card-dark,html.dark .bg-deep-gray,html.dark .mlc-panel,html.dark .mlc-card,html.dark #gm-sub-1 .gm1-bar{background-color:rgba(18,18,18,var(--card-a))}
+html.dark [class*="from-black/80"][class*="to-deep-gray"]{background-image:none;background-color:rgba(18,18,18,var(--card-a))}
+html.dark div[class*="border-card-border"].bg-black,html.dark div[class*="border-card-border"][class*="bg-black/"],html.dark div[class*="border-card-border"].bg-neutral-900,html.dark .liq-kpi{background-color:rgba(0,0,0,var(--tile-a))}
+html.light body .bg-card-dark,html.light body .bg-deep-gray,html.light body .mlc-panel,html.light body .mlc-card,html.light body #gm-sub-1 .gm1-bar{background-color:rgba(255,255,255,var(--card-al))!important}
+html.light body [class*="from-black/80"][class*="to-deep-gray"]{background-image:none!important;background-color:rgba(255,255,255,var(--card-al))!important}
+html.light body div[class*="border-card-border"].bg-black,html.light body div[class*="border-card-border"][class*="bg-black/"],html.light body div[class*="border-card-border"].bg-neutral-900,html.light body .liq-kpi{background-color:rgba(248,250,252,var(--tile-al))!important}
+/* tetap solid: jendela modal/menu samping (overlay) dan header tabel sticky agar baris tidak tembus saat scroll */
+html.dark .fixed .bg-card-dark,html.dark .fixed .bg-deep-gray,html.dark thead.bg-card-dark{background-color:#121212}
+html.dark .fixed div[class*="border-card-border"].bg-black,html.dark .fixed div[class*="border-card-border"][class*="bg-black/"],html.dark .fixed div[class*="border-card-border"].bg-neutral-900{background-color:#000}
+html.light body .fixed .bg-card-dark,html.light body .fixed .bg-deep-gray,html.light body thead.bg-card-dark{background-color:#fff!important}
+html.light body .fixed div[class*="border-card-border"].bg-black,html.light body .fixed div[class*="border-card-border"][class*="bg-black/"],html.light body .fixed div[class*="border-card-border"].bg-neutral-900{background-color:#f8fafc!important}
+/* Kartu Live Crypto Index Tracker & Intraday Telemetry Stream: wadah grafik bening */
+html.dark #intraday-telemetry-card,html.dark #crypto-subpage-1>div:first-child>div.bg-card-dark{background-color:rgba(18,18,18,.16)}
+html.dark #intraday-telemetry-card div.bg-black\/50,html.dark #crypto-subpage-1 div.bg-black\/40{background-color:rgba(0,0,0,.06)}
+html.light body #intraday-telemetry-card,html.light body #crypto-subpage-1>div:first-child>div.bg-card-dark{background-color:rgba(255,255,255,.3)!important}
+html.light body #intraday-telemetry-card div.bg-black\/50,html.light body #crypto-subpage-1 div.bg-black\/40{background-color:rgba(248,250,252,.18)!important}
+@media print{#bg3d{display:none}}
 </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
+<canvas id="bg3d" aria-hidden="true"></canvas>
     <!-- ⚡ LIVE STREAMING TICKS TICKER BAR -->
     <div class="bg-card-dark border-b border-card-border py-2 text-xs overflow-hidden z-40 relative">
         <div class="flex items-center space-x-2 px-4 absolute left-0 top-0 bottom-0 bg-card-dark z-10 border-r border-card-border shadow-md">
@@ -723,7 +766,7 @@ html.light [class*="bg-black/6"],html.light [class*="bg-black/7"]{background-col
                   <div><div class="text-[10px] text-gray-400">BTC Dominance</div><strong id="stat-btc-dom" class="text-xl text-white">56.4%</strong></div>
                   <span id="dom-status" class="px-2 py-0.5 rounded-md text-[9px] font-mono font-bold border bg-gray-500/15 text-gray-300 border-gray-500/30">SEIMBANG</span>
                 </div>
-                <div class="relative h-24 mt-2 rounded-lg overflow-hidden bg-black/30 border border-card-border"><canvas id="mini-dom-pro" class="w-full h-full" aria-label="Grafik area dominasi pasar kripto otomatis"></canvas></div>
+                <div class="relative h-32 mt-2 rounded-lg overflow-hidden bg-black/30 border border-card-border"><canvas id="mini-dom-pro" class="w-full h-full" aria-label="Grafik area dominasi pasar kripto otomatis"></canvas></div>
                 <div class="grid grid-cols-4 gap-1 mt-2 text-[9px] text-gray-400 font-mono">
                   <div class="flex flex-col"><span><i class="inline-block w-1.5 h-1.5 rounded-full mr-1" style="background:#F7931A"></i>BTC</span><span id="leg-btc" class="text-gray-200">56.4%</span></div>
                   <div class="flex flex-col"><span><i class="inline-block w-1.5 h-1.5 rounded-full mr-1" style="background:#627EEA"></i>ETH</span><span id="leg-eth" class="text-gray-200">16.2%</span></div>
@@ -2320,7 +2363,7 @@ html.light [class*="bg-black/6"],html.light [class*="bg-black/7"]{background-col
             const pageData = listToRender.slice(startIndex, endIndex);
             tbody.innerHTML = pageData.map(stk => `
                 <tr class="hover:bg-neutral-900 transition-colors" data-st="${stk.symbol}">
-                    <td class="py-3 px-4 font-bold text-white">${stk.symbol}</td>
+                    <td class="py-3 px-4 font-bold text-white"><div class="stk-sym">${window.stkIcon?window.stkIcon(stk.symbol):''}<span>${stk.symbol}</span></div></td>
                     <td class="py-3 px-4 text-gray-300">${stk.name}</td>
                     <td class="py-3 px-4 text-gray-400 text-[11px]">${stk.sector}</td>
                     <td class="py-3 px-4 text-right font-bold text-white cx-sprice" data-p="${stk.price}">$${stk.price.toFixed(2)}</td>
@@ -2699,7 +2742,7 @@ html.light [class*="bg-black/6"],html.light [class*="bg-black/7"]{background-col
                     if (canvas.offsetParent === null) return;
                     const w = canvas.clientWidth, h = canvas.clientHeight; if (!w || !h) return;
                     const C = this.colors(), cs = this.candles, n = cs.length, MONO = 'ui-monospace, SFMono-Regular, Menlo, monospace';
-                    ctx.clearRect(0, 0, w, h); ctx.fillStyle = C.bg; ctx.fillRect(0, 0, w, h);
+                    ctx.clearRect(0, 0, w, h); /* latar kanvas dibiarkan transparan */
                     const left = 10, right = w - 54, top = 44, volH = Math.max(38, h * 0.15), volBottom = h - 20, volTop = volBottom - volH, priceBottom = volTop - 12;
                     ctx.font = '700 10px ' + MONO; ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
                     ctx.fillStyle = C.up; ctx.fillText('CANDLESTICK • ' + this.period + ' • ' + (this.auto ? 'AUTO' : 'PAUSED'), left, 14);
@@ -4580,19 +4623,20 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
 })();
 </script>
 <script id="dominance-pro">
-/* STATUS PASAR & DOMINASI PRO — area bertumpuk 100% (BTC • ETH • Stablecoin • Lainnya)
-   mengalir otomatis mengikuti data modul live. Data = simulasi ilustratif. */
+/* STATUS PASAR & DOMINASI PRO — donat komposisi (BTC • ETH • Stablecoin • Lainnya) + tren BTC.D
+   dengan gradien, SMA-10, rentang tinggi/rendah dan titik live. Data = simulasi ilustratif. */
 (function () {
   'use strict';
   var cv = document.getElementById('mini-dom-pro'); if (!cv || window.__domPro) return;
   var ctx = cv.getContext('2d'), N = 40, DUR = 1900, COL = ['#F7931A', '#627EEA', '#26A17B', '#64748B'];
-  var hist = [], t0 = performance.now(), cw = 0, ch = 0, dpr = 1;
+  var hist = [], t0 = performance.now(), cw = 0, ch = 0, dpr = 1, cur = null;
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); }, rnd = function () { return Math.random() - .5; };
   var sv = [56.4, 16.2, 7.1];
   for (var i = 0; i <= N; i++) {
     sv = [clamp(sv[0] + rnd() * .5 + (56.4 - sv[0]) * .08, 54.5, 58.5), clamp(sv[1] + rnd() * .3 + (16.2 - sv[1]) * .08, 15, 17.5), clamp(sv[2] + rnd() * .16 + (7.1 - sv[2]) * .08, 6.3, 8)];
     hist.push([sv[0], sv[1], sv[2], 100 - sv[0] - sv[1] - sv[2]]);
   }
+  cur = hist[N].slice();
   function status(b) {
     var e = document.getElementById('dom-status'); if (!e) return;
     var tr = hist[N][0] - hist[N - 20][0], ar = tr >= 0 ? '▲' : '▼';
@@ -4606,27 +4650,38 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
     if (w !== cw || h !== ch) { cw = w; ch = h; dpr = Math.min(window.devicePixelRatio || 1, 2); cv.width = Math.floor(w * dpr); cv.height = Math.floor(h * dpr); }
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
-    var lt = document.documentElement.classList.contains('light');
-    var L = 22, R = w - 6, T = 6, B = h - 6, slot = (R - L) / (N - 1), prog = clamp((now - t0) / DUR, 0, 1);
-    var xAt = function (k) { return R - (N - k) * slot + slot * (1 - prog); };
-    var yAt = function (v) { return B - v / 100 * (B - T); };
-    ctx.font = '8px ui-monospace,Menlo,monospace'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.lineWidth = 1;
-    [0, 25, 50, 75, 100].forEach(function (g) {
-      var y = Math.round(yAt(g)) + .5; ctx.strokeStyle = lt ? 'rgba(15,23,42,.08)' : 'rgba(255,255,255,.07)';
-      ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(R, y); ctx.stroke(); ctx.fillStyle = lt ? '#64748b' : '#94A3B8'; ctx.fillText(g, 2, clamp(y, 8, h - 8));
-    });
-    ctx.save(); ctx.beginPath(); ctx.rect(L, 0, R - L + 1, h); ctx.clip();
-    var cum = hist.map(function (p) { return [p[0], p[0] + p[1], p[0] + p[1] + p[2], 100]; });
-    for (var k = 3; k >= 0; k--) {
-      ctx.beginPath();
-      for (var i = 0; i <= N; i++) { var x = xAt(i), y = yAt(cum[i][k]); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
-      for (i = N; i >= 0; i--) ctx.lineTo(xAt(i), k ? yAt(cum[i][k - 1]) : yAt(0));
-      ctx.closePath(); ctx.fillStyle = COL[k]; ctx.globalAlpha = .3; ctx.fill(); ctx.globalAlpha = 1;
-      if (k < 3) { ctx.beginPath(); for (i = 0; i <= N; i++) { var xx = xAt(i), yy = yAt(cum[i][k]); i ? ctx.lineTo(xx, yy) : ctx.moveTo(xx, yy); } ctx.strokeStyle = COL[k]; ctx.lineWidth = k ? 1 : 1.8; ctx.stroke(); }
+    var lt = document.documentElement.classList.contains('light'), tx = lt ? '#0f172a' : '#F1F5F9', mu = lt ? '#64748b' : '#94A3B8', gr = lt ? 'rgba(15,23,42,.09)' : 'rgba(255,255,255,.07)';
+    var last = hist[N]; for (var q = 0; q < 4; q++) cur[q] += (last[q] - cur[q]) * .08;
+    /* ---- donat ---- */
+    var r = Math.min(h / 2 - 5, w * .36), cx = r + 8, cy = h / 2, th = Math.max(7, r * .3), rr = r - th / 2, a0 = -Math.PI / 2, gap = .05;
+    ctx.lineWidth = th; ctx.lineCap = 'butt'; ctx.strokeStyle = gr; ctx.beginPath(); ctx.arc(cx, cy, rr, 0, 6.2832); ctx.stroke();
+    var tot = cur[0] + cur[1] + cur[2] + cur[3], a1 = a0;
+    for (var k = 0; k < 4; k++) {
+      var sw = cur[k] / tot * 6.2832; ctx.beginPath(); ctx.arc(cx, cy, rr, a1 + gap / 2, a1 + sw - gap / 2); ctx.strokeStyle = COL[k]; ctx.stroke(); a1 += sw;
     }
+    var dl = hist[N][0] - hist[N - 20][0];
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = tx; ctx.font = '700 ' + Math.round(clamp(r * .36, 10, 14)) + 'px ui-monospace,Menlo,monospace';
+    ctx.fillText(cur[0].toFixed(1) + '%', cx, cy - 4);
+    ctx.font = '600 8px ui-monospace,Menlo,monospace'; ctx.fillStyle = dl >= 0 ? (lt ? '#059669' : '#34D399') : (lt ? '#e11d48' : '#FB7185');
+    ctx.fillText((dl >= 0 ? '▲ ' : '▼ ') + Math.abs(dl).toFixed(2), cx, cy + 8);
+    /* ---- tren BTC.D ---- */
+    var L = cx + r + 20, R = w - 26, T = 14, B = h - 8; if (R - L < 40) return;
+    var ser = hist.map(function (p) { return p[0]; }), mn = Math.min.apply(null, ser), mx = Math.max.apply(null, ser), pad = Math.max((mx - mn) * .2, .15);
+    mn -= pad; mx += pad; var slot = (R - L) / (N - 1), prog = clamp((now - t0) / DUR, 0, 1);
+    var xAt = function (k) { return R - (N - k) * slot + slot * (1 - prog); }, yAt = function (v) { return B - (v - mn) / (mx - mn) * (B - T); };
+    ctx.font = '8px ui-monospace,Menlo,monospace'; ctx.textAlign = 'left'; ctx.fillStyle = mu; ctx.lineWidth = 1;
+    ctx.fillText('BTC.D', L, 6);
+    [0, .5, 1].forEach(function (g) { var v = mn + (mx - mn) * g, y = Math.round(yAt(v)) + .5; ctx.strokeStyle = gr; ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(R, y); ctx.stroke(); ctx.fillStyle = mu; ctx.textBaseline = 'middle'; ctx.fillText(v.toFixed(1), R + 3, y); });
+    ctx.save(); ctx.beginPath(); ctx.rect(L, 0, R - L + 1, h); ctx.clip();
+    var gd = ctx.createLinearGradient(0, T, 0, B); gd.addColorStop(0, 'rgba(247,147,26,.38)'); gd.addColorStop(1, 'rgba(247,147,26,0)');
+    ctx.beginPath(); for (var i = 0; i <= N; i++) { var x = xAt(i), y = yAt(ser[i]); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+    ctx.lineTo(xAt(N), B); ctx.lineTo(xAt(0), B); ctx.closePath(); ctx.fillStyle = gd; ctx.fill();
+    ctx.beginPath(); for (i = 0; i <= N; i++) { x = xAt(i); y = yAt(ser[i]); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+    ctx.strokeStyle = COL[0]; ctx.lineWidth = 1.6; ctx.lineJoin = 'round'; ctx.stroke();
+    ctx.setLineDash([3, 3]); ctx.beginPath(); for (i = 9; i <= N; i++) { var m = 0; for (var j = i - 9; j <= i; j++) m += ser[j]; m /= 10; x = xAt(i); y = yAt(m); i > 9 ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+    ctx.strokeStyle = lt ? 'rgba(15,23,42,.55)' : 'rgba(226,232,240,.6)'; ctx.lineWidth = 1; ctx.stroke(); ctx.setLineDash([]);
     ctx.restore();
-    /* titik live pada batas BTC */
-    var vb = hist[N - 1][0] + (hist[N][0] - hist[N - 1][0]) * prog, dy = yAt(vb), ph = (now % 1600) / 1600;
+    var vb = ser[N - 1] + (ser[N] - ser[N - 1]) * prog, dy = yAt(vb), ph = (now % 1600) / 1600;
     ctx.beginPath(); ctx.arc(R, dy, 3 + ph * 6, 0, 6.2832); ctx.strokeStyle = COL[0]; ctx.globalAlpha = 1 - ph; ctx.lineWidth = 1; ctx.stroke(); ctx.globalAlpha = 1;
     ctx.beginPath(); ctx.arc(R, dy, 3, 0, 6.2832); ctx.fillStyle = COL[0]; ctx.fill();
   }
@@ -4704,7 +4759,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     var L = 8, R = w - 68, T = 30, B = h - 20, gap = 8;
     var rH = I.rsi ? Math.max(46, h * .13) : 0, vH = I.vol ? Math.max(40, h * .12) : 0;
     var rTop = B - rH, vBot = rH ? rTop - gap : B, vTop = vBot - vH, pBot = vH ? vTop - gap : vBot;
-    ctx.clearRect(0, 0, w, h); ctx.fillStyle = C.bg; ctx.fillRect(0, 0, w, h);
+    ctx.clearRect(0, 0, w, h); /* latar kanvas dibiarkan transparan */
     var min = Infinity, max = -Infinity;
     cs.forEach(function (c, k) { min = Math.min(min, c.l); max = Math.max(max, c.h); if (I.bb && bo.u[s0 + k] != null) { min = Math.min(min, bo.l[s0 + k]); max = Math.max(max, bo.u[s0 + k]); } });
     var pad = (max - min) * .08 || 1; min -= pad; max += pad;
@@ -5013,5 +5068,98 @@ canvas.cx-mini[data-kind="stock"]{width:96px;flex-basis:96px}
 })();
 </script>
 
+<script id="bg3d-js">
+/* LATAR 3D — jaring partikel berputar dengan perspektif nyata, 3 polihedron wireframe melayang,
+   dan grid lantai yang bergerak ke arah penonton. Parallax mengikuti kursor. Tanpa library eksternal.
+   Mendukung tema gelap/terang, berhenti saat tab tersembunyi, dan statis bila prefers-reduced-motion. */
+(function () {
+  'use strict';
+  var cv = document.getElementById('bg3d'); if (!cv || window.__bg3d) return; window.__bg3d = true;
+  var ctx = cv.getContext('2d'), w = 0, h = 0, dpr = 1, tx = 0, ty = 0, mx = 0, my = 0, last = performance.now(), T = 0;
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var CAM = 10, NP = 90, P = [], i, j;
+  var rnd = function (a, b) { return a + Math.random() * (b - a); }, clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
+  for (i = 0; i < NP; i++) P.push({ x: rnd(-7, 7), y: rnd(-4.5, 3), z: rnd(-7, 7), vx: rnd(-.15, .15), vy: rnd(-.1, .1), vz: rnd(-.15, .15), c: i % 3 });
+  var ph = (1 + Math.sqrt(5)) / 2, V = [[-1, ph, 0], [1, ph, 0], [-1, -ph, 0], [1, -ph, 0], [0, -1, ph], [0, 1, ph], [0, -1, -ph], [0, 1, -ph], [ph, 0, -1], [ph, 0, 1], [-ph, 0, -1], [-ph, 0, 1]], E = [];
+  for (i = 0; i < 12; i++) for (j = i + 1; j < 12; j++) if (Math.abs(Math.hypot(V[i][0] - V[j][0], V[i][1] - V[j][1], V[i][2] - V[j][2]) - 2) < .01) E.push([i, j]);
+  var SH = [{ o: [-5.4, -1.2, 1], s: 1.5, sp: .35 }, { o: [5.6, .4, -1.5], s: 1.1, sp: -.5 }, { o: [.6, -3.1, -3], s: .8, sp: .6 }];
+  var DK = { n: ['56,189,248', '129,140,248', '244,114,182'], g: '56,189,248', a: 1 }, LT = { n: ['2,132,199', '79,70,229', '219,39,119'], g: '71,85,105', a: .7 };
+
+  function size() {
+    w = window.innerWidth; h = window.innerHeight; dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    cv.width = Math.floor(w * dpr); cv.height = Math.floor(h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (RM) draw(0);
+  }
+  window.addEventListener('resize', size);
+  window.addEventListener('mousemove', function (e) { tx = e.clientX / w * 2 - 1; ty = e.clientY / h * 2 - 1; }, { passive: true });
+
+  function draw(dt) {
+    var lt = document.documentElement.classList.contains('light'), C = lt ? LT : DK, A = C.a;
+    var f = Math.max(w, h) * .8, cx = w / 2 + mx * 26, cy = h * .4 + my * 14;
+    T += dt; mx += (tx - mx) * .04; my += (ty - my) * .04;
+    var ya = T * .06 + mx * .35, xa = -.12 + my * .14, ca = Math.cos(ya), sa = Math.sin(ya), cb = Math.cos(xa), sb = Math.sin(xa);
+    ctx.clearRect(0, 0, w, h);
+    /* halo latar */
+    var rg = ctx.createRadialGradient(w / 2, h * .3, 0, w / 2, h * .3, Math.max(w, h) * .7);
+    rg.addColorStop(0, lt ? 'rgba(79,70,229,.07)' : 'rgba(79,70,229,.16)'); rg.addColorStop(1, 'rgba(79,70,229,0)');
+    ctx.fillStyle = rg; ctx.fillRect(0, 0, w, h);
+    /* grid lantai bergerak */
+    var FY = 1.7, hy = cy + FY * f / 40, gl = ctx.createLinearGradient(0, hy, 0, h);
+    gl.addColorStop(0, 'rgba(' + C.g + ',0)'); gl.addColorStop(1, 'rgba(' + C.g + ',' + (.32 * A) + ')');
+    ctx.lineWidth = 1; ctx.strokeStyle = gl; ctx.beginPath();
+    for (i = -24; i <= 24; i += 2) { ctx.moveTo(cx + i * f / 1.2, cy + FY * f / 1.2); ctx.lineTo(cx + i * f / 40, hy); }
+    ctx.stroke();
+    var off = (T * 1.1) % 2;
+    for (i = 0; i < 20; i++) {
+      var z = 1.2 + i * 2 - off, sy = cy + FY * f / z; if (z < 1.2) continue;
+      ctx.strokeStyle = 'rgba(' + C.g + ',' + (clamp(1 - z / 40, 0, 1) * .34 * A) + ')'; ctx.beginPath(); ctx.moveTo(0, sy); ctx.lineTo(w, sy); ctx.stroke();
+    }
+    /* polihedron wireframe */
+    var pr = function (x, y, z) {
+      var x1 = x * ca + z * sa, z1 = -x * sa + z * ca, y2 = y * cb - z1 * sb, z2 = y * sb + z1 * cb + CAM;
+      return [cx + x1 * f / z2, cy + y2 * f / z2, z2];
+    };
+    SH.forEach(function (S, n) {
+      var r = T * S.sp, cr = Math.cos(r), sr = Math.sin(r), cq = Math.cos(r * .7), sq = Math.sin(r * .7);
+      var Q = V.map(function (v) {
+        var x = v[0] * cr + v[2] * sr, z = -v[0] * sr + v[2] * cr, y = v[1] * cq - z * sq; z = v[1] * sq + z * cq;
+        return pr(S.o[0] + x * S.s, S.o[1] + y * S.s, S.o[2] + z * S.s);
+      });
+      ctx.strokeStyle = 'rgba(' + C.n[n % 3] + ',' + (.38 * A) + ')'; ctx.lineWidth = 1.1; ctx.beginPath();
+      E.forEach(function (e) { var a = Q[e[0]], b = Q[e[1]]; if (a[2] > .6 && b[2] > .6) { ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); } });
+      ctx.stroke();
+    });
+    /* jaring partikel 3D */
+    var Q2 = [];
+    for (i = 0; i < NP; i++) {
+      var p = P[i];
+      p.x += p.vx * dt; p.y += p.vy * dt; p.z += p.vz * dt;
+      if (p.x > 7 || p.x < -7) p.vx *= -1; if (p.y > 3 || p.y < -4.5) p.vy *= -1; if (p.z > 7 || p.z < -7) p.vz *= -1;
+      var q = pr(p.x, p.y, p.z); q.push(p.c); Q2.push(q);
+    }
+    ctx.lineWidth = 1;
+    for (i = 0; i < NP; i++) for (j = i + 1; j < NP; j++) {
+      var dx = P[i].x - P[j].x, dy = P[i].y - P[j].y, dz = P[i].z - P[j].z, d2 = dx * dx + dy * dy + dz * dz;
+      if (d2 < 7.5) {
+        var a = Q2[i], b = Q2[j]; if (a[2] < .6 || b[2] < .6) continue;
+        var al = (1 - d2 / 7.5) * .34 * A * clamp(1.6 - (a[2] + b[2]) / 26, .2, 1);
+        ctx.strokeStyle = 'rgba(' + C.n[a[3]] + ',' + al + ')'; ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+      }
+    }
+    for (i = 0; i < NP; i++) {
+      var s = Q2[i]; if (s[2] < .6) continue;
+      var rr = clamp(.1 * f / s[2], .8, 4), da = clamp(1.7 - s[2] / 14, .25, 1) * A;
+      ctx.fillStyle = 'rgba(' + C.n[s[3]] + ',' + (.14 * da) + ')'; ctx.beginPath(); ctx.arc(s[0], s[1], rr * 2.6, 0, 6.2832); ctx.fill();
+      ctx.fillStyle = 'rgba(' + C.n[s[3]] + ',' + (.85 * da) + ')'; ctx.beginPath(); ctx.arc(s[0], s[1], rr, 0, 6.2832); ctx.fill();
+    }
+  }
+  function loop(now) {
+    requestAnimationFrame(loop);
+    var dt = Math.min((now - last) / 1000, .05); last = now;
+    if (document.hidden) return; draw(dt);
+  }
+  size(); if (!RM) requestAnimationFrame(loop);
+})();
+</script>
 </body>
 </html>
