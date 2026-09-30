@@ -1312,7 +1312,7 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
             <div id="se-sub-1" class="space-y-6">
             <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-card-border pb-3">
-                <div><h2 class="text-lg font-bold text-white uppercase tracking-wide">STOCK EXCHANGE</h2><p class="text-xs text-gray-400">Ringkasan pergerakan pasar saham dengan grafik mini yang bergerak otomatis.</p></div>
+                <div><h2 class="text-lg font-bold text-white uppercase tracking-wide">Overview Market</h2><p class="text-xs text-gray-400">Ringkasan pergerakan pasar saham dengan grafik mini yang bergerak otomatis.</p></div>
                 <span class="text-xs text-emerald-400"><i class="fa-solid fa-circle animate-pulse mr-1"></i> AUTO UPDATE</span>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -1651,7 +1651,12 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
       </div>
       <div class="flex flex-wrap items-center gap-1.5 text-[10px]" id="se2-chips"></div>
       <div class="flex gap-2"><input id="se2-q" maxlength="10" placeholder="Cari ticker AS, mis. AMD" class="flex-1 min-w-0 bg-black/50 border border-card-border rounded-lg px-3 py-1.5 text-xs text-white outline-none focus:border-brand-accent"><button id="se2-go" type="button" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white">Muat</button></div>
-      <div class="relative h-[260px] sm:h-[310px] bg-black/50 border border-card-border rounded-xl p-1"><canvas id="se2-main"></canvas></div>
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+        <div class="md:col-span-3 flex items-center justify-center"><div id="se2-radwrap" class="relative w-full max-w-[400px] aspect-square rounded-full overflow-hidden border border-card-border" style="background:radial-gradient(circle,rgba(56,189,248,.08),rgba(0,0,0,.6) 70%)"><canvas id="se2-main"></canvas><canvas id="se2-sweep" class="absolute left-0 top-0 pointer-events-none" style="width:100%;height:100%"></canvas></div></div>
+        <div id="se2-dec" class="md:col-span-2 bg-black/50 border border-card-border rounded-xl p-3 space-y-2 text-[11px]"></div>
+      </div>
+      <div class="flex items-center gap-2 text-[10px] text-gray-500 uppercase tracking-wider"><span class="se2-pulse"></span>Live Tick &bull; 90 tick terakhir, berjalan otomatis</div>
+      <div class="relative h-[90px] bg-black/50 border border-card-border rounded-xl p-1"><canvas id="se2-tape"></canvas></div>
       <div class="text-[10px] text-gray-500 uppercase tracking-wider">MTPI Score (-1 … +1) &bull; ▲ ▼ = pergantian rezim terkonfirmasi</div>
       <div class="relative h-[110px] bg-black/50 border border-card-border rounded-xl p-1"><canvas id="se2-score"></canvas></div>
       <div id="se2-live" class="flex flex-wrap items-center justify-between gap-2 text-[10px] text-gray-400 bg-black/50 border border-card-border rounded-lg px-3 py-1.5"></div>
@@ -1679,7 +1684,7 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
       <div class="overflow-x-auto"><table class="w-full text-xs font-mono"><thead><tr class="text-gray-500 text-[10px] uppercase"><th class="text-left py-1.5">Simbol</th><th class="text-right">Harga</th><th class="text-right">Perubahan</th><th class="text-right hidden sm:table-cell">Volume</th></tr></thead><tbody id="se2-mv"></tbody></table></div>
     </div>
     <div class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl space-y-3 min-w-0">
-      <div class="border-b border-card-border pb-3"><h3 class="text-sm font-bold text-white uppercase tracking-wide">Kalender Libur Bursa AS</h3><p class="text-[11px] text-gray-400">Breaking News </p></div>
+      <div class="border-b border-card-border pb-3"><h3 class="text-sm font-bold text-white uppercase tracking-wide">Kalender Libur Bursa AS</h3><p class="text-[11px] text-gray-400">Dihitung otomatis dari tanggal hari ini</p></div>
       <div id="se2-hol" class="space-y-2 text-xs"></div>
     </div>
   </div>
@@ -5306,9 +5311,9 @@ function mk(sym,name,base){var r=rng(hash(sym+new Date().toDateString())),vol=sy
   var x=o.p;for(var i=0;i<60;i++){o.ser.unshift(x);x*=1+(r()-.5)*vol*.25}o.ser[59]=o.p;S[sym]=o;return o}
 IDX.concat(SEC.map(function(s){return [s[0],s[1],100]}),WL,EX).forEach(function(a){mk(a[0],a[1],a[2])});
 /* ---------- fetch online ---------- */
-var ROUTES=[function(u){return u},function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u)},function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u)}],ri=0,deadUntil=0;
+var ROUTES=[function(u){return u},function(u){return u.replace('query1.','query2.')},function(u){return 'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u)},function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u)}],ri=0,deadUntil=0;
 function getJ(u){return new Promise(function(res,rej){if(Date.now()<deadUntil)return rej(new Error('offline'));var k=0,nf=false;
-  (function next(){if(k>=ROUTES.length){if(!nf)deadUntil=Date.now()+90000;return rej(new Error(nf?'notfound':'offline'))}
+  (function next(){if(k>=ROUTES.length){if(!nf)deadUntil=Date.now()+30000;return rej(new Error(nf?'notfound':'offline'))}
    var idx=(ri+k)%ROUTES.length;k++;var c=new AbortController(),t=setTimeout(function(){c.abort()},7000);
    fetch(ROUTES[idx](u),{signal:c.signal}).then(function(r){clearTimeout(t);if(r.status===404){nf=true;throw 0}if(!r.ok)throw 0;return r.json()})
    .then(function(j){if(!j||!j.chart||!j.chart.result||!j.chart.result[0])throw 0;ri=idx;res(j.chart.result[0])}).catch(function(){clearTimeout(t);if(nf)return rej(new Error('notfound'));next()})})()})}
@@ -5361,10 +5366,14 @@ var ROWH=34,SECRANK={},CYC=['XLK','XLY','XLF','XLI','XLB','XLE','XLC'],DEF=['XLP
 function buildSec(){var b=$('se2-sec');b.style.height=SEC.length*ROWH+'px';
   b.innerHTML=SEC.map(function(s){return '<div class="se2-srow" data-sym="'+s[0]+'" data-k="'+s[0]+'" title="Klik untuk membuka MTPI '+s[0]+'"><span class="se2-rk text-[10px] text-gray-500 font-mono w-7 text-right"></span><span class="text-[11px] font-bold text-white font-mono w-11">'+s[0]+'</span><span class="text-[10px] text-gray-400 w-24 truncate hidden sm:block">'+esc(s[1])+'</span><div class="se2-bar"><i class="se2-fill"></i></div><svg class="se2-sp" viewBox="0 0 54 18" width="54" height="18"><polyline fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="se2-pv text-[11px] font-mono font-bold w-14 text-right"></span></div>'}).join('')}
 var SECH={XLK:['NVDA','AAPL','MSFT'],XLF:['BRK-B','JPM','V'],XLE:['XOM','CVX','COP'],XLV:['LLY','UNH','JNJ'],XLY:['AMZN','TSLA','HD'],XLP:['WMT','COST','PG'],XLI:['GE','CAT','RTX'],XLB:['LIN','SHW','FCX'],XLU:['NEE','SO','DUK'],XLRE:['PLD','AMT','EQIX'],XLC:['META','GOOGL','NFLX']},SLH='';
+var XB={'BRK-B':470,CVX:155,COP:105,LLY:800,UNH:500,JNJ:160,HD:380,COST:950,PG:165,GE:250,CAT:400,RTX:150,LIN:450,SHW:350,FCX:45,NEE:75,SO:90,DUK:115,PLD:110,AMT:200,EQIX:850},EXT=[];
+Object.keys(SECH).forEach(function(k){SECH[k].forEach(function(t){if(!S[t]&&EXT.indexOf(t)<0){mk(t,t,XB[t]||100);EXT.push(t)}})});
+function cp(t){var o=S[t];if(!o)return '';var p=pct(o);return ' <span style="color:'+col(p)+'">'+(p>=0?'+':'')+F(p)+'%</span>'}
+function allSyms(){var u={};[M.sym,'SPY','QQQ'].concat(SEC.map(function(s){return s[0]}),WL.map(function(w){return w[0]}),EXT).forEach(function(k){u[k]=1});return Object.keys(u)}
 function rSecList(a){var el=$('se2-seclist');if(!el)return;
   var h=a.map(function(x,i){var c=col(x.p),cy=CYC.indexOf(x.k)>=0,gc=cy?'#38BDF8':'#c084fc';
-   return '<div class="se2-row p-2 rounded-lg border border-card-border bg-black/40" data-sym="'+x.k+'"><div class="flex items-center justify-between gap-2"><span class="flex items-center gap-1.5 min-w-0"><span class="text-[10px] text-gray-500 font-mono w-4 text-right">'+(i+1)+'</span><b class="text-white font-mono text-[11px]">'+x.k+'</b><span class="text-[10px] text-gray-400 truncate">'+esc(x.n)+'</span></span><span class="flex items-center gap-2 font-mono text-[11px] shrink-0"><span class="text-gray-300">$'+F(x.o.p)+'</span><b style="color:'+c+'">'+(x.p>=0?'+':'')+F(x.p)+'%</b></span></div><div class="flex flex-wrap items-center gap-1 mt-1.5"><span class="se2-tag" style="color:'+gc+';border-color:'+gc+'55">'+(cy?'SIKLIKAL':'DEFENSIF')+'</span>'+(SECH[x.k]||[]).map(function(t){return '<button type="button" data-sym="'+t+'" class="px-1.5 py-0.5 rounded border border-card-border bg-black text-[10px] font-mono text-gray-300 hover:text-white hover:border-brand-accent">'+t+'</button>'}).join('')+'</div></div>'}).join('');
-  if(h!==SLH){SLH=h;el.innerHTML=h}}
+   return '<div class="se2-row p-2 rounded-lg border border-card-border bg-black/40" data-sym="'+x.k+'"><div class="flex items-center justify-between gap-2"><span class="flex items-center gap-1.5 min-w-0"><span class="text-[10px] text-gray-500 font-mono w-4 text-right">'+(i+1)+'</span><b class="text-white font-mono text-[11px]">'+x.k+'</b><span class="text-[10px] text-gray-400 truncate">'+esc(x.n)+'</span></span><span class="flex items-center gap-2 font-mono text-[11px] shrink-0"><span class="text-gray-300">$'+F(x.o.p)+'</span><b style="color:'+c+'">'+(x.p>=0?'+':'')+F(x.p)+'%</b></span></div><div class="flex flex-wrap items-center gap-1 mt-1.5"><span class="se2-tag" style="color:'+gc+';border-color:'+gc+'55">'+(cy?'SIKLIKAL':'DEFENSIF')+'</span>'+(SECH[x.k]||[]).map(function(t){return '<button type="button" data-sym="'+t+'" class="px-1.5 py-0.5 rounded border border-card-border bg-black text-[10px] font-mono text-gray-300 hover:text-white hover:border-brand-accent">'+t+cp(t)+'</button>'}).join('')+'</div></div>'}).join('');
+  if(h!==SLH){var st=el.scrollTop;SLH=h;el.innerHTML=h;el.scrollTop=st}}
 function rSec(){var b=$('se2-sec');if(!b)return;if(!b.firstChild)buildSec();
   var a=SEC.map(function(s){return {k:s[0],n:s[1],p:pct(S[s[0]]),o:S[s[0]]}}).sort(function(x,y){return y.p-x.p}),mx=Math.max(1,Math.max.apply(null,a.map(function(x){return Math.abs(x.p)})));
   a.forEach(function(x,i){var el=b.querySelector('[data-k="'+x.k+'"]');if(!el)return;el.style.top=i*ROWH+'px';var c=col(x.p),w=Math.abs(x.p)/mx*50,pr=SECRANK[x.k],mv=pr==null||pr===i?'':(i<pr?'<b style="color:'+UP+'">▲</b>':'<b style="color:'+DN+'">▼</b>');
@@ -5426,28 +5435,57 @@ function rMain(){var o=S[M.sym];if(!o||!M.data.length)return;M.data[M.data.lengt
   var f=(session().open||M.src==='sim')?1:0,R=mtpi(M.data,f),n=M.data.length,N=Math.min(RG[M.range],n),a=n-N,sl=function(z){return z.slice(a)},p=pct(o),c=col(p),L=n-1;
   $('se2-msym').textContent=M.sym;$('se2-mname').textContent=o.n;$('se2-mtag').outerHTML=tag(o).replace('class="','id="se2-mtag" class="');
   $('se2-mp').textContent='$'+F(o.p);$('se2-mc').innerHTML='<span style="color:'+c+'">'+(p>=0?'▲ +':'▼ ')+F(o.p-o.pc)+' ('+(p>=0?'+':'')+F(p)+'%)</span>';
-  if(!mainChart){mainChart=new Chart($('se2-main'),{type:'line',data:{labels:[],datasets:[{data:[],borderWidth:2.2,tension:.15,pointRadius:function(x){return (M.R&&M.R.flip[x.dataIndex+M.a])?6:0},pointStyle:'triangle',rotation:function(x){return (M.R&&M.R.flip[x.dataIndex+M.a]<0)?180:0},pointBackgroundColor:function(x){return (M.R&&M.R.flip[x.dataIndex+M.a]>0)?UP:DN},pointBorderColor:'#000',segment:{borderColor:function(x){var s=M.R?M.R.state[x.p1DataIndex+M.a]:0;return s>0?UP:s<0?DN:'#9ca3af'},borderDash:function(x){return (M.R&&M.R.forming&&x.p1DataIndex+M.a===M.R.state.length-1)?[4,3]:undefined}}},{data:[],borderColor:'#a78bfa',borderDash:[5,4],borderWidth:1,pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,animation:false,interaction:{mode:'index',intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{label:function(x){return x.datasetIndex?'EMA 50: $'+F(x.raw):'$'+F(x.raw)}}}},scales:{x:{ticks:{color:'#9ca3af',maxTicksLimit:7,maxRotation:0},grid:{color:'rgba(255,255,255,.04)'}},y:{position:'right',ticks:{color:'#9ca3af',callback:function(v){return F(v)}},grid:{color:'rgba(255,255,255,.05)'}}}}});
+  if(!mainChart){mainChart=new Chart($('se2-main'),radarCfg());
    scoreChart=new Chart($('se2-score'),{type:'bar',data:{labels:[],datasets:[{data:[],barPercentage:1,categoryPercentage:1}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(x){return 'MTPI '+(x.raw>=0?'+':'')+F(x.raw)}}}},scales:{x:{display:false},y:{min:-1,max:1,position:'right',ticks:{color:'#9ca3af',stepSize:.5,callback:function(v){return F(v,1)}},grid:{color:function(x){return x.tick.value===0?'rgba(255,255,255,.35)':'rgba(255,255,255,.05)'}}}}}})}
-  M.R=R;M.a=a;var lb=sl(M.labels);mainChart.data.labels=lb;mainChart.data.datasets[0].data=sl(M.data);mainChart.data.datasets[1].data=sl(R.e50);mainChart.update('none');
+  M.R=R;M.a=a;var lb=sl(M.labels),LV=M.range==='LIVE';if(LV&&LT.length)M.lc=LT[LT.length-1][1]>=LT[0][1]?UP:DN;
   var sd=scoreChart.data.datasets[0];scoreChart.data.labels=lb;sd.data=sl(R.score);sd.backgroundColor=sl(R.score).map(function(v){return v>0?'rgba(52,211,153,'+(.35+v*.55).toFixed(2)+')':v<0?'rgba(251,113,133,'+(.35-v*.55).toFixed(2)+')':'#6b7280'});scoreChart.update('none');
   var sc=R.score[L],sn=R.state[L],cl=sn>0?UP:sn<0?DN:'#9ca3af',lbl=sn>0?'BULLISH':sn<0?'BEARISH':'NETRAL',g=Math.abs(sc)*50;
   var vt=function(t){return VN.map(function(v,j){return [v,R.votes[j][L]]}).filter(function(z){return z[0][1]===t}).map(function(z){var u=z[1]>0;return '<div class="flex justify-between py-0.5"><span class="text-gray-400">'+z[0][0]+'</span><b style="color:'+(u?UP:DN)+'">'+(u?'▲ LONG':'▼ SHORT')+'</b></div>'}).join('')};
   var last=M.labels[L-f]||'';
-  LIV=ivals(M.data);var onl=M.src==='live'&&o.src==='live';
+  LIV=ivals(M.data);safe(rRadar)(R,L);var onl=M.src==='live'&&o.src==='live';
   $('se2-live').innerHTML='<span class="flex items-center gap-2"><span class="se2-pulse'+(onl?'':' sim')+'"></span><b class="'+(onl?'text-emerald-400':'text-amber-400')+'">AUTO · '+(onl?'ONLINE':'SIMULASI')+'</b> Trend-following &amp; Osilator dihitung ulang otomatis dari harga '+esc(M.sym)+'</span><span class="font-mono">update '+new Date().toLocaleTimeString('id-ID',{hour12:false})+' · nilai indikator = bar berjalan (tag LIVE = belum terkonfirmasi close)</span>';
   $('se2-dash').innerHTML='<div class="bg-black/50 border border-card-border rounded-xl p-3 space-y-2"><div class="text-[10px] text-gray-500 uppercase tracking-wider">Confirmed Close MTPI</div><div class="flex items-baseline gap-2"><span class="text-3xl font-extrabold font-mono" style="color:'+cl+'">'+(sc>=0?'+':'')+F(sc)+'</span><span class="se2-tag" style="color:'+cl+';border-color:'+cl+'66">'+lbl+'</span></div>'+
    '<div class="relative h-2 rounded-full bg-neutral-800"><div class="absolute top-0 h-2 rounded-full" style="background:'+cl+';'+(sc>=0?'left:50%':'right:50%')+';width:'+g+'%"></div><div class="absolute left-1/2 -top-0.5 w-px h-3 bg-gray-400"></div></div>'+
    '<div class="flex justify-between text-[10px] text-gray-400"><span>Regime: <b class="text-white">'+R.regime+' bar</b></span><span>EMA-cross setuju: <b class="text-white">'+R.agree+'%</b></span></div></div>'+
    indBox(0,R,L)+indBox(1,R,L);
-  $('se2-cf').textContent=f?'Graph AI Networking: '+last:'Infrastructure: '+last}
+  $('se2-cf').textContent=f?'Bar berjalan (garis putus-putus) tidak dihitung — skor & sinyal hanya berubah setelah bar close terkonfirmasi. Bar terkonfirmasi terakhir: '+last:'Semua bar sudah close — skor dihitung dari bar terakhir: '+last}
 
-function rAll(){safe(rSec)();safe(rMov)();safe(rMain)();
+function rAll(){if(!inited||!active())return;safe(rSec)();safe(rMov)();safe(rMain)();safe(rTape)();
   var ks=Object.keys(S),lv=ks.filter(function(k){return S[k].src==='live'}).length,e=$('se2-src');e.className='se2-tag '+(lv?'se2-live':'se2-sim');e.textContent=lv?'ONLINE · '+lv+'/'+ks.length+' LIVE':'SIMULASI · OFFLINE'}
+/* ---------- Radar Deteksi Keputusan (12 indikator MTPI, sapuan otomatis) ---------- */
+var RAD={V:[],c:UP},RSC=[.8,2,.25,3,3,8,0,0,0,4,1.5,0];
+function cl1(x){return Math.max(-1,Math.min(1,x))}
+function radVals(){return VN.map(function(nm,j){var iv=LIV[j];if(!iv)return {v:0,s:0,t:'--',n:nm[0]};var n=parseFloat(String(iv.t).replace('+','')),v;
+  v=j===6?(n-50)/25:j===7?(n-50)/50:j===8?n/150:j===11?(n-.5)*2:Math.tanh(n/RSC[j]);v=cl1(v);v=iv.s*Math.max(.08,Math.abs(v));return {v:v,s:iv.s,t:iv.t,n:nm[0]}})}
+var SL=['EMA','SMA','MACD','P>EMA50','Donchian','ROC','RSI','Stoch','CCI','Mom','AO','%B'];
+function radarCfg(){return {type:'radar',data:{labels:SL,datasets:[{label:'Sinyal',data:[],backgroundColor:UP+'33',borderColor:UP,borderWidth:2,pointRadius:4,tension:.4,pointBackgroundColor:[]},{label:'Netral',data:VN.map(function(){return 0}),borderColor:'rgba(255,255,255,.4)',borderDash:[4,4],borderWidth:1,pointRadius:0,tension:.4,fill:false}]},
+  options:{responsive:true,maintainAspectRatio:false,animation:{duration:700},layout:{padding:14},plugins:{legend:{display:false},tooltip:{callbacks:{title:function(a){return a.length?VN[a[0].dataIndex][0]:''},label:function(x){var o=RAD.V[x.dataIndex];return x.datasetIndex||!o?'':o.t+' · '+(o.s>0?'LONG':'SHORT')}}}},
+   scales:{r:{min:-1,max:1,ticks:{stepSize:.5,color:'#6b7280',backdropColor:'transparent',font:{size:9},callback:function(v){return F(v,1)}},grid:{color:'rgba(255,255,255,.08)',circular:true},angleLines:{color:'rgba(255,255,255,.1)'},pointLabels:{color:'#9ca3af',font:{size:10}}}}}}}
+function rRadar(R,L){var V=radVals(),cnt=0,sm=0,lg=0,sh=0;RAD.V=V;V.forEach(function(x){if(x.s){cnt++;sm+=x.s;if(x.s>0)lg++;else sh++}});
+  var lv=cnt?sm/cnt:0,sc=R.score[L],d=sc>.33?['LONG · BELI',UP]:sc<-.33?['SHORT · JUAL / HINDARI',DN]:['TAHAN · NETRAL','#fbbf24'],c=d[1];RAD.c=c;
+  if(mainChart){var ds=mainChart.data.datasets[0];ds.data=V.map(function(x){return x.v});ds.borderColor=c;ds.backgroundColor=c+'33';ds.pointBackgroundColor=V.map(function(x){return x.s>0?UP:x.s<0?DN:'#6b7280'});mainChart.update()}
+  var top=V.filter(function(x){return x.s}).sort(function(a,b){return Math.abs(b.v)-Math.abs(a.v)}).slice(0,3),ls=lv>.33?'LONG':lv<-.33?'SHORT':'NETRAL',diff=(sc>.33&&lv<-.33)||(sc<-.33&&lv>.33);
+  var e=$('se2-dec');if(!e)return;e.innerHTML='<div class="flex items-center justify-between"><span class="text-[10px] text-gray-500 uppercase tracking-wider">Radar Keputusan · '+esc(M.sym)+'</span><span class="flex items-center gap-1 text-[10px]" style="color:'+c+'"><span class="se2-pulse"></span>SCANNING</span></div>'+
+   '<div class="rounded-lg p-2.5 text-center" style="border:1px solid '+c+'66;background:'+c+'14"><div class="text-[9px] text-gray-400 uppercase tracking-wider">Keputusan terkonfirmasi close</div><div class="text-base font-extrabold" style="color:'+c+'">'+d[0]+'</div><div class="font-mono text-[11px] text-gray-300">Skor MTPI '+(sc>=0?'+':'')+F(sc)+'</div></div>'+
+   '<div class="grid grid-cols-2 gap-2"><div class="bg-black/50 border border-card-border rounded-lg p-2"><div class="text-[9px] text-gray-500 uppercase">Skor live</div><b class="font-mono" style="color:'+col(lv)+'">'+(lv>=0?'+':'')+F(lv)+'</b> <span class="text-gray-400">'+ls+'</span></div><div class="bg-black/50 border border-card-border rounded-lg p-2"><div class="text-[9px] text-gray-500 uppercase">Keyakinan</div><b class="font-mono text-white">'+Math.round(Math.abs(sc)*100)+'%</b></div></div>'+
+   '<div><div class="flex justify-between text-[10px] mb-1"><b style="color:'+UP+'">'+lg+' LONG</b><b style="color:'+DN+'">'+sh+' SHORT</b></div><div class="flex h-2 rounded-full overflow-hidden bg-neutral-800"><div style="width:'+(cnt?lg/cnt*100:0)+'%;background:'+UP+'"></div><div style="width:'+(cnt?sh/cnt*100:0)+'%;background:'+DN+'"></div></div></div>'+
+   '<div><div class="text-[9px] text-gray-500 uppercase tracking-wider mb-1">Sinyal terkuat terdeteksi</div>'+top.map(function(x){return '<div class="flex justify-between py-0.5"><span class="text-gray-300">'+esc(x.n)+'</span><b style="color:'+col(x.v)+'">'+(x.s>0?'▲ LONG':'▼ SHORT')+' '+Math.round(Math.abs(x.v)*100)+'%</b></div>'}).join('')+'</div>'+
+   (diff?'<div class="text-[10px] text-amber-400">Sinyal live berlawanan dengan bar terkonfirmasi — tunggu close.</div>':'')+'<div class="text-[9px] text-gray-500">Analisis indikator otomatis, bukan saran investasi.</div>'}
+var SW={a:0,t:0};
+function sweepFrame(ts){requestAnimationFrame(sweepFrame);var dt=SW.t?Math.min(.1,(ts-SW.t)/1000):0;if(ts-SW.t<30)return;SW.t=ts;SW.a=(SW.a+dt*.9)%(Math.PI*2);
+  var cv=$('se2-sweep'),w=$('se2-radwrap');if(!cv||!w||!mainChart||!mainChart.scales||!mainChart.scales.r||!active())return;
+  var r=mainChart.scales.r,W=w.clientWidth,H=w.clientHeight,dp=window.devicePixelRatio||1;if(cv.width!==Math.round(W*dp)||cv.height!==Math.round(H*dp)){cv.width=Math.round(W*dp);cv.height=Math.round(H*dp)}
+  var x=cv.getContext('2d'),cx=r.xCenter,cy=r.yCenter,R=r.drawingArea,c=RAD.c||UP,a=SW.a,P=Math.PI*2;x.setTransform(dp,0,0,dp,0,0);x.clearRect(0,0,W,H);x.strokeStyle=c+'99';x.lineWidth=1.5;x.beginPath();x.arc(cx,cy,R,0,P);x.stroke();
+  if(x.createConicGradient){var g=x.createConicGradient(a-1.1,cx,cy),k=1.1/P;g.addColorStop(0,c+'00');g.addColorStop(k,c+'55');g.addColorStop(Math.min(.999,k+.002),c+'00');g.addColorStop(1,c+'00');x.fillStyle=g;x.beginPath();x.arc(cx,cy,R,0,P);x.fill()}
+  x.strokeStyle=c;x.lineWidth=1.6;x.beginPath();x.moveTo(cx,cy);x.lineTo(cx+Math.cos(a)*R,cy+Math.sin(a)*R);x.stroke();
+  RAD.V.forEach(function(o,j){if(!o.s)return;var an=-Math.PI/2+j*P/RAD.V.length,rr=(o.v+1)/2*R,px=cx+Math.cos(an)*rr,py=cy+Math.sin(an)*rr,d=((a-an)%P+P)%P,al=d<1.4?1-d/1.4:0,bc=o.s>0?UP:DN;
+   x.fillStyle=bc;x.beginPath();x.arc(px,py,4,0,P);x.fill();if(al>0){x.strokeStyle=bc;x.globalAlpha=al;x.lineWidth=2;x.beginPath();x.arc(px,py,5+al*11,0,P);x.stroke();x.globalAlpha=1}})}
+requestAnimationFrame(sweepFrame);
 /* ---------- kontrol ---------- */
 function msg(t){var e=$('se2-msg');e.textContent=t||'';e.classList.toggle('hidden',!t)}
 function loadMain(){var sym=M.sym;fetchChart(sym,'2y','1d').then(function(r){if(sym!==M.sym)return;if(r.data.length<210)throw new Error('short');M.labels=r.labels;M.data=r.data;M.pc=r.pc;M.src='live';if(!S[sym])apply(sym,r);msg('');rAll()})
   .catch(function(e){if(e.message==='notfound'&&!S[sym]){msg('Ticker "'+sym+'" tidak ditemukan.');M.sym='SPY';return loadMain()}
-   if(!S[sym]){msg('Tidak dapat memuat '+sym+' (offline).');M.sym='SPY'}else msg(e.message==='Graph AI'?'Networking Infrastructure.':'');genSim();rAll()})}
+   if(!S[sym]){msg('Tidak dapat memuat '+sym+' (offline).');M.sym='SPY'}else msg(e.message==='offline'?'Mode simulasi: sumber data online tidak dapat dijangkau, mencoba lagi otomatis.':'');genSim();rAll()})}
 function setSym(s){M.sym=s;msg('');genSim();rAll();loadMain();chips()}
 function chips(){$('se2-chips').innerHTML=['SPY','QQQ','NVDA','AAPL','MSFT','TSLA','AMZN','META'].map(function(s){return '<button type="button" data-sym="'+s+'" class="px-2.5 py-1 rounded-lg border '+(M.sym===s?'bg-brand-primary text-white border-transparent font-bold':'bg-black border-card-border text-gray-400')+'">'+s+'</button>'}).join('');
   $('se2-ranges').innerHTML=Object.keys(RG).map(function(r){return '<button type="button" data-rg="'+r+'" class="px-2.5 py-1 rounded-lg '+(M.range===r?'bg-brand-primary text-white font-bold':'bg-black border border-card-border text-gray-400')+'">'+r+'</button>'}).join('');
@@ -5496,14 +5534,25 @@ function news(){NLOAD=true;if(!NEWS.length)rNews();
    out.sort(function(x,y){return y.date-x.date});
    if(out.length){NEWS=out.slice(0,16);var u=$('se2-nts');if(u)u.textContent='diperbarui '+new Date().toLocaleTimeString('id-ID',{hour12:false});if(NF!=='all'&&!NEWS.some(function(n){return n.e[0]===NF}))NF='all'}
    rNews()})}
-/* ---------- siklus otomatis ---------- */
+/* ---------- siklus otomatis (berjalan sendiri sejak halaman dimuat) ---------- */
+var PI=5,pre=false,polling=false,LT=[],LTs='',tapeChart;
+function bgOk(){return !document.hidden}
 function active(){var p=$('page-stock-exchange'),s=$('se-sub-2');return p&&p.classList.contains('active')&&s&&!s.classList.contains('hidden')&&!document.hidden}
-function enter(){if(inited)return;inited=true;chips();holidays();genSim();rAll();loadMain();poll(IDX.map(function(a){return a[0]}).concat(SEC.map(function(s){return s[0]}),WL.map(function(w){return w[0]}),['SPY','QQQ'])).then(rAll);news()}
-setInterval(safe(function(){if(!active())return;if(!inited)enter();clock();if(nextPoll>0)nextPoll--}),1000);
-setInterval(safe(function(){if(!active()||!inited)return;stepSim();rAll()}),3000);
-setInterval(safe(function(){if(!active()||!inited||nextPoll>0)return;nextPoll=20;pollN++;var core=IDX.map(function(a){return a[0]}).concat([M.sym]);
-  poll(pollN%3===0?core.concat(SEC.map(function(s){return s[0]}),WL.map(function(w){return w[0]})):core).then(rAll);if(pollN%3===0)holidays();if(pollN%3===0||M.src==='sim')loadMain()}),1000);
-setInterval(safe(function(){if(active())news()}),180000);
+function boot(){if(pre)return;pre=true;genSim();poll(allSyms()).then(rAll);loadMain();news()}
+function enter(){if(inited)return;inited=true;chips();holidays();boot();rAll()}
+var TK={timeZone:'America/New_York',hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'};
+function liveFill(sym){fetchChart(sym,'1d','5m').then(function(r){if(sym!==M.sym)return;LT=r.labels.map(function(l,i){return [l,r.data[i]]}).concat(LT).slice(-300)}).catch(function(){if(sym!==M.sym||LT.length>5)return;var o=S[sym];if(!o)return;var g=rng(hash(sym+'intra')),x=o.p,A=[],t=Date.now();for(var i=0;i<78;i++){A.unshift([new Date(t-i*3e5).toLocaleTimeString('en-US',TF),x]);x/=1+(g()-.5)*Math.max(o.vol,.006)*.35}LT=A.concat(LT).slice(-300)})}
+function tickLive(){var o=S[M.sym];if(!o)return;if(LTs!==M.sym){LTs=M.sym;LT=[];liveFill(M.sym)}LT.push([new Date().toLocaleTimeString('en-US',TK),o.p]);if(LT.length>300)LT.shift()}
+function rTape(){var cv=$('se2-tape');if(!cv||!LT.length)return;var c=LT[LT.length-1][1]>=LT[0][1]?UP:DN;
+  if(!tapeChart)tapeChart=new Chart(cv,{type:'line',data:{labels:[],datasets:[{data:[],borderWidth:1.6,pointRadius:0,tension:.25,fill:true}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(x){return '$'+F(x.raw)}}}},scales:{x:{ticks:{color:'#6b7280',maxTicksLimit:6,maxRotation:0},grid:{display:false}},y:{position:'right',ticks:{color:'#9ca3af',maxTicksLimit:4,callback:function(v){return F(v)}},grid:{color:'rgba(255,255,255,.05)'}}}}});
+  var d=tapeChart.data.datasets[0];tapeChart.data.labels=LT.slice(-90).map(function(z){return z[0]});d.data=LT.slice(-90).map(function(z){return z[1]});d.borderColor=c;d.backgroundColor=c+'22';tapeChart.update('none')}
+setInterval(safe(function(){if(!bgOk())return;if(!pre)boot();if(active()){if(!inited)enter();clock()}if(nextPoll>0)nextPoll--}),1000);
+setInterval(safe(function(){if(!bgOk()||!pre)return;stepSim();tickLive();rAll()}),2000);
+setInterval(safe(function(){if(!bgOk()||!pre||polling||nextPoll>0)return;nextPoll=PI;pollN++;polling=true;var full=pollN%6===0;
+  poll(full?allSyms():[M.sym]).then(function(){polling=false;rAll()},function(){polling=false});
+  if(full)holidays();if(full||M.src==='sim')loadMain()}),1000);
+setInterval(safe(function(){if(bgOk())news()}),180000);
+setTimeout(safe(function(){if(bgOk())boot()}),1200);
 /* ---------- sub-halaman ---------- */
 var ACT='px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition',INA='px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition';
 function sub(n){[1,2].forEach(function(i){var e=$('se-sub-'+i);if(e)e.classList.toggle('hidden',i!==n)});var ind=$('se-sub-ind');if(ind)ind.textContent='Halaman '+n+' dari 2';
