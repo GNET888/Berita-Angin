@@ -5439,7 +5439,7 @@ function rMain(){var o=S[M.sym];if(!o||!M.data.length)return;M.data[M.data.lengt
    '<div class="relative h-2 rounded-full bg-neutral-800"><div class="absolute top-0 h-2 rounded-full" style="background:'+cl+';'+(sc>=0?'left:50%':'right:50%')+';width:'+g+'%"></div><div class="absolute left-1/2 -top-0.5 w-px h-3 bg-gray-400"></div></div>'+
    '<div class="flex justify-between text-[10px] text-gray-400"><span>Regime: <b class="text-white">'+R.regime+' bar</b></span><span>EMA-cross setuju: <b class="text-white">'+R.agree+'%</b></span></div></div>'+
    indBox(0,R,L)+indBox(1,R,L);
-  $('se2-cf').textContent=f?'Bar berjalan (garis putus-putus) tidak dihitung — skor & sinyal hanya berubah setelah bar close terkonfirmasi. Bar terkonfirmasi terakhir: '+last:'Semua bar sudah close — skor dihitung dari bar terakhir: '+last}
+  $('se2-cf').textContent=f?'Graph AI Networking: '+last:'Infrastructure: '+last}
 
 function rAll(){safe(rSec)();safe(rMov)();safe(rMain)();
   var ks=Object.keys(S),lv=ks.filter(function(k){return S[k].src==='live'}).length,e=$('se2-src');e.className='se2-tag '+(lv?'se2-live':'se2-sim');e.textContent=lv?'ONLINE · '+lv+'/'+ks.length+' LIVE':'SIMULASI · OFFLINE'}
@@ -5447,7 +5447,7 @@ function rAll(){safe(rSec)();safe(rMov)();safe(rMain)();
 function msg(t){var e=$('se2-msg');e.textContent=t||'';e.classList.toggle('hidden',!t)}
 function loadMain(){var sym=M.sym;fetchChart(sym,'2y','1d').then(function(r){if(sym!==M.sym)return;if(r.data.length<210)throw new Error('short');M.labels=r.labels;M.data=r.data;M.pc=r.pc;M.src='live';if(!S[sym])apply(sym,r);msg('');rAll()})
   .catch(function(e){if(e.message==='notfound'&&!S[sym]){msg('Ticker "'+sym+'" tidak ditemukan.');M.sym='SPY';return loadMain()}
-   if(!S[sym]){msg('Tidak dapat memuat '+sym+' (offline).');M.sym='SPY'}else msg(e.message==='offline'?'Mode simulasi: sumber data online tidak dapat dijangkau, mencoba lagi otomatis.':'');genSim();rAll()})}
+   if(!S[sym]){msg('Tidak dapat memuat '+sym+' (offline).');M.sym='SPY'}else msg(e.message==='Graph AI'?'Networking Infrastructure.':'');genSim();rAll()})}
 function setSym(s){M.sym=s;msg('');genSim();rAll();loadMain();chips()}
 function chips(){$('se2-chips').innerHTML=['SPY','QQQ','NVDA','AAPL','MSFT','TSLA','AMZN','META'].map(function(s){return '<button type="button" data-sym="'+s+'" class="px-2.5 py-1 rounded-lg border '+(M.sym===s?'bg-brand-primary text-white border-transparent font-bold':'bg-black border-card-border text-gray-400')+'">'+s+'</button>'}).join('');
   $('se2-ranges').innerHTML=Object.keys(RG).map(function(r){return '<button type="button" data-rg="'+r+'" class="px-2.5 py-1 rounded-lg '+(M.range===r?'bg-brand-primary text-white font-bold':'bg-black border border-card-border text-gray-400')+'">'+r+'</button>'}).join('');
