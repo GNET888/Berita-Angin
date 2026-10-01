@@ -1992,7 +1992,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-3">
       <div><span class="text-xs font-semibold text-brand-accent uppercase tracking-wider">Bursa Amerika Serikat &bull; NYSE &amp; NASDAQ</span>
         <h2 class="text-2xl font-extrabold text-white mt-1">US Market Live Monitor</h2>
-        <p class="text-xs text-gray-400 mt-1">Data online otomatis (Yahoo Finance &amp; RSS berita). Bila koneksi/CORS diblokir, halaman beralih ke mode simulasi dan mencoba online kembali secara berkala.</p></div>
+        <p class="text-xs text-gray-400 mt-1">Data online otomatis</p></div>
       <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
         <span id="se2-session" class="px-3 py-1 bg-black/50 border border-card-border rounded-lg text-gray-300">--</span>
         <span id="se2-clock" class="px-3 py-1 bg-black/50 border border-card-border rounded-lg text-emerald-400">--</span>
@@ -2182,6 +2182,27 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                             <canvas id="mlc-gauge" width="240" height="140" class="mx-auto"></canvas>
                             <div id="mlc-regime" class="text-sm font-extrabold tracking-wider -mt-1">--</div>
                             <div id="mlc-regime-d" class="text-[11px] text-gray-400 mt-1">&nbsp;</div>
+                        </div>
+                        <div class="mlc-panel" id="mlc-hm-panel">
+                            <style>
+                                #mlc-hm{display:grid;grid-template-columns:52px 28px repeat(10,minmax(0,1fr));gap:2px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;min-width:300px}
+                                #mlc-hm .h{font-size:8px;color:#9ca3af;text-align:center;line-height:16px;font-weight:700}
+                                #mlc-hm .l{font-size:8px;color:#9ca3af;text-align:left;line-height:20px;white-space:nowrap;overflow:hidden}
+                                #mlc-hm .c{height:20px;line-height:20px;border-radius:2px;text-align:center;font-size:8px;font-weight:600;color:#111;cursor:default;transition:background .5s}
+                                #mlc-hm .c:hover{outline:1px solid #fff;outline-offset:-1px}
+                                #mlc-hm .e{height:20px}
+                                #mlc-hm-bar{height:6px;border-radius:3px;background:linear-gradient(90deg,#d73027,#f46d43,#fdbe78,#fefab4,#c8e682,#66bd63,#1a9850)}
+                                html.light #mlc-hm .h,html.light #mlc-hm .l{color:#64748b}
+                            </style>
+                            <div class="flex items-center justify-between gap-2 mb-1">
+                                <div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold text-left"><i class="fa-solid fa-table-cells text-brand-accent"></i> Peta Panas Skor Likuiditas</div>
+                                <div class="flex gap-1 text-xs"><button id="mlc-hm-d" class="liq-btn on" title="Perubahan skor terhadap kohort awal">&Delta; Poin</button><button id="mlc-hm-v" class="liq-btn" title="Nilai skor absolut">Skor</button></div>
+                            </div>
+                            <div id="mlc-hm-sub" class="text-[10px] text-gray-500 mb-2 text-left">Kohort (baris) &times; horizon langkah ke depan (kolom)</div>
+                            <div class="overflow-x-auto"><div id="mlc-hm"></div></div>
+                            <div class="mt-2"><div id="mlc-hm-bar"></div>
+                                <div class="flex justify-between text-[9px] text-gray-500 mt-1"><span id="mlc-hm-l1">Turun</span><span id="mlc-hm-l2">0</span><span id="mlc-hm-l3">Naik</span></div></div>
+                            <div id="mlc-hm-sum" class="text-[10px] text-gray-400 mt-2 font-mono text-left">--</div>
                         </div>
                         <div class="mlc-panel space-y-2">
                             <div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold">Likuiditas Bersih AS</div>
@@ -4379,6 +4400,69 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     g.textAlign = 'center'; g.fillStyle = '#fff'; g.font = '800 24px Inter, sans-serif'; g.fillText(Math.round(st.shown), cx, cy - R * .38);
     g.fillStyle = '#6b7280'; g.font = '10px Inter, sans-serif'; g.textAlign = 'left'; g.fillText('0', cx - R - 4, cy + 12); g.textAlign = 'right'; g.fillText('100', cx + R + 4, cy + 12);
   }
+  /* ---------- Peta Panas Skor Likuiditas (kohort x horizon, segitiga seperti cohort heat map) ---------- */
+  var HM = { mode: 'd', R: 10, C: 10 };
+  var HMS = [[-1, [215, 48, 39]], [-.6, [244, 109, 67]], [-.25, [253, 190, 120]], [0, [254, 250, 180]], [.25, [200, 230, 130]], [.6, [102, 189, 99]], [1, [26, 152, 80]]];
+  function hmColor(t) {
+    t = clamp(t, -1, 1);
+    for (var i = 1; i < HMS.length; i++) {
+      if (t <= HMS[i][0]) {
+        var a = HMS[i - 1], b = HMS[i], f = (t - a[0]) / (b[0] - a[0]);
+        return 'rgb(' + [0, 1, 2].map(function (k) { return Math.round(a[1][k] + (b[1][k] - a[1][k]) * f); }).join(',') + ')';
+      }
+    }
+    return 'rgb(26,152,80)';
+  }
+  function hmFmt(v, d) { var a = Math.abs(v); return d ? (a >= 10 ? Math.round(v) + '' : v.toFixed(1)) : Math.round(v) + ''; }
+  function hmRender() {
+    var el = $('mlc-hm'); if (!el) return;
+    var sc = H.sc, n = sc.length, R = HM.R, C = HM.C, d = HM.mode === 'd', i, k;
+    if (n < R + 2) return;
+    var rows = [], mx = 1.5, sum = 0, cnt = 0, pos = 0;
+    for (i = 0; i < R; i++) {
+      var s = n - 1 - (R - i), avail = Math.min(C, n - 1 - s), cells = [];
+      for (k = 1; k <= C; k++) {
+        if (k > avail) { cells.push(null); continue; }
+        var v = d ? sc[s + k] - sc[s] : sc[s + k];
+        cells.push(v); sum += v; cnt++;
+        if (d) { mx = Math.max(mx, Math.abs(v)); if (v > 0) pos++; } else if (v >= 62) pos++;
+      }
+      rows.push({ t: H.t[s], b: sc[s], c: cells, s: s });
+    }
+    var out = '<div class="h" style="text-align:left">KOHORT</div><div class="h">AWAL</div>';
+    for (k = 1; k <= C; k++) out += '<div class="h">' + k + '</div>';
+    rows.forEach(function (r) {
+      out += '<div class="l">' + r.t + '</div><div class="l" style="text-align:center">' + r.b.toFixed(0) + '</div>';
+      r.c.forEach(function (v, j) {
+        if (v === null) { out += '<div class="e"></div>'; return; }
+        var col = hmColor(d ? v / mx : (v - 50) / 20);
+        var tip = 'Kohort ' + r.t + ' (skor ' + r.b.toFixed(1) + ') → +' + (j + 1) + ' langkah: ' + (d ? (v >= 0 ? '+' : '') + v.toFixed(2) + ' poin' : 'skor ' + v.toFixed(1));
+        out += '<div class="c" style="background:' + col + '" title="' + tip + '">' + hmFmt(v, d) + '</div>';
+      });
+    });
+    el.innerHTML = out;
+    var q;
+    if ((q = $('mlc-hm-l1'))) q.textContent = d ? '▼ −' + mx.toFixed(1) + ' poin' : 'KETAT (≤30)';
+    if ((q = $('mlc-hm-l2'))) q.textContent = d ? '0' : '50';
+    if ((q = $('mlc-hm-l3'))) q.textContent = d ? '+' + mx.toFixed(1) + ' poin ▲' : 'EKSPANSIF (≥70)';
+    if ((q = $('mlc-hm-sub'))) q.textContent = d ? 'Δ skor vs kohort awal · baris = waktu mulai, kolom = langkah ke depan' : 'Skor absolut pada tiap langkah · baris = waktu mulai, kolom = langkah ke depan';
+    if ((q = $('mlc-hm-sum'))) {
+      var avg = cnt ? sum / cnt : 0;
+      q.innerHTML = d
+        ? 'Sel naik: <b class="text-emerald-400">' + Math.round(pos / cnt * 100) + '%</b> · Rata-rata Δ: <b class="' + (avg >= 0 ? 'text-emerald-400' : 'text-rose-400') + '">' + (avg >= 0 ? '+' : '') + avg.toFixed(2) + '</b> poin'
+        : 'Sel zona ekspansif: <b class="text-emerald-400">' + Math.round(pos / cnt * 100) + '%</b> · Rata-rata skor: <b class="text-white">' + avg.toFixed(1) + '</b>';
+    }
+  }
+  function hmWire() {
+    [['mlc-hm-d', 'd'], ['mlc-hm-v', 'v']].forEach(function (z) {
+      var b = $(z[0]); if (!b) return;
+      b.onclick = function () {
+        HM.mode = z[1];
+        $('mlc-hm-d').classList.toggle('on', z[1] === 'd'); $('mlc-hm-v').classList.toggle('on', z[1] === 'v');
+        hmRender();
+      };
+    });
+  }
   /* ---------- Grafik canvas v2 (otomatis via rAF, mengikuti tema) ---------- */
   function mkCharts() {
     if (CH.made) return; var K = window.__proKit; if (!K) return; CH.made = true;
@@ -4511,6 +4595,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     if ((el = $('mlc-upd'))) el.textContent = 'Update ' + clock();
     H.t.push(clock()); H.net.push(+net.toFixed(3)); H.fed.push(+fed.x.toFixed(3)); H.sc.push(+st.score.toFixed(1));
     if (H.t.length > 60) { H.t.shift(); H.net.shift(); H.fed.shift(); H.sc.shift(); }
+    safe(hmRender)();
     if (vis()) { mkCharts(); updCharts(); }
   }
   function tick() {
@@ -4550,7 +4635,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   }
   function loop() { if (!st.paused && vis()) safe(tick)(); setTimeout(loop, st.iv); }
   function start() {
-    safe(wire)(); safe(function () { render(); calRender(); gauge(); })();
+    safe(wire)(); safe(hmWire)(); safe(function () { render(); calRender(); gauge(); })();
     pushAlert('Monitor komponen likuiditas aktif — feed simulasi ilustratif', '#38BDF8');
     loop();
     setInterval(safe(function () { if (vis()) { st.shown += (st.score - st.shown) * .15; gauge(); } }), 60);
