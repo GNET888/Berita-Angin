@@ -212,7 +212,7 @@ html.light [class*="bg-black/6"],html.light [class*="bg-black/7"]{background-col
 #bg3d{position:fixed;left:0;top:0;width:100%;height:100%;z-index:-1;pointer-events:none;display:block}
 html.light #bg3d{filter:none!important}
 /* ===== KARTU TRANSPARAN — atur --card-a (kartu utama) dan --tile-a (panel dalam); 0 = bening penuh, 1 = solid ===== */
-:root{--card-a:.28;--tile-a:.14;--card-al:.45;--tile-al:.30}
+:root{--card-a:.28;--tile-a:.14;--card-al:.38;--tile-al:.26}
 html.dark .bg-card-dark,html.dark .bg-deep-gray,html.dark .mlc-panel,html.dark .mlc-card,html.dark #gm-sub-1 .gm1-bar{background-color:rgba(18,18,18,var(--card-a))}
 html.dark [class*="from-black/80"][class*="to-deep-gray"]{background-image:none;background-color:rgba(18,18,18,var(--card-a))}
 html.dark div[class*="border-card-border"].bg-black,html.dark div[class*="border-card-border"][class*="bg-black/"],html.dark div[class*="border-card-border"].bg-neutral-900,html.dark .liq-kpi{background-color:rgba(0,0,0,var(--tile-a))}
@@ -237,6 +237,8 @@ html.light body .fixed div.bg-black\/50[class*="border-blue-500"],html.light bod
 /* header tabel sticky: kaca buram tipis agar baris yang di-scroll tetap terbaca */
 html.dark thead.bg-card-dark,html.dark .mlc-tbl thead th,html.dark .mlc-tbl tfoot td{background-color:rgba(10,10,10,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 html.light body thead.bg-card-dark,html.light body .mlc-tbl thead th,html.light body .mlc-tbl tfoot td{background-color:rgba(241,245,249,.6)!important;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+/* tema putih: kartu solid + bayangan halus agar tegas di atas latar */
+html.light body .bg-card-dark,html.light body .mlc-panel,html.light body .mlc-card{box-shadow:0 1px 2px rgba(15,23,42,.06),0 10px 28px -14px rgba(15,23,42,.18)!important}
 @media print{#bg3d{display:none}}
 </style>
 <style id="nav-pro-css">
@@ -513,7 +515,7 @@ html.light #sidebar-content .sb-link .sb-chev{color:#94a3b8}
             </nav>
             <div class="sb-foot">
                 <span class="sb-foot-title">Berita Angin</span>
-                <span class="sb-foot-sub">GRAPH AI NETWORKING  &middot; INFRASTURCTURE</span>
+                <span class="sb-foot-sub">1% Issue 99% Fact & Pasar Kaget Digital</span>
             </div>
         </div>
     </div>
@@ -529,7 +531,7 @@ html.light #sidebar-content .sb-link .sb-chev{color:#94a3b8}
                         <span class="text-xs font-semibold text-brand-accent tracking-wide uppercase">Platform Berita & Pasar Web3 Terpadu</span>
                     </div>
                     <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-                        Pusat Informasi Keuangan & <span class="hero-gradient-text">Evolusi Digital</span>
+                        Berita Angin 1% Issue 99% Fact & <span class="hero-gradient-text">Pasar Kaget Digital</span>
                     </h1>
                     <p class="text-gray-300 text-sm sm:text-base font-light leading-relaxed">
                         Dapatkan wawasan terkini seputar pergerakan aset kripto, bursa saham global, dan analisis mendalam berbasis teknologi terdesentralisasi.
@@ -1335,13 +1337,28 @@ html.light #sidebar-content .sb-link .sb-chev{color:#94a3b8}
                             <!-- Area Chart -->
                             <div class="mt-4 rounded-2xl border border-card-border bg-black/50 p-3 sm:p-4">
                                 <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                                    <div class="flex items-center gap-3 text-[10px] font-mono">
-                                        <span class="flex items-center gap-1.5 text-blue-300"><span class="w-2 h-2 rounded-full bg-blue-500"></span>Ethereum</span>
-                                        <span class="flex items-center gap-1.5 text-purple-300"><span class="w-2 h-2 rounded-full bg-purple-500"></span>Polygon</span>
-                                        <span class="flex items-center gap-1.5 text-emerald-300"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Arbitrum</span>
-                                    </div>
-                                    <span id="gas-chart-updated" class="text-[10px] text-gray-500 font-mono">Auto update: --</span>
+                                    <div id="gas-seg" class="gas-segw" role="tablist" aria-label="Pilih jaringan">
+  <button type="button" data-gasnet="all" class="gas-seg-b on">Semua</button>
+  <button type="button" data-gasnet="e" class="gas-seg-b"><i style="background:#3B82F6"></i>Ethereum</button>
+  <button type="button" data-gasnet="p" class="gas-seg-b"><i style="background:#A855F7"></i>Polygon</button>
+  <button type="button" data-gasnet="a" class="gas-seg-b"><i style="background:#10B981"></i>Arbitrum</button>
+</div>
+<style>
+.gas-segw{display:inline-flex;gap:2px;padding:4px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font:600 12px Inter,system-ui,sans-serif}
+.gas-seg-b{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:9px;color:#94A3B8;transition:all .2s}
+.gas-seg-b i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.gas-seg-b:hover{color:#fff}
+.gas-seg-b.on{background:linear-gradient(135deg,#38BDF8,#4F46E5);color:#fff;box-shadow:0 4px 14px rgba(56,189,248,.28)}
+.gas-k{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);min-width:0}
+.gas-kl{font:600 10px Inter,system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#94A3B8}
+.gas-kv{font:800 20px/1.2 Inter,system-ui,sans-serif;color:#F1F5F9;margin-top:2px}.gas-kv small{font-size:11px;font-weight:600;color:#94A3B8}
+.gas-ks{font:600 11px Inter,system-ui,sans-serif;color:#94A3B8;margin-top:1px}
+html.light .gas-segw{background:#f1f5f9;border-color:#e2e8f0}html.light .gas-seg-b{color:#64748b}html.light .gas-seg-b:hover{color:#0f172a}html.light .gas-seg-b.on{color:#fff}
+html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.light .gas-kv{color:#0f172a}
+</style>
+<span id="gas-chart-updated" class="text-[10px] text-gray-500 font-mono">Auto update: --</span>
                                 </div>
+                                <div id="gas-kpi" class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3"></div>
                                 <div class="relative h-[400px] sm:h-[430px] w-full"><canvas id="gas-pro-canvas" class="w-full h-full" aria-label="Grafik gas fee multi-lane Ethereum, Polygon, Arbitrum otomatis"></canvas></div>
                             </div>
                             <!-- Nilai Gas Fee Saat Ini -->
@@ -2036,6 +2053,7 @@ html.light #sidebar-content .sb-link .sb-chev{color:#94a3b8}
     <div class="flex items-center justify-between gap-3 border-b border-card-border pb-3"><div><h3 class="text-sm font-bold text-white uppercase tracking-wide">Berita Pasar AS (Online)</h3><p class="text-[11px] text-gray-400">Dikelompokkan otomatis menurut kejadian di AS &bull; <span id="se2-nts">--</span></p></div><button id="se2-nrf" type="button" class="text-[10px] px-2.5 py-1 rounded-lg bg-black border border-card-border text-gray-300 hover:text-white">Muat ulang</button></div>
     <div id="se2-nfilt" class="flex flex-wrap gap-1.5 text-[10px]"></div>
     <div id="se2-news" class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs"><p class="text-gray-500">Memuat berita...</p></div>
+    <div id="se2-npg" class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-card-border text-[11px]"></div>
   </div>
 </div>
         </section>
@@ -4832,7 +4850,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
 .gmk-wrap{position:relative;height:200px;border-radius:10px;overflow:hidden;background:rgba(0,0,0,.35);border:1px solid #222}
 .gmk-cv{position:absolute;left:0;top:0;width:100%;height:100%;display:block;touch-action:pan-y;cursor:crosshair}
 html.light .gmk-cv{filter:none!important}
-html.light .gmk-wrap{background:#f8fafc;border-color:#e2e8f0}
+html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
 </style>
 <script id="gm-kpi-pro">
 /* ============================================================
@@ -5504,6 +5522,23 @@ html.light .gmk-wrap{background:#f8fafc;border-color:#e2e8f0}
   }
   (function () { var now = Date.now(), i; for (i = 0; i <= G.N; i++) G.d.push(gstep(G.d[G.d.length - 1], now - (G.N - i) * G.DUR)); })();
   function gcong(p) { var s = 0; CH.forEach(function (c) { s += clamp((p[c.k] - c.lo) / (c.hi - c.lo) / 1.3, 0, 1); }); return s / CH.length; }
+  var GV = { m: 'all' };
+  function gseg() { Array.prototype.forEach.call(document.querySelectorAll('[data-gasnet]'), function (b) { b.classList.toggle('on', b.getAttribute('data-gasnet') === GV.m); }); }
+  function gk() {
+    var el = document.getElementById('gas-kpi'); if (!el) return;
+    var D = G.d, o = D[D.length - 1], h = '', ar = function (d) { return (d >= 0 ? '▲ ' : '▼ ') + Math.abs(d).toFixed(1) + '%'; };
+    var card = function (l, v, sub, col) { return '<div class="gas-k"><div class="gas-kl">' + l + '</div><div class="gas-kv"' + (col ? ' style="color:' + col + '"' : '') + '>' + v + '</div><div class="gas-ks">' + sub + '</div></div>'; };
+    var gw = function (v) { return fG(v) + ' <small>Gwei</small>'; };
+    if (GV.m === 'all') {
+      CH.forEach(function (c) { h += card(c.name, gw(o[c.k]), ar((o[c.k] / D[0][c.k] - 1) * 100), c.col); });
+      var ci = Math.round(gcong(o) * 100); h += card('Kemacetan', ci + '%', ci > 66 ? 'Padat' : ci > 40 ? 'Sedang' : 'Lancar', ci > 66 ? '#FB7185' : ci > 40 ? '#FBBF24' : '#34D399');
+    } else {
+      var c = CH.filter(function (x) { return x.k === GV.m; })[0], a = D.map(function (p) { return p[c.k]; }), av = a.reduce(function (t, v) { return t + v; }, 0) / a.length, sb = 'jendela ' + Math.round(G.N * G.DUR / 1000) + ' dtk';
+      h = card('Saat ini', gw(a[a.length - 1]), ar((a[a.length - 1] / a[0] - 1) * 100), c.col) + card('Rata-rata', gw(av), sb) + card('Terendah', gw(Math.min.apply(null, a)), sb) + card('Tertinggi', gw(Math.max.apply(null, a)), sb);
+    }
+    el.innerHTML = h;
+  }
+  document.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-gasnet]'); if (!b) return; GV.m = b.getAttribute('data-gasnet'); gseg(); gk(); });
   var GAS_TX_UNITS = { transfer: 1, swap: 3.5, nft: 2.5, contract: 8 };
   function gdom() {
     var o = G.d[G.d.length - 1], q = function (id) { return document.getElementById(id); };
@@ -5527,90 +5562,86 @@ html.light .gmk-wrap{background:#f8fafc;border-color:#e2e8f0}
     if (bar) { bar.style.width = pct + '%'; bar.style.background = zone[1]; }
     if (lbl) { lbl.textContent = zone[0]; lbl.style.color = zone[1]; }
     if (pctEl) pctEl.textContent = pct + '%';
+    gk();
   }
   setInterval(function () {
     var l = G.d[G.d.length - 1]; G.d.push(gstep(l, Date.now())); G.d.shift(); G.t0 = performance.now(); gdom();
   }, G.DUR);
   document.addEventListener('change', function (e) { if (e.target && e.target.id === 'gas-tx-type') gdom(); });
-  gdom();
-  /* GAS FEE v2 — 3 panel: (1) ETH stacked base+tip + pita σ + EMA8/21 + zona ambang, (2) beban relatif 3 jaringan (% ambang), (3) heatmap per jaringan + kurva kemacetan */
+  gseg(); gdom();
+  /* GAS FEE v3 — desain modern: pilih jaringan, kurva halus + gradient, zona ambang, EMA8, panel indeks kemacetan, tooltip kartu */
+  var UI = 'Inter,system-ui,-apple-system,sans-serif';
+  function gt(c, t, x, y, col, al, sz, wt) { c.font = (wt || 500) + ' ' + (sz || 11) + 'px ' + UI; c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, x, y); }
+  function rr(c, x, y, w, h, r) { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
+  function sp(c, P_, mv) {
+    var n = P_.length, i, d = [], m = [], h, lim;
+    for (i = 0; i < n - 1; i++) d[i] = (P_[i + 1][1] - P_[i][1]) / (P_[i + 1][0] - P_[i][0]);
+    m[0] = d[0]; m[n - 1] = d[n - 2];
+    for (i = 1; i < n - 1; i++) { m[i] = d[i - 1] * d[i] <= 0 ? 0 : (d[i - 1] + d[i]) / 2; lim = 3 * Math.min(Math.abs(d[i - 1]), Math.abs(d[i])); m[i] = clamp(m[i], -lim, lim); }
+    mv ? c.moveTo(P_[0][0], P_[0][1]) : c.lineTo(P_[0][0], P_[0][1]);
+    for (i = 0; i < n - 1; i++) { h = (P_[i + 1][0] - P_[i][0]) / 3; c.bezierCurveTo(P_[i][0] + h, P_[i][1] + m[i] * h, P_[i + 1][0] - h, P_[i + 1][1] - m[i + 1] * h, P_[i + 1][0], P_[i + 1][1]); }
+  }
+  function pill(c, t, x, y, bg) { c.font = '700 11px ' + UI; var w = c.measureText(t).width + 14; rr(c, x, y - 10, w, 20, 10); c.fillStyle = bg; c.fill(); gt(c, t, x + 7, y + .5, '#fff', 'left', 11, 700); }
+  function gtip(c, w, x, title, rows, P) {
+    var bw = 130, bh = 34 + rows.length * 18, bx; c.font = '500 11px ' + UI;
+    rows.forEach(function (q) { bw = Math.max(bw, c.measureText(q[1]).width + c.measureText(q[2]).width + 44); });
+    bx = x + 14 + bw > w - 4 ? x - 14 - bw : x + 14;
+    c.save(); c.shadowColor = 'rgba(0,0,0,.35)'; c.shadowBlur = 18; c.shadowOffsetY = 6; rr(c, bx, 12, bw, bh, 10); c.fillStyle = P.l ? 'rgba(255,255,255,.98)' : 'rgba(17,19,26,.97)'; c.fill(); c.restore();
+    rr(c, bx + .5, 12.5, bw, bh, 10); c.strokeStyle = P.l ? '#e2e8f0' : '#2a2f3a'; c.lineWidth = 1; c.stroke();
+    gt(c, title, bx + 12, 28, P.mu, 'left', 10.5, 600);
+    rows.forEach(function (q, i) { var y = 48 + i * 18; c.beginPath(); c.arc(bx + 16, y, 3.5, 0, TAU); c.fillStyle = q[0]; c.fill(); gt(c, q[1], bx + 26, y, P.mu, 'left', 11, 500); gt(c, q[2], bx + bw - 12, y, P.tx, 'right', 11, 700); });
+  }
   host('gas-pro-canvas', function (c, w, h, now, s, P) {
-    var N = G.N, D = G.d, L = 8, R = w - 50, i, j, m, u, slot = (R - L) / (N - 1), prog = clamp((now - G.t0) / G.DUR, 0, 1);
-    var xAt = function (k) { return R - (N - k) * slot + slot * (1 - prog); };
-    var a1 = 24, b1 = Math.round(h * .5), a2 = b1 + 16, b2 = Math.round(h * .75), a3 = b2 + 14, b3 = h - 14;
-    var E = D.map(function (p) { return p.e; }), cur = D[N], rk = E.filter(function (v) { return v <= cur.e; }).length / E.length;
-    var E0 = CH[0], hx = L;
-    /* header: nilai live tiap jaringan + persentil biaya ETH */
-    CH.forEach(function (ch) {
-      var v = cur[ch.k], sc = v > ch.hi * 1.25 ? P.dn : v > ch.hi ? P.am : P.up;
-      c.fillStyle = ch.col; c.beginPath(); c.arc(hx + 3, 8, 3, 0, TAU); c.fill();
-      hx = Tw(c, ch.name.slice(0, 3).toUpperCase(), hx + 9, 8, ch.col, 8, 700); hx = Tw(c, fG(v), hx - 3, 8, sc, 8, 700) + 4;
+    var N = G.N, D = G.d, all = GV.m === 'all', L = 8, R = w - (w < 420 ? 48 : 56), slot = (R - L) / (N - 1), prog = clamp((now - G.t0) / G.DUR, 0, 1), i, k;
+    var xAt = function (q) { return R - (N - q) * slot + slot * (1 - prog); };
+    var a1 = 10, b1 = Math.round(h * .7), a2 = b1 + 28, b2 = h - 24, cur = D[N];
+    var ch = all ? null : CH.filter(function (x) { return x.k === GV.m; })[0];
+    var ser = (all ? CH : [ch]).map(function (x) { return { c: x, f: all ? function (p) { return p[x.k] / x.hi * 100; } : function (p) { return p[x.k]; } }; });
+    var mn = 1e9, mx = -1e9;
+    ser.forEach(function (z) { D.forEach(function (p) { var v = z.f(p); mn = Math.min(mn, v); mx = Math.max(mx, v); }); });
+    (all ? [0, 100] : [ch.lo, ch.hi]).forEach(function (v) { mn = Math.min(mn, v); mx = Math.max(mx, v); });
+    var pd = (mx - mn) * .1, rg = lerp(s, 'g' + GV.m, Math.max(0, mn - pd), mx + pd, .12); mn = rg.mn; mx = rg.mx;
+    var yv = function (v) { return b1 - (v - mn) / (mx - mn) * (b1 - a1); }, dc = all ? 0 : dec(mn, mx), fm = function (v) { return all ? Math.round(v) + '%' : fmt(v, dc); };
+    [[a1, b1], [a2, b2]].forEach(function (z) { rr(c, L, z[0], R - L, z[1] - z[0], 10); c.fillStyle = P.bg; c.fill(); });
+    for (i = 0; i <= 4; i++) { var gv = mn + (mx - mn) * i / 4, gy = yv(gv); if (i > 0 && i < 4) hline(c, L + 1, R - 1, gy, P.gr, [2, 4]); gt(c, fm(gv), R + 8, clamp(gy, a1 + 6, b1 - 6), P.mu, 'left', 10.5, 500); }
+    /* --- panel utama --- */
+    c.save(); rr(c, L, a1, R - L, b1 - a1, 10); c.clip();
+    if (!all) {
+      var zh = yv(ch.hi), zl = yv(ch.lo), gz = c.createLinearGradient(0, a1, 0, zh);
+      gz.addColorStop(0, 'rgba(244,63,94,.13)'); gz.addColorStop(1, 'rgba(244,63,94,0)'); c.fillStyle = gz; c.fillRect(L, a1, R - L, Math.max(0, zh - a1));
+      gz = c.createLinearGradient(0, b1, 0, zl); gz.addColorStop(0, 'rgba(16,185,129,.13)'); gz.addColorStop(1, 'rgba(16,185,129,0)'); c.fillStyle = gz; c.fillRect(L, zl, R - L, Math.max(0, b1 - zl));
+    }
+    (all ? [[100, P.dn, 'Ambang 100%']] : [[ch.hi, P.dn, 'Mahal ≥ ' + fG(ch.hi)], [ch.lo, P.up, 'Murah ≤ ' + fG(ch.lo)]]).forEach(function (t) {
+      var y = yv(t[0]); if (y > a1 + 22 && y < b1 - 4) { c.globalAlpha = .6; hline(c, L, R, y, t[1], [4, 4]); c.globalAlpha = 1; gt(c, t[2], L + 12, y - 8, t[1], 'left', 10, 600); }
     });
-    if (w > 430) T(c, 'PERSENTIL ETH ' + Math.round(rk * 100) + '% · ' + (rk < .34 ? 'MURAH' : rk < .67 ? 'WAJAR' : 'MAHAL'), R + 48, 8, rk < .34 ? P.up : rk < .67 ? P.am : P.dn, 'right', 8, 700);
-    /* ---------- Panel 1: Ethereum ---------- */
-    var mn = 1e9, mx = -1e9; for (i = 0; i <= N; i++) { mn = Math.min(mn, D[i].eb); mx = Math.max(mx, D[i].e); }
-    mn = Math.min(mn, E0.lo); mx = Math.max(mx, E0.hi);
-    var pd = (mx - mn) * .12, rg = lerp(s, 'r1', Math.max(0, mn - pd), mx + pd, .12); mn = rg.mn; mx = rg.mx;
-    var y1 = function (v) { return b1 - (v - mn) / (mx - mn) * (b1 - a1); };
-    c.fillStyle = P.bg; c.fillRect(L, a1, R - L, b1 - a1); hgrid(c, L, R, a1, b1, mn, mx, P, dec(mn, mx), 4);
-    c.save(); c.beginPath(); c.rect(L, a1, R - L, b1 - a1); c.clip();
-    var yh = y1(E0.hi), yl = y1(E0.lo);
-    c.fillStyle = 'rgba(244,63,94,.09)'; c.fillRect(L, a1, R - L, Math.max(0, yh - a1)); c.fillStyle = 'rgba(16,185,129,.08)'; c.fillRect(L, yl, R - L, Math.max(0, b1 - yl));
-    c.beginPath(); for (j = 2; j <= N; j++) { m = sma(E, j, 10); u = m + 1.5 * sdv(E, j, 10, m); j > 2 ? c.lineTo(xAt(j), y1(u)) : c.moveTo(xAt(j), y1(u)); }
-    for (j = N; j >= 2; j--) { m = sma(E, j, 10); c.lineTo(xAt(j), y1(m - 1.5 * sdv(E, j, 10, m))); }
-    c.closePath(); c.fillStyle = 'rgba(129,140,248,.15)'; c.fill();
-    var g1 = c.createLinearGradient(0, a1, 0, b1); g1.addColorStop(0, 'rgba(59,130,246,.55)'); g1.addColorStop(1, 'rgba(59,130,246,.03)');
-    c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), y1(D[j].eb)) : c.moveTo(xAt(j), y1(D[j].eb)); c.lineTo(xAt(N), b1); c.lineTo(xAt(0), b1); c.closePath(); c.fillStyle = g1; c.fill();
-    c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), y1(D[j].e)) : c.moveTo(xAt(j), y1(D[j].e));
-    for (j = N; j >= 0; j--) c.lineTo(xAt(j), y1(D[j].eb)); c.closePath(); c.fillStyle = 'rgba(34,211,238,.34)'; c.fill();
-    var fq = function (v) { return clamp((v - mn) / (mx - mn), 0, 1); }, gl = c.createLinearGradient(0, b1, 0, a1);
-    gl.addColorStop(0, P.up); gl.addColorStop(fq(E0.lo), P.up); gl.addColorStop(fq(E0.hi), P.am); gl.addColorStop(1, P.dn);
-    c.shadowColor = P.cy; c.shadowBlur = P.l ? 0 : 6; c.lineWidth = 2; c.strokeStyle = gl;
-    c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), y1(E[j])) : c.moveTo(xAt(j), y1(E[j])); c.stroke(); c.shadowBlur = 0;
-    [[ema(E, 8), P.am], [ema(E, 21), P.vi]].forEach(function (z) { c.setLineDash([3, 3]); c.lineWidth = 1; c.strokeStyle = z[1]; c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), y1(z[0][j])) : c.moveTo(xAt(j), y1(z[0][j])); c.stroke(); c.setLineDash([]); });
-    for (j = 10; j <= N; j++) { m = sma(E, j - 1, 10); if (E[j] > m + 2 * sdv(E, j - 1, 10, m) && E[j] > E0.hi) tri(c, xAt(j), y1(E[j]) - 6, false, P.am, 3); }
+    ser.forEach(function (z) {
+      var pts = D.map(function (p, q) { return [xAt(q), yv(z.f(p))]; }), col = z.c.col, g = c.createLinearGradient(0, a1, 0, b1);
+      g.addColorStop(0, col); g.addColorStop(1, col + '00');
+      c.beginPath(); sp(c, pts, 1); c.lineTo(pts[N][0], b1); c.lineTo(pts[0][0], b1); c.closePath(); c.globalAlpha = all ? .10 : .30; c.fillStyle = g; c.fill(); c.globalAlpha = 1;
+      c.shadowColor = col; c.shadowBlur = P.l ? 0 : 10; c.lineWidth = all ? 2 : 2.6; c.lineCap = 'round'; c.strokeStyle = col; c.beginPath(); sp(c, pts, 1); c.stroke(); c.shadowBlur = 0;
+    });
+    if (!all) { var ea = ema(D.map(function (p) { return p[ch.k]; }), 8); c.setLineDash([5, 4]); c.lineWidth = 1.2; c.strokeStyle = P.am; c.beginPath(); sp(c, ea.map(function (v, q) { return [xAt(q), yv(v)]; }), 1); c.stroke(); c.setLineDash([]); }
     c.restore();
-    hline(c, L, R, yh, 'rgba(244,63,94,.5)', [2, 3]); hline(c, L, R, yl, 'rgba(16,185,129,.5)', [2, 3]);
-    var vb = E[N - 1] + (E[N] - E[N - 1]) * prog, dy = y1(vb);
-    if (Math.abs(clamp(yh, a1 + 6, b1 - 6) - dy) > 10) T(c, fG(E0.hi), R + 3, clamp(yh, a1 + 6, b1 - 6), P.dn, 'left', 8, 600);
-    if (Math.abs(clamp(yl, a1 + 6, b1 - 6) - dy) > 10) T(c, fG(E0.lo), R + 3, clamp(yl, a1 + 6, b1 - 6), P.up, 'left', 8, 600);
-    dot(c, R, dy, P.cy, now); tag(c, fG(vb), R + 2, clamp(dy, a1 + 8, b1 - 8), '#3B82F6', '#fff');
-    var lx = Tw(c, 'ETHEREUM · BASE', L + 3, a1 + 7, '#60A5FA', 8, 700); lx = Tw(c, '+ TIP', lx - 2, a1 + 7, P.cy, 8, 700); lx = Tw(c, 'EMA8', lx, a1 + 7, P.am, 8, 700); Tw(c, 'EMA21', lx, a1 + 7, P.vi, 8, 700);
-    /* ---------- Panel 2: beban relatif (% dari ambang tinggi) ---------- */
-    var rl = function (p, ch) { return p[ch.k] / ch.hi * 100; }, m2 = 130;
-    for (i = 0; i <= N; i++) CH.forEach(function (ch) { m2 = Math.max(m2, rl(D[i], ch)); });
-    var r2 = lerp(s, 'r2', 0, m2 * 1.08, .1), y2 = function (v) { return b2 - v / r2.mx * (b2 - a2); };
-    c.fillStyle = P.bg; c.fillRect(L, a2, R - L, b2 - a2);
-    [0, 50, 100].forEach(function (v) { if (v === 100) hline(c, L, R, y2(v), 'rgba(244,63,94,.55)', [3, 3]); else hline(c, L, R, y2(v), P.gr); T(c, v + '%', R - 3, y2(v) - 5, v === 100 ? P.dn : P.mu, 'right', 8, 600); });
-    c.save(); c.beginPath(); c.rect(L, a2, R - L, b2 - a2); c.clip(); c.fillStyle = 'rgba(244,63,94,.07)'; c.fillRect(L, a2, R - L, Math.max(0, y2(100) - a2));
-    CH.forEach(function (ch) {
-      c.shadowColor = ch.col; c.shadowBlur = P.l ? 0 : 5; c.lineWidth = 1.6; c.strokeStyle = ch.col;
-      c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), y2(rl(D[j], ch))) : c.moveTo(xAt(j), y2(rl(D[j], ch))); c.stroke(); c.shadowBlur = 0;
-    });
-    c.restore();
-    var tg = CH.map(function (ch) { return { y: y2(rl(cur, ch)), c: ch.col, t: Math.round(rl(cur, ch)) + '%' }; }).sort(function (p, q) { return p.y - q.y; });
-    tg.forEach(function (q, k) { if (k && q.y < tg[k - 1].y + 13) q.y = tg[k - 1].y + 13; dot(c, R, q.y, q.c, now); tag(c, q.t, R + 4, q.y, q.c, '#111'); });
-    T(c, 'BEBAN RELATIF · % DARI AMBANG TINGGI', L + 3, a2 + 7, P.mu, 'left', 8, 700);
-    /* ---------- Panel 3: heatmap per jaringan + kurva kemacetan ---------- */
-    CH.forEach(function (ch, li) {
-      var y = a3 + li * 9;
-      for (i = 0; i <= N; i++) { var uu = clamp((D[i][ch.k] - ch.lo) / (ch.hi - ch.lo) / 1.3, 0, 1); c.fillStyle = 'hsl(' + Math.round(130 - 130 * uu) + ',70%,' + (P.l ? 50 : 42) + '%)'; c.fillRect(xAt(i) - slot / 2, y, slot + .6, 7); }
-      c.clearRect(R, y - 1, w - R, 9); c.clearRect(0, y - 1, L, 9); tag(c, ch.name.slice(0, 3).toUpperCase(), L + 2, y + 3.5, 'rgba(0,0,0,.55)', '#e5e7eb');
-    });
-    var ca = a3 + 31, yc = function (v) { return b3 - v / 100 * (b3 - ca); }, ci = Math.round(gcong(cur) * 100), cc = ci > 66 ? P.dn : ci > 40 ? P.am : P.up;
-    hline(c, L, R, yc(66), 'rgba(244,63,94,.4)', [2, 3]); hline(c, L, R, yc(40), 'rgba(251,191,36,.4)', [2, 3]); hline(c, L, R, b3, P.gr);
-    var g3 = c.createLinearGradient(0, ca, 0, b3); g3.addColorStop(0, cc); g3.addColorStop(1, 'rgba(0,0,0,0)');
-    c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), yc(gcong(D[j]) * 100)) : c.moveTo(xAt(j), yc(gcong(D[j]) * 100));
-    c.lineTo(xAt(N), b3); c.lineTo(xAt(0), b3); c.closePath(); c.globalAlpha = .28; c.fillStyle = g3; c.fill(); c.globalAlpha = 1;
-    c.lineWidth = 1.6; c.strokeStyle = cc; c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), yc(gcong(D[j]) * 100)) : c.moveTo(xAt(j), yc(gcong(D[j]) * 100)); c.stroke();
-    T(c, 'INDEKS KEMACETAN', L + 3, ca + 6, P.mu, 'left', 8, 700); tag(c, ci + (ci > 66 ? ' PADAT' : ci > 40 ? ' SEDANG' : ' LANCAR'), R + 2, clamp(yc(ci), ca + 6, b3 - 6), cc, '#111');
-    for (i = N; i >= 0; i -= 8) { var xx = xAt(i); if (xx > L + 18 && xx < R - 18) T(c, hms(D[i].t), xx, h - 5, P.mu, 'center', 8); }
-    /* ---------- crosshair ---------- */
+    var tl = all ? 'BEBAN RELATIF · % DARI AMBANG TINGGI' : ch.name.toUpperCase() + ' · GWEI'; gt(c, tl, L + 12, a1 + 14, P.mu, 'left', 10.5, 700);
+    if (!all) gt(c, '– – EMA 8', L + 24 + c.measureText(tl).width, a1 + 14, P.am, 'left', 10.5, 600);
+    var tg = ser.map(function (z) { var p0 = D[N - 1], vb = z.f(p0) + (z.f(cur) - z.f(p0)) * prog; return { y: yv(vb), c: z.c.col, t: fm(vb) }; }).sort(function (p, q) { return p.y - q.y; });
+    tg.forEach(function (q, j) { dot(c, R, q.y, q.c, now); if (j && q.y < tg[j - 1].y + 22) q.y = tg[j - 1].y + 22; pill(c, q.t, R + 6, clamp(q.y, a1 + 10, b1 - 10), q.c); });
+    /* --- panel indeks kemacetan --- */
+    var yc = function (v) { return b2 - 4 - v / 100 * (b2 - a2 - 12); }, ci = Math.round(gcong(cur) * 100), cc = ci > 66 ? P.dn : ci > 40 ? P.am : P.up;
+    c.save(); rr(c, L, a2, R - L, b2 - a2, 10); c.clip();
+    [40, 66].forEach(function (v) { c.globalAlpha = .5; hline(c, L, R, yc(v), v > 50 ? P.dn : P.am, [2, 4]); c.globalAlpha = 1; });
+    var cp = D.map(function (p, q) { return [xAt(q), yc(gcong(p) * 100)]; }), g3 = c.createLinearGradient(0, a2, 0, b2); g3.addColorStop(0, cc); g3.addColorStop(1, cc + '00');
+    c.beginPath(); sp(c, cp, 1); c.lineTo(cp[N][0], b2); c.lineTo(cp[0][0], b2); c.closePath(); c.globalAlpha = .28; c.fillStyle = g3; c.fill(); c.globalAlpha = 1;
+    c.lineWidth = 1.8; c.strokeStyle = cc; c.beginPath(); sp(c, cp, 1); c.stroke(); c.restore();
+    gt(c, 'INDEKS KEMACETAN', L + 12, a2 + 13, P.mu, 'left', 10.5, 700); pill(c, ci + '%', R + 6, clamp(yc(ci), a2 + 10, b2 - 10), cc);
+    for (i = N; i >= 0; i -= 12) { var xx = xAt(i); if (xx > L + 26 && xx < R - 26) gt(c, hms(D[i].t), xx, h - 9, P.mu, 'center', 10.5, 500); }
+    /* --- crosshair + tooltip kartu --- */
     if (s.mx >= L && s.mx <= R) {
-      var k = clamp(Math.round(N - (R + slot * (1 - prog) - s.mx) / slot), 0, N), x = xAt(k), p = D[k];
-      vline(c, x, a1, b3, P); c.beginPath(); c.arc(x, y1(p.e), 3, 0, TAU); c.fillStyle = P.cy; c.fill();
-      CH.forEach(function (ch) { c.beginPath(); c.arc(x, y2(rl(p, ch)), 3, 0, TAU); c.fillStyle = ch.col; c.fill(); });
-      tip(c, w, x, [[hms(p.t), P.tx], ['ETH  ' + fG(p.e) + ' Gwei', CH[0].col], ['  base ' + fG(p.eb) + ' · tip ' + fG(p.pe), P.mu], ['POLY ' + fG(p.p) + ' Gwei', CH[1].col], ['ARB  ' + fG(p.a) + ' Gwei', CH[2].col], ['Beban ETH ' + Math.round(rl(p, E0)) + '%', P.mu], ['Kemacetan ' + Math.round(gcong(p) * 100), P.am]], P);
+      k = clamp(Math.round(N - (R + slot * (1 - prog) - s.mx) / slot), 0, N); var x = xAt(k), p = D[k], rows = [];
+      c.save(); c.setLineDash([4, 4]); c.strokeStyle = P.mu; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(x) + .5, a1); c.lineTo(Math.round(x) + .5, b2); c.stroke(); c.restore();
+      ser.forEach(function (z) { var y = yv(z.f(p)); c.beginPath(); c.arc(x, y, 4.5, 0, TAU); c.fillStyle = P.l ? '#fff' : '#0b0b0f'; c.fill(); c.lineWidth = 2; c.strokeStyle = z.c.col; c.stroke(); rows.push([z.c.col, z.c.name, fG(p[z.c.k]) + ' Gwei' + (all ? ' · ' + Math.round(z.f(p)) + '%' : '')]); });
+      if (!all && ch.k === 'e') { rows.push([P.mu, 'Base fee', fG(p.eb)]); rows.push([P.mu, 'Priority tip', fG(p.pe)]); }
+      rows.push([cc, 'Kemacetan', Math.round(gcong(p) * 100) + '%']); gtip(c, w, x, hms(p.t), rows, P);
     }
   });
   /* ================= 2. INDEKS SAHAM AS ================= */
@@ -6467,7 +6498,7 @@ function setSym(s){M.sym=s;msg('');genSim();rAll();loadMain();chips()}
 function chips(){$('se2-chips').innerHTML=['SPY','QQQ','NVDA','AAPL','MSFT','TSLA','AMZN','META'].map(function(s){return '<button type="button" data-sym="'+s+'" class="px-2.5 py-1 rounded-lg border '+(M.sym===s?'bg-brand-primary text-white border-transparent font-bold':'bg-black border-card-border text-gray-400')+'">'+s+'</button>'}).join('');
   $('se2-ranges').innerHTML=Object.keys(RG).map(function(r){return '<button type="button" data-rg="'+r+'" class="px-2.5 py-1 rounded-lg '+(M.range===r?'bg-brand-primary text-white font-bold':'bg-black border border-card-border text-gray-400')+'">'+r+'</button>'}).join('');
   $('se2-tabs').innerHTML=[['g','Gainers'],['l','Losers'],['a','Paling Aktif']].map(function(t){return '<button type="button" data-tab="'+t[0]+'" class="px-2.5 py-1 rounded-lg '+(tab===t[0]?'bg-brand-primary text-white font-bold':'bg-black border border-card-border text-gray-400')+'">'+t[1]+'</button>'}).join('')}
-var NEWS=[],NF='all',NLOAD=false;
+var NEWS=[],NF='all',NLOAD=false,NP=1,NPS=6; /* NP = halaman berita aktif, NPS = jumlah berita per halaman */
 var FEEDS=[['Yahoo Finance','https://feeds.finance.yahoo.com/rss/2.0/headline?s=%5EGSPC&region=US&lang=en-US'],['CNBC Finance','https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664'],['CNBC Top News','https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114'],['CNBC Investing','https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15839069'],['MarketWatch','https://feeds.content.dowjones.io/public/rss/mw_marketpulse']];
 /* kejadian pasar AS: [kode, label, warna, pola, sektor terdampak] — urutan = prioritas */
 var EVT=[
@@ -6493,12 +6524,26 @@ function fetchFeed(f){var ok=function(a){if(!a.length)throw 0;return a};
   return fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(f[1])).then(function(r){return r.json()}).then(function(j){return ok((j.items||[]).map(function(i){var d=i.pubDate?new Date(i.pubDate.replace(' ','T')+'Z'):new Date();return {title:i.title,link:i.link,date:isNaN(d)?new Date():d,src:f[0]}}))})
   .catch(function(){return fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(f[1])).then(function(r){return r.text()}).then(function(t){var x=new DOMParser().parseFromString(t,'text/xml');
     return ok([].slice.call(x.querySelectorAll('item')).map(function(it){var g=function(k){var e=it.querySelector(k);return e?e.textContent:''},d=new Date(g('pubDate'));return {title:g('title'),link:g('link'),date:isNaN(d)?new Date():d,src:f[0]}}))}).catch(function(){return []})})}
+function rPg(total,pages){var el=$('se2-npg');if(!el)return;
+  if(total<=NPS){el.innerHTML=total?'<span class="text-gray-500">'+total+' berita</span>':'';return}
+  var from=(NP-1)*NPS+1,to=Math.min(total,NP*NPS),B='px-2.5 py-1 rounded-lg border min-w-[30px] text-center ',
+      on=B+'bg-brand-primary text-white border-transparent font-bold',off=B+'bg-black border-card-border text-gray-300 hover:text-white',dis=B+'bg-black border-card-border text-gray-600 cursor-not-allowed',
+      nums=[],i,last=0;
+  for(i=1;i<=pages;i++)if(i===1||i===pages||Math.abs(i-NP)<=1)nums.push(i);
+  var h='<span class="text-gray-500">Menampilkan '+from+'&ndash;'+to+' dari '+total+' berita &bull; Halaman '+NP+' / '+pages+'</span><div class="flex flex-wrap items-center gap-1.5">';
+  h+='<button type="button" data-np="prev" '+(NP<=1?'disabled ':'')+'class="'+(NP<=1?dis:off)+'" aria-label="Halaman sebelumnya">&laquo; Sebelumnya</button>';
+  nums.forEach(function(n){if(last&&n-last>1)h+='<span class="text-gray-600 px-1">&hellip;</span>';last=n;
+    h+='<button type="button" data-np="'+n+'" class="'+(n===NP?on:off)+'"'+(n===NP?' aria-current="page"':'')+'>'+n+'</button>'});
+  h+='<button type="button" data-np="next" '+(NP>=pages?'disabled ':'')+'class="'+(NP>=pages?dis:off)+'" aria-label="Halaman berikutnya">Berikutnya &raquo;</button></div>';
+  el.innerHTML=h}
 function rNews(){var box=$('se2-news'),fl=$('se2-nfilt');if(!box)return;
   var cnt={};NEWS.forEach(function(n){cnt[n.e[0]]=(cnt[n.e[0]]||0)+1});
   fl.innerHTML=NEWS.length?[['all','Semua ('+NEWS.length+')','#38BDF8']].concat(EVT.filter(function(e){return cnt[e[0]]}).map(function(e){return [e[0],e[1]+' ('+cnt[e[0]]+')',e[2]]})).map(function(t){var on=NF===t[0];return '<button type="button" data-nf="'+t[0]+'" class="px-2.5 py-1 rounded-lg border '+(on?'text-white font-bold':'bg-black text-gray-400 border-card-border')+'" style="'+(on?'background:'+t[2]+'33;border-color:'+t[2]:'')+'">'+esc(t[1])+'</button>'}).join(''):'';
   var L=NEWS.filter(function(n){return NF==='all'||n.e[0]===NF});
+  var NPG=Math.max(1,Math.ceil(L.length/NPS));if(NP>NPG)NP=NPG;if(NP<1)NP=1;
+  var PGL=L.slice((NP-1)*NPS,NP*NPS);rPg(L.length,NPG);
   if(!L.length){box.innerHTML='<p class="text-gray-500 md:col-span-2">'+(NLOAD?'Memuat berita...':'Berita online belum dapat dimuat (koneksi/CORS). Akan dicoba lagi otomatis setiap 3 menit.')+'</p>';return}
-  box.innerHTML=L.map(function(n){var e=n.e,sc=n.sn>0?[UP,'▲ POSITIF']:n.sn<0?[DN,'▼ NEGATIF']:['#9ca3af','● NETRAL'];
+  box.innerHTML=PGL.map(function(n){var e=n.e,sc=n.sn>0?[UP,'▲ POSITIF']:n.sn<0?[DN,'▼ NEGATIF']:['#9ca3af','● NETRAL'];
    return '<div class="se2-nc p-3 bg-black/50 border border-card-border rounded-xl hover:border-brand-accent space-y-1.5"><div class="flex items-center justify-between gap-2"><span class="se2-tag" style="color:'+e[2]+';border-color:'+e[2]+'66;background:'+e[2]+'14">'+esc(e[1].toUpperCase())+'</span><span class="se2-tag" style="color:'+sc[0]+';border-color:'+sc[0]+'55">'+sc[1]+'</span></div>'+
     '<a href="'+esc(n.link)+'" target="_blank" rel="noopener noreferrer" class="block text-gray-200 font-semibold leading-snug hover:text-white">'+esc(n.title)+'</a>'+
     '<div class="flex flex-wrap items-center gap-1.5 text-[10px]"><span class="text-gray-500">'+esc(n.src)+' · '+relT(n.date)+'</span>'+(e[4]?'<button type="button" data-sym="'+e[4]+'" class="px-1.5 py-0.5 rounded border border-card-border bg-black text-gray-300 hover:text-white" title="Sektor terdampak">Sektor '+e[4]+'</button>':'')+n.tk.map(function(t){return '<button type="button" data-sym="'+t+'" class="px-1.5 py-0.5 rounded border border-card-border bg-black font-mono text-brand-accent hover:text-white">'+t+'</button>'}).join('')+'</div></div>'}).join('')}
@@ -6509,7 +6554,7 @@ function news(){NLOAD=true;if(!NEWS.length)rNews();
     n.e=e||['umum','Pasar AS Umum','#94a3b8','',''];n.sn=(BULL.test(t)?1:0)-(BEAR.test(t)?1:0);
     n.tk=WLR.filter(function(w){return (w.rs&&w.rs.test(t))||w.rn.test(t)}).map(function(w){return w.s}).slice(0,3);out.push(n)});
    out.sort(function(x,y){return y.date-x.date});
-   if(out.length){NEWS=out.slice(0,16);var u=$('se2-nts');if(u)u.textContent='diperbarui '+new Date().toLocaleTimeString('id-ID',{hour12:false});if(NF!=='all'&&!NEWS.some(function(n){return n.e[0]===NF}))NF='all'}
+   if(out.length){NEWS=out.slice(0,48);var u=$('se2-nts');if(u)u.textContent='diperbarui '+new Date().toLocaleTimeString('id-ID',{hour12:false});if(NF!=='all'&&!NEWS.some(function(n){return n.e[0]===NF}))NF='all'}
    rNews()})}
 /* ---------- siklus otomatis (berjalan sendiri sejak halaman dimuat) ---------- */
 var PI=5,pre=false,polling=false,LT=[],LTs='',tapeChart;
@@ -6538,7 +6583,9 @@ function sub(n){[1,2].forEach(function(i){var e=$('se-sub-'+i);if(e)e.classList.
 document.addEventListener('click',safe(function(e){var t=e.target,a=t.closest&&t.closest('[data-se-sub]');
   if(a){e.preventDefault();var pg=$('page-stock-exchange');if(pg&&!pg.classList.contains('active')){Array.prototype.forEach.call(document.querySelectorAll('.page'),function(p){p.classList.remove('active')});pg.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
    try{if(typeof toggleSidebar==='function')toggleSidebar(false)}catch(x){}sub(+a.getAttribute('data-se-sub'));return}
-  var nf=t.closest&&t.closest('#se-sub-2 [data-nf]');if(nf){NF=nf.getAttribute('data-nf');rNews();return}
+  var nf=t.closest&&t.closest('#se-sub-2 [data-nf]');if(nf){NF=nf.getAttribute('data-nf');NP=1;rNews();return}
+  var np=t.closest&&t.closest('#se2-npg [data-np]');if(np){if(np.disabled)return;var nv=np.getAttribute('data-np');NP=nv==='prev'?NP-1:nv==='next'?NP+1:+nv;rNews();
+   var nb=$('se2-nfilt');if(nb){window.scrollTo({top:Math.max(0,nb.getBoundingClientRect().top+window.pageYOffset-140),behavior:'smooth'})}return}
   var c=t.closest&&t.closest('#se-sub-2 [data-sym]');if(c){setSym(c.getAttribute('data-sym'));return}
   c=t.closest&&t.closest('#se-sub-2 [data-rg]');if(c){M.range=c.getAttribute('data-rg');rAll();chips();return}
   c=t.closest&&t.closest('#se-sub-2 [data-tab]');if(c){tab=c.getAttribute('data-tab');chips();rMov();return}
