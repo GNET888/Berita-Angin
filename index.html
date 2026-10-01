@@ -115,7 +115,6 @@
   .mini-spark.up polyline{stroke:#34d399}.mini-spark.down polyline{stroke:#fb7185}
   @keyframes sparkDraw{to{stroke-dashoffset:0}}
  </style>
-
 <style id="theme-css">
 /* ===== Tombol toggle tema ===== */
 .tt{position:relative;display:inline-flex;align-items:center;width:58px;height:30px;border-radius:999px;border:1px solid #222;background:#121212;cursor:pointer;padding:0;flex:0 0 58px;transition:background .3s,border-color .3s}
@@ -179,7 +178,6 @@ html.light .mlc-tbl tbody tr:nth-child(even){background:rgba(15,23,42,.025)!impo
 html.light .mlc-in{background:#fff!important;border-color:#cbd5e1!important;color:#0f172a!important}
 html.light #gm-sub-1 .gm1-bar{background:#f8fafc!important;border-color:#dbe3ee!important}
 </style>
-
 <style id="stock-live-css">
 @keyframes l2addA{from{background-color:rgba(244,63,94,.5)}to{background-color:transparent}}
 @keyframes l2addB{from{background-color:rgba(16,185,129,.5)}to{background-color:transparent}}
@@ -267,7 +265,37 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
 .se2-pulse{display:inline-block;width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:se2p 1.4s infinite}.se2-pulse.sim{background:#fbbf24;box-shadow:0 0 0 0 rgba(251,191,36,.6)}@keyframes se2p{70%{box-shadow:0 0 0 7px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
 .se2-nc{transition:border-color .15s,transform .15s}.se2-nc:hover{transform:translateY(-1px)}
 </style>
-
+<style id="ba-charts-v2-css">html.light #gas-pro-canvas,html.light #mlc-ch-net,html.light #mlc-ch-imp,html.light #mlc-ch-sc{filter:none!important}#gas-pro-canvas,#mlc-ch-net,#mlc-ch-imp,#mlc-ch-sc{touch-action:pan-y;cursor:crosshair}</style>
+<style id="ba-pink-css">html.light .text-pink-400{color:#db2777!important}</style>
+<style id="ba-profile-sidebar-css">
+/* ===== Halaman Profil: kolom kiri & kanan sejajar (tinggi sama, tepi bawah rata) ===== */
+@media (min-width:1024px){
+  #prof-col-left>div,#prof-col-right>div{flex:1 1 auto}
+  #prof-col-left>div:first-child,#prof-col-right>div:first-child{flex:0 0 auto}
+}
+#prof-col-left>div,#prof-col-right>div{min-width:0}
+/* ===== Sidebar mobile profesional ===== */
+#sidebar-content{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);overflow:hidden}
+#sidebar-content .sb-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 16px 16px;border-bottom:1px solid #222;background:linear-gradient(180deg,rgba(56,189,248,.07),transparent)}
+#sidebar-content .sb-close{flex:0 0 auto;width:36px;height:36px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;color:#9ca3af;border:1px solid #262626;background:rgba(255,255,255,.03);transition:all .15s}
+#sidebar-content .sb-close:hover{color:#fff;border-color:#38BDF8;background:rgba(56,189,248,.10)}
+#sidebar-content .sb-nav{flex:1 1 auto;overflow-y:auto;overscroll-behavior:contain;padding:6px 12px 12px}
+#sidebar-content .sb-label{font:700 10px/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6b7280;padding:0 12px;margin:18px 0 8px}
+#sidebar-content .sb-link{position:relative}
+#sidebar-content .sb-link .sb-chev{color:#4b5563;transition:transform .15s,color .15s}
+#sidebar-content .sb-link:hover .sb-chev{color:#38BDF8;transform:translateX(2px)}
+#sidebar-content .sb-link.is-active::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:3px;background:linear-gradient(#38BDF8,#4F46E5)}
+#sidebar-content .sb-sub{display:flex;flex-direction:column;gap:2px;margin:0 0 6px 27px;padding-left:12px;border-left:1px solid #262626}
+#sidebar-content .sb-dot{flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:#4b5563}
+#sidebar-content .sb-sublink:hover .sb-dot{background:#38BDF8}
+#sidebar-content .sb-foot{padding:14px 16px;border-top:1px solid #222;font-size:10px;letter-spacing:.04em;color:#6b7280;text-align:center}
+html.light #sidebar-content .sb-head,html.light #sidebar-content .sb-foot{border-color:#e2e8f0}
+html.light #sidebar-content .sb-close{border-color:#cbd5e1;background:#f8fafc;color:#475569}
+html.light #sidebar-content .sb-label,html.light #sidebar-content .sb-foot{color:#64748b}
+html.light #sidebar-content .sb-sub{border-color:#e2e8f0}
+html.light #sidebar-content .sb-dot{background:#94a3b8}
+html.light #sidebar-content .sb-link .sb-chev{color:#94a3b8}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <canvas id="bg3d" aria-hidden="true"></canvas>
@@ -350,52 +378,66 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
         </nav>
     </header>
     <!-- Mobile Sidebar Drawer -->
-    <div id="mobile-sidebar" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden transition-opacity duration-300">
-        <div id="sidebar-content" class="absolute top-0 left-0 bottom-0 w-72 bg-deep-gray border-r border-card-border shadow-2xl p-6 flex flex-col justify-between transform -translate-x-full transition-transform duration-300">
-            <div class="space-y-6">
-                <div class="flex items-center justify-between border-b border-card-border pb-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="relative flex-shrink-0">
-                            <img src="profil.gif" alt="Avatar" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-brand-accent shadow-md" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80'">
-                            <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border border-black rounded-full"></span>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-white text-xs sm:text-sm">Berita Angin</h3>
-                            <p class="text-[10px] text-emerald-400">Online</p>
-                        </div>
+    <div id="mobile-sidebar" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden transition-opacity duration-300" role="dialog" aria-modal="true" aria-label="Menu navigasi">
+        <div id="sidebar-content" class="absolute top-0 left-0 bottom-0 w-[86%] max-w-[320px] bg-deep-gray border-r border-card-border shadow-2xl flex flex-col transform -translate-x-full transition-transform duration-300">
+            <div class="sb-head">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="relative flex-shrink-0">
+                        <img src="profil.gif" alt="Avatar" class="w-11 h-11 rounded-full object-cover border-2 border-brand-accent shadow-md" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80'">
+                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-black rounded-full"></span>
                     </div>
-                    <button id="close-sidebar-btn" class="text-gray-400 hover:text-white p-2">
-                        <i class="fa-solid fa-xmark text-lg"></i>
-                    </button>
+                    <div class="min-w-0">
+                        <h3 class="font-bold text-white text-sm leading-tight truncate">Berita Angin</h3>
+                        <p class="text-[10px] text-gray-400 leading-tight mt-0.5 truncate">1% Issue 99% Fact</p>
+                        <p class="text-[10px] text-emerald-400 leading-tight mt-1 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Online</p>
+                    </div>
                 </div>
-                <nav class="space-y-1.5 text-sm font-medium">
-                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="home">
-                        <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span>
-                        <span>Beranda</span>
-                    </a>
-                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="profile">
-                        <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>
-                        <span>Profile & Portofolio</span>
-                    </a>
-                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="crypto-market">
-                        <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
-                        <span>Crypto Market</span>
-                    </a>
-                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="stock-exchange">
-                        <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10 12 4l9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8"/><path d="M3 21h18"/></svg></span>
-                        <span>Stock Exchange</span>
-                    </a>
-                    <a href="#" data-se-sub="1" class="se-sublink flex items-center space-x-3 pl-12 pr-4 py-2 rounded-xl text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span>Overview &amp; Telemetry</span></a>
-                    <a href="#" data-se-sub="2" class="se-sublink flex items-center space-x-3 pl-12 pr-4 py-2 rounded-xl text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span>US Market Live Monitor</span></a>
-                    <a href="#" class="nav-link flex items-center space-x-3.5 px-4 py-3 rounded-xl text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="global-market">
-                        <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></span>
-                        <span>Global Market</span>
-                    </a>
-                    <a href="#" data-gm-sub="1" class="gm-sublink flex items-center space-x-3 pl-12 pr-4 py-2 rounded-xl text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span>Likuiditas & Makro</span></a>
-                    <a href="#" data-gm-sub="2" class="gm-sublink flex items-center space-x-3 pl-12 pr-4 py-2 rounded-xl text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span>Direktori & Analitik</span></a>
-                </nav>
+                <button id="close-sidebar-btn" class="sb-close" aria-label="Tutup Menu">
+                    <i class="fa-solid fa-xmark text-base"></i>
+                </button>
             </div>
-            <div class="border-t border-card-border pt-4 text-xs text-gray-500 text-center">
+            <nav class="sb-nav" aria-label="Navigasi mobile">
+                <p class="sb-label">Menu Utama</p>
+                <div class="space-y-1">
+                    <a href="#" class="nav-link sb-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="home">
+                        <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span>
+                        <span class="flex-1">Beranda</span>
+                        <i class="fa-solid fa-chevron-right text-[9px] sb-chev"></i>
+                    </a>
+                    <a href="#" class="nav-link sb-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="profile">
+                        <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>
+                        <span class="flex-1">Profile &amp; Portofolio</span>
+                        <i class="fa-solid fa-chevron-right text-[9px] sb-chev"></i>
+                    </a>
+                </div>
+                <p class="sb-label">Pasar &amp; Analitik</p>
+                <div class="space-y-1">
+                    <a href="#" class="nav-link sb-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="crypto-market">
+                        <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
+                        <span class="flex-1">Crypto Market</span>
+                        <i class="fa-solid fa-chevron-right text-[9px] sb-chev"></i>
+                    </a>
+                    <a href="#" class="nav-link sb-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="stock-exchange">
+                        <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10 12 4l9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8"/><path d="M3 21h18"/></svg></span>
+                        <span class="flex-1">Stock Exchange</span>
+                        <i class="fa-solid fa-chevron-right text-[9px] sb-chev"></i>
+                    </a>
+                    <div class="sb-sub">
+                        <a href="#" data-se-sub="1" class="se-sublink sb-sublink flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span class="sb-dot"></span><span>Overview &amp; Telemetry</span></a>
+                        <a href="#" data-se-sub="2" class="se-sublink sb-sublink flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span class="sb-dot"></span><span>US Market Live Monitor</span></a>
+                    </div>
+                    <a href="#" class="nav-link sb-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="global-market">
+                        <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></span>
+                        <span class="flex-1">Global Market</span>
+                        <i class="fa-solid fa-chevron-right text-[9px] sb-chev"></i>
+                    </a>
+                    <div class="sb-sub">
+                        <a href="#" data-gm-sub="1" class="gm-sublink sb-sublink flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span class="sb-dot"></span><span>Likuiditas &amp; Makro</span></a>
+                        <a href="#" data-gm-sub="2" class="gm-sublink sb-sublink flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span class="sb-dot"></span><span>Direktori &amp; Analitik</span></a>
+                    </div>
+                </div>
+            </nav>
+            <div class="sb-foot">
                 Berita Angin - 1% Issue 99% Fact Mobile
             </div>
         </div>
@@ -619,9 +661,9 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
                     <h1 class="text-3xl font-extrabold text-white mt-1">Profil CEO Berita Angin !% Issue 99% Fact</h1>
                 </div>
             </div>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
                 <!-- Kolom Kiri -->
-                <div class="space-y-6">
+                <div id="prof-col-left" class="flex flex-col gap-6">
                     <!-- Kartu Info Utama -->
                     <div class="bg-card-dark border border-card-border rounded-2xl p-6 sm:p-8 shadow-xl text-center space-y-4">
                         <div class="relative inline-block mx-auto">
@@ -643,8 +685,8 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
                         </div>
                     </div>
                     <!-- Keahlian & Keterampilan -->
-                    <div class="bg-card-dark border border-card-border rounded-2xl p-6 sm:p-8 shadow-xl space-y-4">
-                        <h3 class="text-base font-bold text-white border-b border-card-border pb-3">Keahlian & Teknologi</h3>
+                    <div class="bg-card-dark border border-card-border rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
+                        <h3 class="text-lg font-bold text-white border-b border-card-border pb-4">Keahlian & Teknologi</h3>
                         <div class="flex flex-wrap gap-2">
                             <span class="bg-black border border-card-border text-gray-300 text-xs px-3 py-1.5 rounded-lg">Solidity</span>
                             <span class="bg-black border border-card-border text-gray-300 text-xs px-3 py-1.5 rounded-lg">Rust / Python / JS / AI / Analyst</span>
@@ -654,22 +696,150 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
                             <span class="bg-black border border-card-border text-gray-300 text-xs px-3 py-1.5 rounded-lg">DeFi Protocols</span>
                             <span class="bg-black border border-card-border text-gray-300 text-xs px-3 py-1.5 rounded-lg">Ethers.js / Web3.js</span>
                         </div>
-                    </div>
-                    <!-- Pengaturan Wallet & Akun -->
-                    <div class="bg-card-dark border border-card-border rounded-2xl p-6 sm:p-8 shadow-xl space-y-4">
-                        <h3 class="text-lg font-bold text-white border-b border-card-border pb-4">Pengaturan Dompet Web3</h3>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Alamat Dompet Utama</label>
-                            <input type="text" value="0x71C8F4a92E31b...98B2 (Terhubung)" class="w-full bg-black border border-card-border rounded-xl px-4 py-3 text-gray-300 text-sm focus:outline-none" readonly>
+                        <p class="text-xs text-gray-400 font-light leading-relaxed">Perpaduan keahlian teknis dan analitis untuk membangun, mengamankan, dan menganalisis ekosistem aset digital, dari kontrak pintar hingga antarmuka pengguna.</p>
+                        <div class="space-y-4 pt-2 border-t border-card-border">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 pt-4">Keterangan Keahlian</h4>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 flex-shrink-0 rounded-lg bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-file-code text-brand-accent text-xs"></i></div>
+                                <div class="min-w-0">
+                                    <h4 class="text-xs font-bold text-white">Solidity</h4>
+                                    <p class="text-xs text-gray-400 font-light leading-relaxed mt-0.5">Menulis smart contract untuk token, vault, marketplace, dan tata kelola di jaringan EVM, dengan fokus pada efisiensi gas dan keamanan.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 flex-shrink-0 rounded-lg bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-terminal text-brand-accent text-xs"></i></div>
+                                <div class="min-w-0">
+                                    <h4 class="text-xs font-bold text-white">Rust / Python / JS / AI / Analyst</h4>
+                                    <p class="text-xs text-gray-400 font-light leading-relaxed mt-0.5">Rust untuk perangkat berkinerja tinggi, Python untuk analisis data dan model AI, JavaScript untuk aplikasi web dan integrasi. Dipadukan dengan analisis pasar kuantitatif.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 flex-shrink-0 rounded-lg bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-shield-halved text-brand-accent text-xs"></i></div>
+                                <div class="min-w-0">
+                                    <h4 class="text-xs font-bold text-white">Smart Contract Audit</h4>
+                                    <p class="text-xs text-gray-400 font-light leading-relaxed mt-0.5">Meninjau kode kontrak untuk menemukan celah seperti reentrancy, overflow, dan kontrol akses lemah, lalu menyusun laporan risiko dan rekomendasi perbaikan.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 flex-shrink-0 rounded-lg bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-react text-brand-accent text-xs"></i></div>
+                                <div class="min-w-0">
+                                    <h4 class="text-xs font-bold text-white">React.js & Next.js</h4>
+                                    <p class="text-xs text-gray-400 font-light leading-relaxed mt-0.5">Membangun antarmuka dApp dan portal data yang cepat, responsif, dan mudah dipelihara, termasuk rendering sisi server.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 flex-shrink-0 rounded-lg bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-wind text-brand-accent text-xs"></i></div>
+                                <div class="min-w-0">
+                                    <h4 class="text-xs font-bold text-white">Tailwind CSS</h4>
+                                    <p class="text-xs text-gray-400 font-light leading-relaxed mt-0.5">Merancang tampilan modern yang konsisten dan mendukung mode gelap maupun terang dengan cepat.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 flex-shrink-0 rounded-lg bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-coins text-brand-accent text-xs"></i></div>
+                                <div class="min-w-0">
+                                    <h4 class="text-xs font-bold text-white">DeFi Protocols</h4>
+                                    <p class="text-xs text-gray-400 font-light leading-relaxed mt-0.5">Memahami mekanisme AMM, lending, yield farming, dan bridge lintas rantai, termasuk risikonya.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-8 h-8 flex-shrink-0 rounded-lg bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-plug text-brand-accent text-xs"></i></div>
+                                <div class="min-w-0">
+                                    <h4 class="text-xs font-bold text-white">Ethers.js / Web3.js</h4>
+                                    <p class="text-xs text-gray-400 font-light leading-relaxed mt-0.5">Menghubungkan antarmuka web dengan blockchain: koneksi dompet, membaca data on-chain, dan mengirim transaksi.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Status Jaringan</label>
-                            <p class="text-sm font-semibold text-emerald-400 pt-1"><span>Local / Interlocal / Global</span></p>
+                    </div>
+                    <!-- Proyek Portofolio Terpilih (dipindah di bawah Keahlian & Teknologi) -->
+                    <div class="bg-card-dark border border-card-border rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
+                        <h3 class="text-lg font-bold text-white border-b border-card-border pb-4">Proyek Portofolio Terpilih</h3>
+                        <p class="text-xs text-gray-400 font-light leading-relaxed">Kumpulan proyek unggulan di bidang arsitektur dApp, keamanan protokol DeFi, analisis kuantitatif, dan platform data pasar global.</p>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="bg-black border border-card-border rounded-xl p-4 space-y-2">
+                                <div class="flex justify-between items-start gap-2">
+                                    <h4 class="text-sm font-bold text-white">DeFi Yield Aggregator</h4>
+                                    <span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded flex-shrink-0">Solidity</span>
+                                </div>
+                                <p class="text-xs text-gray-400 font-light">
+                                    Otomatisasi strategi hasil pertanian likuiditas lintas rantai (cross-chain yield farming) dengan keamanan tingkat tinggi.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 pt-1"><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Cross-chain</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Vault</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Auto-compound</span></div>
+                            </div>
+                            <div class="bg-black border border-card-border rounded-xl p-4 space-y-2">
+                                <div class="flex justify-between items-start gap-2">
+                                    <h4 class="text-sm font-bold text-white">NFT Marketplace Engine</h4>
+                                    <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded flex-shrink-0">Next.js / IPFS</span>
+                                </div>
+                                <p class="text-xs text-gray-400 font-light">
+                                    Platform perdagangan aset digital berbasis desentralisasi penyimpanan IPFS dengan fitur lelang waktu nyata.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 pt-1"><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">IPFS</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Lelang Real-Time</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">ERC-721</span></div>
+                            </div>
+                            <div class="bg-black border border-card-border rounded-xl p-4 space-y-2">
+                                <div class="flex justify-between items-start gap-2">
+                                    <h4 class="text-sm font-bold text-white">Smart Contract Audit Toolkit</h4>
+                                    <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded flex-shrink-0">Rust / Python</span>
+                                </div>
+                                <p class="text-xs text-gray-400 font-light">
+                                    Perangkat audit otomatis untuk mendeteksi celah umum seperti reentrancy, integer overflow, dan akses kontrol lemah sebelum kontrak dirilis ke mainnet.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 pt-1"><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Static Analysis</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Laporan Risiko</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Keamanan DeFi</span></div>
+                            </div>
+                            <div class="bg-black border border-card-border rounded-xl p-4 space-y-2">
+                                <div class="flex justify-between items-start gap-2">
+                                    <h4 class="text-sm font-bold text-white">Crypto Quant Analyzer</h4>
+                                    <span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded flex-shrink-0">Python / AI</span>
+                                </div>
+                                <p class="text-xs text-gray-400 font-light">
+                                    Mesin analisis kuantitatif yang memadukan model prediksi berbasis AI, indikator teknikal, dan data on-chain untuk membaca tren pasar aset digital.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 pt-1"><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Machine Learning</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">On-chain Data</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Backtesting</span></div>
+                            </div>
+                            <div class="bg-black border border-card-border rounded-xl p-4 space-y-2">
+                                <div class="flex justify-between items-start gap-2">
+                                    <h4 class="text-sm font-bold text-white">Real-Time Market Dashboard</h4>
+                                    <span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded flex-shrink-0">JS / Chart.js</span>
+                                </div>
+                                <p class="text-xs text-gray-400 font-light">
+                                    Dasbor pasar kripto, saham, dan komoditas global dengan grafik langsung, candlestick, dan pembaruan data otomatis, basis dari platform Berita Angin.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 pt-1"><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Candlestick</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Live Feed</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Tailwind CSS</span></div>
+                            </div>
+                            <div class="bg-black border border-card-border rounded-xl p-4 space-y-2">
+                                <div class="flex justify-between items-start gap-2">
+                                    <h4 class="text-sm font-bold text-white">DAO Governance Portal</h4>
+                                    <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded flex-shrink-0">React.js / Ethers.js</span>
+                                </div>
+                                <p class="text-xs text-gray-400 font-light">
+                                    Portal tata kelola terdesentralisasi untuk pembuatan proposal, voting berbasis token, dan pelacakan hasil secara transparan di blockchain.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 pt-1"><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Voting On-chain</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Wallet Connect</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Smart Contract</span></div>
+                            </div>
+                            <div class="bg-black border border-card-border rounded-xl p-4 space-y-2">
+                                <div class="flex justify-between items-start gap-2">
+                                    <h4 class="text-sm font-bold text-white">Cross-Chain Bridge Monitor</h4>
+                                    <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded flex-shrink-0">Ethers.js / Web3.js</span>
+                                </div>
+                                <p class="text-xs text-gray-400 font-light">
+                                    Pemantau transaksi jembatan antar-jaringan untuk melacak status transfer aset, likuiditas, dan anomali secara waktu nyata.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 pt-1"><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Multi-chain</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Alert Anomali</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Analitik Likuiditas</span></div>
+                            </div>
+                            <div class="bg-black border border-card-border rounded-xl p-4 space-y-2">
+                                <div class="flex justify-between items-start gap-2">
+                                    <h4 class="text-sm font-bold text-white">Berita Angin Intelligence Engine</h4>
+                                    <span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded flex-shrink-0">Next.js / AI</span>
+                                </div>
+                                <p class="text-xs text-gray-400 font-light">
+                                    Sistem kurasi dan analisis berita pasar yang menyaring isu menjadi fakta, menandai sentimen, serta mengaitkan berita dengan aset terdampak.
+                                </p>
+                                <div class="flex flex-wrap gap-1.5 pt-1"><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Analisis Sentimen</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">Kurasi Berita</span><span class="text-[10px] bg-card-dark border border-card-border text-gray-400 px-2 py-0.5 rounded">1% Issue 99% Fact</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!-- Kolom Kanan -->
-                <div class="lg:col-span-2 space-y-6">
+                <div id="prof-col-right" class="lg:col-span-2 flex flex-col gap-6">
                     <!-- Keterangan Biodata Secara Lengkap -->
                     <div class="bg-card-dark border border-card-border rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
                         <h3 class="text-lg font-bold text-white border-b border-card-border pb-4 flex items-center space-x-2">
@@ -733,52 +903,123 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
                             <i class="fa-solid fa-graduation-cap text-brand-accent"></i>
                             <span>Riwayat Pendidikan & Pengalaman</span>
                         </h3>
-                        <div class="space-y-4 text-sm">
+                        <div class="space-y-8 text-sm">
+                        <div class="space-y-4">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 flex items-center gap-2"><i class="fa-solid fa-briefcase text-brand-accent"></i><span>Pengalaman Profesional</span></h4>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-purple-500/20 flex items-center justify-center"><i class="fa-solid fa-briefcase text-purple-400 text-xs"></i></div>
+                                <div class="flex-1 min-w-0 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">CEO &mdash; Berita Angin</h4><span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded flex-shrink-0">Saat ini</span></div>
+                                    <p class="text-[11px] text-brand-accent font-medium">2024 &ndash; Sekarang</p>
+                                    <p class="text-xs text-gray-400 font-light">Memimpin platform berita dan analitik Web3, kripto, saham, dan pasar global (1% Issue 99% Fact).</p>
+                                    <ul class="text-xs text-gray-400 font-light space-y-1 pt-1"><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Menetapkan visi, strategi produk, dan arah editorial platform</span></li><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Memimpin pengembangan dasbor pasar real-time dan mesin kurasi berita berbasis AI</span></li><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Mengelola tim redaksi, analis, dan pengembang</span></li></ul>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-purple-500/20 flex items-center justify-center"><i class="fa-solid fa-sitemap text-purple-400 text-xs"></i></div>
+                                <div class="flex-1 min-w-0 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Lead dApp Architect</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded flex-shrink-0">Teknologi</span></div>
+                                    <p class="text-[11px] text-brand-accent font-medium">2022 &ndash; 2024</p>
+                                    <p class="text-xs text-gray-400 font-light">Merancang arsitektur aplikasi terdesentralisasi, dari smart contract hingga antarmuka pengguna.</p>
+                                    <ul class="text-xs text-gray-400 font-light space-y-1 pt-1"><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Membangun DeFi Yield Aggregator dan NFT Marketplace Engine</span></li><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Memimpin tim pengembang dengan stack React.js, Next.js, dan Ethers.js</span></li></ul>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-purple-500/20 flex items-center justify-center"><i class="fa-solid fa-shield-halved text-purple-400 text-xs"></i></div>
+                                <div class="flex-1 min-w-0 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Smart Contract Security Auditor</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded flex-shrink-0">Keamanan</span></div>
+                                    <p class="text-[11px] text-brand-accent font-medium">2021 &ndash; 2022</p>
+                                    <p class="text-xs text-gray-400 font-light">Mengaudit smart contract dan protokol DeFi untuk menemukan celah keamanan sebelum rilis ke mainnet.</p>
+                                    <ul class="text-xs text-gray-400 font-light space-y-1 pt-1"><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Menyusun laporan risiko dan rekomendasi perbaikan</span></li><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Mengembangkan perangkat audit otomatis berbasis Rust dan Python</span></li></ul>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-purple-500/20 flex items-center justify-center"><i class="fa-solid fa-code text-purple-400 text-xs"></i></div>
+                                <div class="flex-1 min-w-0 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Web3 Developer</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded flex-shrink-0">Pengembangan</span></div>
+                                    <p class="text-[11px] text-brand-accent font-medium">2020 &ndash; 2021</p>
+                                    <p class="text-xs text-gray-400 font-light">Mengembangkan smart contract Solidity dan integrasi dApp dengan Web3.js serta Ethers.js.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-purple-500/20 flex items-center justify-center"><i class="fa-solid fa-chart-line text-purple-400 text-xs"></i></div>
+                                <div class="flex-1 min-w-0 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Analis Pasar Aset Digital</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded flex-shrink-0">Analisis</span></div>
+                                    <p class="text-[11px] text-brand-accent font-medium">2019 &ndash; 2020</p>
+                                    <p class="text-xs text-gray-400 font-light">Analisis kuantitatif dan teknikal pasar kripto serta saham, sejak masa kuliah S1.</p>
+                                    <ul class="text-xs text-gray-400 font-light space-y-1 pt-1"><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Menyusun laporan pasar dan model prediksi tren harga</span></li></ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 flex items-center gap-2"><i class="fa-solid fa-graduation-cap text-brand-accent"></i><span>Pendidikan Formal</span></h4>
                             <div class="flex items-start space-x-4">
                                 <div class="w-9 h-9 flex-shrink-0 rounded-full bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-user-graduate text-brand-accent text-xs"></i></div>
-                                <div class="flex-1 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
-                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Magister Manajemen (MM)</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded">S2</span></div>
+                                <div class="flex-1 min-w-0 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Magister Manajemen (MM)</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded flex-shrink-0">S2</span></div>
+                                    <p class="text-[11px] text-brand-accent font-medium">2020 &ndash; 2022</p>
                                     <p class="text-xs text-gray-400 font-light">Manajemen strategis, keuangan, dan kepemimpinan bisnis.</p>
+                                    <ul class="text-xs text-gray-400 font-light space-y-1 pt-1"><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Fokus: manajemen keuangan, strategi bisnis, dan transformasi digital</span></li><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Tesis: peran teknologi blockchain dalam efisiensi pasar modal dan aset digital</span></li></ul>
                                 </div>
                             </div>
                             <div class="flex items-start space-x-4">
                                 <div class="w-9 h-9 flex-shrink-0 rounded-full bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-book-open text-brand-accent text-xs"></i></div>
-                                <div class="flex-1 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
-                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Sarjana Ekonomi (SE)</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded">S1</span></div>
+                                <div class="flex-1 min-w-0 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Sarjana Ekonomi (SE)</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded flex-shrink-0">S1</span></div>
+                                    <p class="text-[11px] text-brand-accent font-medium">2016 &ndash; 2020</p>
                                     <p class="text-xs text-gray-400 font-light">Dasar ekonomi, pasar modal, dan analisis keuangan.</p>
+                                    <ul class="text-xs text-gray-400 font-light space-y-1 pt-1"><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Konsentrasi: manajemen keuangan dan investasi</span></li><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Aktif dalam komunitas studi pasar modal dan kewirausahaan kampus</span></li></ul>
                                 </div>
                             </div>
                             <div class="flex items-start space-x-4">
-                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-purple-500/20 flex items-center justify-center"><i class="fa-solid fa-briefcase text-purple-400 text-xs"></i></div>
-                                <div class="flex-1 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
-                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">CEO &mdash; Berita Angin</h4><span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Saat ini</span></div>
-                                    <p class="text-xs text-gray-400 font-light">Memimpin platform berita dan analitik Web3, kripto, saham, dan pasar global (1% Issue 99% Fact).</p>
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-school text-brand-accent text-xs"></i></div>
+                                <div class="flex-1 min-w-0 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Sekolah Menengah Atas (SMA)</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded flex-shrink-0">SMA</span></div>
+                                    <p class="text-[11px] text-brand-accent font-medium">2013 &ndash; 2016</p>
+                                    <p class="text-xs text-gray-400 font-light">Jurusan Ilmu Pengetahuan Sosial (IPS) dengan minat pada ekonomi, akuntansi, dan teknologi informasi.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-school text-brand-accent text-xs"></i></div>
+                                <div class="flex-1 min-w-0 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Sekolah Menengah Pertama (SMP)</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded flex-shrink-0">SMP</span></div>
+                                    <p class="text-[11px] text-brand-accent font-medium">2010 &ndash; 2013</p>
+                                    <p class="text-xs text-gray-400 font-light">Pendidikan menengah pertama di Jakarta.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-brand-primary/20 flex items-center justify-center"><i class="fa-solid fa-child-reaching text-brand-accent text-xs"></i></div>
+                                <div class="flex-1 min-w-0 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Sekolah Dasar (SD)</h4><span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded flex-shrink-0">SD</span></div>
+                                    <p class="text-[11px] text-brand-accent font-medium">2004 &ndash; 2010</p>
+                                    <p class="text-xs text-gray-400 font-light">Pendidikan dasar di Jakarta.</p>
                                 </div>
                             </div>
                         </div>
+                        <div class="space-y-4">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 flex items-center gap-2"><i class="fa-solid fa-award text-brand-accent"></i><span>Sertifikasi & Pelatihan</span></h4>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-9 h-9 flex-shrink-0 rounded-full bg-emerald-500/20 flex items-center justify-center"><i class="fa-solid fa-certificate text-emerald-400 text-xs"></i></div>
+                                <div class="flex-1 min-w-0 bg-black/40 border border-card-border rounded-xl p-4 space-y-1">
+                                    <div class="flex justify-between items-start gap-2"><h4 class="font-bold text-white">Sertifikasi &amp; Pelatihan Profesional</h4><span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded flex-shrink-0">Sertifikat</span></div>
+                                    <p class="text-[11px] text-brand-accent font-medium">2019 &ndash; 2024</p>
+                                    <p class="text-xs text-gray-400 font-light">Pelatihan berkelanjutan di bidang teknologi blockchain dan keuangan.</p>
+                                    <ul class="text-xs text-gray-400 font-light space-y-1 pt-1"><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Pengembangan Smart Contract dan Keamanan Solidity</span></li><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Analisis Teknikal dan Manajemen Risiko Investasi</span></li><li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>Kepemimpinan dan Manajemen Produk Digital</span></li></ul>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
                     </div>
-                    <!-- Portofolio Proyek Unggulan -->
+                    <!-- Pengaturan Wallet & Akun -->
                     <div class="bg-card-dark border border-card-border rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
-                        <h3 class="text-lg font-bold text-white border-b border-card-border pb-4">Proyek Portofolio Terpilih</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="bg-black border border-card-border rounded-xl p-4 space-y-2">
-                                <div class="flex justify-between items-start">
-                                    <h4 class="text-sm font-bold text-white">DeFi Yield Aggregator</h4>
-                                    <span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded">Solidity</span>
-                                </div>
-                                <p class="text-xs text-gray-400 font-light">
-                                    Otomatisasi strategi hasil pertanian likuiditas lintas rantai (cross-chain yield farming) dengan keamanan tingkat tinggi.
-                                </p>
-                            </div>
-                            <div class="bg-black border border-card-border rounded-xl p-4 space-y-2">
-                                <div class="flex justify-between items-start">
-                                    <h4 class="text-sm font-bold text-white">NFT Marketplace Engine</h4>
-                                    <span class="text-[10px] bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded">Next.js / IPFS</span>
-                                </div>
-                                <p class="text-xs text-gray-400 font-light">
-                                    Platform perdagangan aset digital berbasis desentralisasi penyimpanan IPFS dengan fitur lelang waktu nyata.
-                                </p>
-                            </div>
+                        <h3 class="text-lg font-bold text-white border-b border-card-border pb-4">Pengaturan Dompet Web3</h3>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Alamat Dompet Utama</label>
+                            <input type="text" value="0x71C8F4a92E31b...98B2 (Terhubung)" class="w-full bg-black border border-card-border rounded-xl px-4 py-3 text-gray-300 text-sm focus:outline-none" readonly>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Status Jaringan</label>
+                            <p class="text-sm font-semibold text-emerald-400 pt-1"><span>Local / Interlocal / Global</span></p>
                         </div>
                     </div>
                 </div>
@@ -1002,45 +1243,9 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
                     </div>
                 </div>
             </div>
-            <!-- SUB-HALAMAN 2: Kalkulator PnL, Pemantau Gas Fee Real-Time, & Web3 e-Wallet & Multi-Chain Vault -->
+            <!-- SUB-HALAMAN 2: Pemantau Gas Fee Real-Time, & Web3 e-Wallet & Multi-Chain Vault (termasuk Kalkulator PnL) -->
             <div id="crypto-subpage-2" class="crypto-subpage space-y-6 hidden">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-                    <!-- 1. Kalkulator Profit / Loss (PnL) Kripto -->
-                    <div class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4 flex flex-col justify-between h-full">
-                        <div>
-                            <div class="flex items-center justify-between border-b border-card-border pb-3">
-                                <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
-                                    <i class="fa-solid fa-calculator text-brand-accent"></i>
-                                    <span>Kalkulator Profit / Loss (PnL) Kripto</span>
-                                </h3>
-                                <span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded font-mono">Simulasi Trading</span>
-                            </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                                <div class="space-y-1">
-                                    <label class="block text-xs text-gray-400">Harga Beli (USD)</label>
-                                    <input type="number" id="pnl-buy-price" value="65000" oninput="calculateCryptoPnL()" class="w-full bg-black border border-card-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono">
-                                </div>
-                                <div class="space-y-1">
-                                    <label class="block text-xs text-gray-400">Harga Jual / Target (USD)</label>
-                                    <input type="number" id="pnl-sell-price" value="70000" oninput="calculateCryptoPnL()" class="w-full bg-black border border-card-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono">
-                                </div>
-                                <div class="space-y-1 sm:col-span-2">
-                                    <label class="block text-xs text-gray-400">Jumlah Aset (Koin)</label>
-                                    <input type="number" id="pnl-amount" value="0.5" step="0.01" oninput="calculateCryptoPnL()" class="w-full bg-black border border-card-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-4 bg-black/60 border border-card-border rounded-xl flex items-center justify-between font-mono mt-6">
-                            <div>
-                                <span class="text-xs text-gray-400 block">Estimasi Keuntungan / Kerugian:</span>
-                                <span id="pnl-result-amount" class="text-lg font-bold text-emerald-400">+$2,500.00</span>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-xs text-gray-400 block">Persentase (ROI):</span>
-                                <span id="pnl-result-roi" class="text-base font-bold text-emerald-400">+7.69%</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="grid grid-cols-1 gap-6 items-start">
                     <!-- 2. Pemantau Gas Fee Jaringan Real-Time — AREA CHART -->
                     <div class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4 flex flex-col justify-between h-full">
                         <div>
@@ -1265,6 +1470,34 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
                             <button onclick="claimStakingRewards()" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-semibold py-2 rounded-xl text-xs transition">
                                 Klaim Reward Staking
                             </button>
+                        </div>
+                    </div>
+                    <!-- Kalkulator Profit / Loss (PnL) Kripto — digabung ke Desentralisasi & Manajemen Aset -->
+                    <div class="bg-black/50 border border-card-border rounded-2xl p-5 sm:p-6 shadow-xl relative z-10">
+                        <div class="flex items-center justify-between border-b border-card-border pb-3 text-xs">
+                            <span class="font-bold text-white uppercase tracking-wider flex items-center space-x-1.5">
+                                <i class="fa-solid fa-calculator text-brand-accent"></i>
+                                <span>Kalkulator Profit / Loss (PnL) Kripto</span>
+                            </span>
+                            <span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded font-mono">Simulasi Trading</span>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-4 mt-4 items-end">
+                            <div class="space-y-1 lg:col-span-1"><label class="block text-xs text-gray-400">Harga Beli (USD)</label>
+                                <input type="number" id="pnl-buy-price" value="65000" oninput="calculateCryptoPnL()" class="w-full bg-black border border-card-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono"></div>
+                            <div class="space-y-1 lg:col-span-1"><label class="block text-xs text-gray-400">Harga Jual / Target (USD)</label>
+                                <input type="number" id="pnl-sell-price" value="70000" oninput="calculateCryptoPnL()" class="w-full bg-black border border-card-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono"></div>
+                            <div class="space-y-1 lg:col-span-1"><label class="block text-xs text-gray-400">Jumlah Aset (Koin)</label>
+                                <input type="number" id="pnl-amount" value="0.5" step="0.01" oninput="calculateCryptoPnL()" class="w-full bg-black border border-card-border rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono"></div>
+                            <div class="p-3 bg-black/60 border border-card-border rounded-xl flex items-center justify-between font-mono lg:col-span-2">
+                                <div>
+                                    <span class="text-xs text-gray-400 block">Estimasi Keuntungan / Kerugian:</span>
+                                    <span id="pnl-result-amount" class="text-lg font-bold text-emerald-400">+$2,500.00</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-xs text-gray-400 block">Persentase (ROI):</span>
+                                    <span id="pnl-result-roi" class="text-base font-bold text-emerald-400">+7.69%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- Tabel Token & Riwayat Transaksi Vault -->
@@ -1517,8 +1750,9 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
                             </div>
                         </div>
                     </div>
-                    <!-- CURRENCY CONVERTER (KONVERSI NILAI UANG) - Diposisikan Menempel di Sini -->
-                    <div id="currency-converter-card" class="bg-card-dark rounded-2xl border border-card-border p-6 shadow-xl space-y-4">
+                </div>
+                    <!-- CURRENCY CONVERTER (KONVERSI NILAI UANG) - Lebar Penuh Sesuai Halaman -->
+                    <div id="currency-converter-card" class="bg-card-dark rounded-2xl border border-card-border p-6 sm:p-8 shadow-xl space-y-5 lg:col-span-3 lg:order-last w-full">
                         <div class="flex items-center justify-between border-b border-card-border pb-3 gap-2">
                             <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center space-x-2">
                                 <i class="fa-solid fa-money-bill-transfer text-brand-accent"></i>
@@ -1530,8 +1764,8 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
                             <div class="space-y-1">
                                 <label class="block text-xs text-gray-400">Jumlah & Mata Uang Asal</label>
                                 <div class="flex">
-                                    <input type="number" id="converter-amount" value="100" min="0" oninput="convertCurrency()" class="w-full min-w-0 bg-black border border-card-border rounded-l-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-accent font-mono">
-                                    <select id="converter-from" onchange="convertCurrency()" class="bg-neutral-900 border-y border-r border-card-border rounded-r-xl px-3 py-2 text-xs text-white focus:outline-none">
+                                    <input type="number" id="converter-amount" value="100" min="0" oninput="convertCurrency()" class="w-full min-w-0 bg-black border border-card-border rounded-l-xl px-4 py-3 text-base text-white focus:outline-none focus:border-brand-accent font-mono">
+                                    <select id="converter-from" onchange="convertCurrency()" class="bg-neutral-900 border-y border-r border-card-border rounded-r-xl px-3 py-3 text-xs text-white focus:outline-none">
                                         <option value="USD" selected>USD ($)</option>
                                         <option value="IDR">IDR (Rp)</option>
                                         <option value="EUR">EUR (€)</option>
@@ -1557,8 +1791,8 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
                             <div class="space-y-1">
                                 <label class="block text-xs text-gray-400">Hasil & Mata Uang Tujuan</label>
                                 <div class="flex">
-                                    <input type="text" id="converter-result" readonly class="w-full min-w-0 bg-black border border-card-border rounded-l-xl px-3 py-2 text-sm text-emerald-400 font-bold font-mono" value="Rp 1.620.000">
-                                    <select id="converter-to" onchange="convertCurrency()" class="bg-neutral-900 border-y border-r border-card-border rounded-r-xl px-3 py-2 text-xs text-white focus:outline-none">
+                                    <input type="text" id="converter-result" readonly class="w-full min-w-0 bg-black border border-card-border rounded-l-xl px-4 py-3 text-base text-emerald-400 font-bold font-mono" value="Rp 1.620.000">
+                                    <select id="converter-to" onchange="convertCurrency()" class="bg-neutral-900 border-y border-r border-card-border rounded-r-xl px-3 py-3 text-xs text-white focus:outline-none">
                                         <option value="USD">USD ($)</option>
                                         <option value="IDR" selected>IDR (Rp)</option>
                                         <option value="EUR">EUR (€)</option>
@@ -1577,12 +1811,18 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-2 gap-2">
+                                <span class="text-[10px] text-gray-400 uppercase tracking-wider flex items-center gap-1.5"><i class="fa-solid fa-bolt text-brand-accent"></i>Konversi Cepat ke Mata Uang Lain (otomatis)</span>
+                                <span id="fx-quick-note" class="text-[10px] text-gray-500 font-mono"></span>
+                            </div>
+                            <div id="fx-quick" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7 gap-2"></div>
+                        </div>
                         <div class="text-[11px] text-gray-400 flex flex-wrap items-center justify-between gap-1 pt-1 border-t border-card-border/60">
                             <span id="converter-rate-info">Kurs Referensi: 1 USD = Rp 16.200 IDR</span>
                             <span id="converter-status" class="text-emerald-400">● Updated</span>
                         </div>
                     </div>
-                </div>
                 <!-- Kolom Kanan (1 Kolom): Stock Sector Distribution (FineReport Bar Chart Style) & Live Streamed Ticks -->
                 <div class="space-y-6">
                     <!-- STOCK SECTOR DISTRIBUTION (FineReport Bar Chart Style) -->
@@ -1683,7 +1923,7 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
         <div class="md:col-span-3 flex items-center justify-center"><div id="se2-radwrap" class="relative w-full max-w-[400px] aspect-square rounded-full overflow-hidden border border-card-border" style="background:radial-gradient(circle,rgba(56,189,248,.08),rgba(0,0,0,.6) 70%)"><canvas id="se2-main"></canvas><canvas id="se2-sweep" class="absolute left-0 top-0 pointer-events-none" style="width:100%;height:100%"></canvas></div></div>
         <div id="se2-dec" class="md:col-span-2 bg-black/50 border border-card-border rounded-xl p-3 space-y-2 text-[11px]"></div>
       </div>
-      <div class="flex items-center gap-2 text-[10px] text-gray-500 uppercase tracking-wider"><span class="se2-pulse"></span>Live Tick &bull; 90 tick terakhir, berjalan otomatis</div>
+      <div class="flex items-center gap-2 text-[10px] text-gray-500 uppercase tracking-wider"><span class="se2-pulse"></span>Live Streaming Online &bull; 90 otomatis</div>
       <div class="relative h-[90px] bg-black/50 border border-card-border rounded-xl p-1"><canvas id="se2-tape"></canvas></div>
       <div class="text-[10px] text-gray-500 uppercase tracking-wider">MTPI Score (-1 … +1) &bull; ▲ ▼ = pergantian rezim terkonfirmasi</div>
       <div class="relative h-[110px] bg-black/50 border border-card-border rounded-xl p-1"><canvas id="se2-score"></canvas></div>
@@ -1913,9 +2153,9 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
 </div>
                     </div>
                     <div class="gm1-charts">
-    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-line text-brand-accent"></i> Likuiditas Bersih AS vs Neraca Fed <span class="normal-case text-gray-600">(live, $T)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-net"></canvas></div></div>
+    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-line text-pink-400"></i> Likuiditas Bersih AS vs Neraca Fed <span class="normal-case text-gray-600">(live, $T)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-net"></canvas></div></div>
     <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-bar text-brand-accent"></i> Kontribusi per Komponen <span class="normal-case text-gray-600">(+ menambah / − menyerap)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-imp"></canvas></div></div>
-    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-gauge-high text-brand-accent"></i> Riwayat Skor Komposit <span class="normal-case text-gray-600">(garis putus = batas rezim)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-sc"></canvas></div></div>
+    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-gauge-high text-pink-400"></i> Riwayat Skor Komposit <span class="normal-case text-gray-600">(garis putus = batas rezim)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-sc"></canvas></div></div>
                     </div>
                     <div class="gm1-bottom">
                     <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-link text-brand-accent"></i> Korelasi 30H dg Likuiditas Bersih</div><div id="mlc-corr"></div></div>
@@ -3978,7 +4218,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   }
   function scoreFrom(get) { var mz = 0; C.forEach(function (c) { mz += c.e * (get(c) - c.b) / (c.b * c.r * 1.85); }); return clamp(50 + 60 * mz / C.length, 3, 97); }
   (function () { var f = G('fed'), r = G('rrp'), t = G('tga'), now = Date.now(); for (var i = 0; i < 40; i++) { H.t.push(clockAt(now - (39 - i) * 2000)); H.fed.push(+f.h[i].toFixed(3)); H.net.push(+(f.h[i] - r.h[i] - t.h[i]).toFixed(3)); H.sc.push(+scoreFrom(function (c) { return c.h[i]; }).toFixed(1)); } })();
-
   /* ---------- Tabel ---------- */
   function rowHtml(c) {
     return '<tr id="mlc-r-' + c.id + '"><td class="text-gray-500 font-mono" id="mlc-no-' + c.id + '"></td>' +
@@ -4010,7 +4249,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       if (th.getAttribute('data-k') === st.sk) th.classList.add(st.sd > 0 ? 'asc' : 'desc');
     });
   }
-
   /* ---------- Panel lama (dipertahankan) ---------- */
   function pushAlert(txt, col) {
     alerts.unshift({ t: clock(), x: txt, c: col }); if (alerts.length > 8) alerts.pop();
@@ -4047,36 +4285,104 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     g.textAlign = 'center'; g.fillStyle = '#fff'; g.font = '800 24px Inter, sans-serif'; g.fillText(Math.round(st.shown), cx, cy - R * .38);
     g.fillStyle = '#6b7280'; g.font = '10px Inter, sans-serif'; g.textAlign = 'left'; g.fillText('0', cx - R - 4, cy + 12); g.textAlign = 'right'; g.fillText('100', cx + R + 4, cy + 12);
   }
-
-  /* ---------- Grafik Chart.js ---------- */
+  /* ---------- Grafik canvas v2 (otomatis via rAF, mengikuti tema) ---------- */
   function mkCharts() {
-    if (CH.made || !window.Chart) return; CH.made = true;
-    var grid = 'rgba(255,255,255,.06)', tk = '#6b7280';
-    function opt(legend, extra) {
-      var o = { responsive: true, maintainAspectRatio: false, animation: false, interaction: { mode: 'index', intersect: false },
-        plugins: { legend: { display: legend, labels: { color: '#9ca3af', boxWidth: 10, font: { size: 10 } } } },
-        scales: { x: { ticks: { color: tk, maxTicksLimit: 5, font: { size: 9 } }, grid: { color: grid } }, y: { ticks: { color: tk, font: { size: 9 } }, grid: { color: grid } } } };
-      if (extra) extra(o); return o;
-    }
-    var a = $('mlc-ch-net'), b = $('mlc-ch-imp'), c = $('mlc-ch-sc');
-    if (a) CH.net = new Chart(a, { type: 'line', data: { labels: H.t.slice(), datasets: [
-      { label: 'Likuiditas Bersih AS', data: H.net.slice(), borderColor: '#38BDF8', backgroundColor: 'rgba(56,189,248,.12)', fill: true, borderWidth: 2, pointRadius: 0, tension: .35 },
-      { label: 'Neraca Fed', data: H.fed.slice(), borderColor: '#818CF8', borderWidth: 1.6, borderDash: [4, 3], pointRadius: 0, tension: .35 }] }, options: opt(true) });
-    if (b) CH.imp = new Chart(b, { type: 'bar', data: { labels: C.map(function (x) { return x.n.replace(/ \(.*\)/, ''); }), datasets: [{ data: C.map(function () { return 0; }), backgroundColor: C.map(function () { return '#94a3b8'; }), borderRadius: 3 }] },
-      options: opt(false, function (o) { o.indexAxis = 'y'; o.scales.y.ticks.font = { size: 9 }; o.scales.x.min = -1; o.scales.x.max = 1; }) });
-    if (c) CH.sc = new Chart(c, { type: 'line', data: { labels: H.t.slice(), datasets: [
-      { label: 'Skor', data: H.sc.slice(), borderColor: '#fbbf24', backgroundColor: 'rgba(251,191,36,.12)', fill: true, borderWidth: 2, pointRadius: 0, tension: .35 },
-      { label: 'Ekspansif ≥62', data: H.t.map(function () { return 62; }), borderColor: '#34d399', borderDash: [5, 4], borderWidth: 1, pointRadius: 0 },
-      { label: 'Ketat ≤38', data: H.t.map(function () { return 38; }), borderColor: '#fb7185', borderDash: [5, 4], borderWidth: 1, pointRadius: 0 }] },
-      options: opt(true, function (o) { o.scales.y.min = 0; o.scales.y.max = 100; }) });
+    if (CH.made) return; var K = window.__proKit; if (!K) return; CH.made = true;
+    var T = K.T, Tw = K.Tw, tag = K.tag, tip = K.tip, hline = K.hline, vline = K.vline, hgrid = K.hgrid, dot = K.dot, tri = K.tri, sma = K.sma, ema = K.ema, lerp = K.lerp, TAU = 6.2832;
+    ['mlc-ch-net', 'mlc-ch-imp', 'mlc-ch-sc'].forEach(function (id) { var cv = $(id); if (!cv) return; cv.style.cssText = 'display:block;width:100%;height:100%'; cv.parentNode.style.height = '270px'; });
+    var cap = function (s, n) { return s.length > n ? s.slice(0, n - 1) + '…' : s; };
+    /* === 1. Likuiditas Bersih vs Neraca Fed: area + pita penyerapan (RRP+TGA) + EMA + ekstrem + panel momentum === */
+    K.host('mlc-ch-net', function (c, w, h, now, s, P) {
+      var net = H.net, fed = H.fed, n = net.length; if (n < 3) return;
+      var pk = P.l ? '#DB2777' : '#F472B6', pk2 = P.l ? '#9D174D' : '#FBCFE8', pk3 = P.l ? '#BE185D' : '#F9A8D4';
+      var L = 8, R = w - 50, a = 36, b = Math.round(h * .74), m0 = b + 16, m1 = h - 14, slot = (R - L) / (n - 1), i, mn = 1e9, mx = -1e9;
+      var X = function (k) { return L + k * slot; };
+      for (i = 0; i < n; i++) { mn = Math.min(mn, net[i]); mx = Math.max(mx, fed[i]); }
+      var pd = (mx - mn) * .1 + .005, rg = lerp(s, 'r', mn - pd, mx + pd, .12); mn = rg.mn; mx = rg.mx;
+      var Y = function (v) { return b - (v - mn) / (mx - mn) * (b - a); };
+      var cn = net[n - 1], cf = fed[n - 1], d0 = cn - net[0], dp = d0 / net[0] * 100;
+      var hx = Tw(c, 'NET ' + cn.toFixed(3) + 'T', L, 8, pk, 8, 700); Tw(c, (d0 >= 0 ? '▲ ' : '▼ ') + Math.abs(dp).toFixed(2) + '% (' + n + ' tick)', hx, 8, d0 >= 0 ? P.up : P.dn, 8, 700);
+      hx = Tw(c, 'FED ' + cf.toFixed(3) + 'T', L, 20, pk2, 8, 700); Tw(c, 'RRP+TGA ' + (cf - cn).toFixed(3) + 'T · ' + ((cf - cn) / cf * 100).toFixed(1) + '%', hx, 20, pk3, 8, 700);
+      c.fillStyle = P.bg; c.fillRect(L, a, R - L, b - a); hgrid(c, L, R, a, b, mn, mx, P, 3, 4);
+      c.save(); c.beginPath(); c.rect(L, a, R - L, b - a); c.clip();
+      c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(fed[i])) : c.moveTo(X(i), Y(fed[i])); for (i = n - 1; i >= 0; i--) c.lineTo(X(i), Y(net[i]));
+      c.closePath(); c.fillStyle = 'rgba(236,72,153,.13)'; c.fill();
+      var g = c.createLinearGradient(0, a, 0, b); g.addColorStop(0, 'rgba(236,72,153,.42)'); g.addColorStop(1, 'rgba(236,72,153,0)');
+      c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(net[i])) : c.moveTo(X(i), Y(net[i])); c.lineTo(X(n - 1), b); c.lineTo(X(0), b); c.closePath(); c.fillStyle = g; c.fill();
+      c.setLineDash([4, 3]); c.lineWidth = 1.4; c.strokeStyle = pk2; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(fed[i])) : c.moveTo(X(i), Y(fed[i])); c.stroke(); c.setLineDash([]);
+      var em = ema(net, 8); c.lineWidth = 1; c.strokeStyle = pk3; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(em[i])) : c.moveTo(X(i), Y(em[i])); c.stroke();
+      c.shadowColor = pk; c.shadowBlur = P.l ? 0 : 6; c.lineWidth = 2; c.strokeStyle = pk; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(net[i])) : c.moveTo(X(i), Y(net[i])); c.stroke(); c.shadowBlur = 0;
+      var im = net.indexOf(Math.max.apply(null, net)), il = net.indexOf(Math.min.apply(null, net));
+      tri(c, X(im), Y(net[im]) - 7, false, P.up, 3); tri(c, X(il), Y(net[il]) + 7, true, P.dn, 3);
+      c.restore();
+      T(c, 'PENYERAPAN', R - 40, (Y(cf) + Y(cn)) / 2, pk3, 'center', 7, 700);
+      var yn = Y(cn), yf = Y(cf); if (yn - yf < 13) yn = yf + 13;
+      dot(c, R, Y(cn), pk, now); tag(c, cn.toFixed(2), R + 2, yn, pk, '#111'); tag(c, cf.toFixed(2), R + 2, yf, pk2, '#111');
+      /* momentum Δ/tick */
+      var dl = [], dm = .0005; for (i = 1; i < n; i++) { dl.push(net[i] - net[i - 1]); dm = Math.max(dm, Math.abs(net[i] - net[i - 1])); }
+      var zy = (m0 + m1) / 2, bw = Math.max(1, slot * .6); hline(c, L, R, zy, P.mu, [2, 3]);
+      for (i = 1; i < n; i++) { var v = dl[i - 1], bh = Math.abs(v) / dm * (m1 - m0) / 2; c.fillStyle = v >= 0 ? P.up : P.dn; c.globalAlpha = .75; c.fillRect(X(i) - bw / 2, v >= 0 ? zy - bh : zy, bw, Math.max(1, bh)); } c.globalAlpha = 1;
+      T(c, 'MOMENTUM Δ/TICK', L + 2, m0 + 2, P.mu, 'left', 7, 700);
+      for (i = n - 1; i >= 0; i -= 10) if (X(i) > L + 20) T(c, H.t[i], X(i), h - 4, P.mu, 'center', 8);
+      if (s.mx >= L && s.mx <= R) {
+        var k = clamp(Math.round((s.mx - L) / slot), 0, n - 1), x = X(k);
+        vline(c, x, a, m1, P); c.beginPath(); c.arc(x, Y(net[k]), 3, 0, TAU); c.fillStyle = pk; c.fill(); c.beginPath(); c.arc(x, Y(fed[k]), 3, 0, TAU); c.fillStyle = pk2; c.fill();
+        tip(c, w, x, [[H.t[k], P.tx], ['Net  ' + net[k].toFixed(3) + 'T', pk], ['Fed  ' + fed[k].toFixed(3) + 'T', pk2], ['Serap ' + (fed[k] - net[k]).toFixed(3) + 'T', pk3]], P);
+      }
+    });
+    /* === 2. Kontribusi per komponen: bar diverging beranimasi, diurutkan live, penanda EMA lambat, total impuls === */
+    var cs = {};
+    K.host('mlc-ch-imp', function (c, w, h, now, s, P) {
+      var rows = C.map(function (x) { var v = clamp(x.k, -1, 1), q = cs[x.id] || (cs[x.id] = { v: v, g: v, y: -1 }); q.v += (v - q.v) * .14; q.g += (v - q.g) * .02; return { x: x, q: q }; }).sort(function (p, q) { return q.q.v - p.q.v; });
+      var LN = Math.min(118, w * .36), zl = LN + 4, zr = w - 46, zx = (zl + zr) / 2, half = (zr - zl) / 2, top = 26, bot = h - 30, rh = (bot - top) / rows.length, i, pos = 0, neg = 0;
+      T(c, '◄ MENYERAP', zx - 6, 8, P.dn, 'right', 8, 700); T(c, 'MENAMBAH ►', zx + 6, 8, P.up, 'left', 8, 700);
+      [-1, -.5, 0, .5, 1].forEach(function (g) { var x = zx + g * half; c.save(); c.strokeStyle = g === 0 ? P.mu : P.gr; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(x) + .5, top - 4); c.lineTo(Math.round(x) + .5, bot + 2); c.stroke(); c.restore(); T(c, (g > 0 ? '+' : '') + g, x, bot + 9, P.mu, 'center', 7); });
+      var hy = -1; if (s.my >= top && s.my < bot && s.mx >= 0) hy = Math.floor((s.my - top) / rh);
+      rows.forEach(function (r, k) {
+        var x = r.x, q = r.q, ty = top + k * rh, y; if (q.y < 0) q.y = ty; q.y += (ty - q.y) * .2; y = q.y;
+        var col = q.v > .02 ? P.up : q.v < -.02 ? P.dn : P.mu, bh = Math.max(6, rh - 6), bx = zx, bwid = q.v * half;
+        if (k === hy) { c.fillStyle = 'rgba(56,189,248,.09)'; c.fillRect(0, y, w, rh); }
+        c.fillStyle = x.e > 0 ? P.up : P.dn; c.fillRect(2, y + rh / 2 - 3, 3, 6); T(c, cap(x.n.replace(/ \(.*\)/, ''), Math.floor((LN - 10) / 4.9)), 9, y + rh / 2, P.tx, 'left', 8, 600);
+        var gr = c.createLinearGradient(bx, 0, bx + bwid, 0); gr.addColorStop(0, col + '33'); gr.addColorStop(1, col);
+        c.shadowColor = col; c.shadowBlur = P.l ? 0 : 5; c.fillStyle = gr; c.fillRect(Math.min(bx, bx + bwid), y + (rh - bh) / 2, Math.max(1.5, Math.abs(bwid)), bh); c.shadowBlur = 0;
+        var gx = zx + q.g * half; c.fillStyle = P.tx; c.globalAlpha = .55; c.fillRect(gx - .5, y + (rh - bh) / 2 - 2, 1.5, bh + 4); c.globalAlpha = 1;
+        T(c, (q.v > 0 ? '+' : '') + q.v.toFixed(2), w - 3, y + rh / 2, col, 'right', 8, 700);
+        if (q.v > 0) pos += q.v; else neg -= q.v;
+        if (k === hy) tip(c, w, Math.min(zx, w - 120), [[x.n, P.tx], [x.s, P.mu], [(x.e > 0 ? 'Sumber likuiditas' : 'Penyerap likuiditas') + ' · ' + (q.v > 0 ? '+' : '') + q.v.toFixed(2), col]], P);
+      });
+      var tot = pos - neg, sh = pos + neg > 0 ? pos / (pos + neg) : .5, by = h - 11, bl = LN, bw2 = zr - bl;
+      T(c, 'IMPULS BERSIH', 2, by, P.mu, 'left', 8, 700); c.fillStyle = P.dn; c.fillRect(bl + 20, by - 3, bw2 - 20, 6); c.fillStyle = P.up; c.fillRect(bl + 20, by - 3, (bw2 - 20) * sh, 6);
+      T(c, (tot >= 0 ? '+' : '') + tot.toFixed(2), w - 3, by, tot >= 0 ? P.up : P.dn, 'right', 9, 700);
+    });
+    /* === 3. Riwayat skor komposit: zona rezim, garis berwarna per rezim, penanda lintas batas, strip rezim === */
+    K.host('mlc-ch-sc', function (c, w, h, now, s, P) {
+      var sc = H.sc, n = sc.length; if (n < 3) return;
+      var pe = P.l ? '#F472B6' : '#F9A8D4', pn = P.l ? '#DB2777' : '#EC4899', pt = P.l ? '#9D174D' : '#BE185D';
+      var L = 8, R = w - 44, a = 26, b = h - 34, sy = b + 10, slot = (R - L) / (n - 1), i, X = function (k) { return L + k * slot; }, Y = function (v) { return b - v / 100 * (b - a); };
+      var rgm = function (v) { return v >= 62 ? ['EKSPANSIF', pe] : v <= 38 ? ['KETAT', pt] : ['NETRAL', pn]; }, cur = sc[n - 1], rc = rgm(cur), d0 = cur - sc[0], av = sc.reduce(function (p, q) { return p + q; }, 0) / n;
+      var hx = Tw(c, 'SKOR ' + cur.toFixed(1), L, 8, rc[1], 9, 700); hx = Tw(c, rc[0], hx, 8, rc[1], 8, 700); Tw(c, (d0 >= 0 ? '▲ ' : '▼ ') + Math.abs(d0).toFixed(1) + ' · RATA2 ' + av.toFixed(1), hx, 8, P.mu, 8, 600);
+      c.fillStyle = 'rgba(244,114,182,.11)'; c.fillRect(L, Y(100), R - L, Y(62) - Y(100)); c.fillStyle = 'rgba(236,72,153,.04)'; c.fillRect(L, Y(62), R - L, Y(38) - Y(62)); c.fillStyle = 'rgba(157,23,77,.18)'; c.fillRect(L, Y(38), R - L, Y(0) - Y(38));
+      [0, 25, 50, 75, 100].forEach(function (v) { hline(c, L, R, Y(v), P.gr); T(c, v + '', R + 3, Y(v), P.mu, 'left', 8); });
+      hline(c, L, R, Y(62), pe, [5, 4]); hline(c, L, R, Y(38), pt, [5, 4]); T(c, 'EKSPANSIF ≥62', L + 3, Y(62) - 6, pe, 'left', 7, 700); T(c, 'KETAT ≤38', L + 3, Y(38) + 7, pt, 'left', 7, 700);
+      var g = c.createLinearGradient(0, a, 0, b); g.addColorStop(0, 'rgba(236,72,153,.34)'); g.addColorStop(1, 'rgba(236,72,153,0)');
+      c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(sc[i])) : c.moveTo(X(i), Y(sc[i])); c.lineTo(X(n - 1), b); c.lineTo(X(0), b); c.closePath(); c.fillStyle = g; c.fill();
+      var o62 = (Y(62) - a) / (b - a), o38 = (Y(38) - a) / (b - a), gl = c.createLinearGradient(0, a, 0, b);
+      gl.addColorStop(0, pe); gl.addColorStop(o62, pe); gl.addColorStop(Math.min(1, o62 + .001), pn); gl.addColorStop(o38, pn); gl.addColorStop(Math.min(1, o38 + .001), pt); gl.addColorStop(1, pt);
+      c.shadowColor = rc[1]; c.shadowBlur = P.l ? 0 : 6; c.lineWidth = 2; c.strokeStyle = gl; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(sc[i])) : c.moveTo(X(i), Y(sc[i])); c.stroke(); c.shadowBlur = 0;
+      var em = ema(sc, 8); c.setLineDash([2, 3]); c.lineWidth = 1; c.strokeStyle = P.tx; c.globalAlpha = .6; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(em[i])) : c.moveTo(X(i), Y(em[i])); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
+      for (i = 1; i < n; i++) { var p = sc[i - 1], q = sc[i]; if ((p < 62) !== (q < 62)) tri(c, X(i), Y(q) + (q >= 62 ? 7 : -7), q >= 62, q >= 62 ? pe : pn, 3); if ((p > 38) !== (q > 38)) tri(c, X(i), Y(q) + (q <= 38 ? -7 : 7), q > 38, q <= 38 ? pt : pn, 3); }
+      dot(c, X(n - 1), Y(cur), rc[1], now); tag(c, cur.toFixed(1), R + 2, clamp(Y(cur), a + 6, b - 6), rc[1], '#111');
+      for (i = 0; i < n; i++) { c.fillStyle = rgm(sc[i])[1]; c.globalAlpha = .85; c.fillRect(X(i) - slot / 2, sy, slot + .6, 8); } c.globalAlpha = 1;
+      T(c, 'RIWAYAT REZIM', L + 2, sy + 4, 'rgba(0,0,0,.7)', 'left', 7, 700);
+      for (i = n - 1; i >= 0; i -= 10) if (X(i) > L + 20) T(c, H.t[i], X(i), h - 4, P.mu, 'center', 8);
+      if (s.mx >= L && s.mx <= R) {
+        var k = clamp(Math.round((s.mx - L) / slot), 0, n - 1), x = X(k), r = rgm(sc[k]);
+        vline(c, x, a, sy + 8, P); c.beginPath(); c.arc(x, Y(sc[k]), 3, 0, TAU); c.fillStyle = r[1]; c.fill();
+        tip(c, w, x, [[H.t[k], P.tx], ['Skor  ' + sc[k].toFixed(1), r[1]], ['Rezim ' + r[0], r[1]], ['EMA8  ' + em[k].toFixed(1), P.mu]], P);
+      }
+    });
   }
-  function updCharts() {
-    if (!CH.made) return;
-    if (CH.net) { CH.net.data.labels = H.t.slice(); CH.net.data.datasets[0].data = H.net.slice(); CH.net.data.datasets[1].data = H.fed.slice(); CH.net.update('none'); }
-    if (CH.imp) { var d = CH.imp.data.datasets[0]; d.data = C.map(function (x) { return +clamp(x.k, -1, 1).toFixed(2); }); d.backgroundColor = C.map(function (x) { return x.k > .02 ? '#34d399' : x.k < -.02 ? '#fb7185' : '#94a3b8'; }); CH.imp.update('none'); }
-    if (CH.sc) { CH.sc.data.labels = H.t.slice(); CH.sc.data.datasets[0].data = H.sc.slice(); CH.sc.data.datasets[1].data = H.t.map(function () { return 62; }); CH.sc.data.datasets[2].data = H.t.map(function () { return 38; }); CH.sc.update('none'); }
-  }
-
+  function updCharts() { /* grafik canvas menggambar sendiri tiap frame (rAF) */ }
   /* ---------- Render & siklus otomatis ---------- */
   function render() {
     var el, nSrc = 0, nSink = 0, nNeu = 0;
@@ -4610,7 +4916,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   function sma(a, i, n) { var m = 0; for (var j = i - n + 1; j <= i; j++) m += a[j]; return m / n; }
   function sdv(a, i, n, m) { var v = 0; for (var j = i - n + 1; j <= i; j++) v += (a[j] - m) * (a[j] - m); return Math.sqrt(v / n); }
   function vline(c, x, y0, y1, P) { c.save(); c.setLineDash([3, 3]); c.strokeStyle = P.mu; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(x) + .5, y0); c.lineTo(Math.round(x) + .5, y1); c.stroke(); c.restore(); }
-
   /* ================= 1. STATUS PASAR & DOMINASI ================= */
   var D = { N: 40, DUR: 1900, COL: ['#F7931A', '#627EEA', '#26A17B', '#64748B'], hist: [], cur: null, t0: performance.now() }, sv = [56.4, 16.2, 7.1];
   for (var di = 0; di <= D.N; di++) {
@@ -4675,7 +4980,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       tip(c, w, x, [['BTC ' + p[0].toFixed(2) + '%', COL[0]], ['ETH ' + p[1].toFixed(2) + '%', COL[1]], ['STB ' + p[2].toFixed(2) + '%', COL[2]], ['ALT ' + p[3].toFixed(2) + '%', P.mu]], P);
     }
   });
-
   /* ================= 2. KAPITALISASI PASAR GLOBAL — candlestick + EMA/SMA + volume ================= */
   var M = { GS: 3, VIS: 26, cs: [], dc: 2.45, mn: 2.4, mx: 2.5, sh: 0 };
   function upd(cd, p, v) { cd.h = Math.max(cd.h, p); cd.l = Math.min(cd.l, p); cd.c = p; cd.vs += v; cd.n++; cd.v = cd.vs / cd.n; return cd; }
@@ -4720,7 +5024,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       tip(c, w, xk, [['O ' + q.o.toFixed(3) + '  H ' + hq.toFixed(3), P.tx], ['L ' + lq.toFixed(3) + '  C ' + cq.toFixed(3), P.tx], [((cq / q.o - 1) * 100 >= 0 ? '▲ ' : '▼ ') + Math.abs((cq / q.o - 1) * 100).toFixed(2) + '%  Vol $' + q.v.toFixed(1) + 'B', cq >= q.o ? P.up : P.dn]], P);
     }
   });
-
   /* ================= 3. DERIVATIVES (OPEN INT.) — OI + funding rate + long/short ratio ================= */
   var O = { N: 48, DUR: 1900, h: [], t0: performance.now() };
   (function () {
@@ -4832,7 +5135,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   function ema(a, n) { var k = 2 / (n + 1), o = [a[0]], i; for (i = 1; i < a.length; i++) o.push(o[i - 1] + (a[i] - o[i - 1]) * k); return o; }
   function rsi(a, n) { var o = [], i, j, g, l, d; for (i = 0; i < a.length; i++) { if (i < n) { o.push(50); continue; } g = 0; l = 0; for (j = i - n + 1; j <= i; j++) { d = a[j] - a[j - 1]; if (d > 0) g += d; else l -= d; } o.push(l === 0 ? (g === 0 ? 50 : 100) : 100 - 100 / (1 + g / l)); } return o; }
   function lerp(o, k, tmn, tmx, f) { if (!o[k]) o[k] = { mn: tmn, mx: tmx }; o[k].mn += (tmn - o[k].mn) * f; o[k].mx += (tmx - o[k].mx) * f; return o[k]; }
-
+  window.__proKit = { host: host, T: T, Tw: Tw, tag: tag, tip: tip, hline: hline, vline: vline, hgrid: hgrid, dot: dot, tri: tri, sma: sma, sdv: sdv, ema: ema, lerp: lerp, clamp: clamp, fmt: fmt, hms: hms, dec: dec };
   /* ================= 1. PEMANTAU GAS FEE JARINGAN ================= */
   var G = { N: 48, DUR: 2000, t0: performance.now(), d: [] };
   var CH = [
@@ -4881,73 +5184,86 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   }, G.DUR);
   document.addEventListener('change', function (e) { if (e.target && e.target.id === 'gas-tx-type') gdom(); });
   gdom();
+  /* GAS FEE v2 — 3 panel: (1) ETH stacked base+tip + pita σ + EMA8/21 + zona ambang, (2) beban relatif 3 jaringan (% ambang), (3) heatmap per jaringan + kurva kemacetan */
   host('gas-pro-canvas', function (c, w, h, now, s, P) {
-    var N = G.N, D = G.d, i, L = 6, R = w - 46, top = 4, axisH = 12, stripH = 16, gap = 8;
-    var laneH = (h - top - axisH - stripH - gap * 3) / 3, slot = (R - L) / (N - 1), prog = clamp((now - G.t0) / G.DUR, 0, 1);
-    var xAt = function (k) { return R - (N - k) * slot + slot * (1 - prog); }, lanes = [];
-    s.rg = s.rg || {};
-    CH.forEach(function (ch, li) {
-      var y0 = top + li * (laneH + gap), y1 = y0 + laneH, yt = y0 + 13, ser = D.map(function (p) { return p[ch.k]; }), j;
-      var wmn = Math.min.apply(null, ser), wmx = Math.max.apply(null, ser), tmn = Math.min(wmn, ch.lo), tmx = Math.max(wmx, ch.hi), pd = (tmx - tmn) * .12;
-      var rg = lerp(s.rg, li, Math.max(0, tmn - pd), tmx + pd, .12), mn = rg.mn, mx = rg.mx;
-      var yAt = function (v) { return y1 - 2 - (v - mn) / (mx - mn) * (y1 - 2 - yt); }; lanes.push({ yAt: yAt, y0: y0, ser: ser });
-      c.fillStyle = P.bg; c.fillRect(L, y0, R - L, laneH);
-      c.save(); c.beginPath(); c.rect(L, y0, R - L, laneH); c.clip();
-      /* zona ambang */
-      var yh = clamp(yAt(ch.hi), y0, y1), yl = clamp(yAt(ch.lo), y0, y1);
-      c.fillStyle = 'rgba(244,63,94,.08)'; c.fillRect(L, y0, R - L, yh - y0);
-      c.fillStyle = ch.col; c.globalAlpha = .07; c.fillRect(L, yh, R - L, yl - yh); c.globalAlpha = 1;
-      c.fillStyle = 'rgba(16,185,129,.06)'; c.fillRect(L, yl, R - L, y1 - yl);
-      /* pita σ */
-      c.beginPath(); for (j = 2; j <= N; j++) { var m = sma(ser, j, 10), u = m + 1.5 * sdv(ser, j, 10, m); j > 2 ? c.lineTo(xAt(j), yAt(u)) : c.moveTo(xAt(j), yAt(u)); }
-      for (j = N; j >= 2; j--) { m = sma(ser, j, 10); c.lineTo(xAt(j), yAt(m - 1.5 * sdv(ser, j, 10, m))); }
-      c.closePath(); c.fillStyle = ch.col; c.globalAlpha = .13; c.fill(); c.globalAlpha = 1;
-      /* area */
-      var gd = c.createLinearGradient(0, yt, 0, y1); gd.addColorStop(0, ch.col + '66'); gd.addColorStop(1, ch.col + '00');
-      c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), yAt(ser[j])) : c.moveTo(xAt(j), yAt(ser[j]));
-      c.lineTo(xAt(N), y1); c.lineTo(xAt(0), y1); c.closePath(); c.fillStyle = gd; c.fill();
-      /* Ethereum: base fee + priority fee */
-      if (li === 0) {
-        c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), yAt(ser[j])) : c.moveTo(xAt(j), yAt(ser[j]));
-        for (j = N; j >= 0; j--) c.lineTo(xAt(j), yAt(D[j].eb)); c.closePath(); c.fillStyle = 'rgba(147,197,253,.30)'; c.fill();
-        c.setLineDash([2, 3]); c.strokeStyle = P.mu; c.lineWidth = 1; c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), yAt(D[j].eb)) : c.moveTo(xAt(j), yAt(D[j].eb)); c.stroke(); c.setLineDash([]);
-      }
-      /* garis harga */
-      c.lineWidth = 1.8; c.strokeStyle = ch.col; c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), yAt(ser[j])) : c.moveTo(xAt(j), yAt(ser[j])); c.stroke();
-      var em = ema(ser, 8); c.setLineDash([3, 3]); c.lineWidth = 1; c.strokeStyle = P.tx; c.globalAlpha = .6; c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), yAt(em[j])) : c.moveTo(xAt(j), yAt(em[j])); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
-      /* lonjakan */
-      for (j = 10; j <= N; j++) { m = sma(ser, j - 1, 10); if (ser[j] > m + 2 * sdv(ser, j - 1, 10, m) && ser[j] > ch.hi) tri(c, xAt(j), yAt(ser[j]) - 6, false, P.am, 3); }
-      c.restore();
-      hline(c, L, R, yh, 'rgba(244,63,94,.45)', [2, 3]); hline(c, L, R, yl, 'rgba(16,185,129,.45)', [2, 3]);
-      var dyv = yAt(ser[N - 1] + (ser[N] - ser[N - 1]) * prog);
-      if (Math.abs(clamp(yh, y0 + 6, y1 - 6) - dyv) > 10) T(c, fG(ch.hi), R + 3, clamp(yh, y0 + 6, y1 - 6), P.dn, 'left', 8, 600);
-      if (Math.abs(clamp(yl, y0 + 14, y1 - 2) - dyv) > 10) T(c, fG(ch.lo), R + 3, clamp(yl, y0 + 14, y1 - 2), P.up, 'left', 8, 600);
-      /* kepala + tag */
-      var vb = ser[N - 1] + (ser[N] - ser[N - 1]) * prog, dy = yAt(vb); dot(c, R, dy, ch.col, now); tag(c, fG(vb), R + 2, clamp(dy, y0 + 20, y1 - 8), ch.col, '#111');
-      /* header lane */
-      var cur = ser[N], pc = (cur / ser[0] - 1) * 100, st = cur > ch.hi * 1.25 ? ['LONJAKAN', P.dn] : cur > ch.hi ? ['TINGGI', P.am] : cur < ch.lo ? ['RENDAH', P.up] : ['NORMAL', P.cy];
-      var hx = Tw(c, ch.name.toUpperCase(), L + 3, y0 + 7, ch.col, 8, 700);
-      hx = Tw(c, fG(cur) + ' Gwei', hx, y0 + 7, P.tx, 8, 700); hx = Tw(c, (pc >= 0 ? '▲' : '▼') + Math.abs(pc).toFixed(1) + '%', hx, y0 + 7, pc >= 0 ? P.dn : P.up, 8, 600);
-      Tw(c, st[0], hx, y0 + 7, st[1], 8, 700);
-      if (li === 0) T(c, 'BASE ' + fG(D[N].eb) + ' · TIP ' + fG(D[N].pe), R - 2, y0 + 7, P.mu, 'right', 8, 600);
-      else T(c, 'H ' + fG(wmx) + ' L ' + fG(wmn), R - 2, y0 + 7, P.mu, 'right', 8, 600);
+    var N = G.N, D = G.d, L = 8, R = w - 50, i, j, m, u, slot = (R - L) / (N - 1), prog = clamp((now - G.t0) / G.DUR, 0, 1);
+    var xAt = function (k) { return R - (N - k) * slot + slot * (1 - prog); };
+    var a1 = 24, b1 = Math.round(h * .5), a2 = b1 + 16, b2 = Math.round(h * .75), a3 = b2 + 14, b3 = h - 14;
+    var E = D.map(function (p) { return p.e; }), cur = D[N], rk = E.filter(function (v) { return v <= cur.e; }).length / E.length;
+    var E0 = CH[0], hx = L;
+    /* header: nilai live tiap jaringan + persentil biaya ETH */
+    CH.forEach(function (ch) {
+      var v = cur[ch.k], sc = v > ch.hi * 1.25 ? P.dn : v > ch.hi ? P.am : P.up;
+      c.fillStyle = ch.col; c.beginPath(); c.arc(hx + 3, 8, 3, 0, TAU); c.fill();
+      hx = Tw(c, ch.name.slice(0, 3).toUpperCase(), hx + 9, 8, ch.col, 8, 700); hx = Tw(c, fG(v), hx - 3, 8, sc, 8, 700) + 4;
     });
-    /* strip indeks kemacetan */
-    var ys = top + 3 * (laneH + gap) - 2;
-    for (i = 0; i <= N; i++) { var u2 = gcong(D[i]); c.fillStyle = 'hsl(' + Math.round(130 - 130 * u2) + ',70%,' + (P.l ? 50 : 42) + '%)'; c.fillRect(xAt(i) - slot / 2, ys, slot + .6, stripH); }
-    c.save(); c.globalCompositeOperation = 'destination-out'; c.fillRect(R, ys, w - R, stripH); c.fillRect(0, ys, L, stripH); c.restore();
-    var ci = Math.round(gcong(D[N]) * 100), cc = ci > 66 ? P.dn : ci > 40 ? P.am : P.up;
-    tag(c, 'INDEKS KEMACETAN', L + 2, ys + stripH / 2, 'rgba(0,0,0,.55)', '#e5e7eb'); T(c, ci + '', R + 3, ys + stripH / 2, cc, 'left', 9, 700);
+    if (w > 430) T(c, 'PERSENTIL ETH ' + Math.round(rk * 100) + '% · ' + (rk < .34 ? 'MURAH' : rk < .67 ? 'WAJAR' : 'MAHAL'), R + 48, 8, rk < .34 ? P.up : rk < .67 ? P.am : P.dn, 'right', 8, 700);
+    /* ---------- Panel 1: Ethereum ---------- */
+    var mn = 1e9, mx = -1e9; for (i = 0; i <= N; i++) { mn = Math.min(mn, D[i].eb); mx = Math.max(mx, D[i].e); }
+    mn = Math.min(mn, E0.lo); mx = Math.max(mx, E0.hi);
+    var pd = (mx - mn) * .12, rg = lerp(s, 'r1', Math.max(0, mn - pd), mx + pd, .12); mn = rg.mn; mx = rg.mx;
+    var y1 = function (v) { return b1 - (v - mn) / (mx - mn) * (b1 - a1); };
+    c.fillStyle = P.bg; c.fillRect(L, a1, R - L, b1 - a1); hgrid(c, L, R, a1, b1, mn, mx, P, dec(mn, mx), 4);
+    c.save(); c.beginPath(); c.rect(L, a1, R - L, b1 - a1); c.clip();
+    var yh = y1(E0.hi), yl = y1(E0.lo);
+    c.fillStyle = 'rgba(244,63,94,.09)'; c.fillRect(L, a1, R - L, Math.max(0, yh - a1)); c.fillStyle = 'rgba(16,185,129,.08)'; c.fillRect(L, yl, R - L, Math.max(0, b1 - yl));
+    c.beginPath(); for (j = 2; j <= N; j++) { m = sma(E, j, 10); u = m + 1.5 * sdv(E, j, 10, m); j > 2 ? c.lineTo(xAt(j), y1(u)) : c.moveTo(xAt(j), y1(u)); }
+    for (j = N; j >= 2; j--) { m = sma(E, j, 10); c.lineTo(xAt(j), y1(m - 1.5 * sdv(E, j, 10, m))); }
+    c.closePath(); c.fillStyle = 'rgba(129,140,248,.15)'; c.fill();
+    var g1 = c.createLinearGradient(0, a1, 0, b1); g1.addColorStop(0, 'rgba(59,130,246,.55)'); g1.addColorStop(1, 'rgba(59,130,246,.03)');
+    c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), y1(D[j].eb)) : c.moveTo(xAt(j), y1(D[j].eb)); c.lineTo(xAt(N), b1); c.lineTo(xAt(0), b1); c.closePath(); c.fillStyle = g1; c.fill();
+    c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), y1(D[j].e)) : c.moveTo(xAt(j), y1(D[j].e));
+    for (j = N; j >= 0; j--) c.lineTo(xAt(j), y1(D[j].eb)); c.closePath(); c.fillStyle = 'rgba(34,211,238,.34)'; c.fill();
+    var fq = function (v) { return clamp((v - mn) / (mx - mn), 0, 1); }, gl = c.createLinearGradient(0, b1, 0, a1);
+    gl.addColorStop(0, P.up); gl.addColorStop(fq(E0.lo), P.up); gl.addColorStop(fq(E0.hi), P.am); gl.addColorStop(1, P.dn);
+    c.shadowColor = P.cy; c.shadowBlur = P.l ? 0 : 6; c.lineWidth = 2; c.strokeStyle = gl;
+    c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), y1(E[j])) : c.moveTo(xAt(j), y1(E[j])); c.stroke(); c.shadowBlur = 0;
+    [[ema(E, 8), P.am], [ema(E, 21), P.vi]].forEach(function (z) { c.setLineDash([3, 3]); c.lineWidth = 1; c.strokeStyle = z[1]; c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), y1(z[0][j])) : c.moveTo(xAt(j), y1(z[0][j])); c.stroke(); c.setLineDash([]); });
+    for (j = 10; j <= N; j++) { m = sma(E, j - 1, 10); if (E[j] > m + 2 * sdv(E, j - 1, 10, m) && E[j] > E0.hi) tri(c, xAt(j), y1(E[j]) - 6, false, P.am, 3); }
+    c.restore();
+    hline(c, L, R, yh, 'rgba(244,63,94,.5)', [2, 3]); hline(c, L, R, yl, 'rgba(16,185,129,.5)', [2, 3]);
+    var vb = E[N - 1] + (E[N] - E[N - 1]) * prog, dy = y1(vb);
+    if (Math.abs(clamp(yh, a1 + 6, b1 - 6) - dy) > 10) T(c, fG(E0.hi), R + 3, clamp(yh, a1 + 6, b1 - 6), P.dn, 'left', 8, 600);
+    if (Math.abs(clamp(yl, a1 + 6, b1 - 6) - dy) > 10) T(c, fG(E0.lo), R + 3, clamp(yl, a1 + 6, b1 - 6), P.up, 'left', 8, 600);
+    dot(c, R, dy, P.cy, now); tag(c, fG(vb), R + 2, clamp(dy, a1 + 8, b1 - 8), '#3B82F6', '#fff');
+    var lx = Tw(c, 'ETHEREUM · BASE', L + 3, a1 + 7, '#60A5FA', 8, 700); lx = Tw(c, '+ TIP', lx - 2, a1 + 7, P.cy, 8, 700); lx = Tw(c, 'EMA8', lx, a1 + 7, P.am, 8, 700); Tw(c, 'EMA21', lx, a1 + 7, P.vi, 8, 700);
+    /* ---------- Panel 2: beban relatif (% dari ambang tinggi) ---------- */
+    var rl = function (p, ch) { return p[ch.k] / ch.hi * 100; }, m2 = 130;
+    for (i = 0; i <= N; i++) CH.forEach(function (ch) { m2 = Math.max(m2, rl(D[i], ch)); });
+    var r2 = lerp(s, 'r2', 0, m2 * 1.08, .1), y2 = function (v) { return b2 - v / r2.mx * (b2 - a2); };
+    c.fillStyle = P.bg; c.fillRect(L, a2, R - L, b2 - a2);
+    [0, 50, 100].forEach(function (v) { if (v === 100) hline(c, L, R, y2(v), 'rgba(244,63,94,.55)', [3, 3]); else hline(c, L, R, y2(v), P.gr); T(c, v + '%', R - 3, y2(v) - 5, v === 100 ? P.dn : P.mu, 'right', 8, 600); });
+    c.save(); c.beginPath(); c.rect(L, a2, R - L, b2 - a2); c.clip(); c.fillStyle = 'rgba(244,63,94,.07)'; c.fillRect(L, a2, R - L, Math.max(0, y2(100) - a2));
+    CH.forEach(function (ch) {
+      c.shadowColor = ch.col; c.shadowBlur = P.l ? 0 : 5; c.lineWidth = 1.6; c.strokeStyle = ch.col;
+      c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), y2(rl(D[j], ch))) : c.moveTo(xAt(j), y2(rl(D[j], ch))); c.stroke(); c.shadowBlur = 0;
+    });
+    c.restore();
+    var tg = CH.map(function (ch) { return { y: y2(rl(cur, ch)), c: ch.col, t: Math.round(rl(cur, ch)) + '%' }; }).sort(function (p, q) { return p.y - q.y; });
+    tg.forEach(function (q, k) { if (k && q.y < tg[k - 1].y + 13) q.y = tg[k - 1].y + 13; dot(c, R, q.y, q.c, now); tag(c, q.t, R + 4, q.y, q.c, '#111'); });
+    T(c, 'BEBAN RELATIF · % DARI AMBANG TINGGI', L + 3, a2 + 7, P.mu, 'left', 8, 700);
+    /* ---------- Panel 3: heatmap per jaringan + kurva kemacetan ---------- */
+    CH.forEach(function (ch, li) {
+      var y = a3 + li * 9;
+      for (i = 0; i <= N; i++) { var uu = clamp((D[i][ch.k] - ch.lo) / (ch.hi - ch.lo) / 1.3, 0, 1); c.fillStyle = 'hsl(' + Math.round(130 - 130 * uu) + ',70%,' + (P.l ? 50 : 42) + '%)'; c.fillRect(xAt(i) - slot / 2, y, slot + .6, 7); }
+      c.clearRect(R, y - 1, w - R, 9); c.clearRect(0, y - 1, L, 9); tag(c, ch.name.slice(0, 3).toUpperCase(), L + 2, y + 3.5, 'rgba(0,0,0,.55)', '#e5e7eb');
+    });
+    var ca = a3 + 31, yc = function (v) { return b3 - v / 100 * (b3 - ca); }, ci = Math.round(gcong(cur) * 100), cc = ci > 66 ? P.dn : ci > 40 ? P.am : P.up;
+    hline(c, L, R, yc(66), 'rgba(244,63,94,.4)', [2, 3]); hline(c, L, R, yc(40), 'rgba(251,191,36,.4)', [2, 3]); hline(c, L, R, b3, P.gr);
+    var g3 = c.createLinearGradient(0, ca, 0, b3); g3.addColorStop(0, cc); g3.addColorStop(1, 'rgba(0,0,0,0)');
+    c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), yc(gcong(D[j]) * 100)) : c.moveTo(xAt(j), yc(gcong(D[j]) * 100));
+    c.lineTo(xAt(N), b3); c.lineTo(xAt(0), b3); c.closePath(); c.globalAlpha = .28; c.fillStyle = g3; c.fill(); c.globalAlpha = 1;
+    c.lineWidth = 1.6; c.strokeStyle = cc; c.beginPath(); for (j = 0; j <= N; j++) j ? c.lineTo(xAt(j), yc(gcong(D[j]) * 100)) : c.moveTo(xAt(j), yc(gcong(D[j]) * 100)); c.stroke();
+    T(c, 'INDEKS KEMACETAN', L + 3, ca + 6, P.mu, 'left', 8, 700); tag(c, ci + (ci > 66 ? ' PADAT' : ci > 40 ? ' SEDANG' : ' LANCAR'), R + 2, clamp(yc(ci), ca + 6, b3 - 6), cc, '#111');
     for (i = N; i >= 0; i -= 8) { var xx = xAt(i); if (xx > L + 18 && xx < R - 18) T(c, hms(D[i].t), xx, h - 5, P.mu, 'center', 8); }
-    /* crosshair */
+    /* ---------- crosshair ---------- */
     if (s.mx >= L && s.mx <= R) {
       var k = clamp(Math.round(N - (R + slot * (1 - prog) - s.mx) / slot), 0, N), x = xAt(k), p = D[k];
-      vline(c, x, top, ys + stripH, P);
-      lanes.forEach(function (ln, q) { c.beginPath(); c.arc(x, ln.yAt(ln.ser[k]), 3, 0, TAU); c.fillStyle = CH[q].col; c.fill(); });
-      tip(c, w, x, [[hms(p.t), P.tx], ['ETH  ' + fG(p.e) + ' Gwei', CH[0].col], ['  base ' + fG(p.eb) + ' · tip ' + fG(p.pe), P.mu], ['POLY ' + fG(p.p) + ' Gwei', CH[1].col], ['ARB  ' + fG(p.a) + ' Gwei', CH[2].col], ['Kemacetan ' + Math.round(gcong(p) * 100), P.am]], P);
+      vline(c, x, a1, b3, P); c.beginPath(); c.arc(x, y1(p.e), 3, 0, TAU); c.fillStyle = P.cy; c.fill();
+      CH.forEach(function (ch) { c.beginPath(); c.arc(x, y2(rl(p, ch)), 3, 0, TAU); c.fillStyle = ch.col; c.fill(); });
+      tip(c, w, x, [[hms(p.t), P.tx], ['ETH  ' + fG(p.e) + ' Gwei', CH[0].col], ['  base ' + fG(p.eb) + ' · tip ' + fG(p.pe), P.mu], ['POLY ' + fG(p.p) + ' Gwei', CH[1].col], ['ARB  ' + fG(p.a) + ' Gwei', CH[2].col], ['Beban ETH ' + Math.round(rl(p, E0)) + '%', P.mu], ['Kemacetan ' + Math.round(gcong(p) * 100), P.am]], P);
     }
   });
-
   /* ================= 2. INDEKS SAHAM AS ================= */
   var K = 60, KEEP = 240, PER = 6, VC = 30, IXP = {};
   var DEF = { nasdaq: { cv: 'overview-pro-nasdaq', start: 18420.60, prev: 18420.60 / 1.0082, vol: .0007 }, sp: { cv: 'overview-pro-sp', start: 5842.30, prev: 5842.30 / 1.0046, vol: .0005 }, dow: { cv: 'overview-pro-dow', start: 42160.80, prev: 42160.80 / .9982, vol: .0004 } };
@@ -4969,7 +5285,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   function pcline(c, X, L, R, yAt, y0, y1, P) {
     var y = yAt(X.prev); if (!(y > y0 && y < y1)) return; hline(c, L, R, y, P.mu, [3, 3]); T(c, 'PC', L + 2, y - 5, P.mu, 'left', 8, 700);
   }
-
   /* --- NASDAQ: area + EMA9/21 + cross + volume + RSI --- */
   host(DEF.nasdaq.cv, function (c, w, h, now, s, P) {
     var X = IXP.nasdaq, p = X.p, n = p.length, L = 6, R = w - 54, T0 = 16, M1 = Math.round(h * .6), R0 = M1 + 12, R1 = h - 13, i;
@@ -5012,7 +5327,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       tip(c, w, x, [[hms(X.t[k]), P.tx], ['Harga ' + fmt(p[k], 2), uc], [(ch >= 0 ? '▲ ' : '▼ ') + Math.abs(ch).toFixed(2) + '% vs PC', ch >= 0 ? P.up : P.dn], ['EMA9  ' + fmt(e9[k], 2), P.am], ['EMA21 ' + fmt(e21[k], 2), P.vi], ['RSI ' + rs[k].toFixed(1) + '  Vol ' + X.v[k].toFixed(1), P.mu]], P);
     }
   });
-
   /* --- S&P 500: candlestick + EMA8 + volume + MACD --- */
   host(DEF.sp.cv, function (c, w, h, now, s, P) {
     var X = IXP.sp, p = X.p, n = p.length, L = 6, R = w - 54, T0 = 16, M1 = Math.round(h * .55), V0 = M1 + 5, V1 = V0 + Math.round(h * .1), C0 = V1 + 9, C1 = h - 6, i, j;
@@ -5051,7 +5365,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       tip(c, w, xk, [[hms(q4.t), P.tx], ['O ' + fmt(q4.o, 2) + '  H ' + fmt(q4.h, 2), P.tx], ['L ' + fmt(q4.l, 2) + '  C ' + fmt(q4.c, 2), P.tx], [(chg >= 0 ? '▲ ' : '▼ ') + Math.abs(chg).toFixed(2) + '%  Vol ' + q4.v.toFixed(1), chg >= 0 ? P.up : P.dn], ['MACD ' + mc[k].toFixed(2) + ' Sig ' + sg[k].toFixed(2), P.cy]], P);
     }
   });
-
   /* --- Dow Jones: Bollinger ±2σ + SMA20 + %B + bandwidth + squeeze --- */
   host(DEF.dow.cv, function (c, w, h, now, s, P) {
     var X = IXP.dow, p = X.p, n = p.length, L = 6, R = w - 54, T0 = 16, M1 = Math.round(h * .62), B0 = M1 + 12, B1 = h - 13, i;
@@ -5091,7 +5404,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   });
 })();
 </script>
-
 <script id="crypto-index-pro">
 /* LIVE CRYPTO INDEX TRACKER PRO — candlestick ala bursa, berjalan otomatis.
    MA20 • EMA9 • Bollinger(20,2) • Volume • RSI14 • crosshair • last-price tag.
@@ -5106,7 +5418,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   var rnd = function () { return Math.random() - .5; };
   var fmt = function (v, d) { d = d == null ? 2 : d; return v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); };
   var hms = function (t) { return new Date(t).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); };
-
   function advance(ts) {
     var b = TF[S.tf], c = S.cs[S.cs.length - 1];
     if (!c || ts - c.t >= b) { c = { t: ts, o: S.price, h: S.price, l: S.price, c: S.price, v: 0 }; S.cs.push(c); if (S.cs.length > MAX) S.cs.shift(); }
@@ -5123,7 +5434,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     S.open = S.cs[0].o; S.hi = -Infinity; S.lo = Infinity;
     S.cs.forEach(function (c) { S.hi = Math.max(S.hi, c.h); S.lo = Math.min(S.lo, c.l); });
   }
-
   /* ---------- indikator ---------- */
   function sma(a, n) { var o = [], s = 0; for (var i = 0; i < a.length; i++) { s += a[i]; if (i >= n) s -= a[i - n]; o.push(i >= n - 1 ? s / n : null); } return o; }
   function ema(a, n) { var k = 2 / (n + 1), o = [], e = a[0]; for (var i = 0; i < a.length; i++) { e = i ? a[i] * k + e * (1 - k) : a[0]; o.push(i >= n - 1 ? e : null); } return o; }
@@ -5146,7 +5456,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     }
     return o;
   }
-
   /* ---------- render ---------- */
   function colors() {
     return document.documentElement.classList.contains('light')
@@ -5248,7 +5557,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     var r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2); if (!r.width || !r.height) return;
     cv.width = Math.floor(r.width * d); cv.height = Math.floor(r.height * d); ctx.setTransform(d, 0, 0, d, 0, 0); draw();
   }
-
   /* ---------- panel statistik ---------- */
   function tint(id, text, dir) {
     var e = $(id); if (!e) return; e.textContent = text;
@@ -5272,7 +5580,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     if (lv) { lv.textContent = '$' + fmt(S.price); lv.classList.remove('text-emerald-400', 'text-rose-400'); lv.classList.add(chg >= 0 ? 'text-emerald-400' : 'text-rose-400'); }
     var st = $('cxp-status'); if (st) st.textContent = (S.auto ? 'AUTO' : 'PAUSED') + ' • ' + S.ticks.toLocaleString('id-ID') + ' tick • ' + hms(S.last);
   }
-
   /* ---------- kontrol ---------- */
   function setOn(el, on) {
     ['bg-brand-primary', 'text-white', 'border-transparent'].forEach(function (c) { el.classList.toggle(c, on); });
@@ -5293,7 +5600,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   }
   cv.addEventListener('mousemove', pos); cv.addEventListener('touchstart', pos, { passive: true }); cv.addEventListener('touchmove', pos, { passive: true });
   ['mouseleave', 'touchend'].forEach(function (ev) { cv.addEventListener(ev, function () { S.hover = -1; draw(); }); });
-
   seed(); mark(); resize(); panel();
   setInterval(function () {
     if (!S.auto || document.hidden) return;
@@ -5304,7 +5610,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   if (typeof MutationObserver !== 'undefined') new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 })();
 </script>
-
 <style id="cx-pro-css">
 .cx-ico{position:relative;width:24px;height:24px;flex:0 0 24px;border-radius:9999px;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
 .cx-ico b{font:800 7px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.02em}
@@ -5337,7 +5642,6 @@ canvas.cx-mini[data-kind="stock"]{width:96px;flex-basis:96px}
   };
   var isLight = function () { return document.documentElement.classList.contains('light'); };
   var palette = function () { return isLight() ? { up: '#059669', dn: '#e11d48', base: 'rgba(100,116,139,.55)' } : { up: '#34D399', dn: '#FB7185', base: 'rgba(148,163,184,.45)' }; };
-
   /* ---------- state kripto ---------- */
   var CS = {}, coins = {};
   function initCrypto() {
@@ -5370,7 +5674,6 @@ canvas.cx-mini[data-kind="stock"]{width:96px;flex-basis:96px}
       if (v) v.textContent = '$' + (c.total_volume / 1e6).toFixed(1) + 'M';
     });
   }
-
   /* ---------- state saham ---------- */
   var SS = {}, stocks = {}, NC = 14;
   function candlesFrom(closes, vol) {
@@ -5407,7 +5710,6 @@ canvas.cx-mini[data-kind="stock"]{width:96px;flex-basis:96px}
       if (g) { g.textContent = s.change; g.classList.remove('text-emerald-400', 'text-rose-400'); g.classList.add(up ? 'text-emerald-400' : 'text-rose-400'); }
     });
   }
-
   /* ---------- gambar ---------- */
   function prep(cv, dw, dh) {
     var w = cv.clientWidth || dw, h = cv.clientHeight || dh, d = Math.min(window.devicePixelRatio || 1, 2);
@@ -5463,14 +5765,12 @@ canvas.cx-mini[data-kind="stock"]{width:96px;flex-basis:96px}
       try { cv.getAttribute('data-kind') === 'stock' ? drawStock(cv, now) : drawCrypto(cv, now); } catch (e) { }
     });
   }
-
   initCrypto(); initStocks();
   setInterval(function () { if (!document.hidden) try { tickCrypto(); } catch (e) { console.warn('[cx-crypto]', e); } }, 1500);
   setInterval(function () { if (!document.hidden) try { tickStocks(); } catch (e) { console.warn('[cx-stock]', e); } }, 1700);
   requestAnimationFrame(frame);
 })();
 </script>
-
 <script id="bg3d-js">
 /* LATAR 3D — jaring partikel berputar dengan perspektif nyata, 3 polihedron wireframe melayang,
    dan grid lantai yang bergerak ke arah penonton. Parallax mengikuti kursor. Tanpa library eksternal.
@@ -5487,7 +5787,6 @@ canvas.cx-mini[data-kind="stock"]{width:96px;flex-basis:96px}
   for (i = 0; i < 12; i++) for (j = i + 1; j < 12; j++) if (Math.abs(Math.hypot(V[i][0] - V[j][0], V[i][1] - V[j][1], V[i][2] - V[j][2]) - 2) < .01) E.push([i, j]);
   var SH = [{ o: [-5.4, -1.2, 1], s: 1.5, sp: .35 }, { o: [5.6, .4, -1.5], s: 1.1, sp: -.5 }, { o: [.6, -3.1, -3], s: .8, sp: .6 }];
   var DK = { n: ['56,189,248', '129,140,248', '244,114,182'], g: '56,189,248', a: 1 }, LT = { n: ['2,132,199', '79,70,229', '219,39,119'], g: '71,85,105', a: .7 };
-
   function size() {
     w = window.innerWidth; h = window.innerHeight; dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     cv.width = Math.floor(w * dpr); cv.height = Math.floor(h * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -5495,7 +5794,6 @@ canvas.cx-mini[data-kind="stock"]{width:96px;flex-basis:96px}
   }
   window.addEventListener('resize', size);
   window.addEventListener('mousemove', function (e) { tx = e.clientX / w * 2 - 1; ty = e.clientY / h * 2 - 1; }, { passive: true });
-
   function draw(dt) {
     var lt = document.documentElement.classList.contains('light'), C = lt ? LT : DK, A = C.a;
     var f = Math.max(w, h) * .8, cx = w / 2 + mx * 26, cy = h * .4 + my * 14;
@@ -5724,7 +6022,6 @@ function rMain(){var o=S[M.sym];if(!o||!M.data.length)return;M.data[M.data.lengt
    '<div class="flex justify-between text-[10px] text-gray-400"><span>Regime: <b class="text-white">'+R.regime+' bar</b></span><span>EMA-cross setuju: <b class="text-white">'+R.agree+'%</b></span></div></div>'+
    indBox(0,R,L)+indBox(1,R,L);
   $('se2-cf').textContent=f?'Bar berjalan (garis putus-putus) tidak dihitung — skor & sinyal hanya berubah setelah bar close terkonfirmasi. Bar terkonfirmasi terakhir: '+last:'Semua bar sudah close — skor dihitung dari bar terakhir: '+last}
-
 function rAll(){if(!inited||!active())return;safe(rSec)();safe(rMov)();safe(rMain)();safe(rTape)();
   var ks=Object.keys(S),lv=ks.filter(function(k){return S[k].src==='live'}).length,e=$('se2-src');e.className='se2-tag '+(lv?'se2-live':'se2-sim');e.textContent=lv?'ONLINE · '+lv+'/'+ks.length+' LIVE':'SIMULASI · OFFLINE'}
 /* ---------- Radar Deteksi Keputusan (12 indikator MTPI, sapuan otomatis) ---------- */
@@ -5851,6 +6148,44 @@ function navInit(){Array.prototype.forEach.call(document.querySelectorAll('.nav-
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',safe(navInit));else safe(navInit)();
 })();
 </script>
-
+<script id="ba-fx-js">
+/* Konversi Cepat otomatis: mengikuti jumlah, mata uang asal, dan kurs live pada kartu Currency Converter. Aditif, tidak mengubah fungsi lama. */
+(function(){
+'use strict';
+var last='';
+function q(i){return document.getElementById(i)}
+function upd(){try{
+ var a=q('converter-amount'),f=q('converter-from'),t=q('converter-to'),box=q('fx-quick');
+ if(!a||!f||!t||!box||typeof exchangeRatesToUSD==='undefined'||typeof formatCurrencyValue!=='function')return;
+ var amt=parseFloat(a.value)||0,fr=f.value,html='';
+ Object.keys(exchangeRatesToUSD).forEach(function(c){
+  if(c===fr)return;
+  var v=amt*exchangeRatesToUSD[fr]/exchangeRatesToUSD[c],on=c===t.value;
+  html+='<button type="button" data-fx="'+c+'" class="text-left p-2.5 bg-black/60 border '+(on?'border-brand-accent':'border-card-border')+' rounded-xl hover:border-brand-accent transition min-w-0"><span class="text-[10px] text-gray-400 font-mono block">'+c+'</span><span class="text-xs font-bold text-white font-mono block truncate">'+formatCurrencyValue(v,c)+'</span></button>';
+ });
+ if(html!==last){box.innerHTML=html;last=html}
+ var n=q('fx-quick-note');if(n)n.textContent=formatCurrencyValue(amt,fr)+' '+fr+' =';
+}catch(e){if(window.console)console.warn('[fx-quick]',e)}}
+function init(){
+ var card=q('currency-converter-card');if(!card)return;
+ ['input','change'].forEach(function(ev){card.addEventListener(ev,function(){setTimeout(upd,0)})});
+ card.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('[data-fx]');
+  if(b){var t=q('converter-to');t.value=b.getAttribute('data-fx');if(typeof convertCurrency==='function')convertCurrency()}
+  setTimeout(upd,0)});
+ upd();setInterval(upd,1500)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+<script id="ba-sidebar-js">
+/* Tambahan sidebar mobile: tutup dengan klik latar / tombol Esc, dan kunci scroll halaman saat terbuka. Aditif. */
+(function(){
+var m=document.getElementById('mobile-sidebar');if(!m)return;
+function close(){try{if(typeof toggleSidebar==='function')toggleSidebar(false)}catch(e){}}
+m.addEventListener('click',function(e){if(e.target===m)close()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!m.classList.contains('hidden'))close()});
+new MutationObserver(function(){document.body.style.overflow=m.classList.contains('hidden')?'':'hidden'}).observe(m,{attributes:true,attributeFilter:['class']});
+})();
+</script>
 </body>
 </html>
