@@ -845,152 +845,315 @@ html.light .acal-mo,html.light .acal-dw,html.light .acal-lg{color:#64748b}
 </style>
 
 <style id="ba-dashboard-css">
+
 /* ===== BERITA ANGIN · SIDEBAR DASHBOARD GLASS (responsive, dinamis, transparan) ===== */
+
 :root{--ba-sb:264px;--ba-line:rgba(255,255,255,.10);--ba-glass:rgba(10,12,20,.34);--ba-acc:#38BDF8;--ba-acc2:#4F46E5}
+
 html.light{--ba-line:rgba(15,23,42,.10);--ba-glass:rgba(255,255,255,.40)}
+
 html.ba-collapsed{--ba-sb:80px}
+
 #ba-topbar{display:none}
+
 #ba-collapse{display:none}
 
 /* Drawer mobile ikut tampil kaca transparan */
+
 #mobile-sidebar{background:rgba(0,0,0,.30)!important;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+
 #sidebar-content{background:var(--ba-glass)!important;-webkit-backdrop-filter:blur(26px) saturate(170%);backdrop-filter:blur(26px) saturate(170%);border-right:1px solid var(--ba-line)!important}
 
 @media (min-width:768px){
+
   /* ---- Sidebar kaca ---- */
+
   header.sticky{--ba-pad:14px;position:fixed!important;top:0!important;left:0!important;bottom:0!important;width:var(--ba-sb)!important;z-index:45!important;
+
     background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.015)),var(--ba-glass)!important;
+
     -webkit-backdrop-filter:blur(24px) saturate(170%);backdrop-filter:blur(24px) saturate(170%);
+
     border:0!important;border-right:1px solid var(--ba-line)!important;box-shadow:inset -1px 0 0 rgba(255,255,255,.04),12px 0 48px -18px rgba(0,0,0,.45);
+
     transition:width .35s cubic-bezier(.4,0,.2,1),box-shadow .35s}
+
   header.sticky>nav{max-width:none!important;width:100%!important;height:100%!important;padding:0!important;margin:0!important}
+
   header.sticky>nav>div{height:100%!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;padding:18px var(--ba-pad) 14px!important;transition:padding .3s}
+
   /* Brand */
+
   header.sticky>nav>div>div:nth-child(1){padding:2px 4px 16px;margin-bottom:12px;border-bottom:1px solid var(--ba-line)}
+
   header.sticky>nav>div>div:nth-child(1) a{display:flex;align-items:center;gap:11px;overflow:hidden}
+
   header.sticky>nav>div>div:nth-child(1) a::before{content:"\f72e";font-family:"Font Awesome 6 Free";font-weight:900;display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--ba-acc),var(--ba-acc2));color:#fff;font-size:16px;flex:0 0 38px;box-shadow:0 8px 22px -8px rgba(56,189,248,.7);transition:transform .4s}
+
   header.sticky>nav>div>div:nth-child(1) a:hover::before{transform:rotate(-8deg) scale(1.06)}
+
   header.sticky>nav>div>div:nth-child(1) a span{font-size:17px!important;font-weight:800;white-space:nowrap;transition:opacity .2s}
+
   /* Menu */
+
   header.sticky>nav>div>div:nth-child(2){display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-start!important;flex:1 1 auto!important;gap:4px;overflow-y:auto;overflow-x:hidden;font-size:14px!important;scrollbar-width:none}
+
   header.sticky>nav>div>div:nth-child(2)::-webkit-scrollbar{display:none}
+
   header.sticky>nav>div>div:nth-child(2)::before{content:"MENU UTAMA";font-size:10px;font-weight:700;letter-spacing:.16em;color:#64748b;padding:2px 12px 8px;white-space:nowrap}
+
   header.sticky>nav>div>div:nth-child(2)>*{margin:0!important;opacity:0;transform:translateX(-10px);animation:baIn .5s cubic-bezier(.2,.8,.2,1) forwards}
+
   header.sticky>nav>div>div:nth-child(2)>*:nth-child(1){animation-delay:.05s}
+
   header.sticky>nav>div>div:nth-child(2)>*:nth-child(2){animation-delay:.10s}
+
   header.sticky>nav>div>div:nth-child(2)>*:nth-child(3){animation-delay:.15s}
+
   header.sticky>nav>div>div:nth-child(2)>*:nth-child(4){animation-delay:.20s}
+
   header.sticky>nav>div>div:nth-child(2)>*:nth-child(5){animation-delay:.25s}
+
   @keyframes baIn{to{opacity:1;transform:none}}
+
   /* Item menu */
+
   header.sticky .nav-link{position:relative;width:100%;padding:10px 12px!important;border-radius:14px;overflow:hidden;white-space:nowrap;transition:background .25s,color .25s,transform .25s,box-shadow .25s}
+
   header.sticky .nav-link::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(120px circle at var(--mx,50%) var(--my,50%),rgba(56,189,248,.22),transparent 70%)}
+
   header.sticky .nav-link:hover::after{opacity:1}
+
   header.sticky .nav-link:hover{background:rgba(148,163,184,.10)}
+
   header.sticky .nav-link .nav-ico{transition:transform .3s cubic-bezier(.3,1.6,.5,1);flex:0 0 auto}
+
   header.sticky .nav-link:hover .nav-ico{transform:scale(1.15) translateY(-1px)}
+
   header.sticky .nav-link:active{transform:scale(.97)}
+
   header.sticky a.nav-link.ba-active{background:linear-gradient(90deg,rgba(56,189,248,.24),rgba(79,70,229,.10))!important;color:var(--ba-acc)!important;font-weight:700;box-shadow:inset 0 0 0 1px rgba(56,189,248,.28),0 10px 26px -14px rgba(56,189,248,.65)}
+
   header.sticky a.nav-link.ba-active::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:0 4px 4px 0;background:var(--ba-acc);box-shadow:0 0 12px var(--ba-acc)}
+
   html.light header.sticky a.nav-link.ba-active{color:#0284c7!important}
+
   /* Chevron sub-menu */
+
   header.sticky .nav-link .fa-chevron-down{margin-left:auto!important;padding:6px;font-size:10px!important;border-radius:8px;transition:transform .3s,background .2s}
+
   header.sticky .nav-link .fa-chevron-down:hover{background:rgba(148,163,184,.2)}
+
   header.sticky .group.ba-open>.nav-link .fa-chevron-down{transform:rotate(180deg)}
+
   /* Sub-menu: lipat/bentang halus */
+
   header.sticky .group>div.absolute{position:static!important;display:block!important;padding:0 0 0 18px!important;max-height:0;opacity:0;overflow:hidden;transition:max-height .35s ease,opacity .25s ease,padding .25s}
+
   header.sticky .group.ba-open>div.absolute{max-height:220px;opacity:1;padding:4px 0 6px 18px!important}
+
   header.sticky .group>div.absolute>div{width:auto!important;background:transparent!important;border:0!important;border-left:1px solid var(--ba-line)!important;border-radius:0!important;box-shadow:none!important;padding:0 0 0 6px!important;font-size:12.5px!important}
+
   header.sticky .group>div.absolute a{padding:7px 10px!important;white-space:normal}
+
   /* Tema di dasar */
+
   header.sticky>nav>div>div:nth-child(3){margin:12px 0 0!important;padding:14px 4px 0;border-top:1px solid var(--ba-line);display:flex!important;align-items:center;justify-content:space-between;width:100%}
+
   header.sticky>nav>div>div:nth-child(3)::before{content:"Mode Tampilan";font-size:12px;font-weight:600;color:#94a3b8;white-space:nowrap}
 
   /* ---- Mode ikon (collapsed): melebar sementara saat di-hover ---- */
+
   html.ba-collapsed header.sticky:not(:hover){--ba-pad:10px}
+
   html.ba-collapsed header.sticky:hover{width:264px!important;--ba-pad:14px;box-shadow:inset -1px 0 0 rgba(255,255,255,.05),24px 0 70px -16px rgba(0,0,0,.6)}
+
   html.ba-collapsed header.sticky:not(:hover)>nav>div>div:nth-child(1) a span,
+
   html.ba-collapsed header.sticky:not(:hover) .nav-link>span:not(.nav-ico),
+
   html.ba-collapsed header.sticky:not(:hover) .nav-link .fa-chevron-down,
+
   html.ba-collapsed header.sticky:not(:hover)>nav>div>div:nth-child(2)::before,
+
   html.ba-collapsed header.sticky:not(:hover)>nav>div>div:nth-child(3)::before{display:none!important}
+
   html.ba-collapsed header.sticky:not(:hover) .group>div.absolute{display:none!important}
+
   html.ba-collapsed header.sticky:not(:hover) .nav-link{justify-content:center;padding:11px 0!important}
+
   html.ba-collapsed header.sticky:not(:hover)>nav>div>div:nth-child(1){display:flex;justify-content:center;padding-left:0;padding-right:0}
+
   html.ba-collapsed header.sticky:not(:hover)>nav>div>div:nth-child(3){justify-content:center;padding-left:0;padding-right:0}
 
   /* ---- Area konten bergeser mengikuti lebar sidebar ---- */
+
   #bg3d+div,body>main,body>footer,#ba-topbar{transition:margin-left .35s cubic-bezier(.4,0,.2,1),width .35s cubic-bezier(.4,0,.2,1)}
+
   #bg3d+div{margin-left:var(--ba-sb)!important}
+
   body>main{margin-left:var(--ba-sb)!important;margin-right:0!important;width:calc(100% - var(--ba-sb))!important;max-width:none!important;padding:22px 32px 32px!important}
+
   body>footer{margin-left:var(--ba-sb)!important;margin-top:0!important;text-align:left!important;padding-left:32px!important;font-size:12px!important}
 
   /* ---- Topbar kaca ---- */
+
   #ba-topbar{display:flex;position:sticky;top:0;z-index:35;margin-left:var(--ba-sb);padding:11px 32px;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--ba-line);background:var(--ba-glass);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%)}
+
   #ba-collapse{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:11px;border:1px solid var(--ba-line);background:rgba(148,163,184,.08);color:#cbd5e1;cursor:pointer;transition:background .2s,transform .2s,color .2s;flex:0 0 36px}
+
   #ba-collapse:hover{background:rgba(56,189,248,.18);color:var(--ba-acc);transform:scale(1.06)}
+
   #ba-collapse i{transition:transform .35s}
+
   html.ba-collapsed #ba-collapse i{transform:rotate(180deg)}
+
   html.light #ba-collapse{color:#334155}
+
 }
+
 /* Elemen topbar */
+
 .ba-left{display:flex;align-items:center;gap:14px;min-width:0}
+
 .ba-crumb{display:flex;align-items:center;gap:10px;font-size:13px;color:#94a3b8;min-width:0}
+
 .ba-crumb i{font-size:9px;opacity:.7}
+
 .ba-crumb b{font-size:16px;font-weight:800;color:#f8fafc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
 html.light .ba-crumb b{color:#0f172a}
+
 .ba-top-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+
 .ba-live,.ba-clock,.ba-date{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;border:1px solid var(--ba-line);font-size:12px;font-weight:600;color:#cbd5e1;background:rgba(148,163,184,.08);font-variant-numeric:tabular-nums}
+
 html.light .ba-live,html.light .ba-clock,html.light .ba-date{color:#334155}
+
 .ba-live{color:#34d399;border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.10);letter-spacing:.08em;font-weight:800}
+
 .ba-live-dot{width:8px;height:8px;border-radius:50%;background:#34d399;animation:baPulse 1.8s infinite}
+
 @keyframes baPulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,.55)}70%{box-shadow:0 0 0 8px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+
 #page-home.space-y-10>*+*{margin-top:1.5rem!important}
+
 @media (max-width:767px){
+
   #ba-topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid var(--ba-line);background:var(--ba-glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+
   .ba-crumb-root,.ba-crumb i,.ba-date{display:none}
+
   .ba-clock{padding:4px 10px}
+
 }
+
 @media (prefers-reduced-motion:reduce){header.sticky,header.sticky *{animation:none!important;transition:none!important;opacity:1!important;transform:none!important}}
+
 </style>
+
 <style id="ba-dashboard-clean">
+
 /* ===== DASHBOARD: tanpa shadow & border, latar transparan ===== */
+
 :root,html.light{--ba-line:transparent;--ba-glass:transparent}
+
 /* Sidebar desktop + topbar */
+
 header.sticky,html.ba-collapsed header.sticky:hover,#ba-topbar{
+
   background:transparent!important;
+
   border:0!important;border-color:transparent!important;
+
   box-shadow:none!important;
+
   -webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+
 header.sticky>nav>div>div:nth-child(1),
+
 header.sticky>nav>div>div:nth-child(3){border-color:transparent!important}
+
 /* Drawer mobile: tanpa shadow/border (blur tipis dipertahankan agar menu tetap terbaca) */
+
 #mobile-sidebar{background:transparent!important}
+
 #sidebar-content{background:transparent!important;border:0!important;box-shadow:none!important;
+
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+
 #sidebar-content .sb-head,#sidebar-content .sb-foot,#sidebar-content .sb-status,
+
 #sidebar-content .sb-sub,#sidebar-content .sb-sublink::before{border-color:transparent!important;box-shadow:none!important}
+
 html.light #sidebar-content{background:transparent!important;box-shadow:none!important}
+
 /* Item menu, tombol, chip: tanpa ring/glow */
+
 header.sticky a.nav-link.ba-active,header.sticky .nav-link,
+
 header.sticky>nav>div>div:nth-child(1) a::before,
+
 #ba-collapse,.ba-live,.ba-clock,.ba-date{box-shadow:none!important;border-color:transparent!important}
+
 header.sticky a.nav-link.ba-active::before{box-shadow:none!important}
+
 header.sticky .group>div.absolute>div{border-color:transparent!important}
+
 /* Ikon brand sidebar -> foto profil bulat (profil.gif, cadangan Unsplash) */
+
 @media (min-width:768px){
+
   header.sticky>nav>div>div:nth-child(1) a::before{
+
     content:""!important;font-size:0!important;
+
     width:42px!important;height:42px!important;flex:0 0 42px!important;
+
     border-radius:50%!important;box-shadow:none!important;
+
     position:relative!important;inset:auto!important;margin:0!important;
+
     background:url("profil.gif") center/cover no-repeat,
+
                url("https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80") center/cover no-repeat,
+
                linear-gradient(135deg,#38BDF8,#4F46E5)!important}
+
   header.sticky>nav>div>div:nth-child(1) a:hover::before{transform:scale(1.06)!important}
+
   header.sticky>nav>div>div:nth-child(1) a{gap:14px!important;padding-left:4px!important}
+
   header.sticky>nav>div>div:nth-child(1) a span{margin-left:0!important;min-width:0}
+
 }
+
+</style>
+
+<style>
+/* ===== Navigasi Halaman Crypto: model list (selaras sub-menu sidebar) ===== */
+.cr-sub{position:relative;display:flex;flex-direction:column;gap:2px;margin:2px 0 2px 8px;padding-left:14px;border-left:1px solid #262626}
+.cr-sublink{position:relative;display:flex;align-items:center;gap:10px;min-height:38px;padding:8px 12px;border-radius:10px;font-size:12.5px;font-weight:500;color:#8b95a5;text-decoration:none;transition:background .15s,color .15s}
+.cr-sublink::before{content:"";position:absolute;left:-14px;top:50%;width:10px;height:1px;background:#262626}
+.cr-sublink .cr-dot{flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:#4b5563;transition:background .15s,box-shadow .15s}
+.cr-sublink .cr-num{margin-left:auto;font-size:10px;font-weight:700;color:#4b5563;letter-spacing:.04em}
+.cr-sublink:hover{background:rgba(255,255,255,.04);color:#fff}
+.cr-sublink:hover .cr-dot{background:#38BDF8}
+.cr-sublink.is-active{background:rgba(56,189,248,.10);color:#38BDF8;font-weight:600}
+.cr-sublink.is-active .cr-dot{background:#38BDF8;box-shadow:0 0 0 3px rgba(56,189,248,.18)}
+.cr-sublink.is-active .cr-num{color:#38BDF8}
+html.light .cr-sub{border-color:#e2e8f0}
+html.light .cr-sublink::before{background:#e2e8f0}
+html.light .cr-sublink{color:#64748b}
+html.light .cr-sublink:hover{background:#f1f5f9;color:#0f172a}
+html.light .cr-sublink.is-active{background:#e0f2fe;color:#0369a1}
+html.light .cr-sublink.is-active .cr-dot{background:#0284c7}
+/* varian baris: sejajar di sisi kanan bar, seperti tombol halaman lain */
+.cr-sub.cr-sub-row{flex-direction:row;flex-wrap:wrap;gap:6px;margin:0;padding-left:0;border-left:0}
+.cr-sub-row .cr-sublink::before{display:none}
+.cr-sub-row .cr-sublink{min-height:34px;padding:6px 14px;border:1px solid transparent}
+.cr-sub-row .cr-sublink.is-active{border-color:rgba(56,189,248,.35)}
+html.light .cr-sub-row .cr-sublink.is-active{border-color:#7dd3fc}
 </style>
 </head>
 
@@ -1076,13 +1239,31 @@ header.sticky .group>div.absolute>div{border-color:transparent!important}
 
                     </a>
 
-                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="crypto-market">
+                    <div class="relative group">
+
+                        <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="crypto-market">
 
                         <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v3M7 15v3M17 6v3M17 17v3"/><rect x="5" y="7" width="4" height="8" rx="1"/><rect x="15" y="9" width="4" height="8" rx="1"/></svg></span>
 
                         <span>Crypto Market</span>
 
-                    </a>
+                            <i class="fa-solid fa-chevron-down text-[9px] text-gray-500"></i>
+
+                        </a>
+
+                        <div class="absolute left-0 top-full pt-2 hidden group-hover:block z-50">
+
+                            <div class="w-64 bg-card-dark border border-card-border rounded-xl shadow-2xl p-1.5 text-sm">
+
+                                <a href="#" data-cr-sub="1" class="flex items-center space-x-2.5 px-3 py-2 rounded-lg text-gray-300 hover:bg-neutral-800 hover:text-white"><span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 16v-4M12 16V8M16 16v-6"/></svg></span><span>Live Index &amp; Aset Crypto</span></a>
+
+                                <a href="#" data-cr-sub="2" class="flex items-center space-x-2.5 px-3 py-2 rounded-lg text-gray-300 hover:bg-neutral-800 hover:text-white"><span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span><span>Gas Fee &amp; e-Wallet</span></a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                     <div class="relative group">
 
@@ -1241,6 +1422,14 @@ header.sticky .group>div.absolute>div{border-color:transparent!important}
                         <i class="fa-solid fa-chevron-right text-[9px] sb-chev"></i>
 
                     </a>
+
+                    <div class="sb-sub">
+
+                        <a href="#" data-cr-sub="1" class="cr-sidelink sb-sublink flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span class="sb-dot"></span><span>Live Index &amp; Aset Crypto</span></a>
+
+                        <a href="#" data-cr-sub="2" class="cr-sidelink sb-sublink flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span class="sb-dot"></span><span>Gas Fee &amp; e-Wallet</span></a>
+
+                    </div>
 
                     <a href="#" class="nav-link sb-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-300 hover:bg-card-dark hover:text-brand-accent transition-colors" data-page="stock-exchange">
 
@@ -2320,6 +2509,28 @@ header.sticky .group>div.absolute>div{border-color:transparent!important}
 
             </div>
 
+            <!-- Navigasi Halaman Crypto Market (posisi & tata letak sama dengan halaman lain, model list) -->
+
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-card-dark border border-card-border p-3 rounded-xl">
+
+                <div class="flex items-center gap-2 text-xs font-medium text-gray-300">
+
+                    <span class="text-brand-accent font-bold">Navigasi Halaman Crypto:</span>
+
+                    <span id="crypto-subpage-indicator" class="px-2 py-0.5 rounded bg-brand-primary/20 text-brand-accent">Halaman 1 dari 2</span>
+
+                </div>
+
+                <div class="cr-sub cr-sub-row" role="list">
+
+                    <a href="#" role="listitem" data-cr-sub="1" aria-current="page" class="cr-sublink is-active"><span class="cr-dot"></span><span>Live Index &amp; Aset Crypto</span></a>
+
+                    <a href="#" role="listitem" data-cr-sub="2" class="cr-sublink"><span class="cr-dot"></span><span>Gas Fee &amp; e-Wallet</span></a>
+
+                </div>
+
+            </div>
+
             <!-- Compact auto-moving market mini charts -->
 
             <div class="grid grid-cols-2 xl:grid-cols-4 gap-3" id="market-mini-widgets">
@@ -2381,28 +2592,6 @@ header.sticky .group>div.absolute>div{border-color:transparent!important}
                 <div class="relative h-40 mt-2 rounded-lg overflow-hidden bg-black/30 border border-card-border"><canvas id="mini-oi-pro" class="w-full h-full" aria-label="Grafik open interest, funding rate dan rasio long short otomatis"></canvas></div>
 
               </div>
-
-            </div>
-
-            <!-- Tombol Navigasi Sub-Halaman Crypto Market (Halaman 1 & Halaman 2) -->
-
-            <div class="flex items-center justify-between bg-card-dark border border-card-border p-3 rounded-xl">
-
-                <div class="flex items-center space-x-2 text-xs font-medium text-gray-300">
-
-                    <span class="text-brand-accent font-bold">Navigasi Halaman Crypto:</span>
-
-                    <span id="crypto-subpage-indicator" class="px-2 py-0.5 rounded bg-brand-primary/20 text-brand-accent">Halaman 1 dari 2</span>
-
-                </div>
-
-                <div class="flex items-center space-x-2">
-
-                    <button onclick="switchCryptoSubPage(1)" id="crypto-sub-btn-1" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition">1</button>
-
-                    <button onclick="switchCryptoSubPage(2)" id="crypto-sub-btn-2" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition">2</button>
-
-                </div>
 
             </div>
 
@@ -3386,9 +3575,9 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
 
                 <div class="flex items-center gap-2">
 
-                    <button data-se-sub="1" data-se-tab="1" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition">1 · Overview &amp; Telemetry</button>
+                    <button data-se-sub="1" data-se-tab="1" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition">Overview &amp; Telemetry</button>
 
-                    <button data-se-sub="2" data-se-tab="2" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition">2 · US Market Live</button>
+                    <button data-se-sub="2" data-se-tab="2" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition">US Market Live</button>
 
                 </div>
 
@@ -4226,9 +4415,9 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
 
                 <div class="flex items-center gap-2">
 
-                    <button data-gm-sub="1" data-gm-tab="1" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition">1 · Likuiditas & Makro</button>
+                    <button data-gm-sub="1" data-gm-tab="1" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition">Likuiditas & Makro</button>
 
-                    <button data-gm-sub="2" data-gm-tab="2" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition">2 · Direktori & Analitik</button>
+                    <button data-gm-sub="2" data-gm-tab="2" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition">Direktori & Analitik</button>
 
                 </div>
 
@@ -5214,35 +5403,59 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
 
         function switchCryptoSubPage(subPageNum) {
 
-            const subpages = document.querySelectorAll('.crypto-subpage');
+            const n = (+subPageNum === 2) ? 2 : 1;
 
-            subpages.forEach(sp => sp.classList.add('hidden'));
+            document.querySelectorAll('.crypto-subpage').forEach(sp => sp.classList.add('hidden'));
 
-            const targetSub = document.getElementById(`crypto-subpage-${subPageNum}`);
+            const targetSub = document.getElementById(`crypto-subpage-${n}`);
 
-            if(targetSub) targetSub.classList.remove('hidden');
+            if (targetSub) targetSub.classList.remove('hidden');
 
-            document.getElementById('crypto-subpage-indicator').innerText = `Halaman ${subPageNum} dari 2`;
+            const ind = document.getElementById('crypto-subpage-indicator');
 
-            const btn1 = document.getElementById('crypto-sub-btn-1');
+            if (ind) ind.innerText = `Halaman ${n} dari 2`;
 
-            const btn2 = document.getElementById('crypto-sub-btn-2');
+            // Sinkronkan penanda aktif: list di halaman + sub-menu sidebar
+            document.querySelectorAll('.cr-sublink, .cr-sidelink').forEach(el => {
 
-            if (subPageNum === 1) {
+                const on = +el.getAttribute('data-cr-sub') === n;
 
-                btn1.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition";
+                el.classList.toggle('is-active', on);
 
-                btn2.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition";
+                if (on) el.setAttribute('aria-current', 'page'); else el.removeAttribute('aria-current');
 
-            } else {
+            });
 
-                btn2.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white transition";
+            setTimeout(() => window.dispatchEvent(new Event('resize')), 80);
 
-                btn1.className = "px-4 py-1.5 rounded-lg text-xs font-bold bg-black border border-card-border text-gray-300 hover:text-white transition";
+        }
+
+        // Klik list navigasi Crypto (halaman, sidebar, menu atas)
+        document.addEventListener('click', function (e) {
+
+            const a = e.target.closest && e.target.closest('[data-cr-sub]');
+
+            if (!a) return;
+
+            e.preventDefault();
+
+            const pg = document.getElementById('page-crypto-market');
+
+            if (pg && !pg.classList.contains('active')) {
+
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+                pg.classList.add('active');
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
 
             }
 
-        }
+            try { if (typeof toggleSidebar === 'function') toggleSidebar(false); } catch (x) {}
+
+            switchCryptoSubPage(a.getAttribute('data-cr-sub'));
+
+        });
 
         function openArticle(key) {
 
@@ -15499,73 +15712,133 @@ html.light .acal-gr i.l1{background:#9be9a8}html.light .acal-gr i.l2{background:
 </style>
 
 <script id="ba-dashboard-js">
+
 (function(){
+
   try{
+
     var main=document.querySelector('body>main'); if(!main) return;
+
     var root=document.documentElement, hdr=document.querySelector('header.sticky');
+
     var TITLES={'home':'Beranda','profile':'Profile & Portofolio','crypto-market':'Crypto Market','stock-exchange':'Stock Exchange','global-market':'Global Market','article-detail':'Detail Artikel'};
+
     var bar=document.createElement('div'); bar.id='ba-topbar';
+
     bar.innerHTML='<div class="ba-left"><button id="ba-collapse" type="button" aria-label="Ciutkan / lebarkan sidebar" title="Ciutkan / lebarkan sidebar ( [ )"><i class="fa-solid fa-angles-left"></i></button>'
+
       +'<div class="ba-crumb"><span class="ba-crumb-root">Dashboard</span><i class="fa-solid fa-chevron-right"></i><b id="ba-page-title">Beranda</b></div></div>'
+
       +'<div class="ba-top-right"><span class="ba-live"><span class="ba-live-dot"></span>LIVE</span>'
+
       +'<span class="ba-date" id="ba-date"></span>'
+
       +'<span class="ba-clock"><i class="fa-regular fa-clock"></i><span id="ba-clock">--:--:--</span> WIB</span></div>';
+
     main.parentNode.insertBefore(bar,main);
+
     var titleEl=document.getElementById('ba-page-title');
 
     /* Sidebar: lebar/ikon, otomatis ikut ukuran layar, ingat pilihan pengguna */
+
     var pref=null; try{pref=localStorage.getItem('ba-sb');}catch(e){}
+
     var mq=window.matchMedia('(max-width:1023px)');
+
     function apply(){ root.classList.toggle('ba-collapsed', mq.matches || pref==='collapsed'); }
+
     function toggle(){
+
       var now=root.classList.contains('ba-collapsed');
+
       pref=now?'expanded':'collapsed';
+
       try{localStorage.setItem('ba-sb',pref);}catch(e){}
+
       root.classList.toggle('ba-collapsed',!now);
+
       setTimeout(function(){window.dispatchEvent(new Event('resize'));},380);
+
     }
+
     apply();
+
     if(mq.addEventListener) mq.addEventListener('change',apply); else mq.addListener(apply);
+
     document.getElementById('ba-collapse').addEventListener('click',toggle);
+
     document.addEventListener('keydown',function(e){
+
       var t=e.target, tag=t&&t.tagName;
+
       if(e.key==='['&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&tag!=='INPUT'&&tag!=='TEXTAREA'&&tag!=='SELECT'&&!(t&&t.isContentEditable)) toggle();
+
     });
 
     /* Sub-menu: buka otomatis untuk halaman aktif, chevron untuk buka/tutup manual */
+
     var groups=hdr?hdr.querySelectorAll('.group'):[];
+
     groups.forEach(function(g){
+
       var ch=g.querySelector('.fa-chevron-down');
+
       if(ch) ch.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();g.classList.toggle('ba-open');});
+
     });
 
     /* Spotlight mengikuti kursor pada item menu */
+
     if(hdr) hdr.addEventListener('mousemove',function(e){
+
       var a=e.target.closest&&e.target.closest('.nav-link'); if(!a) return;
+
       var r=a.getBoundingClientRect(); a.style.setProperty('--mx',(e.clientX-r.left)+'px'); a.style.setProperty('--my',(e.clientY-r.top)+'px');
+
     });
 
     function sync(){
+
       var act=main.querySelector('.page.active'); var key=act?act.id.replace('page-',''):'home';
+
       titleEl.textContent=TITLES[key]||'Dashboard';
+
       document.querySelectorAll('header a.nav-link[data-page], #mobile-sidebar a.nav-link[data-page]').forEach(function(a){
+
         a.classList.toggle('ba-active',a.getAttribute('data-page')===key);
+
       });
+
       groups.forEach(function(g){var a=g.querySelector('a.nav-link[data-page]'); if(a&&a.getAttribute('data-page')===key) g.classList.add('ba-open'); else g.classList.remove('ba-open');});
+
     }
+
     new MutationObserver(function(m){
+
       for(var i=0;i<m.length;i++){var t=m[i].target; if(t.classList&&t.classList.contains('page')){sync();return;}}
+
     }).observe(main,{attributes:true,attributeFilter:['class'],subtree:true});
+
     function tick(){
+
       var d=new Date(), c=document.getElementById('ba-clock'), dt=document.getElementById('ba-date');
+
       try{
+
         if(c) c.textContent=d.toLocaleTimeString('id-ID',{timeZone:'Asia/Jakarta',hour12:false});
+
         if(dt) dt.textContent=d.toLocaleDateString('id-ID',{timeZone:'Asia/Jakarta',weekday:'short',day:'numeric',month:'short',year:'numeric'});
+
       }catch(e){}
+
     }
+
     tick(); setInterval(tick,1000); sync();
+
   }catch(e){}
+
 })();
+
 </script>
 
 </body>
