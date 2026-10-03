@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="theme-color" content="#000000">
+        <meta name="theme-color" content="#05060a">
     <meta name="description" content="Berita Angin - berita, pasar kripto, saham, dan pasar global real-time.">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <script>window.__BA_PROXY=false;try{fetch('/api/health').then(function(r){window.__BA_PROXY=r.ok}).catch(function(){})}catch(e){}
     if('serviceWorker' in navigator&&location.protocol.indexOf('http')===0){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})})}</script>
-    <title>Berita Angin - 1% Issue 99% Fact</title>
+    <title>Berita Angin (Beta) - 1% Issue 99% Fact</title>
     <script>(function(){try{if(localStorage.getItem('ba-theme')==='light'){var h=document.documentElement;h.classList.remove('dark');h.classList.add('light');}}catch(e){}})();</script>
     <!-- Muat Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -38,14 +38,14 @@
                         'card-dark': '#121212',
                         'card-border': '#222222',
                         'brand-primary': {
-                            light: '#6366F1',
-                            DEFAULT: '#4F46E5',
-                            dark: '#4338CA',
+                            light: '#38BDF8',
+                            DEFAULT: '#0EA5E9',
+                            dark: '#0284C7',
                         },
                         'brand-secondary': {
-                            light: '#F472B6',
-                            DEFAULT: '#EC4899',
-                            dark: '#DB2777',
+                            light: '#67E8F9',
+                            DEFAULT: '#22D3EE',
+                            dark: '#0891B2',
                         },
                         'brand-accent': '#38BDF8',
                     },
@@ -59,7 +59,7 @@
             color: #F9FAFB;
         }
         .hero-gradient-text {
-            background: linear-gradient(to right, #38BDF8, #818CF8);
+            background: linear-gradient(to right, #38BDF8, #38BDF8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -122,7 +122,7 @@
 <style>/* ===== Tombol toggle tema ===== */
 .tt{position:relative;display:inline-flex;align-items:center;width:58px;height:30px;border-radius:999px;border:1px solid #222;background:#121212;cursor:pointer;padding:0;flex:0 0 58px;transition:background .3s,border-color .3s}
 .tt:hover{border-color:#38BDF8}.tt:focus-visible{outline:2px solid #38BDF8;outline-offset:2px}
-.tt-knob{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#38BDF8,#4F46E5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;transition:transform .3s,background .3s}
+.tt-knob{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#38BDF8,#0EA5E9);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;transition:transform .3s,background .3s}
 .tt-sun{display:none}
 html.theme-anim *{transition:background-color .35s,border-color .35s,color .25s!important}
 /* ===== TEMA TERANG ===== */
@@ -151,11 +151,11 @@ html.light .text-brand-accent{color:#0284c7!important}
 html.light .text-emerald-300,html.light .text-emerald-400{color:#059669!important}
 html.light .text-rose-400{color:#e11d48!important}
 html.light .text-amber-400{color:#b45309!important}
-html.light .text-purple-300,html.light .text-purple-400{color:#7c3aed!important}
+html.light .text-sky-300,html.light .text-sky-400{color:#0284c7!important}
 html.light .text-cyan-400{color:#0e7490!important}
 html.light .text-sky-300{color:#0369a1!important}
 html.light .text-blue-400{color:#2563eb!important}
-html.light .bg-brand-primary.text-white,html.light .bg-brand-primary .text-white,html.light [class*="bg-brand-primary/9"].text-white,html.light .bg-emerald-500.text-white,html.light .bg-emerald-600.text-white,html.light [class*="bg-emerald-600/"].text-white,html.light .bg-rose-500.text-white,html.light .bg-rose-600.text-white,html.light .bg-blue-500.text-white,html.light .bg-blue-600.text-white,html.light .bg-blue-700.text-white,html.light .bg-amber-500.text-white,html.light .bg-amber-600.text-white,html.light [class*="bg-purple-600/"].text-white,html.light .bg-purple-600.text-white,html.light .liq-btn.on,html.light .gm-chip.on{color:#fff!important}
+html.light .bg-brand-primary.text-white,html.light .bg-brand-primary .text-white,html.light [class*="bg-brand-primary/9"].text-white,html.light .bg-emerald-500.text-white,html.light .bg-emerald-600.text-white,html.light [class*="bg-emerald-600/"].text-white,html.light .bg-rose-500.text-white,html.light .bg-rose-600.text-white,html.light .bg-blue-500.text-white,html.light .bg-blue-600.text-white,html.light .bg-blue-700.text-white,html.light .bg-amber-500.text-white,html.light .bg-amber-600.text-white,html.light [class*="bg-sky-600/"].text-white,html.light .bg-sky-600.text-white,html.light .liq-btn.on,html.light .gm-chip.on{color:#fff!important}
 html.light .absolute[class*="from-black"] .text-white{color:#fff!important}
 html.light .absolute[class*="from-black"] .text-brand-accent{color:#38BDF8!important}
 html.light canvas{filter:invert(1) hue-rotate(180deg)}
@@ -164,10 +164,10 @@ html.light select option{background:#fff;color:#0f172a}
 html.light ::-webkit-scrollbar-track{background:#f1f5f9}
 html.light ::-webkit-scrollbar-thumb{background:#cbd5e1}
 html.light ::-webkit-scrollbar-thumb:hover{background:#94a3b8}
-html.light .card-3d:hover{box-shadow:0 20px 40px -14px rgba(2,132,199,.22),0 0 24px rgba(79,70,229,.08)}
+html.light .card-3d:hover{box-shadow:0 20px 40px -14px rgba(2,132,199,.22),0 0 24px rgba(14,165,233,.08)}
 /* komponen kustom bawaan halaman Global Market */
 html.light .gm-chip,html.light .liq-btn{background:#fff!important;border-color:#cbd5e1!important;color:#334155!important}
-html.light .gm-chip.on,html.light .liq-btn.on{background:#4F46E5!important;border-color:#4F46E5!important}
+html.light .gm-chip.on,html.light .liq-btn.on{background:#0EA5E9!important;border-color:#0EA5E9!important}
 html.light .gm-row,html.light .mlc-row{border-bottom-color:#e2e8f0!important}
 html.light .liq-kpi{background:#f8fafc!important;border-color:#dbe3ee!important}
 html.light .liq-kpi>b{color:#0f172a!important}
@@ -247,7 +247,7 @@ a:hover>.nav-ico{color:#e2e8f0;background:rgba(148,163,184,.14);border-color:rgb
 .nav-item.is-active>.nav-ico,.sb-link.is-active>.nav-ico{color:#38BDF8;background:rgba(56,189,248,.10);border-color:rgba(56,189,248,.45)}
 .nav-item{position:relative}
 header .nav-item.is-active{color:#fff}
-header .nav-item.is-active::after{content:"";position:absolute;left:0;right:0;bottom:-17px;height:2px;border-radius:2px;background:linear-gradient(90deg,#38BDF8,#4F46E5)}
+header .nav-item.is-active::after{content:"";position:absolute;left:0;right:0;bottom:-17px;height:2px;border-radius:2px;background:linear-gradient(90deg,#38BDF8,#0EA5E9)}
 #sidebar-content .nav-item.is-active{background:rgba(56,189,248,.10);color:#38BDF8}
 html.light .nav-ico{color:#64748b;background:#f1f5f9;border-color:#e2e8f0}
 html.light a:hover>.nav-ico{color:#0f172a;background:#e2e8f0;border-color:#cbd5e1}html.light .nav-item.is-active>.nav-ico,html.light .sb-link.is-active>.nav-ico{color:#0369a1;background:#e0f2fe;border-color:#7dd3fc}
@@ -272,7 +272,7 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
 #sidebar-content{width:88%;max-width:312px;background:linear-gradient(180deg,#0d1117 0%,#090b0f 100%);border-right:1px solid #1c232d;box-shadow:24px 0 60px -20px rgba(0,0,0,.75)}
 #sidebar-content .sb-head{padding:20px 16px 14px;border-bottom:0;background:radial-gradient(120% 100% at 0% 0%,rgba(56,189,248,.14),transparent 60%)}
 #sidebar-content .sb-brand{display:flex;align-items:center;gap:12px;min-width:0}
-#sidebar-content .sb-avatar{position:relative;flex:0 0 auto;width:46px;height:46px;padding:2px;border-radius:50%;background:linear-gradient(135deg,#38BDF8,#4F46E5)}
+#sidebar-content .sb-avatar{position:relative;flex:0 0 auto;width:46px;height:46px;padding:2px;border-radius:50%;background:linear-gradient(135deg,#38BDF8,#0EA5E9)}
 #sidebar-content .sb-avatar img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid #0d1117;display:block}
 #sidebar-content .sb-online{position:absolute;right:0;bottom:0;width:11px;height:11px;border-radius:50%;background:#10b981;border:2px solid #0d1117}
 #sidebar-content .sb-name{display:flex;align-items:center;gap:6px;font:700 15px/1.2 Inter,sans-serif;color:#fff;letter-spacing:-.01em}
@@ -292,7 +292,7 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
 #sidebar-content .sb-nav>.space-y-1>*+*{margin-top:2px}
 #sidebar-content .sb-link{min-height:44px;padding:7px 10px;border-radius:12px;border:1px solid transparent;font-weight:600;font-size:13.5px;color:#c4ccd8;transition:background .18s,border-color .18s,color .18s}
 #sidebar-content .sb-link:hover{background:rgba(56,189,248,.07);border-color:#1f2a38;color:#fff}
-#sidebar-content .sb-link.is-active{background:linear-gradient(90deg,rgba(56,189,248,.16),rgba(79,70,229,.06));border-color:rgba(56,189,248,.28);color:#fff}
+#sidebar-content .sb-link.is-active{background:linear-gradient(90deg,rgba(56,189,248,.16),rgba(14,165,233,.06));border-color:rgba(56,189,248,.28);color:#fff}
 #sidebar-content .sb-link.is-active::before{left:-1px;top:9px;bottom:9px;width:3px}
 #sidebar-content .sb-link.is-active .sb-chev{color:#38BDF8}
 #sidebar-content .sb-badge{flex:0 0 auto;padding:3px 6px;border-radius:6px;font:700 8.5px/1 Inter,sans-serif;letter-spacing:.08em;color:#34d399;background:rgba(52,211,153,.10);border:1px solid rgba(52,211,153,.28)}
@@ -333,7 +333,7 @@ html.light #sidebar-content .sb-foot-sub{color:#64748b}
 </style>
 <style>html.light #gas-pro-canvas,html.light #mlc-ch-net,html.light #mlc-ch-imp,html.light #mlc-ch-sc{filter:none!important}#gas-pro-canvas,#mlc-ch-net,#mlc-ch-imp,#mlc-ch-sc{touch-action:pan-y;cursor:crosshair}
 </style>
-<style>html.light .text-pink-400{color:#db2777!important}
+<style>html.light .text-cyan-400{color:#0891B2!important}
 </style>
 <style>/* ===== Halaman Profil: kolom kiri & kanan sejajar (tinggi sama, tepi bawah rata) ===== */
 @media (min-width:1024px){
@@ -351,7 +351,7 @@ html.light #sidebar-content .sb-foot-sub{color:#64748b}
 #sidebar-content .sb-link{position:relative}
 #sidebar-content .sb-link .sb-chev{color:#4b5563;transition:transform .15s,color .15s}
 #sidebar-content .sb-link:hover .sb-chev{color:#38BDF8;transform:translateX(2px)}
-#sidebar-content .sb-link.is-active::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:3px;background:linear-gradient(#38BDF8,#4F46E5)}
+#sidebar-content .sb-link.is-active::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:3px;background:linear-gradient(#38BDF8,#0EA5E9)}
 #sidebar-content .sb-sub{display:flex;flex-direction:column;gap:2px;margin:0 0 6px 27px;padding-left:12px;border-left:1px solid #262626}
 #sidebar-content .sb-dot{flex:0 0 auto;width:5px;height:5px;border-radius:50%;background:#4b5563}
 #sidebar-content .sb-sublink:hover .sb-dot{background:#38BDF8}
@@ -365,7 +365,7 @@ html.light #sidebar-content .sb-link .sb-chev{color:#94a3b8}
 </style>
 <style>.ap-btn{font-size:12px;font-weight:600;padding:6px 12px;border-radius:8px;border:1px solid #222;background:#000;color:#9ca3af;cursor:pointer;transition:all .2s}
 .ap-btn:hover{border-color:#38BDF8;color:#fff}
-.ap-btn.on{background:#4F46E5;border-color:#4F46E5;color:#fff}
+.ap-btn.on{background:#0EA5E9;border-color:#0EA5E9;color:#fff}
 .ap-chip{font-size:11px;padding:3px 9px;border-radius:999px;border:1px solid #222;background:#0a0a0a;color:#9ca3af}
 .ap-chip.ap-up{color:#34d399;border-color:rgba(52,211,153,.4);background:rgba(52,211,153,.08)}
 .ap-chip.ap-dn{color:#fb7185;border-color:rgba(251,113,133,.4);background:rgba(251,113,133,.08)}
@@ -380,7 +380,7 @@ html.light #sidebar-content .sb-link .sb-chev{color:#94a3b8}
 .ap-heat td{text-align:center;color:#fff;min-width:46px;font-variant-numeric:tabular-nums}
 .ap-heat th{text-align:center}
 html.light .ap-btn{background:#fff;border-color:#cbd5e1;color:#334155}
-html.light .ap-btn.on{background:#4F46E5;border-color:#4F46E5;color:#fff}
+html.light .ap-btn.on{background:#0EA5E9;border-color:#0EA5E9;color:#fff}
 html.light .ap-kpi,html.light .ap-chip{background:#f8fafc;border-color:#dbe3ee}
 html.light .ap-tbl{color:#334155}html.light .ap-tbl td,html.light .ap-tbl th{border-bottom-color:#e2e8f0}
 html.light .ap-heat td{color:#0f172a}
@@ -401,7 +401,7 @@ html.light .apc .ap-seg{border-color:#cbd5e1}
 </style>
 <style id="ba-dashboard-css">
 /* ===== BERITA ANGIN · SIDEBAR DASHBOARD GLASS (responsive, dinamis, transparan) ===== */
-:root{--ba-sb:264px;--ba-line:rgba(255,255,255,.10);--ba-glass:rgba(10,12,20,.34);--ba-acc:#38BDF8;--ba-acc2:#4F46E5}
+:root{--ba-sb:264px;--ba-line:rgba(255,255,255,.10);--ba-glass:rgba(10,12,20,.34);--ba-acc:#38BDF8;--ba-acc2:#0EA5E9}
 html.light{--ba-line:rgba(15,23,42,.10);--ba-glass:rgba(255,255,255,.40)}
 html.ba-collapsed{--ba-sb:80px}
 #ba-topbar{display:none}
@@ -443,7 +443,7 @@ html.ba-collapsed{--ba-sb:80px}
   header.sticky .nav-link .nav-ico{transition:transform .3s cubic-bezier(.3,1.6,.5,1);flex:0 0 auto}
   header.sticky .nav-link:hover .nav-ico{transform:scale(1.15) translateY(-1px)}
   header.sticky .nav-link:active{transform:scale(.97)}
-  header.sticky a.nav-link.ba-active{background:linear-gradient(90deg,rgba(56,189,248,.24),rgba(79,70,229,.10))!important;color:var(--ba-acc)!important;font-weight:700;box-shadow:inset 0 0 0 1px rgba(56,189,248,.28),0 10px 26px -14px rgba(56,189,248,.65)}
+  header.sticky a.nav-link.ba-active{background:linear-gradient(90deg,rgba(56,189,248,.24),rgba(14,165,233,.10))!important;color:var(--ba-acc)!important;font-weight:700;box-shadow:inset 0 0 0 1px rgba(56,189,248,.28),0 10px 26px -14px rgba(56,189,248,.65)}
   header.sticky a.nav-link.ba-active::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:0 4px 4px 0;background:var(--ba-acc);box-shadow:0 0 12px var(--ba-acc)}
   html.light header.sticky a.nav-link.ba-active{color:#0284c7!important}
   /* Chevron sub-menu */
@@ -536,7 +536,7 @@ header.sticky .group>div.absolute>div{border-color:transparent!important}
     position:relative!important;inset:auto!important;margin:0!important;
     background:url("profil.gif") center/cover no-repeat,
                url("https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80") center/cover no-repeat,
-               linear-gradient(135deg,#38BDF8,#4F46E5)!important}
+               linear-gradient(135deg,#38BDF8,#0EA5E9)!important}
   header.sticky>nav>div>div:nth-child(1) a:hover::before{transform:scale(1.06)!important}
   header.sticky>nav>div>div:nth-child(1) a{gap:14px!important;padding-left:4px!important}
   header.sticky>nav>div>div:nth-child(1) a span{margin-left:0!important;min-width:0}
@@ -566,6 +566,166 @@ html.light .cr-sublink.is-active .cr-dot{background:#0284c7}
 .cr-sub-row .cr-sublink{min-height:34px;padding:6px 14px;border:1px solid transparent}
 .cr-sub-row .cr-sublink.is-active{border-color:rgba(56,189,248,.35)}
 html.light .cr-sub-row .cr-sublink.is-active{border-color:#7dd3fc}
+</style>
+<style>
+/* ===== Beranda profesional ===== */
+#page-home{--hp-bg:#0b0d12;--hp-line:#1f2430;--hp-t:#f8fafc;--hp-m:#94a3b8;--hp-a:#38bdf8;--hp-soft:rgba(56,189,248,.10)}
+html.light #page-home{--hp-bg:#fff;--hp-line:#dbe3ee;--hp-t:#0f172a;--hp-m:#475569;--hp-a:#0284c7;--hp-soft:rgba(2,132,199,.08)}
+.hp-hero{display:grid;grid-template-columns:1.35fr .65fr;gap:40px;align-items:center;background:var(--hp-bg);border:1px solid var(--hp-line);border-radius:16px;padding:48px;position:relative;overflow:hidden}
+.hp-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(520px 260px at 0 0,var(--hp-soft),transparent 70%);pointer-events:none}
+.hp-main,.hp-profile{position:relative}
+.hp-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--hp-a);padding:6px 12px;border:1px solid var(--hp-line);border-radius:6px;background:var(--hp-soft)}
+.hp-dot{width:7px;height:7px;border-radius:50%;background:var(--hp-a)}
+.hp-title{margin:20px 0 14px;font-size:clamp(28px,4vw,44px);line-height:1.15;font-weight:800;letter-spacing:-.02em;color:var(--hp-t)}
+.hp-accent{color:var(--hp-a)}
+.hp-lead{max-width:560px;font-size:15.5px;line-height:1.7;color:var(--hp-m)}
+.hp-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.hp-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:8px;font-size:14px;font-weight:600;transition:background .2s,border-color .2s}
+.hp-btn-primary{background:#0EA5E9;color:#fff}.hp-btn-primary:hover{background:#0284C7}
+.hp-btn-ghost{background:transparent;color:var(--hp-t);border:1px solid var(--hp-line)}.hp-btn-ghost:hover{border-color:var(--hp-a);color:var(--hp-a)}
+.hp-trust{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:28px;padding-top:22px;border-top:1px solid var(--hp-line);list-style:none;font-size:13px;color:var(--hp-m)}
+.hp-trust i,.hp-verified{color:#10b981;margin-right:7px}
+.hp-profile{border:1px solid var(--hp-line);border-radius:12px;overflow:hidden;background:var(--hp-bg)}
+.hp-photo{aspect-ratio:1/1;overflow:hidden}.hp-photo img{width:100%;height:100%;object-fit:cover}
+.hp-cap{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;border-top:1px solid var(--hp-line)}
+.hp-cap strong{display:block;font-size:14px;color:var(--hp-t)}.hp-cap span{font-size:12px;color:var(--hp-a);font-weight:600}.hp-verified{margin:0;font-size:18px}
+.hp-stats{display:grid;grid-template-columns:repeat(3,1fr);background:var(--hp-bg);border:1px solid var(--hp-line);border-radius:12px}
+.hp-stat{display:flex;align-items:center;gap:14px;padding:20px 24px}
+.hp-stat+.hp-stat{border-left:1px solid var(--hp-line)}
+.hp-stat>i{width:42px;height:42px;display:grid;place-items:center;border-radius:10px;background:var(--hp-soft);color:var(--hp-a);font-size:17px}
+.hp-stat span{display:block;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--hp-m)}
+.hp-stat b{display:block;margin-top:2px;font-size:19px;font-weight:700;color:var(--hp-t)}
+.hp-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;padding-bottom:16px;margin-bottom:22px;border-bottom:1px solid var(--hp-line)}
+.hp-kicker{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--hp-a)}
+.hp-head h2{margin-top:4px;font-size:clamp(21px,2.6vw,28px);font-weight:800;letter-spacing:-.01em;color:var(--hp-t)}
+.hp-dots-wrap{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--hp-m)}
+#page-home #article-auto-slider{border-radius:0}
+#page-home #article-auto-slider>div{gap:24px!important;padding-top:0!important}
+#page-home .card-3d{border-radius:12px!important;box-shadow:none!important;transition:transform .2s,border-color .2s,box-shadow .2s}
+#page-home .card-3d:hover{transform:translateY(-3px);border-color:var(--hp-a)!important;box-shadow:0 14px 28px -16px rgba(0,0,0,.45)!important}
+#page-home .card-3d .h-56{height:11.5rem}
+#page-home .card-3d h3{font-size:1.02rem;line-height:1.45}
+#page-home .card-3d span.absolute{border-radius:5px!important;font-size:10.5px!important;letter-spacing:.07em;text-transform:uppercase;backdrop-filter:none!important}
+@media(max-width:900px){.hp-hero{grid-template-columns:1fr;padding:28px 20px;gap:28px}.hp-profile{max-width:320px}.hp-stats{grid-template-columns:1fr}.hp-stat+.hp-stat{border-left:0;border-top:1px solid var(--hp-line)}}
+</style>
+<style id="beta-theme">
+/* ===== BETA THEME: aurora + glass (CSS-only, logika JS tidak diubah) ===== */
+:root{--b-line:rgba(255,255,255,.09);--b-glass:rgba(255,255,255,.045);--b-glass2:rgba(255,255,255,.08);--b-grad:linear-gradient(135deg,#7dd3fc,#38bdf8 45%,#0ea5e9)}
+html.light{--b-line:rgba(15,23,42,.10);--b-glass:rgba(255,255,255,.72);--b-glass2:rgba(255,255,255,.92)}
+html body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+ background:radial-gradient(700px 480px at 8% -5%,rgba(14,165,233,.30),transparent 62%),radial-gradient(640px 460px at 95% 8%,rgba(34,211,238,.18),transparent 62%),radial-gradient(760px 520px at 50% 108%,rgba(56,189,248,.18),transparent 62%),#05060a}
+html.light body:before{background:radial-gradient(700px 480px at 8% -5%,rgba(14,165,233,.16),transparent 62%),radial-gradient(640px 460px at 95% 8%,rgba(34,211,238,.12),transparent 62%),radial-gradient(760px 520px at 50% 108%,rgba(56,189,248,.16),transparent 62%),#eef2f9}
+html body[class]{background:transparent!important}
+html.light body[class]{background:transparent!important}
+::selection{background:rgba(56,189,248,.45);color:#fff}
+/* header kaca + nav pil */
+header.sticky{background:rgba(8,10,16,.55)!important;-webkit-backdrop-filter:blur(20px) saturate(1.5);backdrop-filter:blur(20px) saturate(1.5);border-bottom:1px solid var(--b-line)!important}
+html.light header.sticky{background:rgba(255,255,255,.65)!important}
+header .nav-link{padding:7px 13px;border-radius:999px;transition:background .25s,color .25s}
+header .nav-link:hover{background:var(--b-glass2)}
+/* kartu kaca */
+.bg-card-dark:not(#sidebar-content),.bg-deep-gray:not(#sidebar-content){background-color:var(--b-glass)!important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+html.light .bg-card-dark:not(#sidebar-content),html.light .bg-deep-gray:not(#sidebar-content){background-color:var(--b-glass)!important}
+[class*="border-card-border"]{border-color:var(--b-line)!important}
+.rounded-2xl{border-radius:20px!important}.rounded-3xl{border-radius:28px!important}
+.shadow-2xl,.shadow-xl{box-shadow:0 18px 50px -24px rgba(0,0,0,.55)!important}
+html.light .shadow-2xl,html.light .shadow-xl{box-shadow:0 18px 44px -26px rgba(30,41,90,.25)!important}
+/* tombol gradien */
+.bg-brand-primary{background-image:var(--b-grad)!important;background-color:#38BDF8!important;border:0!important;transition:filter .2s,transform .2s,box-shadow .2s}
+.bg-brand-primary:hover{filter:brightness(1.1);box-shadow:0 10px 30px -10px rgba(56,189,248,.7)}
+button,.nav-link{transition:transform .15s}
+/* tipografi & angka */
+h1,h2{letter-spacing:-.025em}
+td,th,.font-mono{font-variant-numeric:tabular-nums}
+input,select,textarea{background-color:var(--b-glass)!important;border-color:var(--b-line)!important;border-radius:12px!important}
+input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 3px rgba(56,189,248,.35)}
+/* transisi halaman & scrollbar */
+.page.active{animation:betaIn .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes betaIn{from{opacity:0;transform:translateY(14px) scale(.995);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+::-webkit-scrollbar-thumb{background:linear-gradient(#38BDF8,#22D3EE)!important;border-radius:8px}
+::-webkit-scrollbar-track{background:transparent!important}
+/* beranda: bento + aurora */
+#page-home{--hp-bg:var(--b-glass);--hp-line:var(--b-line);--hp-soft:rgba(56,189,248,.14)}
+.hp-hero{border-radius:28px;padding:56px;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.hp-hero:before{background:radial-gradient(520px 300px at 0 0,rgba(14,165,233,.30),transparent 70%),radial-gradient(420px 260px at 100% 100%,rgba(34,211,238,.20),transparent 70%)}
+.hp-eyebrow{border-radius:999px}
+.hp-title{font-size:clamp(30px,4.6vw,54px);line-height:1.08}
+.hp-accent{background-image:var(--b-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hp-btn{border-radius:999px}.hp-btn-primary{background:var(--b-grad);box-shadow:0 10px 30px -12px rgba(56,189,248,.8)}.hp-btn-primary:hover{filter:brightness(1.1);background:var(--b-grad)}
+.hp-profile{border-radius:24px;padding:8px;box-shadow:0 0 0 1px var(--b-line),0 30px 60px -30px rgba(14,165,233,.6)}
+.hp-photo{border-radius:18px}.hp-cap{border-top:0}
+.hp-stats{gap:16px;background:none;border:0}
+.hp-stat{background:var(--b-glass);border:1px solid var(--b-line)!important;border-radius:22px;padding:22px 24px;transition:transform .25s,border-color .25s}
+.hp-stat:hover{transform:translateY(-4px);border-color:rgba(56,189,248,.55)!important}
+.hp-stat>i{background:var(--b-grad);color:#fff;border-radius:14px}
+.hp-stat b{font-size:22px}
+#page-home .card-3d{border-radius:22px!important}
+#page-home .card-3d:hover{border-color:rgba(56,189,248,.6)!important}
+#page-home .card-3d span.absolute{border-radius:999px!important}
+@media(max-width:900px){.hp-hero{padding:30px 20px}.hp-stats{grid-template-columns:1fr}.hp-stat+.hp-stat{border-top:1px solid var(--b-line)}}
+@media(prefers-reduced-motion:reduce){.page.active{animation:none}}
+</style>
+<style id="beta-stock-responsive">
+/* ===== BETA v2: latar saham + responsif seluruh halaman ===== */
+:root{--b-bull:#34d399;--b-bear:#fb7185}
+html,body{max-width:100%;overflow-x:hidden}
+img,svg,canvas,video{max-width:100%}
+/* Latar: grid bursa + candlestick bergerak pelan, memudar ke bawah */
+html body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22720%22 height=%22360%22 viewBox=%220 0 720 360%22%3E%3Cg opacity=%22.9%22%3E%3Cline x1=%2215.0%22 x2=%2215.0%22 y1=%22161.9%22 y2=%22187.9%22 stroke=%22%2334d399%22 stroke-width=%222%22/%3E%3Crect x=%228.0%22 y=%22170.2%22 width=%2214%22 height=%229.8%22 rx=%222%22 fill=%22%2334d399%22/%3E%3Cline x1=%2245.0%22 x2=%2245.0%22 y1=%22141.6%22 y2=%22189.2%22 stroke=%22%2334d399%22 stroke-width=%222%22/%3E%3Crect x=%2238.0%22 y=%22152.5%22 width=%2214%22 height=%2217.7%22 rx=%222%22 fill=%22%2334d399%22/%3E%3Cline x1=%2275.0%22 x2=%2275.0%22 y1=%22143.6%22 y2=%22176.6%22 stroke=%22%23fb7185%22 stroke-width=%222%22/%3E%3Crect x=%2268.0%22 y=%22152.5%22 width=%2214%22 height=%228.7%22 rx=%222%22 fill=%22%23fb7185%22/%3E%3Cline x1=%22105.0%22 x2=%22105.0%22 y1=%22124.2%22 y2=%22173.2%22 stroke=%22%2334d399%22 stroke-width=%222%22/%3E%3Crect x=%2298.0%22 y=%22140.4%22 width=%2214%22 height=%2220.9%22 rx=%222%22 fill=%22%2334d399%22/%3E%3Cline x1=%22135.0%22 x2=%22135.0%22 y1=%22125.6%22 y2=%22151.4%22 stroke=%22%23fb7185%22 stroke-width=%222%22/%3E%3Crect x=%22128.0%22 y=%22140.4%22 width=%2214%22 height=%224.0%22 rx=%222%22 fill=%22%23fb7185%22/%3E%3Cline x1=%22165.0%22 x2=%22165.0%22 y1=%22132.5%22 y2=%22153.6%22 stroke=%22%2334d399%22 stroke-width=%222%22/%3E%3Crect x=%22158.0%22 y=%22139.5%22 width=%2214%22 height=%224.9%22 rx=%222%22 fill=%22%2334d399%22/%3E%3Cline x1=%22195.0%22 x2=%22195.0%22 y1=%22102.7%22 y2=%22152.3%22 stroke=%22%2334d399%22 stroke-width=%222%22/%3E%3Crect x=%22188.0%22 y=%22119.6%22 width=%2214%22 height=%2219.9%22 rx=%222%22 fill=%22%2334d399%22/%3E%3Cline x1=%22225.0%22 x2=%22225.0%22 y1=%22108.6%22 y2=%22139.2%22 stroke=%22%23fb7185%22 stroke-width=%222%22/%3E%3Crect x=%22218.0%22 y=%22119.6%22 width=%2214%22 height=%224.2%22 rx=%222%22 fill=%22%23fb7185%22/%3E%3Cline x1=%22255.0%22 x2=%22255.0%22 y1=%2290.9%22 y2=%22134.6%22 stroke=%22%2334d399%22 stroke-width=%222%22/%3E%3Crect x=%22248.0%22 y=%22104.2%22 width=%2214%22 height=%2219.6%22 rx=%222%22 fill=%22%2334d399%22/%3E%3Cline x1=%22285.0%22 x2=%22285.0%22 y1=%2285.5%22 y2=%22123.1%22 stroke=%22%23fb7185%22 stroke-width=%222%22/%3E%3Crect x=%22278.0%22 y=%22104.2%22 width=%2214%22 height=%224.0%22 rx=%222%22 fill=%22%23fb7185%22/%3E%3Cline x1=%22315.0%22 x2=%22315.0%22 y1=%2279.5%22 y2=%22121.1%22 stroke=%22%2334d399%22 stroke-width=%222%22/%3E%3Crect x=%22308.0%22 y=%2289.4%22 width=%2214%22 height=%2216.6%22 rx=%222%22 fill=%22%2334d399%22/%3E%3Cline x1=%22345.0%22 x2=%22345.0%22 y1=%2260.7%22 y2=%22109.4%22 stroke=%22%2334d399%22 stroke-width=%222%22/%3E%3Crect x=%22338.0%22 y=%2275.1%22 width=%2214%22 height=%2214.2%22 rx=%222%22 fill=%22%2334d399%22/%3E%3Cline x1=%22375.0%22 x2=%22375.0%22 y1=%2257.5%22 y2=%2289.4%22 stroke=%22%23fb7185%22 stroke-width=%222%22/%3E%3Crect x=%22368.0%22 y=%2275.1%22 width=%2214%22 height=%224.0%22 rx=%222%22 fill=%22%23fb7185%22/%3E%3Cline x1=%22405.0%22 x2=%22405.0%22 y1=%2257.1%22 y2=%22110.1%22 stroke=%22%23fb7185%22 stroke-width=%222%22/%3E%3Crect x=%22398.0%22 y=%2278.8%22 width=%2214%22 height=%2223.4%22 rx=%222%22 fill=%22%23fb7185%22/%3E%3Cline x1=%22435.0%22 x2=%22435.0%22 y1=%2275.9%22 y2=%22120.3%22 stroke=%22%2334d399%22 stroke-width=%222%22/%3E%3Crect x=%22428.0%22 y=%2288.6%22 width=%2214%22 height=%2213.6%22 rx=%222%22 fill=%22%2334d399%22/%3E%3Cline x1=%22465.0%22 x2=%22465.0%22 y1=%2272.7%22 y2=%22102.4%22 stroke=%22%2334d399%22 stroke-width=%222%22/%3E%3Crect x=%22458.0%22 y=%2281.1%22 width=%2214%22 height=%227.5%22 rx=%222%22 fill=%22%2334d399%22/%3E%3Cline x1=%22495.0%22 x2=%22495.0%22 y1=%2274.5%22 y2=%22111.1%22 stroke=%22%23fb7185%22 stroke-width=%222%22/%3E%3Crect x=%22488.0%22 y=%2281.1%22 width=%2214%22 height=%2213.3%22 rx=%222%22 fill=%22%23fb7185%22/%3E%3Cline x1=%22525.0%22 x2=%22525.0%22 y1=%2276.1%22 y2=%22137.8%22 stroke=%22%23fb7185%22 stroke-width=%222%22/%3E%3Crect x=%22518.0%22 y=%2294.4%22 width=%2214%22 height=%2228.2%22 rx=%222%22 fill=%22%23fb7185%22/%3E%3Cline x1=%22555.0%22 x2=%22555.0%22 y1=%22102.6%22 y2=%22141.1%22 stroke=%22%23fb7185%22 stroke-width=%222%22/%3E%3Crect x=%22548.0%22 y=%22122.6%22 width=%2214%22 height=%227.4%22 rx=%222%22 fill=%22%23fb7185%22/%3E%3Cline x1=%22585.0%22 x2=%22585.0%22 y1=%22110.8%22 y2=%22145.6%22 stroke=%22%2334d399%22 stroke-width=%222%22/%3E%3Crect x=%22578.0%22 y=%22127.9%22 width=%2214%22 height=%224.0%22 rx=%222%22 fill=%22%2334d399%22/%3E%3Cline x1=%22615.0%22 x2=%22615.0%22 y1=%22112.6%22 y2=%22168.2%22 stroke=%22%23fb7185%22 stroke-width=%222%22/%3E%3Crect x=%22608.0%22 y=%22127.9%22 width=%2214%22 height=%2227.0%22 rx=%222%22 fill=%22%23fb7185%22/%3E%3Cline x1=%22645.0%22 x2=%22645.0%22 y1=%22113.8%22 y2=%22176.0%22 stroke=%22%2334d399%22 stroke-width=%222%22/%3E%3Crect x=%22638.0%22 y=%22133.2%22 width=%2214%22 height=%2221.7%22 rx=%222%22 fill=%22%2334d399%22/%3E%3Cline x1=%22675.0%22 x2=%22675.0%22 y1=%22119.6%22 y2=%22170.5%22 stroke=%22%23fb7185%22 stroke-width=%222%22/%3E%3Crect x=%22668.0%22 y=%22133.2%22 width=%2214%22 height=%2220.7%22 rx=%222%22 fill=%22%23fb7185%22/%3E%3Cline x1=%22705.0%22 x2=%22705.0%22 y1=%22146.9%22 y2=%22197.2%22 stroke=%22%23fb7185%22 stroke-width=%222%22/%3E%3Crect x=%22698.0%22 y=%22153.9%22 width=%2214%22 height=%2226.1%22 rx=%222%22 fill=%22%23fb7185%22/%3E%3C/g%3E%3Cpolyline points=%2215.0,175.1 45.0,161.4 75.0,156.9 105.0,150.8 135.0,142.4 165.0,141.9 195.0,129.6 225.0,121.7 255.0,114.0 285.0,105.1 315.0,97.7 345.0,82.3 375.0,77.0 405.0,90.5 435.0,95.4 465.0,84.9 495.0,87.7 525.0,108.5 555.0,126.3 585.0,129.0 615.0,141.4 645.0,144.0 675.0,143.5 705.0,166.9%22 fill=%22none%22 stroke=%22%2338bdf8%22 stroke-width=%222.5%22 stroke-linejoin=%22round%22 opacity=%22.8%22/%3E%3C/svg%3E"),linear-gradient(rgba(148,163,184,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.05) 1px,transparent 1px);
+ background-size:720px 360px,100% 72px,96px 100%;background-position:0 62%,0 0,0 0;background-repeat:repeat-x,repeat,repeat;
+ -webkit-mask-image:linear-gradient(to bottom,transparent 4%,#000 38%,#000 72%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 4%,#000 38%,#000 72%,transparent 100%);
+ animation:bStock 120s linear infinite}
+@keyframes bStock{to{background-position:-720px 62%,0 0,0 0}}
+html.light body:after{opacity:.30}
+/* Layout & header */
+main.container{padding-top:2rem;padding-bottom:3rem}
+header.sticky{padding-top:env(safe-area-inset-top,0)}
+footer{background:var(--b-glass)!important;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--b-line)!important}
+#custom-modal>div{max-width:min(92vw,28rem)}
+/* Tabel & grafik */
+.page [class*="overflow-x-auto"],.ba-scroll{-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.page table{border-collapse:separate;border-spacing:0}
+.page thead th{position:sticky;top:0;background:var(--b-glass2);backdrop-filter:blur(8px)}
+.page tbody tr{transition:background .2s}.page tbody tr:hover{background:var(--b-glass2)}
+.page canvas{max-width:100%!important}
+/* Tablet */
+@media(max-width:1024px){main.container{padding-left:1.25rem;padding-right:1.25rem}.hp-hero{padding:40px 32px}}
+/* Mobile */
+@media(max-width:767px){
+ main.container{padding-top:1.25rem;padding-bottom:2rem;padding-left:.875rem;padding-right:.875rem}
+ .page{overflow-x:clip}
+ .page .text-5xl{font-size:2rem!important;line-height:1.15!important}.page .text-4xl{font-size:1.75rem!important;line-height:1.2!important}.page .text-3xl{font-size:1.5rem!important}
+ .page .grid-cols-4{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .page .grid{gap:.75rem}
+ .rounded-3xl{border-radius:22px!important}.rounded-2xl{border-radius:16px!important}
+ .page [class*="p-8"],.page [class*="p-10"]{padding:1.25rem!important}
+ .hp-hero{padding:26px 18px;border-radius:22px}.hp-title{font-size:clamp(26px,8vw,36px)}.hp-lead{font-size:14.5px}
+ .hp-cta{flex-direction:column}.hp-btn{justify-content:center;width:100%}
+ .hp-profile{max-width:none}.hp-photo{aspect-ratio:4/3}
+ .hp-stat{padding:16px 18px}.hp-head{align-items:flex-start}
+ #page-home #article-auto-slider>div{grid-template-columns:1fr!important}
+ #page-home .card-3d .h-56{height:10rem}
+ button,[role=button],.nav-link,select,input{min-height:40px}
+ .bg-card-dark:not(#sidebar-content),.bg-deep-gray:not(#sidebar-content){-webkit-backdrop-filter:none;backdrop-filter:none;background-color:var(--b-glass2)!important}
+ html body:after{opacity:.32}
+ .page table th,.page table td{white-space:nowrap}
+}
+@media(max-width:380px){.page .grid-cols-3{gap:.5rem}.hp-title{font-size:25px}}
+@media(hover:none){.hp-stat:hover,#page-home .card-3d:hover,.card-3d:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){html body:after{animation:none}}
+</style>
+<style id="beta-sky">html.light .text-sky-400,html.light .text-sky-300{color:#0369a1!important}html.light .text-cyan-300,html.light .text-cyan-400{color:#0e7490!important}.hero-gradient-text{background:linear-gradient(90deg,#7dd3fc,#38bdf8,#0ea5e9);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.hp-accent{background-image:linear-gradient(90deg,#7dd3fc,#38bdf8 50%,#0ea5e9)!important;-webkit-background-clip:text!important;background-clip:text!important;-webkit-text-fill-color:transparent!important;color:#38bdf8;-webkit-box-decoration-break:clone;box-decoration-break:clone}</style>
+<style id="beta-flat">
+/* Tanpa shadow & border pada kartu/panel */
+[class*="shadow-"],.terminal-glow,.card-3d,.card-3d:hover,#page-home .card-3d,#page-home .card-3d:hover,
+.hp-hero,.hp-profile,.hp-stat,.hp-stat:hover,.hp-btn,.hp-btn-primary,.bg-brand-primary,.bg-brand-primary:hover,
+.hp-hero *,.hp-section *{box-shadow:none!important;text-shadow:none!important}
+.border[class*="border-card-border"],.border[class*="border-neutral"],.rounded-2xl.border,.rounded-3xl.border,.rounded-xl.border,
+.hp-hero,.hp-profile,.hp-stat,.hp-eyebrow,.hp-btn-ghost,.hp-stats,#page-home .card-3d{border-color:transparent!important;border-width:0!important}
+.hp-cap,.hp-trust,.hp-head{border-color:transparent!important}
+header.sticky,footer{border-color:transparent!important}
+.card-3d:hover,#page-home .card-3d:hover,.hp-stat:hover{border-color:transparent!important}
 </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
@@ -747,79 +907,45 @@ html.light .cr-sub-row .cr-sublink.is-active{border-color:#7dd3fc}
     <main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl py-10">
         <!-- 1. Halaman Beranda -->
         <section id="page-home" class="page active space-y-10">
-            <div class="bg-card-dark border border-card-border rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
-                <div class="absolute -right-20 -top-20 w-80 h-80 bg-brand-primary/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="space-y-6 max-w-xl relative z-10">
-                    <div class="inline-flex items-center space-x-2 bg-brand-accent/10 border border-brand-accent/30 px-3.5 py-1.5 rounded-full">
-                        <span class="w-2 h-2 rounded-full bg-brand-accent animate-ping"></span>
-                        <span class="text-xs font-semibold text-brand-accent tracking-wide uppercase">Platform Berita & Pasar Web3 Terpadu</span>
+            <!-- Hero profesional -->
+            <div class="hp-hero">
+                <div class="hp-main">
+                    <span class="hp-eyebrow"><span class="hp-dot"></span>Platform Berita &amp; Pasar Web3 Terpadu</span>
+                    <h1 class="hp-title">Berita Angin: <span class="hp-accent">1% Issue 99% Fact</span> &amp; Pasar Kaget Digital</h1>
+                    <p class="hp-lead">Wawasan terkini seputar pergerakan aset kripto, bursa saham global, dan analisis mendalam berbasis teknologi terdesentralisasi, disajikan ringkas dan terverifikasi.</p>
+                    <div class="hp-cta">
+                        <button class="nav-link hp-btn hp-btn-primary" data-page="crypto-market"><i class="fa-solid fa-chart-line"></i><span>Jelajahi Market</span></button>
+                        <button class="nav-link hp-btn hp-btn-ghost" data-page="global-market"><i class="fa-solid fa-globe"></i><span>Global Market</span></button>
                     </div>
-                    <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-                        Berita Angin 1% Issue 99% Fact & <span class="hero-gradient-text">Pasar Kaget Digital</span>
-                    </h1>
-                    <p class="text-gray-300 text-sm sm:text-base font-light leading-relaxed">
-                        Dapatkan wawasan terkini seputar pergerakan aset kripto, bursa saham global, dan analisis mendalam berbasis teknologi terdesentralisasi.
-                    </p>
-                    <div class="flex flex-wrap gap-3 pt-2">
-                        <button class="nav-link bg-brand-primary hover:bg-brand-primary-light text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all shadow-lg active:scale-95 flex items-center space-x-2" data-page="crypto-market">
-                            <i class="fa-solid fa-chart-line"></i>
-                            <span>Jelajahi Market</span>
-                        </button>
-                        <button class="nav-link bg-neutral-900 border border-card-border hover:bg-neutral-800 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all active:scale-95 flex items-center space-x-2" data-page="global-market">
-                            <i class="fa-solid fa-globe"></i>
-                            <span>Global Market</span>
-                        </button>
-                    </div>
+                    <ul class="hp-trust">
+                        <li><i class="fa-solid fa-circle-check"></i>Data pasar real-time</li>
+                        <li><i class="fa-solid fa-circle-check"></i>Analisis independen</li>
+                        <li><i class="fa-solid fa-circle-check"></i>Cakupan global</li>
+                    </ul>
                 </div>
-                <div class="relative z-10 w-full md:w-auto flex justify-center">
-                    <div class="relative w-64 h-64 sm:w-80 sm:h-80 rounded-2xl overflow-hidden border-2 border-brand-accent/40 shadow-2xl group">
-                        <img src="profil.gif" alt="Featured Profile" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80'">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-4">
-                            <span class="text-xs text-brand-accent font-semibold">Chief Executive Officer</span>
-                            <span class="text-white font-bold text-sm">Achmad Efendi, SE, MM</span>
-                        </div>
+                <aside class="hp-profile">
+                    <div class="hp-photo"><img src="profil.gif" alt="Achmad Efendi, SE, MM" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80'"></div>
+                    <div class="hp-cap">
+                        <div><strong>Achmad Efendi, SE, MM</strong><span>Chief Executive Officer</span></div>
+                        <i class="fa-solid fa-circle-check hp-verified" aria-hidden="true"></i>
                     </div>
-                </div>
+                </aside>
             </div>
-            <!-- Grid Highlight Statistik Cepat -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div class="bg-card-dark border border-card-border p-6 rounded-2xl shadow-xl flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-xl bg-brand-primary/20 text-brand-accent flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-newspaper"></i>
-                    </div>
-                    <div>
-                        <span class="text-xs text-gray-400 uppercase tracking-wider block">Artikel & Wawasan</span>
-                        <h4 class="text-2xl font-bold text-white mt-0.5">3+ Pilihan Utama</h4>
-                    </div>
-                </div>
-                <div class="bg-card-dark border border-card-border p-6 rounded-2xl shadow-xl flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-coins"></i>
-                    </div>
-                    <div>
-                        <span class="text-xs text-gray-400 uppercase tracking-wider block">Aset Crypto Terindeks</span>
-                        <h4 class="text-2xl font-bold text-white mt-0.5">28+ Koin Live</h4>
-                    </div>
-                </div>
-                <div class="bg-card-dark border border-card-border p-6 rounded-2xl shadow-xl flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-building-columns"></i>
-                    </div>
-                    <div>
-                        <span class="text-xs text-gray-400 uppercase tracking-wider block">Bursa Saham & Global</span>
-                        <h4 class="text-2xl font-bold text-white mt-0.5">28+ Direktori</h4>
-                    </div>
-                </div>
+            <!-- Statistik ringkas -->
+            <div class="hp-stats">
+                <div class="hp-stat"><i class="fa-solid fa-newspaper"></i><div><span>Artikel &amp; Wawasan</span><b>3+ Pilihan Utama</b></div></div>
+                <div class="hp-stat"><i class="fa-solid fa-coins"></i><div><span>Aset Crypto Terindeks</span><b>28+ Koin Live</b></div></div>
+                <div class="hp-stat"><i class="fa-solid fa-building-columns"></i><div><span>Bursa Saham &amp; Global</span><b>28+ Direktori</b></div></div>
             </div>
-            <!-- Bagian Galeri Artikel & Auto Slide Artikel Berjalan Otomatis -->
-            <div class="space-y-8 pt-4">
-                <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-card-border pb-4">
+            <!-- Artikel pilihan -->
+            <div class="hp-section">
+                <div class="hp-head">
                     <div>
-                        <span class="text-xs font-semibold text-brand-accent uppercase tracking-wider">Galeri Wawasan & Artikel</span>
-                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">Artikel Pilihan Keuangan Digital</h2>
+                        <span class="hp-kicker">Galeri Wawasan &amp; Artikel</span>
+                        <h2>Artikel Pilihan Keuangan Digital</h2>
                     </div>
-                    <div class="flex items-center space-x-3 mt-2 md:mt-0">
-                        <span class="text-xs text-gray-400">Auto-Slide Berjalan Otomatis</span>
+                    <div class="hp-dots-wrap">
+                        <span>Tampil bergilir</span>
                         <div class="flex space-x-1.5" id="article-slider-dots">
                             <button onclick="currentSlide(0)" class="w-3 h-3 rounded-full bg-brand-accent transition-all" aria-label="Slide 1"></button>
                             <button onclick="currentSlide(1)" class="w-3 h-3 rounded-full bg-neutral-700 transition-all" aria-label="Slide 2"></button>
@@ -827,7 +953,6 @@ html.light .cr-sub-row .cr-sublink.is-active{border-color:#7dd3fc}
                         </div>
                     </div>
                 </div>
-                <!-- Container Slider Artikel -->
                 <div id="article-auto-slider" class="relative overflow-hidden rounded-2xl">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-2">
                         <!-- Card Artikel 1 -->
@@ -884,7 +1009,7 @@ html.light .cr-sub-row .cr-sublink.is-active{border-color:#7dd3fc}
                                 <div class="h-56 overflow-hidden relative">
                                     <img src="3.jpg" alt="Stock Exchange" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                                    <span class="absolute top-3 left-3 bg-purple-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Stock & Macro</span>
+                                    <span class="absolute top-3 left-3 bg-sky-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Stock & Macro</span>
                                 </div>
                                 <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                                     <div>
@@ -1025,7 +1150,7 @@ html.light .cr-sub-row .cr-sublink.is-active{border-color:#7dd3fc}
                         </h3>
                         <div>
                             <span class="text-[10px] uppercase tracking-wider text-gray-500 font-bold block">Total Saldo</span>
-                            <span id="pw-balance" class="text-2xl font-extrabold text-white font-mono mt-1 block">180.850.000.0080</span>
+                            <span id="pw-balance" class="text-2xl font-extrabold text-white font-mono mt-1 block">$14,850.20</span>
                         </div>
                         <div class="space-y-2 text-xs">
                             <div class="flex justify-between gap-3 text-gray-400"><span>Alamat Utama</span><span class="font-mono text-white">0x71C8F4a92E31b...98B2</span></div>
@@ -1234,7 +1359,7 @@ html.light .cr-sub-row .cr-sublink.is-active{border-color:#7dd3fc}
                 </div>
               </div>
               <div class="bg-card-dark border border-card-border rounded-xl p-4">
-                <div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">ALTCOIN SEASON INDEX</span><span class="text-purple-400 text-xs">AUTO</span></div>
+                <div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">ALTCOIN SEASON INDEX</span><span class="text-sky-400 text-xs">AUTO</span></div>
                 <div class="flex justify-between items-end mt-2"><div><strong id="mini-alt-value" class="text-lg text-white">68 / 100</strong><div id="alt-zone" class="text-[10px] text-gray-400">Neutral</div></div><span class="text-[10px] text-gray-500">Target 75</span></div>
                 <div class="relative h-24 mt-1"><canvas id="mini-alt-chart"></canvas></div>
               </div>
@@ -1452,10 +1577,10 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                                     <span id="gas-eth" class="text-emerald-400 font-bold text-sm">18 Gwei</span>
                                     <span id="gas-eth-usd" class="text-[10px] text-gray-500 block mt-0.5">~ $0.85 (Transfer)</span>
                                 </div>
-                                <div class="p-3 bg-black/50 border border-purple-500/20 rounded-xl">
+                                <div class="p-3 bg-black/50 border border-sky-500/20 rounded-xl">
                                     <div class="flex items-center justify-between gap-2">
                                         <span class="text-gray-400">Polygon</span>
-                                        <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+                                        <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
                                     </div>
                                     <span id="gas-polygon" class="text-emerald-400 font-bold text-sm">32 Gwei</span>
                                     <span id="gas-polygon-usd" class="text-[10px] text-gray-500 block mt-0.5">~ $0.01 (Transfer)</span>
@@ -1495,7 +1620,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                                 </div>
                                 <div class="grid grid-cols-3 gap-2 text-center font-mono">
                                     <div class="p-2 rounded-lg bg-blue-500/5 border border-blue-500/15"><div class="text-[9px] text-blue-300 mb-0.5">Ethereum</div><div id="gas-cost-eth" class="text-white font-bold text-xs">$0.850</div></div>
-                                    <div class="p-2 rounded-lg bg-purple-500/5 border border-purple-500/15"><div class="text-[9px] text-purple-300 mb-0.5">Polygon</div><div id="gas-cost-polygon" class="text-white font-bold text-xs">$0.010</div></div>
+                                    <div class="p-2 rounded-lg bg-sky-500/5 border border-sky-500/15"><div class="text-[9px] text-sky-300 mb-0.5">Polygon</div><div id="gas-cost-polygon" class="text-white font-bold text-xs">$0.010</div></div>
                                     <div class="p-2 rounded-lg bg-emerald-500/5 border border-emerald-500/15"><div class="text-[9px] text-emerald-300 mb-0.5">Arbitrum</div><div id="gas-cost-arb" class="text-white font-bold text-xs">$0.002</div></div>
                                 </div>
                             </div>
@@ -1793,9 +1918,9 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                     <div class="flex flex-wrap items-center gap-2 text-[10px] font-mono">
                         <span class="px-2 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">CANDLESTICK</span>
                         <span class="px-2 py-1 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-300">OHLC</span>
-                        <span class="px-2 py-1 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-300">VOLUME</span>
+                        <span class="px-2 py-1 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-300">VOLUME</span>
                         <button type="button" data-ind="sma" class="tm-ind px-2 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400">SMA 9</button>
-                        <button type="button" data-ind="ema" class="tm-ind px-2 py-1 rounded-lg bg-purple-500/10 border border-purple-500/30 text-purple-400">EMA 21</button>
+                        <button type="button" data-ind="ema" class="tm-ind px-2 py-1 rounded-lg bg-sky-500/10 border border-sky-500/30 text-sky-400">EMA 21</button>
                         <button type="button" data-ind="vwap" class="tm-ind px-2 py-1 rounded-lg bg-sky-500/10 border border-sky-500/30 text-sky-300">VWAP</button>
                         <span class="text-gray-500">Otomatis real-time &bull; arahkan kursor untuk crosshair</span>
                     </div>
@@ -2046,11 +2171,11 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                     <!-- AI SENTIMENT -->
                     <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl terminal-glow font-mono space-y-4">
                         <div class="flex items-center justify-between border-b border-card-border pb-3 text-xs">
-                            <span class="font-bold text-purple-400 uppercase tracking-wider flex items-center space-x-1.5">
+                            <span class="font-bold text-sky-400 uppercase tracking-wider flex items-center space-x-1.5">
                                 <i class="fa-solid fa-brain"></i>
                                 <span>AI SENTIMENT & NEWS ANALYZER</span>
                             </span>
-                            <span class="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30">SCORE: .992</span>
+                            <span class="text-[10px] bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded border border-sky-500/30">SCORE: .992</span>
                         </div>
                         <div class="space-y-3 text-xs">
                             <div class="p-3 bg-black/60 border border-card-border rounded-xl space-y-2">
@@ -2346,9 +2471,9 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
 </div>
                     </div>
                     <div class="gm1-charts">
-    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-line text-pink-400"></i> Likuiditas Bersih AS vs Neraca Fed <span class="normal-case text-gray-600">(live, $T)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-net"></canvas></div></div>
+    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-line text-cyan-400"></i> Likuiditas Bersih AS vs Neraca Fed <span class="normal-case text-gray-600">(live, $T)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-net"></canvas></div></div>
     <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-bar text-brand-accent"></i> Kontribusi per Komponen <span class="normal-case text-gray-600">(+ menambah / − menyerap)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-imp"></canvas></div></div>
-    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-gauge-high text-pink-400"></i> Riwayat Skor Komposit <span class="normal-case text-gray-600">(garis putus = batas rezim)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-sc"></canvas></div></div>
+    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-gauge-high text-cyan-400"></i> Riwayat Skor Komposit <span class="normal-case text-gray-600">(garis putus = batas rezim)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-sc"></canvas></div></div>
                     </div>
                     <div class="gm1-bottom">
                     <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-link text-brand-accent"></i> Korelasi 30H dg Likuiditas Bersih</div><div id="mlc-corr"></div></div>
@@ -2776,7 +2901,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                     <div class="h-56 overflow-hidden relative">
                         <img src="3.jpg" alt="Stock Exchange" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&auto=format&fit=crop&q=80'">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                        <span class="absolute top-3 left-3 bg-purple-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Stock & Macro</span>
+                        <span class="absolute top-3 left-3 bg-sky-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Stock & Macro</span>
                     </div>
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div>
@@ -5143,7 +5268,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     ['mc', 'NILAI KAPITALISASI PASAR GLOBAL', mc, 'fa-globe', 'bg-brand-primary/10 text-brand-accent', function () { return ' dari kemarin'; }],
     ['dxy', 'INDEKS DOLAR (DXY)', by('US Dollar Index (DXY)'), 'fa-dollar-sign', 'bg-emerald-500/10 text-emerald-400', function (c) { return c < 0 ? ' (Bearish)' : ' (Bullish)'; }],
     ['xau', 'HARGA EMAS (SPOT)', by('Spot Gold (XAU)'), 'fa-coins', 'bg-amber-500/10 text-amber-400', function (c) { return c >= 0 ? ' (Safe Haven)' : ' (Koreksi)'; }],
-    ['wti', 'MINYAK MENTAH (WTI)', by('Crude Oil WTI'), 'fa-oil-well', 'bg-purple-500/10 text-purple-400', function () { return ''; }]
+    ['wti', 'MINYAK MENTAH (WTI)', by('Crude Oil WTI'), 'fa-oil-well', 'bg-sky-500/10 text-sky-400', function () { return ''; }]
   ];
   function kpis() {
     var box = $('gm-kpis'); if (!box) return;
@@ -5663,7 +5788,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   function status(b) {
     var e = document.getElementById('dom-status'); if (!e) return;
     var tr = D.hist[D.N][0] - D.hist[D.N - 20][0], ar = tr >= 0 ? '▲' : '▼';
-    var z = b >= 57.5 ? ['BTC MEMIMPIN', 'bg-amber-500/15 text-amber-300 border-amber-500/30'] : b <= 55.3 ? ['ROTASI ALTCOIN', 'bg-violet-500/15 text-violet-300 border-violet-500/30'] : ['SEIMBANG', 'bg-gray-500/15 text-gray-300 border-gray-500/30'];
+    var z = b >= 57.5 ? ['BTC MEMIMPIN', 'bg-amber-500/15 text-amber-300 border-amber-500/30'] : b <= 55.3 ? ['ROTASI ALTCOIN', 'bg-sky-500/15 text-sky-300 border-sky-500/30'] : ['SEIMBANG', 'bg-gray-500/15 text-gray-300 border-gray-500/30'];
     e.textContent = z[0] + ' ' + ar; e.className = 'px-2 py-0.5 rounded-md text-[9px] font-mono font-bold border ' + z[1];
   }
   window.__domPro = { push: function (b, e, s, o) { D.hist.push([b, e, s, o]); D.hist.shift(); D.t0 = performance.now(); status(b); } };
@@ -7156,6 +7281,11 @@ Array.prototype.forEach.call(m.querySelectorAll('.sb-link[data-page]'),function(
     tick(); setInterval(tick,1000); sync();
   }catch(e){}
 })();
+</script>
+<script>/* Bungkus tabel agar bisa digeser di layar kecil */
+(function(){function w(){document.querySelectorAll('.page table').forEach(function(t){if(t.dataset.bw)return;t.dataset.bw=1;if(t.closest('[class*="overflow-x-auto"],[class*="overflow-auto"],.ba-scroll,[style*="overflow"]'))return;var d=document.createElement('div');d.className='ba-scroll overflow-x-auto';d.style.overflowX='auto';t.parentNode.insertBefore(d,t);d.appendChild(t)})}
+var q;function s(){clearTimeout(q);q=setTimeout(w,250)}
+document.addEventListener('DOMContentLoaded',function(){w();var m=document.querySelector('main');if(m&&window.MutationObserver)new MutationObserver(s).observe(m,{childList:true,subtree:true})});})();
 </script>
 </body>
 </html>
