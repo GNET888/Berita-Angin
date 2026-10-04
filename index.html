@@ -10,7 +10,7 @@
 <script id="ba-settings-boot">
 /* Pengaturan pengguna: dimuat paling awal agar tema/warna langsung benar */
 (function(){
-  var D={accent:'sky',bg:'black',fs:100,card:58,glow:100,bg3d:true,tilt:true,calm:false,ticker:true,name:'',role:'',tz:'Asia/Jakarta',h12:false,start:'home'};
+  var D={accent:'sky',bg:'black',fs:100,card:58,glow:100,bg3d:true,tilt:true,calm:false,ticker:true,name:'',role:'',tz:'Asia/Jakarta',h12:false,start:'home',theme:'dark',font:'sans',radius:'normal',contrast:false,tickspeed:'normal',topinfo:true,autoplay:false,autosec:20};
   var o={};try{o=JSON.parse(localStorage.getItem('ba-settings')||'{}')||{}}catch(e){}
   var S=window.__BA_S={};for(var k in D)S[k]=(o[k]!==undefined&&typeof o[k]===typeof D[k])?o[k]:D[k];
   window.__BA_D=D;
@@ -32,7 +32,14 @@
     r.classList.toggle('ba-calm',!!S.calm);
     r.classList.toggle('ba-no-ticker',!S.ticker);
     window.__BA_3D_OFF=!S.bg3d||S.glow<=0||!!S.calm;
-    var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',BG[S.bg]||'#000000');
+    var lt=S.theme==='light'||(S.theme==='auto'&&window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches);
+    r.classList.toggle('light',lt);r.classList.toggle('dark',!lt);
+    st.setProperty('--ba-bg',lt?'#f1f5f9':(BG[S.bg]||BG.black));
+    st.setProperty('--card-al',Math.max(.55,Math.min(.95,c+.25)).toFixed(2));
+    r.setAttribute('data-font',S.font);r.setAttribute('data-radius',S.radius);r.setAttribute('data-tick',S.tickspeed);
+    r.classList.toggle('ba-hc',!!S.contrast);r.classList.toggle('ba-no-top',!S.topinfo);
+    try{localStorage.setItem('ba-theme',lt?'light':'dark')}catch(e){}
+    var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',lt?'#f1f5f9':(BG[S.bg]||'#000000'));
   };
   window.__baTzLabel=function(){return TZL[S.tz]||S.tz};
   window.__baTime=function(d){try{
@@ -40,11 +47,12 @@
     return d.toLocaleTimeString('id-ID',{timeZone:S.tz,hour12:false}).replace(/\./g,':');
   }catch(e){return d.toLocaleTimeString()}};
   window.__baDate=function(d){try{return d.toLocaleDateString('id-ID',{timeZone:S.tz,weekday:'short',day:'numeric',month:'short',year:'numeric'})}catch(e){return d.toLocaleDateString()}};
+  try{matchMedia('(prefers-color-scheme: light)').addEventListener('change',function(){if(S.theme==='auto')window.baApplyVisual()})}catch(e){}
   window.baApplyVisual();
 })();
 </script>
     <title>Berita Angin (Beta) - 1% Issue 99% Fact</title>
-    <script>(function(){try{localStorage.setItem('ba-theme','dark');}catch(e){}var h=document.documentElement;h.classList.remove('light');h.classList.add('dark');})();</script>
+    <script>(function(){var h=document.documentElement;if(!h.classList.contains('light'))h.classList.add('dark');})();</script>
     <!-- Muat Chart.js untuk Grafik Indeks Real-Time -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <!-- Chart.js Financial untuk Candlestick -->
@@ -1092,7 +1100,7 @@ select.st-in option{background:#0b0b0b;color:#fff}
                                         </p>
                                     </div>
                                     <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
-                                        <span><i class="fa-regular fa-clock mr-1"></i> 5 Menit Baca</span>
+                                        <span><i class="fa-regular fa-clock mr-1"></i> 12 Menit Baca</span>
                                         <span class="text-brand-accent font-medium">Berita Angin Team</span>
                                     </div>
                                 </div>
@@ -1116,7 +1124,7 @@ select.st-in option{background:#0b0b0b;color:#fff}
                                         </p>
                                     </div>
                                     <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
-                                        <span><i class="fa-regular fa-clock mr-1"></i> 4 Menit Baca</span>
+                                        <span><i class="fa-regular fa-clock mr-1"></i> 10 Menit Baca</span>
                                         <span class="text-brand-accent font-medium">Berita Angin Team</span>
                                     </div>
                                 </div>
@@ -1140,7 +1148,7 @@ select.st-in option{background:#0b0b0b;color:#fff}
                                         </p>
                                     </div>
                                     <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
-                                        <span><i class="fa-regular fa-clock mr-1"></i> 6 Menit Baca</span>
+                                        <span><i class="fa-regular fa-clock mr-1"></i> 9 Menit Baca</span>
                                         <span class="text-brand-accent font-medium">Berita Angin Team</span>
                                     </div>
                                 </div>
@@ -2920,7 +2928,9 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                 <div class="st-col">
                     <div class="st-card">
                         <div class="st-h"><i class="fa-solid fa-palette"></i>Tampilan</div>
-                        <div class="st-row first col"><div><b>Warna aksen</b><small>Dipakai pada ikon, tautan, tombol, dan judul bergradasi.</small></div>
+                        <div class="st-row first"><div><b>Tema tampilan</b><small>Putih (terang), Dark Black, atau ikuti pengaturan perangkat. Pintasan: tekan <kbd>T</kbd></small></div>
+                            <div class="st-seg" data-seg="theme"><button type="button" data-val="light"><i class="fa-solid fa-sun"></i> Putih</button><button type="button" data-val="dark"><i class="fa-solid fa-moon"></i> Dark Black</button><button type="button" data-val="auto">Otomatis</button></div></div>
+                        <div class="st-row col"><div><b>Warna aksen</b><small>Dipakai pada ikon, tautan, tombol, dan judul bergradasi.</small></div>
                             <div class="st-acs">
                                 <button type="button" class="st-ac" data-accent-pick="sky" title="Biru langit" aria-label="Biru langit" style="background:#38BDF8"></button>
                                 <button type="button" class="st-ac" data-accent-pick="emerald" title="Zamrud" aria-label="Zamrud" style="background:#34D399"></button>
@@ -2933,6 +2943,11 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                             <div class="st-seg" data-seg="bg"><button type="button" data-val="black">Hitam pekat</button><button type="button" data-val="coal">Arang</button><button type="button" data-val="night">Biru malam</button></div></div>
                         <div class="st-row"><div><b>Ukuran teks</b><small>Memperbesar atau memperkecil seluruh halaman.</small></div>
                             <div class="st-seg" data-seg="fs"><button type="button" data-val="90">Kecil</button><button type="button" data-val="100">Normal</button><button type="button" data-val="110">Besar</button><button type="button" data-val="120">XL</button></div></div>
+                        <div class="st-row"><div><b>Jenis huruf</b><small>Berlaku untuk seluruh halaman situs.</small></div>
+                            <div class="st-seg" data-seg="font"><button type="button" data-val="sans">Standar</button><button type="button" data-val="serif">Serif</button><button type="button" data-val="mono">Mono</button></div></div>
+                        <div class="st-row"><div><b>Sudut card</b><small>Tajam, normal, atau sangat membulat.</small></div>
+                            <div class="st-seg" data-seg="radius"><button type="button" data-val="sharp">Tajam</button><button type="button" data-val="normal">Normal</button><button type="button" data-val="round">Bulat</button></div></div>
+                        <div class="st-row"><label for="st-hc"><b>Kontras tinggi</b><small>Teks sekunder dan garis tepi dibuat lebih jelas.</small></label><div class="st-ctl"><input id="st-hc" type="checkbox" class="st-sw" data-set="contrast" role="switch"></div></div>
                         <div class="st-row"><div><b>Kepekatan card</b><small>Makin rendah, makin tembus pandang ke latar 3D.</small></div>
                             <div class="st-ctl"><input type="range" min="20" max="100" step="2" class="st-rng" data-set="card" aria-label="Kepekatan card"><span class="st-val" data-out="card"></span></div></div>
                         <div class="st-row"><div><b>Kecerahan latar 3D</b><small>Atur intensitas graf jaringan di belakang.</small></div>
@@ -2951,6 +2966,16 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                 </div>
                 <div class="st-col">
                     <div class="st-card">
+                        <div class="st-h"><i class="fa-solid fa-plug"></i>Koneksi Website</div>
+                        <div class="st-row first"><div><b>Status koneksi data</b><small>Memantau koneksi internet dan layanan data langsung situs.</small></div><span class="st-badge" id="st-net">...</span></div>
+                        <div class="st-row"><div><b>Segarkan data langsung</b><small>Muat ulang kurs dan harga live di semua halaman.</small></div><button type="button" class="st-btn pri" id="st-refresh"><i class="fa-solid fa-rotate"></i>Segarkan</button></div>
+                        <div class="st-row"><div><b>Layar penuh</b><small>Cocok untuk menampilkan dashboard di monitor / TV. Pintasan: <kbd>F</kbd></small></div><button type="button" class="st-btn" id="st-full"><i class="fa-solid fa-expand"></i>Layar penuh</button></div>
+                        <div class="st-row"><div><b>Kecepatan Live Ticks</b><small>Laju bilah harga berjalan di atas halaman.</small></div><div class="st-seg" data-seg="tickspeed"><button type="button" data-val="slow">Lambat</button><button type="button" data-val="normal">Normal</button><button type="button" data-val="fast">Cepat</button></div></div>
+                        <div class="st-row"><label for="st-top"><b>Jam, tanggal &amp; LIVE di topbar</b><small>Tampilkan atau sembunyikan info waktu di bilah atas.</small></label><div class="st-ctl"><input id="st-top" type="checkbox" class="st-sw" data-set="topinfo" role="switch"></div></div>
+                        <div class="st-row"><label for="st-auto"><b>Putar halaman otomatis</b><small>Mode layar TV: berpindah Beranda, Crypto, Stock, Global, Statistik secara bergilir. Jeda saat membuka Pengaturan.</small></label><div class="st-ctl"><input id="st-auto" type="checkbox" class="st-sw" data-set="autoplay" role="switch"></div></div>
+                        <div class="st-row"><div><b>Jeda tiap halaman</b></div><div class="st-seg" data-seg="autosec"><button type="button" data-val="10">10 dtk</button><button type="button" data-val="20">20 dtk</button><button type="button" data-val="30">30 dtk</button><button type="button" data-val="60">60 dtk</button></div></div>
+                    </div>
+                    <div class="st-card">
                         <div class="st-h"><i class="fa-solid fa-id-card"></i>Profil</div>
                         <div class="st-row first col"><div class="st-ava"><img data-avatar alt="Foto profil" src="">
                             <div style="display:grid;gap:8px"><b style="color:#f1f5f9;font-size:13px">Foto profil</b>
@@ -2967,7 +2992,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                             </select></div>
                         <div class="st-row"><div><b>Format jam</b></div><div class="st-seg" data-seg="h12"><button type="button" data-val="false">24 jam</button><button type="button" data-val="true">12 jam</button></div></div>
                         <div class="st-row col"><label for="st-start"><b>Halaman awal</b><small>Halaman yang dibuka saat situs dimuat.</small></label>
-                            <select id="st-start" class="st-in" data-set="start"><option value="home">Beranda</option><option value="profile">Profile &amp; Portofolio</option><option value="crypto-market">Crypto Market</option><option value="stock-exchange">Stock Exchange</option><option value="global-market">Global Market</option><option value="market-stat">Market Statistik</option></select></div>
+                            <select id="st-start" class="st-in" data-set="start"><option value="home">Beranda</option><option value="profile">Profile &amp; Portofolio</option><option value="crypto-market">Crypto Market</option><option value="stock-exchange">Stock Exchange</option><option value="global-market">Global Market</option><option value="market-stat">Market Statistik</option><option value="last">Halaman terakhir dibuka</option></select></div>
                     </div>
                     <div class="st-card">
                         <div class="st-h"><i class="fa-solid fa-database"></i>Data &amp; Cadangan</div>
@@ -2976,7 +3001,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                     </div>
                     <div class="st-card">
                         <div class="st-h"><i class="fa-regular fa-keyboard"></i>Pintasan keyboard</div>
-                        <div class="st-keys"><div><kbd>[</kbd>Ciutkan / lebarkan sidebar</div><div><kbd>Ctrl</kbd><kbd>,</kbd>Buka Pengaturan</div></div>
+                        <div class="st-keys"><div><kbd>T</kbd>Ganti tema Putih / Dark Black</div><div><kbd>1</kbd>–<kbd>6</kbd>Pindah halaman (Beranda … Market Statistik)</div><div><kbd>F</kbd>Layar penuh</div><div><kbd>[</kbd>Ciutkan / lebarkan sidebar</div><div><kbd>Ctrl</kbd><kbd>,</kbd>Buka Pengaturan</div></div>
                     </div>
                 </div>
             </div>
@@ -3014,28 +3039,148 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                 title: 'Evolusi Keuangan Digital dan Peran Strategis Web3',
                 category: 'Web3 & DeFi',
                 date: '14 Oktober 2026',
-                readTime: '5 Menit Baca',
+                readTime: '12 Menit Baca',
                 author: 'Berita Angin Team',
                 image: 'https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=1200&auto=format&fit=crop&q=80',
-                content: `<p>Teknologi finansial telah melalui fase transformatif yang masif dalam dekade terakhir. Desentralisasi bukan lagi sekadar wacana eksperimental, melainkan fondasi baru arsitektur ekonomi internet global.</p><p>Melalui Web3, pengguna memiliki kedaulatan penuh atas data, aset digital, serta partisipasi tata kelola secara langsung melalui smart contract yang transparan dan dapat diaudit.</p>`
+                content: `<p class="lead">Dalam kurang dari dua dekade, cara manusia menyimpan, memindahkan, dan memproduksi nilai berubah drastis. Dari buku tabungan fisik, kartu debit, dompet digital milik bank, hingga dompet kripto yang sepenuhnya dikendalikan pemiliknya sendiri. Web3 berada di puncak perubahan itu, dan memahaminya bukan lagi urusan segelintir pengembang, melainkan bekal literasi keuangan bagi siapa pun yang hidup di ekonomi digital.</p>
+<div class="art-box"><b>Poin Penting Artikel Ini</b><ul><li>Web3 menggeser kendali data dan aset dari perantara terpusat ke pengguna melalui blockchain, kriptografi, dan smart contract.</li><li>DeFi, stablecoin, dan tokenisasi aset dunia nyata adalah tiga pilar yang paling cepat berkembang.</li><li>Peluang efisiensi besar, tetapi risiko teknis, pasar, dan regulasi juga nyata dan harus dipahami lebih dulu.</li><li>Keamanan pribadi (kunci privat, verifikasi kontrak, diversifikasi) adalah fondasi partisipasi yang sehat.</li></ul></div>
+<h2>Dari Web1 ke Web3: Tiga Generasi Internet</h2>
+<p>Untuk memahami mengapa Web3 dianggap strategis, kita perlu melihat bagaimana internet berevolusi. Pada era <strong>Web1</strong> (sekitar 1990-an hingga awal 2000-an), internet bersifat baca-saja. Situs web adalah halaman statis; pengguna mengonsumsi informasi tetapi hampir tidak memproduksinya.</p>
+<p>Era <strong>Web2</strong> (2004 hingga kini) membawa media sosial, e-commerce, dan layanan berbasis aplikasi. Pengguna menjadi produsen konten, namun data, identitas, dan aliran pendapatan dikuasai oleh sejumlah platform besar. Model bisnisnya sederhana: layanan terasa gratis karena perhatian dan data pengguna menjadi komoditas.</p>
+<p><strong>Web3</strong> berusaha mengubah pola itu. Idenya, pengguna bisa memiliki aset digital, identitas, dan reputasi mereka sendiri, serta berpartisipasi dalam pengambilan keputusan platform melalui token dan tata kelola terbuka. Kepemilikan dibuktikan secara kriptografis, bukan oleh catatan internal satu perusahaan.</p>
+<div class="art-tblwrap"><table class="art-tbl"><thead><tr><th>Aspek</th><th>Web1</th><th>Web2</th><th>Web3</th></tr></thead><tbody><tr><td>Peran pengguna</td><td>Pembaca</td><td>Pembaca dan pembuat konten</td><td>Pemilik dan peserta tata kelola</td></tr><tr><td>Kendali data</td><td>Pemilik situs</td><td>Platform terpusat</td><td>Pengguna (self-custody)</td></tr><tr><td>Sistem nilai</td><td>Iklan banner</td><td>Iklan dan data pengguna</td><td>Token, biaya protokol, kepemilikan aset</td></tr><tr><td>Kepercayaan</td><td>Pada penerbit</td><td>Pada perusahaan platform</td><td>Pada kode terbuka dan konsensus jaringan</td></tr></tbody></table></div>
+<h2>Fondasi Teknologi Web3</h2>
+<h3>1. Blockchain sebagai buku besar bersama</h3>
+<p>Blockchain adalah basis data terdistribusi yang dipelihara ribuan node secara serentak. Setiap blok berisi kumpulan transaksi yang dikunci secara kriptografis dengan blok sebelumnya, sehingga mengubah catatan lama hampir mustahil tanpa mengubah seluruh rantai setelahnya. Properti inilah yang membuat transaksi dapat diverifikasi publik tanpa harus mempercayai satu pihak.</p>
+<h3>2. Smart contract: logika keuangan yang berjalan otomatis</h3>
+<p>Smart contract adalah program yang tersimpan di blockchain dan berjalan persis sesuai kodenya ketika syarat terpenuhi. Contohnya: pinjaman yang otomatis dilikuidasi bila jaminan turun di bawah batas, atau pertukaran token yang selesai dalam satu transaksi tanpa pialang. Kelebihannya adalah transparansi dan otomatisasi; kekurangannya, bila kode mengandung celah, kesalahan itu ikut berjalan otomatis.</p>
+<h3>3. Skalabilitas lewat layer-2 dan rantai modular</h3>
+<p>Jaringan utama seperti Ethereum sengaja dirancang konservatif demi keamanan, sehingga kapasitas dan biayanya terbatas. Solusi layer-2 (rollup) memproses transaksi di luar rantai utama lalu mengirim bukti ringkasnya kembali. Hasilnya biaya lebih murah dan kecepatan lebih tinggi, sambil tetap mewarisi keamanan rantai dasar.</p>
+<h3>4. Oracle dan interoperabilitas</h3>
+<p>Blockchain tidak dapat mengetahui harga saham atau kurs rupiah dengan sendirinya. Oracle menjembatani data dunia nyata ke dalam smart contract, sedangkan jembatan lintas rantai (bridge) memindahkan aset antar jaringan. Dua komponen ini sangat berguna, tetapi juga termasuk titik yang paling sering diserang.</p>
+<h2>Ekosistem Keuangan Terdesentralisasi (DeFi)</h2>
+<p>DeFi adalah kumpulan layanan keuangan yang dibangun di atas smart contract: bursa, pinjam-meminjam, derivatif, hingga manajemen aset. Berbeda dengan bank, siapa pun dengan dompet dan koneksi internet dapat mengakses layanan ini selama 24 jam sehari, tujuh hari seminggu.</p>
+<ul><li><strong>Bursa terdesentralisasi (DEX).</strong> Menggunakan automated market maker (AMM): harga ditentukan rumus matematis atas kolam likuiditas, bukan buku pesanan tradisional. Penyedia likuiditas memperoleh bagian biaya transaksi.</li><li><strong>Pinjam-meminjam.</strong> Pengguna menyetor aset sebagai jaminan berlebih (overcollateralized) lalu meminjam aset lain. Suku bunga bergerak mengikuti rasio penawaran dan permintaan.</li><li><strong>Stablecoin.</strong> Token yang nilainya dipatok ke aset stabil seperti dolar AS. Stablecoin menjadi &quot;darah&quot; ekosistem: alat tukar, satuan hitung, dan pintu masuk-keluar dari uang fiat.</li><li><strong>Liquid staking.</strong> Aset yang di-stake tetap dapat dipakai lewat token turunan, sehingga imbal hasil staking bisa digabung dengan penggunaan lain, sekaligus menambah lapisan risiko.</li><li><strong>Derivatif on-chain.</strong> Perpetual futures dan opsi yang disettle lewat smart contract, kini mendekati pengalaman platform terpusat.</li></ul>
+<blockquote>Prinsip DeFi: &quot;jangan percaya, verifikasi.&quot; Setiap aturan tertulis dalam kode yang dapat diaudit siapa pun, tetapi tanggung jawab melakukan verifikasi tetap ada pada pengguna.</blockquote>
+<h2>Tokenisasi Aset Dunia Nyata (RWA)</h2>
+<p>Salah satu tren institusional yang paling menonjol adalah tokenisasi: merepresentasikan hak atas aset nyata (obligasi pemerintah, dana pasar uang, properti, komoditas, piutang) sebagai token di blockchain. Manfaat yang dituju adalah penyelesaian transaksi yang lebih cepat, kepemilikan pecahan (fractional) yang menurunkan ukuran investasi minimum, jam perdagangan lebih panjang, serta jejak audit yang transparan.</p>
+<p>Tantangannya terletak pada aspek hukum: token baru bermakna bila hak hukum atas aset dasarnya jelas, kustodiannya tepercaya, dan penerbitnya patuh pada regulasi setempat. Karena itu, tokenisasi cenderung berkembang paling cepat pada instrumen yang sudah teregulasi dan sederhana.</p>
+<h2>Identitas, Dompet, dan Kedaulatan Data</h2>
+<p>Dompet Web3 bukan sekadar tempat menyimpan aset; ia berfungsi sebagai identitas yang bisa dibawa ke berbagai aplikasi. Pengguna masuk dengan menandatangani pesan menggunakan kunci privat, tanpa kata sandi dan tanpa menyerahkan data pribadi ke setiap layanan. Layanan nama (seperti ENS) dan identitas terdesentralisasi (DID) melengkapi gambaran ini dengan nama yang mudah diingat dan kredensial yang dapat diverifikasi.</p>
+<p>Konsekuensinya adalah <strong>tanggung jawab penuh</strong>. Bila kunci privat atau frasa pemulihan (seed phrase) hilang atau bocor, tidak ada layanan pelanggan yang dapat memulihkan aset. Kedaulatan dan risiko berjalan beriringan.</p>
+<h2>DAO dan Tata Kelola Terbuka</h2>
+<p>Decentralized Autonomous Organization (DAO) adalah organisasi yang aturan dan perbendaharaannya dikelola lewat smart contract dan pemungutan suara pemegang token. Proposal diajukan secara terbuka, dipilih, lalu dieksekusi sesuai hasil. Pendekatan ini memberi transparansi, namun menghadapi tantangan nyata: partisipasi pemilih yang rendah, konsentrasi suara pada pemegang besar, dan status hukum yang belum seragam di banyak negara.</p>
+<h2>Peran Institusi dan Perkembangan Regulasi</h2>
+<p>Dalam beberapa tahun terakhir, partisipasi institusi menguat. Produk dana yang diperdagangkan di bursa (ETF) berbasis aset kripto utama telah tersedia di sejumlah yurisdiksi besar sejak 2024, dan kerangka regulasi seperti MiCA di Uni Eropa mulai memberi kepastian bagi penerbit aset kripto dan stablecoin. Di Indonesia, pengawasan aset keuangan digital dan aset kripto beralih ke Otoritas Jasa Keuangan (OJK) setelah penerapan UU P2SK, dengan penekanan pada perlindungan konsumen, tata kelola pedagang, dan kustodian.</p>
+<p>Arah umumnya jelas: ekosistem bergerak dari wilayah abu-abu menuju kerangka yang lebih tertata. Bagi pengguna, ini berarti perlunya memeriksa legalitas platform, memahami pajak atas transaksi aset digital, dan memilih layanan yang terdaftar.</p>
+<h2>Risiko yang Perlu Dipahami</h2>
+<div class="art-box warn"><b>Daftar Risiko Utama</b><ul><li><strong>Risiko smart contract:</strong> celah kode dapat dieksploitasi dan dana sulit dipulihkan.</li><li><strong>Risiko jembatan dan oracle:</strong> titik tersentralisasi tersembunyi sering menjadi sasaran peretasan.</li><li><strong>Risiko pasar dan likuidasi:</strong> volatilitas tinggi dapat memicu likuidasi jaminan secara otomatis.</li><li><strong>Penipuan:</strong> rug pull, situs palsu, airdrop berbahaya, dan rekayasa sosial.</li><li><strong>Risiko regulasi dan pajak:</strong> aturan dapat berubah dan memengaruhi akses maupun biaya.</li><li><strong>Risiko operasional:</strong> kehilangan kunci privat, salah alamat, atau menyetujui izin (approval) yang terlalu luas.</li></ul></div>
+<h2>Panduan Praktis untuk Pemula</h2>
+<ol><li><strong>Mulai dari edukasi, bukan dari imbal hasil.</strong> Pahami cara kerja dompet, biaya jaringan, dan jenis transaksi sebelum menaruh dana.</li><li><strong>Gunakan nominal kecil</strong> untuk belajar. Anggap pembelajaran awal sebagai biaya sekolah.</li><li><strong>Amankan kunci privat.</strong> Simpan frasa pemulihan secara offline, jangan difoto atau dibagikan; pertimbangkan dompet perangkat keras untuk jumlah besar.</li><li><strong>Verifikasi alamat kontrak</strong> dari sumber resmi dan periksa izin yang Anda berikan secara berkala.</li><li><strong>Diversifikasi.</strong> Jangan menaruh seluruh dana pada satu protokol, satu rantai, atau satu stablecoin.</li><li><strong>Catat transaksi</strong> untuk kebutuhan pajak dan evaluasi pribadi.</li></ol>
+<h2>Skenario ke Depan</h2>
+<p>Tiga arah yang paling mungkin membentuk dekade ini. Pertama, <strong>konvergensi</strong> keuangan tradisional dan on-chain: bank dan manajer aset menerbitkan produk tokenisasi, sementara protokol DeFi menambahkan lapisan kepatuhan. Kedua, <strong>abstraksi pengalaman pengguna</strong>: dompet pintar, biaya yang disponsori, dan login sosial membuat Web3 terasa seperti aplikasi biasa. Ketiga, <strong>pembayaran stablecoin</strong> lintas negara yang lebih murah dan cepat, terutama untuk remitansi dan perdagangan internasional.</p>
+<h2>Pertanyaan yang Sering Diajukan</h2>
+<h3>Apakah Web3 sama dengan kripto?</h3>
+<p>Tidak sepenuhnya. Aset kripto adalah salah satu komponennya, sedangkan Web3 mencakup arsitektur yang lebih luas: identitas, kepemilikan data, aplikasi terdesentralisasi, dan tata kelola terbuka.</p>
+<h3>Apakah DeFi lebih aman daripada bank?</h3>
+<p>Keduanya memiliki profil risiko berbeda. Bank menawarkan perlindungan dan regulasi, sementara DeFi menawarkan transparansi dan kendali penuh tetapi tanpa jaring pengaman yang setara. Pengguna menanggung risiko teknis secara langsung.</p>
+<h3>Berapa modal minimum untuk mencoba?</h3>
+<p>Tidak ada angka baku. Yang penting adalah dana yang siap Anda tanggung risikonya, dan biaya jaringan yang wajar relatif terhadap nominal transaksi.</p>
+<h2>Kesimpulan</h2>
+<p>Web3 bukan sekadar tren harga, melainkan perubahan arsitektur tentang siapa yang memegang kendali atas data, aset, dan keputusan. Peluangnya mencakup akses keuangan yang lebih terbuka, efisiensi penyelesaian transaksi, dan model kepemilikan baru. Namun manfaat itu hanya bisa dinikmati oleh mereka yang disiplin pada keamanan, realistis terhadap risiko, dan terus mengikuti perkembangan regulasi.</p>
+<div class="art-box note"><b>Catatan</b><p>Artikel ini bersifat edukasi dan bukan nasihat investasi, hukum, atau pajak. Nilai aset digital dapat berfluktuasi tajam. Lakukan riset mandiri dan konsultasikan keputusan keuangan Anda dengan profesional berlisensi.</p></div>`
             },
             'analisis-crypto': {
                 title: 'Analisis Pergerakan Pasar Kripto & Sentimen Global',
                 category: 'Crypto Market',
                 date: '13 Oktober 2026',
-                readTime: '4 Menit Baca',
+                readTime: '10 Menit Baca',
                 author: 'Berita Angin Market Desk',
                 image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&auto=format&fit=crop&q=80',
-                content: `<p>Pergerakan pasar aset kripto utama seperti Bitcoin dan Ethereum terus menunjukkan korelasi erat dengan likuiditas makroekonomi global serta tingkat adopsi institusional.</p><p>Analisis sentimen harian menunjukkan peningkatan volume beli bersih dari pelaku pasar institusi yang memanfaatkan volatilitas jangka pendek untuk akumulasi portofolio jangka panjang.</p>`
+                content: `<p class="lead">Pasar kripto bergerak 24 jam sehari, tanpa jeda akhir pekan, dan sering bereaksi lebih cepat daripada pasar lain terhadap kabar makro. Karena itu, membaca arahnya menuntut lebih dari sekadar melihat grafik harga. Artikel ini membedah lima lapisan analisis yang dipakai praktisi: makro dan likuiditas, arus institusi, struktur pasar derivatif, data on-chain, serta sentimen.</p>
+<div class="art-box"><b>Poin Penting Artikel Ini</b><ul><li>Harga adalah hasil, bukan penyebab. Cari tahu dahulu siapa yang membeli, dengan modal dari mana, dan dengan leverage berapa.</li><li>Likuiditas makro (kebijakan bank sentral, dolar, imbal hasil obligasi) sering menjadi arus bawah yang menentukan arah jangka menengah.</li><li>Open interest, funding rate, dan rasio long/short memberi gambaran kerapuhan atau kekuatan sebuah tren.</li><li>Tidak ada satu indikator yang cukup; keputusan yang baik lahir dari konfluensi beberapa sinyal dan manajemen risiko yang disiplin.</li></ul></div>
+<h2>1. Gambaran Umum: Bagaimana Pasar Kripto Bergerak</h2>
+<p>Pasar kripto terdiri dari tiga kelompok pelaku utama. <strong>Investor ritel</strong> cenderung bereaksi pada narasi dan momentum. <strong>Institusi</strong> (dana lindung nilai, manajer aset, perusahaan perbendaharaan) bergerak lebih terukur dan sering memakai produk teregulasi seperti ETF. <strong>Pelaku struktural</strong> (market maker, penambang, bursa) memengaruhi likuiditas, pasokan, dan volatilitas intrahari.</p>
+<p>Setiap kelompok punya pemicu berbeda. Itulah sebabnya pergerakan besar biasanya tidak datang dari satu faktor, tetapi dari pertemuan beberapa faktor pada waktu yang sama, misalnya data inflasi yang lebih rendah dari perkiraan, arus masuk ETF, dan posisi short yang terlalu padat.</p>
+<h2>2. Lapisan Makro: Suku Bunga, Dolar, dan Likuiditas</h2>
+<p>Aset berisiko, termasuk kripto, sangat peka terhadap biaya uang. Ketika bank sentral menahan atau menurunkan suku bunga, imbal hasil obligasi cenderung turun dan likuiditas lebih longgar, kondisi yang umumnya lebih mendukung aset berisiko. Sebaliknya, pengetatan membuat modal bergeser ke aset yang lebih aman.</p>
+<h3>Tiga indikator makro yang layak dipantau</h3>
+<ul><li><strong>Indeks Dolar (DXY).</strong> Dolar yang menguat tajam biasanya menekan aset berisiko; pelemahan dolar sering memberi ruang bernapas.</li><li><strong>Imbal hasil obligasi AS tenor 10 tahun.</strong> Kenaikan cepat dapat menekan valuasi aset berisiko; penurunan stabil biasanya mendukung.</li><li><strong>Likuiditas bersih AS.</strong> Perhitungan sederhananya: Neraca Fed dikurangi saldo kas Treasury (TGA) dan reverse repo (RRP). Ketika likuiditas bersih naik, lebih banyak uang tersedia di sistem; saat turun, uang terserap keluar dari pasar.</li></ul>
+<p>Anda dapat melihat perhitungan ini secara langsung pada halaman Global Market di dashboard Berita Angin, pada grafik Likuiditas Bersih AS versus Neraca Fed beserta Skor Komposit rezimnya (ekspansif, netral, ketat).</p>
+<h2>3. Arus Institusi dan Produk Teregulasi</h2>
+<p>Sejak ETF aset kripto utama diperdagangkan di bursa besar, arus dana harian ke dan dari produk tersebut menjadi salah satu data paling diawasi. Arus masuk bersih yang konsisten menandakan permintaan baru yang menyerap pasokan, sedangkan arus keluar beruntun sering menjadi tanda pengambilan untung atau perubahan selera risiko.</p>
+<p>Perlu hati-hati: satu hari arus besar belum membentuk tren. Yang lebih informatif adalah <strong>rata-rata bergulir beberapa minggu</strong> dan apakah arus searah dengan harga atau justru berlawanan (divergensi).</p>
+<h2>4. Struktur Pasar Derivatif</h2>
+<p>Banyak pergerakan ekstrem dalam jangka pendek dipicu oleh likuidasi posisi berleverage. Tiga metrik membantu membaca kerapuhan itu:</p>
+<ul><li><strong>Open interest (OI).</strong> Total nilai kontrak yang masih terbuka. Harga naik bersama OI naik menandakan uang baru masuk; harga naik dengan OI turun bisa menandakan penutupan posisi short semata.</li><li><strong>Funding rate.</strong> Biaya periodik antara pemegang long dan short pada kontrak perpetual. Funding sangat positif dalam waktu lama berarti long terlalu padat dan rentan terhadap koreksi tajam.</li><li><strong>Rasio long/short.</strong> Menunjukkan keseimbangan posisi. Nilai ekstrem di salah satu sisi kerap menjadi bahan bakar pembalikan arah.</li></ul>
+<p>Pada panel Derivatives di dashboard, ketiga data ini tampil berdampingan sehingga perubahan arah leverage mudah dibaca bersama harga.</p>
+<h2>5. Data On-Chain</h2>
+<p>Keunggulan unik aset kripto adalah transparansi data. Beberapa metrik yang umum dipakai:</p>
+<ul><li><strong>Aliran ke dan dari bursa.</strong> Arus masuk besar ke bursa dapat berarti kesiapan menjual; arus keluar menuju dompet pribadi sering dibaca sebagai akumulasi.</li><li><strong>Suplai stablecoin.</strong> Naiknya suplai menandakan amunisi yang siap masuk pasar, ibarat kas di pinggir lapangan.</li><li><strong>Perilaku pemegang jangka panjang.</strong> Distribusi dari dompet yang lama tidur dapat menandai fase akhir siklus; akumulasinya menandai fase pembentukan dasar.</li><li><strong>Aktivitas jaringan.</strong> Jumlah alamat aktif, biaya transaksi, dan volume transfer menunjukkan penggunaan nyata, bukan sekadar spekulasi.</li></ul>
+<h2>6. Sentimen: Antara Ketakutan dan Keserakahan</h2>
+<p>Sentimen mengukur kondisi psikologis pasar. Indikator populer seperti indeks Fear and Greed menggabungkan volatilitas, momentum, volume, media sosial, dan dominasi. Sentimen sering bersifat <strong>kontrarian</strong> pada ekstrem: euforia berlebihan dekat puncak lokal, ketakutan ekstrem dekat dasar lokal. Namun &quot;ekstrem&quot; bisa bertahan lama dalam tren kuat, sehingga sentimen lebih tepat dipakai sebagai konfirmasi daripada pemicu tunggal.</p>
+<blockquote>Pasar jarang berbalik arah ketika semua orang sependapat. Ia berbalik ketika posisi terlalu padat di satu sisi dan datang kejutan kecil di sisi lain.</blockquote>
+<h2>7. Dominasi Bitcoin, Altcoin, dan Siklus</h2>
+<p>Bitcoin umumnya menjadi pintu masuk modal baru. Ketika dominasi Bitcoin naik, modal cenderung bertahan di aset yang dianggap paling mapan; ketika dominasi turun dan aliran bergeser ke Ethereum lalu altcoin berkapitalisasi lebih kecil, pasar biasanya sedang berselera risiko tinggi. Pola ini tidak mekanis, tetapi pergeseran dominasi layak dibaca bersama likuiditas dan volume.</p>
+<p>Peristiwa halving Bitcoin yang terjadi sekitar setiap empat tahun mengurangi penerbitan koin baru dan secara historis dikaitkan dengan siklus harga. Meski begitu, kehadiran ETF, perubahan struktur kepemilikan, dan faktor makro membuat pola lama tidak selalu berulang persis, sehingga sebaiknya diperlakukan sebagai kerangka, bukan jadwal.</p>
+<h2>8. Tiga Skenario dan Pemicu yang Dipantau</h2>
+<div class="art-tblwrap"><table class="art-tbl"><thead><tr><th>Skenario</th><th>Ciri utama</th><th>Sinyal konfirmasi</th></tr></thead><tbody><tr><td>Bullish</td><td>Likuiditas longgar, permintaan institusi konsisten</td><td>Likuiditas bersih naik, arus ETF positif beruntun, OI naik sehat, suplai stablecoin bertambah</td></tr><tr><td>Netral / konsolidasi</td><td>Sinyal campuran, volatilitas menyempit</td><td>Funding mendekati nol, volume menurun, harga bergerak dalam rentang</td></tr><tr><td>Bearish</td><td>Pengetatan makro atau kejutan risiko</td><td>Dolar dan imbal hasil naik, arus keluar ETF, funding terlalu positif lalu likuidasi berantai</td></tr></tbody></table></div>
+<p>Alih-alih memprediksi satu skenario, lebih sehat menetapkan <strong>kondisi yang membatalkan</strong> pandangan Anda. Jika tesis bullish bergantung pada likuiditas yang membaik namun skor likuiditas jatuh ke zona ketat, tesis itu perlu ditinjau ulang.</p>
+<h2>9. Manajemen Risiko: Bagian yang Paling Menentukan</h2>
+<ol><li><strong>Tentukan ukuran posisi</strong> berdasarkan kerugian maksimum yang dapat Anda terima, bukan berdasarkan keyakinan.</li><li><strong>Batasi leverage.</strong> Leverage tinggi mengubah volatilitas wajar menjadi likuidasi.</li><li><strong>Gunakan pembelian bertahap</strong> (dollar-cost averaging) untuk mengurangi risiko salah waktu masuk.</li><li><strong>Tetapkan level evaluasi</strong> sebelum masuk, dan patuhi.</li><li><strong>Pisahkan dana jangka panjang dan trading.</strong> Dua tujuan berbeda perlu aturan berbeda.</li></ol>
+<h2>10. Rutinitas Analisis Harian yang Efisien</h2>
+<ul><li>Cek kalender ekonomi: rilis inflasi, keputusan suku bunga, data tenaga kerja.</li><li>Lihat arah DXY dan imbal hasil obligasi.</li><li>Tinjau arus ETF dan suplai stablecoin.</li><li>Periksa OI, funding, dan rasio long/short.</li><li>Baca sentimen, lalu bandingkan dengan struktur harga di beberapa kerangka waktu.</li><li>Catat kesimpulan dan evaluasi akurasinya setiap minggu.</li></ul>
+<h2>Glosarium Singkat</h2>
+<ul><li><strong>Likuiditas bersih:</strong> uang yang benar-benar tersedia bagi pasar setelah dikurangi penyerapan oleh kas pemerintah dan fasilitas repo.</li><li><strong>Likuidasi:</strong> penutupan paksa posisi berleverage saat jaminan tidak cukup.</li><li><strong>Divergensi:</strong> kondisi saat indikator dan harga bergerak berlawanan arah.</li><li><strong>Konfluensi:</strong> beberapa sinyal independen menunjuk ke kesimpulan yang sama.</li></ul>
+<h2>Kesimpulan</h2>
+<p>Analisis pasar kripto yang matang bukan tentang menebak angka, melainkan membaca rantai sebab-akibat: kondisi likuiditas, siapa yang membeli, seberapa tinggi leverage, dan bagaimana psikologi pasar. Dengan kerangka lima lapisan di atas dan manajemen risiko yang ketat, Anda dapat mengurangi keputusan impulsif dan lebih siap menghadapi volatilitas.</p>
+<div class="art-box note"><b>Catatan</b><p>Artikel ini bersifat edukasi dan bukan rekomendasi membeli atau menjual aset apa pun. Seluruh data pada dashboard bersifat ilustratif sampai terhubung ke sumber data nyata. Aset kripto berisiko tinggi; gunakan hanya dana yang siap Anda tanggung kerugiannya.</p></div>`
             },
             'korelasi-saham': {
                 title: 'Korelasi Bursa Saham Konvensional & Pasar Kripto',
                 category: 'Stock & Macro',
                 date: '12 Oktober 2026',
-                readTime: '6 Menit Baca',
+                readTime: '9 Menit Baca',
                 author: 'Macro Economics Team',
                 image: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=1200&auto=format&fit=crop&q=80',
-                content: `<p>Seiring dengan semakin matangnya industri aset digital, interaksi antara bursa saham konvensional seperti S&P 500 dan teknologi blockchain semakin menarik untuk diamati.</p><p>Faktor suku bunga bank sentral dan ekspektasi inflasi menjadi katalis utama yang menggerakkan kedua instrumen investasi ini secara simultan.</p>`
+                content: `<p class="lead">&quot;Jangan menaruh semua telur dalam satu keranjang&quot; adalah nasihat investasi tertua, tetapi ia hanya berfungsi bila telur-telur itu benar-benar berada di keranjang yang berbeda. Di sinilah korelasi berperan. Artikel ini membahas bagaimana bursa saham konvensional dan pasar kripto saling bergerak, kapan hubungan itu menguat atau melemah, dan bagaimana membacanya untuk keputusan portofolio yang lebih sadar risiko.</p>
+<div class="art-box"><b>Poin Penting Artikel Ini</b><ul><li>Korelasi mengukur kecenderungan dua aset bergerak searah, dengan nilai antara -1 dan +1; ia bukan bukti sebab-akibat.</li><li>Korelasi saham-kripto tidak tetap: cenderung meningkat saat likuiditas menjadi pendorong utama dan saat pasar stres.</li><li>Diversifikasi paling rapuh justru ketika dibutuhkan, sehingga pengujian dalam kondisi stres sama pentingnya dengan kondisi normal.</li><li>Gunakan beberapa jendela waktu dan jangan menyimpulkan dari satu angka tunggal.</li></ul></div>
+<h2>Memahami Korelasi dengan Benar</h2>
+<p>Korelasi Pearson menghitung seberapa konsisten dua deret imbal hasil bergerak bersama. Nilai <strong>+1</strong> berarti selalu searah sempurna, <strong>0</strong> berarti tidak ada hubungan linear, dan <strong>-1</strong> berarti selalu berlawanan. Untuk investor, nilai antara 0,3 dan 0,7 biasanya dianggap korelasi sedang, sedangkan di atas 0,7 dianggap tinggi.</p>
+<div class="art-tblwrap"><table class="art-tbl"><thead><tr><th>Rentang korelasi</th><th>Interpretasi</th><th>Implikasi diversifikasi</th></tr></thead><tbody><tr><td>0,7 hingga 1,0</td><td>Sangat searah</td><td>Manfaat diversifikasi kecil</td></tr><tr><td>0,3 hingga 0,7</td><td>Searah sedang</td><td>Diversifikasi parsial</td></tr><tr><td>-0,3 hingga 0,3</td><td>Hubungan lemah</td><td>Diversifikasi baik</td></tr><tr><td>-1,0 hingga -0,3</td><td>Cenderung berlawanan</td><td>Peredam risiko yang efektif</td></tr></tbody></table></div>
+<p>Dua hal sering terlewat. Pertama, korelasi dihitung dari <strong>imbal hasil</strong> (perubahan persentase), bukan dari level harga. Kedua, ia sangat bergantung pada <strong>jendela waktu</strong>: korelasi 30 hari bisa sangat berbeda dari korelasi 1 tahun.</p>
+<h2>Sejarah Singkat Hubungan Saham dan Kripto</h2>
+<p>Pada tahun-tahun awal, aset kripto relatif terpisah dari pasar saham. Pelakunya kebanyakan investor ritel dan penggemar teknologi, narasinya pun berbeda dari siklus korporasi. Karena itu korelasinya rendah dan sering dipromosikan sebagai &quot;diversifier&quot;.</p>
+<p>Gambaran berubah ketika pasar menghadapi guncangan likuiditas dan siklus suku bunga global. Pada masa pelonggaran besar, aset berisiko naik bersama-sama; pada masa pengetatan, mereka tertekan bersama-sama. Masuknya pelaku institusi dan produk teregulasi juga menyatukan basis investor, sehingga aset kripto kian diperlakukan sebagai bagian dari kantong aset berisiko, terutama berdampingan dengan saham teknologi pertumbuhan.</p>
+<h2>Mengapa Keduanya Bisa Bergerak Bersama</h2>
+<ul><li><strong>Likuiditas dan suku bunga.</strong> Aset berduration panjang seperti saham teknologi dan kripto sama-sama sensitif terhadap biaya modal.</li><li><strong>Selera risiko global (risk-on / risk-off).</strong> Saat takut, investor mengurangi seluruh aset berisiko sekaligus.</li><li><strong>Basis investor yang tumpang tindih.</strong> Dana dan trader yang sama memegang saham dan kripto, sehingga kebutuhan margin di satu pasar memaksa penjualan di pasar lain.</li><li><strong>Leverage dan likuidasi.</strong> Penjualan paksa menular lintas pasar.</li><li><strong>Efek jam perdagangan.</strong> Kripto diperdagangkan 24/7, sehingga kerap menjadi tempat pertama pasar bereaksi saat bursa saham tutup, lalu &quot;dikonfirmasi&quot; saat bursa dibuka.</li></ul>
+<h2>Kapan Hubungan Itu Melemah (Decoupling)</h2>
+<p>Korelasi tidak abadi. Beberapa kondisi yang biasanya menurunkannya:</p>
+<ul><li><strong>Katalis khas kripto:</strong> peristiwa halving, peningkatan jaringan, persetujuan produk baru, atau kejadian peretasan dan kegagalan bursa.</li><li><strong>Perubahan regulasi spesifik</strong> yang hanya menyasar aset digital.</li><li><strong>Rotasi sektor</strong> di pasar saham yang tidak melibatkan teknologi.</li><li><strong>Dominasi narasi domestik</strong>, misalnya adopsi pembayaran atau aturan nasional di suatu negara.</li></ul>
+<h2>Indikator yang Menghubungkan Kedua Pasar</h2>
+<div class="art-tblwrap"><table class="art-tbl"><thead><tr><th>Indikator</th><th>Cara membacanya</th></tr></thead><tbody><tr><td>VIX (indeks volatilitas)</td><td>Lonjakan VIX menandakan ketakutan; umumnya disertai penurunan aset berisiko.</td></tr><tr><td>Indeks Dolar (DXY)</td><td>Dolar menguat cenderung menekan saham global dan kripto.</td></tr><tr><td>Imbal hasil obligasi 10 tahun</td><td>Kenaikan cepat menaikkan tingkat diskonto dan menekan valuasi.</td></tr><tr><td>Likuiditas bersih bank sentral</td><td>Peningkatan likuiditas mendukung aset berisiko secara luas.</td></tr><tr><td>Spread kredit</td><td>Pelebaran spread menunjukkan stres pembiayaan korporasi.</td></tr></tbody></table></div>
+<h2>Membaca Korelasi pada Dashboard</h2>
+<p>Pada halaman Profil dan Market Statistik di Berita Angin, Anda dapat melihat peta panas korelasi, scatter plot risiko versus imbal hasil, serta perbandingan antar aset. Cara memanfaatkannya secara praktis:</p>
+<ol><li>Mulai dari <strong>peta panas</strong> untuk melihat pasangan aset dengan korelasi tertinggi dan terendah.</li><li>Bandingkan <strong>jendela pendek dan panjang</strong>. Bila korelasi 30 hari melonjak jauh di atas korelasi setahun, pasar sedang masuk rezim stres atau rezim likuiditas.</li><li>Lihat <strong>scatter risiko versus imbal hasil</strong> untuk mengetahui apakah tambahan risiko dari sebuah aset sepadan dengan imbal hasilnya.</li><li>Gabungkan dengan <strong>Skor Komposit Likuiditas</strong> pada Global Market untuk memahami latar makronya.</li></ol>
+<h2>Contoh Perhitungan Sederhana</h2>
+<p>Bayangkan portofolio ilustratif berisi 70 persen indeks saham dan 30 persen aset kripto. Volatilitas portofolio bergantung pada volatilitas masing-masing dan korelasinya. Dengan korelasi rendah, volatilitas gabungan turun jauh di bawah rata-rata tertimbang; dengan korelasi mendekati 1, penurunan itu nyaris hilang. Artinya, <strong>pengurangan risiko hasil diversifikasi bukan properti tetap sebuah aset, melainkan hasil dari korelasi yang berlaku saat ini</strong>.</p>
+<blockquote>Dalam krisis, korelasi cenderung menuju satu. Diversifikasi yang tampak sempurna di masa tenang bisa menyusut tepat saat ia paling dibutuhkan.</blockquote>
+<h2>Perspektif untuk Investor Indonesia</h2>
+<p>Bagi investor domestik, ada lapisan tambahan: nilai tukar rupiah terhadap dolar AS, suku bunga acuan Bank Indonesia, dan arus dana asing di pasar saham serta obligasi. Dolar yang menguat dapat menekan IHSG sekaligus menaikkan nilai aset kripto dalam rupiah bila harga dolarnya stabil, sehingga hasil akhir bergantung pada kombinasi pergerakan aset dan kurs. Karena itu, perhitungan imbal hasil dan risiko sebaiknya dilakukan dalam mata uang yang sesuai kebutuhan Anda.</p>
+<h2>Kesalahan Umum dalam Membaca Korelasi</h2>
+<ol><li><strong>Menyamakan korelasi dengan sebab-akibat.</strong> Dua aset bisa bergerak bersama karena dipengaruhi faktor ketiga, misalnya likuiditas.</li><li><strong>Memakai data terlalu pendek.</strong> Sampel kecil menghasilkan angka yang mudah menyesatkan.</li><li><strong>Mengabaikan perubahan rezim.</strong> Korelasi saat pelonggaran berbeda dari saat pengetatan.</li><li><strong>Hanya melihat korelasi linear.</strong> Hubungan bisa berubah drastis di ekor distribusi (saat pasar jatuh tajam).</li><li><strong>Mengira korelasi rendah berarti aman.</strong> Korelasi rendah tidak menjamin aset tersebut tidak merugi.</li></ol>
+<h2>Strategi Praktis</h2>
+<ul><li><strong>Tetapkan porsi aset berisiko tinggi</strong> sesuai toleransi kerugian, lalu rebalancing berkala.</li><li><strong>Uji portofolio dalam skenario stres</strong>, bukan hanya rata-rata historis.</li><li><strong>Tambahkan aset dengan sifat berbeda</strong>: kas, obligasi berkualitas, emas, atau instrumen pendapatan tetap.</li><li><strong>Pantau perubahan korelasi</strong> sebagai sinyal peringatan dini.</li><li><strong>Hindari leverage lintas pasar</strong> karena risiko penularan likuidasi.</li></ul>
+<h2>Pertanyaan yang Sering Diajukan</h2>
+<h3>Apakah kripto masih cocok sebagai diversifikasi dari saham?</h3>
+<p>Tergantung kondisi. Pada fase ketika korelasinya rendah, ia dapat membantu; pada fase korelasi tinggi, manfaat itu berkurang. Karena itu ukuran porsi dan horizon waktu lebih penting daripada label.</p>
+<h3>Berapa jendela waktu yang ideal?</h3>
+<p>Tidak ada satu angka terbaik. Gunakan beberapa jendela, misalnya 30 hari, 90 hari, dan satu tahun, lalu perhatikan konsistensinya.</p>
+<h3>Apakah korelasi tinggi selalu berarti kripto akan jatuh bila saham jatuh?</h3>
+<p>Tidak selalu. Korelasi menggambarkan kecenderungan historis, bukan kepastian arah di masa depan.</p>
+<h2>Kesimpulan</h2>
+<p>Saham dan kripto bukan dua dunia yang terpisah, tetapi juga bukan satu kesatuan. Hubungannya dinamis, dibentuk oleh likuiditas, selera risiko, struktur kepemilikan, dan katalis spesifik. Investor yang cermat tidak berhenti pada satu angka korelasi; ia memantau perubahan rezim, menguji portofolio saat stres, dan menjaga ukuran posisi tetap sesuai kemampuan menanggung risiko.</p>
+<div class="art-box note"><b>Catatan</b><p>Artikel ini bersifat edukasi dan bukan nasihat investasi. Contoh angka bersifat ilustratif. Kinerja masa lalu tidak menjamin hasil di masa depan; konsultasikan keputusan keuangan Anda dengan penasihat berlisensi.</p></div>`
             }
         };
         let currentArticleSlide = 0;
@@ -3058,7 +3203,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                             </p>
                         </div>
                         <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
-                            <span><i class="fa-regular fa-clock mr-1"></i> 5 Menit Baca</span>
+                            <span><i class="fa-regular fa-clock mr-1"></i> 12 Menit Baca</span>
                             <span class="text-brand-accent font-medium">Berita Angin Team</span>
                         </div>
                     </div>
@@ -3083,7 +3228,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                             </p>
                         </div>
                         <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
-                            <span><i class="fa-regular fa-clock mr-1"></i> 4 Menit Baca</span>
+                            <span><i class="fa-regular fa-clock mr-1"></i> 10 Menit Baca</span>
                             <span class="text-brand-accent font-medium">Berita Angin Team</span>
                         </div>
                     </div>
@@ -3108,7 +3253,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                             </p>
                         </div>
                         <div class="pt-4 border-t border-card-border flex items-center justify-between text-xs text-gray-400">
-                            <span><i class="fa-regular fa-clock mr-1"></i> 6 Menit Baca</span>
+                            <span><i class="fa-regular fa-clock mr-1"></i> 9 Menit Baca</span>
                             <span class="text-brand-accent font-medium">Berita Angin Team</span>
                         </div>
                     </div>
@@ -3227,7 +3372,16 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
             document.getElementById('detail-title').innerText = article.title;
             document.getElementById('detail-author').innerText = article.author;
             document.getElementById('detail-image').src = article.image;
-            document.getElementById('detail-content').innerHTML = article.content;
+            document.getElementById('detail-read-time').innerText = article.readTime || '';
+            const box = document.getElementById('detail-content');
+            box.innerHTML = article.content;
+            const hs = box.querySelectorAll('h2');
+            if (hs.length > 3) {
+                let toc = '<nav class="art-toc" aria-label="Daftar isi"><b><i class="fa-solid fa-list-ul"></i> Daftar Isi</b><ol>';
+                hs.forEach((h, i) => { h.id = 'art-h-' + i; toc += '<li><button type="button" data-id="art-h-' + i + '">' + h.textContent + '</button></li>'; });
+                box.insertAdjacentHTML('afterbegin', toc + '</ol></nav>');
+                box.querySelectorAll('.art-toc button').forEach(btn => btn.addEventListener('click', () => { const t = document.getElementById(btn.dataset.id); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }));
+            }
             const pageUrl = encodeURIComponent(window.location.href);
             const pageTitle = encodeURIComponent(article.title);
             document.getElementById('share-whatsapp').href = `https://api.whatsapp.com/send?text=${pageTitle}%20-%20${pageUrl}`;
@@ -4947,7 +5101,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     { id: 'stb', n: 'Suplai Stablecoin', s: 'Kripto · USDT+USDC', u: 'B', b: 165, r: .0025, d: 1, e: 1, ic: 'fa-coins' }
   ];
   var st = { iv: 2000, paused: false, f: 'all', q: '', sk: 'i', sd: 1, score: 50, shown: 50, reg: '' };
-  var alerts = [], H = { t: [], net: [], fed: [], sc: [] }, CH = {};
+  var alerts = [], H = { t: [], net: [], fed: [], sc: [], rrp: [], tga: [] }, CH = {};
   function step(c) { c.p = c.x; c.x = c.x + (c.b - c.x) * .05 + rnd(-1, 1) * c.b * c.r; }
   C.forEach(function (c, i) { c.i = i; c.k = 0; c.dp = 0; c.x = c.b * (1 + rnd(-c.r, c.r) * 2); c.h = []; for (var j = 0; j < 40; j++) { step(c); c.h.push(c.x); } c.o = c.x; });
   var G = function (id) { return C.filter(function (c) { return c.id === id; })[0]; };
@@ -4956,7 +5110,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     return c.u === 'T' ? '$' + s + 'T' : c.u === 'B' ? '$' + s + 'B' : c.u === '%' ? s + '%' : s;
   }
   function scoreFrom(get) { var mz = 0; C.forEach(function (c) { mz += c.e * (get(c) - c.b) / (c.b * c.r * 1.85); }); return clamp(50 + 60 * mz / C.length, 3, 97); }
-  (function () { var f = G('fed'), r = G('rrp'), t = G('tga'), now = Date.now(); for (var i = 0; i < 40; i++) { H.t.push(clockAt(now - (39 - i) * 2000)); H.fed.push(+f.h[i].toFixed(3)); H.net.push(+(f.h[i] - r.h[i] - t.h[i]).toFixed(3)); H.sc.push(+scoreFrom(function (c) { return c.h[i]; }).toFixed(1)); } })();
+  (function () { var f = G('fed'), r = G('rrp'), t = G('tga'), now = Date.now(); for (var i = 0; i < 40; i++) { H.t.push(clockAt(now - (39 - i) * 2000)); H.fed.push(+f.h[i].toFixed(3)); H.net.push(+(f.h[i] - r.h[i] - t.h[i]).toFixed(3)); H.rrp.push(+r.h[i].toFixed(3)); H.tga.push(+t.h[i].toFixed(3)); H.sc.push(+scoreFrom(function (c) { return c.h[i]; }).toFixed(1)); } })();
   /* ---------- Tabel ---------- */
   function rowHtml(c) {
     return '<tr id="mlc-r-' + c.id + '"><td class="text-gray-500 font-mono" id="mlc-no-' + c.id + '"></td>' +
@@ -5091,45 +5245,91 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   function mkCharts() {
     if (CH.made) return; var K = window.__proKit; if (!K) return; CH.made = true;
     var T = K.T, Tw = K.Tw, tag = K.tag, tip = K.tip, hline = K.hline, vline = K.vline, hgrid = K.hgrid, dot = K.dot, tri = K.tri, sma = K.sma, ema = K.ema, lerp = K.lerp, TAU = 6.2832;
-    ['mlc-ch-net', 'mlc-ch-imp', 'mlc-ch-sc'].forEach(function (id) { var cv = $(id); if (!cv) return; cv.style.cssText = 'display:block;width:100%;height:100%'; cv.parentNode.style.height = '270px'; });
+    ['mlc-ch-net', 'mlc-ch-imp', 'mlc-ch-sc'].forEach(function (id) { var cv = $(id); if (!cv) return; cv.style.cssText = 'display:block;width:100%;height:100%'; cv.parentNode.style.height = '300px'; });
     var cap = function (s, n) { return s.length > n ? s.slice(0, n - 1) + '…' : s; };
-    /* === 1. Likuiditas Bersih vs Neraca Fed: area + pita penyerapan (RRP+TGA) + EMA + ekstrem + panel momentum === */
+    /* ---- Helper desain grafik profesional (lokal) ---- */
+    var MONO = 'ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
+    var ra = function (hex, a) { var v = parseInt(hex.slice(1), 16); return 'rgba(' + (v >> 16 & 255) + ',' + (v >> 8 & 255) + ',' + (v & 255) + ',' + a + ')'; };
+    var rr = function (c, x, y, w, h, r) { r = Math.min(r, w / 2, h / 2); c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); };
+    var fx = function (v, d) { return K.fmt ? K.fmt(v, d) : v.toFixed(d); };
+    function swatch(c, x, y, col, kind) {
+      if (kind === 'box') { rr(c, x, y - 4, 8, 8, 2); c.fillStyle = ra(col, .55); c.fill(); c.strokeStyle = col; c.lineWidth = 1; c.stroke(); return x + 12; }
+      c.save(); c.strokeStyle = col; c.lineWidth = kind === 'bold' ? 2.2 : 1.5; if (kind === 'dash') c.setLineDash([3, 2]); c.lineCap = 'round'; c.beginPath(); c.moveTo(x, y); c.lineTo(x + 11, y); c.stroke(); c.restore(); return x + 15;
+    }
+    function legend(c, x, y, col, kind, label, val, vcol, P) {
+      x = swatch(c, x, y, col, kind); x = K.Tw(c, label, x, y, P.mu, 8, 600) - 4; return K.Tw(c, val, x, y, vcol || P.tx, 8, 700) + 6;
+    }
+    function card(c, w, x, y0, title, rows, P) {
+      c.font = '600 8px ' + MONO; var bw = c.measureText(title).width + 8;
+      rows.forEach(function (r) { bw = Math.max(bw, c.measureText(r[0]).width + c.measureText(r[1]).width + 30); });
+      bw += 12; var bh = 21 + rows.length * 12, bx = x + 12 + bw > w - 2 ? x - 12 - bw : x + 12;
+      c.save(); c.shadowColor = 'rgba(0,0,0,' + (P.l ? .16 : .55) + ')'; c.shadowBlur = 12; c.shadowOffsetY = 3; rr(c, bx, y0, bw, bh, 6); c.fillStyle = P.l ? 'rgba(255,255,255,.98)' : 'rgba(10,12,18,.96)'; c.fill(); c.restore();
+      rr(c, bx + .5, y0 + .5, bw - 1, bh - 1, 6); c.strokeStyle = P.l ? '#cbd5e1' : 'rgba(148,163,184,.30)'; c.lineWidth = 1; c.stroke();
+      K.T(c, title, bx + 8, y0 + 9, P.mu, 'left', 8, 700); K.hline(c, bx + 6, bx + bw - 6, y0 + 17, P.gr);
+      rows.forEach(function (r, i) { var y = y0 + 26 + i * 12; rr(c, bx + 8, y - 3, 6, 6, 1.5); c.fillStyle = r[2]; c.fill(); K.T(c, r[0], bx + 19, y, P.mu, 'left', 8, 600); K.T(c, r[1], bx + bw - 8, y, P.tx, 'right', 8, 700); });
+    }
+    function axisTag(c, t, x, y, col, P) { c.font = '700 8px ' + MONO; var tw = c.measureText(t).width + 8; rr(c, x, y - 6.5, tw, 13, 3); c.fillStyle = col; c.fill(); K.T(c, t, x + 4, y, P.l ? '#fff' : '#0b1220', 'left', 8, 700); }
+    function timeTag(c, t, x, y, w, P) { c.font = '700 8px ' + MONO; var tw = c.measureText(t).width + 10, bx = clamp(x - tw / 2, 2, w - tw - 2); rr(c, bx, y - 6.5, tw, 13, 3); c.fillStyle = P.l ? '#334155' : '#e2e8f0'; c.fill(); K.T(c, t, bx + tw / 2, y, P.l ? '#fff' : '#0f172a', 'center', 8, 700); }
+    function xAxis(c, X, n, L, R, y0, y1, P) {
+      for (var i = n - 1; i >= 0; i -= 10) { var x = X(i); if (x < L + 14) continue; c.save(); c.strokeStyle = P.gr; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(x) + .5, y0); c.lineTo(Math.round(x) + .5, y0 + 3); c.stroke(); c.restore(); K.T(c, H.t[i], x, y1, P.mu, 'center', 8); }
+    }
+
+    /* === 1. LIKUIDITAS BERSIH vs NERACA FED — dua seri + pita penyerapan (arsir) + panel komposisi TGA/RRP + crosshair === */
     K.host('mlc-ch-net', function (c, w, h, now, s, P) {
-      var net = H.net, fed = H.fed, n = net.length; if (n < 3) return;
-      var pk = P.l ? '#DB2777' : '#F472B6', pk2 = P.l ? '#9D174D' : '#FBCFE8', pk3 = P.l ? '#BE185D' : '#F9A8D4';
-      var L = 8, R = w - 50, a = 36, b = Math.round(h * .74), m0 = b + 16, m1 = h - 14, slot = (R - L) / (n - 1), i, mn = 1e9, mx = -1e9;
+      var net = H.net, fed = H.fed, rrp = H.rrp || [], tga = H.tga || [], n = net.length; if (n < 3) return;
+      var cF = P.l ? '#2563EB' : '#60A5FA', cN = P.l ? '#0891B2' : '#22D3EE', cT = P.l ? '#d97706' : '#FBBF24', cR = P.l ? '#7c3aed' : '#A78BFA';
+      var L = 10, R = w - 44, a = 38, b = Math.round(h * .62), m0 = b + 22, m1 = h - 22, slot = (R - L) / (n - 1), i, mn = 1e9, mx = -1e9;
       var X = function (k) { return L + k * slot; };
       for (i = 0; i < n; i++) { mn = Math.min(mn, net[i]); mx = Math.max(mx, fed[i]); }
-      var pd = (mx - mn) * .1 + .005, rg = lerp(s, 'r', mn - pd, mx + pd, .12); mn = rg.mn; mx = rg.mx;
+      var pd = (mx - mn) * .12 + .004, rg = K.lerp(s, 'r', mn - pd, mx + pd, .12); mn = rg.mn; mx = rg.mx;
       var Y = function (v) { return b - (v - mn) / (mx - mn) * (b - a); };
-      var cn = net[n - 1], cf = fed[n - 1], d0 = cn - net[0], dp = d0 / net[0] * 100;
-      var hx = Tw(c, 'NET ' + cn.toFixed(3) + 'T', L, 8, pk, 8, 700); Tw(c, (d0 >= 0 ? '▲ ' : '▼ ') + Math.abs(dp).toFixed(2) + '% (' + n + ' tick)', hx, 8, d0 >= 0 ? P.up : P.dn, 8, 700);
-      hx = Tw(c, 'FED ' + cf.toFixed(3) + 'T', L, 20, pk2, 8, 700); Tw(c, 'RRP+TGA ' + (cf - cn).toFixed(3) + 'T · ' + ((cf - cn) / cf * 100).toFixed(1) + '%', hx, 20, pk3, 8, 700);
-      c.fillStyle = P.bg; c.fillRect(L, a, R - L, b - a); hgrid(c, L, R, a, b, mn, mx, P, 3, 4);
-      c.save(); c.beginPath(); c.rect(L, a, R - L, b - a); c.clip();
-      c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(fed[i])) : c.moveTo(X(i), Y(fed[i])); for (i = n - 1; i >= 0; i--) c.lineTo(X(i), Y(net[i]));
-      c.closePath(); c.fillStyle = 'rgba(236,72,153,.13)'; c.fill();
-      var g = c.createLinearGradient(0, a, 0, b); g.addColorStop(0, 'rgba(236,72,153,.42)'); g.addColorStop(1, 'rgba(236,72,153,0)');
+      var cn = net[n - 1], cf = fed[n - 1], dr = cf - cn, d0 = cn - net[0], dp = d0 / net[0] * 100;
+      /* legenda 2 baris */
+      var lx = legend(c, L, 9, cN, 'bold', 'LIKUIDITAS BERSIH', fx(cn, 3) + 'T', cN, P);
+      K.T(c, (d0 >= 0 ? '▲ +' : '▼ ') + dp.toFixed(2) + '%', R + 40, 9, d0 >= 0 ? P.up : P.dn, 'right', 8, 700);
+      lx = legend(c, L, 22, cF, 'line', 'NERACA FED', fx(cf, 3) + 'T', cF, P);
+      legend(c, lx, 22, cT, 'box', 'PENYERAPAN', fx(dr, 3) + 'T · ' + (dr / cf * 100).toFixed(1) + '%', cT, P);
+      /* area plot */
+      rr(c, L, a, R - L, b - a, 4); c.fillStyle = P.bg; c.fill();
+      K.hgrid(c, L, R, a, b, mn, mx, P, 2, 4);
+      c.save(); rr(c, L, a, R - L, b - a, 4); c.clip();
+      /* pita penyerapan = Fed - Net (diarsir) */
+      c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(fed[i])) : c.moveTo(X(i), Y(fed[i])); for (i = n - 1; i >= 0; i--) c.lineTo(X(i), Y(net[i])); c.closePath();
+      c.fillStyle = ra(cT, .09); c.fill(); c.save(); c.clip(); c.strokeStyle = ra(cT, .30); c.lineWidth = 1;
+      for (var hx = L - (b - a); hx < R; hx += 7) { c.beginPath(); c.moveTo(hx, b); c.lineTo(hx + (b - a), a); c.stroke(); } c.restore();
+      /* area gradasi di bawah garis net */
+      var g = c.createLinearGradient(0, a, 0, b); g.addColorStop(0, ra(cN, P.l ? .26 : .30)); g.addColorStop(1, ra(cN, 0));
       c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(net[i])) : c.moveTo(X(i), Y(net[i])); c.lineTo(X(n - 1), b); c.lineTo(X(0), b); c.closePath(); c.fillStyle = g; c.fill();
-      c.setLineDash([4, 3]); c.lineWidth = 1.4; c.strokeStyle = pk2; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(fed[i])) : c.moveTo(X(i), Y(fed[i])); c.stroke(); c.setLineDash([]);
-      var em = ema(net, 8); c.lineWidth = 1; c.strokeStyle = pk3; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(em[i])) : c.moveTo(X(i), Y(em[i])); c.stroke();
-      c.shadowColor = pk; c.shadowBlur = P.l ? 0 : 6; c.lineWidth = 2; c.strokeStyle = pk; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(net[i])) : c.moveTo(X(i), Y(net[i])); c.stroke(); c.shadowBlur = 0;
+      /* garis Fed */
+      c.lineWidth = 1.5; c.strokeStyle = cF; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(fed[i])) : c.moveTo(X(i), Y(fed[i])); c.stroke();
+      /* EMA 8 */
+      var em = K.ema(net, 8); c.setLineDash([2, 3]); c.lineWidth = 1; c.strokeStyle = P.tx; c.globalAlpha = .5; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(em[i])) : c.moveTo(X(i), Y(em[i])); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
+      /* garis Net */
+      c.shadowColor = cN; c.shadowBlur = P.l ? 0 : 7; c.lineWidth = 2.2; c.lineCap = 'round'; c.strokeStyle = cN; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(net[i])) : c.moveTo(X(i), Y(net[i])); c.stroke(); c.shadowBlur = 0;
+      /* ekstrem H / L */
       var im = net.indexOf(Math.max.apply(null, net)), il = net.indexOf(Math.min.apply(null, net));
-      tri(c, X(im), Y(net[im]) - 7, false, P.up, 3); tri(c, X(il), Y(net[il]) + 7, true, P.dn, 3);
+      [[im, 'H ', -9], [il, 'L ', 10]].forEach(function (e) { var ex = X(e[0]), ey = Y(net[e[0]]); c.beginPath(); c.arc(ex, ey, 3, 0, TAU); c.fillStyle = P.l ? '#fff' : '#0b1220'; c.fill(); c.lineWidth = 1.4; c.strokeStyle = cN; c.stroke(); K.T(c, e[1] + net[e[0]].toFixed(3), clamp(ex, L + 28, R - 28), ey + e[2], P.mu, 'center', 7, 700); });
       c.restore();
-      T(c, 'PENYERAPAN', R - 40, (Y(cf) + Y(cn)) / 2, pk3, 'center', 7, 700);
-      var yn = Y(cn), yf = Y(cf); if (yn - yf < 13) yn = yf + 13;
-      dot(c, R, Y(cn), pk, now); tag(c, cn.toFixed(2), R + 2, yn, pk, '#111'); tag(c, cf.toFixed(2), R + 2, yf, pk2, '#111');
-      /* momentum Δ/tick */
-      var dl = [], dm = .0005; for (i = 1; i < n; i++) { dl.push(net[i] - net[i - 1]); dm = Math.max(dm, Math.abs(net[i] - net[i - 1])); }
-      var zy = (m0 + m1) / 2, bw = Math.max(1, slot * .6); hline(c, L, R, zy, P.mu, [2, 3]);
-      for (i = 1; i < n; i++) { var v = dl[i - 1], bh = Math.abs(v) / dm * (m1 - m0) / 2; c.fillStyle = v >= 0 ? P.up : P.dn; c.globalAlpha = .75; c.fillRect(X(i) - bw / 2, v >= 0 ? zy - bh : zy, bw, Math.max(1, bh)); } c.globalAlpha = 1;
-      T(c, 'MOMENTUM Δ/TICK', L + 2, m0 + 2, P.mu, 'left', 7, 700);
-      for (i = n - 1; i >= 0; i -= 10) if (X(i) > L + 20) T(c, H.t[i], X(i), h - 4, P.mu, 'center', 8);
+      /* garis harga terakhir + tag sumbu kanan */
+      [[cn, cN], [cf, cF]].forEach(function (z) { K.hline(c, X(n - 1), R, Y(z[0]), ra(z[1], .7), [3, 3]); });
+      var yn = Y(cn), yf = Y(cf); if (yn - yf < 14) yn = yf + 14;
+      K.dot(c, X(n - 1), Y(cn), cN, now); axisTag(c, cn.toFixed(2), R + 2, yn, cN, P); axisTag(c, cf.toFixed(2), R + 2, yf, cF, P);
+      /* panel komposisi penyerapan: TGA + RRP bertumpuk */
+      K.T(c, 'KOMPOSISI PENYERAPAN', L + 1, m0 - 7, P.mu, 'left', 7, 700);
+      var dm = .01; for (i = 0; i < n; i++) dm = Math.max(dm, (rrp[i] || 0) + (tga[i] || 0)); dm *= 1.12;
+      var bw = Math.max(1.4, slot * .66);
+      K.hline(c, L, R, m1, P.gr);
+      for (i = 0; i < n; i++) { var vt = (tga[i] || 0) / dm * (m1 - m0), vr = (rrp[i] || 0) / dm * (m1 - m0); c.fillStyle = ra(cT, .85); c.fillRect(X(i) - bw / 2, m1 - vt, bw, Math.max(.5, vt)); c.fillStyle = ra(cR, .85); c.fillRect(X(i) - bw / 2, m1 - vt - vr, bw, Math.max(.5, vr)); }
+      var lg = legend(c, R - 118, m0 - 7, cT, 'box', 'TGA', fx(tga[n - 1] || 0, 2), cT, P); legend(c, lg, m0 - 7, cR, 'box', 'RRP', fx(rrp[n - 1] || 0, 2), cR, P);
+      xAxis(c, X, n, L, R, m1, h - 7, P);
+      /* crosshair */
       if (s.mx >= L && s.mx <= R) {
-        var k = clamp(Math.round((s.mx - L) / slot), 0, n - 1), x = X(k);
-        vline(c, x, a, m1, P); c.beginPath(); c.arc(x, Y(net[k]), 3, 0, TAU); c.fillStyle = pk; c.fill(); c.beginPath(); c.arc(x, Y(fed[k]), 3, 0, TAU); c.fillStyle = pk2; c.fill();
-        tip(c, w, x, [[H.t[k], P.tx], ['Net  ' + net[k].toFixed(3) + 'T', pk], ['Fed  ' + fed[k].toFixed(3) + 'T', pk2], ['Serap ' + (fed[k] - net[k]).toFixed(3) + 'T', pk3]], P);
+        var k = clamp(Math.round((s.mx - L) / slot), 0, n - 1), x = X(k), dk = net[k] - (k ? net[k - 1] : net[k]);
+        K.vline(c, x, a, m1, P);
+        if (s.my >= a && s.my <= b) { K.hline(c, L, R, s.my, P.mu, [3, 3]); axisTag(c, (mn + (b - s.my) / (b - a) * (mx - mn)).toFixed(3), R + 2, s.my, P.l ? '#334155' : '#e2e8f0', P); }
+        [[net[k], cN], [fed[k], cF]].forEach(function (z) { c.beginPath(); c.arc(x, Y(z[0]), 3.4, 0, TAU); c.fillStyle = z[1]; c.fill(); c.lineWidth = 1.5; c.strokeStyle = P.l ? '#fff' : '#0b1220'; c.stroke(); });
+        timeTag(c, H.t[k], x, h - 7, w, P);
+        card(c, w, x, a + 4, H.t[k], [['Neraca Fed', fx(fed[k], 3) + 'T', cF], ['Likuiditas Bersih', fx(net[k], 3) + 'T', cN], ['Penyerapan', fx(fed[k] - net[k], 3) + 'T', cT], ['Δ / tick', (dk >= 0 ? '+' : '') + dk.toFixed(4), dk >= 0 ? P.up : P.dn]], P);
       }
     });
     /* === 2. Kontribusi per komponen: bar diverging beranimasi, diurutkan live, penanda EMA lambat, total impuls === */
@@ -5156,31 +5356,56 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       T(c, 'IMPULS BERSIH', 2, by, P.mu, 'left', 8, 700); c.fillStyle = P.dn; c.fillRect(bl + 20, by - 3, bw2 - 20, 6); c.fillStyle = P.up; c.fillRect(bl + 20, by - 3, (bw2 - 20) * sh, 6);
       T(c, (tot >= 0 ? '+' : '') + tot.toFixed(2), w - 3, by, tot >= 0 ? P.up : P.dn, 'right', 9, 700);
     });
-    /* === 3. Riwayat skor komposit: zona rezim, garis berwarna per rezim, penanda lintas batas, strip rezim === */
+    /* === 3. RIWAYAT SKOR KOMPOSIT — pita rezim, garis berwarna per rezim, batas putus-putus, strip rezim & distribusi === */
     K.host('mlc-ch-sc', function (c, w, h, now, s, P) {
       var sc = H.sc, n = sc.length; if (n < 3) return;
-      var pe = P.l ? '#F472B6' : '#F9A8D4', pn = P.l ? '#DB2777' : '#EC4899', pt = P.l ? '#9D174D' : '#BE185D';
-      var L = 8, R = w - 44, a = 26, b = h - 34, sy = b + 10, slot = (R - L) / (n - 1), i, X = function (k) { return L + k * slot; }, Y = function (v) { return b - v / 100 * (b - a); };
-      var rgm = function (v) { return v >= 62 ? ['EKSPANSIF', pe] : v <= 38 ? ['KETAT', pt] : ['NETRAL', pn]; }, cur = sc[n - 1], rc = rgm(cur), d0 = cur - sc[0], av = sc.reduce(function (p, q) { return p + q; }, 0) / n;
-      var hx = Tw(c, 'SKOR ' + cur.toFixed(1), L, 8, rc[1], 9, 700); hx = Tw(c, rc[0], hx, 8, rc[1], 8, 700); Tw(c, (d0 >= 0 ? '▲ ' : '▼ ') + Math.abs(d0).toFixed(1) + ' · RATA2 ' + av.toFixed(1), hx, 8, P.mu, 8, 600);
-      c.fillStyle = 'rgba(244,114,182,.11)'; c.fillRect(L, Y(100), R - L, Y(62) - Y(100)); c.fillStyle = 'rgba(236,72,153,.04)'; c.fillRect(L, Y(62), R - L, Y(38) - Y(62)); c.fillStyle = 'rgba(157,23,77,.18)'; c.fillRect(L, Y(38), R - L, Y(0) - Y(38));
-      [0, 25, 50, 75, 100].forEach(function (v) { hline(c, L, R, Y(v), P.gr); T(c, v + '', R + 3, Y(v), P.mu, 'left', 8); });
-      hline(c, L, R, Y(62), pe, [5, 4]); hline(c, L, R, Y(38), pt, [5, 4]); T(c, 'EKSPANSIF ≥62', L + 3, Y(62) - 6, pe, 'left', 7, 700); T(c, 'KETAT ≤38', L + 3, Y(38) + 7, pt, 'left', 7, 700);
-      var g = c.createLinearGradient(0, a, 0, b); g.addColorStop(0, 'rgba(236,72,153,.34)'); g.addColorStop(1, 'rgba(236,72,153,0)');
+      var cE = P.up, cA = P.l ? '#d97706' : '#FBBF24', cK = P.dn;
+      var L = 10, R = w - 36, a = 44, b = h - 46, sy = b + 6, slot = (R - L) / (n - 1), i, X = function (k) { return L + k * slot; }, Y = function (v) { return b - v / 100 * (b - a); };
+      var rgm = function (v) { return v >= 62 ? ['EKSPANSIF', cE] : v <= 38 ? ['KETAT', cK] : ['NETRAL', cA]; };
+      var cur = sc[n - 1], rc = rgm(cur), d0 = cur - sc[0], av = sc.reduce(function (p, q) { return p + q; }, 0) / n, em = K.ema(sc, 8);
+      /* header: skor besar + pil rezim */
+      K.T(c, cur.toFixed(1), L, 13, rc[1], 'left', 15, 700); var tx = L + c.measureText(cur.toFixed(1)).width + 8;
+      c.font = '700 8px ' + MONO; var pw = c.measureText(rc[0]).width + 12; rr(c, tx, 6, pw, 15, 7.5); c.fillStyle = ra(rc[1], .16); c.fill(); c.strokeStyle = ra(rc[1], .55); c.lineWidth = 1; c.stroke(); K.T(c, rc[0], tx + pw / 2, 13.5, rc[1], 'center', 8, 700);
+      K.T(c, (d0 >= 0 ? '▲ +' : '▼ ') + d0.toFixed(1) + ' poin', R + 34, 13, d0 >= 0 ? P.up : P.dn, 'right', 8, 700);
+      var lx = legend(c, L, 31, rc[1], 'bold', 'SKOR', '', P.tx, P); lx = legend(c, lx - 4, 31, P.tx, 'dash', 'EMA8', em[n - 1].toFixed(1), P.tx, P); legend(c, lx, 31, P.mu, 'dash', 'RATA2', av.toFixed(1), P.mu, P);
+      /* pita rezim */
+      c.save(); rr(c, L, a, R - L, b - a, 4); c.clip();
+      c.fillStyle = ra(cE, P.l ? .10 : .09); c.fillRect(L, Y(100), R - L, Y(62) - Y(100));
+      c.fillStyle = ra(cA, P.l ? .05 : .035); c.fillRect(L, Y(62), R - L, Y(38) - Y(62));
+      c.fillStyle = ra(cK, P.l ? .10 : .09); c.fillRect(L, Y(38), R - L, Y(0) - Y(38));
+      c.restore();
+      [0, 25, 50, 75, 100].forEach(function (v) { K.hline(c, L, R, Y(v), P.gr); K.T(c, v + '', R + 4, Y(v), P.mu, 'left', 8); });
+      K.T(c, 'EKSPANSIF', L + 5, Y(100) + 8, ra(cE, .9), 'left', 7, 700); K.T(c, 'NETRAL', L + 5, Y(50), ra(cA, .9), 'left', 7, 700); K.T(c, 'KETAT', L + 5, Y(0) - 8, ra(cK, .9), 'left', 7, 700);
+      /* garis batas rezim (putus-putus) */
+      K.hline(c, L, R, Y(62), cE, [5, 4]); K.hline(c, L, R, Y(38), cK, [5, 4]);
+      var yc0 = Y(cur); if (Math.abs(yc0 - Y(62)) > 13) axisTag(c, '62', R + 2, Y(62) - 1, cE, P); if (Math.abs(yc0 - Y(38)) > 13) axisTag(c, '38', R + 2, Y(38) + 1, cK, P);
+      /* area + garis berwarna per rezim */
+      c.save(); c.beginPath(); c.rect(L, a, R - L, b - a); c.clip();
+      var g = c.createLinearGradient(0, a, 0, b); g.addColorStop(0, ra(rc[1], .30)); g.addColorStop(1, ra(rc[1], 0));
       c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(sc[i])) : c.moveTo(X(i), Y(sc[i])); c.lineTo(X(n - 1), b); c.lineTo(X(0), b); c.closePath(); c.fillStyle = g; c.fill();
-      var o62 = (Y(62) - a) / (b - a), o38 = (Y(38) - a) / (b - a), gl = c.createLinearGradient(0, a, 0, b);
-      gl.addColorStop(0, pe); gl.addColorStop(o62, pe); gl.addColorStop(Math.min(1, o62 + .001), pn); gl.addColorStop(o38, pn); gl.addColorStop(Math.min(1, o38 + .001), pt); gl.addColorStop(1, pt);
-      c.shadowColor = rc[1]; c.shadowBlur = P.l ? 0 : 6; c.lineWidth = 2; c.strokeStyle = gl; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(sc[i])) : c.moveTo(X(i), Y(sc[i])); c.stroke(); c.shadowBlur = 0;
-      var em = ema(sc, 8); c.setLineDash([2, 3]); c.lineWidth = 1; c.strokeStyle = P.tx; c.globalAlpha = .6; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(em[i])) : c.moveTo(X(i), Y(em[i])); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
-      for (i = 1; i < n; i++) { var p = sc[i - 1], q = sc[i]; if ((p < 62) !== (q < 62)) tri(c, X(i), Y(q) + (q >= 62 ? 7 : -7), q >= 62, q >= 62 ? pe : pn, 3); if ((p > 38) !== (q > 38)) tri(c, X(i), Y(q) + (q <= 38 ? -7 : 7), q > 38, q <= 38 ? pt : pn, 3); }
-      dot(c, X(n - 1), Y(cur), rc[1], now); tag(c, cur.toFixed(1), R + 2, clamp(Y(cur), a + 6, b - 6), rc[1], '#111');
-      for (i = 0; i < n; i++) { c.fillStyle = rgm(sc[i])[1]; c.globalAlpha = .85; c.fillRect(X(i) - slot / 2, sy, slot + .6, 8); } c.globalAlpha = 1;
-      T(c, 'RIWAYAT REZIM', L + 2, sy + 4, 'rgba(0,0,0,.7)', 'left', 7, 700);
-      for (i = n - 1; i >= 0; i -= 10) if (X(i) > L + 20) T(c, H.t[i], X(i), h - 4, P.mu, 'center', 8);
+      var o62 = clamp((Y(62) - a) / (b - a), 0, 1), o38 = clamp((Y(38) - a) / (b - a), 0, 1), gl = c.createLinearGradient(0, a, 0, b);
+      gl.addColorStop(0, cE); gl.addColorStop(o62, cE); gl.addColorStop(Math.min(1, o62 + .001), cA); gl.addColorStop(o38, cA); gl.addColorStop(Math.min(1, o38 + .001), cK); gl.addColorStop(1, cK);
+      c.setLineDash([2, 3]); c.lineWidth = 1; c.strokeStyle = P.tx; c.globalAlpha = .5; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(em[i])) : c.moveTo(X(i), Y(em[i])); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
+      c.shadowColor = rc[1]; c.shadowBlur = P.l ? 0 : 7; c.lineWidth = 2.2; c.lineCap = 'round'; c.strokeStyle = gl; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(sc[i])) : c.moveTo(X(i), Y(sc[i])); c.stroke(); c.shadowBlur = 0;
+      /* penanda lintas batas rezim */
+      for (i = 1; i < n; i++) { var p = sc[i - 1], q = sc[i], th = (p < 62) !== (q < 62) ? 62 : (p > 38) !== (q > 38) ? 38 : 0; if (th) { var f = (th - p) / (q - p), mxp = X(i - 1) + f * slot; c.beginPath(); c.arc(mxp, Y(th), 3.2, 0, TAU); c.fillStyle = P.l ? '#fff' : '#0b1220'; c.fill(); c.lineWidth = 1.5; c.strokeStyle = rgm(q)[1]; c.stroke(); } }
+      c.restore();
+      K.dot(c, X(n - 1), Y(cur), rc[1], now); axisTag(c, cur.toFixed(1), R + 2, clamp(Y(cur), a + 7, b - 7), rc[1], P);
+      /* strip rezim */
+      var cnt = { E: 0, A: 0, K: 0 };
+      for (i = 0; i < n; i++) { var rv = rgm(sc[i]); rv[0] === 'EKSPANSIF' ? cnt.E++ : rv[0] === 'KETAT' ? cnt.K++ : cnt.A++; c.fillStyle = ra(rv[1], .9); c.fillRect(X(i) - slot / 2 + .3, sy, slot - .6, 6); }
+      /* sumbu waktu + distribusi rezim */
+      xAxis(c, X, n, L, R, sy + 6, sy + 18, P);
+      var dx = L, dy = h - 7, pc = function (v) { return Math.round(v / n * 100) + '%'; };
+      [['EKSPANSIF', cE, cnt.E], ['NETRAL', cA, cnt.A], ['KETAT', cK, cnt.K]].forEach(function (z) { dx = legend(c, dx, dy, z[1], 'box', z[0], pc(z[2]), z[1], P); });
+      /* crosshair */
       if (s.mx >= L && s.mx <= R) {
-        var k = clamp(Math.round((s.mx - L) / slot), 0, n - 1), x = X(k), r = rgm(sc[k]);
-        vline(c, x, a, sy + 8, P); c.beginPath(); c.arc(x, Y(sc[k]), 3, 0, TAU); c.fillStyle = r[1]; c.fill();
-        tip(c, w, x, [[H.t[k], P.tx], ['Skor  ' + sc[k].toFixed(1), r[1]], ['Rezim ' + r[0], r[1]], ['EMA8  ' + em[k].toFixed(1), P.mu]], P);
+        var k = clamp(Math.round((s.mx - L) / slot), 0, n - 1), x = X(k), r = rgm(sc[k]), dk = sc[k] - (k ? sc[k - 1] : sc[k]), nb = sc[k] >= 50 ? 62 : 38;
+        K.vline(c, x, a, sy + 6, P);
+        if (s.my >= a && s.my <= b) { K.hline(c, L, R, s.my, P.mu, [3, 3]); axisTag(c, ((b - s.my) / (b - a) * 100).toFixed(1), R + 2, s.my, P.l ? '#334155' : '#e2e8f0', P); }
+        c.beginPath(); c.arc(x, Y(sc[k]), 3.6, 0, TAU); c.fillStyle = r[1]; c.fill(); c.lineWidth = 1.5; c.strokeStyle = P.l ? '#fff' : '#0b1220'; c.stroke();
+        timeTag(c, H.t[k], x, sy + 18, w, P);
+        card(c, w, x, a + 4, H.t[k], [['Skor', sc[k].toFixed(1), r[1]], ['Rezim', r[0], r[1]], ['EMA8', em[k].toFixed(1), P.mu], ['Δ / tick', (dk >= 0 ? '+' : '') + dk.toFixed(1), dk >= 0 ? P.up : P.dn], ['Jarak ke ' + nb, (sc[k] - nb >= 0 ? '+' : '') + (sc[k] - nb).toFixed(1), P.mu]], P);
       }
     });
   }
@@ -5217,8 +5442,8 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     CORR.forEach(function (q) { q.v = clamp(q.v + rnd(-.025, .025) + (q.b - q.v) * .1, -.95, .95); });
     corrRender();
     if ((el = $('mlc-upd'))) el.textContent = 'Update ' + clock();
-    H.t.push(clock()); H.net.push(+net.toFixed(3)); H.fed.push(+fed.x.toFixed(3)); H.sc.push(+st.score.toFixed(1));
-    if (H.t.length > 60) { H.t.shift(); H.net.shift(); H.fed.shift(); H.sc.shift(); }
+    H.t.push(clock()); H.net.push(+net.toFixed(3)); H.fed.push(+fed.x.toFixed(3)); H.sc.push(+st.score.toFixed(1)); H.rrp.push(+rrp.x.toFixed(3)); H.tga.push(+tga.x.toFixed(3));
+    if (H.t.length > 60) { H.t.shift(); H.net.shift(); H.fed.shift(); H.sc.shift(); H.rrp.shift(); H.tga.shift(); }
     safe(hmRender)();
     if (vis()) { mkCharts(); updCharts(); }
   }
@@ -7542,6 +7767,57 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
   document.addEventListener('mouseleave',reset);
 })();
 </script>
+<style id="ba-ext-css">
+/* ===== Tema Putih (menimpa paksaan dark-black) ===== */
+html.light{color-scheme:light!important}
+html.light body,html.light body[class]{color:#0f172a!important}
+html.light body:before{background:radial-gradient(ellipse at 50% 0%,rgba(14,165,233,.14),transparent 60%),radial-gradient(ellipse at 100% 20%,rgba(34,211,238,.10),transparent 55%)!important}
+html.light body .text-white{color:#0f172a!important}
+html.light body .text-gray-100,html.light body .text-gray-200,html.light body .text-gray-300{color:#1e293b!important}
+html.light body .text-gray-400{color:#475569!important}
+html.light body .text-gray-500{color:#64748b!important}
+html.light body .bg-brand-primary.text-white,html.light body .bg-brand-primary .text-white,html.light body [class*="bg-brand-primary/9"].text-white,html.light body .bg-emerald-500.text-white,html.light body .bg-emerald-600.text-white,html.light body .bg-rose-600.text-white,html.light body .bg-amber-600.text-white,html.light body .bg-blue-600.text-white,html.light body .absolute[class*="from-black"] .text-white{color:#fff!important}
+html.light body .card-3d{background-color:rgba(255,255,255,var(--card-al,.75))!important}
+html.light input:not([type=checkbox]):not([type=range]):not([type=radio]):not([type=file]),html.light select,html.light textarea{background-color:rgba(255,255,255,.9)!important;color:#0f172a!important}
+html.light #custom-modal>div{background-color:#fff!important}
+html.light ::-webkit-scrollbar-track{background:#f1f5f9!important}
+html.light #bg3d{filter:invert(1) hue-rotate(180deg)!important;opacity:calc(var(--ba-3d,1)*.5)}
+/* halaman Pengaturan: varian putih */
+html.light #page-settings h1,html.light .st-h,html.light .st-row b,html.light .st-ava b{color:#0f172a!important}
+html.light .st-sub,html.light .st-row small,html.light .st-prev p,html.light .st-ava small{color:#64748b!important}
+html.light .st-card{background:rgba(255,255,255,var(--card-al,.75));border-color:rgba(15,23,42,.10)}
+html.light .st-row{border-top-color:rgba(15,23,42,.08)}
+html.light .st-seg{background:rgba(15,23,42,.05);border-color:rgba(15,23,42,.10)}
+html.light .st-seg button{color:#475569}html.light .st-seg button:hover{color:#0f172a}html.light .st-seg button.is-on{color:#001018}
+html.light input.st-sw{background-color:#cbd5e1!important}
+html.light input.st-sw:checked{background-color:rgb(var(--ba-ac2,14 165 233))!important}
+html.light .st-in{background:#fff!important;color:#0f172a!important;border-color:#cbd5e1}
+html.light select.st-in option{background:#fff;color:#0f172a}
+html.light .st-btn{color:#334155;background:#fff;border-color:#cbd5e1}html.light .st-btn:hover{background:#f1f5f9}
+html.light .st-btn.pri{background:rgb(var(--ba-ac2,14 165 233));color:#001018}
+html.light .st-prev{background:rgba(255,255,255,.8);border-color:#dbe3ee}
+html.light .st-keys{color:#334155}html.light .st-keys kbd,html.light .st-row kbd{background:#f1f5f9;border-color:#cbd5e1;color:#0f172a}
+html.light .st-ac.is-on{border-color:#0f172a;box-shadow:0 0 0 3px rgba(15,23,42,.15)}
+html.light #st-toast{background:#0f172a;color:#fff}
+/* tombol tema cepat di topbar */
+.ba-tt{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;color:#cbd5e1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);cursor:pointer;padding:0;transition:background .2s,color .2s}
+.ba-tt:hover{background:rgba(255,255,255,.12);color:rgb(var(--ba-ac,56 189 248))}
+html.light .ba-tt,html.light .ba-gear{color:#334155;background:#fff;border-color:#cbd5e1}
+.st-badge{font:600 12px ui-monospace,Menlo,monospace;padding:5px 11px;border-radius:999px;background:rgba(52,211,153,.14);color:#34d399;white-space:nowrap}
+.st-badge.off{background:rgba(251,113,133,.14);color:#fb7185}
+html.light .st-badge{color:#047857}html.light .st-badge.off{color:#be123c}
+/* fitur tambahan */
+html[data-font="serif"] body{font-family:Georgia,'Times New Roman',serif!important}
+html[data-font="mono"] body{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace!important}
+html[data-radius="sharp"] [class*="rounded-"]:not(.rounded-full),html[data-radius="sharp"] .st-card{border-radius:6px!important}
+html[data-radius="round"] .rounded-2xl,html[data-radius="round"] .rounded-xl,html[data-radius="round"] .st-card{border-radius:28px!important}
+html[data-tick="slow"] #live-ticks-ticker{animation-duration:90s!important}
+html[data-tick="fast"] #live-ticks-ticker{animation-duration:18s!important}
+html.ba-no-top .ba-live,html.ba-no-top .ba-clock,html.ba-no-top .ba-date{display:none!important}
+html.ba-hc:not(.light) body .text-gray-300,html.ba-hc:not(.light) body .text-gray-400,html.ba-hc:not(.light) body .text-gray-500{color:#f3f4f6!important}
+html.ba-hc.light body .text-gray-300,html.ba-hc.light body .text-gray-400,html.ba-hc.light body .text-gray-500{color:#0f172a!important}
+html.ba-hc [class*="border-card-border"],html.ba-hc .st-card{border-color:rgba(148,163,184,.55)!important}
+</style>
 <script id="ba-settings-js">
 /* Halaman Pengaturan: semua kontrol langsung diterapkan & disimpan (localStorage 'ba-settings') */
 (function(){
@@ -7613,9 +7889,85 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
   document.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&e.key===','){e.preventDefault();openSettings()}});
   new MutationObserver(function(){var sb=$('[data-sb]',page);if(sb)sb.checked=root.classList.contains('ba-collapsed')}).observe(root,{attributes:true,attributeFilter:['class']});
 
+  window.baSettingsChange=change;window.baToast=toast;
   applyAll();
   /* Halaman awal (hanya saat dimuat) */
-  if(S.start&&S.start!=='home'){setTimeout(function(){var a=$('a.nav-link[data-page="'+S.start+'"]');if(a)a.click()},60)}
+  var tgt=S.start==='last'?(function(){try{return localStorage.getItem('ba-lastpage')}catch(e){return null}})():S.start;
+  if(tgt&&tgt!=='home'&&tgt!=='settings'){setTimeout(function(){var a=$('a.nav-link[data-page="'+tgt+'"]');if(a)a.click()},60)}
+})();
+</script>
+<style id="ba-art-css">
+/* ===== Tipografi artikel panjang ===== */
+#detail-content{font-weight:300}
+#detail-content>*{max-width:100%}
+#detail-content h2{font-size:1.55rem;line-height:1.25;font-weight:800;color:#fff;margin:2.4rem 0 .9rem;scroll-margin-top:96px;display:flex;gap:.65rem;align-items:center;letter-spacing:-.01em}
+#detail-content h2::before{content:"";flex:0 0 4px;height:1.15em;border-radius:4px;background:linear-gradient(180deg,rgb(var(--ba-ac,56 189 248)),rgb(var(--ba-ac2,14 165 233)))}
+#detail-content h3{font-size:1.12rem;font-weight:700;color:#f1f5f9;margin:1.6rem 0 .5rem}
+#detail-content p{margin:0 0 1.1rem;line-height:1.85}
+#detail-content p.lead{font-size:1.14em;color:#e5e7eb;border-left:3px solid rgb(var(--ba-ac,56 189 248));padding-left:1rem;line-height:1.8}
+#detail-content ul,#detail-content ol{margin:0 0 1.3rem 1.35rem;padding:0}
+#detail-content ul{list-style:disc}#detail-content ol{list-style:decimal}
+#detail-content li{margin:.4rem 0;line-height:1.8;padding-left:.2rem}
+#detail-content li::marker{color:rgb(var(--ba-ac,56 189 248))}
+#detail-content strong{color:#fff;font-weight:600}
+#detail-content blockquote{margin:1.6rem 0;padding:1.05rem 1.3rem;border-left:3px solid rgb(var(--ba-ac,56 189 248));background:rgba(255,255,255,.045);border-radius:0 14px 14px 0;font-style:italic;color:#e2e8f0;line-height:1.8}
+#detail-content .art-box{margin:1.6rem 0;padding:1.1rem 1.3rem;border:1px solid rgb(var(--ba-ac,56 189 248) / .35);background:rgb(var(--ba-ac,56 189 248) / .07);border-radius:16px}
+#detail-content .art-box>b{display:block;color:#fff;font-size:.95rem;font-weight:700;margin-bottom:.5rem;letter-spacing:.01em}
+#detail-content .art-box ul{margin-bottom:.2rem}#detail-content .art-box p{margin:0;font-size:.95em}
+#detail-content .art-box.warn{border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.07)}
+#detail-content .art-box.note{border-color:rgba(148,163,184,.35);background:rgba(148,163,184,.07);font-size:.92em}
+.art-tblwrap{overflow-x:auto;margin:1.5rem 0;border:1px solid rgba(148,163,184,.25);border-radius:14px}
+.art-tbl{width:100%;border-collapse:collapse;font-size:.88em;min-width:520px}
+.art-tbl th{background:rgba(148,163,184,.12);color:#fff;text-align:left;padding:.7rem .9rem;font-weight:700;white-space:nowrap}
+.art-tbl td{padding:.65rem .9rem;border-top:1px solid rgba(148,163,184,.16);vertical-align:top;line-height:1.55}
+.art-tbl tbody tr:nth-child(even){background:rgba(148,163,184,.05)}
+.art-toc{margin:0 0 2rem;padding:1.1rem 1.3rem;border:1px solid rgba(148,163,184,.25);border-radius:16px;background:rgba(148,163,184,.06)}
+.art-toc>b{display:block;color:#fff;font-weight:700;font-size:.95rem;margin-bottom:.5rem}
+.art-toc>b i{color:rgb(var(--ba-ac,56 189 248));margin-right:.4rem}
+#detail-content .art-toc ol{margin:0 0 0 1.2rem;columns:2;column-gap:2rem}
+@media(max-width:640px){#detail-content .art-toc ol{columns:1}#detail-content h2{font-size:1.3rem}}
+.art-toc li{margin:.15rem 0;break-inside:avoid}
+.art-toc button{background:none;border:0;color:#cbd5e1;font-size:.9rem;text-align:left;cursor:pointer;padding:.1rem 0;font-weight:400}
+.art-toc button:hover{color:rgb(var(--ba-ac,56 189 248));text-decoration:underline}
+html.light #detail-content h2,html.light #detail-content h3,html.light #detail-content strong,html.light #detail-content .art-box>b,html.light .art-toc>b,html.light .art-tbl th{color:#0f172a}
+html.light #detail-content p.lead,html.light #detail-content blockquote{color:#1e293b}
+html.light #detail-content blockquote{background:rgba(15,23,42,.04)}
+html.light .art-toc button{color:#334155}
+html.light .art-tblwrap,html.light .art-toc{border-color:rgba(15,23,42,.14)}
+html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
+</style>
+<script id="ba-ext-js">
+/* Tema Putih/Dark Black cepat, koneksi data, layar penuh, putar halaman otomatis, pintasan keyboard */
+(function(){
+  var S=window.__BA_S,root=document.documentElement;if(!S||!window.baSettingsChange)return;
+  var $=function(q,c){return (c||document).querySelector(q)};
+  var PAGES=['home','profile','crypto-market','stock-exchange','global-market','market-stat'],AUTO=['home','crypto-market','stock-exchange','global-market','market-stat'],cur='home';
+  function go(p){var a=$('a.nav-link[data-page="'+p+'"]');if(a)a.click()}
+  function isLight(){return root.classList.contains('light')}
+  function toggleTheme(){var l=isLight();window.baSettingsChange('theme',l?'dark':'light',l?'Tema Dark Black aktif':'Tema Putih aktif')}
+  var tr=$('#ba-topbar .ba-top-right'),tb=null;
+  function icon(){if(!tb)return;tb.innerHTML='<i class="fa-solid '+(isLight()?'fa-sun':'fa-moon')+'"></i>';tb.title=isLight()?'Ganti ke Dark Black (T)':'Ganti ke Putih (T)'}
+  if(tr){tb=document.createElement('button');tb.type='button';tb.className='ba-tt';tb.setAttribute('aria-label','Ganti tema Putih / Dark Black');tb.addEventListener('click',toggleTheme);tr.insertBefore(tb,$('.ba-gear',tr)||null)}
+  icon();new MutationObserver(icon).observe(root,{attributes:true,attributeFilter:['class']});
+  function full(){try{if(document.fullscreenElement)document.exitFullscreen();else root.requestFullscreen()}catch(e){}}
+  function net(){var el=$('#st-net');if(!el)return;var on=navigator.onLine;el.className='st-badge'+(on?'':' off');el.textContent=on?(window.__BA_PROXY?'Online • API aktif':'Online'):'Offline'}
+  window.addEventListener('online',net);window.addEventListener('offline',net);net();setTimeout(net,2500);
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a.nav-link[data-page]');
+    if(a){cur=a.getAttribute('data-page');if(cur!=='settings'){try{localStorage.setItem('ba-lastpage',cur)}catch(x){}}}
+    if(e.target.closest('#st-full'))full();
+    if(e.target.closest('#st-refresh')){var ok=false;if(typeof loadLiveRates==='function'){try{loadLiveRates();ok=true}catch(x){}}net();window.baToast&&window.baToast(ok?'Data langsung dimuat ulang':'Data langsung akan dimuat otomatis')}
+  },true);
+  var timer=null;
+  function syncAuto(){clearInterval(timer);timer=null;if(!S.autoplay)return;
+    timer=setInterval(function(){if(cur==='settings'||document.hidden)return;var i=AUTO.indexOf(cur);go(AUTO[(i+1)%AUTO.length])},Math.max(5,S.autosec||20)*1000)}
+  var base=window.baApplyVisual;window.baApplyVisual=function(){base();syncAuto()};syncAuto();
+  document.addEventListener('keydown',function(e){
+    if(e.ctrlKey||e.metaKey||e.altKey)return;var t=e.target;
+    if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable))return;
+    var k=(e.key||'').toLowerCase();
+    if(k==='t')toggleTheme();else if(k==='f')full();else if(/^[1-6]$/.test(k))go(PAGES[+k-1]);
+  });
 })();
 </script>
 </body>
