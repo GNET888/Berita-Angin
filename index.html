@@ -54,7 +54,7 @@
   window.baApplyVisual();
 })();
 </script>
-    <title>Berita Angin - 1% Issue 99% Fact</title>
+    <title>Berita Angin (Beta) - 1% Issue 99% Fact</title>
     <script>(function(){var h=document.documentElement;if(!h.classList.contains('light'))h.classList.add('dark');})();</script>
     <!-- Muat Chart.js untuk Grafik Indeks Real-Time -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -900,6 +900,47 @@ html.light #ba-install,html.light #ba-toast{color:#0f172a;background:rgba(255,25
 #ba-toast.show{opacity:1}
 @media (min-width:768px){#ba-install{left:auto;right:20px;bottom:20px;transform:none}}
 @media (prefers-reduced-motion:reduce){.page.ba-enter,#ba-splash .lg,#ba-splash i::after{animation:none!important}#ba-sheet{transition:none}}
+</style>
+<style id="ba-mobile-fix">
+/* ===== PERBAIKAN MOBILE & RESPONSIF (sidebar/drawer dihapus di HP) ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button,select,summary,[role=button]{touch-action:manipulation}
+.ba-tscroll{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+@media (max-width:767px){
+  /* Sidebar/drawer + header lama dihapus di HP: navigasi pindah ke tab bar bawah */
+  #mobile-sidebar,#mobile-menu-btn,header.sticky{display:none!important}
+  /* Area status bar (notch) */
+  html:before{content:"";position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);background:var(--ba-bg,#000);z-index:44;pointer-events:none}
+  html.light:before{background:#f1f5f9}
+  /* Bar judul halaman: satu bar ringkas, lengket, terbaca di atas konten */
+  html #ba-topbar{position:sticky!important;top:env(safe-area-inset-top,0px);z-index:40;margin:0!important;padding:10px 16px!important;background:rgba(6,8,14,.74)!important;-webkit-backdrop-filter:blur(18px) saturate(160%)!important;backdrop-filter:blur(18px) saturate(160%)!important}
+  html.light #ba-topbar{background:rgba(255,255,255,.8)!important}
+  #ba-topbar .ba-crumb b{font-size:18px}
+  #ba-topbar .ba-top-right{flex-wrap:nowrap;gap:6px}
+  .ba-tickwrap{padding-top:calc(env(safe-area-inset-top,0px) + 5px)!important;padding-bottom:5px!important}
+  html.ba-no-ticker .ba-tickwrap{display:none!important}
+  /* Konten: lebar penuh, tanpa geser samping */
+  body>main{margin:0!important;width:100%!important;max-width:100%!important;padding-left:calc(.875rem + env(safe-area-inset-left,0px))!important;padding-right:calc(.875rem + env(safe-area-inset-right,0px))!important;padding-top:.875rem!important}
+  .page,.page>*{min-width:0}
+  .page .flex{min-width:0}
+  .page [class*="grid-cols-3"],.page [class*="grid-cols-5"],.page [class*="grid-cols-6"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .page img,.page svg,.page canvas{max-width:100%}
+  .page pre,.page code{white-space:pre-wrap;word-break:break-word}
+  /* Input tidak memicu zoom otomatis di iOS */
+  input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea{font-size:16px!important}
+  #ba-sheet{max-height:78vh;max-height:78dvh}
+  #custom-modal>div{max-width:calc(100vw - 24px)!important}
+}
+@media (max-width:360px){
+  .ba-tab{font-size:10px}.ba-tab-ico{width:42px}
+  body>main{padding-left:.625rem!important;padding-right:.625rem!important}
+  #ba-topbar .ba-clock{display:none}
+}
+/* HP landscape: tab bar lebih pendek */
+@media (max-width:900px) and (max-height:480px){
+  #ba-tabbar .ba-tab{min-height:44px;flex-direction:row;gap:6px}#ba-tabbar .ba-tab span:last-child{display:none}
+  body>main{padding-bottom:78px!important}
+}
 </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
@@ -8156,6 +8197,34 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     W.addEventListener('beforeinstallprompt',function(e){e.preventDefault();evt=e;var r=sheet.querySelector('[data-act="install"]');if(r&&!standalone)r.hidden=false;showChip('Pasang Berita Angin sebagai aplikasi',true);});
     W.addEventListener('appinstalled',function(){hideChip(true);say('Aplikasi terpasang');});
     if(/iphone|ipad|ipod/i.test(navigator.userAgent)&&!standalone)showChip('Ketuk Bagikan, lalu <b>Tambahkan ke Layar Utama</b>',false);
+  }catch(e){}
+})();
+</script>
+<script id="ba-mobile-js">
+(function(){
+  try{
+    var D=document,W=window,main=D.querySelector('body>main');if(!main)return;
+    var mq=W.matchMedia('(max-width:767px)');
+    var tk=D.getElementById('live-ticks-ticker');
+    if(tk){var w=tk.closest('.border-b');if(w)w.classList.add('ba-tickwrap');}
+    /* Tabel tanpa pembungkus scroll -> bisa digeser mendatar di HP */
+    function scan(){
+      if(!mq.matches)return;
+      var pg=main.querySelector('.page.active');if(!pg)return;
+      Array.prototype.forEach.call(pg.querySelectorAll('table:not([data-ba-t])'),function(t){
+        t.setAttribute('data-ba-t','1');
+        var p=t.parentElement,ok=false;
+        while(p&&p!==main){var o=getComputedStyle(p).overflowX;if(o==='auto'||o==='scroll'){ok=true;break;}p=p.parentElement;}
+        if(!ok)t.classList.add('ba-tscroll');
+      });
+    }
+    var tm;function later(){clearTimeout(tm);tm=setTimeout(scan,350);}
+    new MutationObserver(later).observe(main,{childList:true,subtree:true});
+    new MutationObserver(later).observe(main,{attributes:true,attributeFilter:['class'],subtree:true,childList:false});
+    if(mq.addEventListener)mq.addEventListener('change',scan);
+    scan();setTimeout(scan,1500);
+    /* Tutup lembar Lainnya saat layar diputar/diubah ukurannya ke desktop */
+    mq.addEventListener&&mq.addEventListener('change',function(e){if(!e.matches){var sh=D.getElementById('ba-sheet'),sc=D.getElementById('ba-scrim');if(sh)sh.classList.remove('open');if(sc)sc.classList.remove('open');}});
   }catch(e){}
 })();
 </script>
