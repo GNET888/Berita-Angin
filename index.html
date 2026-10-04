@@ -942,6 +942,19 @@ a,button,select,summary,[role=button]{touch-action:manipulation}
   body>main{padding-bottom:78px!important}
 }
 </style>
+<style id="ba-scroll-fix">
+/* ===== PERBAIKAN SCROLL (HP) ===== */
+html{overflow-x:hidden!important;overflow-y:auto!important;height:auto!important;overscroll-behavior:auto!important;touch-action:pan-y pinch-zoom}
+body{overflow:visible!important;height:auto!important;position:static!important;overscroll-behavior:auto!important;touch-action:auto}
+#ba-splash{pointer-events:none!important}
+html:before{pointer-events:none}
+#ba-scrim:not(.open),#ba-sheet:not(.open){pointer-events:none!important}
+@media (max-width:767px){
+  html{-webkit-overflow-scrolling:touch}
+  #bg3d,#bg3d-lbl{pointer-events:none!important;touch-action:none}
+  .page{overflow-y:visible}
+}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-splash" aria-hidden="true"><img class="lg" alt="" width="88" height="88"><b>Berita Angin</b><span>1% Issue 99% Fact</span><i></i></div>
@@ -8225,6 +8238,39 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     scan();setTimeout(scan,1500);
     /* Tutup lembar Lainnya saat layar diputar/diubah ukurannya ke desktop */
     mq.addEventListener&&mq.addEventListener('change',function(e){if(!e.matches){var sh=D.getElementById('ba-sheet'),sc=D.getElementById('ba-scrim');if(sh)sh.classList.remove('open');if(sc)sc.classList.remove('open');}});
+  }catch(e){}
+})();
+</script>
+<script id="ba-scroll-js">
+(function(){
+  try{
+    var W=window,D=document,mq=W.matchMedia('(max-width:767px)');
+    /* 1) Jangan biarkan scroll terkunci (body overflow:hidden tersangkut) */
+    function unlock(){
+      if(!mq.matches)return;
+      var sh=D.getElementById('ba-sheet'),open=sh&&sh.classList.contains('open');
+      if(D.body.style.overflow==='hidden'&&!open)D.body.style.overflow='';
+      if(D.documentElement.style.overflow==='hidden')D.documentElement.style.overflow='';
+    }
+    new MutationObserver(unlock).observe(D.body,{attributes:true,attributeFilter:['style','class']});
+    unlock();
+    /* 2) Animasi latar 3D berhenti sementara saat jari menggulir, lalu lanjut lagi */
+    var prev=false,busy=false,tm;
+    function stop(){
+      if(!mq.matches)return;
+      if(!busy){busy=true;prev=!!W.__BA_3D_OFF;W.__BA_3D_OFF=true;}
+      clearTimeout(tm);tm=setTimeout(function(){busy=false;W.__BA_3D_OFF=prev;},220);
+    }
+    W.addEventListener('scroll',stop,{passive:true});
+    D.addEventListener('touchmove',stop,{passive:true});
+    /* 3) Bar alamat HP naik/turun hanya mengubah tinggi layar: jangan hitung ulang kanvas */
+    var lw=W.innerWidth,lh=W.innerHeight;
+    W.addEventListener('resize',function(e){
+      if(!mq.matches){lw=W.innerWidth;lh=W.innerHeight;return;}
+      var dw=Math.abs(W.innerWidth-lw),dh=Math.abs(W.innerHeight-lh);
+      if(dw<2&&dh<=200){e.stopImmediatePropagation();return;}
+      lw=W.innerWidth;lh=W.innerHeight;
+    },true);
   }catch(e){}
 })();
 </script>
