@@ -2956,6 +2956,69 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                     <div id="ms-alerts" class="text-[11px] text-gray-300 space-y-1"></div>
                 </div>
             </div>
+            <!-- Peta Kapitalisasi Pasar 3D: menggabungkan market cap Crypto, Stock Exchange, Global Market -->
+            <div id="ms3d-card" class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-6">
+                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                    <div><h3 class="text-base sm:text-lg font-bold text-white"><i class="fa-solid fa-cube text-brand-accent mr-2"></i>Peta Kapitalisasi Pasar 3D</h3>
+                    <p class="text-[11px] text-gray-500 mt-0.5">Market cap dibaca langsung dari halaman Crypto Market, Stock Exchange, dan Global Market. Tinggi balok memakai skala akar kuadrat agar Crypto tetap terlihat; angka asli ada di label. Seret untuk memutar.</p></div>
+                    <span class="text-[11px] text-gray-400 font-mono"><span class="live-dot"></span>Sinkron <span id="ms3d-upd">--:--:--</span></span>
+                </div>
+                <div class="relative h-[360px] sm:h-[420px] w-full bg-black/40 border border-card-border rounded-xl overflow-hidden"><canvas id="ms3d" class="w-full h-full" style="touch-action:pan-y;cursor:grab" aria-label="Grafik 3D kapitalisasi pasar Crypto, Saham AS, dan Global"></canvas></div>
+                <div id="ms3d-leg" class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-3"></div>
+            </div>
+            <script>(function(){
+  var cv=document.getElementById('ms3d');if(!cv)return;var ctx=cv.getContext('2d'),yaw=-.6,drag=null,D=null,t0=-9e9,SC=[[239,159,26],[56,189,248],[52,211,153]];
+  function T(id){var e=document.getElementById(id);return e?(e.textContent||'').trim():''}
+  function num(s){var m=String(s).match(/-?[\d.,]+/);if(!m)return NaN;var n=m[0];n=(n.indexOf(',')>-1&&n.indexOf('.')<0)?n.replace(',','.'):n.replace(/,/g,'');return parseFloat(n)}
+  function tri(s){var v=num(s);if(isNaN(v))return NaN;var u=String(s).replace(/[\d.,\s$-]/g,'').toLowerCase();return v*(/^(t|triliun|tn)/.test(u)?1:/^(b|miliar|bn)/.test(u)?.001:/^(m|juta|mn)/.test(u)?1e-6:1)}
+  function fT(v){return v>=1?'$'+v.toFixed(2)+' T':'$'+(v*1000).toFixed(0)+' M'}
+  function sum(a){return a.reduce(function(x,y){return x+y[1]},0)}
+  function collect(){
+    var cr=tri(T('stat-global-mcap')),gl=tri(T('gm-k-mc')),sec={},st=0;if(isNaN(cr))cr=2.45;if(isNaN(gl))gl=108.4;
+    try{allStockDirectory.forEach(function(s){var v=tri(s.mktCap);if(v>0){st+=v;sec[s.sector]=(sec[s.sector]||0)+v}})}catch(e){}
+    var lg=['leg-btc','leg-eth','leg-stb','leg-oth'].map(function(i){var v=num(T(i));return isNaN(v)?0:v}),ls=lg.reduce(function(a,b){return a+b},0);
+    if(ls<50){lg=[56.4,16.2,7.1,20.3];ls=100}
+    var cs=[['BTC',lg[0]/ls*cr],['ETH',lg[1]/ls*cr],['Stablecoin',lg[2]/ls*cr],['Altcoin lain',lg[3]/ls*cr]];
+    var sk=Object.keys(sec).sort(function(a,b){return sec[b]-sec[a]}),ss=sk.slice(0,3).map(function(k){return[k,sec[k]]});ss.push(['Sektor lain',Math.max(0,st-sum(ss))]);
+    var gs=[['Crypto',cr],['Saham AS',st],['Aset lain',Math.max(0,gl-cr-st)]];
+    return[{n:'Crypto Market',tot:cr,seg:cs},{n:'Stock Exchange',tot:st,seg:ss},{n:'Global Market',tot:Math.max(gl,cr+st),seg:gs}];
+  }
+  function legend(){
+    var g=D[2].tot;document.getElementById('ms3d-leg').innerHTML=D.map(function(m,i){var c='rgb('+SC[i].join(',')+')';
+      return '<div class="bg-black/40 border border-card-border rounded-lg px-3 py-2"><div class="flex justify-between items-baseline"><span class="text-[10px] uppercase tracking-wider text-gray-500"><i class="inline-block w-2 h-2 rounded-sm mr-1" style="background:'+c+'"></i>'+m.n+'</span><b class="font-mono text-sm text-white">'+fT(m.tot)+'</b></div><div class="text-[10px] text-gray-500 mb-1">'+(i<2?(m.tot/g*100).toFixed(1)+'% dari Global Market':'Total kapitalisasi pasar global')+'</div><div class="flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] font-mono text-gray-300">'+m.seg.map(function(s){return '<span>'+s[0]+' '+(s[1]/sum(m.seg)*100).toFixed(1)+'%</span>'}).join('')+'</div></div>'}).join('');
+    document.getElementById('ms3d-upd').textContent=new Date().toLocaleTimeString('id-ID',{timeZone:'Asia/Jakarta',hour12:false}).replace(/\./g,':');
+  }
+  function draw(now){
+    requestAnimationFrame(draw);if(cv.offsetParent===null)return;
+    var dpr=Math.min(2,window.devicePixelRatio||1),w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;
+    if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(h*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr)}
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+    if(!D||now-t0>1000){D=collect();t0=now;legend()}
+    var R=document.documentElement.classList;if(!drag&&!R.contains('ba-calm'))yaw+=.004;
+    var tx=R.contains('light')?'#334155':'#cbd5e1',cx=w/2,cy=h*.78,s=Math.min(w/7,h/4.2),cp=Math.cos(.5),sp=Math.sin(.5),co=Math.cos(yaw),si=Math.sin(yaw);
+    function pr(x,y,z){var xr=x*co-z*si,zr=x*si+z*co;return[cx+xr*s,cy-(y*cp+zr*sp)*s,zr]}
+    function F(a,rgb,k){ctx.beginPath();a.forEach(function(p,i){i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1])});ctx.closePath();
+      ctx.fillStyle='rgba('+rgb.map(function(v){return Math.min(255,Math.round(v*k))}).join(',')+',.96)';ctx.fill();ctx.strokeStyle='rgba(255,255,255,.14)';ctx.lineWidth=1;ctx.stroke()}
+    function box(x0,x1,y0,y1,z0,z1,rgb,k){
+      var c=[[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1],[x0,y1,z0],[x1,y1,z0],[x1,y1,z1],[x0,y1,z1]].map(function(p){return pr(p[0],p[1],p[2])});
+      [[[4,5,6,7],0,1,0],[[0,1,5,4],0,0,-1],[[2,3,7,6],0,0,1],[[3,0,4,7],-1,0,0],[[1,2,6,5],1,0,0]].forEach(function(f){
+        var nx=f[1]*co-f[3]*si,nz=f[1]*si+f[3]*co;if(f[2]===0&&nz>=0)return;
+        F(f[0].map(function(i){return c[i]}),rgb,k*(f[2]>0?1.25:.62+.38*(-nz)+.12*nx))})}
+    /* lantai + grid */
+    F([pr(-3.2,0,-1.6),pr(3.2,0,-1.6),pr(3.2,0,1.6),pr(-3.2,0,1.6)],[148,163,184],.35);
+    ctx.strokeStyle='rgba(148,163,184,.18)';for(var g=-3;g<=3;g++){var a=pr(g,0,-1.6),b=pr(g,0,1.6);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke()}
+    for(g=-1;g<=1;g++){a=pr(-3.2,0,g*1.6/1);b=pr(3.2,0,g*1.6/1);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke()}
+    var mx=Math.sqrt(Math.max.apply(null,D.map(function(m){return m.tot}))),cols=D.map(function(m,i){return{m:m,i:i,x:(i-1)*2.1,H:2.3*Math.sqrt(m.tot)/mx}});
+    cols.sort(function(p,q){return pr(q.x,0,0)[2]-pr(p.x,0,0)[2]});
+    cols.forEach(function(c){var y=0,st=sum(c.m.seg)||1;c.m.seg.forEach(function(sg,j){var hh=c.H*sg[1]/st;if(hh<=0)return;box(c.x-.6,c.x+.6,y,y+hh,-.6,.6,SC[c.i],1.12-j*.17);y+=hh})});
+    ctx.textAlign='center';ctx.font='700 '+(w<420?10:12)+'px ui-monospace,Menlo,monospace';
+    cols.forEach(function(c){var t=pr(c.x,c.H+.18,0),b=pr(c.x,0,-.9);ctx.fillStyle=tx;ctx.fillText(fT(c.m.tot),t[0],t[1]);ctx.fillStyle='#94a3b8';ctx.font='600 '+(w<420?9:11)+'px Inter,sans-serif';ctx.fillText(c.m.n,b[0],b[1]+16);ctx.font='700 '+(w<420?10:12)+'px ui-monospace,Menlo,monospace'});
+  }
+  cv.addEventListener('pointerdown',function(e){drag={x:e.clientX};cv.style.cursor='grabbing';try{cv.setPointerCapture(e.pointerId)}catch(_){}});
+  cv.addEventListener('pointermove',function(e){if(drag){yaw+=(e.clientX-drag.x)*.01;drag.x=e.clientX}});
+  ['pointerup','pointercancel'].forEach(function(n){cv.addEventListener(n,function(){drag=null;cv.style.cursor='grab'})});
+  requestAnimationFrame(draw);
+})();</script>
             <!-- Analyst Toolkit Statistik -->
             <div id="analyst-toolkit" class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-6">
                 <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
@@ -7081,6 +7144,18 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
       ? { bg: '#ffffff', grid: 'rgba(15,23,42,.07)', ax: '#64748b', up: '#059669', dn: '#e11d48', ma: '#d97706', em: '#2563eb', bb: 'rgba(124,58,237,.9)', bf: 'rgba(124,58,237,.07)', ch: 'rgba(15,23,42,.4)', tag: '#0f172a', tagt: '#ffffff', on: '#ffffff' }
       : { bg: '#050505', grid: 'rgba(255,255,255,.055)', ax: '#94A3B8', up: '#34D399', dn: '#FB7185', ma: '#FBBF24', em: '#38BDF8', bb: 'rgba(167,139,250,.9)', bf: 'rgba(167,139,250,.08)', ch: 'rgba(226,232,240,.4)', tag: '#E2E8F0', tagt: '#050505', on: '#04130c' };
   }
+  /* ---------- helper 3D ---------- */
+  function b3(col, k, a) { var m = String(col).match(/^#([0-9a-f]{3,6})$/i), r = 100, g = 116, bl = 139;
+    if (m) { var h = m[1]; if (h.length < 6) h = h.split('').map(function (z) { return z + z; }).join(''); r = parseInt(h.substr(0, 2), 16); g = parseInt(h.substr(2, 2), 16); bl = parseInt(h.substr(4, 2), 16); }
+    else { m = String(col).match(/rgba?\(([^)]+)\)/); if (m) { var q = m[1].split(/[ ,\/]+/).map(parseFloat); r = q[0]; g = q[1]; bl = q[2]; } }
+    var f = function (n) { return Math.max(0, Math.min(255, Math.round(n * k))); }; return 'rgba(' + f(r) + ',' + f(g) + ',' + f(bl) + ',' + (a == null ? 1 : a) + ')'; }
+  function box3(x, y, w, h, col, d) {
+    var ox = d * .75, oy = -d * .6, gr = ctx.createLinearGradient(x, y, x + w, y);
+    gr.addColorStop(0, b3(col, 1.15)); gr.addColorStop(1, b3(col, .8));
+    ctx.fillStyle = gr; ctx.fillRect(x, y, w, h);                                   /* sisi depan */
+    ctx.fillStyle = b3(col, 1.4); ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + w, y); ctx.lineTo(x + w + ox, y + oy); ctx.lineTo(x + ox, y + oy); ctx.closePath(); ctx.fill();   /* atas */
+    ctx.fillStyle = b3(col, .52); ctx.beginPath(); ctx.moveTo(x + w, y); ctx.lineTo(x + w + ox, y + oy); ctx.lineTo(x + w + ox, y + h + oy); ctx.lineTo(x + w, y + h); ctx.closePath(); ctx.fill();   /* kanan */
+  }
   function draw() {
     if (cv.offsetParent === null) return;
     var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
@@ -7123,9 +7198,11 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     cs.forEach(function (c, k) {
       var x = Math.round(xAt(k)) + .5, col = c.c >= c.o ? C.up : C.dn;
       ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(x, toY(c.h)); ctx.lineTo(x, toY(c.l)); ctx.stroke();
-      var y1 = toY(Math.max(c.o, c.c)), y2 = toY(Math.min(c.o, c.c));
-      ctx.fillRect(Math.round(x - bw / 2), y1, Math.round(bw), Math.max(1, y2 - y1));
+      var y1 = toY(Math.max(c.o, c.c)), y2 = toY(Math.min(c.o, c.c)), bl = Math.round(x - bw / 2), bwr = Math.round(bw), bh3 = Math.max(1, y2 - y1), d3 = Math.min(9, bw * .8);
+      /* 3D: bayangan lantai, sumbu di tengah kedalaman, lalu balok (depan + atas + kanan) */
+      ctx.save(); ctx.fillStyle = 'rgba(0,0,0,.28)'; ctx.fillRect(bl + d3 * .75 + 2, y1 - d3 * .6 + 3, bwr, bh3); ctx.restore();
+      ctx.strokeStyle = b3(col, .6); ctx.beginPath(); ctx.moveTo(x + d3 * .37, toY(c.h) - d3 * .3); ctx.lineTo(x + d3 * .37, toY(c.l) - d3 * .3); ctx.stroke();
+      box3(bl, y1, bwr, bh3, col, d3);
     });
     if (I.ma) line(ma, C.ma, 1.3); if (I.ema) line(em, C.em, 1.3);
     /* high / low terlihat */
@@ -7140,7 +7217,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
       var vm = 0; cs.forEach(function (c) { vm = Math.max(vm, c.v); });
       ctx.strokeStyle = C.grid; ctx.beginPath(); ctx.moveTo(L, vTop - 4.5); ctx.lineTo(R, vTop - 4.5); ctx.stroke();
       ctx.globalAlpha = .42;
-      cs.forEach(function (c, k) { ctx.fillStyle = c.c >= c.o ? C.up : C.dn; var bh = c.v / (vm || 1) * (vBot - vTop); ctx.fillRect(Math.round(xAt(k) - bw / 2), vBot - bh, Math.round(bw), bh); });
+      cs.forEach(function (c, k) { var bh = c.v / (vm || 1) * (vBot - vTop); box3(Math.round(xAt(k) - bw / 2), vBot - bh, Math.round(bw), bh, c.c >= c.o ? C.up : C.dn, Math.min(6, bw * .6)); });
       ctx.globalAlpha = 1; ctx.fillStyle = C.ax; ctx.textAlign = 'left'; ctx.fillText('VOL', L + 2, vTop + 9);
     }
     /* RSI */
