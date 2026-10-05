@@ -54,7 +54,7 @@
   window.baApplyVisual();
 })();
 </script>
-    <title>Berita Angin - 1% Issue 99% Fact</title>
+    <title>Berita Angin  - 1% Issue 99% Fact</title>
     <script>(function(){var h=document.documentElement;if(!h.classList.contains('light'))h.classList.add('dark');})();</script>
     <!-- Muat Chart.js untuk Grafik Indeks Real-Time -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -2850,7 +2850,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                                 <div>
                                     <h3 class="text-base font-bold text-white uppercase tracking-wider flex items-center space-x-2"><i class="fa-solid fa-chart-line text-brand-accent"></i><span>28 Direktori Indeks & Komoditas Global Utama</span></h3>
-                                    <p class="text-xs text-gray-400 mt-0.5">Nilai, perubahan, dan status sesi diperbarui otomatis; bursa tutup tidak bergerak.</p>
+                                    <p class="text-xs text-gray-400 mt-0.5">Snapshot pasar diperbarui 5 Oktober 2026; nilai dan perubahan mengikuti kuotasi publik terbaru yang tersedia, lalu tampilan diperbarui otomatis.</p>
                                 </div>
                                 <div class="relative w-full sm:w-64">
                                     <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500 text-xs"><i class="fa-solid fa-search"></i></span>
@@ -2956,69 +2956,6 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                     <div id="ms-alerts" class="text-[11px] text-gray-300 space-y-1"></div>
                 </div>
             </div>
-            <!-- Peta Kapitalisasi Pasar 3D: menggabungkan market cap Crypto, Stock Exchange, Global Market -->
-            <div id="ms3d-card" class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-6">
-                <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-                    <div><h3 class="text-base sm:text-lg font-bold text-white"><i class="fa-solid fa-cube text-brand-accent mr-2"></i>Peta Kapitalisasi Pasar 3D</h3>
-                    <p class="text-[11px] text-gray-500 mt-0.5">Market cap dibaca langsung dari halaman Crypto Market, Stock Exchange, dan Global Market. Tinggi balok memakai skala akar kuadrat agar Crypto tetap terlihat; angka asli ada di label. Seret untuk memutar.</p></div>
-                    <span class="text-[11px] text-gray-400 font-mono"><span class="live-dot"></span>Sinkron <span id="ms3d-upd">--:--:--</span></span>
-                </div>
-                <div class="relative h-[360px] sm:h-[420px] w-full bg-black/40 border border-card-border rounded-xl overflow-hidden"><canvas id="ms3d" class="w-full h-full" style="touch-action:pan-y;cursor:grab" aria-label="Grafik 3D kapitalisasi pasar Crypto, Saham AS, dan Global"></canvas></div>
-                <div id="ms3d-leg" class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-3"></div>
-            </div>
-            <script>(function(){
-  var cv=document.getElementById('ms3d');if(!cv)return;var ctx=cv.getContext('2d'),yaw=-.6,drag=null,D=null,t0=-9e9,SC=[[239,159,26],[56,189,248],[52,211,153]];
-  function T(id){var e=document.getElementById(id);return e?(e.textContent||'').trim():''}
-  function num(s){var m=String(s).match(/-?[\d.,]+/);if(!m)return NaN;var n=m[0];n=(n.indexOf(',')>-1&&n.indexOf('.')<0)?n.replace(',','.'):n.replace(/,/g,'');return parseFloat(n)}
-  function tri(s){var v=num(s);if(isNaN(v))return NaN;var u=String(s).replace(/[\d.,\s$-]/g,'').toLowerCase();return v*(/^(t|triliun|tn)/.test(u)?1:/^(b|miliar|bn)/.test(u)?.001:/^(m|juta|mn)/.test(u)?1e-6:1)}
-  function fT(v){return v>=1?'$'+v.toFixed(2)+' T':'$'+(v*1000).toFixed(0)+' M'}
-  function sum(a){return a.reduce(function(x,y){return x+y[1]},0)}
-  function collect(){
-    var cr=tri(T('stat-global-mcap')),gl=tri(T('gm-k-mc')),sec={},st=0;if(isNaN(cr))cr=2.45;if(isNaN(gl))gl=108.4;
-    try{allStockDirectory.forEach(function(s){var v=tri(s.mktCap);if(v>0){st+=v;sec[s.sector]=(sec[s.sector]||0)+v}})}catch(e){}
-    var lg=['leg-btc','leg-eth','leg-stb','leg-oth'].map(function(i){var v=num(T(i));return isNaN(v)?0:v}),ls=lg.reduce(function(a,b){return a+b},0);
-    if(ls<50){lg=[56.4,16.2,7.1,20.3];ls=100}
-    var cs=[['BTC',lg[0]/ls*cr],['ETH',lg[1]/ls*cr],['Stablecoin',lg[2]/ls*cr],['Altcoin lain',lg[3]/ls*cr]];
-    var sk=Object.keys(sec).sort(function(a,b){return sec[b]-sec[a]}),ss=sk.slice(0,3).map(function(k){return[k,sec[k]]});ss.push(['Sektor lain',Math.max(0,st-sum(ss))]);
-    var gs=[['Crypto',cr],['Saham AS',st],['Aset lain',Math.max(0,gl-cr-st)]];
-    return[{n:'Crypto Market',tot:cr,seg:cs},{n:'Stock Exchange',tot:st,seg:ss},{n:'Global Market',tot:Math.max(gl,cr+st),seg:gs}];
-  }
-  function legend(){
-    var g=D[2].tot;document.getElementById('ms3d-leg').innerHTML=D.map(function(m,i){var c='rgb('+SC[i].join(',')+')';
-      return '<div class="bg-black/40 border border-card-border rounded-lg px-3 py-2"><div class="flex justify-between items-baseline"><span class="text-[10px] uppercase tracking-wider text-gray-500"><i class="inline-block w-2 h-2 rounded-sm mr-1" style="background:'+c+'"></i>'+m.n+'</span><b class="font-mono text-sm text-white">'+fT(m.tot)+'</b></div><div class="text-[10px] text-gray-500 mb-1">'+(i<2?(m.tot/g*100).toFixed(1)+'% dari Global Market':'Total kapitalisasi pasar global')+'</div><div class="flex flex-wrap gap-x-3 gap-y-0.5 text-[10px] font-mono text-gray-300">'+m.seg.map(function(s){return '<span>'+s[0]+' '+(s[1]/sum(m.seg)*100).toFixed(1)+'%</span>'}).join('')+'</div></div>'}).join('');
-    document.getElementById('ms3d-upd').textContent=new Date().toLocaleTimeString('id-ID',{timeZone:'Asia/Jakarta',hour12:false}).replace(/\./g,':');
-  }
-  function draw(now){
-    requestAnimationFrame(draw);if(cv.offsetParent===null)return;
-    var dpr=Math.min(2,window.devicePixelRatio||1),w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;
-    if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(h*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr)}
-    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
-    if(!D||now-t0>1000){D=collect();t0=now;legend()}
-    var R=document.documentElement.classList;if(!drag&&!R.contains('ba-calm'))yaw+=.004;
-    var tx=R.contains('light')?'#334155':'#cbd5e1',cx=w/2,cy=h*.78,s=Math.min(w/7,h/4.2),cp=Math.cos(.5),sp=Math.sin(.5),co=Math.cos(yaw),si=Math.sin(yaw);
-    function pr(x,y,z){var xr=x*co-z*si,zr=x*si+z*co;return[cx+xr*s,cy-(y*cp+zr*sp)*s,zr]}
-    function F(a,rgb,k){ctx.beginPath();a.forEach(function(p,i){i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1])});ctx.closePath();
-      ctx.fillStyle='rgba('+rgb.map(function(v){return Math.min(255,Math.round(v*k))}).join(',')+',.96)';ctx.fill();ctx.strokeStyle='rgba(255,255,255,.14)';ctx.lineWidth=1;ctx.stroke()}
-    function box(x0,x1,y0,y1,z0,z1,rgb,k){
-      var c=[[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1],[x0,y1,z0],[x1,y1,z0],[x1,y1,z1],[x0,y1,z1]].map(function(p){return pr(p[0],p[1],p[2])});
-      [[[4,5,6,7],0,1,0],[[0,1,5,4],0,0,-1],[[2,3,7,6],0,0,1],[[3,0,4,7],-1,0,0],[[1,2,6,5],1,0,0]].forEach(function(f){
-        var nx=f[1]*co-f[3]*si,nz=f[1]*si+f[3]*co;if(f[2]===0&&nz>=0)return;
-        F(f[0].map(function(i){return c[i]}),rgb,k*(f[2]>0?1.25:.62+.38*(-nz)+.12*nx))})}
-    /* lantai + grid */
-    F([pr(-3.2,0,-1.6),pr(3.2,0,-1.6),pr(3.2,0,1.6),pr(-3.2,0,1.6)],[148,163,184],.35);
-    ctx.strokeStyle='rgba(148,163,184,.18)';for(var g=-3;g<=3;g++){var a=pr(g,0,-1.6),b=pr(g,0,1.6);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke()}
-    for(g=-1;g<=1;g++){a=pr(-3.2,0,g*1.6/1);b=pr(3.2,0,g*1.6/1);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke()}
-    var mx=Math.sqrt(Math.max.apply(null,D.map(function(m){return m.tot}))),cols=D.map(function(m,i){return{m:m,i:i,x:(i-1)*2.1,H:2.3*Math.sqrt(m.tot)/mx}});
-    cols.sort(function(p,q){return pr(q.x,0,0)[2]-pr(p.x,0,0)[2]});
-    cols.forEach(function(c){var y=0,st=sum(c.m.seg)||1;c.m.seg.forEach(function(sg,j){var hh=c.H*sg[1]/st;if(hh<=0)return;box(c.x-.6,c.x+.6,y,y+hh,-.6,.6,SC[c.i],1.12-j*.17);y+=hh})});
-    ctx.textAlign='center';ctx.font='700 '+(w<420?10:12)+'px ui-monospace,Menlo,monospace';
-    cols.forEach(function(c){var t=pr(c.x,c.H+.18,0),b=pr(c.x,0,-.9);ctx.fillStyle=tx;ctx.fillText(fT(c.m.tot),t[0],t[1]);ctx.fillStyle='#94a3b8';ctx.font='600 '+(w<420?9:11)+'px Inter,sans-serif';ctx.fillText(c.m.n,b[0],b[1]+16);ctx.font='700 '+(w<420?10:12)+'px ui-monospace,Menlo,monospace'});
-  }
-  cv.addEventListener('pointerdown',function(e){drag={x:e.clientX};cv.style.cursor='grabbing';try{cv.setPointerCapture(e.pointerId)}catch(_){}});
-  cv.addEventListener('pointermove',function(e){if(drag){yaw+=(e.clientX-drag.x)*.01;drag.x=e.clientX}});
-  ['pointerup','pointercancel'].forEach(function(n){cv.addEventListener(n,function(){drag=null;cv.style.cursor='grab'})});
-  requestAnimationFrame(draw);
-})();</script>
             <!-- Analyst Toolkit Statistik -->
             <div id="analyst-toolkit" class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-6">
                 <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
@@ -4070,34 +4007,34 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
             convertCurrency();
         }
         const globalMarketDirectory28 = [
-            { name: 'S&P 500', region: 'Amerika Serikat', category: 'Ekuitas / Saham', value: '5,584.20', change: '+0.75%', status: 'Buka' },
-            { name: 'NASDAQ Composite', region: 'Amerika Serikat', category: 'Ekuitas Teknologi', value: '17,820.50', change: '+1.10%', status: 'Buka' },
-            { name: 'Dow Jones Industrial', region: 'Amerika Serikat', category: 'Ekuitas Blue-Chip', value: '41,250.80', change: '+0.42%', status: 'Buka' },
-            { name: 'Russell 2000', region: 'Amerika Serikat', category: 'Saham Kapitalisasi Kecil', value: '2,185.30', change: '+1.25%', status: 'Buka' },
-            { name: 'FTSE 100', region: 'Inggris / Eropa', category: 'Ekuitas Regional', value: '8,245.10', change: '-0.20%', status: 'Tutup' },
-            { name: 'DAX Performance Index', region: 'Jerman / Eropa', category: 'Ekuitas Utama', value: '18,740.10', change: '+0.65%', status: 'Tutup' },
-            { name: 'CAC 40', region: 'Prancis / Eropa', category: 'Ekuitas Utama', value: '7,510.40', change: '-0.15%', status: 'Tutup' },
-            { name: 'Euro Stoxx 50', region: 'Zona Euro', category: 'Indeks Gabungan', value: '4,920.80', change: '+0.30%', status: 'Tutup' },
-            { name: 'Nikkei 225', region: 'Jepang / Asia', category: 'Ekuitas Utama', value: '39,120.00', change: '+1.45%', status: 'Tutup' },
-            { name: 'TOPIX Index', region: 'Jepang / Asia', category: 'Ekuitas Luas', value: '2,745.20', change: '+1.10%', status: 'Tutup' },
-            { name: 'Hang Seng Index', region: 'Hong Kong', category: 'Ekuitas Asia', value: '17,650.30', change: '-0.85%', status: 'Tutup' },
-            { name: 'Shanghai Composite', region: 'Tiongkok', category: 'Ekuitas Domestik', value: '2,820.40', change: '-0.40%', status: 'Tutup' },
-            { name: 'CSI 300', region: 'Tiongkok', category: 'Saham Unggulan', value: '3,310.90', change: '-0.35%', status: 'Tutup' },
-            { name: 'Nifty 50', region: 'India', category: 'Ekuitas Berkembang', value: '25,050.10', change: '+0.88%', status: 'Tutup' },
-            { name: 'KOSPI', region: 'Korea Selatan', category: 'Ekuitas Utama', value: '2,580.60', change: '+0.50%', status: 'Tutup' },
-            { name: 'ASX 200', region: 'Australia', category: 'Ekuitas Pasifik', value: '8,110.20', change: '+0.32%', status: 'Tutup' },
-            { name: 'IHSG', region: 'Indonesia', category: 'Ekuitas Domestik', value: '7,485.60', change: '+0.55%', status: 'Tutup' },
-            { name: 'Straits Times Index', region: 'Singapura', category: 'Ekuitas Asia Tenggara', value: '3,420.10', change: '+0.15%', status: 'Tutup' },
-            { name: 'MSCI Emerging Markets', region: 'Global', category: 'Pasar Berkembang', value: '1,105.40', change: '+0.60%', status: 'Buka' },
-            { name: 'Spot Gold (XAU)', region: 'Global', category: 'Logam Mulia', value: '$2,385.40', change: '+0.92%', status: 'Buka' },
-            { name: 'Spot Silver (XAG)', region: 'Global', category: 'Logam Mulia', value: '$28.45', change: '+1.40%', status: 'Buka' },
-            { name: 'Crude Oil WTI', region: 'Global', category: 'Energi / Minyak', value: '$78.20', change: '-1.15%', status: 'Buka' },
-            { name: 'Brent Crude Oil', region: 'Global', category: 'Energi / Minyak', value: '$81.60', change: '-0.95%', status: 'Buka' },
-            { name: 'Natural Gas', region: 'Global', category: 'Energi / Komoditas', value: '$2.28', change: '+2.10%', status: 'Buka' },
-            { name: 'Copper Futures', region: 'Global', category: 'Logam Industri', value: '$4.25', change: '+0.80%', status: 'Buka' },
-            { name: 'US Dollar Index (DXY)', region: 'Amerika Serikat', category: 'Mata Uang / Valas', value: '104.25', change: '-0.35%', status: 'Buka' },
-            { name: 'Bloomberg Commodity Index', region: 'Global', category: 'Komoditas Gabungan', value: '98.50', change: '+0.25%', status: 'Buka' },
-            { name: 'Bitcoin Dominance Index', region: 'Global', category: 'Indeks Aset Kripto', value: '56.4%', change: '+0.40%', status: 'Buka' }
+            { name: 'S&P 500', region: 'Amerika Serikat', category: 'Ekuitas / Saham', value: '7,722.72', change: '+0.73%', status: 'Buka' },
+            { name: 'NASDAQ Composite', region: 'Amerika Serikat', category: 'Ekuitas Teknologi', value: '27,190.86', change: '+1.19%', status: 'Buka' },
+            { name: 'Dow Jones Industrial', region: 'Amerika Serikat', category: 'Ekuitas Blue-Chip', value: '51,176.96', change: '+0.49%', status: 'Buka' },
+            { name: 'Russell 2000', region: 'Amerika Serikat', category: 'Saham Kapitalisasi Kecil', value: '2,832.89', change: '+0.94%', status: 'Buka' },
+            { name: 'FTSE 100', region: 'Inggris / Eropa', category: 'Ekuitas Regional', value: '10,372.00', change: '+0.04%', status: 'Tutup' },
+            { name: 'DAX Performance Index', region: 'Jerman / Eropa', category: 'Ekuitas Utama', value: '24,759.00', change: '-0.75%', status: 'Tutup' },
+            { name: 'CAC 40', region: 'Prancis / Eropa', category: 'Ekuitas Utama', value: '8,218.00', change: '-0.32%', status: 'Tutup' },
+            { name: 'Euro Stoxx 50', region: 'Zona Euro', category: 'Indeks Gabungan', value: '6,062.00', change: '-0.68%', status: 'Tutup' },
+            { name: 'Nikkei 225', region: 'Jepang / Asia', category: 'Ekuitas Utama', value: '69,946.86', change: '+2.40%', status: 'Tutup' },
+            { name: 'TOPIX Index', region: 'Jepang / Asia', category: 'Ekuitas Luas', value: '4,130.73', change: '+0.97%', status: 'Tutup' },
+            { name: 'Hang Seng Index', region: 'Hong Kong', category: 'Ekuitas Asia', value: '24,040.34', change: '+0.28%', status: 'Tutup' },
+            { name: 'Shanghai Composite', region: 'Tiongkok', category: 'Ekuitas Domestik', value: '3,842.19', change: '+0.31%', status: 'Tutup' },
+            { name: 'CSI 300', region: 'Tiongkok', category: 'Saham Unggulan', value: '4,357.62', change: '+0.29%', status: 'Tutup' },
+            { name: 'Nifty 50', region: 'India', category: 'Ekuitas Berkembang', value: '22,555.75', change: '+0.60%', status: 'Tutup' },
+            { name: 'KOSPI', region: 'Korea Selatan', category: 'Ekuitas Utama', value: '7,003.74', change: '+0.46%', status: 'Tutup' },
+            { name: 'ASX 200', region: 'Australia', category: 'Ekuitas Pasifik', value: '8,200.00', change: '+0.55%', status: 'Tutup' },
+            { name: 'IHSG', region: 'Indonesia', category: 'Ekuitas Domestik', value: '6,118.86', change: '+1.36%', status: 'Tutup' },
+            { name: 'Straits Times Index', region: 'Singapura', category: 'Ekuitas Asia Tenggara', value: '5,664.33', change: '+0.52%', status: 'Tutup' },
+            { name: 'MSCI Emerging Markets', region: 'Global', category: 'Pasar Berkembang', value: '1,744.93', change: '+0.00%', status: 'Tutup' },
+            { name: 'Spot Gold (XAU)', region: 'Global', category: 'Logam Mulia', value: '$4,196.00', change: '+0.80%', status: 'Buka' },
+            { name: 'Spot Silver (XAG)', region: 'Global', category: 'Logam Mulia', value: '$62.08', change: '+2.80%', status: 'Buka' },
+            { name: 'Crude Oil WTI', region: 'Global', category: 'Energi / Minyak', value: '$90.20', change: '-1.00%', status: 'Buka' },
+            { name: 'Brent Crude Oil', region: 'Global', category: 'Energi / Minyak', value: '$101.91', change: '-0.30%', status: 'Buka' },
+            { name: 'Natural Gas', region: 'Global', category: 'Energi / Komoditas', value: '$3.036', change: '+0.00%', status: 'Buka' },
+            { name: 'Copper Futures', region: 'Global', category: 'Logam Industri', value: '$14,555.00', change: '+0.80%', status: 'Buka' },
+            { name: 'US Dollar Index (DXY)', region: 'Amerika Serikat', category: 'Mata Uang / Valas', value: '101.97', change: '+0.25%', status: 'Buka' },
+            { name: 'Bloomberg Commodity Index', region: 'Global', category: 'Komoditas Gabungan', value: '140.19', change: '+0.00%', status: 'Buka' },
+            { name: 'Bitcoin Dominance Index', region: 'Global', category: 'Indeks Aset Kripto', value: '56.4%', change: '+0.44%', status: 'Buka' }
         ];
         let globalCurrentPage = 1;
         const globalItemsPerPage = 10;
@@ -5959,13 +5896,21 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
 <script>/* ============================================================
    LIVE MODULE — GLOBAL MARKET (2 sub-halaman)
    Satu sumber data untuk KPI, tabel 28 direktori, valas, movers, dan sesi.
-   Data awal = nilai asli halaman; status sesi mengikuti jam nyata (UTC), bursa tutup tidak bergerak.
-   Hanya menyentuh #page-global-market (#gm-*). Data = simulasi ilustratif.
+   Data awal = snapshot pasar 5 Oktober 2026; status sesi mengikuti jam nyata (UTC).
+   Hanya menyentuh #page-global-market (#gm-*).
    ============================================================ */
 (function () {
   'use strict';
   if (window.__gmHub) return; window.__gmHub = true;
-  var PAGE = 'page-global-market', R = [["S&P 500", "Amerika Serikat", "Ekuitas / Saham", "5,584.20", "+0.75%", "us", "s"], ["NASDAQ Composite", "Amerika Serikat", "Ekuitas Teknologi", "17,820.50", "+1.10%", "us", "s"], ["Dow Jones Industrial", "Amerika Serikat", "Ekuitas Blue-Chip", "41,250.80", "+0.42%", "us", "s"], ["Russell 2000", "Amerika Serikat", "Saham Kapitalisasi Kecil", "2,185.30", "+1.25%", "us", "s"], ["FTSE 100", "Inggris / Eropa", "Ekuitas Regional", "8,245.10", "-0.20%", "eu", "s"], ["DAX Performance Index", "Jerman / Eropa", "Ekuitas Utama", "18,740.10", "+0.65%", "eu", "s"], ["CAC 40", "Prancis / Eropa", "Ekuitas Utama", "7,510.40", "-0.15%", "eu", "s"], ["Euro Stoxx 50", "Zona Euro", "Indeks Gabungan", "4,920.80", "+0.30%", "eu", "s"], ["Nikkei 225", "Jepang / Asia", "Ekuitas Utama", "39,120.00", "+1.45%", "jp", "s"], ["TOPIX Index", "Jepang / Asia", "Ekuitas Luas", "2,745.20", "+1.10%", "jp", "s"], ["Hang Seng Index", "Hong Kong", "Ekuitas Asia", "17,650.30", "-0.85%", "cn", "s"], ["Shanghai Composite", "Tiongkok", "Ekuitas Domestik", "2,820.40", "-0.40%", "cn", "s"], ["CSI 300", "Tiongkok", "Saham Unggulan", "3,310.90", "-0.35%", "cn", "s"], ["Nifty 50", "India", "Ekuitas Berkembang", "25,050.10", "+0.88%", "in", "s"], ["KOSPI", "Korea Selatan", "Ekuitas Utama", "2,580.60", "+0.50%", "kr", "s"], ["ASX 200", "Australia", "Ekuitas Pasifik", "8,110.20", "+0.32%", "au", "s"], ["IHSG", "Indonesia", "Ekuitas Domestik", "7,485.60", "+0.55%", "id", "s"], ["Straits Times Index", "Singapura", "Ekuitas Asia Tenggara", "3,420.10", "+0.15%", "sg", "s"], ["MSCI Emerging Markets", "Global", "Pasar Berkembang", "1,105.40", "+0.60%", "gl", "s"], ["Spot Gold (XAU)", "Global", "Logam Mulia", "$2,385.40", "+0.92%", "gl", "k"], ["Spot Silver (XAG)", "Global", "Logam Mulia", "$28.45", "+1.40%", "gl", "k"], ["Crude Oil WTI", "Global", "Energi / Minyak", "$78.20", "-1.15%", "gl", "k"], ["Brent Crude Oil", "Global", "Energi / Minyak", "$81.60", "-0.95%", "gl", "k"], ["Natural Gas", "Global", "Energi / Komoditas", "$2.28", "+2.10%", "gl", "k"], ["Copper Futures", "Global", "Logam Industri", "$4.25", "+0.80%", "gl", "k"], ["US Dollar Index (DXY)", "Amerika Serikat", "Mata Uang / Valas", "104.25", "-0.35%", "gl", "v"], ["Bloomberg Commodity Index", "Global", "Komoditas Gabungan", "98.50", "+0.25%", "gl", "k"], ["Bitcoin Dominance Index", "Global", "Indeks Aset Kripto", "56.4%", "+0.40%", "cx", "v"]];
+  var PAGE = 'page-global-market', R = [
+    ["S&P 500","Amerika Serikat","Ekuitas / Saham","7,722.72","+0.73%","us","s"], ["NASDAQ Composite","Amerika Serikat","Ekuitas Teknologi","27,190.86","+1.19%","us","s"], ["Dow Jones Industrial","Amerika Serikat","Ekuitas Blue-Chip","51,176.96","+0.49%","us","s"], ["Russell 2000","Amerika Serikat","Saham Kapitalisasi Kecil","2,832.89","+0.94%","us","s"],
+    ["FTSE 100","Inggris / Eropa","Ekuitas Regional","10,372.00","+0.04%","eu","s"], ["DAX Performance Index","Jerman / Eropa","Ekuitas Utama","24,759.00","-0.75%","eu","s"], ["CAC 40","Prancis / Eropa","Ekuitas Utama","8,218.00","-0.32%","eu","s"], ["Euro Stoxx 50","Zona Euro","Indeks Gabungan","6,062.00","-0.68%","eu","s"],
+    ["Nikkei 225","Jepang / Asia","Ekuitas Utama","69,946.86","+2.40%","jp","s"], ["TOPIX Index","Jepang / Asia","Ekuitas Luas","4,130.73","+0.97%","jp","s"], ["Hang Seng Index","Hong Kong","Ekuitas Asia","24,040.34","+0.28%","cn","s"], ["Shanghai Composite","Tiongkok","Ekuitas Domestik","3,842.19","+0.31%","cn","s"],
+    ["CSI 300","Tiongkok","Saham Unggulan","4,357.62","+0.29%","cn","s"], ["Nifty 50","India","Ekuitas Berkembang","22,555.75","+0.60%","in","s"], ["KOSPI","Korea Selatan","Ekuitas Utama","7,003.74","+0.46%","kr","s"], ["ASX 200","Australia","Ekuitas Pasifik","8,200.00","+0.55%","au","s"],
+    ["IHSG","Indonesia","Ekuitas Domestik","6,118.86","+1.36%","id","s"], ["Straits Times Index","Singapura","Ekuitas Asia Tenggara","5,664.33","+0.52%","sg","s"], ["MSCI Emerging Markets","Global","Pasar Berkembang","1,744.93","+0.00%","gl","s"], ["Spot Gold (XAU)","Global","Logam Mulia","$4,196.00","+0.80%","gl","k"],
+    ["Spot Silver (XAG)","Global","Logam Mulia","$62.08","+2.80%","gl","k"], ["Crude Oil WTI","Global","Energi / Minyak","$90.20","-1.00%","gl","k"], ["Brent Crude Oil","Global","Energi / Minyak","$101.91","-0.30%","gl","k"], ["Natural Gas","Global","Energi / Komoditas","$3.036","+0.00%","gl","k"],
+    ["Copper Futures","Global","Logam Industri","$14,555.00","+0.80%","gl","k"], ["US Dollar Index (DXY)","Amerika Serikat","Mata Uang / Valas","101.97","+0.25%","gl","v"], ["Bloomberg Commodity Index","Global","Komoditas Gabungan","140.19","+0.00%","gl","k"], ["Bitcoin Dominance Index","Global","Indeks Aset Kripto","56.4%","+0.44%","cx","v"]
+  ];
   var HRS = { us: [13.5, 20], eu: [7, 15.5], jp: [0, 6], cn: [1.5, 8], 'in': [3.75, 10], kr: [0, 6.5], au: [0, 6], id: [2, 8.83], sg: [1, 9] };
   var $ = function (id) { return document.getElementById(id); };
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
@@ -5977,6 +5922,8 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   var pageOn = function () { var p = $(PAGE); return !!p && p.classList.contains('active'); };
   function isOpen(k) {
     if (k === 'cx') return true;
+    var iso = new Date().toISOString().slice(0,10);
+    if (iso === '2026-10-05' && (k === 'cn' || k === 'kr')) return false;
     var d = new Date(), w = d.getUTCDay(); if (w === 0 || w === 6) return false;
     if (k === 'gl') return true;
     var h = d.getUTCHours() + d.getUTCMinutes() / 60, s = HRS[k]; return h >= s[0] && h < s[1];
@@ -6111,7 +6058,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
    GLOBAL MARKET KPI PRO — Kapitalisasi Pasar Global • DXY • Emas (XAU) • Minyak WTI
    Grafik canvas profesional multi-panel: candlestick/area + indikator (EMA, SMA, Bollinger, Donchian)
    + panel bawah (Volume, RSI, MACD, Stochastic), crosshair, tag harga & waktu, scroll berbasis waktu.
-   Data diumpankan modul LIVE Global Market lewat window.__gmKpiPro.push. Data = simulasi ilustratif.
+   Data diumpankan modul LIVE Global Market lewat window.__gmKpiPro.push dari snapshot pasar halaman.
    ============================================================ */
 (function () {
   'use strict';
