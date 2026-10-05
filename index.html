@@ -54,7 +54,7 @@
   window.baApplyVisual();
 })();
 </script>
-    <title>Berita Angin (Beta) - 1% Issue 99% Fact</title>
+    <title>Berita Angin - 1% Issue 99% Fact</title>
     <script>(function(){var h=document.documentElement;if(!h.classList.contains('light'))h.classList.add('dark');})();</script>
     <!-- Muat Chart.js untuk Grafik Indeks Real-Time -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -955,6 +955,58 @@ html:before{pointer-events:none}
   .page{overflow-y:visible}
 }
 </style>
+<style id="ba-phone-app">
+/* ===== BERITA ANGIN · MODE APLIKASI HP (penyempurnaan akhir, dimuat paling akhir) ===== */
+:root{--ba-vh:100vh;--ba-tab-h:62px}
+@supports (height:100dvh){:root{--ba-vh:100dvh}}
+@media (max-width:767px){
+  /* Tinggi layar penuh yang stabil (tidak melompat saat bar browser naik/turun) */
+  body,body.min-h-screen{min-height:var(--ba-vh)!important}
+  html{scrollbar-width:none}::-webkit-scrollbar{display:none}
+  /* Kunci scroll latar saat menu bawah terbuka */
+  html:has(#ba-sheet.open){overflow:hidden!important}
+  /* Top bar ringkas: judul halaman + LIVE saja */
+  #ba-collapse,#ba-topbar .ba-crumb-root,#ba-topbar .ba-crumb>i,#ba-topbar .ba-date{display:none!important}
+  #ba-topbar{min-height:48px;padding:8px calc(14px + env(safe-area-inset-right,0px)) 8px calc(14px + env(safe-area-inset-left,0px))!important}
+  #ba-topbar .ba-crumb b{font-size:18px;font-weight:800}
+  #ba-topbar .ba-clock{font-size:11px}
+  /* Tab bar bawah: rapi, di tengah, tidak melebar di layar besar/lipat */
+  #ba-tabbar{left:max(10px,env(safe-area-inset-left,0px))!important;right:max(10px,env(safe-area-inset-right,0px))!important;bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;max-width:520px;margin:0 auto;min-height:var(--ba-tab-h);border:1px solid rgba(148,163,184,.14);box-shadow:0 10px 30px rgba(0,0,0,.45)}
+  html.light #ba-tabbar{box-shadow:0 8px 24px rgba(15,23,42,.14)}
+  .ba-tab{min-height:52px}
+  .ba-tab span:last-child{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  body>main{padding-bottom:calc(var(--ba-tab-h) + 30px + env(safe-area-inset-bottom,0px))!important}
+  #ba-install{bottom:calc(var(--ba-tab-h) + 22px + env(safe-area-inset-bottom,0px))!important}
+  /* Teks kecil lebih terbaca di layar HP */
+  .page .text-\[9px\]{font-size:10.5px!important}
+  .page .text-\[10px\]{font-size:11px!important}
+  .page .text-\[11px\]{font-size:12px!important}
+  .page .text-xs{font-size:12.5px;line-height:1.35}
+  /* Jarak antar-bagian lebih rapat, seperti aplikasi */
+  .page .space-y-10>:not([hidden])~:not([hidden]){margin-top:1.5rem!important;margin-bottom:0!important}
+  .page .space-y-8>:not([hidden])~:not([hidden]){margin-top:1.25rem!important;margin-bottom:0!important}
+  /* Tabel: geser samping di dalam kartu, halaman tidak ikut melebar */
+  .page table{display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  /* Grafik/area tinggi tetap: tidak lebih tinggi dari layar HP */
+  .page [class*="h-[4"],.page [class*="h-[3"]{max-height:62vh;max-height:62dvh}
+  /* Dialog menjadi bottom sheet penuh lebar */
+  div.fixed.inset-0[id*="modal"]{align-items:flex-end!important;padding:0!important}
+  div.fixed.inset-0[id*="modal"]>div,#custom-modal>div{margin:0!important;width:100%!important;max-width:100%!important;max-height:88vh;max-height:88dvh;overflow-y:auto;overscroll-behavior:contain;border-radius:24px 24px 0 0!important;padding-bottom:calc(1.25rem + env(safe-area-inset-bottom,0px))!important}
+  /* ===== SATU KARTU PER BARIS (tanpa kartu kiri-kanan) =====
+     Penyebab sebelumnya: aturan lama mengubah [class*="grid-cols-3/5/6"] menjadi 2 kolom,
+     termasuk "lg:grid-cols-3" -> kartu terbelah kiri-kanan di HP. Di sini dikembalikan ke 1 kolom. */
+  .page .grid[class*="grid-cols-1"]{grid-template-columns:minmax(0,1fr)!important}
+  .page .grid[class*="grid-cols-1"]>*{grid-column:auto!important;grid-row:auto!important;min-width:0;width:100%;max-width:100%}
+  .page .grid[class*="grid-cols-1"]>.h-full{height:auto!important}
+  /* Kolom kanan (Order Book, Live Streaming/Streamed, AI Sentiment, Staking & Yield, Sector Bell Curve) menumpuk penuh */
+  .page .grid[class*="grid-cols-1"]>.space-y-6,.page .grid[class*="grid-cols-1"]>.space-y-4{width:100%}
+  .page .grid[class*="grid-cols-1"]>.space-y-6>*,.page .grid[class*="grid-cols-1"]>.space-y-4>*{width:100%;max-width:100%;min-width:0}
+  /* Isi kartu yang berjajar kiri-kanan di dalam kartu (judul + badge) boleh turun baris */
+  .page .grid[class*="grid-cols-1"] .flex.items-center.justify-between{flex-wrap:wrap;row-gap:6px}
+  /* Umpan balik sentuhan */
+  .page .card-3d:active{transform:scale(.985)!important;transition:transform .12s}
+}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-splash" aria-hidden="true"><img class="lg" alt="" width="88" height="88"><b>Berita Angin</b><span>1% Issue 99% Fact</span><i></i></div>
@@ -1202,7 +1254,7 @@ html:before{pointer-events:none}
                         <div class="perspective-container article-slide-item">
                             <article onclick="openArticle('evolusi-web3')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
                                 <div class="h-56 overflow-hidden relative">
-                                    <img src="https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=600&auto=format&fit=crop&q=80" alt="Evolusi Web3" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0b1220,#132033)'">
+                                    <img src="1.jpg" alt="Evolusi Web3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                                     <span class="absolute top-3 left-3 bg-brand-primary/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Web3 & DeFi</span>
                                 </div>
@@ -1226,7 +1278,7 @@ html:before{pointer-events:none}
                         <div class="perspective-container article-slide-item">
                             <article onclick="openArticle('analisis-crypto')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
                                 <div class="h-56 overflow-hidden relative">
-                                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop&q=80" alt="Crypto Market" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0b1220,#132033)'">
+                                    <img src="2.jpg" alt="Crypto Market" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                                     <span class="absolute top-3 left-3 bg-emerald-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Crypto Market</span>
                                 </div>
@@ -1250,7 +1302,7 @@ html:before{pointer-events:none}
                         <div class="perspective-container article-slide-item">
                             <article onclick="openArticle('korelasi-saham')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
                                 <div class="h-56 overflow-hidden relative">
-                                    <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&auto=format&fit=crop&q=80" alt="Stock Exchange" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0b1220,#132033)'">
+                                    <img src="3.jpg" alt="Stock Exchange" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                                     <span class="absolute top-3 left-3 bg-sky-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Stock & Macro</span>
                                 </div>
@@ -3311,7 +3363,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
             <div class="perspective-container article-slide-item">
                 <article onclick="openArticle('evolusi-web3')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
                     <div class="h-56 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=600&auto=format&fit=crop&q=80" alt="Evolusi Web3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0b1220,#132033)'">
+                        <img src="1.jpg" alt="Evolusi Web3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=600&auto=format&fit=crop&q=80'">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-brand-primary/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Web3 & DeFi</span>
                     </div>
@@ -3336,7 +3388,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
             <div class="perspective-container article-slide-item">
                 <article onclick="openArticle('analisis-crypto')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
                     <div class="h-56 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop&q=80" alt="Crypto Market" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0b1220,#132033)'">
+                        <img src="2.jpg" alt="Crypto Market" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop&q=80'">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-emerald-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Crypto Market</span>
                     </div>
@@ -3361,7 +3413,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
             <div class="perspective-container article-slide-item">
                 <article onclick="openArticle('korelasi-saham')" class="card-3d bg-card-dark border border-card-border rounded-2xl overflow-hidden shadow-2xl flex flex-col cursor-pointer group h-full">
                     <div class="h-56 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&auto=format&fit=crop&q=80" alt="Stock Exchange" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#0b1220,#132033)'">
+                        <img src="3.jpg" alt="Stock Exchange" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&auto=format&fit=crop&q=80'">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                         <span class="absolute top-3 left-3 bg-sky-600/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur shadow-md">Stock & Macro</span>
                     </div>
@@ -4544,7 +4596,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
         function startAutomaticChartUpdates() {
             setInterval(() => {
                 const nowTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                if (stockSectorBarChartInstance && stockSectorBarChartInstance.canvas) {
+                if (stockSectorBarChartInstance) {
                     const sectorData = stockSectorBarChartInstance.data.datasets[0].data;
                     for (let i = 0; i < sectorData.length; i++) {
                         let fluctuation = (Math.random() - 0.49) * 1.2;
@@ -4552,7 +4604,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                     }
                     stockSectorBarChartInstance.update('none');
                 }
-                if (cryptoIndexChartInstance && cryptoIndexChartInstance.canvas) {
+                if (cryptoIndexChartInstance) {
                     const candleSet = cryptoIndexChartInstance.data.datasets[0].data;
                     const lineSet = cryptoIndexChartInstance.data.datasets[1].data;
                     const volumeSet = cryptoIndexChartInstance.data.datasets[2].data;
@@ -4575,7 +4627,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                     if (indexValEl) indexValEl.innerText = `$${newVal.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
                 }
                 /* Intraday Telemetry kini berjalan otomatis lewat timer internalnya sendiri. */
-                if (globalMarketChartInstance && globalMarketChartInstance.canvas) {
+                if (globalMarketChartInstance) {
                     const globalLabels = globalMarketChartInstance.data.labels;
                     const globalData = globalMarketChartInstance.data.datasets[0].data;
                     globalLabels.shift();
@@ -4586,7 +4638,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                     globalData.push(newGlobalVal);
                     globalMarketChartInstance.update('none');
                 }
-                if (macroBarChartInstance && macroBarChartInstance.canvas) {
+                if (macroBarChartInstance) {
                     // Gerakkan empat titik secara otomatis tanpa mengubah
                     // struktur/fungsi chart lain pada halaman.
                     const scatterRanges = [
@@ -4609,7 +4661,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                     });
                     macroBarChartInstance.update('none');
                 }
-                if (globalMiniTickChartInstance && globalMiniTickChartInstance.canvas) {
+                if (globalMiniTickChartInstance) {
                     const miniData = globalMiniTickChartInstance.data.datasets[0].data;
                     miniData.shift();
                     const lastMini = miniData[miniData.length - 1];
@@ -7456,9 +7508,7 @@ function mk(sym,name,base){var r=rng(hash(sym+new Date().toDateString())),vol=sy
   var x=o.p;for(var i=0;i<60;i++){o.ser.unshift(x);x*=1+(r()-.5)*vol*.25}o.ser[59]=o.p;S[sym]=o;return o}
 IDX.concat(SEC.map(function(s){return [s[0],s[1],100]}),WL,EX).forEach(function(a){mk(a[0],a[1],a[2])});
 /* ---------- fetch online ---------- */
-/* Urutan rute: proxy yang mendukung CORS lebih dulu agar tidak memicu error CORS beruntun
-   saat fetch langsung ke Yahoo diblokir browser. Fetch langsung hanya dipakai sebagai upaya terakhir. */
-var ROUTES=[function(u){return window.__BA_PROXY?'/api/proxy?url='+encodeURIComponent(u):'https://corsproxy.io/?'+encodeURIComponent(u)},function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u)},function(u){return 'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},function(u){return u.replace('query1.','query2.')},function(u){return u}],ri=0,deadUntil=0;
+var ROUTES=[function(u){return window.__BA_PROXY?'/api/proxy?url='+encodeURIComponent(u):u},function(u){return u},function(u){return u.replace('query1.','query2.')},function(u){return 'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u)},function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u)}],ri=0,deadUntil=0;
 function getJ(u){return new Promise(function(res,rej){if(Date.now()<deadUntil)return rej(new Error('offline'));var k=0,nf=false;
   (function next(){if(k>=ROUTES.length){if(!nf)deadUntil=Date.now()+30000;return rej(new Error(nf?'notfound':'offline'))}
    var idx=(ri+k)%ROUTES.length;k++;var c=new AbortController(),t=setTimeout(function(){c.abort()},7000);
@@ -8275,6 +8325,21 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     },true);
   }catch(e){}
 })();
+</script>
+<script id="ba-phone-app-js">
+(function(){try{
+  var r=document.documentElement;
+  /* Cadangan untuk browser lama yang belum mengenal satuan dvh */
+  if(!(window.CSS&&CSS.supports&&CSS.supports('height','100dvh'))){
+    var fx=function(){r.style.setProperty('--ba-vh',window.innerHeight+'px')};
+    fx();addEventListener('resize',fx);addEventListener('orientationchange',fx);
+  }
+  /* Pindah tab/menu di HP: kembali ke atas halaman, seperti aplikasi */
+  document.addEventListener('click',function(e){
+    var t=e.target.closest&&e.target.closest('.ba-tab,.ba-row[data-go]');
+    if(t&&matchMedia('(max-width:767px)').matches)setTimeout(function(){window.scrollTo({top:0,behavior:'smooth'})},40);
+  },true);
+}catch(e){}})();
 </script>
 </body>
 </html>
