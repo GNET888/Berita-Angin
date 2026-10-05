@@ -54,13 +54,72 @@
   window.baApplyVisual();
 })();
 </script>
-    <title>Berita Angin - 1% Issue 99% Fact</title>
+    <title>Berita Angin 1% Issue 99% Fact</title>
     <script>(function(){var h=document.documentElement;if(!h.classList.contains('light'))h.classList.add('dark');})();</script>
     <!-- Muat Chart.js untuk Grafik Indeks Real-Time -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <!-- Chart.js Financial untuk Candlestick -->
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
+<script id="ba-chart3d">
+/* Plugin Chart.js global: ubah semua grafik menjadi tampilan 3 dimensi (ekstrusi bar/candlestick/garis, donat bertebal).
+   Matikan: baChart3D(false) di konsol, nyalakan: baChart3D(true). */
+(function(){
+  if(typeof Chart==='undefined')return;
+  var ON=true;try{ON=localStorage.getItem('ba-chart3d')!=='0'}catch(e){}
+  window.BA_CHART3D=ON;
+  window.baChart3D=function(v){window.BA_CHART3D=!!v;try{localStorage.setItem('ba-chart3d',v?'1':'0')}catch(e){}
+    Object.keys(Chart.instances).forEach(function(k){try{Chart.instances[k].update('none')}catch(e){}})};
+  function rgb(c){if(typeof c!=='string')return null;var m=c.match(/rgba?\(([^)]+)\)/);
+    if(m){var p=m[1].split(/[ ,\/]+/).map(parseFloat);return[p[0],p[1],p[2],p.length>3&&!isNaN(p[3])?p[3]:1]}
+    m=c.match(/^#([0-9a-f]{3,8})$/i);if(m){var h=m[1];if(h.length<6)h=h.split('').map(function(x){return x+x}).join('');
+      return[parseInt(h.substr(0,2),16),parseInt(h.substr(2,2),16),parseInt(h.substr(4,2),16),h.length===8?parseInt(h.substr(6,2),16)/255:1]}return null}
+  function shade(c,k,a){var v=rgb(c)||[100,116,139,1];function f(n){return Math.max(0,Math.min(255,Math.round(n*k)))}
+    return'rgba('+f(v[0])+','+f(v[1])+','+f(v[2])+','+(a!=null?a:Math.max(v[3],.7))+')'}
+  function pick(){for(var i=0;i<arguments.length;i++){var a=arguments[i];if(Array.isArray(a))a=a[0];if(typeof a==='string'&&rgb(a))return a}return'#38bdf8'}
+  var T={bar:1,candlestick:1,ohlc:1,line:1,doughnut:1,pie:1};
+  function active(c){return window.BA_CHART3D&&c.canvas&&c.height>=70&&!c.canvas.hasAttribute('data-no3d')}
+  function types(c){return c.getSortedVisibleDatasetMetas().map(function(m){return m.type})}
+  function box(ctx,l,t,r,b,col,d){ /* sisi atas + sisi kanan */
+    if(r-l<.5||b-t<.5)return;var ox=d*.75,oy=-d*.6;
+    ctx.fillStyle=shade(col,1.25,.95);ctx.beginPath();ctx.moveTo(l,t);ctx.lineTo(r,t);ctx.lineTo(r+ox,t+oy);ctx.lineTo(l+ox,t+oy);ctx.closePath();ctx.fill();
+    ctx.fillStyle=shade(col,.55,.95);ctx.beginPath();ctx.moveTo(r,t);ctx.lineTo(r+ox,t+oy);ctx.lineTo(r+ox,b+oy);ctx.lineTo(r,b);ctx.closePath();ctx.fill()}
+  Chart.register({
+    id:'ba3d',
+    beforeLayout:function(c){try{if(!active(c))return;var ty=types(c);
+      var pie=ty.length&&ty.every(function(t){return t==='doughnut'||t==='pie'});
+      if(!ty.some(function(t){return T[t]}))return;
+      var l=c.options.layout||(c.options.layout={}),p=c.$b3p;
+      if(!p){var o=l.padding;p=c.$b3p=typeof o==='number'?{top:o,right:o,bottom:o,left:o}:Object.assign({top:0,right:0,bottom:0,left:0},o||{})}
+      l.padding=pie?{top:p.top,right:p.right,bottom:p.bottom+10,left:p.left}:{top:p.top+9,right:p.right+9,bottom:p.bottom,left:p.left}}catch(e){}},
+    beforeDatasetDraw:function(c,a){try{if(!active(c))return;var m=a.meta,ctx=c.ctx,ds=c.data.datasets[m.index]||{},t=m.type;
+      if(!T[t])return;ctx.save();
+      if(t==='bar'){m.data.forEach(function(e){if(e.hidden)return;
+        var p=e.getProps(['x','y','base','width','height'],true),l,r,tp,b;
+        if(e.horizontal){l=Math.min(p.x,p.base);r=Math.max(p.x,p.base);tp=p.y-p.height/2;b=p.y+p.height/2}
+        else{l=p.x-p.width/2;r=p.x+p.width/2;tp=Math.min(p.y,p.base);b=Math.max(p.y,p.base)}
+        if(isNaN(l+r+tp+b))return;var d=Math.min(9,Math.max(2,Math.min(r-l,b-tp)*.6));
+        var bg=e.options&&e.options.backgroundColor;box(ctx,l,tp,r,b,pick(bg,ds.backgroundColor,ds.borderColor),d)})}
+      else if(t==='candlestick'||t==='ohlc'){m.data.forEach(function(e){
+        var p=e.getProps(['x','open','close','width'],true);if(isNaN(p.x+p.open+p.close))return;
+        var w=Math.max(3,Math.min(p.width||6,14)),up=p.close<=p.open,o=e.options||{},bc=o.borderColors||o.backgroundColors||{};
+        var col=pick(up?bc.up:bc.down,up?'#34d399':'#fb7185');
+        box(ctx,p.x-w/2,Math.min(p.open,p.close),p.x+w/2,Math.max(p.open,p.close)+.5,col,Math.min(8,w*.7))})}
+      else if(t==='line'){var pts=m.data.map(function(e){return e.getProps(['x','y','skip'],true)}).filter(function(q){return!q.skip&&!isNaN(q.x+q.y)});
+        if(pts.length>1&&pts.length<700&&ds.type!=='scatter'&&ds.showLine!==false&&(ds.borderWidth==null||ds.borderWidth>0)){
+          var col=pick(ds.borderColor,ds.backgroundColor),ox=6,oy=-5,i;
+          ctx.fillStyle=shade(col,.5,.55);ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);
+          for(i=1;i<pts.length;i++)ctx.lineTo(pts[i].x,pts[i].y);
+          for(i=pts.length-1;i>=0;i--)ctx.lineTo(pts[i].x+ox,pts[i].y+oy);ctx.closePath();ctx.fill();
+          ctx.strokeStyle=shade(col,1.2,.9);ctx.lineWidth=1;ctx.beginPath();
+          pts.forEach(function(q,j){j?ctx.lineTo(q.x+ox,q.y+oy):ctx.moveTo(q.x+ox,q.y+oy)});ctx.stroke()}}
+      else if((t==='doughnut'||t==='pie')&&'filter' in ctx){ctx.filter='brightness(.55)';
+        for(var k=10;k>=1;k-=1){ctx.save();ctx.translate(0,k);m.data.forEach(function(e){e.draw(ctx)});ctx.restore()}}
+      ctx.restore()}catch(e){try{a.meta&&c.ctx.restore()}catch(_){}}}
+  });
+})();
+</script>
+
     <!-- Muat font Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
