@@ -2,6 +2,9 @@
 <html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" type="image/png" href="icon-192.png">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preconnect" href="https://api.coingecko.com" crossorigin>
@@ -15,7 +18,33 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Berita Angin">
-    <script>window.__BA_PROXY=false;try{if(location.protocol.indexOf('http')===0)fetch('/api/health').then(function(r){window.__BA_PROXY=r.ok}).catch(function(){})}catch(e){}</script>
+    <script>window.__BA_PROXY=false;window.__BA_STATIC=/(^|\.)(github\.io|githubusercontent\.com|pages\.dev|netlify\.app|vercel\.app)$/i.test(location.hostname);try{if(location.protocol.indexOf('http')===0&&!window.__BA_STATIC)fetch('/api/health').then(function(r){window.__BA_PROXY=r.ok}).catch(function(){})}catch(e){}</script>
+<script id="ba-fetch-core">
+/* Pengambilan data online yang cepat di hosting statis (GitHub Pages): rute dicoba bertahap-paralel, hasil dibagi antar modul 30 dtk */
+(function(){
+  var CK={};
+  window.__baFetch=function(routes,u,txt,ms){
+    var key=u,hit=CK[key];
+    if(hit&&Date.now()-hit.t<30000)return hit.p.then(function(t){return txt?t:JSON.parse(t)});
+    var p=new Promise(function(res,rej){
+      var urls=[];routes.forEach(function(f){var x=null;try{x=f(u)}catch(e){}if(x&&urls.indexOf(x)<0)urls.push(x)});
+      if(!urls.length)return rej(new Error('offline'));
+      var done=false,fails=0,next=0,ctr=[],tm;
+      function launch(){
+        if(done||next>=urls.length)return;var i=next++,c=new AbortController(),t=setTimeout(function(){c.abort()},ms||7000);ctr.push(c);
+        fetch(urls[i],{signal:c.signal}).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(v){
+          clearTimeout(t);if(done)return;if(!v)throw 0;done=true;clearTimeout(tm);ctr.forEach(function(x){if(x!==c)try{x.abort()}catch(e){}});res(v)
+        }).catch(function(){clearTimeout(t);if(done)return;fails++;if(fails>=urls.length){done=true;clearTimeout(tm);rej(new Error('offline'))}else launch()});
+        if(next<urls.length)tm=setTimeout(launch,1400);
+      }
+      launch();
+    });
+    CK[key]={t:Date.now(),p:p};
+    p.catch(function(){if(CK[key]&&CK[key].p===p)delete CK[key]});
+    return p.then(function(t){return txt?t:JSON.parse(t)});
+  };
+})();
+</script>
 <script id="ba-settings-boot">
 /* Pengaturan pengguna: dimuat paling awal agar tema/warna langsung benar */
 (function(){
@@ -63,7 +92,7 @@
     <title>Berita Angin  - 1% Issue 99% Fact</title>
     <script>(function(){var h=document.documentElement;if(!h.classList.contains('light'))h.classList.add('dark');})();</script>
     <!-- Muat Chart.js untuk Grafik Indeks Real-Time -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" crossorigin></script>
   <!-- Chart.js Financial untuk Candlestick -->
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
@@ -1075,7 +1104,7 @@ html:before{pointer-events:none}
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-splash" aria-hidden="true"><div class="ba-ring"><img class="lg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
-<script>(function(){var s=document.getElementById('ba-splash');try{var im=s.querySelector('.lg');if(im)im.src=window.__BA_ICON192}catch(e){}try{if(sessionStorage.getItem('ba-splash')){s.remove();return}sessionStorage.setItem('ba-splash','1')}catch(e){}var t0=Date.now();function hide(){if(!s)return;s.classList.add('out');setTimeout(function(){if(s){s.remove();s=null}},450)}function go(){requestAnimationFrame(function(){setTimeout(hide,Math.max(0,((window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)?220:4900)-(Date.now()-t0)))})}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();setTimeout(hide,6000)})();</script>
+<script>(function(){var s=document.getElementById('ba-splash');try{var im=s.querySelector('.lg');if(im)im.src=window.__BA_ICON192}catch(e){}try{if(sessionStorage.getItem('ba-splash')){s.remove();return}sessionStorage.setItem('ba-splash','1')}catch(e){}var t0=Date.now();function hide(){if(!s)return;s.classList.add('out');setTimeout(function(){if(s){s.remove();s=null}},450)}function go(){requestAnimationFrame(function(){setTimeout(hide,Math.max(0,((window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)?200:1100)-(Date.now()-t0)))})}if(document.readyState==='complete')go();else window.addEventListener('load',go);setTimeout(hide,3500)})();</script>
 
 <canvas id="bg3d" aria-hidden="true"></canvas>
     <!-- ⚡ LIVE STREAMING TICKS TICKER BAR -->
@@ -8379,7 +8408,7 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     try{
       var a=W.__BA_ICON192,b=W.__BA_ICON512;
       
-      if(location.protocol.indexOf('http')===0){var base=location.href.split('#')[0];
+      if(location.protocol.indexOf('http')===0&&!D.querySelector('link[rel="manifest"][href="manifest.webmanifest"]')){var base=location.href.split('#')[0];
         var mf={name:'Berita Angin',short_name:'Berita Angin',description:'Berita, pasar kripto, saham, dan pasar global real-time.',start_url:base,scope:base.replace(/[^\/]*$/,''),display:'standalone',orientation:'portrait',background_color:'#000000',theme_color:'#000000',lang:'id',shortcuts:[{name:'Pengaturan',short_name:'Pengaturan',url:base+'#settings',icons:[{src:a,sizes:'192x192',type:'image/png'}]}],icons:[{src:a,sizes:'192x192',type:'image/png',purpose:'any maskable'},{src:b,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
         var ml=D.createElement('link');ml.rel='manifest';ml.href=URL.createObjectURL(new Blob([JSON.stringify(mf)],{type:'application/manifest+json'}));D.head.appendChild(ml);}
     }catch(e){}
@@ -8543,9 +8572,7 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
 (function(){
   var enc=encodeURIComponent, W=window;
   var R=[function(u){return W.__BA_PROXY?'/api/proxy?url='+enc(u):null},function(u){return u},function(u){return 'https://api.codetabs.com/v1/proxy?quest='+enc(u)},function(u){return 'https://corsproxy.io/?'+enc(u)},function(u){return 'https://api.allorigins.win/raw?url='+enc(u)}];
-  function get(u,txt){return new Promise(function(res,rej){var k=0;(function nx(){if(k>=R.length)return rej(new Error('offline'));var url=R[k++](u);if(!url)return nx();
-    var c=new AbortController(),t=setTimeout(function(){c.abort()},9000);
-    fetch(url,{signal:c.signal}).then(function(r){clearTimeout(t);if(!r.ok)throw 0;return txt?r.text():r.json()}).then(res).catch(function(){clearTimeout(t);nx()})})()})}
+  function get(u,txt){return window.__baFetch(R,u,txt,8000)}
   function badge(id,anchor,ok,msg){var el=document.getElementById(id);
     if(!el){var a=document.getElementById(anchor);a=a&&(a.closest('.overflow-x-auto')||a.closest('table')||a);if(!a||!a.parentNode)return;
       el=document.createElement('div');el.id=id;el.className='text-[10px] font-mono px-1 py-1';a.parentNode.insertBefore(el,a.nextSibling)}
@@ -8639,18 +8666,7 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     function (u) { return W.__BA_PROXY ? '/api/proxy?url=' + enc(u) : null; },
     function (u) { return 'https://api.codetabs.com/v1/proxy?quest=' + enc(u); },
     function (u) { return 'https://corsproxy.io/?' + enc(u); }];
-  function get(u, ms) {
-    return new Promise(function (res, rej) {
-      var k = 0;
-      (function nx() {
-        if (k >= PX.length) return rej(0);
-        var url = PX[k++](u); if (!url) return nx();
-        var c = new AbortController(), t = setTimeout(function () { c.abort(); }, ms || 6000);
-        fetch(url, { signal: c.signal }).then(function (r) { clearTimeout(t); if (!r.ok) throw 0; return r.json(); })
-          .then(res, function () { clearTimeout(t); nx(); });
-      })();
-    });
-  }
+  function get(u, ms) { return window.__baFetch(PX, u, false, ms || 6000); }
 
   /* ===== 2. DATA DOMINASI HARIAN (satu titik per hari UTC, disimpan di perangkat) ===== */
   var KEY = 'ba-dom-v2', ST;
@@ -8834,9 +8850,7 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
 var W=window,D=document,enc=encodeURIComponent,$=function(i){return D.getElementById(i)};
 var LV=W.__LV=W.__LV||{};
 var P=[function(u){return W.__BA_PROXY?'/api/proxy?url='+enc(u):null},function(u){return u},function(u){return 'https://api.codetabs.com/v1/proxy?quest='+enc(u)},function(u){return 'https://corsproxy.io/?'+enc(u)}];
-function get(u){return new Promise(function(ok,no){var k=0;(function nx(){if(k>=P.length)return no(0);var url=P[k++](u);if(!url)return nx();
- var c=new AbortController(),t=setTimeout(function(){c.abort()},9000);
- fetch(url,{signal:c.signal}).then(function(r){clearTimeout(t);if(!r.ok)throw 0;return r.json()}).then(ok,function(){clearTimeout(t);nx()})})()})}
+function get(u){return window.__baFetch(P,u,false,8000)}
 function chart(sym,rg,iv){return get('https://query1.finance.yahoo.com/v8/finance/chart/'+enc(sym)+'?range='+rg+'&interval='+iv).then(function(j){
  var r=j.chart.result[0],m=r.meta,q=r.indicators.quote[0].close||[],ts=r.timestamp||[],a=[],i;
  for(i=0;i<q.length;i++)if(q[i]!=null&&isFinite(q[i]))a.push(q[i]);
@@ -8941,6 +8955,10 @@ function poll(){if(busy||D.hidden)return;busy=1;Promise.all(K.map(function(k){re
 Promise.all(K.map(init)).then(function(){L.live=1;usd();prices();units();recap();H.gdom();setInterval(function(){if(on())poll()},1500);setInterval(poll,15000);setInterval(prices,60000);setInterval(units,300000)});
 D.addEventListener('visibilitychange',function(){if(!D.hidden)poll()});
 })();
+</script>
+<script id="ba-sw-reg">
+(function(){try{if(!('serviceWorker' in navigator))return;var h=location.hostname;if(!(location.protocol==='https:'||h==='localhost'||h==='127.0.0.1'))return;
+window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}catch(e){}})();
 </script>
 <style id="ba-settings-app-css">
 #page-settings .st-row.ba-na{opacity:.55}
