@@ -1302,6 +1302,30 @@ html .ba-tab-ico::before,html .ba-tab.on .ba-tab-ico::before{display:none!import
 html.light .ba-tab .di{color:#536471}html.light .ba-tab.on .di{color:#0f1419}
 .ba-tab.on .di .di-on{fill:currentColor!important}
 </style>
+<style id="ba-tabbar-flush">
+/* ===== TAB BAR HP: menempel penuh ke bawah (seperti tombol navigasi HP), ikon saja ===== */
+:root{--ba-tab-h:56px}
+@media (max-width:767px){
+  html body #ba-tabbar{
+    left:0!important;right:0!important;bottom:0!important;margin:0!important;max-width:none!important;width:100%!important;
+    border-radius:0!important;border:0!important;border-top:1px solid rgba(148,163,184,.12)!important;box-shadow:none!important;
+    padding:0 max(6px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(6px,env(safe-area-inset-left,0px))!important;
+    min-height:0!important;background:var(--ba-bg,#000)!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;align-items:stretch}
+  html.light body #ba-tabbar{background:#f1f5f9!important;border-top-color:rgba(15,23,42,.1)!important}
+  html body #ba-tabbar .ba-tab{min-height:var(--ba-tab-h)!important;height:var(--ba-tab-h);padding:0!important;gap:0!important;justify-content:center}
+  /* label disembunyikan secara visual (tetap terbaca screen reader) */
+  html body #ba-tabbar .ba-tab>span:last-child{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  html body #ba-tabbar .ba-tab-ico{width:56px!important;height:36px!important}
+  html body #ba-tabbar .di{width:28px;height:28px}
+  body>main{padding-bottom:calc(var(--ba-tab-h) + 20px + env(safe-area-inset-bottom,0px))!important}
+  #ba-install{bottom:calc(var(--ba-tab-h) + 12px + env(safe-area-inset-bottom,0px))!important}
+}
+@media (max-width:900px) and (max-height:480px){
+  html body #ba-tabbar .ba-tab{min-height:44px!important;height:44px}
+  body>main{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))!important}
+}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-splash" aria-hidden="true"><div class="ba-ring"><img class="lg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
