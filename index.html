@@ -3007,7 +3007,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between border-b border-card-border pb-4 gap-3">
                     <div>
                         <h3 class="text-lg font-bold text-white flex items-center gap-2"><i class="fa-solid fa-chart-column text-brand-accent"></i>Indeks Likuiditas & Komposit Pasar Global</h3>
-                        <p class="text-xs text-gray-400 mt-0.5">Kinerja indeks saham dunia &amp; Asia (basis 100 = awal periode) · data online Yahoo Finance</p>
+                        <p class="text-xs text-gray-400 mt-0.5">Kinerja indeks saham utama dunia (basis 100 = awal periode) · data online Yahoo Finance</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-2 text-xs">
                         <span id="liq-src" class="px-3 py-1 bg-black border border-card-border rounded-lg text-brand-accent font-mono">Memuat data online…</span>
@@ -3018,7 +3018,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                     </div>
                 </div>
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                    <div class="liq-kpi"><span>Indeks Komposit</span><b id="liq-k-bal">--</b><small>rata-rata bursa terpilih · basis 100</small></div>
+                    <div class="liq-kpi"><span>Indeks Komposit</span><b id="liq-k-bal">--</b><small>rata-rata 6 bursa · basis 100</small></div>
                     <div class="liq-kpi"><span>Momentum 5 Hari</span><b id="liq-k-mom">--</b><small>vs 5 sesi sebelumnya</small></div>
                     <div class="liq-kpi"><span>Rezim Pasar</span><b id="liq-k-reg">--</b><small id="liq-k-regd">&nbsp;</small></div>
                     <div class="liq-kpi"><span>Persentil Periode</span><b id="liq-k-pct">--</b><small>posisi indeks terkini</small></div>
@@ -3034,11 +3034,36 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                     <canvas id="globalMarketChart"></canvas>
                 </div>
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
-                    <div id="liq-regions" class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-3"></div>
-                    <div class="liq-kpi">
+                    <style>.liq-netwrap{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0}.liq-netwrap>canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.7}.liq-netwrap>:not(canvas){position:relative;z-index:1}
+                    .liq-nethead{display:flex;flex-direction:column;flex-wrap:nowrap;gap:8px;justify-content:flex-start;align-items:flex-start}.liq-nethead small{display:block;line-height:1.4}.liq-nethead b{display:block;font-size:12px;color:#fff;text-transform:uppercase;letter-spacing:.06em}.liq-nethead small{font-size:11px;color:#9ca3af}.liq-nethead button:disabled{opacity:.35;cursor:default}#liq-pg{font:600 11px ui-monospace,Menlo,monospace;color:#d1d5db;min-width:36px;text-align:center}
+                    #liq-regions{flex:1 1 auto;display:flex;flex-direction:column;min-width:0;overflow-x:auto}
+                    #liq-tbl{width:100%;height:100%;border-collapse:separate;border-spacing:0;background:rgba(10,10,10,.82);border:1px solid #222;border-radius:14px;overflow:hidden;font-size:12px;color:#e5e7eb}
+                    #liq-tbl th{padding:9px 12px;text-align:left;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:#9ca3af;border-bottom:1px solid #222;background:rgba(18,18,18,.95);white-space:nowrap}
+                    #liq-tbl td{padding:6px 12px;border-bottom:1px solid #1a1a1a;white-space:nowrap}#liq-tbl tr:last-child td{border-bottom:0}
+                    .liq-card{cursor:pointer;transition:background .2s}.liq-card:hover{background:rgba(56,189,248,.08)}.liq-card.off{opacity:.45}
+                    .liq-card .n{color:#6b7280;font:600 11px ui-monospace,Menlo,monospace;width:28px}.liq-card .nm i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:8px;vertical-align:-1px}.liq-card .nm small{color:#9ca3af;margin-left:6px;font-size:10px}
+                    .liq-card b{font:800 14px ui-monospace,Menlo,monospace;color:#fde047}.liq-card.up b{color:#5eead4}.fl{width:22px;height:15px;border-radius:3px;margin-right:8px;vertical-align:-3px;box-shadow:0 0 0 1px rgba(255,255,255,.18)}.liq-card b.d{font-size:12px}.liq-card .liq-bar{width:90px;margin:0}.liq-card .px{font:700 12px ui-monospace,Menlo,monospace;text-align:right;color:#fff}
+                    .liq-card em{font-style:normal;font-size:9px;font-weight:700;color:var(--c)}.liq-card em::after{content:'● GRAFIK'}.liq-card.off em::after{content:'+ GRAFIK'}
+                    #liq-tbl th.r{text-align:right}
+                    #liq-tbl th,#liq-tbl td,#liq-tbl tr{border:0!important}
+                    .liq-heatbox{display:flex;flex-direction:column}.liq-heatbox>small:last-child{margin-top:auto!important;padding-top:8px}html.light #liq-tbl{background:rgba(255,255,255,.92);color:#334155;border-color:#e2e8f0}html.light #liq-tbl th{background:#f1f5f9}html.light .liq-card .px{color:#0f172a}</style>
+                    <div class="liq-netwrap lg:col-span-2">
+                        <canvas id="liq-net"></canvas>
+                        <div class="liq-nethead"><div><small>Update harian: Berita Angin  <span id="liq-day">--</span>1% Issue 99%Fact & Pasar Kaget </small></div>
+                            <div class="flex items-center gap-1"><button id="liq-core" class="liq-btn">Inti</button><button id="liq-all" class="liq-btn">Semua</button><button id="liq-pv" class="liq-btn">‹</button><span id="liq-pg">1 / 1</span><button id="liq-nx" class="liq-btn">›</button></div></div>
+                        <div id="liq-regions"></div>
+                    </div>
+                    <div class="liq-kpi liq-heatbox">
                         <span>Peta Panas 36 Hari (return harian komposit)</span>
                         <div id="liq-heat" class="liq-heat mt-2"></div>
                         <small class="block mt-2">Teal naik · kuning turun</small>
+                        <style>.liq-ex{display:flex;flex-direction:column;gap:10px;margin-top:12px;border-top:1px solid #222;padding-top:12px}.ex-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.ex-g>div{background:#0a0a0a;border:1px solid #1f1f1f;border-radius:10px;padding:6px 8px;min-width:0}.ex-g span,.ex-t>span{display:block;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#9ca3af}.ex-g b{font:800 12px ui-monospace,Menlo,monospace;color:#fff;white-space:nowrap}
+                        .ex-br{display:flex;height:8px;border-radius:4px;overflow:hidden;background:#1f1f1f;margin:6px 0 4px}.ex-br i{display:block;height:100%;transition:width .5s}#liq-br-u{background:#2dd4bf}#liq-br-d{background:#facc15}#liq-tb>div{display:flex;align-items:center;font-size:11px;padding:3px 0;color:#d1d5db}#liq-tb b{margin-left:auto;font:700 11px ui-monospace,Menlo,monospace}#liq-tb hr{border:0;border-top:1px dashed #333;margin:3px 0}#liq-tb .fl{width:18px;height:12px;margin-right:6px}html.light .ex-g>div{background:#f8fafc;border-color:#e2e8f0}html.light .ex-g b{color:#0f172a}html.light #liq-tb>div{color:#334155}</style>
+                        <div class="liq-ex">
+                            <div class="ex-g"><div><span>Hari naik</span><b id="liq-x1">--</b></div><div><span>Rata² harian</span><b id="liq-x2">--</b></div><div><span>Volatilitas</span><b id="liq-x3">--</b></div><div><span>Hari terbaik</span><b id="liq-x4">--</b></div><div><span>Hari terburuk</span><b id="liq-x5">--</b></div><div><span>Drawdown maks</span><b id="liq-x6">--</b></div></div>
+                            <div class="ex-t"><span>Breadth negara (periode)</span><div class="ex-br"><i id="liq-br-u"></i><i id="liq-br-d"></i></div><small id="liq-br-t">--</small></div>
+                            <div class="ex-t"><span>Terkuat · Terlemah (periode)</span><div id="liq-tb"></div></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3132,7 +3157,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
 </div>
                     </div>
                     <div class="gm1-charts">
-    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-line text-cyan-400"></i> Likuiditas Bersih AS vs Neraca Fed <span class="normal-case text-gray-600">(live, $T)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-net"></canvas></div></div>
+    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-line text-cyan-400"></i> Likuiditas Bersih AS vs Neraca Fed <span class="normal-case text-gray-600">(harian, $T)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-net"></canvas></div></div>
     <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-bar text-brand-accent"></i> Kontribusi per Komponen <span class="normal-case text-gray-600">(+ menambah / − menyerap)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-imp"></canvas></div></div>
     <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-gauge-high text-cyan-400"></i> Riwayat Skor Komposit <span class="normal-case text-gray-600">(garis putus = batas rezim)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-sc"></canvas></div></div>
                     </div>
@@ -3256,6 +3281,27 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                     <div class="text-[10px] uppercase tracking-wider text-gray-500 mt-3 mb-1">Peringatan otomatis</div>
                     <div id="ms-alerts" class="text-[11px] text-gray-300 space-y-1"></div>
                 </div>
+            </div>
+            <!-- Pusat Data Online Harian -->
+            <div id="ba-data-hub-card" class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-6">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                    <div>
+                        <h3 class="text-base sm:text-lg font-bold text-white"><i class="fa-solid fa-database text-brand-accent mr-2"></i>Pusat Data Online Harian</h3>
+                        <p class="text-[11px] text-gray-500 mt-0.5">Riwayat harian nyata dari semua halaman (Crypto, Saham, Global, Makro) dalam satu grafik. Disinkronkan sekali per hari, tanpa data simulasi.</p>
+                    </div>
+                    <div class="flex items-center gap-2"><span id="bh-status" class="text-[10px] font-mono text-gray-400">Memuat…</span><button type="button" id="bh-sync" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border border-card-border text-gray-200 bg-black/40"><i class="fa-solid fa-rotate mr-1"></i>Sinkron</button></div>
+                </div>
+                <div id="bh-groups" class="flex flex-wrap gap-1.5 mb-2"></div>
+                <div id="bh-chips" class="flex flex-wrap gap-1.5 mb-3"></div>
+                <div id="bh-modes" class="flex flex-wrap gap-1.5 mb-3"></div>
+                <div class="relative" style="height:340px"><canvas id="bh-c1"></canvas><div id="bh-empty" class="absolute inset-0 items-center justify-center text-xs text-gray-500" style="display:none">Belum ada data online yang dapat ditampilkan. Tekan Sinkron atau pilih seri.</div></div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+                    <div><div class="text-[10px] uppercase tracking-wider text-gray-500 mb-2">Perubahan 30 hari (kelompok terpilih)</div><div style="height:380px"><canvas id="bh-c2"></canvas></div></div>
+                    <div><div class="text-[10px] uppercase tracking-wider text-gray-500 mb-2">Korelasi return harian · 60 hari terakhir</div><div id="bh-corr" class="overflow-x-auto"></div></div>
+                </div>
+                <div class="text-[10px] uppercase tracking-wider text-gray-500 mt-6 mb-2">Status sinkron per seri</div>
+                <div id="bh-tbl" class="overflow-x-auto"></div>
+                <p class="text-[10px] text-gray-500 mt-3">Sumber: CoinGecko, Yahoo Finance, FRED, alternative.me. Alat bantu analisis, bukan saran investasi.</p>
             </div>
             <!-- Analyst Toolkit Statistik -->
             <div id="analyst-toolkit" class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-6">
@@ -5426,26 +5472,25 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   window.__liveGlobalLiquidity = true;
   var W = window, D = document, enc = encodeURIComponent, PAGE = 'page-global-market';
   var MK = [
-    { name: 'Jepang',    lab: 'JEPANG',    sym: '^N225',     col: '#34d399', w: 1.8, main: 1, asia: 1 },
-    { name: 'Inggris',   lab: 'INGGRIS',   sym: '^FTSE',     col: '#3b9cff', w: 1.8, main: 1 },
-    { name: 'Eropa',     lab: 'EROPA',     sym: '^STOXX50E', col: '#b79cff', w: 2.4, main: 1 },
-    { name: 'China',     lab: 'CHINA',     sym: '000001.SS', col: '#ff8a2a', w: 2.6, main: 1, asia: 1 },
-    { name: 'AS',        lab: 'AS',        sym: '^GSPC',     col: '#19e6d0', w: 3.2, main: 1 },
-    { name: 'India',     lab: 'INDIA',     sym: '^NSEI',     col: '#7fcf86', w: 1.8, main: 1, asia: 1 },
-    { name: 'Hong Kong', lab: 'HONG KONG', sym: '^HSI',      col: '#ef4444', w: 1.8, asia: 1 },
-    { name: 'Korea',     lab: 'KOREA',     sym: '^KS11',     col: '#eab308', w: 1.8, asia: 1 },
-    { name: 'Taiwan',    lab: 'TAIWAN',    sym: '^TWII',     col: '#e879f9', w: 1.8, asia: 1 },
-    { name: 'Singapura', lab: 'SINGAPURA', sym: '^STI',      col: '#a3e635', w: 1.8, asia: 1 },
-    { name: 'Indonesia', lab: 'INDONESIA', sym: '^JKSE',     col: '#ff6fa8', w: 1.8, asia: 1 }
+    { name: 'Jepang',  lab: 'JEPANG',  sym: '^N225',     col: '#34d399', w: 1.8 },
+    { name: 'Inggris', lab: 'INGGRIS', sym: '^FTSE',     col: '#3b9cff', w: 1.8 },
+    { name: 'Eropa',   lab: 'EROPA',   sym: '^STOXX50E', col: '#b79cff', w: 2.4 },
+    { name: 'China',   lab: 'CHINA',   sym: '000001.SS', col: '#ff8a2a', w: 2.6 },
+    { name: 'AS',      lab: 'AS',      sym: '^GSPC',     col: '#19e6d0', w: 3.2 },
+    { name: 'India',   lab: 'INDIA',   sym: '^NSEI',     col: '#7fcf86', w: 1.8 },
+    { name: 'Hong Kong', lab: 'HONG KONG', sym: '^HSI',    col: '#ef4444', w: 1.6 },
+    { name: 'Korea',   lab: 'KOREA',   sym: '^KS11',     col: '#eab308', w: 1.6 },
+    { name: 'Taiwan',  lab: 'TAIWAN',  sym: '^TWII',     col: '#d946ef', w: 1.6 },
+    { name: 'Singapura', lab: 'SINGAPURA', sym: '^STI',  col: '#a3e635', w: 1.6 },
+    { name: 'Indonesia', lab: 'INDONESIA', sym: '^JKSE', col: '#f472b6', w: 1.6 },
+    { name: 'Jerman',  lab: 'JERMAN',  sym: '^GDAXI',    col: '#94a3b8', w: 1.6 },
+    { name: 'Prancis', lab: 'PRANCIS', sym: '^FCHI',     col: '#0ea5e9', w: 1.6 },
+    { name: 'Australia', lab: 'AUSTRALIA', sym: '^AXJO', col: '#c2a878', w: 1.6 }
   ];
-  var NM = MK.length, CI = NM;                       /* indeks dataset komposit = 6 */
-  var YD = Math.max(10, Math.round((Date.now() - new Date(new Date().getFullYear(), 0, 1)) / 864e5 * 5 / 7));
-  var RG = [['1B', '1mo', 22], ['3B', '3mo', 64], ['6B', '6mo', 127], ['YTD', 'ytd', YD], ['1T', '1y', 252]];
+  var NM = MK.length, CI = NM, CORE = 6, PS = 7;                       /* indeks dataset komposit = 6 */
+  var RG = [['1B', '1mo', 22], ['3B', '3mo', 64], ['6B', '6mo', 127], ['1T', '1y', 252]];
   var MON = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'];
-  var st = { rg: 1, mode: 'line', paused: false, grp: 'all', vis: MK.map(function () { return true; }).concat([true]) };
-  var GRP = [['all', 'Semua', 'Komposit Global'], ['main', 'Utama', 'Komposit Utama'], ['asia', 'Asia', 'Komposit Asia']];
-  function inGrp(q) { return st.grp === 'all' || (st.grp === 'main' && MK[q].main) || (st.grp === 'asia' && MK[q].asia); }
-  function grpName() { return GRP.filter(function (g) { return g[0] === st.grp; })[0][2]; }
+  var st = { rg: 1, mode: 'line', paused: false, vis: MK.map(function (_, i) { return i < CORE; }).concat([true]), pg: 0, hl: null };
   var $ = function (id) { return D.getElementById(id); };
   var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
   var visible = function () { var p = $(PAGE); return !!p && p.classList.contains('active') && !D.hidden; };
@@ -5491,7 +5536,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     dates = dates.slice(i0);
     var px = res.map(function (r) { return r ? r.price : null; });
     ser = ser.map(function (s) { if (!s) return null; var b = s[i0]; return s.slice(i0).map(function (v) { return +(v / b * 100).toFixed(3); }); });
-    var comp = dates.map(function (_, i) { var t = 0, n = 0; ser.forEach(function (s) { if (s) { t += s[i]; n++; } }); return +(t / n).toFixed(3); });
+    var comp = dates.map(function (_, i) { var t = 0, n = 0; ser.forEach(function (s, q) { if (s && q < CORE) { t += s[i]; n++; } }); return +(t / n).toFixed(3); });
     return { dates: dates, s: ser, comp: comp, px: px, src: src, t: Date.now() };
   }
   function sim(n) {
@@ -5508,19 +5553,13 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   /* ---------- model & anotasi ---------- */
   var model = sim(RG[st.rg][2]), cache = {}, loading = false, heat = [], chart = null, lastK = 0;
   function dlab(s) { var p = s.split('-'); return +p[2] + ' ' + MON[+p[1] - 1]; }
-  function recomp() {
-    var M = model, n = M.dates.length, c = [], i, q;
-    for (i = 0; i < n; i++) { var t = 0, k = 0; for (q = 0; q < NM; q++) if (M.s[q] && inGrp(q)) { t += M.s[q][i]; k++; } c.push(k ? +(t / k).toFixed(3) : 100); }
-    M.comp = c;
-  }
-  function asOf(M) { var l = M.dates[M.dates.length - 1]; return l ? (+l.slice(8)) + ' ' + MON[+l.slice(5, 7) - 1] + ' ' + l.slice(0, 4) : ''; }
   function leader() {
-    var b = -1, v = -1e9; model.s.forEach(function (s, q) { if (s && inGrp(q) && s[s.length - 1] > v) { v = s[s.length - 1]; b = q; } }); return b;
+    var b = -1, v = -1e9; model.s.forEach(function (s, q) { if (s && s[s.length - 1] > v) { v = s[s.length - 1]; b = q; } }); return b;
   }
   function events() {
     var M = model, n = M.dates.length, mv = [], q, i, ev = [];
     for (q = 0; q < NM; q++) {
-      var s = M.s[q]; if (!s || !inGrp(q)) continue; var bi = 1, br = 0;
+      var s = M.s[q]; if (!s || !st.vis[q]) continue; var bi = 1, br = 0;
       for (i = 1; i < n; i++) { var r = (s[i] / s[i - 1] - 1) * 100; if (Math.abs(r) > Math.abs(br)) { br = r; bi = i; } }
       mv.push({ q: q, i: bi, r: br });
     }
@@ -5528,7 +5567,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     if (mv[0]) {
       var e = mv[0], m = MK[e.q];
       ev.push({ i: e.i, q: e.q, col: m.col, v: M.s[e.q][e.i], title: dlab(M.dates[e.i]) + ' / ' + m.lab,
-        text: (e.r >= 0 ? 'Melonjak ' : 'Anjlok ') + Math.abs(e.r).toFixed(1).replace('.', ',') + '% dalam sehari, pergerakan harian terbesar di antara ' + mv.length + ' bursa pada periode ini.' });
+        text: (e.r >= 0 ? 'Melonjak ' : 'Anjlok ') + Math.abs(e.r).toFixed(1).replace('.', ',') + '% dalam sehari, pergerakan harian terbesar di antara bursa yang tampil pada periode ini.' });
     }
     var L = leader();
     if (L >= 0) {
@@ -5595,7 +5634,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       lb.push({ q: q, y: Y.getPixelForValue(s[n - 1]), v: s[n - 1] });
     }
     lb.sort(function (p, r) { return p.y - r.y; });
-    var compact = lb.length > 7, gap = compact ? 15 : 25, i;
+    var gap = 25, i;
     for (i = 1; i < lb.length; i++) if (lb[i].y - lb[i - 1].y < gap) lb[i].y = lb[i - 1].y + gap;
     var over2 = lb.length ? lb[lb.length - 1].y - (a.bottom - 6) : 0;
     if (over2 > 0) for (i = lb.length - 1; i >= 0; i--) { lb[i].y -= over2; if (i && lb[i].y - lb[i - 1].y >= gap) break; }
@@ -5604,14 +5643,9 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       if (!st.paused) { c.fillStyle = m.col; c.globalAlpha = .3 * (1 - pl); c.beginPath(); c.arc(ex, ey, 4 + 6 * pl, 0, 6.2832); c.fill(); c.globalAlpha = 1; }
       c.fillStyle = m.col; c.beginPath(); c.arc(ex, ey, 3, 0, 6.2832); c.fill();
       c.textAlign = 'left'; c.textBaseline = 'middle';
-      var pc = o.v >= 100 ? (lt ? '#0f766e' : '#5eead4') : (lt ? '#a16207' : '#fde047'), ptxt = sg(o.v - 100, 1).replace('.', ',') + '%';
-      if (compact) {
-        c.font = '800 10px Inter, system-ui, sans-serif'; c.fillStyle = m.col; c.fillText(m.lab, a.right + 10, o.y);
-        var lw = c.measureText(m.lab).width; c.font = '600 10px Inter, system-ui, sans-serif'; c.fillStyle = pc; c.fillText(ptxt, a.right + 14 + lw, o.y);
-      } else {
-        c.font = '800 12px Inter, system-ui, sans-serif'; c.fillStyle = m.col; c.fillText(m.lab, a.right + 10, o.y - 6);
-        c.font = '600 10px Inter, system-ui, sans-serif'; c.fillStyle = pc; c.fillText(ptxt, a.right + 10, o.y + 7);
-      }
+      c.font = '800 12px Inter, system-ui, sans-serif'; c.fillStyle = m.col; c.fillText(m.lab, a.right + 10, o.y - 6);
+      c.font = '600 10px Inter, system-ui, sans-serif'; c.fillStyle = o.v >= 100 ? (lt ? '#0f766e' : '#5eead4') : (lt ? '#a16207' : '#fde047');
+      c.fillText(sg(o.v - 100, 1).replace('.', ',') + '%', a.right + 10, o.y + 7);
     });
     /* status */
     var s2 = model.src === 'sim' ? ['◌ SIMULASI', 'rgba(251,146,60,.95)'] : st.paused ? ['❚❚ JEDA', 'rgba(251,191,36,.95)'] : ['● LIVE', 'rgba(52,211,153,' + (0.6 + 0.4 * Math.sin(tt * 4)).toFixed(2) + ')'];
@@ -5662,21 +5696,21 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   }
   function render() {
     if (!ensure()) return;
-    var M = model, n = M.dates.length, lo = 1e9, hi = -1e9, L = leader(), q, cnt = 0;
+    var M = model, n = M.dates.length, lo = 1e9, hi = -1e9, L = leader(), q;
     var lt = light(), tk = lt ? '#64748b' : '#9ca3af';
     chart.options.scales.x.ticks.color = tk; chart.options.scales.y.ticks.color = tk;
     chart.options.scales.y.grid.color = lt ? 'rgba(15,23,42,.08)' : 'rgba(148,163,184,.09)';
-    chart.data.labels = M.dates; recomp();
+    chart.data.labels = M.dates;
     for (q = 0; q < NM; q++) {
       var s = M.s[q], d = chart.data.datasets[q];
-      d.data = s || []; d.hidden = !st.vis[q] || !s || !inGrp(q);
+      d.data = s || []; d.hidden = !st.vis[q] || !s;
+      d.borderColor = st.hl == null || st.hl === q ? MK[q].col : MK[q].col + '33'; d.borderWidth = MK[q].w + (st.hl === q ? 1.8 : 0);
       var fillIt = st.mode === 'area' || q === L;
       d.fill = fillIt && s ? 'start' : false;
       d.backgroundColor = areaFill(MK[q].col, st.mode === 'area' ? (q === L ? '66' : '33') : '70');
-      if (s && st.vis[q] && inGrp(q)) { cnt++; s.forEach(function (v) { lo = Math.min(lo, v); hi = Math.max(hi, v); }); }
+      if (s && st.vis[q]) s.forEach(function (v) { lo = Math.min(lo, v); hi = Math.max(hi, v); });
     }
-    chart.options.layout.padding.right = cnt > 7 ? 124 : 92;
-    var cd = chart.data.datasets[CI]; cd.data = M.comp; cd.hidden = !st.vis[CI]; cd.label = grpName();
+    var cd = chart.data.datasets[CI]; cd.data = M.comp; cd.hidden = !st.vis[CI];
     cd.borderColor = lt ? 'rgba(15,23,42,.6)' : 'rgba(255,255,255,.7)';
     if (!st.vis[CI]) {} else M.comp.forEach(function (v) { lo = Math.min(lo, v); hi = Math.max(hi, v); });
     if (lo > hi) { lo = 95; hi = 105; }
@@ -5698,13 +5732,32 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     for (k = 0; k < n; k++) if (M.comp[k] <= v) rank++;
     if ((e = $('liq-k-pct'))) e.textContent = 'P' + Math.round(rank / n * 100);
     var rs = [], tot = 0;
-    for (q = 0; q < NM; q++) { var s = M.s[q]; rs[q] = s ? s[n - 1] - 100 : null; if (s && inGrp(q)) tot += Math.abs(rs[q]); }
-    tot = tot || 1;
+    for (q = 0; q < NM; q++) { var s = M.s[q]; rs[q] = s ? s[n - 1] - 100 : null; if (s) tot = Math.max(tot, Math.abs(rs[q])); }
+    tot = tot || 1; rs.forEach(function (v, q) { var c = D.querySelector('.liq-card[data-q="' + q + '"]'); if (c) c.classList.toggle('up', v != null && v >= 0); });
     for (q = 0; q < NM; q++) {
       if ((e = $('liq-rv' + q))) { e.textContent = rs[q] == null ? 'offline' : sg(rs[q], 2) + '%'; e.style.color = rs[q] == null ? '#9ca3af' : rs[q] >= 0 ? '#5eead4' : '#fde047'; }
       if ((e = $('liq-rs' + q))) e.style.width = rs[q] == null ? '0' : (Math.abs(rs[q]) / tot * 100).toFixed(0) + '%';
+      spark($('liq-sp' + q), M.s[q], MK[q].col);
+      var dd = M.s[q] && n > 1 ? (M.s[q][n - 1] / M.s[q][n - 2] - 1) * 100 : null;
+      if ((e = $('liq-rd' + q))) { e.textContent = dd == null ? '--' : (dd >= 0 ? '▲ ' : '▼ ') + sg(dd, 2) + '%'; e.style.color = dd == null ? '#9ca3af' : dd >= 0 ? '#5eead4' : '#fde047'; }
       if ((e = $('liq-ra' + q))) e.textContent = M.px[q] == null ? '--' : M.px[q].toLocaleString('en-US', { maximumFractionDigits: 2 });
     }
+    /* statistik pendukung peta panas */
+    (function () {
+      var w = Math.min(36, n - 1), R = [], i, up = 0, sum = 0, bi = 0, wi = 0, pk = -1e9, dd = 0;
+      for (i = n - w; i < n; i++) { var r = (M.comp[i] / M.comp[i - 1] - 1) * 100; R.push(r); if (r >= 0) up++; sum += r; if (r > R[bi]) bi = R.length - 1; if (r < R[wi]) wi = R.length - 1; var lv = M.comp[i]; if (lv > pk) pk = lv; dd = Math.min(dd, (lv / pk - 1) * 100); }
+      var mu = sum / R.length, sd = Math.sqrt(R.reduce(function (a, b) { return a + (b - mu) * (b - mu); }, 0) / R.length), set = function (id, t, c) { var x = $(id); if (x) { x.textContent = t; if (c) x.style.color = c; } };
+      set('liq-x1', up + '/' + R.length + ' (' + Math.round(up / R.length * 100) + '%)', up * 2 >= R.length ? '#5eead4' : '#fde047');
+      set('liq-x2', sg(mu, 2) + '%', mu >= 0 ? '#5eead4' : '#fde047'); set('liq-x3', sd.toFixed(2) + '%');
+      set('liq-x4', sg(R[bi], 2) + '%', '#5eead4'); set('liq-x5', sg(R[wi], 2) + '%', '#fde047'); set('liq-x6', dd.toFixed(2) + '%', '#fde047');
+      var ok = [], u = 0; for (q = 0; q < NM; q++) if (rs[q] != null) { ok.push({ q: q, v: rs[q] }); if (rs[q] >= 0) u++; }
+      var bu = $('liq-br-u'), bd = $('liq-br-d'), tot2 = ok.length || 1;
+      if (bu) bu.style.width = (u / tot2 * 100) + '%'; if (bd) bd.style.width = ((ok.length - u) / tot2 * 100) + '%';
+      set('liq-br-t', u + ' naik · ' + (ok.length - u) + ' turun dari ' + ok.length + ' negara');
+      ok.sort(function (a, b) { return b.v - a.v; });
+      var row = function (o) { return '<div><img class="fl" src="' + FLG[o.q] + '">' + MK[o.q].name + '<b style="color:' + (o.v >= 0 ? '#5eead4' : '#fde047') + '">' + sg(o.v, 2) + '%</b></div>'; }, tb = $('liq-tb');
+      if (tb) tb.innerHTML = ok.slice(0, 3).map(row).join('') + (ok.length > 5 ? '<hr>' + ok.slice(-3).map(row).join('') : '');
+    })();
     for (k = 0; k < heat.length; k++) {
       var ix = n - heat.length + k, c = heat[k];
       c.classList.toggle('now', k === heat.length - 1);
@@ -5715,9 +5768,10 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       c.textContent = +M.dates[ix].slice(8);
       c.title = dlab(M.dates[ix]) + ': ' + sg(r, 2).replace('.', ',') + '%';
     }
+    if ((e = $('liq-day'))) e.textContent = 'penutupan ' + dlab(M.dates[n - 1]) + ' ' + M.dates[n - 1].slice(0, 4) + ' vs ' + dlab(M.dates[n - 2]);
     var t = new Date(M.t);
     if ((e = $('liq-updated'))) e.textContent = (M.src === 'live' ? 'Update ' : M.src === 'cache' ? 'Cache ' : 'Simulasi ') + pad(t.getHours()) + ':' + pad(t.getMinutes()) + ':' + pad(t.getSeconds());
-    if ((e = $('liq-src'))) { e.textContent = M.src === 'live' ? 'Yahoo Finance · Live · s/d ' + asOf(M) : M.src === 'cache' ? 'Yahoo Finance · Cache · s/d ' + asOf(M) : loading ? 'Memuat data online…' : 'Offline · data simulasi'; e.style.color = M.src === 'sim' && !loading ? '#fb923c' : ''; }
+    if ((e = $('liq-src'))) { e.textContent = M.src === 'live' ? 'Yahoo Finance · Live' : M.src === 'cache' ? 'Yahoo Finance · Cache' : loading ? 'Memuat data online…' : 'Offline · data simulasi'; e.style.color = M.src === 'sim' && !loading ? '#fb923c' : ''; }
   }
 
   /* ---------- muat data ---------- */
@@ -5751,29 +5805,67 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     a.href = URL.createObjectURL(bl); a.download = 'indeks-pasar-global.csv'; D.body.appendChild(a); a.click(); a.remove();
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 800);
   }
+  var FLG = ['data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjYiIGZpbGw9IiNCQzAwMkQiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAxMjE2OSIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI0IiBkPSJNMCAwbDMwIDIwTTMwIDBMMCAyMCIvPjxwYXRoIHN0cm9rZT0iI0M4MTAyRSIgc3Ryb2tlLXdpZHRoPSIxLjUiIGQ9Ik0wIDBsMzAgMjBNMzAgMEwwIDIwIi8+PHBhdGggc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjYiIGQ9Ik0xNSAwdjIwTTAgMTBoMzAiLz48cGF0aCBzdHJva2U9IiNDODEwMkUiIHN0cm9rZS13aWR0aD0iMy40IiBkPSJNMTUgMHYyME0wIDEwaDMwIi8+PC9zdmc+','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAzOSIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjIxLjAiIGN5PSIxMC4wIiByPSIxIiBmaWxsPSIjZmMwIi8+PGNpcmNsZSBjeD0iMjAuMiIgY3k9IjEzLjAiIHI9IjEiIGZpbGw9IiNmYzAiLz48Y2lyY2xlIGN4PSIxOC4wIiBjeT0iMTUuMiIgcj0iMSIgZmlsbD0iI2ZjMCIvPjxjaXJjbGUgY3g9IjE1LjAiIGN5PSIxNi4wIiByPSIxIiBmaWxsPSIjZmMwIi8+PGNpcmNsZSBjeD0iMTIuMCIgY3k9IjE1LjIiIHI9IjEiIGZpbGw9IiNmYzAiLz48Y2lyY2xlIGN4PSI5LjgiIGN5PSIxMy4wIiByPSIxIiBmaWxsPSIjZmMwIi8+PGNpcmNsZSBjeD0iOS4wIiBjeT0iMTAuMCIgcj0iMSIgZmlsbD0iI2ZjMCIvPjxjaXJjbGUgY3g9IjkuOCIgY3k9IjcuMCIgcj0iMSIgZmlsbD0iI2ZjMCIvPjxjaXJjbGUgY3g9IjEyLjAiIGN5PSI0LjgiIHI9IjEiIGZpbGw9IiNmYzAiLz48Y2lyY2xlIGN4PSIxNS4wIiBjeT0iNC4wIiByPSIxIiBmaWxsPSIjZmMwIi8+PGNpcmNsZSBjeD0iMTguMCIgY3k9IjQuOCIgcj0iMSIgZmlsbD0iI2ZjMCIvPjxjaXJjbGUgY3g9IjIwLjIiIGN5PSI3LjAiIHI9IjEiIGZpbGw9IiNmYzAiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0RFMjkxMCIgZD0iTTAgMGgzMHYyMEgweiIvPjxwb2x5Z29uIGZpbGw9IiNGRkRFMDAiIHBvaW50cz0iNi4wLDIuNSA2LjgsNC45IDkuMyw0LjkgNy4zLDYuNCA4LjEsOC44IDYuMCw3LjQgMy45LDguOCA0LjcsNi40IDIuNyw0LjkgNS4yLDQuOSIvPjxjaXJjbGUgY3g9IjExIiBjeT0iMiIgcj0iLjkiIGZpbGw9IiNGRkRFMDAiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjQiIHI9Ii45IiBmaWxsPSIjRkZERTAwIi8+PGNpcmNsZSBjeD0iMTMiIGN5PSI3IiByPSIuOSIgZmlsbD0iI0ZGREUwMCIvPjxjaXJjbGUgY3g9IjExIiBjeT0iOSIgcj0iLjkiIGZpbGw9IiNGRkRFMDAiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDAuMDBoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDMuMDhoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDYuMTZoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDkuMjRoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDEyLjMyaDMwdjEuNTRIMHoiLz48cGF0aCBmaWxsPSIjQjIyMjM0IiBkPSJNMCAxNS40MGgzMHYxLjU0SDB6Ii8+PHBhdGggZmlsbD0iI0IyMjIzNCIgZD0iTTAgMTguNDhoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiMzQzNCNkUiIGQ9Ik0wIDBoMTN2MTAuOEgweiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0ZGOTkzMyIgZD0iTTAgMGgzMHY3SDB6Ii8+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgNi43aDMwdjYuN0gweiIvPjxwYXRoIGZpbGw9IiMxMzg4MDgiIGQ9Ik0wIDEzLjNoMzBWMjBIMHoiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjEwIiByPSIyLjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMDA4MCIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0RFMjkxMCIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjQuNSIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjQiIGZpbGw9IiNDRDJFM0EiLz48cGF0aCBmaWxsPSIjMDA0N0EwIiBkPSJNMTEgMTBhNCA0IDAgMDA4IDB6Ii8+PHBhdGggc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEuMiIgZD0iTTMgM2wzIDJNMy44IDQuNmwzIDJNMjQgMTVsMyAyTTIzIDE2LjRsMyAyTTI0IDVsMy0yTTIzIDMuNmwzLTJNMyAxN2wzLTJNMy44IDE1LjRsMy0yIi8+PC9zdmc+','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0ZFMDAwMCIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiMwMDAwOTUiIGQ9Ik0wIDBoMTV2MTBIMHoiLz48Y2lyY2xlIGN4PSI3LjUiIGN5PSI1IiByPSIzIiBmaWxsPSIjZmZmIi8+PC9zdmc+','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNFRjMzNDAiIGQ9Ik0wIDBoMzB2MTBIMHoiLz48Y2lyY2xlIGN4PSI2IiBjeT0iNSIgcj0iMyIgZmlsbD0iI2ZmZiIvPjxjaXJjbGUgY3g9IjcuMyIgY3k9IjUiIHI9IjIuNiIgZmlsbD0iI0VGMzM0MCIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNFNzAwMTEiIGQ9Ik0wIDBoMzB2MTBIMHoiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAwMCIgZD0iTTAgMGgzMHY3SDB6Ii8+PHBhdGggZmlsbD0iI0QwMCIgZD0iTTAgNi43aDMwdjYuN0gweiIvPjxwYXRoIGZpbGw9IiNGRkNFMDAiIGQ9Ik0wIDEzLjNoMzBWMjBIMHoiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAwMjM5NSIgZD0iTTAgMGgxMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xMCAwaDEwdjIwSDEweiIvPjxwYXRoIGZpbGw9IiNFRDI5MzkiIGQ9Ik0yMCAwaDEwdjIwSDIweiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAxMjE2OSIgZD0iTTAgMGgzMHYyMEgweiIvPjxnIHRyYW5zZm9ybT0ic2NhbGUoLjUpIj48cGF0aCBmaWxsPSIjMDEyMTY5IiBkPSJNMCAwaDMwdjIwSDB6Ii8+PHBhdGggc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQiIGQ9Ik0wIDBsMzAgMjBNMzAgMEwwIDIwIi8+PHBhdGggc3Ryb2tlPSIjQzgxMDJFIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTAgMGwzMCAyME0zMCAwTDAgMjAiLz48cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNiIgZD0iTTE1IDB2MjBNMCAxMGgzMCIvPjxwYXRoIHN0cm9rZT0iI0M4MTAyRSIgc3Ryb2tlLXdpZHRoPSIzLjQiIGQ9Ik0xNSAwdjIwTTAgMTBoMzAiLz48L2c+PHBvbHlnb24gZmlsbD0iI2ZmZiIgcG9pbnRzPSI4LjAsMTIuMCA4LjcsMTQuMCAxMC45LDE0LjEgOS4xLDE1LjQgOS44LDE3LjQgOC4wLDE2LjIgNi4yLDE3LjQgNi45LDE1LjQgNS4xLDE0LjEgNy4zLDE0LjAiLz48cG9seWdvbiBmaWxsPSIjZmZmIiBwb2ludHM9IjIyLjAsMTIuMCAyMi41LDEzLjQgMjMuOSwxMy40IDIyLjgsMTQuMiAyMy4yLDE1LjYgMjIuMCwxNC44IDIwLjgsMTUuNiAyMS4yLDE0LjIgMjAuMSwxMy40IDIxLjUsMTMuNCIvPjxwb2x5Z29uIGZpbGw9IiNmZmYiIHBvaW50cz0iMjQuMCwzLjAgMjQuNSw0LjQgMjUuOSw0LjQgMjQuOCw1LjIgMjUuMiw2LjYgMjQuMCw1LjggMjIuOCw2LjYgMjMuMiw1LjIgMjIuMSw0LjQgMjMuNSw0LjQiLz48cG9seWdvbiBmaWxsPSIjZmZmIiBwb2ludHM9IjE5LjAsNy4wIDE5LjUsOC40IDIwLjksOC40IDE5LjgsOS4yIDIwLjIsMTAuNiAxOS4wLDkuOCAxNy44LDEwLjYgMTguMiw5LjIgMTcuMSw4LjQgMTguNSw4LjQiLz48cG9seWdvbiBmaWxsPSIjZmZmIiBwb2ludHM9IjI2LjAsOC4wIDI2LjUsOS40IDI3LjksOS40IDI2LjgsMTAuMiAyNy4yLDExLjYgMjYuMCwxMC44IDI0LjgsMTEuNiAyNS4yLDEwLjIgMjQuMSw5LjQgMjUuNSw5LjQiLz48L3N2Zz4='];
+  function spark(el, s, col) {
+    if (!el || !s) { if (el) el.innerHTML = ''; return; }
+    var a = s.slice(-36), lo = Math.min.apply(null, a), hi = Math.max.apply(null, a), sp = hi - lo || 1, W2 = 96, H = 28, pts = a.map(function (v, i) { return [(i / (a.length - 1) * (W2 - 6) + 2).toFixed(1), (H - 4 - (v - lo) / sp * (H - 8)).toFixed(1)]; });
+    var ln = pts.map(function (p) { return p.join(','); }).join(' '), L = pts[pts.length - 1], y0 = (H - 4 - (100 - lo) / sp * (H - 8)), id = 'g' + col.slice(1) + a.length;
+    el.innerHTML = '<defs><linearGradient id="' + id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + col + '" stop-opacity=".45"/><stop offset="1" stop-color="' + col + '" stop-opacity="0"/></linearGradient></defs>'
+      + '<polygon fill="url(#' + id + ')" points="2,' + H + ' ' + ln + ' ' + L[0] + ',' + H + '"/><polyline fill="none" stroke="' + col + '" stroke-width="1.6" stroke-linejoin="round" points="' + ln + '"/><circle cx="' + L[0] + '" cy="' + L[1] + '" r="2.4" fill="' + col + '"/>';
+  }
+  /* ---------- kartu negara (terhubung ke grafik), halaman, jaringan latar ---------- */
+  function setVis(i, v) {
+    st.vis[i] = v; var ch = $('liq-chips'), c = D.querySelector('.liq-card[data-q="' + i + '"]');
+    if (ch && ch.children[i]) ch.children[i].classList.toggle('off', !v);
+    if (c) c.classList.toggle('off', !v);
+    render();
+  }
+  function cards() {
+    var rg = $('liq-regions'); if (!rg) return;
+    var pages = Math.ceil(NM / PS); st.pg = Math.max(0, Math.min(pages - 1, st.pg));
+    rg.innerHTML = '<table id="liq-tbl"><thead><tr><th>#</th><th>Negara · Indeks</th><th>Hari ini</th><th>Periode</th><th>Tren Kekuatan</th><th class="r">Harga terakhir</th><th>Grafik</th></tr></thead><tbody></tbody></table>';
+    var tb = rg.querySelector('tbody');
+    MK.slice(st.pg * PS, st.pg * PS + PS).forEach(function (g, k) {
+      var r = st.pg * PS + k, tr = D.createElement('tr');
+      tr.className = 'liq-card' + (st.vis[r] ? '' : ' off'); tr.dataset.q = r; tr.style.setProperty('--c', g.col);
+      tr.innerHTML = '<td class="n">' + (r + 1) + '</td><td class="nm"><img class="fl" alt="" src="' + FLG[r] + '">' + g.name + '<small>' + g.sym.replace('^', '').replace('.SS', '') + '</small></td><td><b class="d" id="liq-rd' + r + '">--</b></td><td><b id="liq-rv' + r + '">--</b></td><td><svg class="spk" id="liq-sp' + r + '" width="96" height="28" viewBox="0 0 96 28"></svg></td><td class="px" id="liq-ra' + r + '">--</td><td><em></em></td>';
+      tr.onclick = function () { setVis(r, !st.vis[r]); };
+      tr.onmouseenter = function () { st.hl = r; render(); };
+      tr.onmouseleave = function () { st.hl = null; render(); };
+      tb.appendChild(tr);
+    });
+    var pg = $('liq-pg'); if (pg) pg.textContent = (st.pg + 1) + ' / ' + pages;
+    var a = $('liq-pv'), b = $('liq-nx'); if (a) a.disabled = st.pg === 0; if (b) b.disabled = st.pg === pages - 1;
+    kpi();
+  }
+  function net() {
+    var cv = $('liq-net'), box = cv && cv.parentElement; if (!cv) return;
+    var cx = cv.getContext('2d'), N = [], T = MK.map(function (m) { return m.lab; }).concat(['GOLD', 'DXY', 'NVDA', 'BBCA', 'TLKM', 'BBRI']), i;
+    function size() { cv.width = box.clientWidth; cv.height = box.clientHeight; }
+    size(); if (W.ResizeObserver) new ResizeObserver(size).observe(box);
+    for (i = 0; i < T.length; i++) N.push({ x: rnd(0, cv.width || 600), y: rnd(0, cv.height || 300), vx: rnd(-.25, .25), vy: rnd(-.25, .25), t: T[i], c: i < NM ? MK[i].col : '#64748b' });
+    (function f() {
+      if (visible() && cv.width) {
+        cx.clearRect(0, 0, cv.width, cv.height);
+        N.forEach(function (n) { n.x += n.vx; n.y += n.vy; if (n.x < 0 || n.x > cv.width) n.vx *= -1; if (n.y < 0 || n.y > cv.height) n.vy *= -1; });
+        N.forEach(function (a, x) { N.forEach(function (b, y) { var d = Math.hypot(a.x - b.x, a.y - b.y); if (y > x && d < 170) { cx.strokeStyle = 'rgba(99,130,190,' + (0.35 * (1 - d / 170)).toFixed(2) + ')'; cx.beginPath(); cx.moveTo(a.x, a.y); cx.lineTo(b.x, b.y); cx.stroke(); } }); });
+        cx.font = '700 9px ui-monospace,Menlo,monospace';
+        N.forEach(function (n) { cx.fillStyle = n.c; cx.globalAlpha = .8; cx.beginPath(); cx.arc(n.x, n.y, 2, 0, 6.2832); cx.fill(); cx.globalAlpha = .55; cx.fillText(n.t, n.x + 5, n.y - 4); cx.globalAlpha = 1; });
+      }
+      requestAnimationFrame(f);
+    })();
+  }
   function btn(txt, cls) { var b = D.createElement('button'); b.className = 'liq-btn' + (cls ? ' ' + cls : ''); b.textContent = txt; return b; }
-  function buildChips() {
-    var chips = $('liq-chips'); if (!chips) return; chips.innerHTML = '';
-    MK.concat([{ name: grpName(), col: '#ffffff' }]).forEach(function (g, i) {
-      if (i < NM && !inGrp(i)) return;
-      var b = D.createElement('button'); b.className = 'liq-btn liq-chip' + (st.vis[i] ? '' : ' off');
-      b.innerHTML = '<span class="liq-sw" style="background:' + g.col + '"></span>' + g.name;
-      b.onclick = function () { st.vis[i] = !st.vis[i]; b.classList.toggle('off', !st.vis[i]); render(); };
-      chips.appendChild(b);
-    });
-  }
-  function buildPanels() {
-    var rg = $('liq-regions'); if (!rg) return; rg.innerHTML = '';
-    MK.forEach(function (g, r) {
-      if (!inGrp(r)) return;
-      var dv = D.createElement('div'); dv.className = 'liq-kpi';
-      dv.innerHTML = '<span>' + g.name + ' · ' + g.sym.replace('^', '') + '</span><b id="liq-rv' + r + '">--</b><div class="liq-bar"><i id="liq-rs' + r + '" style="background:' + g.col + ';width:0"></i></div><small>Harga terakhir <span id="liq-ra' + r + '">--</span></small>';
-      rg.appendChild(dv);
-    });
-  }
   function ui() {
     var chips = $('liq-chips'), tf = $('liq-tf'), md = $('liq-mode'), rg = $('liq-regions'), ht = $('liq-heat');
-    buildChips();
+    if (chips) { chips.innerHTML = '';
+      MK.concat([{ name: 'Komposit Global', col: '#ffffff' }]).forEach(function (g, i) {
+        var b = D.createElement('button'); b.className = 'liq-btn liq-chip';
+        b.innerHTML = '<span class="liq-sw" style="background:' + g.col + '"></span>' + g.name;
+        if (!st.vis[i]) b.classList.add('off'); b.onclick = function () { setVis(i, !st.vis[i]); };
+        chips.appendChild(b);
+      });
+    }
     if (tf) { tf.innerHTML = ''; RG.forEach(function (r, k) {
       var b = btn(r[0], k === st.rg ? 'on' : '');
       b.onclick = function () { st.rg = k; Array.prototype.forEach.call(tf.children, function (x) { x.classList.remove('on'); }); b.classList.add('on'); var h = cache[r[1]]; model = h || sim(r[2]); render(); kpi(); load(false); };
@@ -5784,16 +5876,12 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       b.onclick = function () { st.mode = m[0]; Array.prototype.forEach.call(md.children, function (x) { x.classList.remove('on'); }); b.classList.add('on'); render(); };
       md.appendChild(b);
     }); }
-    buildPanels();
-    if (md && !$('liq-grp')) {
-      var gr = D.createElement('div'); gr.id = 'liq-grp'; gr.className = 'flex gap-1';
-      GRP.forEach(function (g) {
-        var b = btn(g[1], g[0] === st.grp ? 'on' : '');
-        b.onclick = function () { st.grp = g[0]; Array.prototype.forEach.call(gr.children, function (x) { x.classList.remove('on'); }); b.classList.add('on'); buildChips(); buildPanels(); render(); kpi(); };
-        gr.appendChild(b);
-      });
-      md.parentNode.insertBefore(gr, md);
-    }
+    cards(); net();
+    var pv = $('liq-pv'), nx = $('liq-nx'), al = $('liq-all'), co = $('liq-core');
+    if (pv) pv.onclick = function () { st.pg--; cards(); };
+    if (nx) nx.onclick = function () { st.pg++; cards(); };
+    if (al) al.onclick = function () { MK.forEach(function (_, i) { st.vis[i] = true; }); cards(); chips && Array.prototype.forEach.call(chips.children, function (c) { c.classList.remove('off'); }); render(); };
+    if (co) co.onclick = function () { MK.forEach(function (_, i) { st.vis[i] = i < CORE; }); cards(); chips && Array.prototype.forEach.call(chips.children, function (c, i) { c.classList.toggle('off', i < NM && i >= CORE); }); render(); };
     if (ht) { ht.innerHTML = ''; heat = []; for (var k = 0; k < 36; k++) { var c = D.createElement('i'); ht.appendChild(c); heat.push(c); } fitHeat(); if (W.ResizeObserver) new ResizeObserver(safe(fitHeat)).observe(ht.parentElement || ht); else W.addEventListener('resize', safe(fitHeat)); }
     var p = $('liq-pause'); if (p) p.onclick = function () { st.paused = !st.paused; p.innerHTML = st.paused ? '<i class="fa-solid fa-play"></i> Lanjut' : '<i class="fa-solid fa-pause"></i> Jeda'; p.classList.toggle('on', st.paused); if (!st.paused) load(true); };
     var c2 = $('liq-csv'); if (c2) c2.onclick = safe(csv);
@@ -5803,7 +5891,9 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   function start() {
     safe(ui)(); safe(function () { render(); kpi(); })(); safe(load)(true);
     setInterval(safe(function () { if (chart && visible() && !st.paused) chart.draw(); }), 90);       /* denyut LIVE */
-    setInterval(safe(function () { if (!st.paused && !D.hidden) load(true); }), 60000);                 /* data online tiap 60 dtk */
+    setInterval(safe(function () { if (!st.paused && !D.hidden) load(true); }), 60000);
+    var today = new Date().toDateString();
+    setInterval(safe(function () { var d = new Date().toDateString(); if (d !== today) { today = d; cache = {}; load(true); } }), 30000);   /* ganti hari: muat ulang data harian */                 /* data online tiap 60 dtk */
     setInterval(safe(function () { if (model.src === 'sim' && !loading && !st.paused) load(true); }), 15000);  /* coba lagi bila offline */
     new MutationObserver(safe(function () { if (chart) render(); })).observe(D.documentElement, { attributes: true, attributeFilter: ['class'] });
     D.addEventListener('click', function (e) {
@@ -6016,65 +6106,61 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     }
     function axisTag(c, t, x, y, col, P) { c.font = '700 8px ' + MONO; var tw = c.measureText(t).width + 8; rr(c, x, y - 6.5, tw, 13, 3); c.fillStyle = col; c.fill(); K.T(c, t, x + 4, y, P.l ? '#fff' : '#0b1220', 'left', 8, 700); }
     function timeTag(c, t, x, y, w, P) { c.font = '700 8px ' + MONO; var tw = c.measureText(t).width + 10, bx = clamp(x - tw / 2, 2, w - tw - 2); rr(c, bx, y - 6.5, tw, 13, 3); c.fillStyle = P.l ? '#334155' : '#e2e8f0'; c.fill(); K.T(c, t, bx + tw / 2, y, P.l ? '#fff' : '#0f172a', 'center', 8, 700); }
-    function xAxis(c, X, n, L, R, y0, y1, P) {
-      for (var i = n - 1; i >= 0; i -= 10) { var x = X(i); if (x < L + 14) continue; c.save(); c.strokeStyle = P.gr; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(x) + .5, y0); c.lineTo(Math.round(x) + .5, y0 + 3); c.stroke(); c.restore(); K.T(c, H.t[i], x, y1, P.mu, 'center', 8); }
+    function xAxis(c, X, n, L, R, y0, y1, P, TL) {
+      for (var i = n - 1; i >= 0; i -= 10) { var x = X(i); if (x < L + 14) continue; c.save(); c.strokeStyle = P.gr; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(x) + .5, y0); c.lineTo(Math.round(x) + .5, y0 + 3); c.stroke(); c.restore(); K.T(c, (TL || H.t)[i], x, y1, P.mu, 'center', 8); }
     }
-    /* === 1. LIKUIDITAS BERSIH vs NERACA FED — dua seri + pita penyerapan (arsir) + panel komposisi TGA/RRP + crosshair === */
+    /* === 1. LIKUIDITAS BERSIH vs NERACA FED — AREA BERTUMPUK harian: Bersih + TGA + RRP = Neraca Fed, panel Δ harian === */
     K.host('mlc-ch-net', function (c, w, h, now, s, P) {
-      var net = H.net, fed = H.fed, rrp = H.rrp || [], tga = H.tga || [], n = net.length; if (n < 3) return;
+      var MM = window.__MLC || {}, Dd = (MM.D && MM.D.t && MM.D.t.length >= 10) ? MM.D : H, daily = Dd !== H;
+      var net = Dd.net, fed = Dd.fed, rrp = Dd.rrp || [], tga = Dd.tga || [], lab = Dd.t, n = net.length; if (n < 3) return;
       var cF = P.l ? '#2563EB' : '#60A5FA', cN = P.l ? '#0891B2' : '#22D3EE', cT = P.l ? '#d97706' : '#FBBF24', cR = P.l ? '#7c3aed' : '#A78BFA';
-      var L = 10, R = w - 44, a = 38, b = Math.round(h * .62), m0 = b + 22, m1 = h - 22, slot = (R - L) / (n - 1), i, mn = 1e9, mx = -1e9;
+      var L = 10, R = w - 44, a = 38, b = Math.round(h * .66), m0 = b + 22, m1 = h - 22, slot = (R - L) / (n - 1), i, mn = 1e9, mx = -1e9;
       var X = function (k) { return L + k * slot; };
       for (i = 0; i < n; i++) { mn = Math.min(mn, net[i]); mx = Math.max(mx, fed[i]); }
       var pd = (mx - mn) * .12 + .004, rg = K.lerp(s, 'r', mn - pd, mx + pd, .12); mn = rg.mn; mx = rg.mx;
       var Y = function (v) { return b - (v - mn) / (mx - mn) * (b - a); };
-      var cn = net[n - 1], cf = fed[n - 1], dr = cf - cn, d0 = cn - net[0], dp = d0 / net[0] * 100;
-      /* legenda 2 baris */
+      var cn = net[n - 1], cf = fed[n - 1], dr = cf - cn, d0 = cn - net[0], dp = d0 / net[0] * 100, d1 = cn - net[n - 2];
+      /* legenda 2 baris + penanda mode */
       var lx = legend(c, L, 9, cN, 'bold', 'LIKUIDITAS BERSIH', fx(cn, 3) + 'T', cN, P);
-      K.T(c, (d0 >= 0 ? '▲ +' : '▼ ') + dp.toFixed(2) + '%', R + 40, 9, d0 >= 0 ? P.up : P.dn, 'right', 8, 700);
+      K.T(c, (d1 >= 0 ? '▲ +' : '▼ ') + d1.toFixed(3) + 'T ' + (daily ? '1H' : 'tick') + '  ·  ' + (d0 >= 0 ? '+' : '') + dp.toFixed(2) + '%', R + 40, 9, d1 >= 0 ? P.up : P.dn, 'right', 8, 700);
       lx = legend(c, L, 22, cF, 'line', 'NERACA FED', fx(cf, 3) + 'T', cF, P);
-      legend(c, lx, 22, cT, 'box', 'PENYERAPAN', fx(dr, 3) + 'T · ' + (dr / cf * 100).toFixed(1) + '%', cT, P);
+      lx = legend(c, lx, 22, cT, 'box', 'TGA', fx(tga[n - 1] || 0, 3), cT, P);
+      legend(c, lx, 22, cR, 'box', 'RRP', fx(rrp[n - 1] || 0, 3), cR, P);
+      K.T(c, daily ? 'HARIAN · FRED' : 'LIVE · SIMULASI', R + 40, 22, daily ? P.up : cT, 'right', 8, 700);
       /* area plot */
       rr(c, L, a, R - L, b - a, 4); c.fillStyle = P.bg; c.fill();
       K.hgrid(c, L, R, a, b, mn, mx, P, 2, 4);
       c.save(); rr(c, L, a, R - L, b - a, 4); c.clip();
-      /* pita penyerapan = Fed - Net (diarsir) */
-      c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(fed[i])) : c.moveTo(X(i), Y(fed[i])); for (i = n - 1; i >= 0; i--) c.lineTo(X(i), Y(net[i])); c.closePath();
-      c.fillStyle = ra(cT, .09); c.fill(); c.save(); c.clip(); c.strokeStyle = ra(cT, .30); c.lineWidth = 1;
-      for (var hx = L - (b - a); hx < R; hx += 7) { c.beginPath(); c.moveTo(hx, b); c.lineTo(hx + (b - a), a); c.stroke(); } c.restore();
-      /* area gradasi di bawah garis net */
-      var g = c.createLinearGradient(0, a, 0, b); g.addColorStop(0, ra(cN, P.l ? .26 : .30)); g.addColorStop(1, ra(cN, 0));
+      /* pita bertumpuk: TGA di atas Bersih, RRP di atas TGA (puncak = Neraca Fed) */
+      var band = function (lo, hi, col) { c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(hi(i))) : c.moveTo(X(i), Y(hi(i))); for (i = n - 1; i >= 0; i--) c.lineTo(X(i), Y(lo(i))); c.closePath(); c.fillStyle = col; c.fill(); };
+      band(function (k) { return net[k] + (tga[k] || 0); }, function (k) { return fed[k]; }, ra(cR, P.l ? .30 : .42));
+      band(function (k) { return net[k]; }, function (k) { return net[k] + (tga[k] || 0); }, ra(cT, P.l ? .30 : .38));
+      var g = c.createLinearGradient(0, a, 0, b); g.addColorStop(0, ra(cN, P.l ? .34 : .42)); g.addColorStop(1, ra(cN, .04));
       c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(net[i])) : c.moveTo(X(i), Y(net[i])); c.lineTo(X(n - 1), b); c.lineTo(X(0), b); c.closePath(); c.fillStyle = g; c.fill();
-      /* garis Fed */
+      /* garis Fed (puncak tumpukan) */
       c.lineWidth = 1.5; c.strokeStyle = cF; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(fed[i])) : c.moveTo(X(i), Y(fed[i])); c.stroke();
-      /* EMA 8 */
-      var em = K.ema(net, 8); c.setLineDash([2, 3]); c.lineWidth = 1; c.strokeStyle = P.tx; c.globalAlpha = .5; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(em[i])) : c.moveTo(X(i), Y(em[i])); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
       /* garis Net */
-      c.shadowColor = cN; c.shadowBlur = P.l ? 0 : 7; c.lineWidth = 2.2; c.lineCap = 'round'; c.strokeStyle = cN; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(net[i])) : c.moveTo(X(i), Y(net[i])); c.stroke(); c.shadowBlur = 0;
-      /* ekstrem H / L */
-      var im = net.indexOf(Math.max.apply(null, net)), il = net.indexOf(Math.min.apply(null, net));
-      [[im, 'H ', -9], [il, 'L ', 10]].forEach(function (e) { var ex = X(e[0]), ey = Y(net[e[0]]); c.beginPath(); c.arc(ex, ey, 3, 0, TAU); c.fillStyle = P.l ? '#fff' : '#0b1220'; c.fill(); c.lineWidth = 1.4; c.strokeStyle = cN; c.stroke(); K.T(c, e[1] + net[e[0]].toFixed(3), clamp(ex, L + 28, R - 28), ey + e[2], P.mu, 'center', 7, 700); });
+      c.shadowColor = cN; c.shadowBlur = P.l ? 0 : 7; c.lineWidth = 2.2; c.lineCap = 'round'; c.lineJoin = 'round'; c.strokeStyle = cN; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(net[i])) : c.moveTo(X(i), Y(net[i])); c.stroke(); c.shadowBlur = 0;
       c.restore();
-      /* garis harga terakhir + tag sumbu kanan */
+      /* garis nilai terakhir + tag sumbu kanan */
       [[cn, cN], [cf, cF]].forEach(function (z) { K.hline(c, X(n - 1), R, Y(z[0]), ra(z[1], .7), [3, 3]); });
       var yn = Y(cn), yf = Y(cf); if (yn - yf < 14) yn = yf + 14;
       K.dot(c, X(n - 1), Y(cn), cN, now); axisTag(c, cn.toFixed(2), R + 2, yn, cN, P); axisTag(c, cf.toFixed(2), R + 2, yf, cF, P);
-      /* panel komposisi penyerapan: TGA + RRP bertumpuk */
-      K.T(c, 'KOMPOSISI PENYERAPAN', L + 1, m0 - 7, P.mu, 'left', 7, 700);
-      var dm = .01; for (i = 0; i < n; i++) dm = Math.max(dm, (rrp[i] || 0) + (tga[i] || 0)); dm *= 1.12;
-      var bw = Math.max(1.4, slot * .66);
-      K.hline(c, L, R, m1, P.gr);
-      for (i = 0; i < n; i++) { var vt = (tga[i] || 0) / dm * (m1 - m0), vr = (rrp[i] || 0) / dm * (m1 - m0); c.fillStyle = ra(cT, .85); c.fillRect(X(i) - bw / 2, m1 - vt, bw, Math.max(.5, vt)); c.fillStyle = ra(cR, .85); c.fillRect(X(i) - bw / 2, m1 - vt - vr, bw, Math.max(.5, vr)); }
-      var lg = legend(c, R - 118, m0 - 7, cT, 'box', 'TGA', fx(tga[n - 1] || 0, 2), cT, P); legend(c, lg, m0 - 7, cR, 'box', 'RRP', fx(rrp[n - 1] || 0, 2), cR, P);
-      xAxis(c, X, n, L, R, m1, h - 7, P);
+      /* panel Δ harian likuiditas bersih (batang naik/turun dari garis nol) */
+      K.T(c, daily ? 'Δ HARIAN LIKUIDITAS BERSIH ($T)' : 'Δ PER TICK LIKUIDITAS BERSIH ($T)', L + 1, m0 - 7, P.mu, 'left', 7, 700);
+      var dl = [], dm = .001; for (i = 0; i < n; i++) { dl.push(i ? net[i] - net[i - 1] : 0); dm = Math.max(dm, Math.abs(dl[i])); } dm *= 1.15;
+      var zy = (m0 + m1) / 2, hh = (m1 - m0) / 2, bw = Math.max(1.6, slot * .66);
+      K.hline(c, L, R, zy, P.gr);
+      for (i = 1; i < n; i++) { var vh = Math.abs(dl[i]) / dm * hh; c.fillStyle = ra(dl[i] >= 0 ? (P.l ? '#059669' : '#34D399') : (P.l ? '#e11d48' : '#FB7185'), .85); c.fillRect(X(i) - bw / 2, dl[i] >= 0 ? zy - vh : zy, bw, Math.max(.6, vh)); }
+      xAxis(c, X, n, L, R, m1, h - 7, P, lab);
       /* crosshair */
       if (s.mx >= L && s.mx <= R) {
         var k = clamp(Math.round((s.mx - L) / slot), 0, n - 1), x = X(k), dk = net[k] - (k ? net[k - 1] : net[k]);
         K.vline(c, x, a, m1, P);
         if (s.my >= a && s.my <= b) { K.hline(c, L, R, s.my, P.mu, [3, 3]); axisTag(c, (mn + (b - s.my) / (b - a) * (mx - mn)).toFixed(3), R + 2, s.my, P.l ? '#334155' : '#e2e8f0', P); }
         [[net[k], cN], [fed[k], cF]].forEach(function (z) { c.beginPath(); c.arc(x, Y(z[0]), 3.4, 0, TAU); c.fillStyle = z[1]; c.fill(); c.lineWidth = 1.5; c.strokeStyle = P.l ? '#fff' : '#0b1220'; c.stroke(); });
-        timeTag(c, H.t[k], x, h - 7, w, P);
-        card(c, w, x, a + 4, H.t[k], [['Neraca Fed', fx(fed[k], 3) + 'T', cF], ['Likuiditas Bersih', fx(net[k], 3) + 'T', cN], ['Penyerapan', fx(fed[k] - net[k], 3) + 'T', cT], ['Δ / tick', (dk >= 0 ? '+' : '') + dk.toFixed(4), dk >= 0 ? P.up : P.dn]], P);
+        timeTag(c, lab[k], x, h - 7, w, P);
+        card(c, w, x, a + 4, lab[k], [['Neraca Fed', fx(fed[k], 3) + 'T', cF], ['Likuiditas Bersih', fx(net[k], 3) + 'T', cN], ['TGA', fx(tga[k] || 0, 3) + 'T', cT], ['RRP', fx(rrp[k] || 0, 3) + 'T', cR], [daily ? 'Δ harian' : 'Δ / tick', (dk >= 0 ? '+' : '') + dk.toFixed(4), dk >= 0 ? P.up : P.dn]], P);
       }
     });
     /* === 2. Kontribusi per komponen: bar diverging beranimasi, diurutkan live, penanda EMA lambat, total impuls === */
@@ -9023,11 +9109,246 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
       for(var i=0;i<M.H.net.length&&f&&r&&t;i++){M.H.fed[i]=+f.h[i].toFixed(3);M.H.rrp[i]=+r.h[i].toFixed(3);M.H.tga[i]=+t.h[i].toFixed(3);M.H.net[i]=+(f.h[i]-r.h[i]-t.h[i]).toFixed(3)}
       badge('ba-live-ml','mlc-table',n>0,n+' dari 9 komponen dari FRED/Yahoo/CoinGecko · '+hm());
     })}
-  function boot(){liveCrypto().then(function(){return liveMacro()}).catch(function(){});liveStocks()}
+  function fh(id){return get('https://fred.stlouisfed.org/graph/fredgraph.csv?id='+id+'&cosd='+new Date(Date.now()-110*864e5).toISOString().slice(0,10),1).then(function(t){
+    var o=[];t.trim().split('\n').slice(1).forEach(function(l){var p=l.split(','),v=parseFloat(p[1]);if(p[0]&&isFinite(v))o.push([p[0],v])});return o})}
+  function histMacro(){var M=W.__MLC;if(!M)return;var MN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    return Promise.all([fh('WALCL'),fh('RRPONTSYD'),fh('WTREGEN')]).then(function(r){
+      var F=r[0],R=r[1],T=r[2];if(R.length<10||!F.length||!T.length)throw 0;
+      var fi=0,ti=0,fv=null,tv=null,D={t:[],fed:[],rrp:[],tga:[],net:[],iso:[]};
+      R.forEach(function(q){var d=q[0];while(fi<F.length&&F[fi][0]<=d){fv=F[fi][1];fi++}while(ti<T.length&&T[ti][0]<=d){tv=T[ti][1];ti++}
+        if(fv==null||tv==null)return;var f=fv/1e6,rp=q[1]/1e3,tg=tv/1e6;
+        D.iso.push(d);D.t.push(d.slice(8,10)+' '+MN[+d.slice(5,7)-1]);D.fed.push(+f.toFixed(3));D.rrp.push(+rp.toFixed(3));D.tga.push(+tg.toFixed(3));D.net.push(+(f-rp-tg).toFixed(3))});
+      if(D.t.length<10)throw 0;Object.keys(D).forEach(function(k){D[k]=D[k].slice(-60)});M.D=D}).catch(function(){})}
+  function boot(){liveCrypto().then(function(){return liveMacro()}).then(function(){return histMacro()}).catch(function(){});liveStocks()}
   setTimeout(boot,60);
   setInterval(function(){if(!document.hidden)liveCrypto()},5*6e4);
   setInterval(function(){if(!document.hidden)liveStocks()},10*6e4);
-  setInterval(function(){if(!document.hidden)liveMacro()},6*36e5);
+  setInterval(function(){if(!document.hidden){liveMacro();histMacro()}},6*36e5);
+})();
+</script>
+<script id="ba-data-hub">
+/* PUSAT DATA ONLINE HARIAN — satu sumber data untuk semua halaman.
+   Menarik riwayat harian NYATA (CoinGecko, Yahoo Finance, FRED, Fear & Greed), disimpan per hari di localStorage
+   (sinkron 1x/hari + tombol manual + cek ulang otomatis bila hari berganti atau sinkron gagal).
+   Tidak ada angka fiktif: seri yang gagal dimuat ditandai "Belum ada", bukan diisi simulasi.
+   Hasilnya (1) menggantikan riwayat acak Komponen Likuiditas Makro dengan data harian asli dan
+   (2) ditampilkan menyeluruh di kartu "Pusat Data Online Harian" (halaman Market Statistik). */
+(function () {
+  'use strict';
+  if (window.__baHub) return;
+  var W = window, D = document, enc = encodeURIComponent, $ = function (i) { return D.getElementById(i); };
+  var R = [function (u) { return W.__BA_PROXY ? '/api/proxy?url=' + enc(u) : null; }, function (u) { return u; },
+    function (u) { return 'https://api.codetabs.com/v1/proxy?quest=' + enc(u); }, function (u) { return 'https://corsproxy.io/?' + enc(u); },
+    function (u) { return 'https://api.allorigins.win/raw?url=' + enc(u); }];
+  var get = function (u, ms) { return W.__baFetch(R, u, false, ms || 10000); };
+  var getTxt = function (u) { return W.__baFetch(R, u, true, 10000); };
+  var KEY = 'ba-hub-v1', CG = 'https://api.coingecko.com/api/v3/', YH = 'https://query1.finance.yahoo.com/v8/finance/chart/';
+  var dayKey = function () { return new Date(Date.now() + 7 * 36e5).toISOString().slice(0, 10); };
+  var iso = function (ms) { return new Date(ms).toISOString().slice(0, 10); };
+  var hm = function () { return new Date().toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour12: false }).replace(/\./g, ':').slice(0, 5); };
+  function toPts(m) { return Object.keys(m).sort().map(function (d) { return [d, m[d]]; }); }
+
+  /* ---------- Daftar seri: id, nama, kelompok, format, pengambil data ---------- */
+  var META = [];
+  function add(id, n, g, f, task) { META.push({ id: id, n: n, g: g, f: f, task: task }); }
+  [['btc', 'Bitcoin', 'bitcoin'], ['eth', 'Ethereum', 'ethereum'], ['sol', 'Solana', 'solana'], ['bnb', 'BNB', 'binancecoin']].forEach(function (c) {
+    add(c[0], c[1], 'Crypto', 'usd', function () {
+      return get(CG + 'coins/' + c[2] + '/market_chart?vs_currency=usd&days=180&interval=daily').then(function (j) {
+        var m = {}; j.prices.forEach(function (p) { if (isFinite(p[1])) m[iso(p[0])] = p[1]; }); return toPts(m); });
+    });
+  });
+  add('fng', 'Fear & Greed Kripto', 'Crypto', 'n0', function () {
+    return get('https://api.alternative.me/fng/?limit=180').then(function (j) {
+      var m = {}; j.data.forEach(function (x) { var v = parseFloat(x.value); if (isFinite(v)) m[iso(+x.timestamp * 1000)] = v; }); return toPts(m); });
+  });
+  [['spx', 'S&P 500', 'Saham', '^GSPC', 'n2'], ['ndx', 'NASDAQ Composite', 'Saham', '^IXIC', 'n2'], ['dji', 'Dow Jones', 'Saham', '^DJI', 'n2'],
+   ['nvda', 'NVIDIA', 'Saham', 'NVDA', 'usd'], ['aapl', 'Apple', 'Saham', 'AAPL', 'usd'], ['msft', 'Microsoft', 'Saham', 'MSFT', 'usd'],
+   ['jkse', 'IHSG', 'Global', '^JKSE', 'n2'], ['n225', 'Nikkei 225', 'Global', '^N225', 'n2'], ['gold', 'Emas (GC)', 'Global', 'GC=F', 'usd'],
+   ['oil', 'Minyak WTI', 'Global', 'CL=F', 'usd'], ['dxy', 'Indeks Dolar (DXY)', 'Global', 'DX-Y.NYB', 'n2'], ['vix', 'VIX', 'Global', '^VIX', 'n2'],
+   ['eur', 'EUR/USD', 'Global', 'EURUSD=X', 'n4'], ['jpy', 'USD/JPY', 'Global', 'USDJPY=X', 'n2']].forEach(function (y) {
+    add(y[0], y[1], y[2], y[4], function () {
+      return get(YH + enc(y[3]) + '?range=6mo&interval=1d').then(function (j) {
+        var r = j.chart.result[0], ts = r.timestamp, cl = r.indicators.quote[0].close, m = {};
+        for (var i = 0; i < ts.length; i++) if (cl[i] != null && isFinite(cl[i])) m[iso(ts[i] * 1000)] = cl[i];
+        return toPts(m); });
+    });
+  });
+  [['fed', 'Neraca Fed (WALCL)', 'WALCL', 1e-6, 'T'], ['rrp', 'Reverse Repo (RRP)', 'RRPONTSYD', 1e-3, 'T'],
+   ['tga', 'Kas Treasury (TGA)', 'WTREGEN', 1e-6, 'T'], ['ust', 'Imbal Hasil UST 10Y', 'DGS10', 1, 'pct']].forEach(function (f) {
+    add(f[0], f[1], 'Makro', f[4], function () {
+      return getTxt('https://fred.stlouisfed.org/graph/fredgraph.csv?id=' + f[2] + '&cosd=' + new Date(Date.now() - 200 * 864e5).toISOString().slice(0, 10)).then(function (t) {
+        var m = {}; t.trim().split('\n').slice(1).forEach(function (l) { var p = l.split(','), v = parseFloat(p[1]); if (p[0] && isFinite(v)) m[p[0]] = v * f[3]; }); return toPts(m); });
+    });
+  });
+  var BY = {}; META.forEach(function (m) { BY[m.id] = m; });
+  var COL = ['#38bdf8', '#f59e0b', '#34d399', '#f472b6', '#a78bfa', '#fb7185', '#facc15', '#2dd4bf', '#60a5fa', '#fb923c', '#4ade80', '#c084fc', '#22d3ee', '#f87171', '#a3e635', '#e879f9', '#fbbf24', '#818cf8', '#5eead4', '#fda4af', '#bef264', '#7dd3fc'];
+  META.forEach(function (m, i) { m.c = COL[i % COL.length]; });
+
+  /* ---------- Penyimpanan harian ---------- */
+  var S = {}, meta = { day: '', ts: 0, ok: 0 }, busy = null, fresh = {};
+  try { var c0 = JSON.parse(localStorage.getItem(KEY) || 'null'); if (c0 && c0.S) { S = c0.S; meta = { day: c0.day || '', ts: c0.ts || 0, ok: c0.ok || 0 }; } } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify({ day: meta.day, ts: meta.ts, ok: meta.ok, S: S })); } catch (e) {} }
+
+  function pool(tasks, n) {
+    var i = 0, act = 0, res = [];
+    return new Promise(function (done) {
+      (function nx() {
+        if (i >= tasks.length && act === 0) return done(res);
+        while (act < n && i < tasks.length) (function (k) {
+          act++; Promise.resolve().then(tasks[k]).then(function (v) { res[k] = v; }, function () { res[k] = null; }).then(function () { act--; nx(); });
+        })(i++);
+      })();
+    });
+  }
+  function sync(force) {
+    if (busy) return busy;
+    var today = dayKey(), have = Object.keys(S).length;
+    if (!force && meta.day === today && have >= Math.ceil(META.length * .5)) { applyMods(); render(); return Promise.resolve('cache'); }
+    setStatus('Menyinkron data online…', '#38bdf8');
+    busy = pool(META.map(function (m) { return m.task; }), 3).then(function (res) {
+      var ok = 0;
+      META.forEach(function (m, i) {
+        var p = res[i];
+        if (p && p.length >= 5) { S[m.id] = { pts: p.slice(-200), upd: Date.now() }; fresh[m.id] = 1; ok++; }
+      });
+      meta.ok = ok; meta.ts = Date.now();
+      if (ok >= Math.ceil(META.length * .5)) meta.day = today;   /* belum cukup → dicoba lagi otomatis */
+      save(); busy = null; applyMods(); render();
+      try { W.dispatchEvent(new CustomEvent('ba-hub-sync', { detail: { ok: ok, total: META.length } })); } catch (e) {}
+      return ok;
+    }).catch(function () { busy = null; render(); });
+    return busy;
+  }
+
+  /* ---------- Ganti data simulasi modul lain dengan data harian asli ---------- */
+  function applyMods() {
+    try {
+      var M = W.__MLC; if (!M || !M.C) return;
+      M.C.forEach(function (c) {
+        var s = S[c.id]; if (!s || !BY[c.id] || BY[c.id].g !== 'Makro' && c.id !== 'dxy') return;
+        var v = s.pts.map(function (p) { return p[1]; }).filter(function (x) { return isFinite(x) && x > 0; });
+        if (v.length < 5) return;
+        var h = v.slice(-40); while (h.length < 40) h.unshift(h[0]);
+        c.h = h; var last = h[h.length - 1]; c.b = c.x = c.o = c.p = last; c.real = 1;
+      });
+    } catch (e) {}
+  }
+
+  /* ---------- Statistik & format ---------- */
+  function fmt(m, v) {
+    if (!isFinite(v)) return '–';
+    var L = function (d) { return v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); };
+    return m.f === 'usd' ? '$' + L(v >= 1000 ? 0 : 2) : m.f === 'T' ? '$' + L(3) + 'T' : m.f === 'pct' ? L(2) + '%' : m.f === 'n4' ? L(4) : m.f === 'n0' ? L(0) : L(2);
+  }
+  function stat(id) {
+    var s = S[id]; if (!s || !s.pts.length) return null;
+    var p = s.pts, n = p.length, last = p[n - 1], prev = n > 1 ? p[n - 2][1] : NaN, cut = new Date(new Date(last[0]).getTime() - 30 * 864e5).toISOString().slice(0, 10), b = p[0][1];
+    for (var i = 0; i < n; i++) if (p[i][0] >= cut) { b = p[i][1]; break; }
+    return { last: last[1], d: last[0], d1: (last[1] / prev - 1) * 100, d30: (last[1] / b - 1) * 100 };
+  }
+  function pearson(a, b) {
+    var n = a.length; if (n < 8) return NaN; var ma = 0, mb = 0, i; for (i = 0; i < n; i++) { ma += a[i]; mb += b[i]; } ma /= n; mb /= n;
+    var sab = 0, saa = 0, sbb = 0; for (i = 0; i < n; i++) { sab += (a[i] - ma) * (b[i] - mb); saa += (a[i] - ma) * (a[i] - ma); sbb += (b[i] - mb) * (b[i] - mb); }
+    return sab / Math.sqrt(saa * sbb || 1);
+  }
+  function corr(x, y) {
+    var A = {}, k; S[x].pts.forEach(function (p) { A[p[0]] = p[1]; });
+    var d = [], va = [], vb = []; S[y].pts.forEach(function (p) { if (A[p[0]] != null) { d.push(p[0]); va.push(A[p[0]]); vb.push(p[1]); } });
+    var ra = [], rb = []; for (k = 1; k < d.length; k++) { ra.push(va[k] / va[k - 1] - 1); rb.push(vb[k] / vb[k - 1] - 1); }
+    return pearson(ra.slice(-60), rb.slice(-60));
+  }
+
+  /* ---------- Tampilan ---------- */
+  var GR = ['Semua', 'Crypto', 'Saham', 'Global', 'Makro'];
+  var st = { g: 'Semua', mode: 'idx', rng: 60, sel: { btc: 1, eth: 1, spx: 1, ndx: 1, gold: 1, oil: 1, dxy: 1, jkse: 1 } }, ch1 = null, ch2 = null;
+  var active = function () { var p = $('page-market-stat'); return !!p && p.classList.contains('active'); };
+  function setStatus(t, c) { var e = $('bh-status'); if (e) { e.textContent = t; e.style.color = c || '#94a3b8'; } }
+  var btn = function (on) { return 'px-2.5 py-1 rounded-lg text-[11px] font-semibold border ' + (on ? 'border-brand-accent text-white bg-brand-primary' : 'border-card-border text-gray-300 bg-black/40'); };
+  var vis = function () { return META.filter(function (m) { return st.g === 'Semua' || m.g === st.g; }); };
+  var selIds = function () { return vis().filter(function (m) { return st.sel[m.id] && S[m.id]; }).map(function (m) { return m.id; }); };
+
+  function controls() {
+    var h = '', e;
+    e = $('bh-groups'); if (e) { GR.forEach(function (g) { h += '<button type="button" data-bhg="' + g + '" class="' + btn(st.g === g) + '">' + g + '</button>'; }); e.innerHTML = h; }
+    e = $('bh-modes'); if (e) { h = ''; [['idx', 'Indeks = 100'], ['pct', '% Perubahan'], ['price', 'Harga (log)']].forEach(function (m) { h += '<button type="button" data-bhm="' + m[0] + '" class="' + btn(st.mode === m[0]) + '">' + m[1] + '</button>'; });
+      [30, 60, 90, 180].forEach(function (r) { h += '<button type="button" data-bhr="' + r + '" class="' + btn(st.rng === r) + '">' + r + 'H</button>'; }); e.innerHTML = h; }
+    e = $('bh-chips'); if (e) { h = ''; vis().forEach(function (m) {
+      var on = st.sel[m.id] && S[m.id], has = !!S[m.id];
+      h += '<button type="button" data-bhs="' + m.id + '" class="px-2 py-1 rounded-lg text-[11px] font-semibold border border-card-border bg-black/40 ' + (has ? '' : 'opacity-40') + '" style="' + (on ? 'color:#fff;border-color:' + m.c : 'color:#9ca3af') + '"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + (on ? m.c : '#4b5563') + ';margin-right:5px"></span>' + m.n + '</button>'; }); e.innerHTML = h; }
+  }
+  function lineChart(ids) {
+    var cv = $('bh-c1'); if (!cv || !W.Chart) return;
+    var last = ''; ids.forEach(function (id) { var p = S[id].pts; if (p[p.length - 1][0] > last) last = p[p.length - 1][0]; });
+    var cut = last ? new Date(new Date(last).getTime() - st.rng * 864e5).toISOString().slice(0, 10) : '';
+    var ds = ids.map(function (id) {
+      var pts = S[id].pts.filter(function (p) { return p[0] >= cut; }), b = pts.length ? pts[0][1] : 1;
+      return { label: BY[id].n, borderColor: BY[id].c, backgroundColor: BY[id].c, borderWidth: 1.6, pointRadius: 0, pointHoverRadius: 3, tension: .15, spanGaps: true,
+        data: pts.map(function (p) { return { x: p[0], y: st.mode === 'idx' ? p[1] / b * 100 : st.mode === 'pct' ? (p[1] / b - 1) * 100 : p[1] }; }) };
+    });
+    var cfg = { type: 'line', data: { datasets: ds }, options: { responsive: true, maintainAspectRatio: false, animation: false, interaction: { mode: 'index', intersect: false },
+      plugins: { legend: { labels: { color: '#cbd5e1', boxWidth: 10, font: { size: 10 } } }, tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + c.parsed.y.toLocaleString('en-US', { maximumFractionDigits: 2 }) + (st.mode === 'pct' ? '%' : ''); } } } },
+      scales: { x: { type: 'time', time: { unit: st.rng > 90 ? 'month' : 'week', tooltipFormat: 'dd MMM yyyy' }, ticks: { color: '#94a3b8', maxRotation: 0, font: { size: 10 } }, grid: { color: 'rgba(148,163,184,.08)' } },
+        y: { type: st.mode === 'price' ? 'logarithmic' : 'linear', ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(148,163,184,.1)' } } } } };
+    if (ch1) { try { ch1.destroy(); } catch (e) {} } ch1 = new W.Chart(cv.getContext('2d'), cfg);
+  }
+  function barChart() {
+    var cv = $('bh-c2'); if (!cv || !W.Chart) return;
+    var rows = vis().map(function (m) { var s = stat(m.id); return s ? { n: m.n, v: s.d30 } : null; }).filter(Boolean).sort(function (a, b) { return b.v - a.v; });
+    var cfg = { type: 'bar', data: { labels: rows.map(function (r) { return r.n; }), datasets: [{ data: rows.map(function (r) { return +r.v.toFixed(2); }), backgroundColor: rows.map(function (r) { return r.v >= 0 ? 'rgba(52,211,153,.8)' : 'rgba(251,113,133,.8)'; }), borderRadius: 3 }] },
+      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: false, plugins: { legend: { display: false }, tooltip: { callbacks: { label: function (c) { return c.parsed.x.toFixed(2) + '%'; } } } },
+        scales: { x: { ticks: { color: '#94a3b8', font: { size: 10 }, callback: function (v) { return v + '%'; } }, grid: { color: 'rgba(148,163,184,.1)' } }, y: { ticks: { color: '#cbd5e1', font: { size: 10 } }, grid: { display: false } } } } };
+    if (ch2) { try { ch2.destroy(); } catch (e) {} } ch2 = new W.Chart(cv.getContext('2d'), cfg);
+  }
+  function corrTable(ids) {
+    var e = $('bh-corr'); if (!e) return; ids = ids.slice(0, 8);
+    if (ids.length < 3) { e.innerHTML = '<div class="text-[11px] text-gray-500">Pilih minimal 3 seri untuk melihat korelasi.</div>'; return; }
+    var h = '<table class="w-full text-[10px] font-mono"><tr><td></td>' + ids.map(function (i) { return '<td class="px-1 py-1 text-center text-gray-400">' + BY[i].n.split(' ')[0] + '</td>'; }).join('') + '</tr>';
+    ids.forEach(function (a) { h += '<tr><td class="pr-2 py-0.5 text-gray-400 whitespace-nowrap">' + BY[a].n.split(' ')[0] + '</td>';
+      ids.forEach(function (b) { var r = a === b ? 1 : corr(a, b), c = !isFinite(r) ? 'rgba(75,85,99,.25)' : r >= 0 ? 'rgba(52,211,153,' + (.12 + Math.abs(r) * .7).toFixed(2) + ')' : 'rgba(251,113,133,' + (.12 + Math.abs(r) * .7).toFixed(2) + ')';
+        h += '<td class="px-1 py-1 text-center text-white" style="background:' + c + '">' + (isFinite(r) ? r.toFixed(2) : '–') + '</td>'; }); h += '</tr>'; });
+    e.innerHTML = h + '</table>';
+  }
+  function table() {
+    var e = $('bh-tbl'); if (!e) return; var h = '';
+    META.forEach(function (m) {
+      var s = stat(m.id), up = function (x) { return x >= 0 ? 'text-emerald-400' : 'text-rose-400'; }, f = fresh[m.id], today = s && meta.day === dayKey();
+      h += '<tr class="border-t border-card-border"><td class="py-1.5 pr-2 text-white whitespace-nowrap"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' + m.c + ';margin-right:6px"></span>' + m.n + '</td><td class="pr-2 text-gray-400">' + m.g + '</td>' +
+        (s ? '<td class="pr-2 text-right text-white font-mono">' + fmt(m, s.last) + '</td><td class="pr-2 text-right font-mono ' + up(s.d1) + '">' + (s.d1 >= 0 ? '+' : '') + s.d1.toFixed(2) + '%</td><td class="pr-2 text-right font-mono ' + up(s.d30) + '">' + (s.d30 >= 0 ? '+' : '') + s.d30.toFixed(2) + '%</td><td class="pr-2 text-gray-400 font-mono">' + s.d.slice(5) + '</td>' +
+          '<td class="text-right whitespace-nowrap" style="color:' + (f ? '#34d399' : today ? '#38bdf8' : '#fbbf24') + '">' + (f ? '● Online' : today ? '◐ Cache hari ini' : '◐ Cache lama') + '</td>'
+        : '<td colspan="5" class="text-right text-gray-500">○ Belum ada data online</td>') + '</tr>';
+    });
+    e.innerHTML = '<table class="w-full text-[11px]"><thead><tr class="text-[10px] uppercase tracking-wider text-gray-500 text-left"><th class="pb-1">Seri</th><th>Kelompok</th><th class="text-right">Terakhir</th><th class="text-right">1H</th><th class="text-right">30H</th><th>Tgl data</th><th class="text-right">Status</th></tr></thead><tbody>' + h + '</tbody></table>';
+  }
+  function render() {
+    var n = Object.keys(S).length, f = Object.keys(fresh).length;
+    if (!busy) setStatus(n ? (f ? '● Online · ' : '◐ Cache · ') + n + ' dari ' + META.length + ' seri · sinkron ' + (meta.day || '–') + (meta.ts ? ' ' + new Date(meta.ts).toLocaleTimeString('id-ID', { timeZone: 'Asia/Jakarta', hour12: false }).replace(/\./g, ':').slice(0, 5) : '') : '○ Belum ada data online (sumber tidak terjangkau) · mencoba lagi otomatis', f ? '#34d399' : n ? '#38bdf8' : '#94a3b8');
+    if (!active()) return;
+    controls(); var ids = selIds(); table();
+    var em = $('bh-empty'); if (em) em.style.display = ids.length ? 'none' : 'flex';
+    if (ids.length) lineChart(ids); else if (ch1) { try { ch1.destroy(); } catch (e) {} ch1 = null; }
+    if (n) barChart(); corrTable(ids);
+  }
+
+  /* ---------- Interaksi ---------- */
+  D.addEventListener('click', function (ev) {
+    var t = ev.target.closest && ev.target.closest('[data-bhg],[data-bhm],[data-bhr],[data-bhs],#bh-sync'); if (!t) return;
+    if (t.id === 'bh-sync') { sync(true); return; }
+    if (t.dataset.bhg) { st.g = t.dataset.bhg; if (st.g !== 'Semua') { st.sel = {}; vis().forEach(function (m) { st.sel[m.id] = 1; }); } else st.sel = { btc: 1, eth: 1, spx: 1, ndx: 1, gold: 1, oil: 1, dxy: 1, jkse: 1 }; }
+    else if (t.dataset.bhm) st.mode = t.dataset.bhm;
+    else if (t.dataset.bhr) st.rng = +t.dataset.bhr;
+    else if (t.dataset.bhs) st.sel[t.dataset.bhs] = st.sel[t.dataset.bhs] ? 0 : 1;
+    render();
+  });
+  function boot() {
+    var p = $('page-market-stat');
+    if (p && W.MutationObserver) new MutationObserver(function () { if (active()) render(); }).observe(p, { attributes: true, attributeFilter: ['class'] });
+    applyMods(); render(); sync(false);
+    setInterval(function () { if (!D.hidden) applyMods(); }, 60000);                       /* jaga riwayat asli tidak tertimpa */
+    setInterval(function () { if (!D.hidden && !busy && (meta.day !== dayKey())) sync(false); }, 10 * 6e4); /* hari berganti / sinkron sebelumnya gagal */
+    D.addEventListener('visibilitychange', function () { if (!D.hidden && meta.day !== dayKey()) sync(false); });
+  }
+  W.__baHub = { sync: sync, series: function (id) { return S[id] ? S[id].pts.slice() : null; }, stat: stat, ids: function () { return META.map(function (m) { return m.id; }); } };
+  if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', function () { setTimeout(boot, 1800); }); else setTimeout(boot, 1800);
 })();
 </script>
 <script id="ba-fast-patch">
