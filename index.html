@@ -821,6 +821,7 @@ html.light #page-market-stat{--ms-t:#0f172a;--ms-m:#475569;--ms-d:#64748b;--ms-u
 #page-market-stat .ms-jump{display:inline-flex;gap:2px;padding:3px;border-radius:11px;background:var(--b-glass);box-shadow:inset 0 0 0 1px var(--b-line)}
 #page-market-stat .ms-jump button{padding:7px 13px;border:0;border-radius:8px;background:none;color:var(--ms-m);font:600 12px/1 inherit;cursor:pointer;transition:background .15s,color .15s}
 #page-market-stat .ms-jump button:hover{background:var(--b-glass2);color:var(--ms-t)}
+#page-market-stat .ms-jump button.is-active{background:var(--b-glass2);color:var(--ms-t);box-shadow:inset 0 0 0 1px var(--b-line)}
 #page-market-stat .ms-live{font:500 11.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ms-m);white-space:nowrap}
 #page-market-stat button:focus-visible,#page-market-stat a:focus-visible{outline:2px solid var(--ms-ac);outline-offset:2px}
 /* kartu */
@@ -3518,7 +3519,28 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
             </div>
         </section>
         <script>/* Navigasi lompat Market Statistik */
-        (function(){document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-ms-go]');if(!b)return;var t=document.getElementById(b.getAttribute('data-ms-go'));if(!t)return;var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;t.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'})})})();
+        (function(){
+  /* Navigasi Market Statistik: tiap tombol membuka halamannya sendiri (bukan scroll) */
+  var MAP={'ms-sec-ringkas':['ms-sec-ringkas','ms-trio'],'ba-data-hub-card':['ba-data-hub-card'],'analyst-toolkit':['analyst-toolkit']};
+  var KEY='ms-tab';
+  function els(k){return MAP[k].map(function(id){return document.getElementById(id)||document.querySelector('#page-market-stat .'+id)}).filter(Boolean)}
+  function show(k,save){
+    if(!MAP[k])k='ms-sec-ringkas';
+    Object.keys(MAP).forEach(function(x){els(x).forEach(function(n){n.style.display=(x===k)?'':'none'})});
+    document.querySelectorAll('#page-market-stat .ms-jump button').forEach(function(b){
+      var on=b.getAttribute('data-ms-go')===k;b.classList.toggle('is-active',on);b.setAttribute('aria-pressed',on?'true':'false')});
+    if(save){try{localStorage.setItem(KEY,k)}catch(e){}}
+    /* grafik yang tadinya tersembunyi perlu menghitung ulang ukurannya */
+    setTimeout(function(){try{window.dispatchEvent(new Event('resize'))}catch(e){}},60);
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('[data-ms-go]');if(!b)return;
+    show(b.getAttribute('data-ms-go'),true);
+    var p=document.getElementById('page-market-stat');if(p&&p.scrollIntoView)p.scrollIntoView({block:'start'});
+  });
+  var s='ms-sec-ringkas';try{s=localStorage.getItem(KEY)||s}catch(e){}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){show(s)});else show(s);
+})();
         </script>
         <script>/* Market Statistik: membaca hasil analisis langsung dari elemen di halaman Crypto Market, Stock Exchange, dan Global Market (tanpa mengubah halaman tersebut), diperbarui tiap 2 detik. */
         (function(){
