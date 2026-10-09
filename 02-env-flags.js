@@ -1,1 +1,0 @@
-window.__BA_PROXY=false;window.__BA_STATIC=/(^|\.)(github\.io|githubusercontent\.com|pages\.dev|netlify\.app|vercel\.app)$/i.test(location.hostname);try{if(location.protocol.indexOf('http')===0&&!window.__BA_STATIC)fetch('/api/health').then(function(r){window.__BA_PROXY=r.ok}).catch(function(){})}catch(e){}
