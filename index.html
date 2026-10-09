@@ -821,8 +821,6 @@ html.light #page-market-stat{--ms-t:#0f172a;--ms-m:#475569;--ms-d:#64748b;--ms-u
 #page-market-stat .ms-jump{display:inline-flex;gap:2px;padding:3px;border-radius:11px;background:var(--b-glass);box-shadow:inset 0 0 0 1px var(--b-line)}
 #page-market-stat .ms-jump button{padding:7px 13px;border:0;border-radius:8px;background:none;color:var(--ms-m);font:600 12px/1 inherit;cursor:pointer;transition:background .15s,color .15s}
 #page-market-stat .ms-jump button:hover{background:var(--b-glass2);color:var(--ms-t)}
-#page-market-stat .ms-jump button.on{background:var(--b-glass2);color:var(--ms-t)}
-#page-market-stat[data-ms-cur="1"] [data-ms-pg]:not([data-ms-pg="1"]),#page-market-stat[data-ms-cur="2"] [data-ms-pg]:not([data-ms-pg="2"]),#page-market-stat[data-ms-cur="3"] [data-ms-pg]:not([data-ms-pg="3"]){display:none!important}
 #page-market-stat .ms-live{font:500 11.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ms-m);white-space:nowrap}
 #page-market-stat button:focus-visible,#page-market-stat a:focus-visible{outline:2px solid var(--ms-ac);outline-offset:2px}
 /* kartu */
@@ -1440,6 +1438,26 @@ html.light .ba-tab .di{color:#536471}html.light .ba-tab.on .di{color:#0f1419}
   html body #ba-tabbar.ba-hide{transform:translateY(105%)!important}
 }
 @media (prefers-reduced-motion:reduce){html body #ba-tabbar{transition:none!important}}
+</style>
+<style id="ba-nav-boost">
+/* ===== NAV HP: lebih tinggi + respons sentuh instan ===== */
+:root{--ba-tab-h:66px}
+@media (max-width:767px){
+  html body #ba-tabbar{touch-action:manipulation;-webkit-tap-highlight-color:transparent;contain:layout paint}
+  html body #ba-tabbar .ba-tab{position:relative;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:color .12s,background-color .12s;outline:0}
+  html body #ba-tabbar .ba-tab::before{content:"";position:absolute;inset:0 -2px}              /* area ketuk lebih lebar */
+  html body #ba-tabbar .ba-tab-ico{width:60px!important;height:42px!important;border-radius:14px!important;transition:transform .09s ease-out,background-color .12s!important}
+  html body #ba-tabbar .di{width:30px;height:30px}
+  html body #ba-tabbar .ba-tab.ba-press .ba-tab-ico{transform:scale(.84)!important;background:rgba(148,163,184,.16)!important}
+  html body #ba-tabbar .ba-tab:focus-visible .ba-tab-ico{box-shadow:0 0 0 2px rgba(56,189,248,.8)!important}
+  #ba-sheet .ba-row{min-height:58px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:background-color .1s}
+  #ba-sheet .ba-row:active{background:rgba(148,163,184,.14)}
+  .nav-link,button,a{touch-action:manipulation}
+}
+@media (max-width:900px) and (max-height:480px){
+  html body #ba-tabbar .ba-tab{min-height:48px!important;height:48px}
+}
+@media (prefers-reduced-motion:reduce){html body #ba-tabbar .ba-tab-ico{transition:none!important}}
 </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
@@ -3151,6 +3169,29 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                     .liq-card em{font-style:normal;font-size:9px;font-weight:700;color:var(--c)}.liq-card em::after{content:'● GRAFIK'}.liq-card.off em::after{content:'+ GRAFIK'}
                     #liq-tbl th.r{text-align:right}
                     #liq-tbl th,#liq-tbl td,#liq-tbl tr{border:0!important}
+                    /* === Interval tabel negara: tinggi baris & jarak kolom seragam di semua halaman (urutan 1 dst) === */
+                    #liq-tbl{table-layout:auto;min-width:640px}
+                    #liq-tbl th,#liq-tbl td{padding:0 10px!important;vertical-align:middle}
+                    #liq-tbl thead th{height:38px}
+                    #liq-tbl tbody tr{height:46px}
+                    #liq-tbl tbody tr+tr td{border-top:1px solid #1a1a1a!important}
+                    #liq-tbl th:first-child,#liq-tbl td.n{width:44px;min-width:44px;max-width:44px;padding:0 4px!important;text-align:center!important;font-variant-numeric:tabular-nums}
+                    #liq-tbl td.nm{min-width:150px}
+                    #liq-tbl td.nm .fl{display:inline-block;margin-right:10px;vertical-align:middle;flex:none}
+                    #liq-tbl th:nth-child(3),#liq-tbl th:nth-child(4),#liq-tbl td:nth-child(3),#liq-tbl td:nth-child(4){width:84px;text-align:right}
+                    #liq-tbl th:nth-child(5),#liq-tbl td:nth-child(5){width:116px}
+                    #liq-tbl th:nth-child(6),#liq-tbl td.px{width:110px}
+                    #liq-tbl th:last-child,#liq-tbl td:last-child{width:84px;text-align:left}
+                    #liq-tbl tr.liq-blank{pointer-events:none}#liq-tbl tr.liq-blank td{color:transparent}
+                    html.light #liq-tbl tbody tr+tr td{border-top-color:#e2e8f0!important}
+                    #liq-regions{-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+                    @media (max-width:1023px){
+                      #liq-tbl{height:auto}
+                      #liq-tbl tbody tr{height:50px}
+                      #liq-tbl th:first-child,#liq-tbl td.n{position:sticky;left:0;z-index:2;background:#0b0b0b}
+                      #liq-tbl th:nth-child(2),#liq-tbl td.nm{position:sticky;left:44px;z-index:2;background:#0b0b0b;box-shadow:6px 0 8px -6px rgba(0,0,0,.7)}
+                      html.light #liq-tbl th:first-child,html.light #liq-tbl td.n,html.light #liq-tbl th:nth-child(2),html.light #liq-tbl td.nm{background:#fff}
+                    }
                     .liq-heatbox{display:flex;flex-direction:column}.liq-heatbox>small:last-child{margin-top:auto!important;padding-top:8px}html.light #liq-tbl{background:rgba(255,255,255,.92);color:#334155;border-color:#e2e8f0}html.light #liq-tbl th{background:#f1f5f9}html.light .liq-card .px{color:#0f172a}</style>
                     <div class="liq-netwrap lg:col-span-2">
                         <canvas id="liq-net"></canvas>
@@ -3359,7 +3400,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
             </div>
         </section>
             <!-- Halaman Market Statistik: rangkuman hasil analisis dari Crypto Market, Stock Exchange, Global Market -->
-        <section id="page-market-stat" class="page ms-page" data-ms-cur="1">
+        <section id="page-market-stat" class="page ms-page">
             <header class="ms-head">
                 <div>
                     <h2>Market Statistik</h2>
@@ -3367,17 +3408,17 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                 </div>
                 <div class="ms-tools">
                     <nav class="ms-jump" aria-label="Lompat ke bagian">
-                        <button type="button" class="on" data-ms-go="ms-sec-ringkas">Ringkasan</button>
+                        <button type="button" data-ms-go="ms-sec-ringkas">Ringkasan</button>
                         <button type="button" data-ms-go="ba-data-hub-card">Riwayat harian</button>
                         <button type="button" data-ms-go="analyst-toolkit">Analyst Toolkit</button>
                     </nav>
                     <span class="ms-live"><span class="live-dot"></span>Diperbarui <span id="ms-upd">--:--:--</span> WIB</span>
                 </div>
             </header>
-            <div id="ms-sec-ringkas" class="ms-top" data-ms-pg="1">
+            <div id="ms-sec-ringkas" class="ms-top">
                 <div id="ms-bias" class="ms-card ms-verdict bg-card-dark"></div>
             </div>
-            <div class="ms-trio" data-ms-pg="1">
+            <div class="ms-trio">
                 <article class="ms-card bg-card-dark">
                     <div class="ms-card-h"><h3><i class="fa-solid fa-coins"></i>Crypto Market</h3><span id="ms-pill-crypto" class="ms-pill ms-nt">Netral</span></div>
                     <div id="ms-crypto"></div>
@@ -3395,7 +3436,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                 </article>
             </div>
             <!-- Pusat Data Online Harian -->
-            <div id="ba-data-hub-card" class="ms-card ms-wide bg-card-dark" data-ms-pg="2">
+            <div id="ba-data-hub-card" class="ms-card ms-wide bg-card-dark">
                 <div class="ms-card-h ms-card-h--top">
                     <div>
                         <h3><i class="fa-solid fa-database"></i>Pusat Data Online Harian</h3>
@@ -3419,7 +3460,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                 <p class="text-[10px] text-gray-500 mt-3">Sumber: CoinGecko, Yahoo Finance, FRED, alternative.me. Alat bantu analisis, bukan saran investasi.</p>
             </div>
             <!-- Analyst Toolkit Statistik -->
-            <div id="analyst-toolkit" class="ms-card ms-wide bg-card-dark" data-ms-pg="3">
+            <div id="analyst-toolkit" class="ms-card ms-wide bg-card-dark">
                 <div class="ms-card-h ms-card-h--top">
                     <div><h3><i class="fa-solid fa-toolbox"></i>Analyst Toolkit Statistik <span id="tk-badge" class="ml-1 text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 align-middle">AUTO LIVE</span></h3>
                     <p class="ms-sub" id="tk-sub">Terminal statistik otomatis: harga, indikator, distribusi return, drawdown, dan korelasi. Bukan harga pasar.</p></div>
@@ -3477,7 +3518,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
             </div>
         </section>
         <script>/* Navigasi lompat Market Statistik */
-        (function(){var MAP={'ms-sec-ringkas':'1','ba-data-hub-card':'2','analyst-toolkit':'3'};document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-ms-go]');if(!b)return;var pg=MAP[b.getAttribute('data-ms-go')];if(!pg)return;var sec=document.getElementById('page-market-stat');if(!sec)return;sec.setAttribute('data-ms-cur',pg);Array.prototype.forEach.call(sec.querySelectorAll('[data-ms-go]'),function(x){x.classList.toggle('on',x===b)});try{window.dispatchEvent(new Event('resize'))}catch(_){}setTimeout(function(){try{window.dispatchEvent(new Event('resize'))}catch(_){}},60);var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;sec.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'})})})();
+        (function(){document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-ms-go]');if(!b)return;var t=document.getElementById(b.getAttribute('data-ms-go'));if(!t)return;var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;t.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'})})})();
         </script>
         <script>/* Market Statistik: membaca hasil analisis langsung dari elemen di halaman Crypto Market, Stock Exchange, dan Global Market (tanpa mengubah halaman tersebut), diperbarui tiap 2 detik. */
         (function(){
@@ -5971,6 +6012,11 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       tr.onmouseleave = function () { st.hl = null; render(); };
       tb.appendChild(tr);
     });
+    for (var pad = tb.children.length; pad < PS; pad++) { /* halaman terakhir diisi baris kosong agar interval baris sama dengan halaman lain */
+      var bl = D.createElement('tr'); bl.className = 'liq-blank'; bl.setAttribute('aria-hidden', 'true');
+      bl.innerHTML = '<td class="n">&nbsp;</td><td class="nm">&nbsp;</td><td></td><td></td><td></td><td class="px"></td><td></td>';
+      tb.appendChild(bl);
+    }
     var pg = $('liq-pg'); if (pg) pg.textContent = (st.pg + 1) + ' / ' + pages;
     var a = $('liq-pv'), b = $('liq-nx'); if (a) a.disabled = st.pg === 0; if (b) b.disabled = st.pg === pages - 1;
     kpi();
@@ -9948,7 +9994,7 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
    Jari geser ke bawah (halaman naik)  -> tab bar muncul
    Ubah HIDE_ON_DOWN ke false untuk membalik arah. */
 (function(){
-  var HIDE_ON_DOWN = true, THRESHOLD = 8, TOP_ZONE = 60;
+  var HIDE_ON_DOWN = true, THRESHOLD = 4, TOP_ZONE = 60;
   var mq = window.matchMedia('(max-width:767px)');
   var last = 0, ticking = false;
 
@@ -10156,5 +10202,20 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
 })();
 </script>
 
+<script id="ba-nav-boost-js">
+/* NAV HP: umpan balik sentuh instan (pointerdown) + sorotan tab aktif langsung tanpa menunggu pindah halaman */
+(function(){
+  var mq=window.matchMedia('(max-width:767px)'),cur=null,t=null;
+  function tab(e){return e.target&&e.target.closest?e.target.closest('#ba-tabbar .ba-tab'):null}
+  function clr(){if(cur){cur.classList.remove('ba-press');cur=null}clearTimeout(t)}
+  document.addEventListener('pointerdown',function(e){if(!mq.matches)return;var b=tab(e);if(!b)return;clr();cur=b;b.classList.add('ba-press');t=setTimeout(clr,1200)},{passive:true,capture:true});
+  ['pointerup','pointercancel','pointerleave','touchend','touchcancel'].forEach(function(n){document.addEventListener(n,function(){if(cur)setTimeout(clr,60)},{passive:true,capture:true})});
+  document.addEventListener('click',function(e){
+    if(!mq.matches)return;var b=tab(e);if(!b||b.getAttribute('data-k')==='more')return;
+    var nav=document.getElementById('ba-tabbar');if(!nav)return;
+    Array.prototype.forEach.call(nav.querySelectorAll('.ba-tab'),function(x){x.classList.toggle('on',x===b)}); /* sorot langsung */
+  },true);
+})();
+</script>
 </body>
 </html>
