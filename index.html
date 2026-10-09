@@ -39,13 +39,7 @@
     var n={'1mo':22,'3mo':64,'6mo':127,'1y':252}[rg]||252, h=D.hist[sym].slice(-n);
     if(h.length<3) return null; return {pts:h,price:h[h.length-1][1]};};
   if(D&&D.cryptoGlobal&&D.cryptoGlobal.btc){window.__CGG=Object.assign({},D.cryptoGlobal);}
-  document.addEventListener('DOMContentLoaded',function(){
-    var b=document.createElement('div'); b.id='daily-badge';
-    var age=D&&D.asOf?Math.floor((Date.now()-Date.parse(D.asOf+'T00:00:00Z'))/864e5):null;
-    var stale=age===null||age>2;
-    b.textContent=D?('Data pasar: '+D.asOf+(stale?' (usang '+age+' hari)':' (terbaru)')):'Data harian tidak termuat';
-    b.style.cssText='position:fixed;right:10px;bottom:10px;z-index:9999;font:600 10px ui-monospace,monospace;padding:4px 8px;border-radius:8px;background:rgba(0,0,0,.65);color:'+(stale?'#f87171':'#34d399')+';border:1px solid '+(stale?'#7f1d1d':'#065f46')+';pointer-events:none';
-    document.body.appendChild(b);});
+
 })();
 </script>
 
@@ -827,6 +821,8 @@ html.light #page-market-stat{--ms-t:#0f172a;--ms-m:#475569;--ms-d:#64748b;--ms-u
 #page-market-stat .ms-jump{display:inline-flex;gap:2px;padding:3px;border-radius:11px;background:var(--b-glass);box-shadow:inset 0 0 0 1px var(--b-line)}
 #page-market-stat .ms-jump button{padding:7px 13px;border:0;border-radius:8px;background:none;color:var(--ms-m);font:600 12px/1 inherit;cursor:pointer;transition:background .15s,color .15s}
 #page-market-stat .ms-jump button:hover{background:var(--b-glass2);color:var(--ms-t)}
+#page-market-stat .ms-jump button.on{background:var(--b-glass2);color:var(--ms-t)}
+#page-market-stat[data-ms-cur="1"] [data-ms-pg]:not([data-ms-pg="1"]),#page-market-stat[data-ms-cur="2"] [data-ms-pg]:not([data-ms-pg="2"]),#page-market-stat[data-ms-cur="3"] [data-ms-pg]:not([data-ms-pg="3"]){display:none!important}
 #page-market-stat .ms-live{font:500 11.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ms-m);white-space:nowrap}
 #page-market-stat button:focus-visible,#page-market-stat a:focus-visible{outline:2px solid var(--ms-ac);outline-offset:2px}
 /* kartu */
@@ -3133,8 +3129,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                     <div class="liq-kpi"><span>Rezim Pasar</span><b id="liq-k-reg">--</b><small id="liq-k-regd">&nbsp;</small></div>
                     <div class="liq-kpi"><span>Persentil Periode</span><b id="liq-k-pct">--</b><small>posisi indeks terkini</small></div>
                 </div>
-                <div class="flex flex-wrap items-center justify-between gap-3">
-                    <div id="liq-chips" class="flex flex-wrap gap-2 text-xs"></div>
+                <div class="flex flex-wrap items-center justify-end gap-3">
                     <div class="flex flex-wrap items-center gap-2 text-xs">
                         <div id="liq-mode" class="flex gap-1"></div>
                         <div id="liq-tf" class="flex gap-1"></div>
@@ -3172,7 +3167,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                         <div class="liq-ex">
                             <div class="ex-g"><div><span>Hari naik</span><b id="liq-x1">--</b></div><div><span>Rata² harian</span><b id="liq-x2">--</b></div><div><span>Volatilitas</span><b id="liq-x3">--</b></div><div><span>Hari terbaik</span><b id="liq-x4">--</b></div><div><span>Hari terburuk</span><b id="liq-x5">--</b></div><div><span>Drawdown maks</span><b id="liq-x6">--</b></div></div>
                             <div class="ex-t"><span>Breadth negara (periode)</span><div class="ex-br"><i id="liq-br-u"></i><i id="liq-br-d"></i></div><small id="liq-br-t">--</small></div>
-                            <div class="ex-t"><span>Terkuat · Terlemah (periode)</span><div id="liq-tb"></div></div>
+                            <div class="ex-t"><span>Terkuat · Terlemah (periode) · 26 negara</span><div id="liq-tb"></div></div>
                         </div>
                     </div>
                 </div>
@@ -3364,7 +3359,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
             </div>
         </section>
             <!-- Halaman Market Statistik: rangkuman hasil analisis dari Crypto Market, Stock Exchange, Global Market -->
-        <section id="page-market-stat" class="page ms-page">
+        <section id="page-market-stat" class="page ms-page" data-ms-cur="1">
             <header class="ms-head">
                 <div>
                     <h2>Market Statistik</h2>
@@ -3372,17 +3367,17 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                 </div>
                 <div class="ms-tools">
                     <nav class="ms-jump" aria-label="Lompat ke bagian">
-                        <button type="button" data-ms-go="ms-sec-ringkas">Ringkasan</button>
+                        <button type="button" class="on" data-ms-go="ms-sec-ringkas">Ringkasan</button>
                         <button type="button" data-ms-go="ba-data-hub-card">Riwayat harian</button>
                         <button type="button" data-ms-go="analyst-toolkit">Analyst Toolkit</button>
                     </nav>
                     <span class="ms-live"><span class="live-dot"></span>Diperbarui <span id="ms-upd">--:--:--</span> WIB</span>
                 </div>
             </header>
-            <div id="ms-sec-ringkas" class="ms-top">
+            <div id="ms-sec-ringkas" class="ms-top" data-ms-pg="1">
                 <div id="ms-bias" class="ms-card ms-verdict bg-card-dark"></div>
             </div>
-            <div class="ms-trio">
+            <div class="ms-trio" data-ms-pg="1">
                 <article class="ms-card bg-card-dark">
                     <div class="ms-card-h"><h3><i class="fa-solid fa-coins"></i>Crypto Market</h3><span id="ms-pill-crypto" class="ms-pill ms-nt">Netral</span></div>
                     <div id="ms-crypto"></div>
@@ -3400,7 +3395,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                 </article>
             </div>
             <!-- Pusat Data Online Harian -->
-            <div id="ba-data-hub-card" class="ms-card ms-wide bg-card-dark">
+            <div id="ba-data-hub-card" class="ms-card ms-wide bg-card-dark" data-ms-pg="2">
                 <div class="ms-card-h ms-card-h--top">
                     <div>
                         <h3><i class="fa-solid fa-database"></i>Pusat Data Online Harian</h3>
@@ -3424,7 +3419,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                 <p class="text-[10px] text-gray-500 mt-3">Sumber: CoinGecko, Yahoo Finance, FRED, alternative.me. Alat bantu analisis, bukan saran investasi.</p>
             </div>
             <!-- Analyst Toolkit Statistik -->
-            <div id="analyst-toolkit" class="ms-card ms-wide bg-card-dark">
+            <div id="analyst-toolkit" class="ms-card ms-wide bg-card-dark" data-ms-pg="3">
                 <div class="ms-card-h ms-card-h--top">
                     <div><h3><i class="fa-solid fa-toolbox"></i>Analyst Toolkit Statistik <span id="tk-badge" class="ml-1 text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 align-middle">AUTO LIVE</span></h3>
                     <p class="ms-sub" id="tk-sub">Terminal statistik otomatis: harga, indikator, distribusi return, drawdown, dan korelasi. Bukan harga pasar.</p></div>
@@ -3482,7 +3477,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
             </div>
         </section>
         <script>/* Navigasi lompat Market Statistik */
-        (function(){document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-ms-go]');if(!b)return;var t=document.getElementById(b.getAttribute('data-ms-go'));if(!t)return;var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;t.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'})})})();
+        (function(){var MAP={'ms-sec-ringkas':'1','ba-data-hub-card':'2','analyst-toolkit':'3'};document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-ms-go]');if(!b)return;var pg=MAP[b.getAttribute('data-ms-go')];if(!pg)return;var sec=document.getElementById('page-market-stat');if(!sec)return;sec.setAttribute('data-ms-cur',pg);Array.prototype.forEach.call(sec.querySelectorAll('[data-ms-go]'),function(x){x.classList.toggle('on',x===b)});try{window.dispatchEvent(new Event('resize'))}catch(_){}setTimeout(function(){try{window.dispatchEvent(new Event('resize'))}catch(_){}},60);var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;sec.scrollIntoView({behavior:rm?'auto':'smooth',block:'start'})})})();
         </script>
         <script>/* Market Statistik: membaca hasil analisis langsung dari elemen di halaman Crypto Market, Stock Exchange, dan Global Market (tanpa mengubah halaman tersebut), diperbarui tiap 2 detik. */
         (function(){
@@ -5612,12 +5607,24 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     { name: 'Indonesia', lab: 'INDONESIA', sym: '^JKSE', col: '#f472b6', w: 1.6 },
     { name: 'Jerman',  lab: 'JERMAN',  sym: '^GDAXI',    col: '#94a3b8', w: 1.6 },
     { name: 'Prancis', lab: 'PRANCIS', sym: '^FCHI',     col: '#0ea5e9', w: 1.6 },
-    { name: 'Australia', lab: 'AUSTRALIA', sym: '^AXJO', col: '#c2a878', w: 1.6 }
+    { name: 'Australia', lab: 'AUSTRALIA', sym: '^AXJO', col: '#c2a878', w: 1.6 },
+    { name: 'Brasil', lab: 'BRASIL', sym: '^BVSP', col: '#22c55e', w: 1.6 },
+    { name: 'Kanada', lab: 'KANADA', sym: '^GSPTSE', col: '#f43f5e', w: 1.6 },
+    { name: 'Meksiko', lab: 'MEKSIKO', sym: '^MXX', col: '#14b8a6', w: 1.6 },
+    { name: 'Swiss', lab: 'SWISS', sym: '^SSMI', col: '#fb7185', w: 1.6 },
+    { name: 'Spanyol', lab: 'SPANYOL', sym: '^IBEX', col: '#f59e0b', w: 1.6 },
+    { name: 'Italia', lab: 'ITALIA', sym: 'FTSEMIB.MI', col: '#84cc16', w: 1.6 },
+    { name: 'Belanda', lab: 'BELANDA', sym: '^AEX', col: '#fb923c', w: 1.6 },
+    { name: 'Thailand', lab: 'THAILAND', sym: '^SET.BK', col: '#6366f1', w: 1.6 },
+    { name: 'Malaysia', lab: 'MALAYSIA', sym: '^KLSE', col: '#e879f9', w: 1.6 },
+    { name: 'Selandia Baru', lab: 'SELANDIA BARU', sym: '^NZ50', col: '#38bdf8', w: 1.6 },
+    { name: 'Turki', lab: 'TURKI', sym: 'XU100.IS', col: '#dc2626', w: 1.6 },
+    { name: 'Arab Saudi', lab: 'ARAB SAUDI', sym: '^TASI.SR', col: '#16a34a', w: 1.6 }
   ];
   var NM = MK.length, CI = NM, CORE = 6, PS = 7;                       /* indeks dataset komposit = 6 */
   var RG = [['1B', '1mo', 22], ['3B', '3mo', 64], ['6B', '6mo', 127], ['1T', '1y', 252]];
   var MON = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'];
-  var st = { rg: 1, mode: 'line', paused: false, vis: MK.map(function (_, i) { return i < CORE; }).concat([true]), pg: 0, hl: null };
+  var st = { rg: 1, mode: 'line', paused: false, vis: MK.map(function () { return true; }).concat([true]), pg: 0, hl: null };
   var $ = function (id) { return D.getElementById(id); };
   var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
   var visible = function () { var p = $(PAGE); return !!p && p.classList.contains('active') && !D.hidden; };
@@ -5886,7 +5893,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       set('liq-br-t', u + ' naik · ' + (ok.length - u) + ' turun dari ' + ok.length + ' negara');
       ok.sort(function (a, b) { return b.v - a.v; });
       var row = function (o) { return '<div><img class="fl" src="' + FLG[o.q] + '">' + MK[o.q].name + '<b style="color:' + (o.v >= 0 ? '#5eead4' : '#fde047') + '">' + sg(o.v, 2) + '%</b></div>'; }, tb = $('liq-tb');
-      if (tb) tb.innerHTML = ok.slice(0, 3).map(row).join('') + (ok.length > 5 ? '<hr>' + ok.slice(-3).map(row).join('') : '');
+      var kk = ok.length >= 12 ? 5 : 3; if (tb) tb.innerHTML = ok.slice(0, kk).map(row).join('') + (ok.length > kk + 2 ? '<hr>' + ok.slice(-kk).map(row).join('') : '');
     })();
     for (k = 0; k < heat.length; k++) {
       var ix = n - heat.length + k, c = heat[k];
@@ -5935,7 +5942,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     a.href = URL.createObjectURL(bl); a.download = 'indeks-pasar-global.csv'; D.body.appendChild(a); a.click(); a.remove();
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 800);
   }
-  var FLG = ['data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjYiIGZpbGw9IiNCQzAwMkQiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAxMjE2OSIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI0IiBkPSJNMCAwbDMwIDIwTTMwIDBMMCAyMCIvPjxwYXRoIHN0cm9rZT0iI0M4MTAyRSIgc3Ryb2tlLXdpZHRoPSIxLjUiIGQ9Ik0wIDBsMzAgMjBNMzAgMEwwIDIwIi8+PHBhdGggc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjYiIGQ9Ik0xNSAwdjIwTTAgMTBoMzAiLz48cGF0aCBzdHJva2U9IiNDODEwMkUiIHN0cm9rZS13aWR0aD0iMy40IiBkPSJNMTUgMHYyME0wIDEwaDMwIi8+PC9zdmc+','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAzOSIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjIxLjAiIGN5PSIxMC4wIiByPSIxIiBmaWxsPSIjZmMwIi8+PGNpcmNsZSBjeD0iMjAuMiIgY3k9IjEzLjAiIHI9IjEiIGZpbGw9IiNmYzAiLz48Y2lyY2xlIGN4PSIxOC4wIiBjeT0iMTUuMiIgcj0iMSIgZmlsbD0iI2ZjMCIvPjxjaXJjbGUgY3g9IjE1LjAiIGN5PSIxNi4wIiByPSIxIiBmaWxsPSIjZmMwIi8+PGNpcmNsZSBjeD0iMTIuMCIgY3k9IjE1LjIiIHI9IjEiIGZpbGw9IiNmYzAiLz48Y2lyY2xlIGN4PSI5LjgiIGN5PSIxMy4wIiByPSIxIiBmaWxsPSIjZmMwIi8+PGNpcmNsZSBjeD0iOS4wIiBjeT0iMTAuMCIgcj0iMSIgZmlsbD0iI2ZjMCIvPjxjaXJjbGUgY3g9IjkuOCIgY3k9IjcuMCIgcj0iMSIgZmlsbD0iI2ZjMCIvPjxjaXJjbGUgY3g9IjEyLjAiIGN5PSI0LjgiIHI9IjEiIGZpbGw9IiNmYzAiLz48Y2lyY2xlIGN4PSIxNS4wIiBjeT0iNC4wIiByPSIxIiBmaWxsPSIjZmMwIi8+PGNpcmNsZSBjeD0iMTguMCIgY3k9IjQuOCIgcj0iMSIgZmlsbD0iI2ZjMCIvPjxjaXJjbGUgY3g9IjIwLjIiIGN5PSI3LjAiIHI9IjEiIGZpbGw9IiNmYzAiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0RFMjkxMCIgZD0iTTAgMGgzMHYyMEgweiIvPjxwb2x5Z29uIGZpbGw9IiNGRkRFMDAiIHBvaW50cz0iNi4wLDIuNSA2LjgsNC45IDkuMyw0LjkgNy4zLDYuNCA4LjEsOC44IDYuMCw3LjQgMy45LDguOCA0LjcsNi40IDIuNyw0LjkgNS4yLDQuOSIvPjxjaXJjbGUgY3g9IjExIiBjeT0iMiIgcj0iLjkiIGZpbGw9IiNGRkRFMDAiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjQiIHI9Ii45IiBmaWxsPSIjRkZERTAwIi8+PGNpcmNsZSBjeD0iMTMiIGN5PSI3IiByPSIuOSIgZmlsbD0iI0ZGREUwMCIvPjxjaXJjbGUgY3g9IjExIiBjeT0iOSIgcj0iLjkiIGZpbGw9IiNGRkRFMDAiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDAuMDBoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDMuMDhoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDYuMTZoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDkuMjRoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDEyLjMyaDMwdjEuNTRIMHoiLz48cGF0aCBmaWxsPSIjQjIyMjM0IiBkPSJNMCAxNS40MGgzMHYxLjU0SDB6Ii8+PHBhdGggZmlsbD0iI0IyMjIzNCIgZD0iTTAgMTguNDhoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiMzQzNCNkUiIGQ9Ik0wIDBoMTN2MTAuOEgweiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0ZGOTkzMyIgZD0iTTAgMGgzMHY3SDB6Ii8+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgNi43aDMwdjYuN0gweiIvPjxwYXRoIGZpbGw9IiMxMzg4MDgiIGQ9Ik0wIDEzLjNoMzBWMjBIMHoiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjEwIiByPSIyLjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMDA4MCIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0RFMjkxMCIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjQuNSIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjQiIGZpbGw9IiNDRDJFM0EiLz48cGF0aCBmaWxsPSIjMDA0N0EwIiBkPSJNMTEgMTBhNCA0IDAgMDA4IDB6Ii8+PHBhdGggc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEuMiIgZD0iTTMgM2wzIDJNMy44IDQuNmwzIDJNMjQgMTVsMyAyTTIzIDE2LjRsMyAyTTI0IDVsMy0yTTIzIDMuNmwzLTJNMyAxN2wzLTJNMy44IDE1LjRsMy0yIi8+PC9zdmc+','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0ZFMDAwMCIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiMwMDAwOTUiIGQ9Ik0wIDBoMTV2MTBIMHoiLz48Y2lyY2xlIGN4PSI3LjUiIGN5PSI1IiByPSIzIiBmaWxsPSIjZmZmIi8+PC9zdmc+','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNFRjMzNDAiIGQ9Ik0wIDBoMzB2MTBIMHoiLz48Y2lyY2xlIGN4PSI2IiBjeT0iNSIgcj0iMyIgZmlsbD0iI2ZmZiIvPjxjaXJjbGUgY3g9IjcuMyIgY3k9IjUiIHI9IjIuNiIgZmlsbD0iI0VGMzM0MCIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNFNzAwMTEiIGQ9Ik0wIDBoMzB2MTBIMHoiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAwMCIgZD0iTTAgMGgzMHY3SDB6Ii8+PHBhdGggZmlsbD0iI0QwMCIgZD0iTTAgNi43aDMwdjYuN0gweiIvPjxwYXRoIGZpbGw9IiNGRkNFMDAiIGQ9Ik0wIDEzLjNoMzBWMjBIMHoiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAwMjM5NSIgZD0iTTAgMGgxMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xMCAwaDEwdjIwSDEweiIvPjxwYXRoIGZpbGw9IiNFRDI5MzkiIGQ9Ik0yMCAwaDEwdjIwSDIweiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAxMjE2OSIgZD0iTTAgMGgzMHYyMEgweiIvPjxnIHRyYW5zZm9ybT0ic2NhbGUoLjUpIj48cGF0aCBmaWxsPSIjMDEyMTY5IiBkPSJNMCAwaDMwdjIwSDB6Ii8+PHBhdGggc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQiIGQ9Ik0wIDBsMzAgMjBNMzAgMEwwIDIwIi8+PHBhdGggc3Ryb2tlPSIjQzgxMDJFIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTAgMGwzMCAyME0zMCAwTDAgMjAiLz48cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNiIgZD0iTTE1IDB2MjBNMCAxMGgzMCIvPjxwYXRoIHN0cm9rZT0iI0M4MTAyRSIgc3Ryb2tlLXdpZHRoPSIzLjQiIGQ9Ik0xNSAwdjIwTTAgMTBoMzAiLz48L2c+PHBvbHlnb24gZmlsbD0iI2ZmZiIgcG9pbnRzPSI4LjAsMTIuMCA4LjcsMTQuMCAxMC45LDE0LjEgOS4xLDE1LjQgOS44LDE3LjQgOC4wLDE2LjIgNi4yLDE3LjQgNi45LDE1LjQgNS4xLDE0LjEgNy4zLDE0LjAiLz48cG9seWdvbiBmaWxsPSIjZmZmIiBwb2ludHM9IjIyLjAsMTIuMCAyMi41LDEzLjQgMjMuOSwxMy40IDIyLjgsMTQuMiAyMy4yLDE1LjYgMjIuMCwxNC44IDIwLjgsMTUuNiAyMS4yLDE0LjIgMjAuMSwxMy40IDIxLjUsMTMuNCIvPjxwb2x5Z29uIGZpbGw9IiNmZmYiIHBvaW50cz0iMjQuMCwzLjAgMjQuNSw0LjQgMjUuOSw0LjQgMjQuOCw1LjIgMjUuMiw2LjYgMjQuMCw1LjggMjIuOCw2LjYgMjMuMiw1LjIgMjIuMSw0LjQgMjMuNSw0LjQiLz48cG9seWdvbiBmaWxsPSIjZmZmIiBwb2ludHM9IjE5LjAsNy4wIDE5LjUsOC40IDIwLjksOC40IDE5LjgsOS4yIDIwLjIsMTAuNiAxOS4wLDkuOCAxNy44LDEwLjYgMTguMiw5LjIgMTcuMSw4LjQgMTguNSw4LjQiLz48cG9seWdvbiBmaWxsPSIjZmZmIiBwb2ludHM9IjI2LjAsOC4wIDI2LjUsOS40IDI3LjksOS40IDI2LjgsMTAuMiAyNy4yLDExLjYgMjYuMCwxMC44IDI0LjgsMTEuNiAyNS4yLDEwLjIgMjQuMSw5LjQgMjUuNSw5LjQiLz48L3N2Zz4='];
+  var FLG = ['data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjYiIGZpbGw9IiNCQzAwMkQiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAxMjE2OSIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSI0IiBkPSJNMCAwbDMwIDIwTTMwIDBMMCAyMCIvPjxwYXRoIHN0cm9rZT0iI0M4MTAyRSIgc3Ryb2tlLXdpZHRoPSIxLjUiIGQ9Ik0wIDBsMzAgMjBNMzAgMEwwIDIwIi8+PHBhdGggc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjYiIGQ9Ik0xNSAwdjIwTTAgMTBoMzAiLz48cGF0aCBzdHJva2U9IiNDODEwMkUiIHN0cm9rZS13aWR0aD0iMy40IiBkPSJNMTUgMHYyME0wIDEwaDMwIi8+PC9zdmc+','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAzOSIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjIxLjAiIGN5PSIxMC4wIiByPSIxIiBmaWxsPSIjZmMwIi8+PGNpcmNsZSBjeD0iMjAuMiIgY3k9IjEzLjAiIHI9IjEiIGZpbGw9IiNmYzAiLz48Y2lyY2xlIGN4PSIxOC4wIiBjeT0iMTUuMiIgcj0iMSIgZmlsbD0iI2ZjMCIvPjxjaXJjbGUgY3g9IjE1LjAiIGN5PSIxNi4wIiByPSIxIiBmaWxsPSIjZmMwIi8+PGNpcmNsZSBjeD0iMTIuMCIgY3k9IjE1LjIiIHI9IjEiIGZpbGw9IiNmYzAiLz48Y2lyY2xlIGN4PSI5LjgiIGN5PSIxMy4wIiByPSIxIiBmaWxsPSIjZmMwIi8+PGNpcmNsZSBjeD0iOS4wIiBjeT0iMTAuMCIgcj0iMSIgZmlsbD0iI2ZjMCIvPjxjaXJjbGUgY3g9IjkuOCIgY3k9IjcuMCIgcj0iMSIgZmlsbD0iI2ZjMCIvPjxjaXJjbGUgY3g9IjEyLjAiIGN5PSI0LjgiIHI9IjEiIGZpbGw9IiNmYzAiLz48Y2lyY2xlIGN4PSIxNS4wIiBjeT0iNC4wIiByPSIxIiBmaWxsPSIjZmMwIi8+PGNpcmNsZSBjeD0iMTguMCIgY3k9IjQuOCIgcj0iMSIgZmlsbD0iI2ZjMCIvPjxjaXJjbGUgY3g9IjIwLjIiIGN5PSI3LjAiIHI9IjEiIGZpbGw9IiNmYzAiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0RFMjkxMCIgZD0iTTAgMGgzMHYyMEgweiIvPjxwb2x5Z29uIGZpbGw9IiNGRkRFMDAiIHBvaW50cz0iNi4wLDIuNSA2LjgsNC45IDkuMyw0LjkgNy4zLDYuNCA4LjEsOC44IDYuMCw3LjQgMy45LDguOCA0LjcsNi40IDIuNyw0LjkgNS4yLDQuOSIvPjxjaXJjbGUgY3g9IjExIiBjeT0iMiIgcj0iLjkiIGZpbGw9IiNGRkRFMDAiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjQiIHI9Ii45IiBmaWxsPSIjRkZERTAwIi8+PGNpcmNsZSBjeD0iMTMiIGN5PSI3IiByPSIuOSIgZmlsbD0iI0ZGREUwMCIvPjxjaXJjbGUgY3g9IjExIiBjeT0iOSIgcj0iLjkiIGZpbGw9IiNGRkRFMDAiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDAuMDBoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDMuMDhoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDYuMTZoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDkuMjRoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiNCMjIyMzQiIGQ9Ik0wIDEyLjMyaDMwdjEuNTRIMHoiLz48cGF0aCBmaWxsPSIjQjIyMjM0IiBkPSJNMCAxNS40MGgzMHYxLjU0SDB6Ii8+PHBhdGggZmlsbD0iI0IyMjIzNCIgZD0iTTAgMTguNDhoMzB2MS41NEgweiIvPjxwYXRoIGZpbGw9IiMzQzNCNkUiIGQ9Ik0wIDBoMTN2MTAuOEgweiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0ZGOTkzMyIgZD0iTTAgMGgzMHY3SDB6Ii8+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgNi43aDMwdjYuN0gweiIvPjxwYXRoIGZpbGw9IiMxMzg4MDgiIGQ9Ik0wIDEzLjNoMzBWMjBIMHoiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjEwIiByPSIyLjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwMDA4MCIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0RFMjkxMCIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjQuNSIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjQiIGZpbGw9IiNDRDJFM0EiLz48cGF0aCBmaWxsPSIjMDA0N0EwIiBkPSJNMTEgMTBhNCA0IDAgMDA4IDB6Ii8+PHBhdGggc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEuMiIgZD0iTTMgM2wzIDJNMy44IDQuNmwzIDJNMjQgMTVsMyAyTTIzIDE2LjRsMyAyTTI0IDVsMy0yTTIzIDMuNmwzLTJNMyAxN2wzLTJNMy44IDE1LjRsMy0yIi8+PC9zdmc+','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0ZFMDAwMCIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiMwMDAwOTUiIGQ9Ik0wIDBoMTV2MTBIMHoiLz48Y2lyY2xlIGN4PSI3LjUiIGN5PSI1IiByPSIzIiBmaWxsPSIjZmZmIi8+PC9zdmc+','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNFRjMzNDAiIGQ9Ik0wIDBoMzB2MTBIMHoiLz48Y2lyY2xlIGN4PSI2IiBjeT0iNSIgcj0iMyIgZmlsbD0iI2ZmZiIvPjxjaXJjbGUgY3g9IjcuMyIgY3k9IjUiIHI9IjIuNiIgZmlsbD0iI0VGMzM0MCIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNFNzAwMTEiIGQ9Ik0wIDBoMzB2MTBIMHoiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAwMCIgZD0iTTAgMGgzMHY3SDB6Ii8+PHBhdGggZmlsbD0iI0QwMCIgZD0iTTAgNi43aDMwdjYuN0gweiIvPjxwYXRoIGZpbGw9IiNGRkNFMDAiIGQ9Ik0wIDEzLjNoMzBWMjBIMHoiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAwMjM5NSIgZD0iTTAgMGgxMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xMCAwaDEwdjIwSDEweiIvPjxwYXRoIGZpbGw9IiNFRDI5MzkiIGQ9Ik0yMCAwaDEwdjIwSDIweiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAxMjE2OSIgZD0iTTAgMGgzMHYyMEgweiIvPjxnIHRyYW5zZm9ybT0ic2NhbGUoLjUpIj48cGF0aCBmaWxsPSIjMDEyMTY5IiBkPSJNMCAwaDMwdjIwSDB6Ii8+PHBhdGggc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjQiIGQ9Ik0wIDBsMzAgMjBNMzAgMEwwIDIwIi8+PHBhdGggc3Ryb2tlPSIjQzgxMDJFIiBzdHJva2Utd2lkdGg9IjEuNSIgZD0iTTAgMGwzMCAyME0zMCAwTDAgMjAiLz48cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iNiIgZD0iTTE1IDB2MjBNMCAxMGgzMCIvPjxwYXRoIHN0cm9rZT0iI0M4MTAyRSIgc3Ryb2tlLXdpZHRoPSIzLjQiIGQ9Ik0xNSAwdjIwTTAgMTBoMzAiLz48L2c+PHBvbHlnb24gZmlsbD0iI2ZmZiIgcG9pbnRzPSI4LjAsMTIuMCA4LjcsMTQuMCAxMC45LDE0LjEgOS4xLDE1LjQgOS44LDE3LjQgOC4wLDE2LjIgNi4yLDE3LjQgNi45LDE1LjQgNS4xLDE0LjEgNy4zLDE0LjAiLz48cG9seWdvbiBmaWxsPSIjZmZmIiBwb2ludHM9IjIyLjAsMTIuMCAyMi41LDEzLjQgMjMuOSwxMy40IDIyLjgsMTQuMiAyMy4yLDE1LjYgMjIuMCwxNC44IDIwLjgsMTUuNiAyMS4yLDE0LjIgMjAuMSwxMy40IDIxLjUsMTMuNCIvPjxwb2x5Z29uIGZpbGw9IiNmZmYiIHBvaW50cz0iMjQuMCwzLjAgMjQuNSw0LjQgMjUuOSw0LjQgMjQuOCw1LjIgMjUuMiw2LjYgMjQuMCw1LjggMjIuOCw2LjYgMjMuMiw1LjIgMjIuMSw0LjQgMjMuNSw0LjQiLz48cG9seWdvbiBmaWxsPSIjZmZmIiBwb2ludHM9IjE5LjAsNy4wIDE5LjUsOC40IDIwLjksOC40IDE5LjgsOS4yIDIwLjIsMTAuNiAxOS4wLDkuOCAxNy44LDEwLjYgMTguMiw5LjIgMTcuMSw4LjQgMTguNSw4LjQiLz48cG9seWdvbiBmaWxsPSIjZmZmIiBwb2ludHM9IjI2LjAsOC4wIDI2LjUsOS40IDI3LjksOS40IDI2LjgsMTAuMiAyNy4yLDExLjYgMjYuMCwxMC44IDI0LjgsMTEuNiAyNS4yLDEwLjIgMjQuMSw5LjQgMjUuNSw5LjQiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAwOUMzQiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNGRkRGMDAiIGQ9Ik0xNSAybDEyIDgtMTIgOEwzIDEweiIvPjxjaXJjbGUgY3g9IjE1IiBjeT0iMTAiIHI9IjQuMiIgZmlsbD0iIzAwMjc3NiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNENTJCMUUiIGQ9Ik0wIDBoNy41djIwSDB6TTIyLjUgMEgzMHYyMGgtNy41eiIvPjxwYXRoIGZpbGw9IiNENTJCMUUiIGQ9Ik0xNSA1bDEuNiAzLjQgMi42LTEtMSA0IDEuNi44LTUuMiAwLTUuMiAwIDEuNi0uOC0xLTQgMi42IDF6Ii8+PC9zdmc+','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiMwMDY4NDciIGQ9Ik0wIDBoMTB2MjBIMHoiLz48cGF0aCBmaWxsPSIjQ0UxMTI2IiBkPSJNMjAgMGgxMHYyMEgyMHoiLz48Y2lyY2xlIGN4PSIxNSIgY3k9IjEwIiByPSIyLjYiIGZpbGw9IiM4YzZkM2YiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0Q1MkIxRSIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0xMyA0aDR2NC41aDQuNXYzSDE3VjE2aC00di00LjVIOC41di0zSDEzeiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0FBMTUxQiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNGMUJGMDAiIGQ9Ik0wIDVoMzB2MTBIMHoiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiMwMDkyNDYiIGQ9Ik0wIDBoMTB2MjBIMHoiLz48cGF0aCBmaWxsPSIjQ0UyQjM3IiBkPSJNMjAgMGgxMHYyMEgyMHoiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNBRTFDMjgiIGQ9Ik0wIDBoMzB2Ni43SDB6Ii8+PHBhdGggZmlsbD0iIzIxNDY4QiIgZD0iTTAgMTMuM2gzMFYyMEgweiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0E1MTkzMSIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNGNEY1RjgiIGQ9Ik0wIDMuM2gzMHYxMy40SDB6Ii8+PHBhdGggZmlsbD0iIzJEMkE0QSIgZD0iTTAgNi43aDMwdjYuNkgweiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNDQzAwMDEiIGQ9Ik0wIDBoMzB2Mi41SDB6TTAgNWgzMHYyLjVIMHpNMCAxMGgzMHYyLjVIMHpNMCAxNWgzMHYyLjVIMHoiLz48cGF0aCBmaWxsPSIjMDEwMDY2IiBkPSJNMCAwaDE1djEwSDB6Ii8+PGNpcmNsZSBjeD0iNi41IiBjeT0iNSIgcj0iMyIgZmlsbD0iI0ZDMCIvPjxjaXJjbGUgY3g9IjcuNCIgY3k9IjUiIHI9IjIuNCIgZmlsbD0iIzAxMDA2NiIvPjwvc3ZnPg==','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAxMjE2OSIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjIzIiBjeT0iNSIgcj0iMS4yIiBmaWxsPSIjQ0MxNDJCIi8+PGNpcmNsZSBjeD0iMjEiIGN5PSIxMCIgcj0iMS4yIiBmaWxsPSIjQ0MxNDJCIi8+PGNpcmNsZSBjeD0iMjUiIGN5PSIxMSIgcj0iMS4yIiBmaWxsPSIjQ0MxNDJCIi8+PGNpcmNsZSBjeD0iMjMiIGN5PSIxNS41IiByPSIxLjIiIGZpbGw9IiNDQzE0MkIiLz48cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMyIgZD0iTTAgMGwxMiA4TTEyIDBMMCA4Ii8+PHBhdGggc3Ryb2tlPSIjQzgxMDJFIiBzdHJva2Utd2lkdGg9IjEuMiIgZD0iTTAgMGwxMiA4TTEyIDBMMCA4Ii8+PC9zdmc+','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iI0UzMEExNyIgZD0iTTAgMGgzMHYyMEgweiIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTAiIHI9IjUiIGZpbGw9IiNmZmYiLz48Y2lyY2xlIGN4PSIxMy40IiBjeT0iMTAiIHI9IjQiIGZpbGw9IiNFMzBBMTciLz48Y2lyY2xlIGN4PSIxOCIgY3k9IjEwIiByPSIxLjQiIGZpbGw9IiNmZmYiLz48L3N2Zz4=','data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMCAyMCI+PHBhdGggZmlsbD0iIzAwNkMzNSIgZD0iTTAgMGgzMHYyMEgweiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik03IDhoMTZ2MS40SDd6TTkgMTRoMTJ2MS4ySDl6Ii8+PC9zdmc+'];
   function spark(el, s, col) {
     if (!el || !s) { if (el) el.innerHTML = ''; return; }
     var a = s.slice(-36), lo = Math.min.apply(null, a), hi = Math.max.apply(null, a), sp = hi - lo || 1, W2 = 96, H = 28, pts = a.map(function (v, i) { return [(i / (a.length - 1) * (W2 - 6) + 2).toFixed(1), (H - 4 - (v - lo) / sp * (H - 8)).toFixed(1)]; });
@@ -6069,7 +6076,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   var st = { iv: 2000, paused: false, f: 'all', q: '', sk: 'i', sd: 1, score: 50, shown: 50, reg: '' };
   var alerts = [], H = { t: [], net: [], fed: [], sc: [], rrp: [], tga: [] }, CH = {};
   window.__MLC = { C: C, H: H };
-  function step(c) { c.p = c.x; c.x = c.x + (c.b - c.x) * .05 + rnd(-1, 1) * c.b * c.r; }
+  function step(c) { if (window.__MLC_DAILY && c.id !== 'stb') { c.p = c.x; c.x = c.b; return; } c.p = c.x; c.x = c.x + (c.b - c.x) * .05 + rnd(-1, 1) * c.b * c.r; }
   C.forEach(function (c, i) { c.i = i; c.k = 0; c.dp = 0; c.x = c.b * (1 + rnd(-c.r, c.r) * 2); c.h = []; for (var j = 0; j < 40; j++) { step(c); c.h.push(c.x); } c.o = c.x; });
   var G = function (id) { return C.filter(function (c) { return c.id === id; })[0]; };
   function fm(c, v) {
@@ -6320,7 +6327,8 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     });
     /* === 3. RIWAYAT SKOR KOMPOSIT — pita rezim, garis berwarna per rezim, batas putus-putus, strip rezim & distribusi === */
     K.host('mlc-ch-sc', function (c, w, h, now, s, P) {
-      var sc = H.sc, n = sc.length; if (n < 3) return;
+      var sc = H.sc.slice(), lt = H.t.slice(), lv = (window.__MLC_DAILY && isFinite(window.__MLC_DAILY.live)) ? window.__MLC_DAILY.live : null;
+      var n = sc.length; if (n < 3) return;
       var cE = P.up, cA = P.l ? '#d97706' : '#FBBF24', cK = P.dn;
       var L = 10, R = w - 36, a = 44, b = h - 46, sy = b + 6, slot = (R - L) / (n - 1), i, X = function (k) { return L + k * slot; }, Y = function (v) { return b - v / 100 * (b - a); };
       var rgm = function (v) { return v >= 62 ? ['EKSPANSIF', cE] : v <= 38 ? ['KETAT', cK] : ['NETRAL', cA]; };
@@ -6357,7 +6365,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       var cnt = { E: 0, A: 0, K: 0 };
       for (i = 0; i < n; i++) { var rv = rgm(sc[i]); rv[0] === 'EKSPANSIF' ? cnt.E++ : rv[0] === 'KETAT' ? cnt.K++ : cnt.A++; c.fillStyle = ra(rv[1], .9); c.fillRect(X(i) - slot / 2 + .3, sy, slot - .6, 6); }
       /* sumbu waktu + distribusi rezim */
-      xAxis(c, X, n, L, R, sy + 6, sy + 18, P);
+      xAxis(c, X, n, L, R, sy + 6, sy + 18, P, lt);
       var dx = L, dy = h - 7, pc = function (v) { return Math.round(v / n * 100) + '%'; };
       [['EKSPANSIF', cE, cnt.E], ['NETRAL', cA, cnt.A], ['KETAT', cK, cnt.K]].forEach(function (z) { dx = legend(c, dx, dy, z[1], 'box', z[0], pc(z[2]), z[1], P); });
       /* crosshair */
@@ -6366,8 +6374,8 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
         K.vline(c, x, a, sy + 6, P);
         if (s.my >= a && s.my <= b) { K.hline(c, L, R, s.my, P.mu, [3, 3]); axisTag(c, ((b - s.my) / (b - a) * 100).toFixed(1), R + 2, s.my, P.l ? '#334155' : '#e2e8f0', P); }
         c.beginPath(); c.arc(x, Y(sc[k]), 3.6, 0, TAU); c.fillStyle = r[1]; c.fill(); c.lineWidth = 1.5; c.strokeStyle = P.l ? '#fff' : '#0b1220'; c.stroke();
-        timeTag(c, H.t[k], x, sy + 18, w, P);
-        card(c, w, x, a + 4, H.t[k], [['Skor', sc[k].toFixed(1), r[1]], ['Rezim', r[0], r[1]], ['EMA8', em[k].toFixed(1), P.mu], ['Δ / tick', (dk >= 0 ? '+' : '') + dk.toFixed(1), dk >= 0 ? P.up : P.dn], ['Jarak ke ' + nb, (sc[k] - nb >= 0 ? '+' : '') + (sc[k] - nb).toFixed(1), P.mu]], P);
+        timeTag(c, lt[k], x, sy + 18, w, P);
+        card(c, w, x, a + 4, lt[k], [['Skor', sc[k].toFixed(1), r[1]], ['Rezim', r[0], r[1]], ['Data', (lv != null && k === n - 1) ? 'LIVE' : 'Harian', (lv != null && k === n - 1) ? P.up : P.mu], ['EMA8', em[k].toFixed(1), P.mu], ['Δ harian', (dk >= 0 ? '+' : '') + dk.toFixed(1), dk >= 0 ? P.up : P.dn], ['Jarak ke ' + nb, (sc[k] - nb >= 0 ? '+' : '') + (sc[k] - nb).toFixed(1), P.mu]], P);
       }
     });
   }
@@ -6388,14 +6396,14 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     });
     layout();
     if ((el = $('mlc-tf'))) el.innerHTML = 'Menambah likuiditas: <b class="text-emerald-400">' + nSrc + '</b> &nbsp;·&nbsp; Menyerap: <b class="text-rose-400">' + nSink + '</b> &nbsp;·&nbsp; Netral: <b class="text-gray-300">' + nNeu + '</b> &nbsp;·&nbsp; Klik judul kolom untuk mengurutkan';
-    var fed = G('fed'), rrp = G('rrp'), tga = G('tga'), net = fed.x - rrp.x - tga.x, net0 = fed.o - rrp.o - tga.o, nd = (net / net0 - 1) * 100;
+    var fed = G('fed'), rrp = G('rrp'), tga = G('tga'), net = fed.x - rrp.x - tga.x, net0 = fed.o - rrp.o - tga.o, nd = window.__MLC_DAILY ? window.__MLC_DAILY.dNet : (net / net0 - 1) * 100;
     if ((el = $('mlc-net'))) el.textContent = '$' + net.toFixed(3) + 'T';
     if ((el = $('mlc-netd'))) { el.textContent = (nd >= 0 ? '▲ +' : '▼ ') + nd.toFixed(2) + '%'; el.style.color = nd >= 0 ? '#34d399' : '#fb7185'; }
     if ((el = $('mlc-bn'))) el.style.width = (net / fed.x * 100).toFixed(1) + '%';
     if ((el = $('mlc-bt'))) el.style.width = (tga.x / fed.x * 100).toFixed(1) + '%';
     if ((el = $('mlc-br'))) el.style.width = (rrp.x / fed.x * 100).toFixed(1) + '%';
     if ((el = $('mlc-g3'))) el.textContent = '$' + (fed.x + G('ecb').x + G('boj').x).toFixed(2) + 'T';
-    st.score = scoreFrom(function (c) { return c.x; });
+    st.score = (window.__MLC_DAILY && isFinite(window.__MLC_DAILY.score)) ? window.__MLC_DAILY.score : scoreFrom(function (c) { return c.x; });
     var rg = st.score >= 62 ? ['EKSPANSIF', '#34d399', 'Kondisi likuiditas longgar — mendukung aset berisiko'] : st.score <= 38 ? ['KETAT', '#fb7185', 'Likuiditas mengetat — tekanan pada aset berisiko'] : ['NETRAL', '#fbbf24', 'Sumber & penyerap likuiditas relatif seimbang'];
     if ((el = $('mlc-regime'))) { el.textContent = rg[0]; el.style.color = rg[1]; }
     if ((el = $('mlc-regime-d'))) el.textContent = rg[2];
@@ -6404,8 +6412,8 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     CORR.forEach(function (q) { q.v = clamp(q.v + rnd(-.025, .025) + (q.b - q.v) * .1, -.95, .95); });
     corrRender();
     if ((el = $('mlc-upd'))) el.textContent = 'Update ' + clock();
-    H.t.push(clock()); H.net.push(+net.toFixed(3)); H.fed.push(+fed.x.toFixed(3)); H.sc.push(+st.score.toFixed(1)); H.rrp.push(+rrp.x.toFixed(3)); H.tga.push(+tga.x.toFixed(3));
-    if (H.t.length > 60) { H.t.shift(); H.net.shift(); H.fed.shift(); H.sc.shift(); H.rrp.shift(); H.tga.shift(); }
+    if (!window.__MLC_DAILY) { H.t.push(clock()); H.net.push(+net.toFixed(3)); H.fed.push(+fed.x.toFixed(3)); H.sc.push(+st.score.toFixed(1)); H.rrp.push(+rrp.x.toFixed(3)); H.tga.push(+tga.x.toFixed(3));
+    if (H.t.length > 60) { H.t.shift(); H.net.shift(); H.fed.shift(); H.sc.shift(); H.rrp.shift(); H.tga.shift(); } }
     safe(hmRender)();
     if (vis()) { mkCharts(); updCharts(); }
   }
@@ -6641,12 +6649,12 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       d: (raw.split('.')[1] || '').replace(/\D/g, '').length, v: v, p: v / (1 + ch / 100), mk: a[5], g: a[6], vol: a[6] === 'k' ? .0011 : a[6] === 'v' ? .0004 : .0006 });
   });
   var by = function (n) { return items.filter(function (x) { return x.n === n; })[0]; };
-  window.__GM = { items: items, FX: null, by: by };
+  window.__GM = { items: items, FX: null, by: by, isOpen: isOpen, mc: null };
   var mc = mkItem({ n: 'Kapitalisasi', pre: '$', u: ' Triliun', d: 1, v: 108.4, p: 108.4 / 1.018, mk: 'gl', vol: .0004 });
   var FX = (window.__dailyFXrows || function (x) { return x; })([['USD/IDR', 16240, .12, 0], ['EUR/USD', 1.085, -.08, 4], ['USD/JPY', 157.2, .21, 2], ['GBP/USD', 1.285, -.05, 4], ['USD/SGD', 1.348, .03, 4], ['AUD/USD', .665, .1, 4]]).map(function (a) {
     return mkItem({ n: a[0], d: a[3], v: a[1], p: a[1] / (1 + a[2] / 100), mk: 'gl', vol: .00035 });
   });
-  window.__GM.FX = FX;
+  window.__GM.FX = FX; window.__GM.mc = mc;
   var fv = function (x, v) { return x.pre + nf(v, x.d) + x.suf + x.u; };
   var chg = function (x) { return (x.v / x.p - 1) * 100; };
   var ct = function (c) { return (c >= 0 ? '+' : '') + c.toFixed(2) + '%'; };
@@ -9237,9 +9245,9 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
       var V={fed:a[0]/1e6,rrp:a[1]/1e3,tga:a[2]/1e6,m2:a[3]/1e3,ust:a[4],ecb:a[5]/1e6*a[7],boj:a[6]*1e8/a[8]/1e12,dxy:a[9]};
       if(cgCoins&&cgCoins.usdt&&cgCoins.usdc)V.stb=(cgCoins.usdt.market_cap+cgCoins.usdc.market_cap)/1e9;
       var n=0;M.C.forEach(function(c){var v=V[c.id];if(!isFinite(v)||v<=0)return;n++;
-        c.b=v;c.x=c.o=c.p=v;c.h=c.h.map(function(){return v*(1+(Math.random()-.5)*c.r*2)})});
+        c.b=v;c.x=c.p=v;if(!W.__MLC_DAILY){c.o=v;c.h=c.h.map(function(){return v*(1+(Math.random()-.5)*c.r*2)})}});
       var f=M.C.filter(function(c){return c.id==='fed'})[0],r=M.C.filter(function(c){return c.id==='rrp'})[0],t=M.C.filter(function(c){return c.id==='tga'})[0];
-      for(var i=0;i<M.H.net.length&&f&&r&&t;i++){M.H.fed[i]=+f.h[i].toFixed(3);M.H.rrp[i]=+r.h[i].toFixed(3);M.H.tga[i]=+t.h[i].toFixed(3);M.H.net[i]=+(f.h[i]-r.h[i]-t.h[i]).toFixed(3)}
+      for(var i=0;i<M.H.net.length&&f&&r&&t&&!W.__MLC_DAILY;i++){M.H.fed[i]=+f.h[i].toFixed(3);M.H.rrp[i]=+r.h[i].toFixed(3);M.H.tga[i]=+t.h[i].toFixed(3);M.H.net[i]=+(f.h[i]-r.h[i]-t.h[i]).toFixed(3)}
       badge('ba-live-ml','mlc-table',n>0,n+' dari 9 komponen dari FRED/Yahoo/CoinGecko · '+hm());
     })}
   function fh(id){return get('https://fred.stlouisfed.org/graph/fredgraph.csv?id='+id+'&cosd='+new Date(Date.now()-110*864e5).toISOString().slice(0,10),1).then(function(t){
@@ -9969,6 +9977,182 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
   if(mq.addEventListener) mq.addEventListener('change', function(){ setHidden(false); });
   /* ketuk tab / pindah halaman: tampilkan lagi */
   document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.ba-tab')){ setHidden(false); last = y(); } }, true);
+})();
+</script>
+
+<script id="ba-liq-daily">
+/* LIKUIDITAS HARIAN ONLINE — Likuiditas Bersih AS, Skor Komposit, Peta Panas.
+   Sumber: FRED (WALCL, RRPONTSYD, WTREGEN), dicek saat dibuka, tiap ganti hari (WIB), dan tiap 3 jam.
+   Skor = momentum harian Likuiditas Bersih (perubahan 20 & 5 hari, dinormalkan). Peta panas = riwayat skor harian nyata.
+   Cache terakhir disimpan di localStorage; bila offline kartu memakai cache dan ditandai. */
+(function(){
+  'use strict';
+  var W=window,D=document,enc=encodeURIComponent,KEY='ba-liq-daily-v1';
+  var R=[function(u){return W.__BA_PROXY?'/api/proxy?url='+enc(u):null},function(u){return u},
+    function(u){return 'https://api.codetabs.com/v1/proxy?quest='+enc(u)},function(u){return 'https://corsproxy.io/?'+enc(u)},
+    function(u){return 'https://api.allorigins.win/raw?url='+enc(u)},function(u){return 'https://thingproxy.freeboard.io/fetch/'+u}];
+  var MN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  var dayKey=function(){return new Date(Date.now()+7*36e5).toISOString().slice(0,10)};
+  var hm=function(){return new Date().toLocaleTimeString('id-ID',{timeZone:'Asia/Jakarta',hour12:false}).replace(/\./g,':').slice(0,5)};
+  var lbl=function(d){return (+d.slice(8,10))+' '+MN[+d.slice(5,7)-1]+' '+d.slice(0,4)};
+  var st={ok:false,busy:null,ts:0,day:'',d:null,fail:false,src:''};
+  var LOC=null;
+  function local(){ /* sumber utama: liquidity.json satu domain (diisi otomatis tiap hari oleh update_liquidity.py) — cepat & tanpa CORS */
+    if(LOC)return LOC;
+    LOC=fetch('liquidity.json?d='+dayKey(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
+      if(!j||!j.fed||!j.rrp||!j.tga||j.rrp.length<40)throw 0;return j});
+    LOC.catch(function(){LOC=null});return LOC}
+  function newest(j){return j.rrp[j.rrp.length-1][0]}
+  function stale(j){return (Date.now()-Date.parse(newest(j)+'T00:00:00Z'))/864e5>4}
+  function pull(){
+    return local().then(function(j){
+      if(!stale(j)){st.src='liquidity.json';return [j.fed,j.rrp,j.tga]}
+      return Promise.all([fred('WALCL'),fred('RRPONTSYD'),fred('WTREGEN')]).then(function(r){st.src='FRED';return r}).catch(function(){st.src='liquidity.json (belum diperbarui server)';return [j.fed,j.rrp,j.tga]})
+    },function(){
+      return Promise.all([fred('WALCL'),fred('RRPONTSYD'),fred('WTREGEN')]).then(function(r){st.src='FRED';return r})})}
+  function fred(id){
+    var u='https://fred.stlouisfed.org/graph/fredgraph.csv?id='+id+'&cosd='+new Date(Date.now()-420*864e5).toISOString().slice(0,10);
+    return W.__baFetch(R,u,true,10000).then(function(t){
+      var o=[];t.trim().split('\n').slice(1).forEach(function(l){var p=l.split(','),v=parseFloat(p[1]);if(p[0]&&isFinite(v))o.push([p[0],v])});
+      if(!o.length)throw 0;return o});
+  }
+  function build(F,Rr,T){
+    var fi=0,ti=0,fv=null,tv=null,o={iso:[],fed:[],rrp:[],tga:[],net:[]};
+    Rr.forEach(function(q){var d=q[0];
+      while(fi<F.length&&F[fi][0]<=d){fv=F[fi][1];fi++}
+      while(ti<T.length&&T[ti][0]<=d){tv=T[ti][1];ti++}
+      if(fv==null||tv==null)return;
+      var f=fv/1e6,r=q[1]/1e3,g=tv/1e6;
+      o.iso.push(d);o.fed.push(f);o.rrp.push(r);o.tga.push(g);o.net.push(f-r-g)});
+    var n=o.net.length;if(n<40)throw 0;
+    function ch(k){var a=[];for(var i=k;i<n;i++)a.push(o.net[i]-o.net[i-k]);return a}
+    function sd(a){var m=a.reduce(function(x,y){return x+y},0)/a.length;return Math.sqrt(a.reduce(function(x,y){return x+(y-m)*(y-m)},0)/a.length)||1e-9}
+    var c20=ch(20),c5=ch(5),s20=sd(c20),s5=sd(c5);
+    o.sc=o.net.map(function(_,i){if(i<20)return null;
+      var z=.6*(o.net[i]-o.net[i-20])/s20+.4*(o.net[i]-o.net[i-5])/s5;
+      return Math.min(97,Math.max(3,50+45*Math.tanh(z)))});
+    var cut=n-60,out={};
+    Object.keys(o).forEach(function(k){out[k]=o[k].slice(Math.max(cut,20))});
+    return out;
+  }
+  function apply(d){
+    var M=W.__MLC;if(!M||!d||d.net.length<12)return false;
+    var H=M.H,n=d.net.length,L=n-1,keys=['fed','rrp','tga'],i;
+    W.__MLC_DAILY={score:d.sc[L],base:d.sc[L],live:null,dNet:(d.net[L]/d.net[L-1]-1)*100,iso:d.iso[L]};
+    H.t.length=H.net.length=H.fed.length=H.sc.length=H.rrp.length=H.tga.length=0;
+    for(i=0;i<n;i++){H.t.push(d.iso[i].slice(8,10)+' '+MN[+d.iso[i].slice(5,7)-1]);
+      H.net.push(+d.net[i].toFixed(3));H.fed.push(+d.fed[i].toFixed(3));H.rrp.push(+d.rrp[i].toFixed(3));H.tga.push(+d.tga[i].toFixed(3));H.sc.push(+d.sc[i].toFixed(1))}
+    M.D={iso:d.iso.slice(),t:H.t.slice(),fed:H.fed.slice(),rrp:H.rrp.slice(),tga:H.tga.slice(),net:H.net.slice()};
+    M.C.forEach(function(c){
+      if(keys.indexOf(c.id)<0)return;var s=d[c.id],v=s[L];
+      c.b=v;c.x=c.p=v;c.o=s[L-1];c.h=s.slice(-40);
+      while(c.h.length<40)c.h.unshift(c.h[0])});
+    liveTick();return true;
+  }
+  /* Skor LIVE = skor harian (FRED) + sentimen pasar global (saham dunia vs DXY), digeser maks ±8 poin; ttiap 2 dtk */
+  function liveTick(){
+    var Z=W.__MLC_DAILY,G=W.__GM;if(!Z||!G||!G.items||!G.items.length)return;
+    var eq=G.items.filter(function(x){return x.g==='s'}),sum=0;eq.forEach(function(x){sum+=pct(x)});
+    var dxy=G.items.filter(function(x){return x.n.indexOf('DXY')>-1})[0],dx=dxy?pct(dxy):0;
+    var tone=Math.max(-2,Math.min(2,(eq.length?sum/eq.length:0)-.5*dx));
+    Z.live=Math.max(3,Math.min(97,Z.base+4*tone));Z.score=Z.live;Z.tone=tone;
+  }
+  function pct(x){return (x.v/x.p-1)*100}
+  function fmt(c){return (c>=0?'+':'')+c.toFixed(2)+'%'}
+  function paintMarket(){}
+  function paint(){}
+  function status(){paintMarket()}
+
+  /* ---------- Panel lengkap: seluruh pasar global (di bawah Peta Panas) ---------- */
+  var GP={tab:'all',sort:'grp',built:false};
+  var esc=function(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;')};
+  var nfm=function(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+  var HUB=[['btc','Bitcoin','n2','$'],['eth','Ethereum','n2','$'],['sol','Solana','n2','$'],['bnb','BNB','n2','$'],['vix','VIX (Volatilitas)','n2',''],['fng','Fear & Greed Kripto','n0','']];
+  function grpOf(x){
+    if(x.g==='k')return 'Komoditas & Logam';
+    if(x.g==='v')return 'Valas & Indeks Aset';
+    if(x.mk==='us')return 'Saham Amerika';
+    if(x.mk==='eu')return 'Saham Eropa';
+    if(x.mk==='gl')return 'Saham Global';
+    return 'Saham Asia-Pasifik'}
+  function spk(h,col){
+    if(!h||h.length<3)return '';var mn=Math.min.apply(0,h),mx=Math.max.apply(0,h),g=(mx-mn)||1;
+    return '<svg viewBox="0 0 60 16" width="60" height="16" preserveAspectRatio="none"><polyline points="'+h.map(function(v,i){return (i/(h.length-1)*60).toFixed(1)+','+(14-(v-mn)/g*12).toFixed(1)}).join(' ')+'" fill="none" stroke="'+col+'" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"/></svg>'}
+  function allRows(){
+    var G=W.__GM,out=[];if(!G||!G.items)return out;
+    G.items.forEach(function(x){out.push({n:x.n,sub:x.r,grp:grpOf(x),t:x.g==='s'?'s':x.g==='k'?'k':'v',c:pct(x),v:x.pre+nfm(x.v,x.d)+x.suf+x.u,h:x.h,open:G.isOpen?G.isOpen(x.mk):true})});
+    (G.FX||[]).forEach(function(x){out.push({n:x.n,sub:'Pasangan mata uang',grp:'Valas & Indeks Aset',t:'v',c:pct(x),v:nfm(x.v,x.d),h:x.h,open:true})});
+    var hub=W.__baHub;
+    if(hub&&hub.series)HUB.forEach(function(q){var a=hub.series(q[0]);if(!a||a.length<3)return;
+      var l=a[a.length-1][1],pv=a[a.length-2][1];if(!(pv>0))return;
+      out.push({n:q[1],sub:'Data harian · '+a[a.length-1][0],grp:'Kripto & Volatilitas',t:'c',c:(l/pv-1)*100,v:q[3]+nfm(l,q[2]==='n0'?0:2),h:a.slice(-30).map(function(z){return z[1]}),open:true})});
+    return out}
+  function buildPanel(){
+    if(GP.built||D.getElementById('ba-gmp'))return GP.built=true;
+    var hmp=D.getElementById('mlc-hm-panel');if(!hmp)return false;
+    var e=D.createElement('div');e.className='mlc-panel';e.id='ba-gmp';
+    e.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold text-left"><i class="fa-solid fa-earth-asia text-brand-accent"></i> Pergerakan Pasar Global</div><span id="ba-gmp-tone" style="font:700 10px ui-monospace,monospace"></span></div>'+
+      '<div id="ba-gmp-br" style="margin-top:8px"></div><div id="ba-gmp-mv" style="margin-top:8px;font:600 9px ui-monospace,monospace;text-align:left"></div>'+
+      '<div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:10px" id="ba-gmp-tabs"></div>'+
+      '<div id="ba-gmp-list" style="margin-top:6px;max-height:360px;overflow-y:auto;text-align:left"></div>'+
+      '<div id="ba-gmp-ft" style="margin-top:6px;font:600 9px ui-monospace,monospace;color:#64748b;text-align:left"></div>';
+    hmp.parentNode.insertBefore(e,hmp.nextSibling);
+    e.addEventListener('click',function(ev){var t=ev.target.closest&&ev.target.closest('[data-gt],[data-gs]');if(!t)return;
+      if(t.hasAttribute('data-gt'))GP.tab=t.getAttribute('data-gt');else GP.sort=t.getAttribute('data-gs');paintPanel()});
+    return GP.built=true}
+  function paintPanel(){
+    if(!buildPanel())return;var r=allRows();if(!r.length)return;
+    var up=0,dn=0,sum=0,eq=[],i;r.forEach(function(x){x.c>=0?up++:dn++;if(x.t==='s')eq.push(x.c)});
+    var avg=eq.length?eq.reduce(function(a,b){return a+b},0)/eq.length:0,dxr=r.filter(function(x){return x.n.indexOf('DXY')>-1})[0],dx=dxr?dxr.c:0;
+    var sc=avg-.5*dx,tone=sc>.25?['RISK-ON','#34d399']:sc<-.25?['RISK-OFF','#fb7185']:['CAMPURAN','#fbbf24'];
+    var te=D.getElementById('ba-gmp-tone');te.style.color=tone[1];te.textContent='● '+tone[0];
+    var pu=Math.round(up/r.length*100);
+    D.getElementById('ba-gmp-br').innerHTML='<div style="display:flex;height:8px;border-radius:4px;overflow:hidden;background:#000"><i style="width:'+pu+'%;background:#34d399;transition:width .5s"></i><i style="flex:1;background:#fb7185"></i></div>'+
+      '<div style="display:flex;justify-content:space-between;font:600 10px ui-monospace,monospace;margin-top:4px"><span style="color:#34d399">▲ '+up+' naik ('+pu+'%)</span><span style="color:#94a3b8">'+r.length+' pasar</span><span style="color:#fb7185">'+dn+' turun ▼</span></div>';
+    var by=r.slice().sort(function(a,b){return b.c-a.c}),top=by.slice(0,3),bot=by.slice(-3).reverse();
+    var mv=function(a){return a.map(function(x){var col=x.c>=0?'#34d399':'#fb7185';return '<span style="padding:2px 6px;border-radius:6px;background:'+col+'1a;color:'+col+';white-space:nowrap">'+esc(x.n)+' '+fmt(x.c)+'</span>'}).join(' ')};
+    D.getElementById('ba-gmp-mv').innerHTML='<div style="color:#94a3b8;margin-bottom:3px">NAIK TERBESAR</div><div style="display:flex;flex-wrap:wrap;gap:4px">'+mv(top)+'</div><div style="color:#94a3b8;margin:6px 0 3px">TURUN TERBESAR</div><div style="display:flex;flex-wrap:wrap;gap:4px">'+mv(bot)+'</div>';
+    var T=[['all','Semua'],['s','Saham'],['k','Komoditas'],['v','Valas'],['c','Kripto & Vol']],S=[['grp','Grup'],['up','Naik ▲'],['dn','Turun ▼']];
+    var btn=function(a,k,on,attr){return '<button type="button" '+attr+'="'+a[0]+'" class="liq-btn'+(on?' on':'')+'" style="font-size:10px;padding:2px 8px">'+a[1]+'</button>'};
+    D.getElementById('ba-gmp-tabs').innerHTML=T.map(function(a){return btn(a,0,GP.tab===a[0],'data-gt')}).join('')+'<span style="flex:1"></span>'+S.map(function(a){return btn(a,0,GP.sort===a[0],'data-gs')}).join('');
+    var L=r.filter(function(x){return GP.tab==='all'||x.t===GP.tab});
+    if(GP.sort==='grp'){var GO=['Saham Amerika','Saham Eropa','Saham Asia-Pasifik','Saham Global','Komoditas & Logam','Valas & Indeks Aset','Kripto & Volatilitas'];L=L.map(function(x,i){return [x,i]}).sort(function(a,b){return (GO.indexOf(a[0].grp)-GO.indexOf(b[0].grp))||(a[1]-b[1])}).map(function(z){return z[0]})}else if(GP.sort==='up')L.sort(function(a,b){return b.c-a.c});else if(GP.sort==='dn')L.sort(function(a,b){return a.c-b.c});
+    var h='',last='',mx=Math.max.apply(0,L.map(function(x){return Math.abs(x.c)}).concat([1]));
+    L.forEach(function(x){
+      if(GP.sort==='grp'&&x.grp!==last){last=x.grp;h+='<div style="font:700 9px ui-monospace,monospace;color:#64748b;letter-spacing:.06em;padding:8px 0 3px;text-transform:uppercase">'+esc(x.grp)+'</div>'}
+      var col=x.c>=0?'#34d399':'#fb7185',w=Math.min(50,Math.abs(x.c)/mx*50);
+      h+='<div style="display:grid;grid-template-columns:minmax(0,1fr) 60px 82px;gap:6px;align-items:center;padding:4px 0;border-bottom:1px solid #1c1c1c">'+
+        '<div style="min-width:0"><div style="font:600 11px Inter,sans-serif;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="color:'+(x.open?'#34d399':'#64748b')+';font-size:8px" title="'+(x.open?'Pasar buka':'Pasar tutup')+'">'+(x.open?'●':'○')+'</span> '+esc(x.n)+'</div>'+
+        '<div style="position:relative;height:3px;background:#1f1f1f;border-radius:2px;margin-top:3px"><i style="position:absolute;top:0;height:100%;border-radius:2px;background:'+col+';left:'+(x.c>=0?50:50-w)+'%;width:'+w+'%;transition:all .5s"></i></div></div>'+
+        '<div>'+spk(x.h,col)+'</div>'+
+        '<div style="text-align:right;font:600 10px ui-monospace,monospace"><div style="color:#e2e8f0">'+esc(x.v)+'</div><div style="color:'+col+'">'+(x.c>=0?'▲ ':'▼ ')+fmt(x.c)+'</div></div></div>'});
+    var box=D.getElementById('ba-gmp-list'),sc0=box.scrollTop;box.innerHTML=h||'<div style="color:#64748b;font-size:11px;padding:8px 0">Belum ada data.</div>';box.scrollTop=sc0;
+    D.getElementById('ba-gmp-ft').textContent='Saham · komoditas · valas dari halaman Global Market (diperbarui tiap 2 dtk) · kripto & volatilitas dari data harian online · ● pasar buka ○ tutup';
+  }
+  function sync(force){
+    if(st.busy)return st.busy;
+    if(!force&&st.ok&&st.day===dayKey()&&Date.now()-st.ts<3*36e5)return Promise.resolve();
+    status();
+    st.busy=pull().then(function(r){
+      var d=build(r[0],r[1],r[2]);
+      if(!apply(d))throw 0;
+      st.d=d;st.ok=true;st.ts=Date.now();st.day=dayKey();
+      try{localStorage.setItem(KEY,JSON.stringify({ts:st.ts,day:st.day,d:d}))}catch(e){}
+    }).catch(function(){st.ok=false;st.fail=true;setTimeout(function(){sync(true)},3e4)})
+    .then(function(){st.busy=null;status()});
+    return st.busy;
+  }
+  function boot(){
+    try{var c=JSON.parse(localStorage.getItem(KEY)||'null');
+      if(c&&c.d&&apply(c.d)){st.d=c.d;st.ts=c.ts||0}}catch(e){}
+    status();sync(true);
+    paintPanel();setInterval(function(){if(!D.hidden){liveTick();paintMarket();paintPanel()}},2000);
+    setInterval(function(){if(!D.hidden&&st.day&&st.day!==dayKey())sync(true)},3e4);
+    setInterval(function(){if(!D.hidden)sync(false)},36e5);
+    D.addEventListener('visibilitychange',function(){if(!D.hidden)sync(false)});
+  }
+  function wait(n){if(W.__MLC&&D.getElementById('mlc-regime-d'))return boot();if(n>0)setTimeout(function(){wait(n-1)},500)}
+  if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',function(){wait(40)});else wait(40);
 })();
 </script>
 
