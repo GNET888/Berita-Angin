@@ -1,1 +1,0 @@
-(function(){window.__BA_ICON192="icon-192.png";window.__BA_ICON512="icon-512.png";var h=document.head;[["icon","image/png"],["apple-touch-icon",""]].forEach(function(r){var l=document.createElement("link");l.rel=r[0];if(r[1])l.type=r[1];l.href=window.__BA_ICON192;h.appendChild(l)})})();
