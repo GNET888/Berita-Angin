@@ -11086,5 +11086,79 @@ button:not(:disabled):active,[role=button]:active,.nav-link:active,.sb-link:acti
 })();
 </script>
 
+<style id="ba-mobile-app">
+/* ===== BERITA ANGIN · HP: tabel jadi kartu, semua kolom terbaca penuh ===== */
+@media (max-width:767px){
+html body table[data-ba-st],html body #liq-tbl[data-ba-st],html body #mlc-table[data-ba-st]{display:block!important;width:100%!important;min-width:0!important;max-width:100%!important;overflow:visible!important;border:0!important;background:transparent!important;border-radius:0!important}
+html body table[data-ba-st] tbody,html body #liq-tbl[data-ba-st] tbody,html body #mlc-table[data-ba-st] tbody{display:block!important;width:100%!important;background:transparent!important}
+html body table[data-ba-st] tfoot,html body #liq-tbl[data-ba-st] tfoot,html body #mlc-table[data-ba-st] tfoot{display:block!important;width:100%!important;background:transparent!important}
+html body table[data-ba-st] thead,html body #liq-tbl[data-ba-st] thead,html body #mlc-table[data-ba-st] thead{display:none!important}
+html body table[data-ba-st] tr,html body #liq-tbl[data-ba-st] tr,html body #mlc-table[data-ba-st] tr{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 14px;position:relative;height:auto!important;margin:0 0 10px!important;padding:13px 14px!important;border:1px solid rgba(148,163,184,.16)!important;border-radius:14px!important;background:rgba(15,20,28,.55)!important}
+html body table[data-ba-st] td,html body #liq-tbl[data-ba-st] td,html body #mlc-table[data-ba-st] td{display:flex!important;flex-direction:column;align-items:flex-start;gap:3px;width:auto!important;min-width:0!important;max-width:none!important;height:auto!important;padding:0!important;border:0!important;text-align:left!important;white-space:normal!important;position:static!important;background:transparent!important;box-shadow:none!important;font-size:13px;line-height:1.35;overflow-wrap:anywhere}
+html body table[data-ba-st] td::before,html body #liq-tbl[data-ba-st] td::before,html body #mlc-table[data-ba-st] td::before{content:attr(data-label);font:600 10px/1.2 Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#8b95a5}
+html body table[data-ba-st] td[data-label=""]::before,html body #liq-tbl[data-ba-st] td[data-label=""]::before,html body #mlc-table[data-ba-st] td[data-label=""]::before{display:none}
+html body table[data-ba-st] td[colspan],html body #liq-tbl[data-ba-st] td[colspan],html body #mlc-table[data-ba-st] td[colspan]{grid-column:1/-1}
+html body table[data-ba-st] td[data-st="t"],html body #liq-tbl[data-ba-st] td[data-st="t"],html body #mlc-table[data-ba-st] td[data-st="t"]{grid-column:1/-1;flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap;font-size:15px;font-weight:700;padding-right:40px!important}
+html body table[data-ba-st] td[data-st="t"]::before,html body #liq-tbl[data-ba-st] td[data-st="t"]::before,html body #mlc-table[data-ba-st] td[data-st="t"]::before{display:none}
+html body table[data-ba-st] td[data-st="r"],html body #liq-tbl[data-ba-st] td[data-st="r"],html body #mlc-table[data-ba-st] td[data-st="r"]{position:absolute!important;top:13px;right:14px;flex-direction:row;font:700 11px ui-monospace,Menlo,monospace;color:#6b7686}
+html body table[data-ba-st] td[data-st="r"]::before,html body #liq-tbl[data-ba-st] td[data-st="r"]::before,html body #mlc-table[data-ba-st] td[data-st="r"]::before{display:none}
+html body table[data-ba-st] tr.liq-blank,html body #liq-tbl[data-ba-st] tr.liq-blank,html body #mlc-table[data-ba-st] tr.liq-blank{display:none!important}
+html body table[data-ba-st] tr:active,html body #liq-tbl[data-ba-st] tr:active,html body #mlc-table[data-ba-st] tr:active{background:rgba(56,189,248,.10)!important}
+html body table[data-ba-st] td svg.spk,html body table[data-ba-st] td canvas,html body #liq-tbl[data-ba-st] td svg.spk,html body table[data-ba-st] td canvas,html body #mlc-table[data-ba-st] td svg.spk,html body table[data-ba-st] td canvas{width:100%!important;max-width:100%;height:32px}
+html body table[data-ba-st] img.fl,html body #liq-tbl[data-ba-st] img.fl,html body #mlc-table[data-ba-st] img.fl{flex:none;margin:0!important}
+html body table[data-ba-st="s"] thead,html body #liq-tbl[data-ba-st="s"] thead,html body #mlc-table[data-ba-st="s"] thead{display:block!important;margin:0 0 10px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+html body table[data-ba-st="s"] thead tr,html body #liq-tbl[data-ba-st="s"] thead tr,html body #mlc-table[data-ba-st="s"] thead tr{display:flex!important;gap:6px;border:0!important;padding:0!important;margin:0!important;background:transparent!important}
+html body table[data-ba-st="s"] thead th,html body #liq-tbl[data-ba-st="s"] thead th,html body #mlc-table[data-ba-st="s"] thead th{position:static!important;flex:none;padding:7px 13px!important;border:1px solid rgba(148,163,184,.25)!important;border-radius:999px!important;font-size:11px;white-space:nowrap!important;background:transparent!important;text-align:left!important}
+html.light body table[data-ba-st] tr,html.light body #liq-tbl[data-ba-st] tr,html.light body #mlc-table[data-ba-st] tr{background:#fff!important;border-color:#e2e8f0!important}
+html.light body table[data-ba-st] td::before,html.light body #liq-tbl[data-ba-st] td::before,html.light body #mlc-table[data-ba-st] td::before{color:#64748b}
+html.light body table[data-ba-st] td[data-st="r"],html.light body #liq-tbl[data-ba-st] td[data-st="r"],html.light body #mlc-table[data-ba-st] td[data-st="r"]{color:#94a3b8}
+input,select,textarea{font-size:16px!important}
+.liq-btn{min-height:36px;padding-left:12px;padding-right:12px}
+}
+</style>
+<script id="ba-mobile-app-js">
+(function(){
+  if(window.__baMob)return;window.__baMob=1;
+  var d=document,mq=window.matchMedia('(max-width:767px)'),pend=[],tm=0;
+  /* Beri label kolom di setiap sel tabel lebar agar di HP tampil sebagai kartu: semua data terbaca penuh */
+  function lab(t){
+    var ths=t.querySelectorAll('thead th');
+    if(ths.length<4||t.classList.contains('art-tbl'))return;
+    var L=[],sort=false,i,r,c;
+    for(i=0;i<ths.length;i++){L.push((ths[i].textContent||'').replace(/\s+/g,' ').trim());if(ths[i].hasAttribute('data-k'))sort=true}
+    var rk=/^(#|no\.?|rank)?$/i.test(L[0])?0:-1,ti=rk===0?1:0;
+    t.setAttribute('data-ba-st',sort?'s':'1');
+    var rows=t.querySelectorAll('tbody tr,tfoot tr');
+    for(r=0;r<rows.length;r++){
+      var cs=rows[r].cells;
+      for(c=0;c<cs.length;c++){
+        var td=cs[c];if(td.hasAttribute('data-label'))continue;
+        var one=td.colSpan<=1;
+        td.setAttribute('data-label',one?(L[c]||''):'');
+        if(one){if(c===rk)td.setAttribute('data-st','r');else if(c===ti)td.setAttribute('data-st','t')}
+      }
+    }
+  }
+  function flush(){tm=0;var a=pend;pend=[];if(!mq.matches)return;a.forEach(function(t){if(t.isConnected)lab(t)})}
+  function q(t){if(pend.indexOf(t)<0)pend.push(t);if(!tm)tm=setTimeout(flush,120)}
+  function all(){Array.prototype.forEach.call(d.querySelectorAll('table'),q)}
+  if(window.MutationObserver){
+    new MutationObserver(function(ms){
+      if(!mq.matches)return;
+      for(var i=0;i<ms.length;i++){
+        var n=ms[i].target,t=n.closest?n.closest('table'):null;
+        if(t){q(t);continue}
+        var a=ms[i].addedNodes;
+        for(var j=0;j<a.length;j++){var e=a[j];
+          if(e.nodeType!==1||!e.childElementCount&&e.tagName!=='TABLE')continue;
+          if(e.tagName==='TABLE')q(e);else{var ts=e.querySelectorAll('table');for(var k=0;k<ts.length;k++)q(ts[k])}
+        }
+      }
+    }).observe(d.body,{childList:true,subtree:true});
+  }
+  if(mq.addEventListener)mq.addEventListener('change',function(e){if(e.matches)all()});
+  if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',all);else all();
+})();
+</script>
 </body>
 </html>
