@@ -1777,6 +1777,14 @@ html.light .ba-tab .di{color:#536471}html.light .ba-tab.on .di{color:#0f1419}
                     </div>
                 </div>
             </div>
+
+        <!-- Berita Pasar AS (Online) dipindah ke Beranda -->
+  <div class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl space-y-3">
+    <div class="flex items-center justify-between gap-3 border-b border-card-border pb-3"><div><h3 class="text-sm font-bold text-white uppercase tracking-wide">Berita Pasar Online</h3><p class="text-[11px] text-gray-400">Dikelompokkan otomatis menurut kejadian di AS &bull; <span id="se2-nts">--</span></p></div><button id="se2-nrf" type="button" class="text-[10px] px-2.5 py-1 rounded-lg bg-black border border-card-border text-gray-300 hover:text-white">Muat ulang</button></div>
+    <div id="se2-nfilt" class="flex flex-wrap gap-1.5 text-[10px]"></div>
+    <div id="se2-news" class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs"><p class="text-gray-500">Memuat berita...</p></div>
+    <div id="se2-npg" class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-card-border text-[11px]"></div>
+  </div>
         </section>
         <!-- Halaman Detail Artikel -->
         <section id="page-article-detail" class="page space-y-8">
@@ -3041,11 +3049,37 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
       <div id="se2-hol" class="space-y-2 text-xs"></div>
     </div>
   </div>
-  <div class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl space-y-3">
-    <div class="flex items-center justify-between gap-3 border-b border-card-border pb-3"><div><h3 class="text-sm font-bold text-white uppercase tracking-wide">Berita Pasar AS (Online)</h3><p class="text-[11px] text-gray-400">Dikelompokkan otomatis menurut kejadian di AS &bull; <span id="se2-nts">--</span></p></div><button id="se2-nrf" type="button" class="text-[10px] px-2.5 py-1 rounded-lg bg-black border border-card-border text-gray-300 hover:text-white">Muat ulang</button></div>
-    <div id="se2-nfilt" class="flex flex-wrap gap-1.5 text-[10px]"></div>
-    <div id="se2-news" class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs"><p class="text-gray-500">Memuat berita...</p></div>
-    <div id="se2-npg" class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-card-border text-[11px]"></div>
+  <style id="se3-css">
+#se3-wrap{display:flex;flex-direction:column;gap:1.5rem}
+#se3-wrap .se3-row{display:grid;grid-template-columns:1fr;gap:1.5rem}
+@media(min-width:1024px){#se3-wrap .se3-row{grid-template-columns:2fr 1fr}}
+#se3-wrap .se3-sub{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#9ca3af;font-weight:700;margin:2px 0 8px}
+#se3-wrap .se3-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media(min-width:640px){#se3-wrap .se3-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1280px){#se3-wrap .se3-grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
+#se3-wrap .se3-c{padding:10px 12px;background:rgba(0,0,0,.45);border:1px solid rgba(148,163,184,.18);border-radius:12px;min-width:0}
+#se3-wrap .se3-n{font-size:10px;color:#9ca3af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#se3-wrap .se3-p{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-top:2px}
+#se3-wrap .se3-p b{font:700 13px ui-monospace,Menlo,monospace;color:#f8fafc}
+#se3-wrap .se3-p span{font:600 11px ui-monospace,Menlo,monospace}
+#se3-wrap svg.se3-sp{display:block;width:100%;height:26px;margin-top:4px}
+#se3-wrap .se3-note{font-size:11px;color:#9ca3af;line-height:1.5}
+#se3-wrap .se3-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:6px;border:1px solid;font-family:ui-monospace,Menlo,monospace}
+#se3-wrap .se3-heat{display:flex;flex-wrap:wrap;gap:6px}
+#se3-wrap .se3-t{border:0;cursor:pointer;border-radius:10px;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;transition:transform .15s,filter .15s}
+#se3-wrap .se3-t:hover{transform:translateY(-2px);filter:brightness(1.15)}
+#se3-wrap .se3-t b{font-size:12px}#se3-wrap .se3-t i{font-style:normal;font-size:10px;opacity:.95}
+#se3-wrap .se3-ev{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;background:rgba(0,0,0,.45);border:1px solid rgba(148,163,184,.18);border-radius:10px;font-size:11px}
+#se3-wrap .se3-ev small{color:#9ca3af;display:block;font-size:10px}
+#se3-wrap .se3-btn{font-size:10px;padding:4px 10px;border-radius:8px;background:#000;border:1px solid rgba(148,163,184,.25);color:#d1d5db;cursor:pointer}
+html.light #se3-wrap .se3-c,html.light #se3-wrap .se3-ev{background:rgba(241,245,249,.9)}
+html.light #se3-wrap .se3-p b{color:#0f172a}
+  </style>
+  <div id="se3-wrap">
+    <div class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl space-y-3">
+      <div class="border-b border-card-border pb-3"><h3 class="text-sm font-bold text-white uppercase tracking-wide">Agenda Pasar AS Berikutnya</h3><p class="text-[11px] text-gray-400">FOMC, data tenaga kerja (NFP), dan opsi kedaluwarsa &bull; dihitung otomatis, verifikasi ke jadwal resmi</p></div>
+      <div id="se3-ag" class="se3-grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))"></div>
+    </div>
   </div>
 </div>
         </section>
@@ -8713,6 +8747,26 @@ function navSync(){var a=document.querySelector('.page.active'),n=a?a.id.replace
 function navInit(){Array.prototype.forEach.call(document.querySelectorAll('.nav-ico'),function(i){var a=i.closest('a');if(a&&a.getAttribute('data-page'))a.classList.add('nav-item')});
   Array.prototype.forEach.call(document.querySelectorAll('.page'),function(p){new MutationObserver(navSync).observe(p,{attributes:true,attributeFilter:['class']})});navSync()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',safe(navInit));else safe(navInit)();
+})();
+</script>
+<script>/* US Market Live: agenda pasar AS (dihitung otomatis). */
+(function(){
+'use strict';
+var $=function(i){return document.getElementById(i)};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+/* ---------- Agenda (dihitung otomatis) ---------- */
+var FOMC=['2026-01-28','2026-03-18','2026-04-29','2026-06-17','2026-07-29','2026-09-16','2026-10-28','2026-12-09'];
+function nthFri(y,m,n){var d=new Date(Date.UTC(y,m,1)),off=(5-d.getUTCDay()+7)%7;return new Date(Date.UTC(y,m,1+off+7*(n-1)))}
+function agenda(){var el=$('se3-ag');if(!el)return;var ny=new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'})),td=Date.UTC(ny.getFullYear(),ny.getMonth(),ny.getDate()),ev=[];
+ for(var k=0;k<4;k++){var y=ny.getFullYear(),m=ny.getMonth()+k;if(m>11){y++;m-=12}
+  ev.push([nthFri(y,m,1),'NFP','Data Tenaga Kerja AS (perkiraan)','#fbbf24']);
+  var q=(m%3===2);ev.push([nthFri(y,m,3),'OPEX',q?'Triple Witching (opsi & futures kedaluwarsa)':'Opsi bulanan kedaluwarsa',q?'#c084fc':'#a78bfa'])}
+ FOMC.forEach(function(s){var p=s.split('-');ev.push([new Date(Date.UTC(+p[0],+p[1]-1,+p[2])),'FOMC','Keputusan suku bunga The Fed','#38bdf8'])});
+ ev=ev.filter(function(e){return e[0].getTime()>=td}).sort(function(a,b){return a[0]-b[0]}).slice(0,8);
+ el.innerHTML=ev.length?ev.map(function(e){var d=Math.round((e[0].getTime()-td)/864e5);
+  return '<div class="se3-ev"><div><span class="se3-tag" style="color:'+e[3]+';border-color:'+e[3]+'66">'+e[1]+'</span><small style="margin-top:4px">'+esc(e[2])+'</small><small>'+e[0].toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',timeZone:'UTC'})+'</small></div><b style="font-family:ui-monospace,monospace;color:#e5e7eb;white-space:nowrap">'+(d===0?'HARI INI':d+' hari')+'</b></div>'}).join(''):'<p class="se3-note">Tidak ada agenda terdekat.</p>'}
+function init(){agenda();setInterval(agenda,60000)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script>
 <script>/* Konversi Cepat otomatis: mengikuti jumlah, mata uang asal, dan kurs live pada kartu Currency Converter. Aditif, tidak mengubah fungsi lama. */
