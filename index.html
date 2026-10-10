@@ -54,6 +54,10 @@
 <link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" crossorigin>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
         <meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://api.coingecko.com" crossorigin>
+<link rel="preconnect" href="https://assets.coingecko.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
     <meta name="description" content="Berita Angin - berita, pasar kripto, saham, dan pasar global real-time.">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -3012,9 +3016,10 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
       </div>
       <div class="flex flex-wrap items-center gap-1.5 text-[10px]" id="se2-chips"></div>
       <div class="flex gap-2"><input id="se2-q" maxlength="10" placeholder="Cari ticker AS, mis. AMD" class="flex-1 min-w-0 bg-black/50 border border-card-border rounded-lg px-3 py-1.5 text-xs text-white outline-none focus:border-brand-accent"><button id="se2-go" type="button" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white">Muat</button></div>
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-        <div class="md:col-span-3 flex items-center justify-center"><div id="se2-radwrap" class="relative w-full max-w-[400px] aspect-square rounded-full overflow-hidden border border-card-border" style="background:radial-gradient(circle,rgba(56,189,248,.08),rgba(0,0,0,.6) 70%)"><canvas id="se2-main"></canvas><canvas id="se2-sweep" class="absolute left-0 top-0 pointer-events-none" style="width:100%;height:100%"></canvas></div></div>
-        <div id="se2-dec" class="md:col-span-2 bg-black/50 border border-card-border rounded-xl p-3 space-y-2 text-[11px]"></div>
+      <div class="space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2 text-[10px] uppercase tracking-wider text-gray-500"><span>Radar Multi-Lapis &bull; 12 indikator MTPI (dalam) + orbit 11 sektor (luar)</span><span class="flex items-center gap-1.5"><span class="se2-pulse"></span>sapuan otomatis &bull; arahkan kursor ke blip</span></div>
+        <div class="flex items-center justify-center"><div id="se2-radwrap" class="relative w-full max-w-[620px] aspect-square rounded-2xl overflow-hidden border border-card-border" style="background:radial-gradient(circle at 50% 50%,rgba(56,189,248,.08),rgba(2,6,12,.94) 74%);box-shadow:inset 0 0 60px rgba(56,189,248,.06)"><canvas id="se2-main" style="position:absolute;left:0;top:0;width:100%;height:100%"></canvas><canvas id="se2-sweep" style="position:absolute;left:0;top:0;width:100%;height:100%"></canvas><div id="se2-rtip" style="position:absolute;display:none;pointer-events:none;z-index:5;background:rgba(2,6,12,.95);border:1px solid rgba(148,163,184,.35);border-radius:8px;padding:6px 8px;font:600 10px ui-monospace,Menlo,monospace;color:#e5e7eb;white-space:nowrap"></div></div></div>
+        <div id="se2-dec" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px]"></div>
       </div>
       <div class="flex items-center gap-2 text-[10px] text-gray-500 uppercase tracking-wider"><span class="se2-pulse"></span>Live Tick &bull; 90 tick terakhir, berjalan otomatis</div>
       <div class="relative h-[90px] bg-black/50 border border-card-border rounded-xl p-1"><canvas id="se2-tape"></canvas></div>
@@ -5718,7 +5723,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     { name: 'Turki', lab: 'TURKI', sym: 'XU100.IS', col: '#dc2626', w: 1.6 },
     { name: 'Arab Saudi', lab: 'ARAB SAUDI', sym: '^TASI.SR', col: '#16a34a', w: 1.6 }
   ];
-  var NM = MK.length, CI = NM, CORE = 6, PS = 7;                       /* indeks dataset komposit = 6 */
+  var NM = MK.length, CI = NM, CORE = 6, PS = (W.matchMedia && W.matchMedia('(min-width:1024px)').matches) ? 13 : 7;                       /* indeks dataset komposit = 6 */
   var RG = [['1B', '1mo', 22], ['3B', '3mo', 64], ['6B', '6mo', 127], ['1T', '1y', 252]];
   var MON = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'];
   var st = { rg: 1, mode: 'line', paused: false, vis: MK.map(function () { return true; }).concat([true]), pg: 0, hl: null };
@@ -6116,6 +6121,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       md.appendChild(b);
     }); }
     cards(); net();
+    if (W.matchMedia) { var mqPS = W.matchMedia('(min-width:1024px)'); var fnPS = function (e) { PS = e.matches ? 13 : 7; st.pg = 0; cards(); }; if (mqPS.addEventListener) mqPS.addEventListener('change', fnPS); }
     var pv = $('liq-pv'), nx = $('liq-nx'), al = $('liq-all'), co = $('liq-core');
     if (pv) pv.onclick = function () { st.pg--; cards(); };
     if (nx) nx.onclick = function () { st.pg++; cards(); };
@@ -8580,7 +8586,661 @@ function rMain(){var o=S[M.sym];if(!o||!M.data.length)return;M.data[M.data.lengt
   var f=(session().open||M.src==='sim')?1:0,R=mtpi(M.data,f),n=M.data.length,N=Math.min(RG[M.range],n),a=n-N,sl=function(z){return z.slice(a)},p=pct(o),c=col(p),L=n-1;
   $('se2-msym').textContent=M.sym;$('se2-mname').textContent=o.n;$('se2-mtag').outerHTML=tag(o).replace('class="','id="se2-mtag" class="');
   $('se2-mp').textContent='$'+F(o.p);$('se2-mc').innerHTML='<span style="color:'+c+'">'+(p>=0?'▲ +':'▼ ')+F(o.p-o.pc)+' ('+(p>=0?'+':'')+F(p)+'%)</span>';
-  if(!mainChart){mainChart=new Chart($('se2-main'),radarCfg());
+  if(!mainChart){mainChart={radar:1};
+   scoreChart=new Chart($('se2-score'),{type:'bar',data:{labels:[],datasets:[{data:[],barPercentage:1,categoryPercentage:1}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(x){return 'MTPI '+(x.raw>=0?'+':'')+F(x.raw)}}}},scales:{x:{display:false},y:{min:-1,max:1,position:'right',ticks:{color:'#9ca3af',stepSize:.5,callback:function(v){return F(v,1)}},grid:{color:function(x){return x.tick.value===0?'rgba(255,255,255,.35)':'rgba(255,255,255,.05)'}}}}}})}
+  M.R=R;M.a=a;var lb=sl(M.labels),LV=M.range==='LIVE';if(LV&&LT.length)M.lc=LT[LT.length-1][1]>=LT[0][1]?UP:DN;
+  var sd=scoreChart.data.datasets[0];scoreChart.data.labels=lb;sd.data=sl(R.score);sd.backgroundColor=sl(R.score).map(function(v){return v>0?'rgba(52,211,153,'+(.35+v*.55).toFixed(2)+')':v<0?'rgba(251,113,133,'+(.35-v*.55).toFixed(2)+')':'#6b7280'});scoreChart.update('none');
+  var sc=R.score[L],sn=R.state[L],cl=sn>0?UP:sn<0?DN:'#9ca3af',lbl=sn>0?'BULLISH':sn<0?'BEARISH':'NETRAL',g=Math.abs(sc)*50;
+  var vt=function(t){return VN.map(function(v,j){return [v,R.votes[j][L]]}).filter(function(z){return z[0][1]===t}).map(function(z){var u=z[1]>0;return '<div class="flex justify-between py-0.5"><span class="text-gray-400">'+z[0][0]+'</span><b style="color:'+(u?UP:DN)+'">'+(u?'▲ LONG':'▼ SHORT')+'</b></div>'}).join('')};
+  var last=M.labels[L-f]||'';
+  LIV=ivals(M.data);safe(rRadar)(R,L);var onl=M.src==='live'&&o.src==='live';
+  $('se2-live').innerHTML='<span class="flex items-center gap-2"><span class="se2-pulse'+(onl?'':' sim')+'"></span><b class="'+(onl?'text-emerald-400':'text-amber-400')+'">AUTO · '+(onl?'ONLINE':'OFFLINE')+'</b> Trend-following &amp; Osilator dihitung ulang otomatis dari harga '+esc(M.sym)+'</span><span class="font-mono">update '+new Date().toLocaleTimeString('id-ID',{hour12:false})+' · nilai indikator = bar berjalan (tag LIVE = belum terkonfirmasi close)</span>';
+  $('se2-dash').innerHTML='<div class="bg-black/50 border border-card-border rounded-xl p-3 space-y-2"><div class="text-[10px] text-gray-500 uppercase tracking-wider">Confirmed Close MTPI</div><div class="flex items-baseline gap-2"><span class="text-3xl font-extrabold font-mono" style="color:'+cl+'">'+(sc>=0?'+':'')+F(sc)+'</span><span class="se2-tag" style="color:'+cl+';border-color:'+cl+'66">'+lbl+'</span></div>'+
+   '<div class="relative h-2 rounded-full bg-neutral-800"><div class="absolute top-0 h-2 rounded-full" style="background:'+cl+';'+(sc>=0?'left:50%':'right:50%')+';width:'+g+'%"></div><div class="absolute left-1/2 -top-0.5 w-px h-3 bg-gray-400"></div></div>'+
+   '<div class="flex justify-between text-[10px] text-gray-400"><span>Regime: <b class="text-white">'+R.regime+' bar</b></span><span>EMA-cross setuju: <b class="text-white">'+R.agree+'%</b></span></div></div>'+
+   indBox(0,R,L)+indBox(1,R,L);
+  $('se2-cf').textContent=f?'Bar berjalan (garis putus-putus) tidak dihitung — skor & sinyal hanya berubah setelah bar close terkonfirmasi. Bar terkonfirmasi terakhir: '+last:'Semua bar sudah close — skor dihitung dari bar terakhir: '+last}
+function rAll(){if(!inited||!active())return;safe(rSec)();safe(rMov)();safe(rMain)();safe(rTape)();
+  var ks=Object.keys(S),lv=ks.filter(function(k){return S[k].src==='live'}).length,e=$('se2-src');e.className='se2-tag '+(lv?'se2-live':'se2-sim');e.textContent=lv?'ONLINE · '+lv+'/'+ks.length+' LIVE':'OFFLINE'}
+/* ---------- SPY RADAR MULTI-LAPIS: 12 indikator MTPI (dalam) + orbit 11 sektor (luar) + sapuan otomatis ---------- */
+var RAD={V:[],c:UP},RSC=[.8,2,.25,3,3,8,0,0,0,4,1.5,0];
+var RAD2={hist:[],sym:'',R:null,L:0,sc:0,lv:0,d:null,lg:0,sh:0,gl:[0,0,0,0],HIT:[],lock:'',bound:false};
+function cl1(x){return Math.max(-1,Math.min(1,x))}
+function radVals(){return VN.map(function(nm,j){var iv=LIV[j];if(!iv)return {v:0,s:0,t:'--',n:nm[0]};var n=parseFloat(String(iv.t).replace('+','')),v;
+  v=j===6?(n-50)/25:j===7?(n-50)/50:j===8?n/150:j===11?(n-.5)*2:Math.tanh(n/RSC[j]);v=cl1(v);v=iv.s*Math.max(.08,Math.abs(v));return {v:v,s:iv.s,t:iv.t,n:nm[0]}})}
+var SL=['EMA','SMA','MACD','P>EMA50','Donchian','ROC','RSI','Stoch','CCI','Mom','AO','%B'];
+var RMONO='ui-monospace,Menlo,monospace',RP=Math.PI*2;
+function radGeo(W){var Rb=W/2-6,sm=W<420;return {cx:W/2,cy:W/2,Rb:Rb,Ri:Rb*(sm?.46:.54),Ro:Rb*.8,am:Rb*.045,sm:sm}}
+function radSize(){var w=$('se2-radwrap'),a=$('se2-main'),b=$('se2-sweep');if(!w||!a||!b)return null;var W=w.clientWidth;if(!W)return null;var dp=Math.min(2,window.devicePixelRatio||1),px=Math.round(W*dp),ch=false;
+  if(a.width!==px||b.width!==px||a.height!==px||b.height!==px){a.width=a.height=b.width=b.height=px;ch=true}return {W:W,dp:dp,ch:ch}}
+function radA(j,m){return -Math.PI/2+j*RP/m}
+/* lapisan statis: bezel, cincin jarak, poligon sinyal, hub */
+function radDraw(){var z=radSize();if(!z)return;var W=z.W,g=radGeo(W),x=$('se2-main').getContext('2d'),c=RAD.c||UP,V=RAD.V,n=V.length,R=RAD2.R;if(!R||!n)return;
+  var fs=Math.max(7,Math.min(10,W/62)),cx=g.cx,cy=g.cy,dg,an,j,k;
+  x.setTransform(z.dp,0,0,z.dp,0,0);x.clearRect(0,0,W,W);x.lineJoin='round';
+  x.strokeStyle='rgba(56,189,248,.05)';x.lineWidth=1;for(k=1;k<8;k++){var gp=W*k/8;x.beginPath();x.moveTo(gp,0);x.lineTo(gp,W);x.moveTo(0,gp);x.lineTo(W,gp);x.stroke()}
+  x.strokeStyle='rgba(148,163,184,.45)';x.lineWidth=1.2;x.beginPath();x.arc(cx,cy,g.Rb,0,RP);x.stroke();
+  for(dg=0;dg<360;dg+=2){an=(dg-90)*Math.PI/180;var ln=dg%30===0?10:dg%10===0?6:3;x.strokeStyle=dg%30===0?'rgba(226,232,240,.75)':'rgba(148,163,184,.4)';x.beginPath();x.moveTo(cx+Math.cos(an)*g.Rb,cy+Math.sin(an)*g.Rb);x.lineTo(cx+Math.cos(an)*(g.Rb-ln),cy+Math.sin(an)*(g.Rb-ln));x.stroke()}
+  x.textAlign='center';x.textBaseline='middle';
+  if(!g.sm){x.fillStyle='#64748b';x.font='600 '+(fs-1)+'px '+RMONO;for(dg=0;dg<360;dg+=30){an=(dg-90)*Math.PI/180;x.fillText(('00'+dg).slice(-3),cx+Math.cos(an)*(g.Rb-20),cy+Math.sin(an)*(g.Rb-20))}}
+  /* orbit sektor */
+  x.setLineDash([2,4]);x.strokeStyle='rgba(192,132,252,.45)';x.lineWidth=1;x.beginPath();x.arc(cx,cy,g.Ro,0,RP);x.stroke();x.setLineDash([]);
+  x.strokeStyle='rgba(192,132,252,.12)';[g.Ro-g.am,g.Ro+g.am].forEach(function(r){x.beginPath();x.arc(cx,cy,r,0,RP);x.stroke()});
+  /* cincin jarak indikator */
+  [[-.5,'-0.5'],[0,'0'],[.5,'+0.5'],[1,'+1']].forEach(function(q){var r=(q[0]+1)/2*g.Ri;x.setLineDash(q[0]===0?[5,4]:[]);x.strokeStyle=q[0]===0?'rgba(226,232,240,.35)':'rgba(148,163,184,.16)';x.lineWidth=1;x.beginPath();x.arc(cx,cy,r,0,RP);x.stroke();x.setLineDash([]);
+   x.fillStyle='#6b7280';x.font='500 '+(fs-1.5)+'px '+RMONO;x.textAlign='left';x.fillText(q[1],cx+3,cy-r-4)});
+  x.textAlign='center';
+  /* jari-jari, busur kelompok, label */
+  for(j=0;j<n;j++){an=radA(j,n);var gc=VN[j][1]?'#c084fc':'#38bdf8',ca=Math.cos(an),sa=Math.sin(an);
+   x.strokeStyle='rgba(148,163,184,.14)';x.lineWidth=1;x.beginPath();x.moveTo(cx,cy);x.lineTo(cx+ca*(g.Ri+6),cy+sa*(g.Ri+6));x.stroke();
+   x.strokeStyle=gc;x.lineWidth=3;x.globalAlpha=.85;x.beginPath();x.arc(cx,cy,g.Ri+8,an-RP/n*.32,an+RP/n*.32);x.stroke();x.globalAlpha=1;
+   var lr=g.Ri+8+(g.sm?10:15),lx=cx+ca*lr,ly=cy+sa*lr;x.textAlign=ca>.35?'left':ca<-.35?'right':'center';
+   x.fillStyle=gc;x.font='700 '+(g.sm?fs-1.5:fs-.5)+'px '+RMONO;x.fillText(SL[j],lx,ly-(g.sm?0:4));
+   if(!g.sm){x.fillStyle=V[j].s>0?UP:V[j].s<0?DN:'#6b7280';x.font='600 '+(fs-1.5)+'px '+RMONO;x.fillText(String(V[j].t),lx,ly+6)}}
+  x.textAlign='center';
+  var pt=function(arr){return arr.map(function(v,i){var a=radA(i,n),r=(v+1)/2*g.Ri;return [cx+Math.cos(a)*r,cy+Math.sin(a)*r]})},
+   path=function(p){x.beginPath();p.forEach(function(q,i){i?x.lineTo(q[0],q[1]):x.moveTo(q[0],q[1])});x.closePath()};
+  var h=RAD2.hist.slice(0,-1);h.forEach(function(s,i){x.globalAlpha=.07+.16*(i+1)/h.length;x.strokeStyle=c;x.lineWidth=1;path(pt(s));x.stroke()});x.globalAlpha=1;
+  var cf=VN.map(function(q,i){return (R.votes[i][RAD2.L]||0)*.62});x.setLineDash([5,4]);x.strokeStyle='rgba(255,255,255,.6)';x.lineWidth=1.2;path(pt(cf));x.stroke();x.setLineDash([]);
+  var lp=pt(V.map(function(o){return o.v})),gr=x.createRadialGradient(cx,cy,0,cx,cy,g.Ri);gr.addColorStop(0,c+'10');gr.addColorStop(1,c+'45');
+  x.fillStyle=gr;x.strokeStyle=c;x.lineWidth=2;path(lp);x.fill();x.stroke();
+  /* hub */
+  var hr=g.Ri*.2,sc=RAD2.sc;x.fillStyle='rgba(2,6,12,.96)';x.strokeStyle=c+'aa';x.lineWidth=1.2;x.beginPath();x.arc(cx,cy,hr,0,RP);x.fill();x.stroke();
+  x.strokeStyle='rgba(148,163,184,.25)';x.lineWidth=3;x.beginPath();x.arc(cx,cy,hr+5,0,RP);x.stroke();
+  x.strokeStyle=c;x.lineCap='round';x.beginPath();x.arc(cx,cy,hr+5,-Math.PI/2,-Math.PI/2+sc*Math.PI,sc<0);x.stroke();x.lineCap='butt';
+  x.fillStyle=c;x.font='800 '+Math.max(10,hr*.72)+'px '+RMONO;x.fillText((sc>=0?'+':'')+F(sc),cx,cy-2);x.fillStyle='#6b7280';x.font='600 '+Math.max(6,hr*.3)+'px '+RMONO;x.fillText('MTPI',cx,cy+hr*.5);
+  /* HUD sudut */
+  if(!g.sm){var o=S[M.sym],p=o?pct(o):0;x.textAlign='left';x.fillStyle='#f8fafc';x.font='800 '+(fs+4)+'px '+RMONO;x.fillText(M.sym,12,18);
+   x.fillStyle=col(p);x.font='700 '+(fs+1)+'px '+RMONO;x.fillText(o?'$'+F(o.p)+'  '+(p>=0?'+':'')+F(p)+'%':'--',12,34);
+   x.font='600 '+(fs-1)+'px '+RMONO;var ly2=W-12,L2=[['\u25C6 LIVE',c],['\u2506 CLOSE','#e2e8f0'],['\u25A0 TREND','#38bdf8'],['\u25A0 OSILATOR','#c084fc'],['\u25CF SEKTOR','#fbbf24']];
+   L2.forEach(function(q,i){x.fillStyle=q[1];x.fillText(q[0],12,ly2-(L2.length-1-i)*12)});
+   x.textAlign='right';x.fillStyle=UP;x.font='700 '+(fs)+'px '+RMONO;x.fillText('LONG '+RAD2.lg,W-12,W-26);x.fillStyle=DN;x.fillText('SHORT '+RAD2.sh,W-12,W-13);
+   x.fillStyle='#9ca3af';x.font='600 '+(fs-1)+'px '+RMONO;x.fillText('AGREE '+R.agree+'%',W-12,W-39)}
+  x.textAlign='center'}
+function rRadar(R,L){var V=radVals(),cnt=0,sm=0,lg=0,sh=0,gl=[0,0,0,0];RAD.V=V;
+  V.forEach(function(x,j){if(x.s){cnt++;sm+=x.s;if(x.s>0)lg++;else sh++;gl[(VN[j][1]?2:0)+(x.s>0?0:1)]++}});
+  var lv=cnt?sm/cnt:0,sc=R.score[L],d=sc>.33?['LONG · BELI',UP]:sc<-.33?['SHORT · JUAL / HINDARI',DN]:['TAHAN · NETRAL','#fbbf24'],c=d[1];RAD.c=c;
+  if(RAD2.sym!==M.sym){RAD2.sym=M.sym;RAD2.hist=[]}
+  var snap=V.map(function(x){return x.v}),lh=RAD2.hist[RAD2.hist.length-1];
+  if(!lh||snap.some(function(v,i){return Math.abs(v-lh[i])>.03})){RAD2.hist.push(snap);if(RAD2.hist.length>6)RAD2.hist.shift()}
+  RAD2.R=R;RAD2.L=L;RAD2.sc=sc;RAD2.lv=lv;RAD2.d=d;RAD2.lg=lg;RAD2.sh=sh;RAD2.gl=gl;
+  radDraw();
+  var e=$('se2-dec');if(!e)return;
+  var top=V.filter(function(x){return x.s}).sort(function(a,b){return Math.abs(b.v)-Math.abs(a.v)}).slice(0,3),ls=lv>.33?'LONG':lv<-.33?'SHORT':'NETRAL',diff=(sc>.33&&lv<-.33)||(sc<-.33&&lv>.33),
+   sp=SEC.map(function(s){return {k:s[0],n:s[1],p:pct(S[s[0]])}}).sort(function(a,b){return b.p-a.p}),
+   av=function(Q){var v=sp.filter(function(q){return Q.indexOf(q.k)>=0});return v.reduce(function(s,q){return s+q.p},0)/(v.length||1)},rd=av(CYC)-av(DEF),
+   rg=rd>.15?['RISK-ON',UP]:rd<-.15?['RISK-OFF',DN]:['NETRAL','#fbbf24'],up=sp.filter(function(q){return q.p>=0}).length,
+   box='bg-black/50 border border-card-border rounded-xl p-3 space-y-2 min-w-0',
+   hd=function(t,r){return '<div class="flex items-center justify-between"><span class="text-[10px] text-gray-500 uppercase tracking-wider">'+t+'</span>'+(r||'')+'</div>'},
+   tile=function(h2,v2,c2,s2){return '<div class="bg-black/50 border border-card-border rounded-lg p-2 min-w-0"><div class="text-[9px] text-gray-500 uppercase">'+h2+'</div><b class="font-mono text-xs" style="color:'+c2+'">'+v2+'</b>'+(s2?' <span class="text-[10px] text-gray-400">'+s2+'</span>':'')+'</div>'};
+  var bars=V.map(function(x,j){var cc=x.s>0?UP:x.s<0?DN:'#6b7280';return '<div class="flex items-center gap-1.5 py-[2px]"><span class="w-[76px] truncate text-[9px]" style="color:'+(VN[j][1]?'#c084fc':'#38bdf8')+'">'+esc(x.n)+'</span><div class="relative flex-1 h-1.5 rounded bg-neutral-800"><div class="absolute top-0 h-1.5 rounded" style="background:'+cc+';'+(x.v>=0?'left:50%':'right:50%')+';width:'+(Math.abs(x.v)*50)+'%"></div><div class="absolute left-1/2 -top-px w-px h-2 bg-gray-500"></div></div><span class="w-[44px] text-right font-mono text-[9px] text-gray-300">'+esc(x.t)+'</span></div>'}).join('');
+  var tiles=sp.map(function(q){var cc=col(q.p);return '<div class="rounded px-1 py-1 text-center" style="background:'+cc+'22;border:1px solid '+cc+'44" title="'+esc(q.n)+'"><div class="text-[9px] font-bold text-white">'+q.k+'</div><div class="text-[9px] font-mono" style="color:'+cc+'">'+(q.p>=0?'+':'')+F(q.p,1)+'%</div></div>'}).join('');
+  var gtxt=function(lbl,gc,a,b){return '<div class="flex items-center justify-between text-[10px]"><span style="color:'+gc+'">'+lbl+'</span><span class="font-mono"><b style="color:'+UP+'">'+a+'▲</b> <b style="color:'+DN+'">'+b+'▼</b></span></div>'};
+  e.innerHTML=
+   '<div class="'+box+'">'+hd('Radar Keputusan · '+esc(M.sym),'<span class="flex items-center gap-1 text-[10px]" style="color:'+c+'"><span class="se2-pulse"></span>SCANNING</span>')+
+    '<div class="rounded-lg p-2.5 text-center" style="border:1px solid '+c+'66;background:'+c+'14"><div class="text-[9px] text-gray-400 uppercase tracking-wider">Keputusan terkonfirmasi close</div><div class="text-base font-extrabold" style="color:'+c+'">'+d[0]+'</div><div class="font-mono text-[11px] text-gray-300">Skor MTPI '+(sc>=0?'+':'')+F(sc)+'</div></div>'+
+    '<div class="grid grid-cols-2 gap-2">'+tile('Skor live',(lv>=0?'+':'')+F(lv),col(lv),ls)+tile('Keyakinan',Math.round(Math.abs(sc)*100)+'%','#f8fafc','')+tile('Regime',R.regime+' bar','#f8fafc','')+tile('EMA setuju',R.agree+'%','#f8fafc','')+'</div>'+
+    '<div><div class="flex justify-between text-[10px] mb-1"><b style="color:'+UP+'">'+lg+' LONG</b><b style="color:'+DN+'">'+sh+' SHORT</b></div><div class="flex h-2 rounded-full overflow-hidden bg-neutral-800"><div style="width:'+(cnt?lg/cnt*100:0)+'%;background:'+UP+'"></div><div style="width:'+(cnt?sh/cnt*100:0)+'%;background:'+DN+'"></div></div></div>'+
+    gtxt('Trend-following (6)','#38bdf8',gl[0],gl[1])+gtxt('Osilator (6)','#c084fc',gl[2],gl[3])+
+    (diff?'<div class="text-[10px] text-amber-400">Sinyal live berlawanan dengan bar terkonfirmasi — tunggu close.</div>':'')+'</div>'+
+   '<div class="'+box+'">'+hd('Medan Indikator (12)','<span class="text-[9px] text-gray-500">&larr; SHORT | LONG &rarr;</span>')+bars+
+    '<div class="pt-1 border-t border-card-border/50"><div class="text-[9px] text-gray-500 uppercase tracking-wider mb-1">Sinyal terkuat terdeteksi</div>'+top.map(function(x){return '<div class="flex justify-between py-0.5"><span class="text-gray-300">'+esc(x.n)+'</span><b style="color:'+col(x.v)+'">'+(x.s>0?'▲ LONG':'▼ SHORT')+' '+Math.round(Math.abs(x.v)*100)+'%</b></div>'}).join('')+'</div></div>'+
+   '<div class="'+box+'">'+hd('Orbit Sektor (11)','<span class="se2-tag" style="color:'+rg[1]+';border-color:'+rg[1]+'66">'+rg[0]+'</span>')+
+    '<div class="grid grid-cols-4 gap-1">'+tiles+'</div>'+
+    '<div class="grid grid-cols-2 gap-2">'+tile('Siklikal',(av(CYC)>=0?'+':'')+F(av(CYC),2)+'%',col(av(CYC)),'')+tile('Defensif',(av(DEF)>=0?'+':'')+F(av(DEF),2)+'%',col(av(DEF)),'')+tile('Spread',(rd>=0?'+':'')+F(rd,2)+'%',col(rd),'')+tile('Breadth',up+' / '+sp.length,up>=6?UP:DN,'naik')+'</div>'+
+    '<div class="text-[9px] text-gray-500">Cincin luar = % perubahan harian 11 sektor (naik = keluar dari garis dasar). Cincin dalam = 12 indikator MTPI. Garis putus-putus putih = sinyal terkonfirmasi close.</div>'+
+    '<div class="text-[9px] text-gray-500">Analisis indikator otomatis, bukan saran investasi.</div></div>'}
+/* lapisan dinamis: sapuan, blip, ping, HUD jam */
+var SW={a:0,t:0};
+function sweepFrame(ts){requestAnimationFrame(sweepFrame);if(ts-SW.t<33)return;var dt=SW.t?Math.min(.1,(ts-SW.t)/1000):0;SW.t=ts;SW.a=(SW.a+dt*.75)%RP;
+  var cv=$('se2-sweep');if(!cv||!RAD2.R||!active())return;var z=radSize();if(!z)return;if(z.ch)radDraw();
+  var W=z.W,g=radGeo(W),x=cv.getContext('2d'),c=RAD.c||UP,a=SW.a,cx=g.cx,cy=g.cy,V=RAD.V,n=V.length,fs=Math.max(7,Math.min(10,W/62)),hit=[];
+  x.setTransform(z.dp,0,0,z.dp,0,0);x.clearRect(0,0,W,W);
+  if(x.createConicGradient){var gd=x.createConicGradient(a-1.3,cx,cy),k=1.3/RP;gd.addColorStop(0,c+'00');gd.addColorStop(k,c+'55');gd.addColorStop(Math.min(.999,k+.002),c+'00');gd.addColorStop(1,c+'00');x.fillStyle=gd;x.beginPath();x.arc(cx,cy,g.Rb-1,0,RP);x.fill()}
+  x.save();x.shadowColor=c;x.shadowBlur=8;x.strokeStyle=c;x.lineWidth=1.6;x.beginPath();x.moveTo(cx,cy);x.lineTo(cx+Math.cos(a)*(g.Rb-1),cy+Math.sin(a)*(g.Rb-1));x.stroke();x.restore();
+  var lock='',ld=9;
+  V.forEach(function(o,j){if(!o.s)return;var an=radA(j,n),r=(o.v+1)/2*g.Ri,px=cx+Math.cos(an)*r,py=cy+Math.sin(an)*r,d=((a-an)%RP+RP)%RP,al=d<1.4?1-d/1.4:0,bc=o.s>0?UP:DN;
+   if(d<.16&&d<ld){ld=d;lock=o.n+' '+o.t+' '+(o.s>0?'LONG':'SHORT')}
+   x.save();x.shadowColor=bc;x.shadowBlur=3+al*10;x.fillStyle=bc;x.beginPath();x.moveTo(px,py-5);x.lineTo(px+4.5,py);x.lineTo(px,py+5);x.lineTo(px-4.5,py);x.closePath();x.fill();x.restore();
+   if(al>0){x.strokeStyle=bc;x.globalAlpha=al;x.lineWidth=1.6;x.beginPath();x.arc(px,py,6+(1-al)*14,0,RP);x.stroke();x.globalAlpha=1}
+   hit.push({x:px,y:py,h:'<b style="color:'+(VN[j][1]?'#c084fc':'#38bdf8')+'">'+esc(o.n)+'</b><br>Nilai '+esc(o.t)+' · <b style="color:'+bc+'">'+(o.s>0?'LONG':'SHORT')+'</b> · kekuatan '+Math.round(Math.abs(o.v)*100)+'%'})});
+  var sp=SEC.map(function(s,i){return {k:s[0],n:s[1],p:pct(S[s[0]]),i:i}}),mx=Math.max(.5,Math.max.apply(null,sp.map(function(q){return Math.abs(q.p)})));
+  x.textAlign='center';x.textBaseline='middle';
+  sp.forEach(function(q){var an=-Math.PI/2+(q.i+.5)*RP/sp.length,off=cl1(q.p/mx)*g.am,r=g.Ro+off,ca=Math.cos(an),sa=Math.sin(an),px=cx+ca*r,py=cy+sa*r,d=((a-an)%RP+RP)%RP,al=d<1.6?1-d/1.6:0,bc=col(q.p),cy2=CYC.indexOf(q.k)>=0;
+   x.strokeStyle=bc;x.globalAlpha=.55;x.lineWidth=1.2;x.beginPath();x.moveTo(cx+ca*g.Ro,cy+sa*g.Ro);x.lineTo(px,py);x.stroke();x.globalAlpha=1;
+   x.save();x.shadowColor=bc;x.shadowBlur=2+al*9;x.fillStyle=bc;x.beginPath();x.arc(px,py,2.6+al*1.6,0,RP);x.fill();x.restore();
+   x.strokeStyle=cy2?'#38bdf8':'#c084fc';x.lineWidth=1;x.beginPath();x.arc(px,py,5,0,RP);x.stroke();
+   x.globalAlpha=.55+.45*al;x.fillStyle=bc;x.font='700 '+(fs-2)+'px '+RMONO;x.fillText(q.k,cx+ca*(g.Ro+g.am+11),cy+sa*(g.Ro+g.am+11));x.globalAlpha=1;
+   hit.push({x:px,y:py,h:'<b>'+q.k+'</b> '+esc(q.n)+'<br><b style="color:'+bc+'">'+(q.p>=0?'+':'')+F(q.p)+'%</b> · '+(cy2?'SIKLIKAL':'DEFENSIF')})});
+  if(!g.sm){var nw=ny(),tm=pd(nw.h)+':'+pd(nw.mi)+':'+pd(nw.s)+' ET',brg=Math.round(((a+Math.PI/2)*180/Math.PI+360)%360);
+   x.textAlign='right';x.fillStyle='#e2e8f0';x.font='700 '+(fs+1)+'px '+RMONO;x.fillText(tm,W-12,18);x.fillStyle='#9ca3af';x.font='600 '+(fs-1)+'px '+RMONO;x.fillText('SCAN BRG '+('00'+brg).slice(-3)+'\u00B0',W-12,31);
+   x.fillStyle=lock?c:'#475569';x.fillText(lock?'LOCK '+lock:'LOCK --',W-12,43)}
+  x.textAlign='center';RAD2.HIT=hit;
+  if(!RAD2.bound){RAD2.bound=true;var tp=$('se2-rtip'),mv=function(e){var r=cv.getBoundingClientRect(),cl=e.touches?e.touches[0]:e,mx2=cl.clientX-r.left,my=cl.clientY-r.top,best=null,bd=16;RAD2.HIT.forEach(function(h){var dd=Math.hypot(h.x-mx2,h.y-my);if(dd<bd){bd=dd;best=h}});
+    if(!best||!tp){if(tp)tp.style.display='none';return}tp.innerHTML=best.h;tp.style.display='block';tp.style.left=Math.max(4,Math.min(mx2+12,r.width-tp.offsetWidth-4))+'px';tp.style.top=Math.max(4,my-tp.offsetHeight-10)+'px'};
+   cv.addEventListener('mousemove',mv);cv.addEventListener('click',mv);cv.addEventListener('mouseleave',function(){if(tp)tp.style.display='none'})}}
+requestAnimationFrame(sweepFrame);
+/* ---------- kontrol ---------- */
+  function setOn(el, on) {
+    ['bg-brand-primary', 'text-white', 'border-transparent'].forEach(function (c) { el.classList.toggle(c, on); });
+    ['bg-black', 'border-card-border', 'text-gray-300'].forEach(function (c) { el.classList.toggle(c, !on); });
+  }
+  function mark() {
+    document.querySelectorAll('#cxp-tf [data-tf]').forEach(function (b) { setOn(b, b.dataset.tf === S.tf); });
+    document.querySelectorAll('#cxp-ind [data-ind]').forEach(function (b) { setOn(b, !!S.ind[b.dataset.ind]); });
+    var p = $('cxp-pause'); if (p) { p.textContent = S.auto ? 'PAUSE' : 'RESUME'; setOn(p, !S.auto); }
+  }
+  document.querySelectorAll('#cxp-tf [data-tf]').forEach(function (b) { b.addEventListener('click', function () { S.tf = b.dataset.tf; S.hover = -1; seed(); mark(); draw(); panel(); }); });
+  document.querySelectorAll('#cxp-ind [data-ind]').forEach(function (b) { b.addEventListener('click', function () { S.ind[b.dataset.ind] = !S.ind[b.dataset.ind]; mark(); draw(); }); });
+  var pb = $('cxp-pause'); if (pb) pb.addEventListener('click', function () { S.auto = !S.auto; mark(); draw(); panel(); });
+  function pos(e) {
+    var r = cv.getBoundingClientRect(), p = e.touches ? e.touches[0] : e, g = S.g; if (!g) return;
+    S.mx = p.clientX - r.left; S.my = p.clientY - r.top;
+    var i = Math.floor((S.mx - g.L) / g.slot) - g.off; S.hover = i >= 0 && i < g.n && S.mx <= g.R ? i : -1; draw();
+  }
+  cv.addEventListener('mousemove', pos); cv.addEventListener('touchstart', pos, { passive: true }); cv.addEventListener('touchmove', pos, { passive: true });
+  ['mouseleave', 'touchend'].forEach(function (ev) { cv.addEventListener(ev, function () { S.hover = -1; draw(); }); });
+  seed(); mark(); resize(); panel();
+  setInterval(function () {
+    if (!S.auto || document.hidden) return;
+    S.last = Date.now(); advance(S.last); S.ticks++; panel(); draw();
+  }, 300);
+  window.addEventListener('resize', resize, { passive: true });
+  if (typeof ResizeObserver !== 'undefined') new ResizeObserver(resize).observe(cv.parentElement || cv);
+  if (typeof MutationObserver !== 'undefined') new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+})();
+</script>
+<style>.cx-ico{position:relative;width:24px;height:24px;flex:0 0 24px;border-radius:9999px;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.cx-ico b{font:800 7px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.02em}
+.cx-ico img{position:absolute;inset:0;width:100%;height:100%;border-radius:9999px;background:#0b0b0e;object-fit:cover}
+canvas.cx-mini{display:block;width:104px;height:34px;flex:0 0 104px;border-radius:6px;background:rgba(148,163,184,.05);border:1px solid rgba(148,163,184,.14)}
+canvas.cx-mini[data-kind="stock"]{width:96px;flex-basis:96px}
+@keyframes cxUp{from{background:rgba(52,211,153,.30)}to{background:transparent}}
+@keyframes cxDn{from{background:rgba(251,113,133,.30)}to{background:transparent}}
+.cx-fu{animation:cxUp .8s ease-out}.cx-fd{animation:cxDn .8s ease-out}
+</style>
+<script>/* GRAFIK PROFESIONAL OTOMATIS
+   • Crypto Asset → Perubahan 24j : area gradien halus + garis open 24j + titik live berdenyut
+   • U.S. Stock Directory → CHANGE (%) : mini candlestick intraday + garis previous close
+   Data = simulasi ilustratif sampai feed nyata tersambung. */
+(function () {
+  'use strict';
+  if (window.__cxCells) return; window.__cxCells = true;
+  var rnd = function () { return Math.random() - .5; };
+  var CC = { btc: '#F7931A', eth: '#627EEA', sol: '#9945FF', bnb: '#F3BA2F', xrp: '#23292F', ada: '#0033AD', doge: '#C2A633', avax: '#E84142', dot: '#E6007A', link: '#2A5ADA', pol: '#8247E5', shib: '#E4462B', ltc: '#345D9D', uni: '#FF007A', near: '#00A37A', atom: '#4B4F6E', xlm: '#14B6E7', xmr: '#FF6600', etc: '#3AB83A', fil: '#0090FF', icp: '#3B00B9', hbar: '#3A3A3A', render: '#E5484D', imx: '#17B5CB', inj: '#0AA5C0', mkr: '#1AAB9B', aave: '#B6509E', arb: '#28A0F0', trx: '#FF060A', ton: '#0098EA', bch: '#8DC351', apt: '#00B3A4', sui: '#4DA2FF', vet: '#15BDFF', grt: '#6747ED', algo: '#2B2B2B', stx: '#5546FF', op: '#FF0420' };
+  window.cxIcon = function (c) {
+    var t = String(c.symbol || '').toUpperCase();
+    return '<span class="cx-ico" style="background:' + (CC[c.symbol] || '#475569') + '"><b>' + t.slice(0, 4) + '</b>' +
+      (c.image ? '<img src="' + c.image + '" alt="' + t + '" loading="lazy" onerror="this.remove()">' : '') + '</span>';
+  };
+  window.cxFmt = function (v) {
+    if (v >= 1000) return v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (v >= 1) return v.toFixed(2);
+    return v >= .01 ? v.toFixed(4) : v.toFixed(6);
+  };
+  var isLight = function () { return document.documentElement.classList.contains('light'); };
+  var palette = function () { return isLight() ? { up: '#059669', dn: '#e11d48', base: 'rgba(100,116,139,.55)' } : { up: '#34D399', dn: '#FB7185', base: 'rgba(148,163,184,.45)' }; };
+  /* ---------- state kripto ---------- */
+  var CS = {}, coins = {};
+  function initCrypto() {
+    if (typeof cryptoPagesData === 'undefined') return;
+    Object.keys(cryptoPagesData).forEach(function (k) {
+      cryptoPagesData[k].forEach(function (c) {
+        coins[c.symbol] = c;
+        var cur = c.current_price, open = cur / (1 + c.price_change_percentage_24h / 100), n = 30, s = [], vol = .0011 + Math.abs(c.price_change_percentage_24h) * .00016;
+        for (var i = 0; i < n; i++) { var t = i / (n - 1); s.push((open + (cur - open) * t) * (1 + rnd() * vol * 5 * Math.sin(Math.PI * t * .96 + .05))); }
+        s[0] = open; s[n - 1] = cur;
+        CS[c.symbol] = { s: s, open: open, cur: cur, target: cur, shown: cur, vol: vol };
+      });
+    });
+  }
+  /* Dipanggil setelah data online (CoinGecko) masuk: harga live jadi acuan baru, jadi tidak tertimpa simulasi lama */
+  window.__baCryptoResync = function () {
+    Object.keys(coins).forEach(function (sym) {
+      var c = coins[sym], st = CS[sym]; if (!c || !st || !(c.current_price > 0)) return;
+      var cur = c.current_price, pc = c.price_change_percentage_24h || 0, open = cur / (1 + pc / 100), n = st.s.length, vol = .0011 + Math.abs(pc) * .00016;
+      for (var i = 0; i < n; i++) { var t = i / (n - 1); st.s[i] = (open + (cur - open) * t) * (1 + rnd() * vol * 5 * Math.sin(Math.PI * t * .96 + .05)); }
+      st.s[0] = open; st.s[n - 1] = cur; st.open = open; st.cur = cur; st.target = cur; st.shown = cur; st.vol = vol;
+    });
+  };
+  function tickCrypto() {
+    Object.keys(CS).forEach(function (sym) {
+      var st = CS[sym], c = coins[sym];
+      st.cur = Math.max(st.cur * .2, st.cur * (1 + rnd() * st.vol * 2.2) + (st.target - st.cur) * .035);
+      st.s.push(st.cur); st.s.shift();
+      c.current_price = st.cur; c.price_change_percentage_24h = (st.cur / st.open - 1) * 100;
+      c.total_volume = Math.max(1e6, c.total_volume * (1 + rnd() * .006));
+    });
+    var tb = document.getElementById('crypto-table-body'); if (!tb || tb.offsetParent === null) return;
+    tb.querySelectorAll('tr[data-cx]').forEach(function (tr) {
+      var c = coins[tr.getAttribute('data-cx')], st = CS[tr.getAttribute('data-cx')]; if (!c) return;
+      var p = tr.querySelector('.cx-price'), g = tr.querySelector('.cx-pct'), v = tr.querySelector('.cx-vol'), pct = c.price_change_percentage_24h;
+      if (p) { var old = p.getAttribute('data-p') * 1, nw = c.current_price; p.textContent = '$' + cxFmt(nw); p.setAttribute('data-p', nw);
+        if (old && old !== nw) { p.classList.remove('cx-fu', 'cx-fd'); void p.offsetWidth; p.classList.add(nw > old ? 'cx-fu' : 'cx-fd'); } }
+      if (g) { g.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%'; g.classList.remove('text-emerald-400', 'text-rose-400'); g.classList.add(pct >= 0 ? 'text-emerald-400' : 'text-rose-400'); }
+      if (v) v.textContent = '$' + (c.total_volume / 1e6).toFixed(1) + 'M';
+    });
+  }
+  /* ---------- state saham ---------- */
+  var SS = {}, stocks = {}, NC = 14;
+  function candlesFrom(closes, vol) {
+    var out = [];
+    for (var i = 1; i < closes.length; i++) { var o = closes[i - 1], c = closes[i]; out.push({ o: o, c: c, h: Math.max(o, c) + Math.random() * vol, l: Math.min(o, c) - Math.random() * vol }); }
+    return out;
+  }
+  function initStocks() {
+    if (typeof allStockDirectory === 'undefined') return;
+    allStockDirectory.forEach(function (s) {
+      stocks[s.symbol] = s;
+      var chg = parseFloat(s.change) || 0, price = s.price, pc = price / (1 + chg / 100), closes = [pc], vol = price * .0022;
+      for (var i = 1; i <= NC; i++) { var t = i / NC; closes.push(i === NC ? price : pc + (price - pc) * t + rnd() * price * .006 * (1 - t * .6)); }
+      var cd = candlesFrom(closes, vol);
+      SS[s.symbol] = { c: cd, pc: pc, target: price, shown: price, vol: price * .0016, n: 0 };
+    });
+  }
+  function tickStocks() {
+    Object.keys(SS).forEach(function (sym) {
+      var st = SS[sym], s = stocks[sym], k = st.c[st.c.length - 1];
+      st.n++;
+      if (st.n % 4 === 0) { st.c.push({ o: k.c, c: k.c, h: k.c, l: k.c }); st.c.shift(); k = st.c[st.c.length - 1]; }
+      k.c = Math.max(.01, k.c + rnd() * st.vol * 2 + (st.target - k.c) * .05);
+      k.h = Math.max(k.h, k.c); k.l = Math.min(k.l, k.c);
+      var chg = +((k.c / st.pc - 1) * 100).toFixed(2);
+      if (s._lp > 0) { s.price = s._lp; s.change = (s._lc >= 0 ? '+' : '') + s._lc.toFixed(2) + '%'; } else { s.price = k.c; s.change = (chg >= 0 ? '+' : '') + chg.toFixed(2) + '%'; }
+    });
+    var tb = document.getElementById('stock-table-body'); if (!tb || tb.offsetParent === null) return;
+    tb.querySelectorAll('tr[data-st]').forEach(function (tr) {
+      var s = stocks[tr.getAttribute('data-st')]; if (!s) return;
+      var p = tr.querySelector('.cx-sprice'), g = tr.querySelector('.cx-schg'), up = s.change.indexOf('-') < 0;
+      if (p) { var old = p.getAttribute('data-p') * 1; p.textContent = '$' + s.price.toFixed(2); p.setAttribute('data-p', s.price);
+        if (old && old !== s.price) { p.classList.remove('cx-fu', 'cx-fd'); void p.offsetWidth; p.classList.add(s.price > old ? 'cx-fu' : 'cx-fd'); } }
+      if (g) { g.textContent = s.change; g.classList.remove('text-emerald-400', 'text-rose-400'); g.classList.add(up ? 'text-emerald-400' : 'text-rose-400'); }
+    });
+  }
+  /* ---------- gambar ---------- */
+  function prep(cv, dw, dh) {
+    var w = cv.clientWidth || dw, h = cv.clientHeight || dh, d = Math.min(window.devicePixelRatio || 1, 2);
+    if (cv.width !== Math.round(w * d) || cv.height !== Math.round(h * d)) { cv.width = Math.round(w * d); cv.height = Math.round(h * d); }
+    var x = cv.getContext('2d'); x.setTransform(d, 0, 0, d, 0, 0); x.clearRect(0, 0, w, h); return { x: x, w: w, h: h };
+  }
+  function drawCrypto(cv, now) {
+    var st = CS[cv.getAttribute('data-sym')]; if (!st) return;
+    st.shown += (st.cur - st.shown) * .2;
+    var o = prep(cv, 104, 34), x = o.x, w = o.w, h = o.h, C = palette(), s = st.s.slice(0, -1).concat([st.shown]), n = s.length;
+    var mn = Math.min(st.open, Math.min.apply(null, s)), mx = Math.max(st.open, Math.max.apply(null, s)), pad = (mx - mn) * .16 || mx * .001; mn -= pad; mx += pad;
+    var X = function (i) { return 3 + i * (w - 9) / (n - 1); }, Y = function (v) { return h - 3 - (v - mn) / (mx - mn) * (h - 6); };
+    var up = st.shown >= st.open, col = up ? C.up : C.dn;
+    x.strokeStyle = C.base; x.lineWidth = 1; x.setLineDash([2, 3]); x.beginPath(); x.moveTo(0, Math.round(Y(st.open)) + .5); x.lineTo(w, Math.round(Y(st.open)) + .5); x.stroke(); x.setLineDash([]);
+    x.beginPath(); x.moveTo(X(0), Y(s[0]));
+    for (var i = 1; i < n; i++) { var mx2 = (X(i - 1) + X(i)) / 2, my2 = (Y(s[i - 1]) + Y(s[i])) / 2; x.quadraticCurveTo(X(i - 1), Y(s[i - 1]), mx2, my2); }
+    x.lineTo(X(n - 1), Y(s[n - 1]));
+    x.save(); x.lineTo(X(n - 1), h); x.lineTo(X(0), h); x.closePath();
+    var g = x.createLinearGradient(0, 0, 0, h); g.addColorStop(0, col + '55'); g.addColorStop(1, col + '00'); x.fillStyle = g; x.fill(); x.restore();
+    x.beginPath(); x.moveTo(X(0), Y(s[0]));
+    for (i = 1; i < n; i++) { x.quadraticCurveTo(X(i - 1), Y(s[i - 1]), (X(i - 1) + X(i)) / 2, (Y(s[i - 1]) + Y(s[i])) / 2); }
+    x.lineTo(X(n - 1), Y(s[n - 1])); x.strokeStyle = col; x.lineWidth = 1.6; x.lineJoin = 'round'; x.stroke();
+    var ph = (now % 1500) / 1500, ex = X(n - 1), ey = Y(s[n - 1]);
+    x.beginPath(); x.arc(ex, ey, 2.5 + ph * 5, 0, 6.2832); x.strokeStyle = col; x.globalAlpha = (1 - ph) * .8; x.lineWidth = 1; x.stroke(); x.globalAlpha = 1;
+    x.beginPath(); x.arc(ex, ey, 2.4, 0, 6.2832); x.fillStyle = col; x.fill();
+  }
+  function drawStock(cv, now) {
+    var st = SS[cv.getAttribute('data-sym')]; if (!st) return;
+    var k = st.c[st.c.length - 1]; st.shown += (k.c - st.shown) * .25;
+    var o = prep(cv, 96, 34), x = o.x, w = o.w, h = o.h, C = palette(), cs = st.c, n = cs.length;
+    var mn = st.pc, mx = st.pc; cs.forEach(function (c) { mn = Math.min(mn, c.l); mx = Math.max(mx, c.h); });
+    var pad = (mx - mn) * .14 || mx * .001; mn -= pad; mx += pad;
+    var slot = (w - 6) / n, Y = function (v) { return h - 3 - (v - mn) / (mx - mn) * (h - 6); };
+    x.strokeStyle = C.base; x.lineWidth = 1; x.setLineDash([2, 3]); x.beginPath(); x.moveTo(0, Math.round(Y(st.pc)) + .5); x.lineTo(w, Math.round(Y(st.pc)) + .5); x.stroke(); x.setLineDash([]);
+    cs.forEach(function (c, i) {
+      var last = i === n - 1, cl = last ? st.shown : c.c, hi = last ? Math.max(c.h, cl) : c.h, lo = last ? Math.min(c.l, cl) : c.l;
+      var col = cl >= c.o ? C.up : C.dn, cx = Math.round(3 + (i + .5) * slot) + .5, bw = Math.max(2, Math.floor(slot * .62));
+      x.strokeStyle = col; x.fillStyle = col; x.lineWidth = 1;
+      x.beginPath(); x.moveTo(cx, Y(hi)); x.lineTo(cx, Y(lo)); x.stroke();
+      var y1 = Y(Math.max(c.o, cl)), y2 = Y(Math.min(c.o, cl)); x.fillRect(Math.round(cx - bw / 2), y1, bw, Math.max(1, y2 - y1));
+    });
+    var lc = st.shown >= st.pc ? C.up : C.dn, ly = Y(st.shown), ph = (now % 1500) / 1500;
+    x.strokeStyle = lc; x.globalAlpha = .55; x.lineWidth = 1; x.beginPath(); x.moveTo(w - 8, ly); x.lineTo(w, ly); x.stroke(); x.globalAlpha = 1;
+    x.beginPath(); x.arc(w - 3, ly, 1.6 + ph * 2.6, 0, 6.2832); x.globalAlpha = 1 - ph; x.stroke(); x.globalAlpha = 1;
+    x.beginPath(); x.arc(w - 3, ly, 1.8, 0, 6.2832); x.fillStyle = lc; x.fill();
+  }
+  var lastF = 0;
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (document.hidden || now - lastF < 33) return; lastF = now;
+    document.querySelectorAll('canvas.cx-mini').forEach(function (cv) {
+      if (cv.offsetParent === null) return;
+      try { cv.getAttribute('data-kind') === 'stock' ? drawStock(cv, now) : drawCrypto(cv, now); } catch (e) { }
+    });
+  }
+  initCrypto(); initStocks();
+  setInterval(function () { if (!document.hidden) try { tickCrypto(); } catch (e) { console.warn('[cx-crypto]', e); } }, 1500);
+  setInterval(function () { if (!document.hidden) try { tickStocks(); } catch (e) { console.warn('[cx-stock]', e); } }, 1700);
+  requestAnimationFrame(frame);
+})();
+</script>
+<script>(window.requestIdleCallback||function(f){setTimeout(f,150)})(function(){/* LATAR 3D — "Visualizing Graphs in 3D with WebGL": graf jaringan aset (Kripto, Saham, Global) berbasis
+   force-directed layout 3D yang dirender dengan WebGL murni (tanpa library): simpul bercahaya (point sprite),
+   sisi bergradasi, denyut data yang mengalir di sepanjang sisi, kamera orbit + parallax kursor, label hub.
+   Mendukung tema gelap/terang, berhenti saat tab tersembunyi, dan statis bila prefers-reduced-motion. */
+(function () {
+  'use strict';
+  var cv = document.getElementById('bg3d'); if (!cv || window.__bg3d) return; window.__bg3d = true;
+  var gl = cv.getContext('webgl', { alpha: true, antialias: true, premultipliedAlpha: true }) || cv.getContext('experimental-webgl');
+  if (!gl) return;
+  var lb = document.createElement('canvas'); lb.id = 'bg3d-lbl'; lb.setAttribute('aria-hidden', 'true');
+  lb.style.cssText = 'position:fixed;left:0;top:0;width:100%;height:100%;z-index:-1;pointer-events:none;display:block';
+  cv.style.zIndex = '-2'; cv.parentNode.insertBefore(lb, cv); var lx = lb.getContext('2d');
+  var w = 0, h = 0, dpr = 1, tx = 0, ty = 0, mx = 0, my = 0, last = performance.now(), T = 0, frame = 0, i, j;
+  var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rnd = function (a, b) { return a + Math.random() * (b - a); }, clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
+  var DKC = [[.22, .74, .97], [.2, .83, .6], [.51, .55, .97]], LTC = [[.01, .52, .78], [.02, .59, .41], [.31, .27, .9]], PUL = { d: [.98, .75, .14], l: [.71, .33, .04] };
+  var NAMES = [['BTC', 'ETH', 'SOL', 'BNB', 'XRP', 'ADA'], ['BBCA', 'BBRI', 'TLKM', 'ASII', 'NVDA', 'AAPL'], ['S&P 500', 'IHSG', 'NIKKEI', 'DAX', 'DXY', 'GOLD']];
+  /* ---------- graf: 3 klaster, hub berderajat tinggi + lampiran preferensial ---------- */
+  var NCL = 3, NPC = 46, N = NCL * NPC, E = [], cl = new Uint8Array(N), deg = new Float32Array(N), lab = [];
+  var px = new Float32Array(N), py = new Float32Array(N), pz = new Float32Array(N), vx = new Float32Array(N), vy = new Float32Array(N), vz = new Float32Array(N);
+  function link(a, b) { if (a === b) return; for (var q = 0; q < E.length; q++) if ((E[q][0] === a && E[q][1] === b) || (E[q][0] === b && E[q][1] === a)) return; E.push([a, b]); deg[a]++; deg[b]++; }
+  (function build() {
+    var c, k, n, base, pick, tot, r, ang = [0, 2.094, 4.188];
+    for (c = 0; c < NCL; c++) {
+      base = c * NPC;
+      for (n = 0; n < NPC; n++) { var id = base + n; cl[id] = c; px[id] = Math.cos(ang[c]) * 3.2 + rnd(-1.4, 1.4); py[id] = (c - 1) * 1.6 + rnd(-1.4, 1.4); pz[id] = Math.sin(ang[c]) * 3.2 + rnd(-1.4, 1.4); }
+      for (k = 0; k < 6; k++) { link(base + k, base + (k + 1) % 6); link(base + k, base + (k + 2) % 6); lab[base + k] = NAMES[c][k]; }
+      for (n = 6; n < NPC; n++) {
+        for (k = 0; k < (n % 3 === 0 ? 2 : 1); k++) {
+          tot = 0; for (j = 0; j < n; j++) tot += deg[base + j] + 1; r = Math.random() * tot; pick = 0;
+          for (j = 0; j < n; j++) { r -= deg[base + j] + 1; if (r <= 0) { pick = j; break; } }
+          link(base + n, base + pick);
+        }
+      }
+    }
+    for (k = 0; k < 16; k++) { var a = Math.floor(Math.random() * NCL), b = (a + 1 + Math.floor(Math.random() * 2)) % NCL; link(a * NPC + Math.floor(Math.random() * 8), b * NPC + Math.floor(Math.random() * 8)); }
+    link(0, NPC); link(0, 2 * NPC); link(NPC, 2 * NPC);
+  })();
+  var NE = E.length;
+  /* ---------- tata letak force-directed 3D ---------- */
+  var REP = .75, SPR = .07, RL = 1.1, GRV = .03;
+  function layout(n) {
+    while (n-- > 0) {
+      var a, b, dx, dy, dz, r2, f, e;
+      for (a = 0; a < N; a++) for (b = a + 1; b < N; b++) {
+        dx = px[a] - px[b]; dy = py[a] - py[b]; dz = pz[a] - pz[b]; r2 = dx * dx + dy * dy + dz * dz + .08; f = REP / (r2 * Math.sqrt(r2));
+        vx[a] += dx * f; vy[a] += dy * f; vz[a] += dz * f; vx[b] -= dx * f; vy[b] -= dy * f; vz[b] -= dz * f;
+      }
+      for (e = 0; e < NE; e++) {
+        a = E[e][0]; b = E[e][1]; dx = px[b] - px[a]; dy = py[b] - py[a]; dz = pz[b] - pz[a]; var L = Math.sqrt(dx * dx + dy * dy + dz * dz) + 1e-4; f = SPR * (L - RL) / L;
+        vx[a] += dx * f; vy[a] += dy * f; vz[a] += dz * f; vx[b] -= dx * f; vy[b] -= dy * f; vz[b] -= dz * f;
+      }
+      for (a = 0; a < N; a++) {
+        vx[a] = (vx[a] - px[a] * GRV) * .82; vy[a] = (vy[a] - py[a] * GRV) * .82; vz[a] = (vz[a] - pz[a] * GRV) * .82;
+        var sp = Math.sqrt(vx[a] * vx[a] + vy[a] * vy[a] + vz[a] * vz[a]); if (sp > .35) { sp = .35 / sp; vx[a] *= sp; vy[a] *= sp; vz[a] *= sp; }
+        px[a] += vx[a]; py[a] += vy[a]; pz[a] += vz[a];
+      }
+    }
+  }
+  layout(260);
+  /* ---------- matriks ---------- */
+  function persp(f, a, n, fr) { var t = 1 / Math.tan(f / 2); return [t / a, 0, 0, 0, 0, t, 0, 0, 0, 0, (fr + n) / (n - fr), -1, 0, 0, 2 * fr * n / (n - fr), 0]; }
+  function look(e, c, u) {
+    var zx = e[0] - c[0], zy = e[1] - c[1], zz = e[2] - c[2], l = Math.hypot(zx, zy, zz); zx /= l; zy /= l; zz /= l;
+    var xx = u[1] * zz - u[2] * zy, xy = u[2] * zx - u[0] * zz, xz = u[0] * zy - u[1] * zx; l = Math.hypot(xx, xy, xz); xx /= l; xy /= l; xz /= l;
+    var yx = zy * xz - zz * xy, yy = zz * xx - zx * xz, yz = zx * xy - zy * xx;
+    return [xx, yx, zx, 0, xy, yy, zy, 0, xz, yz, zz, 0, -(xx * e[0] + xy * e[1] + xz * e[2]), -(yx * e[0] + yy * e[1] + yz * e[2]), -(zx * e[0] + zy * e[1] + zz * e[2]), 1];
+  }
+  function mul(a, b) { var o = new Array(16), r, c, k, s; for (r = 0; r < 4; r++) for (c = 0; c < 4; c++) { s = 0; for (k = 0; k < 4; k++) s += a[k * 4 + c] * b[r * 4 + k]; o[r * 4 + c] = s; } return o; }
+  /* ---------- WebGL ---------- */
+  function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
+  function prog(vs, fs) { var p = gl.createProgram(); gl.attachShader(p, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(p, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(p); return p; }
+  var FOG = 'float fog(float wv){return clamp(1.6-(wv-uD)/(uR*2.2),.22,1.);}';
+  var pL = prog('attribute vec3 aP;attribute vec4 aC;uniform mat4 uM;uniform float uD,uR;varying vec4 vC;' + FOG + 'void main(){vec4 p=uM*vec4(aP,1.);gl_Position=p;vC=vec4(aC.rgb,aC.a*fog(p.w));}',
+    'precision mediump float;varying vec4 vC;void main(){gl_FragColor=vec4(vC.rgb*vC.a,vC.a);}');
+  var pP = prog('attribute vec3 aP;attribute vec4 aC;attribute float aS;uniform mat4 uM;uniform float uD,uR,uPx;varying vec4 vC;' + FOG + 'void main(){vec4 p=uM*vec4(aP,1.);gl_Position=p;gl_PointSize=aS*uPx/p.w;vC=vec4(aC.rgb,aC.a*fog(p.w));}',
+    'precision mediump float;varying vec4 vC;uniform float uLt;void main(){vec2 q=gl_PointCoord-.5;float d=length(q)*2.;if(d>1.)discard;float core=1.-smoothstep(.0,.36,d),halo=pow(1.-d,2.4)*.6,a=clamp(core+halo,0.,1.)*vC.a;vec3 c=mix(vC.rgb,vec3(1.),core*.5*(1.-uLt));gl_FragColor=vec4(c*a,a);}');
+  var bL = gl.createBuffer(), bN = gl.createBuffer(), NPU = 34, bU = gl.createBuffer();
+  var LV = new Float32Array(NE * 2 * 7), NV = new Float32Array(N * 8), UV = new Float32Array(NPU * 8);
+  var PU = []; for (i = 0; i < NPU; i++) PU.push({ e: Math.floor(Math.random() * NE), t: Math.random(), sp: rnd(.25, .6), d: Math.random() < .5 ? 1 : 0 });
+  var uL = {}, uP = {};
+  ['uM', 'uD', 'uR'].forEach(function (n) { uL[n] = gl.getUniformLocation(pL, n); });
+  ['uM', 'uD', 'uR', 'uPx', 'uLt'].forEach(function (n) { uP[n] = gl.getUniformLocation(pP, n); });
+  var aL = { p: gl.getAttribLocation(pL, 'aP'), c: gl.getAttribLocation(pL, 'aC') }, aP = { p: gl.getAttribLocation(pP, 'aP'), c: gl.getAttribLocation(pP, 'aC'), s: gl.getAttribLocation(pP, 'aS') };
+  var cx = 0, cy = 0, cz = 0, rad = 5, M = null;
+  function size() {
+    w = window.innerWidth; h = window.innerHeight; dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    cv.width = lb.width = Math.floor(w * dpr); cv.height = lb.height = Math.floor(h * dpr); gl.viewport(0, 0, cv.width, cv.height); lx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (RM) draw(0);
+  }
+  window.addEventListener('resize', size);
+  window.addEventListener('mousemove', function (e) { tx = e.clientX / w * 2 - 1; ty = e.clientY / h * 2 - 1; }, { passive: true });
+  function draw(dt) {
+    var lt = document.documentElement.classList.contains('light'), CC = lt ? LTC : DKC, PC = lt ? PUL.l : PUL.d, e, a, b, o;
+    T += dt; frame++; mx += (tx - mx) * .04; my += (ty - my) * .04;
+    layout(frame < 90 ? 2 : 1);
+    for (a = 0; a < N; a++) { var th = T * .9 + a * 1.7; px[a] += Math.sin(th) * .0016; py[a] += Math.cos(th * 1.3) * .0016; pz[a] += Math.sin(th * .7) * .0016; }
+    /* pusat & radius graf (dihaluskan; radius = persentil 92 agar pencilan tidak mengecilkan graf) */
+    var sx = 0, sy = 0, sz = 0, ds = new Float32Array(N); for (a = 0; a < N; a++) { sx += px[a]; sy += py[a]; sz += pz[a]; }
+    sx /= N; sy /= N; sz /= N; for (a = 0; a < N; a++) ds[a] = Math.hypot(px[a] - sx, py[a] - sy, pz[a] - sz); ds.sort();
+    cx += (sx - cx) * .08; cy += (sy - cy) * .08; cz += (sz - cz) * .08; rad += (ds[Math.floor(N * .92)] * 1.1 - rad) * .05;
+    /* skala seluruh layar: graf diregangkan mengikuti rasio layar agar memenuhi seluruh tampilan */
+    var asp = w / h, fov = .9, th = Math.tan(fov / 2), kx = 1, ky = 1, D, yaw = T * .06 + mx * .45, pit = .28 + my * .18;
+    if (asp >= 1) { kx = clamp(asp * .92, 1, 2.6); D = rad * 2.0; } else { ky = clamp(.92 / asp, 1, 2.4); D = rad * .95 / (th * asp); }
+    var eye = [cx + D * Math.cos(pit) * Math.sin(yaw), cy + D * Math.sin(pit), cz + D * Math.cos(pit) * Math.cos(yaw)];
+    M = mul(persp(fov, asp, .1, 300), mul([kx, 0, 0, 0, 0, ky, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], look(eye, [cx, cy, cz], [0, 1, 0])));
+    /* sisi */
+    for (e = 0; e < NE; e++) {
+      a = E[e][0]; b = E[e][1]; var cross = cl[a] !== cl[b], al = (cross ? .4 : .26) * (lt ? 1.15 : 1);
+      o = e * 14; LV[o] = px[a]; LV[o + 1] = py[a]; LV[o + 2] = pz[a]; LV[o + 3] = CC[cl[a]][0]; LV[o + 4] = CC[cl[a]][1]; LV[o + 5] = CC[cl[a]][2]; LV[o + 6] = al;
+      LV[o + 7] = px[b]; LV[o + 8] = py[b]; LV[o + 9] = pz[b]; LV[o + 10] = CC[cl[b]][0]; LV[o + 11] = CC[cl[b]][1]; LV[o + 12] = CC[cl[b]][2]; LV[o + 13] = al;
+    }
+    /* simpul */
+    for (a = 0; a < N; a++) { o = a * 8; NV[o] = px[a]; NV[o + 1] = py[a]; NV[o + 2] = pz[a]; NV[o + 3] = CC[cl[a]][0]; NV[o + 4] = CC[cl[a]][1]; NV[o + 5] = CC[cl[a]][2]; NV[o + 6] = .95; NV[o + 7] = lab[a] ? 2.1 : clamp(.8 + deg[a] * .1, .8, 1.6); }
+    /* denyut data di sepanjang sisi */
+    for (i = 0; i < NPU; i++) {
+      var P = PU[i]; P.t += dt * P.sp; if (P.t > 1) { P.t = 0; P.e = Math.floor(Math.random() * NE); P.d = Math.random() < .5 ? 1 : 0; }
+      a = E[P.e][P.d]; b = E[P.e][1 - P.d]; o = i * 8; var tt = P.t;
+      UV[o] = px[a] + (px[b] - px[a]) * tt; UV[o + 1] = py[a] + (py[b] - py[a]) * tt; UV[o + 2] = pz[a] + (pz[b] - pz[a]) * tt; UV[o + 3] = PC[0]; UV[o + 4] = PC[1]; UV[o + 5] = PC[2]; UV[o + 6] = 1; UV[o + 7] = 1.15;
+    }
+    gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); gl.disable(gl.DEPTH_TEST); gl.enable(gl.BLEND);
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    gl.useProgram(pL); gl.uniformMatrix4fv(uL.uM, false, new Float32Array(M)); gl.uniform1f(uL.uD, D); gl.uniform1f(uL.uR, rad);
+    gl.bindBuffer(gl.ARRAY_BUFFER, bL); gl.bufferData(gl.ARRAY_BUFFER, LV, gl.DYNAMIC_DRAW);
+    gl.enableVertexAttribArray(aL.p); gl.vertexAttribPointer(aL.p, 3, gl.FLOAT, false, 28, 0); gl.enableVertexAttribArray(aL.c); gl.vertexAttribPointer(aL.c, 4, gl.FLOAT, false, 28, 12);
+    gl.drawArrays(gl.LINES, 0, NE * 2);
+    gl.useProgram(pP); gl.uniformMatrix4fv(uP.uM, false, new Float32Array(M)); gl.uniform1f(uP.uD, D); gl.uniform1f(uP.uR, rad); gl.uniform1f(uP.uPx, 11 * D * dpr * clamp(h / 900, .75, 1.3)); gl.uniform1f(uP.uLt, lt ? 1 : 0);
+    if (!lt) gl.blendFunc(gl.ONE, gl.ONE);
+    [[bN, NV, N], [bU, UV, NPU]].forEach(function (B) {
+      gl.bindBuffer(gl.ARRAY_BUFFER, B[0]); gl.bufferData(gl.ARRAY_BUFFER, B[1], gl.DYNAMIC_DRAW);
+      gl.enableVertexAttribArray(aP.p); gl.vertexAttribPointer(aP.p, 3, gl.FLOAT, false, 32, 0); gl.enableVertexAttribArray(aP.c); gl.vertexAttribPointer(aP.c, 4, gl.FLOAT, false, 32, 12); gl.enableVertexAttribArray(aP.s); gl.vertexAttribPointer(aP.s, 1, gl.FLOAT, false, 32, 28);
+      gl.drawArrays(gl.POINTS, 0, B[2]);
+    });
+    /* label hub (kanvas 2D di atas WebGL) */
+    lx.clearRect(0, 0, w, h); lx.font = '600 11px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace'; lx.textBaseline = 'middle';
+    for (a = 0; a < N; a++) {
+      if (!lab[a]) continue;
+      var X = M[0] * px[a] + M[4] * py[a] + M[8] * pz[a] + M[12], Y = M[1] * px[a] + M[5] * py[a] + M[9] * pz[a] + M[13], W = M[3] * px[a] + M[7] * py[a] + M[11] * pz[a] + M[15];
+      if (W < .3) continue;
+      var f = clamp(1.6 - (W - D) / (rad * 2.2), .22, 1), c = CC[cl[a]];
+      lx.fillStyle = 'rgba(' + Math.round(c[0] * 255) + ',' + Math.round(c[1] * 255) + ',' + Math.round(c[2] * 255) + ',' + (.9 * f).toFixed(3) + ')';
+      lx.fillText(lab[a], (X / W * .5 + .5) * w + 9, (1 - (Y / W * .5 + .5)) * h - 9);
+    }
+  }
+  function loop(now) {
+    requestAnimationFrame(loop);
+    var dt = Math.min((now - last) / 1000, .05); last = now;
+    if (document.hidden || window.__BA_3D_OFF) return; draw(dt);
+  }
+  size(); if (!RM) requestAnimationFrame(loop);
+})();
+},{timeout:700});
+</script>
+<script>(function(){
+'use strict';
+var $=function(i){return document.getElementById(i)};
+var safe=function(f){return function(){try{return f.apply(this,arguments)}catch(e){console.warn('[SE2]',e)}}};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+var F=function(n,d){d=d==null?2:d;return (n==null||isNaN(n))?'--':Number(n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
+var UP='#34d399',DN='#fb7185',pd=function(n){return (n<10?'0':'')+n};
+var IDX=[]; /* kartu indeks S&P 500 / NASDAQ / DOW / VIX dihapus */
+var SEC=[['XLK','Teknologi'],['XLF','Keuangan'],['XLE','Energi'],['XLV','Kesehatan'],['XLY','Konsumer Siklikal'],['XLP','Konsumer Primer'],['XLI','Industri'],['XLB','Material'],['XLU','Utilitas'],['XLRE','Properti'],['XLC','Komunikasi']];
+var WL=[['NVDA','NVIDIA',228.87],['AAPL','Apple',250],['MSFT','Microsoft',500],['AMZN','Amazon',230],['GOOGL','Alphabet',250],['META','Meta',700],['TSLA','Tesla',400],['AVGO','Broadcom',350],['AMD','AMD',200],['NFLX','Netflix',1200],['JPM','JPMorgan',300],['V','Visa',340],['WMT','Walmart',100],['XOM','Exxon Mobil',115],['KO','Coca-Cola',70],['DIS','Disney',110],['BAC','Bank of America',50],['PFE','Pfizer',26],['INTC','Intel',30],['UBER','Uber',90],['BRK-B','Berkshire Hathaway',470],['LLY','Eli Lilly',800],['UNH','UnitedHealth',500],['JNJ','Johnson & Johnson',160],['HD','Home Depot',380],['COST','Costco',950],['PG','Procter & Gamble',165],['CVX','Chevron',155],['ORCL','Oracle',200],['CRM','Salesforce',250],['MA','Mastercard',560],['MRK','Merck',90],['ABBV','AbbVie',190],['PEP','PepsiCo',150],['CSCO','Cisco',65],['ADBE','Adobe',350],['QCOM','Qualcomm',160],['MU','Micron',100],['PLTR','Palantir',150],['GS','Goldman Sachs',600],['CAT','Caterpillar',400],['GE','GE Aerospace',250],['TMO','Thermo Fisher',500],['MCD','McDonalds',300],['IBM','IBM',250],['WFC','Wells Fargo',75],['NKE','Nike',70],['T','AT&T',25]];
+var EX=[['SPY','SPDR S&P 500 ETF',680],['QQQ','Invesco QQQ',600]];
+var RG={'6M':126,'1Y':252,'2Y':504};
+var S={},M={sym:'SPY',range:'1Y',labels:[],data:[],pc:null,src:'sim'},tab='g',inited=false,pollN=0,nextPoll=20,mainChart,scoreChart,idxCharts=[];
+/* ---------- RNG & store ---------- */
+function hash(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function mk(sym,name,base){var r=rng(hash(sym+new Date().toDateString())),vol=sym==='^VIX'?.06:.011,chg=(r()-.5)*2*vol,pc=base;
+  var o={sym:sym,n:name,pc:pc,p:pc*(1+chg),v:Math.round((5+r()*70)*1e6),ser:[],src:'sim',vol:vol};
+  var x=o.p;for(var i=0;i<60;i++){o.ser.unshift(x);x*=1+(r()-.5)*vol*.25}o.ser[59]=o.p;S[sym]=o;return o}
+IDX.concat(SEC.map(function(s){return [s[0],s[1],100]}),WL,EX).forEach(function(a){mk(a[0],a[1],a[2])});
+/* ---------- fetch online ---------- */
+var ROUTES=[function(u){return window.__BA_PROXY?'/api/proxy?url='+encodeURIComponent(u):u},function(u){return u},function(u){return u.replace('query1.','query2.')},function(u){return 'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u)},function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u)}],ri=0,deadUntil=0;
+function seqJ(u){return new Promise(function(res,rej){if(Date.now()<deadUntil)return rej(new Error('offline'));var k=0,nf=false;
+  (function next(){if(k>=ROUTES.length){if(!nf)deadUntil=Date.now()+30000;return rej(new Error(nf?'notfound':'offline'))}
+   var idx=(ri+k)%ROUTES.length;k++;var c=new AbortController(),t=setTimeout(function(){c.abort()},4500);
+   fetch(ROUTES[idx](u),{signal:c.signal}).then(function(r){clearTimeout(t);if(r.status===404){nf=true;throw 0}if(!r.ok)throw 0;return r.json()})
+   .then(function(j){if(!j||!j.chart||!j.chart.result||!j.chart.result[0])throw 0;ri=idx;res(j.chart.result[0])}).catch(function(){clearTimeout(t);if(nf)return rej(new Error('notfound'));next()})})()})}
+var routeOk=false,probeP=null;
+function raceJ(u){return new Promise(function(res,rej){if(Date.now()<deadUntil)return rej(new Error('offline'));var n=ROUTES.length,fail=0,done=false,nf=false;
+  ROUTES.forEach(function(R,idx){var c=new AbortController(),t=setTimeout(function(){c.abort()},4500);
+   fetch(R(u),{signal:c.signal}).then(function(r){clearTimeout(t);if(r.status===404){nf=true;throw 0}if(!r.ok)throw 0;return r.json()})
+   .then(function(j){if(!j||!j.chart||!j.chart.result||!j.chart.result[0])throw 0;if(!done){done=true;routeOk=true;ri=idx;res(j.chart.result[0])}})
+   .catch(function(){clearTimeout(t);if(++fail>=n&&!done){if(!nf)deadUntil=Date.now()+30000;rej(new Error(nf?'notfound':'offline'))}})})})}
+function getJ(u){
+  if(routeOk)return seqJ(u).catch(function(e){if(e.message==='offline')routeOk=false;throw e});
+  if(probeP)return probeP.then(function(){return getJ(u)},function(){return seqJ(u)});
+  var p=raceJ(u);probeP=p;p.then(function(){probeP=null},function(){probeP=null});return p}
+var TF={timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hour12:false};
+function fetchChart(sym,rg,iv){return getJ('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?range='+rg+'&interval='+iv).then(function(r){
+  var q=r.indicators&&r.indicators.quote&&r.indicators.quote[0]||{},ts=r.timestamp||[],cl=q.close||[],L=[],D=[];
+  for(var i=0;i<ts.length;i++){if(cl[i]==null)continue;var d=new Date(ts[i]*1000);D.push(cl[i]);L.push(iv.indexOf('m')>0?d.toLocaleTimeString('en-US',TF):d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'2-digit'}))}
+  if(!D.length)throw new Error('empty');var m=r.meta||{};
+  return {labels:L,data:D,pc:m.chartPreviousClose||m.previousClose||D[0],price:m.regularMarketPrice||D[D.length-1],vol:m.regularMarketVolume,t:m.regularMarketTime,name:m.shortName||m.symbol}})}
+function apply(sym,r){var o=S[sym]||(S[sym]={sym:sym,n:r.name||sym,v:0,vol:.01});o.p=r.price;o.pc=r.pc;if(r.vol)o.v=r.vol;o.ser=r.data.slice(-80);o.src='live';if(r.t)o.t=r.t;if(r.name&&(!o.n||o.n===sym))o.n=r.name}
+function poll(list){var q=list.slice();function w(){var s=q.shift();if(!s)return Promise.resolve();return fetchChart(s,'1d','5m').then(function(r){apply(s,r)}).catch(function(){var o=S[s];if(o&&o.src==='live'&&Date.now()<deadUntil)o.src=MVS[s]?'cache':'sim'}).then(w)}
+  return Promise.all([w(),w(),w(),w(),w(),w()]).then(function(){saveMv();$('se2-upd').textContent='Pembaruan terakhir: '+new Date().toLocaleTimeString('id-ID')})}
+/* ---------- simulasi ---------- */
+function stepSim(){Object.keys(S).forEach(function(k){var o=S[k];if(o.src!=='sim')return;o.p*=1+(Math.random()-.5)*o.vol*.12;o.v+=Math.round(Math.random()*4e4);o.ser.push(o.p);if(o.ser.length>80)o.ser.shift()})}
+function genSim(){var o=S[M.sym];if(!o)return;var r=rng(hash(M.sym+'mtpi')),n=504,x=o.p,D=[],L=[],d=new Date(),ph=r()*6;
+  for(var i=0;i<n;i++){D.unshift(x);while(d.getDay()===0||d.getDay()===6)d.setDate(d.getDate()-1);L.unshift(d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'2-digit'}));d.setDate(d.getDate()-1);
+   var dr=.0007*Math.sin(i/38+ph),sh=(r()+r()+r()-1.5)*Math.max(o.vol,.008)*.9;x/=1+dr+sh}
+  M.data=D;M.labels=L;M.pc=o.pc;M.src='sim'}
+/* ---------- sesi pasar ---------- */
+var DF=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour12:false,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',weekday:'short'});
+function ny(){var o={};DF.formatToParts(new Date()).forEach(function(p){o[p.type]=p.value});return {y:+o.year,m:+o.month,d:+o.day,h:(+o.hour)%24,mi:+o.minute,s:+o.second,wd:o.weekday}}
+var HOL={'2026-01-01':"Tahun Baru",'2026-01-19':'Martin Luther King Jr. Day','2026-02-16':"Presidents' Day",'2026-04-03':'Good Friday','2026-05-25':'Memorial Day','2026-06-19':'Juneteenth','2026-07-03':'Hari Kemerdekaan (observed)','2026-09-07':'Labor Day','2026-11-26':'Thanksgiving','2026-12-25':'Natal','2027-01-01':'Tahun Baru','2027-01-18':'Martin Luther King Jr. Day'};
+var EARLY={'2026-11-27':'Setelah Thanksgiving (tutup 13:00 ET)','2026-12-24':'Malam Natal (tutup 13:00 ET)'};
+function key(y,m,d){return y+'-'+pd(m)+'-'+pd(d)}
+function wdOf(y,m,d){return new Date(Date.UTC(y,m-1,d)).getUTCDay()}
+function trading(y,m,d){var w=wdOf(y,m,d);return w!==0&&w!==6&&!HOL[key(y,m,d)]}
+function addDay(y,m,d,k){var t=new Date(Date.UTC(y,m-1,d+k));return [t.getUTCFullYear(),t.getUTCMonth()+1,t.getUTCDate()]}
+function hms(ms){ms=Math.max(0,Math.floor(ms/1000));var d=Math.floor(ms/86400),h=Math.floor(ms%86400/3600),m=Math.floor(ms%3600/60);return (d?d+'h ':'')+pd(h)+':'+pd(m)+':'+pd(ms%60)}
+function session(){var n=ny(),k=key(n.y,n.m,n.d),tr=trading(n.y,n.m,n.d),mn=n.h*60+n.mi,er=!!EARLY[k],cl=er?780:960,now=Date.UTC(n.y,n.m-1,n.d,n.h,n.mi,n.s),ph,open=false,tgt,lbl;
+  if(!tr)ph=(wdOf(n.y,n.m,n.d)%6===0)?'TUTUP · Akhir Pekan':'TUTUP · '+HOL[k];
+  else if(mn>=570&&mn<cl){ph='BUKA · Sesi Reguler'+(er?' (Early Close)':'');open=true}
+  else if(mn>=240&&mn<570)ph='PRE-MARKET';else if(mn>=cl&&mn<(er?1020:1200))ph='AFTER-HOURS';else ph='TUTUP';
+  if(open){tgt=Date.UTC(n.y,n.m-1,n.d,Math.floor(cl/60),cl%60);lbl='Tutup dalam '}
+  else{var y=n.y,m=n.m,d=n.d;if(!(tr&&mn<570)){do{var a=addDay(y,m,d,1);y=a[0];m=a[1];d=a[2]}while(!trading(y,m,d))}tgt=Date.UTC(y,m-1,d,9,30);lbl='Buka dalam '}
+  return {ph:ph,open:open,cd:lbl+hms(tgt-now),ny:pd(n.h)+':'+pd(n.mi)+':'+pd(n.s)}}
+function clock(){var s=session(),e=$('se2-session');e.textContent=s.ph;e.style.color=s.open?UP:(s.ph==='PRE-MARKET'||s.ph==='AFTER-HOURS'?'#fbbf24':'#9ca3af');
+  $('se2-clock').textContent='NY '+s.ny+' · WIB '+new Date().toLocaleTimeString('id-ID',{timeZone:'Asia/Jakarta',hour12:false});
+  $('se2-cd').textContent=s.cd+' · Refresh data dalam '+nextPoll+' dtk'}
+function holidays(){var n=ny(),t=Date.UTC(n.y,n.m-1,n.d),all=[];Object.keys(HOL).forEach(function(k){all.push([k,HOL[k],0])});Object.keys(EARLY).forEach(function(k){all.push([k,EARLY[k],1])});
+  all.sort();var out=all.filter(function(a){var p=a[0].split('-');return Date.UTC(+p[0],p[1]-1,+p[2])>=t}).slice(0,5);
+  $('se2-hol').innerHTML=out.map(function(a){var p=a[0].split('-'),dd=Math.round((Date.UTC(+p[0],p[1]-1,+p[2])-t)/864e5);
+   return '<div class="flex items-center justify-between p-2.5 bg-black/50 border border-card-border rounded-xl"><div><div class="text-white font-semibold">'+esc(a[1])+'</div><div class="text-[10px] text-gray-500">'+new Date(Date.UTC(+p[0],p[1]-1,+p[2])).toLocaleDateString('id-ID',{timeZone:'UTC',weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</div></div><span class="se2-tag '+(a[2]?'se2-sim':'se2-live')+'">'+(dd===0?'HARI INI':dd+' HARI')+(a[2]?' · EARLY':'')+'</span></div>'}).join('')||'<p class="text-gray-500">Tidak ada data.</p>'}
+/* ---------- render ---------- */
+function pct(o){return o.pc?(o.p/o.pc-1)*100:0}
+function col(v){return v>=0?UP:DN}
+function spark(cv,c){return new Chart(cv,{type:'line',data:{labels:[],datasets:[{data:[],borderColor:c,borderWidth:1.6,pointRadius:0,fill:true,backgroundColor:c+'22',tension:.3}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}})}
+function tag(o){return o.src==='live'?'<span class="se2-tag se2-live">LIVE</span>':'<span class="se2-tag se2-sim">OFF</span>'}
+/* ---------- Sector Rotation Monitor (peringkat otomatis + animasi) ---------- */
+var ROWH=34,SECRANK={},CYC=['XLK','XLY','XLF','XLI','XLB','XLE','XLC'],DEF=['XLP','XLU','XLV','XLRE'];
+function buildSec(){var b=$('se2-sec');b.style.height=SEC.length*ROWH+'px';
+  b.innerHTML=SEC.map(function(s){return '<div class="se2-srow" data-sym="'+s[0]+'" data-k="'+s[0]+'" title="Klik untuk membuka MTPI '+s[0]+'"><span class="se2-rk text-[10px] text-gray-500 font-mono w-7 text-right"></span><span class="text-[11px] font-bold text-white font-mono w-11">'+s[0]+'</span><span class="text-[10px] text-gray-400 w-24 truncate hidden sm:block">'+esc(s[1])+'</span><div class="se2-bar"><i class="se2-fill"></i></div><svg class="se2-sp" viewBox="0 0 54 18" width="54" height="18"><polyline fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="se2-pv text-[11px] font-mono font-bold w-14 text-right"></span></div>'}).join('')}
+var SECH={XLK:['NVDA','AAPL','MSFT'],XLF:['BRK-B','JPM','V'],XLE:['XOM','CVX','COP'],XLV:['LLY','UNH','JNJ'],XLY:['AMZN','TSLA','HD'],XLP:['WMT','COST','PG'],XLI:['GE','CAT','RTX'],XLB:['LIN','SHW','FCX'],XLU:['NEE','SO','DUK'],XLRE:['PLD','AMT','EQIX'],XLC:['META','GOOGL','NFLX']},SLH='';
+var XB={'BRK-B':470,CVX:155,COP:105,LLY:800,UNH:500,JNJ:160,HD:380,COST:950,PG:165,GE:250,CAT:400,RTX:150,LIN:450,SHW:350,FCX:45,NEE:75,SO:90,DUK:115,PLD:110,AMT:200,EQIX:850},EXT=[];
+Object.keys(SECH).forEach(function(k){SECH[k].forEach(function(t){if(!S[t]&&EXT.indexOf(t)<0){mk(t,t,XB[t]||100);EXT.push(t)}})});
+function cp(t){var o=S[t];if(!o)return '';var p=pct(o);return ' <span style="color:'+col(p)+'">'+(p>=0?'+':'')+F(p)+'%</span>'}
+function allSyms(){var u={};[M.sym,'SPY','QQQ'].concat(SEC.map(function(s){return s[0]}),WL.map(function(w){return w[0]}),EXT).forEach(function(k){u[k]=1});return Object.keys(u)}
+function rSecList(a){var el=$('se2-seclist');if(!el)return;
+  var h=a.map(function(x,i){var c=col(x.p),cy=CYC.indexOf(x.k)>=0,gc=cy?'#38BDF8':'#c084fc';
+   return '<div class="se2-row p-2 rounded-lg border border-card-border bg-black/40" data-sym="'+x.k+'"><div class="flex items-center justify-between gap-2"><span class="flex items-center gap-1.5 min-w-0"><span class="text-[10px] text-gray-500 font-mono w-4 text-right">'+(i+1)+'</span><b class="text-white font-mono text-[11px]">'+x.k+'</b><span class="text-[10px] text-gray-400 truncate">'+esc(x.n)+'</span></span><span class="flex items-center gap-2 font-mono text-[11px] shrink-0"><span class="text-gray-300">$'+F(x.o.p)+'</span><b style="color:'+c+'">'+(x.p>=0?'+':'')+F(x.p)+'%</b></span></div><div class="flex flex-wrap items-center gap-1 mt-1.5"><span class="se2-tag" style="color:'+gc+';border-color:'+gc+'55">'+(cy?'SIKLIKAL':'DEFENSIF')+'</span>'+(SECH[x.k]||[]).map(function(t){return '<button type="button" data-sym="'+t+'" class="px-1.5 py-0.5 rounded border border-card-border bg-black text-[10px] font-mono text-gray-300 hover:text-white hover:border-brand-accent">'+t+cp(t)+'</button>'}).join('')+'</div></div>'}).join('');
+  if(h!==SLH){var st=el.scrollTop;SLH=h;el.innerHTML=h;el.scrollTop=st}}
+function rSec(){var b=$('se2-sec');if(!b)return;if(!b.firstChild)buildSec();
+  var a=SEC.map(function(s){return {k:s[0],n:s[1],p:pct(S[s[0]]),o:S[s[0]]}}).sort(function(x,y){return y.p-x.p}),mx=Math.max(1,Math.max.apply(null,a.map(function(x){return Math.abs(x.p)})));
+  a.forEach(function(x,i){var el=b.querySelector('[data-k="'+x.k+'"]');if(!el)return;el.style.top=i*ROWH+'px';var c=col(x.p),w=Math.abs(x.p)/mx*50,pr=SECRANK[x.k],mv=pr==null||pr===i?'':(i<pr?'<b style="color:'+UP+'">▲</b>':'<b style="color:'+DN+'">▼</b>');
+   el.querySelector('.se2-rk').innerHTML=mv+(i+1);var f=el.querySelector('.se2-fill');f.style.left=x.p>=0?'50%':(50-w)+'%';f.style.width=w+'%';f.style.background='linear-gradient('+(x.p>=0?'90deg':'270deg')+','+c+'55,'+c+')';
+   var s=x.o.ser.slice(-40),mn=Math.min.apply(null,s),mxv=Math.max.apply(null,s),rg=(mxv-mn)||1;el.querySelector('polyline').setAttribute('points',s.map(function(v,j){return (j/(s.length-1||1)*54).toFixed(1)+','+(16.5-(v-mn)/rg*15).toFixed(1)}).join(' '));el.querySelector('polyline').setAttribute('stroke',c);
+   var pv=el.querySelector('.se2-pv'),t=(x.p>=0?'+':'')+F(x.p)+'%';if(pv.textContent!==t){pv.textContent=t;pv.style.color=c;el.classList.remove('se2-flash');void el.offsetWidth;el.classList.add('se2-flash')}});
+  a.forEach(function(x,i){SECRANK[x.k]=i});
+  rSecList(a);
+  var avg=function(L){var v=a.filter(function(x){return L.indexOf(x.k)>=0});return v.reduce(function(s,x){return s+x.p},0)/(v.length||1)},d=avg(CYC)-avg(DEF),up=a.filter(function(x){return x.p>=0}).length,
+   rg=d>.15?['RISK-ON',UP]:d<-.15?['RISK-OFF',DN]:['NETRAL','#fbbf24'],L=a[0],Z=a[a.length-1],
+   T=function(h,v,c){return '<div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider text-[9px]">'+h+'</div><div class="font-bold text-xs font-mono truncate" style="color:'+c+'">'+v+'</div></div>'};
+  $('se2-rot').innerHTML=T('Pemimpin',L.k+' '+(L.p>=0?'+':'')+F(L.p)+'%',col(L.p))+T('Tertinggal',Z.k+' '+(Z.p>=0?'+':'')+F(Z.p)+'%',col(Z.p))+T('Rotasi',rg[0],rg[1])+T('Breadth',up+' / '+a.length+' naik',up>=6?UP:DN);
+  $('se2-sect').innerHTML=tag(S.XLK)}
+/* ---------- Top Movers • Large Cap: ditarik dari U.S. Stock Directory & Fundamental Matrix (allStockDirectory) ---------- */
+var MVS={};WL.forEach(function(w){MVS[w[0]]=1});
+var MVK='se2-mv-cache-v2';
+function dirAll(){try{return allStockDirectory}catch(e){return []}}
+function mcN(s){if(s._mc>0)return s._mc;var m=String(s.mktCap||'').match(/([\d.,]+)\s*([TBM])/i);if(!m)return 0;return parseFloat(m[1].replace(/,/g,''))*({T:1e12,B:1e9,M:1e6}[m[2].toUpperCase()]||0)}
+function saveMv(){try{var d=[];dirAll().forEach(function(s){if(s._lsrc==='live'&&s._lp>0)d.push([s.symbol,s._lp,s._lc,s._lv||0,s._lt||0])});if(d.length>=5)localStorage.setItem(MVK,JSON.stringify({ts:Date.now(),d:d}))}catch(e){}}
+function loadMv(){try{var c=JSON.parse(localStorage.getItem(MVK)||'null');if(!c||Date.now()-c.ts>5*864e5)return;var m={};dirAll().forEach(function(s){m[s.symbol]=s});c.d.forEach(function(a){var s=m[a[0]];if(s&&s._lp==null){s._lp=a[1];s._lc=a[2];s._lv=a[3];s._lt=a[4];s._lsrc='cache'}})}catch(e){}}
+loadMv();
+function rMov(){var L=[],nl=0,ts=0;
+  dirAll().forEach(function(d){if(mcN(d)<1e10)return;var live=d._lp>0,p=live?d._lp:+d.price,c=live?d._lc:parseFloat(d.change);if(!(p>0)||isNaN(c))return;
+    if(live&&d._lsrc==='live')nl++;if(live&&d._lt>ts)ts=d._lt;L.push({sym:d.symbol,n:d.name,mc:d.mktCap,p:p,c:c,v:live?(d._lv||0):0})});
+  if(L.length<3){$('se2-breadth').innerHTML='';$('se2-breadtxt').innerHTML='<span style="color:#fbbf24">Stock Directory belum termuat.</span>';$('se2-mv').innerHTML='<tr><td colspan="4" class="py-6 text-center text-gray-500">Menunggu data U.S. Stock Directory...</td></tr>';return}
+  var adv=L.filter(function(o){return o.c>=0}).length,dec=L.length-adv,
+      lb=nl===L.length?['LIVE',UP]:nl?['LIVE '+nl+'/'+L.length,'#fbbf24']:['DATA DIREKTORI','#fbbf24'],
+      dt=ts?new Date(ts*1000).toLocaleString('id-ID',{timeZone:'Asia/Jakarta',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:false})+' WIB':'';
+  $('se2-breadth').innerHTML='<div style="width:'+adv/L.length*100+'%;background:'+UP+'"></div><div style="width:'+dec/L.length*100+'%;background:'+DN+'"></div>';
+  $('se2-breadtxt').innerHTML='Naik <b style="color:'+UP+'">'+adv+'</b> · Turun <b style="color:'+DN+'">'+dec+'</b> dari '+L.length+' saham large cap (≥ $10B) · sumber: U.S. Stock Directory · <b style="color:'+lb[1]+'">'+lb[0]+'</b>'+(dt?' · harga per '+dt:'');
+  L.sort(tab==='g'?function(a,b){return b.c-a.c}:tab==='l'?function(a,b){return a.c-b.c}:function(a,b){return b.v-a.v||b.c-a.c});
+  $('se2-mv').innerHTML=L.slice(0,8).map(function(o){var p=o.c;return '<tr class="se2-row border-t border-card-border" data-sym="'+esc(o.sym)+'"><td class="py-2"><span class="stk-sym">'+(window.stkIcon?window.stkIcon(o.sym):'')+'<span><b class="text-white">'+esc(o.sym)+'</b> <span class="text-gray-500 font-sans text-[10px]">'+esc(o.n)+' · '+esc(o.mc)+'</span></span></span></td><td class="text-right text-white">$'+F(o.p)+'</td><td class="text-right font-bold" style="color:'+col(p)+'">'+(p>=0?'+':'')+F(p)+'%<div class="ml-auto h-1 rounded-full mt-1" style="width:'+Math.min(100,Math.abs(p)*25)+'%;background:'+col(p)+'"></div></td><td class="text-right text-gray-400 hidden sm:table-cell">'+(o.v?F(o.v/1e6,1)+'M':'--')+'</td></tr>'}).join('')}
+/* ---------- Confirmed Close MTPI (12 indikator, skor -1..+1) ---------- */
+function ema(a,n){var k=2/(n+1),o=[],p;for(var i=0;i<a.length;i++){p=i?a[i]*k+p*(1-k):a[i];o.push(p)}return o}
+function sma(a,n){var o=[],s=0;for(var i=0;i<a.length;i++){s+=a[i];if(i>=n)s-=a[i-n];o.push(i>=n-1?s/n:null)}return o}
+function rsiA(a,n){var o=[null],g=0,l=0;for(var i=1;i<a.length;i++){var d=a[i]-a[i-1],u=d>0?d:0,w=d<0?-d:0;if(i<=n){g+=u;l+=w;if(i===n){g/=n;l/=n;o.push(l===0?100:100-100/(1+g/l))}else o.push(null)}else{g=(g*(n-1)+u)/n;l=(l*(n-1)+w)/n;o.push(l===0?100:100-100/(1+g/l))}}return o}
+var VN=[['EMA 12/26',0],['SMA 50/200',0],['MACD 12/26/9',0],['Harga > EMA 50',0],['Donchian 55',0],['ROC 63',0],['RSI 14',1],['Stochastic 14',1],['CCI 20',1],['Momentum 10',1],['Awesome Osc',1],['Bollinger %B',1]];
+function mtpi(c,f){var n=c.length-f,x=c.slice(0,n),e12=ema(x,12),e26=ema(x,26),e50=ema(x,50),s50=sma(x,50),s200=sma(x,200),s5=sma(x,5),s34=sma(x,34),s20=sma(x,20),ml=e12.map(function(v,i){return v-e26[i]}),sg=ema(ml,9),rs=rsiA(x,14);
+  var fn=[function(i){return e12[i]>e26[i]},function(i){return s200[i]==null?null:s50[i]>s200[i]},function(i){return ml[i]>sg[i]},function(i){return x[i]>e50[i]},
+   function(i){if(i<55)return null;var h=-1/0,l=1/0;for(var j=i-55;j<i;j++){if(x[j]>h)h=x[j];if(x[j]<l)l=x[j]}return x[i]>(h+l)/2},function(i){return i<63?null:x[i]>x[i-63]},
+   function(i){return rs[i]==null?null:rs[i]>50},function(i){if(i<14)return null;var h=-1/0,l=1/0;for(var j=i-13;j<=i;j++){if(x[j]>h)h=x[j];if(x[j]<l)l=x[j]}return h===l?null:(x[i]-l)/(h-l)>.5},
+   function(i){if(i<19||s20[i]==null)return null;var d=0;for(var j=i-19;j<=i;j++)d+=Math.abs(x[j]-s20[i]);d/=20;return d?(x[i]-s20[i])/(.015*d)>0:null},function(i){return i<10?null:x[i]>x[i-10]},
+   function(i){return s34[i]==null?null:s5[i]>s34[i]},function(i){return s20[i]==null?null:x[i]>s20[i]}];
+  var V=fn.map(function(){return []}),sc=[],st=[],fl=[],ag=0,ac=0,tot=0,s;
+  for(var i=0;i<n;i++){s=0;fn.forEach(function(g,j){var r=g(i),v=r==null?(i?V[j][i-1]:0):(r?1:-1);V[j].push(v);s+=v});sc.push(s/12);
+   var pv=i?st[i-1]:0,cur=sc[i]>0?1:sc[i]<0?-1:pv;st.push(cur);fl.push(i&&cur!==pv&&pv!==0?cur:0);if(i>=200){tot++;if(Math.sign(sc[i])===V[0][i])ag++}}
+  if(f){sc.push(sc[n-1]);st.push(st[n-1]);fl.push(0);V.forEach(function(v){v.push(v[n-1])})}
+  var rg=1;for(var k=c.length-2;k>=0&&st[k]===st[c.length-1];k--)rg++;
+  return {score:sc,state:st,flip:fl,votes:V,e50:e50.concat(f?[e50[n-1]]:[]),regime:rg,agree:tot?Math.round(ag/tot*100):0,forming:f}}
+var LIV=[],PSIG={};
+function ivals(c){var n=c.length,i=n-1,x=c[i],e12=ema(c,12),e26=ema(c,26),e50=ema(c,50),s50=sma(c,50),s200=sma(c,200),s5=sma(c,5),s34=sma(c,34),s20=sma(c,20),ml=e12.map(function(v,k){return v-e26[k]}),sg=ema(ml,9),rs=rsiA(c,14),o=[],
+  P=function(v){return (v>=0?'+':'')+F(v)+'%'},sg1=function(t){return t?1:-1},j,h,l,d,m,sd;
+  o[0]={t:P((e12[i]/e26[i]-1)*100),s:sg1(e12[i]>e26[i])};
+  o[1]=s200[i]==null?null:{t:P((s50[i]/s200[i]-1)*100),s:sg1(s50[i]>s200[i])};
+  o[2]={t:P((ml[i]-sg[i])/x*100),s:sg1(ml[i]>sg[i])};
+  o[3]={t:P((x/e50[i]-1)*100),s:sg1(x>e50[i])};
+  if(i<55)o[4]=null;else{h=-1/0;l=1/0;for(j=i-55;j<i;j++){if(c[j]>h)h=c[j];if(c[j]<l)l=c[j]}m=(h+l)/2;o[4]={t:P((x/m-1)*100),s:sg1(x>m)}}
+  o[5]=i<63?null:{t:P((x/c[i-63]-1)*100),s:sg1(x>c[i-63])};
+  o[6]=rs[i]==null?null:{t:F(rs[i],1),s:sg1(rs[i]>50)};
+  if(i<14)o[7]=null;else{h=-1/0;l=1/0;for(j=i-13;j<=i;j++){if(c[j]>h)h=c[j];if(c[j]<l)l=c[j]}o[7]=h===l?null:{t:F((x-l)/(h-l)*100,1),s:sg1((x-l)/(h-l)>.5)}}
+  if(i<19||s20[i]==null)o[8]=null;else{d=0;for(j=i-19;j<=i;j++)d+=Math.abs(c[j]-s20[i]);d/=20;o[8]=d?{t:F((x-s20[i])/(.015*d),1),s:sg1((x-s20[i])/(.015*d)>0)}:null}
+  o[9]=i<10?null:{t:P((x/c[i-10]-1)*100),s:sg1(x>c[i-10])};
+  o[10]=s34[i]==null?null:{t:P((s5[i]/s34[i]-1)*100),s:sg1(s5[i]>s34[i])};
+  if(s20[i]==null)o[11]=null;else{sd=0;for(j=i-19;j<=i;j++)sd+=Math.pow(c[j]-s20[i],2);sd=Math.sqrt(sd/20);o[11]=sd?{t:F((x-(s20[i]-2*sd))/(4*sd),2),s:sg1(x>s20[i])}:null}
+  return o}
+function indBox(g,R,L){var rows=[],lg=0,sh=0;
+  VN.forEach(function(v,j){if(v[1]!==g)return;var iv=LIV[j];
+   if(!iv){rows.push('<div class="flex items-center justify-between py-1 border-b border-card-border/40 last:border-0"><span class="text-gray-400">'+v[0]+'</span><span class="text-gray-600 font-mono">menunggu data</span></div>');return}
+   var u=iv.s>0,k=M.sym+'|'+j,ch=PSIG[k]!=null&&PSIG[k]!==iv.s,pre=R.votes[j][L]!==iv.s;PSIG[k]=iv.s;if(u)lg++;else sh++;
+   rows.push('<div class="flex items-center justify-between gap-2 py-1 border-b border-card-border/40 last:border-0 rounded'+(ch?' se2-flash':'')+'"><span class="text-gray-400 truncate">'+v[0]+'</span><span class="font-mono text-gray-300 ml-auto">'+iv.t+'</span><b class="w-16 text-right" style="color:'+(u?UP:DN)+'">'+(u?'▲ LONG':'▼ SHORT')+'</b>'+(pre?'<span class="se2-tag" style="color:#fbbf24;border-color:#fbbf2455" title="Sinyal live — belum terkonfirmasi close">LIVE</span>':'')+'</div>')});
+  return '<div class="bg-black/50 border border-card-border rounded-xl p-3 text-[11px]"><div class="flex items-center justify-between mb-1"><span class="text-[10px] text-brand-accent uppercase tracking-wider">'+(g?'Osilator (6)':'Trend-following (6)')+'</span><span class="text-[10px] font-mono"><b style="color:'+UP+'">'+lg+'▲</b> <b style="color:'+DN+'">'+sh+'▼</b></span></div>'+rows.join('')+'</div>'}
+function rMain(){var o=S[M.sym];if(!o||!M.data.length)return;M.data[M.data.length-1]=o.p;
+  var f=(session().open||M.src==='sim')?1:0,R=mtpi(M.data,f),n=M.data.length,N=Math.min(RG[M.range],n),a=n-N,sl=function(z){return z.slice(a)},p=pct(o),c=col(p),L=n-1;
+  $('se2-msym').textContent=M.sym;$('se2-mname').textContent=o.n;$('se2-mtag').outerHTML=tag(o).replace('class="','id="se2-mtag" class="');
+  $('se2-mp').textContent='$'+F(o.p);$('se2-mc').innerHTML='<span style="color:'+c+'">'+(p>=0?'▲ +':'▼ ')+F(o.p-o.pc)+' ('+(p>=0?'+':'')+F(p)+'%)</span>';
+  if(!mainChart){mainChart={radar:1};
    scoreChart=new Chart($('se2-score'),{type:'bar',data:{labels:[],datasets:[{data:[],barPercentage:1,categoryPercentage:1}]},options:{responsive:true,maintainAspectRatio:false,animation:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(x){return 'MTPI '+(x.raw>=0?'+':'')+F(x.raw)}}}},scales:{x:{display:false},y:{min:-1,max:1,position:'right',ticks:{color:'#9ca3af',stepSize:.5,callback:function(v){return F(v,1)}},grid:{color:function(x){return x.tick.value===0?'rgba(255,255,255,.35)':'rgba(255,255,255,.05)'}}}}}})}
   M.R=R;M.a=a;var lb=sl(M.labels),LV=M.range==='LIVE';if(LV&&LT.length)M.lc=LT[LT.length-1][1]>=LT[0][1]?UP:DN;
   var sd=scoreChart.data.datasets[0];scoreChart.data.labels=lb;sd.data=sl(R.score);sd.backgroundColor=sl(R.score).map(function(v){return v>0?'rgba(52,211,153,'+(.35+v*.55).toFixed(2)+')':v<0?'rgba(251,113,133,'+(.35-v*.55).toFixed(2)+')':'#6b7280'});scoreChart.update('none');
@@ -10352,5 +11012,79 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
   },true);
 })();
 </script>
+<style id="ba-app-pro">
+/* ===== BERITA ANGIN · LAPISAN APLIKASI PRO (respons klik cepat, dimuat paling akhir) ===== */
+/* 1) Pindah halaman: cepat (0,18 dtk), bukan 0,55 dtk */
+.page.active{animation:baProIn .18s cubic-bezier(.2,.8,.2,1)!important}
+@keyframes baProIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* 2) Bilah progres tipis saat pindah halaman */
+#ba-pro-bar{position:fixed;left:0;top:0;height:2px;width:100%;z-index:2147483000;pointer-events:none;background:linear-gradient(90deg,#38BDF8,#0EA5E9,#34d399);transform:scaleX(0);transform-origin:0 50%;opacity:0}
+#ba-pro-bar.go{animation:baProBar .42s cubic-bezier(.2,.8,.2,1) both}
+@keyframes baProBar{0%{opacity:1;transform:scaleX(0)}70%{opacity:1;transform:scaleX(1)}100%{opacity:0;transform:scaleX(1)}}
+/* 3) Umpan balik sentuh instan: menekan terasa langsung (pakai properti scale, tidak menimpa transform lain) */
+button,[role=button],.nav-link,.sb-link,.sb-sublink,.ba-row,summary{transition-property:scale,background-color,color,border-color,opacity;transition-duration:.09s,.14s,.14s,.14s,.14s;transition-timing-function:ease-out}
+button:not(:disabled):active,[role=button]:active,.nav-link:active,.sb-link:active,.sb-sublink:active,summary:active{scale:.96}
+.ba-row:active{background:rgba(56,189,248,.12)}
+/* Riak sentuh kecil di titik ketukan */
+.ba-pro-rip{position:fixed;z-index:2147482000;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;pointer-events:none;background:rgba(56,189,248,.32);transform:scale(.2);opacity:1;animation:baProRip .5s ease-out forwards}
+@keyframes baProRip{to{transform:scale(2.4);opacity:0}}
+/* 4) Tanpa hover "lengket" di layar sentuh */
+@media (hover:none){.card-3d:hover{transform:none!important}}
+/* 5) Fokus keyboard yang jelas (desktop) */
+:where(button,a,[role=button],input,select,textarea,summary):focus-visible{outline:2px solid #38BDF8;outline-offset:2px}
+/* 6) Desktop: item sidebar bergeser halus saat disorot */
+@media (min-width:768px) and (hover:hover){
+  header.sticky a.nav-link{transition-property:translate,background-color,color;transition-duration:.12s}
+  header.sticky a.nav-link:hover{translate:2px 0}
+}
+/* 7) HP: penanda tab aktif (garis tipis di atas ikon, tanpa bayangan) */
+@media (max-width:767px){
+  #ba-tabbar .ba-tab.on::before{content:"";position:absolute;top:0;left:50%;width:26px;height:2px;margin-left:-13px;border-radius:0 0 2px 2px;background:rgb(var(--ba-ac,56 189 248))}
+}
+/* 8) Saat dipasang sebagai aplikasi: tanpa tarik-untuk-muat-ulang / pantulan */
+@media (display-mode:standalone){html,body{overscroll-behavior-y:contain!important}}
+/* 9) Global Market: tabel negara & Peta Panas sejajar (tinggi sama, tabel mengisi penuh) */
+@media (min-width:1024px){
+  .liq-netwrap{height:100%}
+  #liq-regions{display:flex;flex-direction:column}
+  #liq-tbl{flex:1 1 auto;height:auto}
+  .liq-heatbox>.liq-ex{flex:1 1 auto;justify-content:space-between}
+}
+@media (prefers-reduced-motion:reduce){.page.active{animation:none!important}#ba-pro-bar,.ba-pro-rip{display:none!important}}
+</style>
+<script id="ba-app-pro-js">
+(function(){
+  if(window.__baPro)return;window.__baPro=1;
+  var d=document,reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var bar=d.createElement('div');bar.id='ba-pro-bar';d.body.appendChild(bar);
+  function run(){if(reduce)return;bar.classList.remove('go');void bar.offsetWidth;bar.classList.add('go')}
+  /* Riak + getar ringan saat mengetuk tombol/menu (respon langsung di pointerdown) */
+  var SEL='button,.nav-link,.ba-tab,.ba-row,[role=button],.sb-link,.sb-sublink';
+  d.addEventListener('pointerdown',function(e){
+    if(e.button>0)return;
+    var t=e.target&&e.target.closest?e.target.closest(SEL):null;
+    if(!t||t.disabled)return;
+    if(!reduce){
+      var r=d.createElement('span');r.className='ba-pro-rip';
+      r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
+      d.body.appendChild(r);setTimeout(function(){if(r.parentNode)r.parentNode.removeChild(r)},520);
+    }
+    if(t.closest('#ba-tabbar')&&navigator.vibrate){try{navigator.vibrate(8)}catch(_){}}
+  },{passive:true,capture:true});
+  /* Pindah halaman: bilah progres + kembali ke atas (tanpa mengubah fungsi halaman) */
+  var lastId=(d.querySelector('.page.active')||{}).id;
+  function onChange(){
+    var a=d.querySelector('.page.active');
+    if(!a||a.id===lastId)return;
+    lastId=a.id;run();
+    try{window.scrollTo(0,0)}catch(_){}
+  }
+  if(window.MutationObserver){
+    var mo=new MutationObserver(function(){requestAnimationFrame(onChange)});
+    Array.prototype.forEach.call(d.querySelectorAll('.page'),function(p){mo.observe(p,{attributes:true,attributeFilter:['class']})});
+  }
+})();
+</script>
+
 </body>
 </html>
