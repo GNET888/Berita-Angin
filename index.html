@@ -8,6 +8,9 @@
 html{background:var(--ba-bg,#000)}
 html.ba-pre body>*:not(#ba-splash){opacity:0!important}
 html.ba-fade body>*:not(#ba-splash){transition:opacity .22s ease-out}
+/* ANTI-KEDIP v2: halaman pertama & menu samping langsung tampil final (tanpa animasi masuk) */
+html .page.active[data-ba-first]{animation:none!important}
+html header.sticky>nav>div>div:nth-child(2)>*{opacity:1!important;transform:none!important;animation:none!important}
 </style>
 <noscript><style>html.ba-pre body>*{opacity:1!important}</style></noscript>
 <script src="data.js"></script>
@@ -150,6 +153,8 @@ html.ba-fade body>*:not(#ba-splash){transition:opacity .22s ease-out}
   <!-- Chart.js Financial untuk Candlestick -->
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
+<script id="ba-chart-boot">/* ANTI-KEDIP v2: grafik langsung tergambar penuh saat boot (tanpa animasi masuk) */
+(function(){window.__baBoot=true;try{if(window.Chart){Chart.register({id:"ba-noanim-boot",beforeInit:function(c){if(window.__baBoot){try{c.options.animation=false}catch(e){}}}})}}catch(e){}})();</script>
 <script id="ba-chart3d">
 /* Semua grafik memakai model 2D (datar). Plugin ekstrusi 3D sudah dihapus; fungsi baChart3D() dipertahankan sebagai stub agar kode lama tidak error. */
 (function(){window.BA_CHART3D=false;window.baChart3D=function(){};try{localStorage.removeItem('ba-chart3d')}catch(e){}})();
@@ -10860,17 +10865,21 @@ button:not(:disabled):active,[role=button]:active,.nav-link:active,.sb-link:acti
 <script id="ba-reveal-js">
 (function(){
   var h=document.documentElement,done=false,t0=Date.now();
+  /* tandai halaman aktif pertama: tidak memutar animasi masuk; penanda dicabut saat halaman itu ditinggalkan */
+  try{var fp=document.querySelector('.page.active');if(fp){fp.setAttribute('data-ba-first','1');
+    if(window.MutationObserver){var mo=new MutationObserver(function(){if(!fp.classList.contains('active')){fp.removeAttribute('data-ba-first');mo.disconnect()}});mo.observe(fp,{attributes:true,attributeFilter:['class']})}}}catch(e){}
   function reveal(){if(done)return;done=true;
     requestAnimationFrame(function(){requestAnimationFrame(function(){
       h.classList.add('ba-fade');h.classList.remove('ba-pre');
-      setTimeout(function(){h.classList.remove('ba-fade')},450);
+      setTimeout(function(){h.classList.remove('ba-fade');window.__baBoot=false},450);
     })});}
   function fontsThenReveal(){
-    var f=(document.fonts&&document.fonts.ready)?Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,600)})]):Promise.resolve();
+    var f=(document.fonts&&document.fonts.ready)?Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,700)})]):Promise.resolve();
     f.then(function(){setTimeout(reveal,120)});}
   function check(){
     var ok=Array.prototype.every.call(document.querySelectorAll('link[rel=stylesheet]'),function(l){return l.media!=='print'});
-    if(ok||Date.now()-t0>1800)fontsThenReveal();else setTimeout(check,40);}
+    var loaded=document.readyState==='complete';
+    if((ok&&loaded)||Date.now()-t0>2200)fontsThenReveal();else setTimeout(check,40);}
   if(document.readyState!=='loading')check();else document.addEventListener('DOMContentLoaded',check);
 })();
 </script>
