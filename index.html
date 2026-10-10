@@ -1780,7 +1780,7 @@ html.light .ba-tab .di{color:#536471}html.light .ba-tab.on .di{color:#0f1419}
 
         <!-- Berita Pasar AS (Online) dipindah ke Beranda -->
   <div class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl space-y-3">
-    <div class="flex items-center justify-between gap-3 border-b border-card-border pb-3"><div><h3 class="text-sm font-bold text-white uppercase tracking-wide">Berita Pasar Online</h3><p class="text-[11px] text-gray-400">Dikelompokkan otomatis menurut kejadian di AS &bull; <span id="se2-nts">--</span></p></div><button id="se2-nrf" type="button" class="text-[10px] px-2.5 py-1 rounded-lg bg-black border border-card-border text-gray-300 hover:text-white">Muat ulang</button></div>
+    <div class="flex items-center justify-between gap-3 border-b border-card-border pb-3"><div><h3 class="text-sm font-bold text-white uppercase tracking-wide">Berita Pasar AS (Online)</h3><p class="text-[11px] text-gray-400">Dikelompokkan otomatis menurut kejadian di AS &bull; <span id="se2-nts">--</span></p></div><button id="se2-nrf" type="button" class="text-[10px] px-2.5 py-1 rounded-lg bg-black border border-card-border text-gray-300 hover:text-white">Muat ulang</button></div>
     <div id="se2-nfilt" class="flex flex-wrap gap-1.5 text-[10px]"></div>
     <div id="se2-news" class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs"><p class="text-gray-500">Memuat berita...</p></div>
     <div id="se2-npg" class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-card-border text-[11px]"></div>
@@ -3077,7 +3077,7 @@ html.light #se3-wrap .se3-p b{color:#0f172a}
   </style>
   <div id="se3-wrap">
     <div class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl space-y-3">
-      <div class="border-b border-card-border pb-3"><h3 class="text-sm font-bold text-white uppercase tracking-wide">Agenda Pasar AS Berikutnya</h3><p class="text-[11px] text-gray-400">FOMC, data tenaga kerja (NFP), dan opsi kedaluwarsa &bull; dihitung otomatis, verifikasi ke jadwal resmi</p></div>
+      <div class="border-b border-card-border pb-3"><h3 class="text-sm font-bold text-white uppercase tracking-wide">Agenda Pasar AS Berikutnya</h3><p class="text-[11px] text-gray-400">FOMC, NFP, CPI, PPI, JOLTS, opsi kedaluwarsa &amp; libur bursa &bull; sebelum &amp; mendatang &bull; sumber: BLS &amp; Federal Reserve (Okt 2026), verifikasi ke jadwal resmi</p></div>
       <div id="se3-ag" class="se3-grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))"></div>
     </div>
   </div>
@@ -8755,16 +8755,75 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 var $=function(i){return document.getElementById(i)};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
 /* ---------- Agenda (dihitung otomatis) ---------- */
-var FOMC=['2026-01-28','2026-03-18','2026-04-29','2026-06-17','2026-07-29','2026-09-16','2026-10-28','2026-12-09'];
+/* Data resmi: jadwal BLS & FOMC 2026 (diverifikasi Okt 2026). Format: [tanggal, tag, keterangan, warna, hasil, perkiraan?] */
+var C={FOMC:'#38bdf8',NFP:'#fbbf24',CPI:'#f87171',PPI:'#fb923c',JOLTS:'#34d399',RETAIL:'#2dd4bf',PCE:'#f472b6',OPEX:'#a78bfa',TW:'#c084fc',ECI:'#60a5fa',LIBUR:'#9ca3af',PEMILU:'#f43f5e'};
+var EV=[
+ ['2026-07-29','FOMC','Keputusan suku bunga The Fed',C.FOMC,'Tahan di 3,50-3,75% (suara 9-3)'],
+ ['2026-08-07','NFP','Data tenaga kerja AS (Juli)',C.NFP,'-10 rb (revisi); pengangguran 4,1%'],
+ ['2026-08-12','CPI','Inflasi konsumen AS (Juli)',C.CPI,'+0,1% m/m, 3,4% y/y; inti +0,2% m/m'],
+ ['2026-08-13','PPI','Inflasi produsen AS (Juli)',C.PPI],
+ ['2026-09-04','NFP','Data tenaga kerja AS (Agustus)',C.NFP,'+133 rb (revisi); pengangguran 4,1%'],
+ ['2026-09-07','LIBUR','Labor Day - bursa AS tutup',C.LIBUR],
+ ['2026-09-10','PPI','Inflasi produsen AS (Agustus)',C.PPI],
+ ['2026-09-11','CPI','Inflasi konsumen AS (Agustus)',C.CPI,'+0,4% m/m, 3,4% y/y; inti +0,3% m/m'],
+ ['2026-09-16','FOMC','Keputusan suku bunga The Fed',C.FOMC,'NAIK 25 bp ke 3,75-4,00% (suara 12-0)'],
+ ['2026-09-18','OPEX','Triple Witching (opsi & futures kedaluwarsa)',C.TW],
+ ['2026-10-02','NFP','Data tenaga kerja AS (September)',C.NFP,'+29 rb (konsensus ~84 rb); pengangguran 4,2%'],
+ ['2026-10-14','CPI','Inflasi konsumen AS (September)',C.CPI],
+ ['2026-10-15','PPI','Inflasi produsen AS (September)',C.PPI],
+ ['2026-10-16','OPEX','Opsi bulanan kedaluwarsa',C.OPEX],
+ ['2026-10-28','FOMC','Keputusan suku bunga The Fed',C.FOMC],
+ ['2026-10-30','ECI','Biaya tenaga kerja ECI (Kuartal III)',C.ECI],
+ ['2026-11-03','PEMILU','Pemilu paruh waktu AS',C.PEMILU],
+ ['2026-11-03','JOLTS','Lowongan kerja JOLTS (September)',C.JOLTS],
+ ['2026-11-06','NFP','Data tenaga kerja AS (Oktober)',C.NFP],
+ ['2026-11-10','CPI','Inflasi konsumen AS (Oktober)',C.CPI],
+ ['2026-11-13','PPI','Inflasi produsen AS (Oktober)',C.PPI],
+ ['2026-11-17','RETAIL','Penjualan ritel AS (Oktober) - perkiraan jadwal',C.RETAIL],
+ ['2026-11-20','OPEX','Opsi bulanan kedaluwarsa',C.OPEX],
+ ['2026-11-25','PCE','Inflasi PCE (Oktober) - perkiraan jadwal',C.PCE],
+ ['2026-11-26','LIBUR','Thanksgiving - bursa AS tutup',C.LIBUR],
+ ['2026-12-01','JOLTS','Lowongan kerja JOLTS (Oktober)',C.JOLTS],
+ ['2026-12-04','NFP','Data tenaga kerja AS (November)',C.NFP],
+ ['2026-12-09','FOMC','Keputusan suku bunga The Fed + proyeksi dot plot',C.FOMC],
+ ['2026-12-10','CPI','Inflasi konsumen AS (November)',C.CPI],
+ ['2026-12-15','PPI','Inflasi produsen AS (November)',C.PPI],
+ ['2026-12-18','OPEX','Triple Witching (opsi & futures kedaluwarsa)',C.TW],
+ ['2026-12-25','LIBUR','Natal - bursa AS tutup',C.LIBUR]
+];
+var EV0=[];
+[['2026-01-09','NFP','Data tenaga kerja AS (Desember 2025)'],['2026-02-11','NFP','Data tenaga kerja AS (Januari)'],['2026-03-06','NFP','Data tenaga kerja AS (Februari)'],['2026-04-03','NFP','Data tenaga kerja AS (Maret)'],['2026-05-08','NFP','Data tenaga kerja AS (April)'],['2026-06-05','NFP','Data tenaga kerja AS (Mei)'],['2026-07-02','NFP','Data tenaga kerja AS (Juni)'],
+ ['2026-01-13','CPI','Inflasi konsumen AS (Desember 2025)'],['2026-02-13','CPI','Inflasi konsumen AS (Januari)'],['2026-03-11','CPI','Inflasi konsumen AS (Februari)'],['2026-04-10','CPI','Inflasi konsumen AS (Maret)'],['2026-05-12','CPI','Inflasi konsumen AS (April)'],['2026-06-10','CPI','Inflasi konsumen AS (Mei)'],['2026-07-14','CPI','Inflasi konsumen AS (Juni)'],
+ ['2026-01-14','PPI','Inflasi produsen AS (November 2025)'],['2026-01-30','PPI','Inflasi produsen AS (Desember 2025)'],['2026-02-27','PPI','Inflasi produsen AS (Januari)'],['2026-03-18','PPI','Inflasi produsen AS (Februari)'],['2026-04-14','PPI','Inflasi produsen AS (Maret)'],['2026-05-13','PPI','Inflasi produsen AS (April)'],['2026-06-11','PPI','Inflasi produsen AS (Mei)'],['2026-07-15','PPI','Inflasi produsen AS (Juni)'],
+ ['2026-01-28','FOMC','Keputusan suku bunga The Fed'],['2026-03-18','FOMC','Keputusan suku bunga The Fed'],['2026-04-29','FOMC','Keputusan suku bunga The Fed'],['2026-06-17','FOMC','Keputusan suku bunga The Fed']
+].forEach(function(e){EV0.push([e[0],e[1],e[2],C[e[1]],e[1]==='FOMC'?'Tahan di 3,50-3,75%':''])});
+EV=EV0.concat(EV);
 function nthFri(y,m,n){var d=new Date(Date.UTC(y,m,1)),off=(5-d.getUTCDay()+7)%7;return new Date(Date.UTC(y,m,1+off+7*(n-1)))}
+function pd(s){var p=s.split('-');return new Date(Date.UTC(+p[0],+p[1]-1,+p[2]))}
+var PG={up:0,past:0,tab:'up'},PS=10;
 function agenda(){var el=$('se3-ag');if(!el)return;var ny=new Date(new Date().toLocaleString('en-US',{timeZone:'America/New_York'})),td=Date.UTC(ny.getFullYear(),ny.getMonth(),ny.getDate()),ev=[];
- for(var k=0;k<4;k++){var y=ny.getFullYear(),m=ny.getMonth()+k;if(m>11){y++;m-=12}
-  ev.push([nthFri(y,m,1),'NFP','Data Tenaga Kerja AS (perkiraan)','#fbbf24']);
-  var q=(m%3===2);ev.push([nthFri(y,m,3),'OPEX',q?'Triple Witching (opsi & futures kedaluwarsa)':'Opsi bulanan kedaluwarsa',q?'#c084fc':'#a78bfa'])}
- FOMC.forEach(function(s){var p=s.split('-');ev.push([new Date(Date.UTC(+p[0],+p[1]-1,+p[2])),'FOMC','Keputusan suku bunga The Fed','#38bdf8'])});
- ev=ev.filter(function(e){return e[0].getTime()>=td}).sort(function(a,b){return a[0]-b[0]}).slice(0,8);
- el.innerHTML=ev.length?ev.map(function(e){var d=Math.round((e[0].getTime()-td)/864e5);
-  return '<div class="se3-ev"><div><span class="se3-tag" style="color:'+e[3]+';border-color:'+e[3]+'66">'+e[1]+'</span><small style="margin-top:4px">'+esc(e[2])+'</small><small>'+e[0].toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',timeZone:'UTC'})+'</small></div><b style="font-family:ui-monospace,monospace;color:#e5e7eb;white-space:nowrap">'+(d===0?'HARI INI':d+' hari')+'</b></div>'}).join(''):'<p class="se3-note">Tidak ada agenda terdekat.</p>'}
+ EV.forEach(function(e){ev.push({d:pd(e[0]),t:e[1],l:e[2],c:e[3],r:e[4]||''})});
+ /* Setelah Des 2026: perkiraan otomatis NFP & OPEX sampai data resmi ditambahkan */
+ for(var k=0;k<30;k++){var y=2027,m=k;if(m>11){y++;m-=12}
+  ev.push({d:nthFri(y,m,1),t:'NFP',l:'Data tenaga kerja AS (perkiraan)',c:C.NFP,r:''});
+  var q=(m%3===2);ev.push({d:nthFri(y,m,3),t:'OPEX',l:q?'Triple Witching (perkiraan)':'Opsi bulanan kedaluwarsa (perkiraan)',c:q?C.TW:C.OPEX,r:''})}
+ ev.sort(function(a,b){return a.d-b.d});
+ var cols=1;try{cols=Math.max(1,getComputedStyle(el).gridTemplateColumns.split(' ').filter(Boolean).length)}catch(x){}PS=cols*2;
+ var fit=function(a){return a.slice(0,Math.floor(a.length/PS)*PS)};
+ var L={up:fit(ev.filter(function(e){return e.d.getTime()>=td}).slice(0,60)),past:fit(ev.filter(function(e){return e.d.getTime()<td}).reverse().slice(0,60))};
+ function card(e,isPast){var d=Math.round((e.d.getTime()-td)/864e5),cnt=isPast?(-d)+' hari lalu':(d===0?'HARI INI':d+' hari');
+  return '<div class="se3-ev"'+(isPast?' style="opacity:.85"':'')+'><div><span class="se3-tag" style="color:'+e.c+';border-color:'+e.c+'66">'+e.t+'</span><small style="margin-top:4px">'+esc(e.l)+'</small><small>'+e.d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'UTC'})+'</small>'+(e.r?'<small style="color:#e5e7eb;margin-top:2px"><b>Hasil:</b> '+esc(e.r)+'</small>':(isPast?'<small style="color:#6b7280">Sudah dirilis</small>':''))+'</div><b style="font-family:ui-monospace,monospace;color:'+(isPast?'#9ca3af':'#e5e7eb')+';white-space:nowrap">'+cnt+'</b></div>'}
+ var tab=PG.tab,list=L[tab],pages=Math.max(1,Math.ceil(list.length/PS));if(PG[tab]>=pages)PG[tab]=pages-1;if(PG[tab]<0)PG[tab]=0;
+ var cur=PG[tab],items=list.slice(cur*PS,cur*PS+PS);
+ var bs='border:1px solid #374151;border-radius:8px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:#e5e7eb';
+ var tb=function(k,t){var on=tab===k;return '<button type="button" data-ag-tab="'+k+'" style="'+bs+(on?';background:#38bdf822;border-color:#38bdf8;color:#38bdf8':'')+'">'+t+' ('+L[k].length+')</button>'};
+ var nb=function(dir,t,dis){return '<button type="button" data-ag-pg="'+dir+'" '+(dis?'disabled ':'')+'style="'+bs+(dis?';opacity:.35;cursor:default':'')+'">'+t+'</button>'};
+ el.innerHTML='<div style="grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap">'+tb('up','Akan datang')+tb('past','Sebelumnya')+'</div>'
+  +(items.length?items.map(function(e){return card(e,tab==='past')}).join(''):'<p class="se3-note">Tidak ada data.</p>')
+  +'<div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:12px;margin-top:4px">'+nb('-1','&larr; Sebelumnya',cur===0)+'<span style="font-size:12px;color:#9ca3af;font-family:ui-monospace,monospace">Halaman '+(cur+1)+' / '+pages+'</span>'+nb('1','Berikutnya &rarr;',cur>=pages-1)+'</div>'}
+document.addEventListener('click',function(ev){var t=ev.target.closest&&ev.target.closest('[data-ag-tab],[data-ag-pg]');if(!t||!$('se3-ag')||!$('se3-ag').contains(t))return;
+ if(t.hasAttribute('data-ag-tab')){PG.tab=t.getAttribute('data-ag-tab')}else if(!t.disabled){PG[PG.tab]+=+t.getAttribute('data-ag-pg')}agenda()});
+var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(agenda,150)});
 function init(){agenda();setInterval(agenda,60000)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
