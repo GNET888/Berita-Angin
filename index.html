@@ -11122,7 +11122,7 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
 /* RESPONS CEPAT: tanpa jeda ketuk, umpan balik tekan instan, transisi halaman & menu singkat */
 html a,html button,html [role=button],html [role=tab],html label,html summary,html select,html input[type=checkbox],html input[type=radio],html input[type=range]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 @media (prefers-reduced-motion:no-preference){
-  html:not(.ba-calm) body .page.active,html:not(.ba-calm) body .page.ba-enter{animation:baFast .14s ease-out both!important}
+  html:not(.ba-calm) body .page.active:not([data-ba-first]),html:not(.ba-calm) body .page.ba-enter:not([data-ba-first]){animation:baFast .14s ease-out both!important}
   @keyframes baFast{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   html #mobile-sidebar.duration-300,html #sidebar-content.duration-300{transition-duration:.18s!important}
   html .nav-link:active,html .sb-link:active,html .ba-tab:active,html .ba-row:active,html .liq-btn:active,html .ms-btn:active,html .tk-tab:active,html .hp-btn:active,html .ms-ck:active,html .gm-chip:active,html .cr-sublink:active,html .cr-sidelink:active{transform:scale(.97)}
@@ -11150,6 +11150,20 @@ html a,html button,html [role=button],html [role=tab],html label,html summary,ht
     if(W.Chart&&W.Chart.defaults){try{W.Chart.defaults.animation=false}catch(x){}clearInterval(iv)}
     else if(++n>80)clearInterval(iv);
   },250);
+  /* 3. Anti-kedip saat tampil: halaman yang aktif selama proses muat (termasuk halaman terakhir yang dipulihkan)
+        ditandai agar animasi masuknya tidak diputar ulang begitu website muncul. Tanda dicabut saat pindah halaman. */
+  var h=D.documentElement,boot=function(){return h.classList.contains('ba-pre')||h.classList.contains('ba-fade')};
+  function mark(){
+    var a=D.querySelector('.page.active');
+    Array.prototype.forEach.call(D.querySelectorAll('.page[data-ba-first]'),function(p){if(p!==a)p.removeAttribute('data-ba-first')});
+    if(a&&boot())a.setAttribute('data-ba-first','1');
+  }
+  mark();
+  if(W.MutationObserver){
+    var mo=new MutationObserver(mark);
+    Array.prototype.forEach.call(D.querySelectorAll('.page'),function(p){mo.observe(p,{attributes:true,attributeFilter:['class']})});
+    mo.observe(h,{attributes:true,attributeFilter:['class']});
+  }
 })();
 </script>
 </body>
