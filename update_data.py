@@ -117,18 +117,51 @@ def stock_symbols():
     return ["NVDA", "AAPL", "MSFT", "AMZN", "GOOGL", "META", "TSLA", "AMD", "NFLX", "INTC"]
 
 # ---------------------------------------------------------------- bagian-bagian
+# 38 aset di halaman Crypto Market: simbol di Web3.html -> id CoinGecko (dipanggil per-id agar
+# tidak tertukar token tiruan dan tidak hilang bila di luar top 250)
+CG_IDS = {
+    "btc": "bitcoin", "eth": "ethereum", "sol": "solana", "bnb": "binancecoin", "xrp": "ripple",
+    "ada": "cardano", "doge": "dogecoin", "avax": "avalanche-2", "dot": "polkadot", "link": "chainlink",
+    "pol": "polygon-ecosystem-token", "shib": "shiba-inu", "ltc": "litecoin", "uni": "uniswap",
+    "near": "near", "atom": "cosmos", "xlm": "stellar", "xmr": "monero", "etc": "ethereum-classic",
+    "fil": "filecoin", "icp": "internet-computer", "hbar": "hedera-hashgraph", "render": "render-token",
+    "imx": "immutable-x", "inj": "injective-protocol", "mkr": "maker", "aave": "aave", "arb": "arbitrum",
+    "trx": "tron", "ton": "the-open-network", "bch": "bitcoin-cash", "apt": "aptos", "sui": "sui",
+    "vet": "vechain", "grt": "the-graph", "algo": "algorand", "stx": "blockstack", "op": "optimism",
+    "usdt": "tether", "usdc": "usd-coin",
+}
+CG = "https://api.coingecko.com/api/v3/"
+
+def _cg_row(r):
+    return {"p": r["current_price"],
+            "c": round(r.get("price_change_percentage_24h") or 0, 2),
+            "v": r.get("total_volume") or 0,
+            "m": r.get("market_cap") or 0,
+            "r": r.get("market_cap_rank")}
+
 def sec_crypto():
-    url = ("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc"
-           "&per_page=250&page=1&sparkline=false&price_change_percentage=24h")
-    rows = http(url)
+    base = (CG + "coins/markets?vs_currency=usd&order=market_cap_desc"
+            "&per_page=250&page=1&sparkline=false&price_change_percentage=24h")
+    rows = http(base)
     crypto = {}
     for r in rows:  # urutan market cap menurun: simbol pertama menang (hindari token tiruan)
         k = (r.get("symbol") or "").lower()
         if not k or k in crypto or r.get("current_price") is None:
             continue
-        crypto[k] = {"p": r["current_price"],
-                     "c": round(r.get("price_change_percentage_24h") or 0, 2),
-                     "v": r.get("total_volume") or 0}
+        crypto[k] = _cg_row(r)
+    # 38 aset utama: ambil per-id (selalu benar, walau di luar top 250), menimpa hasil di atas
+    try:
+        time.sleep(1.5)
+        ids = ",".join(CG_IDS.values())
+        by_id = {r["id"]: r for r in http(base.replace("per_page=250", "per_page=250") + "&ids=" + ids)}
+        for sym, cid in CG_IDS.items():
+            r = by_id.get(cid)
+            if r and r.get("current_price") is not None:
+                crypto[sym] = _cg_row(r)
+            elif sym not in crypto:
+                log("  - kripto tidak ditemukan:", sym, cid)
+    except Exception as e:  # noqa
+        log("  - kripto per-id gagal (pakai top 250):", e)
     # alias nama lama -> token pengganti (selalu timpa: "matic"/"rndr" lama bisa tersisa di CoinGecko)
     if "pol" in crypto:
         crypto["matic"] = crypto["pol"]
@@ -136,7 +169,7 @@ def sec_crypto():
         crypto["rndr"] = crypto["render"]
     if "btc" not in crypto:
         raise ValueError("BTC tidak ada di respons CoinGecko")
-    caps = {(r.get("symbol") or "").lower(): r.get("market_cap") or 0 for r in rows}
+    caps = {k: v.get("m") or 0 for k, v in crypto.items()}
     return crypto, caps
 
 def sec_crypto_global(caps):
