@@ -13,7 +13,7 @@ html .page.active[data-ba-first]{animation:none!important}
 html header.sticky>nav>div>div:nth-child(2)>*{opacity:1!important;transform:none!important;animation:none!important}
 </style>
 <noscript><style>html.ba-pre body>*{opacity:1!important}</style></noscript>
-<script src="data.js"></script>
+<script>document.write('<script src="data.js?d='+new Date().toISOString().slice(0,13)+'"><\/script>')</script>
 <script>/* PEMUAT DATA HARIAN: membaca data.js (dibuat update_data.py) dan menimpa nilai dasar. Gagal/tidak ada = pakai nilai tertanam. */
 (function(){
   var D=window.__DAILY||null;
