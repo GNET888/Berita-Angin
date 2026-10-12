@@ -4,6 +4,14 @@ on:
   schedule:
     - cron: "15 */6 * * *"      # tiap 6 jam (UTC); minimal sekali sehari
   workflow_dispatch: {}          # tombol "Run workflow" manual
+  push:                          # jalan langsung saat skrip/workflow diganti (data.js terisi tanpa menunggu jadwal)
+    paths:
+      - "update_data.py"
+      - ".github/workflows/update-data.yml"
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
 
 permissions:
   contents: write
