@@ -1,12 +1,31 @@
 <!DOCTYPE html>
 <html lang="id" class="dark">
 <head>
-<script>/* ANTI-KEDIP: tahan tampilan (opacity 0) sampai CSS, font & ikon siap, lalu munculkan sekali dengan halus. Pengaman 4 dtk. */
-(function(){var h=document.documentElement;h.classList.add('ba-pre');var u=function(){h.classList.remove('ba-pre')};setTimeout(u,2500);window.addEventListener('load',function(){setTimeout(u,300)});window.addEventListener('error',function(){setTimeout(u,1500)})})();</script>
+<!-- MOBILE EMERGENCY RECOVERY v3: force content visible and reduce heavy effects on phones -->
+<style id="ba-mobile-emergency-v3">
+html.ba-pre body>*:not(#ba-splash),html.ba-fade body>*:not(#ba-splash){opacity:1!important;visibility:visible!important}
+@media(max-width:767px){
+ html,body{width:100%!important;max-width:100%!important;min-height:100%!important;overflow-x:hidden!important;background:#05070d!important}
+ body{display:block!important;position:relative!important;height:auto!important;overflow-y:auto!important;padding-bottom:82px!important}
+ #ba-splash{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+ #bg3d,#bg3d-lbl{display:none!important;visibility:hidden!important}
+ body>main{display:block!important;float:none!important;width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;transform:none!important}
+ body>main .page.active{display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;animation:none!important}
+ body>main .page.active *{animation-duration:0s!important;scroll-behavior:auto!important}
+ img,video,canvas,svg{max-width:100%;height:auto}
+ .overflow-hidden{max-width:100%}
+ [class*=grid-cols-]{grid-template-columns:repeat(1,minmax(0,1fr))!important}
+ table{max-width:100%;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+ #ba-tabbar{position:fixed!important;left:0!important;right:0!important;bottom:0!important;z-index:99990!important;max-width:100vw!important}
+ }
+</style>
+<script id="ba-mobile-emergency-js-v3">
+(function(){try{var h=document.documentElement,m=window.matchMedia&&matchMedia('(max-width:767px)').matches;if(!m)return;h.classList.remove('ba-pre','ba-fade');window.__BA_MOBILE_LIGHT=true;window.__BA_3D_OFF=true;function recover(){h.classList.remove('ba-pre','ba-fade');var sp=document.getElementById('ba-splash');if(sp){sp.classList.add('out');sp.style.setProperty('display','none','important')}var main=document.querySelector('body>main');if(main){main.style.setProperty('display','block','important');main.style.setProperty('opacity','1','important');var pages=main.querySelectorAll('.page');var active=main.querySelector('.page.active');if(!active&&pages.length){pages[0].classList.add('active');active=pages[0]}if(active){active.style.setProperty('display','block','important');active.style.setProperty('visibility','visible','important');active.style.setProperty('opacity','1','important')}}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',recover,{once:true});else recover();window.addEventListener('pageshow',recover);setTimeout(recover,100);setTimeout(recover,1000);setTimeout(recover,2500)}catch(e){}})();
+</script>
+
 <style id="ba-boot-css">
 @font-face{font-family:'Inter Fallback';src:local('Arial'),local('Helvetica Neue'),local('Roboto');size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}
 html{background:var(--ba-bg,#000)}
-html.ba-pre body>*:not(#ba-splash){opacity:0!important}
 html.ba-fade body>*:not(#ba-splash){transition:opacity .22s ease-out}
 /* ANTI-KEDIP v2: halaman pertama & menu samping langsung tampil final (tanpa animasi masuk) */
 html .page.active[data-ba-first]{animation:none!important}
@@ -1744,67 +1763,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 @media (prefers-reduced-motion:reduce){.bn-live,.bn-rf.spin svg,.bn-sk i{animation:none}.bn-bar i{transition:none}}
 </style>
 <script>window.__BA_3D_GAP=(window.matchMedia&&matchMedia('(pointer:coarse)').matches)||window.innerWidth<1024?28:0;</script>
-
-<!-- MOBILE RECOVERY PATCH: tampilkan konten walau font/CDN/animasi gagal di ponsel -->
-<style id="ba-mobile-recovery">
-  html,body{width:100%;min-height:100%;max-width:100%;margin:0}
-  body{overflow-x:hidden}
-  *,*::before,*::after{box-sizing:border-box}
-  img,video,canvas,svg{max-width:100%}
-  main,header,footer,section,article,.page,.container{min-width:0;max-width:100%}
-  .page.active{display:block!important}
-  @media(max-width:767px){
-    /* Jangan biarkan efek boot atau splash menutupi situs di browser HP */
-    html.ba-pre body>*:not(#ba-splash),
-    html.ba-fade body>*:not(#ba-splash){opacity:1!important}
-    #ba-splash{display:none!important;visibility:hidden!important;pointer-events:none!important}
-    #bg3d{display:none!important}
-    body{overflow-x:hidden!important;-webkit-text-size-adjust:100%;padding-bottom:env(safe-area-inset-bottom,0px)}
-    main{width:100%!important;max-width:100%!important;padding-left:12px!important;padding-right:12px!important}
-    .container{width:100%!important;max-width:100%!important}
-    .page{width:100%;overflow-wrap:anywhere}
-    .page.active{animation:none!important;transform:none!important}
-    canvas{max-width:100%;touch-action:pan-y}
-    table{max-width:100%}
-    .overflow-x-auto{max-width:100%;-webkit-overflow-scrolling:touch}
-    #ba-topbar{max-width:100vw;overflow:hidden}
-  }
-  @media(max-width:380px){
-    main{padding-left:8px!important;padding-right:8px!important}
-    #ba-topbar .ba-left{gap:4px!important}
-    #ba-topbar .ba-top-right{gap:3px!important}
-  }
-  @media(prefers-reduced-motion:reduce){
-    *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-  }
-</style>
-<script id="ba-mobile-recovery-js">
-(function(){
-  try {
-    var mobile = window.matchMedia && window.matchMedia('(max-width: 767px)').matches;
-    if (!mobile) return;
-    var root = document.documentElement;
-    root.classList.remove('ba-pre','ba-fade');
-    window.__BA_3D_OFF = true;
-    var reveal = function(){
-      root.classList.remove('ba-pre','ba-fade');
-      var splash = document.getElementById('ba-splash');
-      if (splash) splash.style.display = 'none';
-      var pages = document.querySelectorAll('.page');
-      if (pages.length && !document.querySelector('.page.active')) pages[0].classList.add('active');
-    };
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', reveal, {once:true});
-    else reveal();
-    window.addEventListener('pageshow', reveal);
-    setTimeout(reveal, 900);
-  } catch(e) {}
-})();
-</script>
-
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
-<div id="ba-splash" aria-hidden="true"><div class="ba-ring"><img class="lg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
-<script>(function(){var s=document.getElementById('ba-splash');try{var im=s.querySelector('.lg');if(im)im.src=window.__BA_ICON192}catch(e){}try{if(sessionStorage.getItem('ba-splash')){s.remove();return}sessionStorage.setItem('ba-splash','1')}catch(e){}var t0=Date.now();function hide(){if(!s)return;s.classList.add('out');setTimeout(function(){if(s){s.remove();s=null}},300)}function go(){requestAnimationFrame(function(){setTimeout(hide,Math.max(0,((window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)?150:700)-(Date.now()-t0)))})}if(document.readyState==='complete')go();else window.addEventListener('load',go);setTimeout(hide,2200)})();</script>
 <canvas id="bg3d" aria-hidden="true"></canvas>
     <!-- ⚡ LIVE STREAMING TICKS TICKER BAR -->
     <div id="ba-ticker-bar" class="bg-card-dark border-b border-card-border py-2 text-xs overflow-hidden z-40 relative">
@@ -12288,5 +12248,60 @@ html #ba-topbar #ba-collapse:active,html #ba-topbar .ba-tt:active,html #ba-topba
   html[data-ba-page="home"] body>main{padding-left:12px!important;padding-right:12px!important}
 }
 </style>
+
+<!-- FINAL MOBILE STABILITY PATCH: prioritaskan konten, bukan efek dekoratif -->
+<style id="ba-final-mobile-stability">
+  html,body{width:100%;max-width:100%;min-height:100%;margin:0;overflow-x:hidden!important}
+  body{min-height:100vh;min-height:100dvh}
+  #ba-splash{display:none!important}
+  @media(max-width:767px){
+    html,body{height:auto!important;overflow-y:auto!important;position:static!important;touch-action:pan-y}
+    body{display:block!important;padding-bottom:calc(82px + env(safe-area-inset-bottom,0px))!important;font-size:15px;-webkit-text-size-adjust:100%}
+    body>main{display:block!important;width:100%!important;max-width:100%!important;margin:0!important;padding:12px 10px 100px!important;overflow:visible!important}
+    main .page{display:none}
+    main .page.active{display:block!important;visibility:visible!important;opacity:1!important;transform:none!important;animation:none!important;width:100%!important;max-width:100%!important;overflow:visible!important}
+    main .page.active *{max-width:100%}
+    #bg3d,#bg3d-lbl{display:none!important;visibility:hidden!important}
+    #ba-tabbar{position:fixed!important;bottom:calc(8px + env(safe-area-inset-bottom,0px))!important;z-index:999!important}
+    #ba-topbar{position:sticky!important;top:0!important;z-index:100!important;max-width:100vw!important}
+    img,video,canvas,svg{height:auto;max-width:100%}
+    table{display:block;max-width:100%;overflow-x:auto}
+    input,select,textarea,button{font-size:16px;max-width:100%}
+    .grid{min-width:0}
+    .overflow-x-auto,.ba-scroll{max-width:100%;overflow-x:auto!important;-webkit-overflow-scrolling:touch}
+    .xp,.xp-feed,.xp-side{min-width:0!important;width:100%!important;max-width:100%!important}
+    .xp{display:block!important}
+    .xp-side{margin-top:14px}
+    .page.active [style*="min-width"]{min-width:0!important}
+  }
+  @media(max-width:380px){body>main{padding-left:7px!important;padding-right:7px!important}.page.active{font-size:14px}}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+<script id="ba-final-mobile-stability-js">
+(function(){
+  function recover(){
+    try{
+      var root=document.documentElement;
+      root.classList.remove('ba-pre','ba-fade');
+      var splash=document.getElementById('ba-splash'); if(splash)splash.remove();
+      var main=document.querySelector('body>main');
+      if(main){
+        var pages=main.querySelectorAll('.page');
+        if(pages.length&&!main.querySelector('.page.active')){
+          var home=main.querySelector('#page-home')||pages[0];home.classList.add('active');
+        }
+      }
+      if(window.matchMedia&&window.matchMedia('(max-width:767px)').matches){
+        window.__BA_3D_OFF=true;
+        var bg=document.getElementById('bg3d');if(bg)bg.style.display='none';
+      }
+    }catch(e){/* jangan biarkan pemulihan menghentikan render */}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',recover,{once:true});else recover();
+  window.addEventListener('pageshow',recover);
+  setTimeout(recover,100);setTimeout(recover,1200);
+})();
+</script>
+
 </body>
 </html>
