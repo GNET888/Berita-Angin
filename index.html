@@ -2,7 +2,7 @@
 <html lang="id" class="dark">
 <head>
 <script>/* ANTI-KEDIP: tahan tampilan (opacity 0) sampai CSS, font & ikon siap, lalu munculkan sekali dengan halus. Pengaman 4 dtk. */
-(function(){var h=document.documentElement;h.classList.add('ba-pre');setTimeout(function(){h.classList.remove('ba-pre')},4000)})();</script>
+(function(){var h=document.documentElement;h.classList.add('ba-pre');var u=function(){h.classList.remove('ba-pre')};setTimeout(u,2500);window.addEventListener('load',function(){setTimeout(u,300)});window.addEventListener('error',function(){setTimeout(u,1500)})})();</script>
 <style id="ba-boot-css">
 @font-face{font-family:'Inter Fallback';src:local('Arial'),local('Helvetica Neue'),local('Roboto');size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}
 html{background:var(--ba-bg,#000)}
@@ -13,6 +13,14 @@ html .page.active[data-ba-first]{animation:none!important}
 html header.sticky>nav>div>div:nth-child(2)>*{opacity:1!important;transform:none!important;animation:none!important}
 </style>
 <noscript><style>html.ba-pre body>*{opacity:1!important}</style></noscript>
+<script id="ba-reset">
+/* PEMULIHAN: buka alamat situs dengan ?reset=1 untuk menghapus service worker & cache lama (jika tampilan HP tersangkut versi rusak). */
+(function(){try{if(!/[?&]reset=1/.test(location.search))return;
+var p=[];if(navigator.serviceWorker)p.push(navigator.serviceWorker.getRegistrations().then(function(r){return Promise.all(r.map(function(x){return x.unregister()}))}));
+if(window.caches)p.push(caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x)}))}));
+try{sessionStorage.clear()}catch(e){}
+Promise.all(p).then(function(){location.replace(location.pathname)})}catch(e){}})();
+</script>
 <script>try{if(/^(https?|file):$/.test(location.protocol))document.write('<script src="data.js?d='+new Date().toISOString().slice(0,13)+'" onerror="window.__DAILY_FAIL=1"><\/script>')}catch(e){}</script>
 <script>/* PEMUAT DATA HARIAN: membaca data.js (dibuat update_data.py) dan menimpa nilai dasar. Gagal/tidak ada = pakai nilai tertanam. */
 (function(){
@@ -150,12 +158,34 @@ html header.sticky>nav>div>div:nth-child(2)>*{opacity:1!important;transform:none
     <title>Berita Angin  - 1% Issue 99% Fact</title>
     <script>(function(){var h=document.documentElement;if(!h.classList.contains('light'))h.classList.add('dark');})();</script>
     <!-- Muat Chart.js untuk Grafik Indeks Real-Time -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" crossorigin></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" crossorigin></script>
   <!-- Chart.js Financial untuk Candlestick -->
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js"></script>
+<script id="ba-cdn-fallback">
+/* CADANGAN CDN: jika jsDelivr lambat/diblokir di jaringan HP, muat Chart.js dari mirror lain secara berurutan. Halaman tidak pernah menunggu ini. */
+(function(){
+  var chain=[
+    ['https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js','https://fastly.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js'],
+    ['https://fastly.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js'],
+    ['https://fastly.jsdelivr.net/npm/chartjs-chart-financial@0.2.1/dist/chartjs-chart-financial.min.js']
+  ];
+  function load(urls,ok,fail){var i=0;(function next(){if(i>=urls.length)return fail&&fail();var s=document.createElement('script');s.src=urls[i++];s.async=false;s.onload=ok;s.onerror=function(){s.remove();next()};document.head.appendChild(s)})()}
+  function run(){
+    if(window.Chart)return;
+    load(chain[0],function(){
+      try{window.__baRegNoAnim&&window.__baRegNoAnim()}catch(e){}
+      load(chain[1],function(){load(chain[2],done,done)},done);
+    });
+    function done(){try{window.dispatchEvent(new Event('resize'));window.dispatchEvent(new Event('ba-chart-ready'))}catch(e){}}
+  }
+  window.addEventListener('load',function(){setTimeout(run,800)});
+})();
+</script>
 <script id="ba-chart-boot">/* ANTI-KEDIP v2: grafik langsung tergambar penuh saat boot (tanpa animasi masuk) */
-(function(){window.__baBoot=true;try{if(window.Chart){Chart.register({id:"ba-noanim-boot",beforeInit:function(c){if(window.__baBoot){try{c.options.animation=false}catch(e){}}}})}}catch(e){}})();</script>
+window.__baBoot=true;
+(function(){function reg(){try{if(window.Chart&&!window.__baNoAnimReg){window.__baNoAnimReg=1;Chart.register({id:"ba-noanim-boot",beforeInit:function(c){if(window.__baBoot){try{c.options.animation=false}catch(e){}}}})}}catch(e){}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',reg);else reg();window.__baRegNoAnim=reg})();</script>
 <script id="ba-chart3d">
 /* Semua grafik memakai model 2D (datar). Plugin ekstrusi 3D sudah dihapus; fungsi baChart3D() dipertahankan sebagai stub agar kode lama tidak error. */
 (function(){window.BA_CHART3D=false;window.baChart3D=function(){};try{localStorage.removeItem('ba-chart3d')}catch(e){}})();
@@ -1717,7 +1747,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-splash" aria-hidden="true"><div class="ba-ring"><img class="lg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
-<script>(function(){var s=document.getElementById('ba-splash');try{var im=s.querySelector('.lg');if(im)im.src=window.__BA_ICON192}catch(e){}try{if(sessionStorage.getItem('ba-splash')){s.remove();return}sessionStorage.setItem('ba-splash','1')}catch(e){}var t0=Date.now();function hide(){if(!s)return;s.classList.add('out');setTimeout(function(){if(s){s.remove();s=null}},300)}function go(){requestAnimationFrame(function(){setTimeout(hide,Math.max(0,((window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)?150:700)-(Date.now()-t0)))})}if(document.readyState==='complete')go();else window.addEventListener('load',go);setTimeout(hide,3500)})();</script>
+<script>(function(){var s=document.getElementById('ba-splash');try{var im=s.querySelector('.lg');if(im)im.src=window.__BA_ICON192}catch(e){}try{if(sessionStorage.getItem('ba-splash')){s.remove();return}sessionStorage.setItem('ba-splash','1')}catch(e){}var t0=Date.now();function hide(){if(!s)return;s.classList.add('out');setTimeout(function(){if(s){s.remove();s=null}},300)}function go(){requestAnimationFrame(function(){setTimeout(hide,Math.max(0,((window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)?150:700)-(Date.now()-t0)))})}if(document.readyState==='complete')go();else window.addEventListener('load',go);setTimeout(hide,2200)})();</script>
 <canvas id="bg3d" aria-hidden="true"></canvas>
     <!-- ⚡ LIVE STREAMING TICKS TICKER BAR -->
     <div id="ba-ticker-bar" class="bg-card-dark border-b border-card-border py-2 text-xs overflow-hidden z-40 relative">
