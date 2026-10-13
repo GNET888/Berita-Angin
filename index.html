@@ -11468,5 +11468,77 @@ html a,html button,html [role=button],html [role=tab],html label,html summary,ht
   }
 })();
 </script>
+<style id="ba-stable-nav-css">
+/* STABIL v3: pindah halaman instan, tanpa geser/blur/fade yang menggerakkan grafik */
+html body .page.active,html body .page.ba-enter,html body .page.active:not([data-ba-first]),html body .page.ba-enter:not([data-ba-first]){animation:none!important;transform:none!important;filter:none!important;opacity:1!important;transition:none!important}
+html,body{scroll-behavior:auto!important}
+html body .page canvas{transform:none!important;transition:none!important}
+html body .page canvas,html body .page [id*="chart"],html body .page [class*="h-[3"],html body .page [class*="h-[4"]{contain:layout paint}
+html body .crypto-subpage{animation:none!important}
+html body .nav-link,html body .sb-link,html body .ba-tab,html body .hp-btn,html body .tk-tab{touch-action:manipulation}
+</style>
+<script id="ba-stable-nav">
+(function(){
+  'use strict';
+  var D=document,W=window;
+  function charts(){var o=[];try{var I=W.Chart&&W.Chart.instances;if(I)Object.keys(I).forEach(function(k){o.push(I[k])})}catch(e){}return o}
+  /* Ukur ulang grafik di dalam elemen yang baru tampil, SINKRON (sebelum frame digambar) -> posisi/ukuran tidak melompat */
+  function fit(root){
+    var L=charts();
+    for(var i=0;i<L.length;i++){
+      var c=L[i];
+      try{
+        var cv=c.canvas;if(!cv||!cv.isConnected)continue;
+        if(root&&!root.contains(cv))continue;
+        var par=cv.parentNode;
+        if(!par||!par.clientWidth)continue;
+        if(Math.abs(c.width-par.clientWidth*(c.currentDevicePixelRatio||W.devicePixelRatio||1))>1||!c.width)c.resize();
+        else c.draw&&c.draw();
+      }catch(e){}
+    }
+  }
+  function ready(){
+    if(W.Chart&&W.Chart.defaults){
+      try{W.Chart.defaults.animation=false;W.Chart.defaults.resizeDelay=0;W.Chart.defaults.transitions&&(W.Chart.defaults.transitions.active={animation:{duration:0}})}catch(e){}
+      return true}
+    return false}
+  var n=0,iv=setInterval(function(){if(ready()||++n>80)clearInterval(iv)},100);ready();
+  /* Callback MutationObserver berjalan sebagai microtask: sebelum browser menggambar frame berikutnya */
+  var mo=new MutationObserver(function(list){
+    var seen=[];
+    list.forEach(function(m){
+      var t=m.target;
+      if(seen.indexOf(t)>-1)return;
+      if(t.classList.contains('page')&&!t.classList.contains('active'))return;
+      if(t.classList.contains('crypto-subpage')&&t.classList.contains('hidden'))return;
+      seen.push(t);fit(t);
+    });
+  });
+  function watch(){
+    Array.prototype.forEach.call(D.querySelectorAll('.page,.crypto-subpage'),function(e){mo.observe(e,{attributes:true,attributeFilter:['class']})});
+  }
+  watch();
+  /* Cadangan: ResizeObserver untuk wadah grafik yang ukurannya berubah (mis. sidebar, rotasi layar) */
+  if(W.ResizeObserver){
+    var ro=new ResizeObserver(function(es){es.forEach(function(en){var el=en.target;if(el.clientWidth)fit(el)})});
+    var tries=0,t=setInterval(function(){
+      charts().forEach(function(c){var p=c.canvas&&c.canvas.parentNode;if(p&&!p.__baro){p.__baro=1;ro.observe(p)}});
+      if(++tries>40)clearInterval(t);
+    },500);
+  }
+  /* Resize sintetis yang tertunda (60-380 ms) sudah tidak perlu & membuat grafik berkedip dua kali: gabungkan ke 1 frame */
+  var rq=0,realDispatch=W.dispatchEvent.bind(W);
+  W.dispatchEvent=function(ev){
+    if(ev&&ev.type==='resize'&&!ev.isTrusted&&!ev.__ba){
+      if(rq)return true;
+      rq=requestAnimationFrame(function(){rq=0;var e=new Event('resize');e.__ba=1;realDispatch(e)});
+      return true;
+    }
+    return realDispatch(ev);
+  };
+  /* Saat tab kembali aktif, gambar ulang grafik halaman aktif */
+  D.addEventListener('visibilitychange',function(){if(!D.hidden)fit(D.querySelector('.page.active'))});
+})();
+</script>
 </body>
 </html>
