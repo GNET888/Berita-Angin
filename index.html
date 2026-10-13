@@ -4340,7 +4340,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                 const px = window.cxFmt ? cxFmt(coin.current_price) : coin.current_price.toLocaleString();
                 return `
                 <tr class="hover:bg-neutral-900 transition-colors" data-cx="${coin.symbol}">
-                    <td class="py-3 px-6 text-gray-400 font-mono text-xs">#${coin.market_cap_rank}</td>
+                    <td class="py-3 px-6 text-gray-400 font-mono text-xs">${coin.market_cap_rank}</td>
                     <td class="py-3 px-6 flex items-center space-x-3">
                         ${window.cxIcon ? window.cxIcon(coin) : ''}
                         <span class="flex flex-col leading-tight"><span class="font-bold text-white">${coin.name}</span><span class="text-[10px] font-mono text-gray-500 uppercase">${coin.symbol}</span></span>
