@@ -2,12 +2,16 @@
 <html lang="id" class="dark">
 <head>
 <script>/* ANTI-KEDIP: tahan tampilan (opacity 0) sampai CSS, font & ikon siap, lalu munculkan sekali dengan halus. Pengaman 4 dtk. */
-(function(){var h=document.documentElement;h.classList.add('ba-pre');setTimeout(function(){h.classList.remove('ba-pre')},4000)})();</script>
+(function(){var h=document.documentElement;h.classList.add('ba-pre');setTimeout(function(){h.classList.remove('ba-pre')},1500)})();</script>
+<script>/* ANTI-KEDIP: tentukan sidebar ikon/lebar SEBELUM halaman digambar, supaya konten tidak bergeser setelah loading. */
+(function(){try{var h=document.documentElement,p=null;try{p=localStorage.getItem('ba-sb')}catch(e){}
+if(p==='collapsed'||window.matchMedia('(max-width:1023px)').matches)h.classList.add('ba-collapsed')}catch(e){}})();</script>
+<style id="ba-noshift-css">html.ba-pre header.sticky,html.ba-pre body>main,html.ba-pre body>footer,html.ba-pre #ba-topbar,html.ba-pre #bg3d+div,html.ba-fade header.sticky,html.ba-fade body>main,html.ba-fade body>footer,html.ba-fade #ba-topbar,html.ba-fade #bg3d+div{transition:none!important}</style>
 <style id="ba-boot-css">
 @font-face{font-family:'Inter Fallback';src:local('Arial'),local('Helvetica Neue'),local('Roboto');size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}
 html{background:var(--ba-bg,#000)}
 html.ba-pre body>*:not(#ba-splash){opacity:0!important}
-html.ba-fade body>*:not(#ba-splash){transition:opacity .22s ease-out}
+html.ba-fade body>*:not(#ba-splash){transition:opacity .1s ease-out}
 /* ANTI-KEDIP v2: halaman pertama & menu samping langsung tampil final (tanpa animasi masuk) */
 html .page.active[data-ba-first]{animation:none!important}
 html header.sticky>nav>div>div:nth-child(2)>*{opacity:1!important;transform:none!important;animation:none!important}
@@ -560,7 +564,8 @@ html.ba-collapsed{--ba-sb:80px}
   header.sticky a.nav-link.ba-active::before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:0 4px 4px 0;background:var(--ba-acc);box-shadow:0 0 12px var(--ba-acc)}
   html.light header.sticky a.nav-link.ba-active{color:#0284c7!important}
   /* Chevron sub-menu */
-  header.sticky .nav-link .fa-chevron-down{margin-left:auto!important;padding:6px;font-size:10px!important;border-radius:8px;transition:transform .3s,background .2s}
+  header.sticky .nav-link>span:not(.nav-ico){min-width:0;overflow:hidden;text-overflow:ellipsis}
+  header.sticky .nav-link .fa-chevron-down{margin-left:auto!important;flex:0 0 auto!important;padding:6px 4px;margin-right:-6px;font-size:10px!important;border-radius:8px;transition:transform .3s,background .2s}
   header.sticky .nav-link .fa-chevron-down:hover{background:rgba(148,163,184,.2)}
   header.sticky .group.ba-open>.nav-link .fa-chevron-down{transform:rotate(180deg)}
   /* Sub-menu: lipat/bentang halus */
@@ -1071,7 +1076,7 @@ body{overscroll-behavior-y:contain}
 body>footer{display:none!important}
 .page.ba-enter{animation:baPg .32s cubic-bezier(.2,.8,.2,1) both}
 @keyframes baPg{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-#ba-splash{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#05070d;color:#fff;font-family:Inter,system-ui,sans-serif;transition:opacity .3s}
+#ba-splash{position:fixed;inset:0;z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#05070d;color:#fff;font-family:Inter,system-ui,sans-serif;transition:opacity .12s}
 #ba-splash.out{opacity:0;pointer-events:none}
 #ba-splash .lg{width:76px;height:76px;border-radius:24px;display:grid;place-items:center;font:800 28px/1 Inter,sans-serif;background:linear-gradient(135deg,rgb(var(--ba-ac3,125 211 252)),rgb(var(--ba-ac2,14 165 233)));animation:baSp 1.1s ease-in-out infinite alternate}
 #ba-splash b{font-size:24px;font-weight:800}
@@ -1508,6 +1513,103 @@ html.light #page-home{--xp-bg:rgba(255,255,255,.95);--xp-line:#eff3f4;--xp-t:#0f
 #page-home .xp-quick a:hover{background:rgba(29,155,240,.12)}
 #page-home .xp-go{background:#787a7a;color:var(--xp-invt);border:0;border-radius:999px;padding:0 18px;height:36px;font:700 15px/20px inherit;font-family:inherit;cursor:pointer;transition:background .15s,color .15s;opacity:.9}
 #page-home .xp-go.on{background:var(--xp-pk);color:#fff;opacity:1}
+
+
+/* ===== Kotak posting: bilah alat (foto, GIF, emoji, ...) + tombol Posting di kiri setelahnya ===== */
+#page-home .xp-cbody{position:relative}
+#page-home .xp-crow{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:6px 12px;padding:4px 0 6px}
+#page-home .xp-tools{display:flex;align-items:center;flex-wrap:wrap;margin-left:-8px}
+#page-home .xp-tools button,#page-home .xp-tools .xp-pick{position:relative;width:34px;height:34px;border:0;background:none;padding:0;border-radius:50%;display:grid;place-items:center;color:var(--xp-m);cursor:pointer;transition:background .15s,color .15s}
+#page-home .xp-tools button:hover,#page-home .xp-tools .xp-pick:hover,#page-home .xp-tools button.on{background:rgba(29,155,240,.12);color:var(--xp-a)}
+#page-home .xp-tools svg{width:20px;height:20px;display:block}
+#page-home .xp-dot{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--xp-t);pointer-events:none}
+#page-home .xp-crow .xp-cnt{margin-left:auto}
+#page-home .xp-emo{margin:2px 0 8px;padding:8px;border:1px solid var(--xp-line);border-radius:14px;background:var(--xp-bg);display:grid;grid-template-columns:repeat(8,1fr);gap:2px;max-height:190px;overflow:auto}
+#page-home .xp-emo[hidden]{display:none}
+#page-home .xp-emo button{border:0;background:none;border-radius:8px;font-size:22px;line-height:34px;height:36px;cursor:pointer;padding:0}
+#page-home .xp-emo.stk{grid-template-columns:repeat(5,1fr)}#page-home .xp-emo.stk button{font-size:34px;height:52px;line-height:52px}
+#page-home .xp-emo button:hover{background:var(--xp-hov)}
+@media(max-width:520px){#page-home .xp-tools button,#page-home .xp-tools .xp-pick{width:29px;height:29px}#page-home .xp-tools svg{width:18px;height:18px}#page-home .xp-tools{margin-left:-6px}}
+/* ===== Artikel harian: tata letak berbeda-beda ===== */
+#page-home .da{margin-top:12px;border:1px solid var(--xp-line);border-radius:16px;overflow:hidden;color:var(--xp-t)}
+#page-home .da small{display:block;color:var(--xp-m);font-size:13px;line-height:16px}
+#page-home .da strong{display:block;font-size:16px;line-height:21px;font-weight:700}
+#page-home .da-badge{background:rgba(29,155,240,.14);color:var(--xp-a);border-radius:999px;font-size:11px;font-weight:700;line-height:16px;padding:0 8px;margin-left:6px;white-space:nowrap}
+#page-home .da-hero{position:relative;aspect-ratio:16/9;background:#0b1220}
+#page-home .da-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#page-home .da-ov{position:absolute;left:0;right:0;bottom:0;padding:34px 16px 14px;background:linear-gradient(transparent,rgba(0,0,0,.82))}
+#page-home .da-ov small{color:#cbd5e1}#page-home .da-ov strong{color:#fff;font-size:20px;line-height:26px;margin-top:2px}
+#page-home .da-split{display:grid;grid-template-columns:112px 1fr;align-items:stretch}
+#page-home .da-split img{width:112px;height:100%;min-height:112px;object-fit:cover;display:block}
+#page-home .da-split>div{padding:12px 14px;align-self:center}
+#page-home .da-quote{padding:14px 18px 16px;border-left:4px solid var(--xp-a);background:var(--xp-hov)}
+#page-home .da-qm{font:800 56px/40px Georgia,serif;color:var(--xp-a);height:30px}
+#page-home .da-quote blockquote{margin:4px 0 10px;font-size:19px;line-height:26px;font-weight:600;font-style:italic}
+#page-home .da-stats{padding:14px}
+#page-home .da-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+#page-home .da-tiles>div{border:1px solid var(--xp-line);border-radius:12px;padding:10px 8px;text-align:center;min-width:0}
+#page-home .da-tiles b{display:block;font-size:17px;line-height:22px;color:var(--xp-a);overflow-wrap:anywhere}
+#page-home .da-tiles span{display:block;font-size:12px;line-height:16px;color:var(--xp-m);margin-top:2px}
+#page-home .da-list{padding:14px}
+#page-home .da-list ol{list-style:none;counter-reset:n;margin:10px 0 0;padding:0;display:grid;gap:8px}
+#page-home .da-list li{counter-increment:n;position:relative;padding-left:34px;font-size:14px;line-height:20px;color:var(--xp-m)}
+#page-home .da-list li::before{content:counter(n);position:absolute;left:0;top:0;width:24px;height:24px;border-radius:50%;background:var(--xp-a);color:#fff;font-weight:700;font-size:13px;display:grid;place-items:center}
+#page-home .da-list li b{color:var(--xp-t)}
+#page-home .da-time{padding:14px}
+#page-home .da-time ul{list-style:none;margin:10px 0 0;padding:0 0 0 6px;border-left:2px solid var(--xp-line)}
+#page-home .da-time li{position:relative;padding:0 0 12px 18px}
+#page-home .da-time li:last-child{padding-bottom:0}
+#page-home .da-time li i{position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--xp-a);box-shadow:0 0 0 3px var(--xp-hov)}
+#page-home .da-time b{display:block;font-size:14px}#page-home .da-time span{display:block;font-size:13px;line-height:18px;color:var(--xp-m)}
+#page-home .da-qa{padding:12px;display:grid;gap:8px}
+#page-home .da-qa .q,#page-home .da-qa .a{border-radius:16px;padding:10px 14px;font-size:14px;line-height:20px;max-width:92%}
+#page-home .da-qa .q{background:var(--xp-hov);justify-self:start;border-bottom-left-radius:4px;font-weight:600}
+#page-home .da-qa .a{background:var(--xp-a);color:#fff;justify-self:end;border-bottom-right-radius:4px}
+#page-home .da-qa .a small{color:rgba(255,255,255,.8)}
+#page-home .da-vs{padding:14px}
+#page-home .da-vs>div{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+#page-home .da-vs section{border-radius:12px;padding:10px 12px;font-size:13px;line-height:18px;min-width:0}
+#page-home .da-vs .up{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.4)}
+#page-home .da-vs .dn{background:rgba(244,63,94,.12);border:1px solid rgba(244,63,94,.4)}
+#page-home .da-vs section small{font-weight:700;margin-bottom:2px;color:var(--xp-t)}
+@media(max-width:520px){#page-home .da-split{grid-template-columns:92px 1fr}#page-home .da-split img{width:92px}#page-home .da-vs>div{grid-template-columns:1fr}#page-home .da-tiles b{font-size:15px}}
+
+/* ===== Kotak posting (status & artikel) + timeline ===== */
+#page-home .xp-compose{align-items:flex-start;padding:14px 16px 10px}
+#page-home .xp-cmode{display:inline-flex;gap:2px;padding:3px;margin:0 0 8px;border:1px solid var(--xp-line);border-radius:999px}
+#page-home .xp-cmode button{border:0;background:none;color:var(--xp-m);font-family:inherit;font-size:13px;font-weight:700;line-height:1;padding:7px 16px;border-radius:999px;cursor:pointer;transition:background .15s,color .15s}
+#page-home .xp-cmode button.on{background:var(--xp-a);color:#fff}
+#page-home .xp-cfields{display:flex;flex-direction:column;gap:8px;margin:0 0 6px}
+#page-home .xp-cfields[hidden]{display:none}
+#page-home .xp-cin{width:100%;background:transparent;border:1px solid var(--xp-line);border-radius:12px;color:var(--xp-t);font-family:inherit;font-size:15px;line-height:20px;font-weight:500;padding:10px 12px;outline:0;-webkit-appearance:none;appearance:none}
+#page-home .xp-cin:focus{border-color:var(--xp-a)}
+#page-home .xp-cin option{background:var(--xp-bg);color:var(--xp-t)}
+#page-home textarea.xp-in{display:block;resize:none;min-height:56px;overflow:auto;white-space:pre-wrap}
+#page-home .xp-compose.is-art .xp-in{font-size:16px;line-height:24px}
+#page-home .xp-cprev{position:relative;margin:2px 0 8px;border:1px solid var(--xp-line);border-radius:16px;overflow:hidden}
+#page-home .xp-cprev[hidden]{display:none}
+#page-home .xp-cprev img{display:block;width:100%;max-height:260px;object-fit:cover}
+#page-home .xp-cprev button{position:absolute;top:8px;right:8px;width:32px;height:32px;border:0;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;font-size:20px;line-height:1;cursor:pointer}
+#page-home .xp-quick button,#page-home .xp-quick .xp-pick{width:36px;height:36px;border:0;background:none;padding:0;border-radius:50%;display:grid;place-items:center;color:var(--xp-a);cursor:pointer;transition:background .15s}
+#page-home .xp-quick button:hover,#page-home .xp-quick .xp-pick:hover{background:rgba(29,155,240,.12)}
+#page-home .xp-cright{display:flex;align-items:center;gap:10px}
+#page-home .xp-cnt{min-width:34px;text-align:right;font-size:13px;color:var(--xp-m)}
+#page-home .xp-cnt.warn{color:#f4212e;font-weight:700}
+#page-home .xp-go:disabled{opacity:.5;cursor:not-allowed}
+#page-home .xp-sbar{display:none;align-items:center;gap:10px;margin:10px 16px 0;height:40px;padding:0 14px;border:1px solid var(--xp-line);border-radius:999px;color:var(--xp-m)}
+#page-home .xp-sbar:focus-within{border-color:var(--xp-a);color:var(--xp-a)}
+#page-home .xp-sbar input{flex:1;min-width:0;background:none!important;border:0!important;outline:0!important;box-shadow:none!important;border-radius:0!important;height:auto!important;padding:0!important;color:var(--xp-t);font-size:15px;font-family:inherit}
+@media(max-width:1023px){#page-home .xp-sbar{display:flex}}
+#page-home .xp-time{color:var(--xp-m);font-size:15px}
+#page-home .xp-text{white-space:pre-wrap;overflow-wrap:anywhere}
+#page-home .xp-del:hover{color:#f4212e;background:rgba(244,33,46,.1)}
+#page-home .xp-pill{position:sticky;top:calc(var(--xp-top) + 60px);z-index:19;display:flex;align-items:center;gap:6px;margin:8px auto;border:0;border-radius:999px;background:var(--xp-a);color:#fff;font-family:inherit;font-size:14px;font-weight:700;line-height:1;padding:10px 16px;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.45)}
+#page-home .xp-pill[hidden]{display:none}
+#page-home .xp-crow{flex-wrap:wrap;row-gap:6px}
+@media(max-width:520px){#page-home .xp-quick{margin-left:-6px}#page-home .xp-quick button,#page-home .xp-quick .xp-pick{width:30px;height:30px}#page-home .xp-cnt{min-width:28px}#page-home .xp-go{padding:0 14px}}
+@keyframes xpNew{from{background:rgba(29,155,240,.20)}to{background:transparent}}
+#page-home .xp-post.xp-new{animation:xpNew 2.4s ease-out}
+@media (prefers-reduced-motion:reduce){#page-home .xp-post.xp-new{animation:none}}
 #page-home .xp-post{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--xp-line);transition:background .15s}
 #page-home .xp-post[data-open]{cursor:pointer}
 #page-home .xp-post[data-open]:hover,#page-home .xp-post[data-open]:focus-visible{background:var(--xp-hov);outline:0}
@@ -1549,6 +1651,12 @@ html.light #page-home{--xp-bg:rgba(255,255,255,.95);--xp-line:#eff3f4;--xp-t:#0f
 #page-home .xp-newsbox .se2-nc{background:transparent!important;border:0!important;border-bottom:1px solid var(--xp-line)!important;border-radius:0!important;padding:12px 0!important}
 #page-home .xp-newsbox .se2-nc:hover{background:var(--xp-hov)!important}
 #page-home .xp-newsbox .se2-nc a{color:var(--xp-t)!important;font-size:15px;font-weight:500}
+#page-home .xp-newsbox #se2-news .se2-nc{padding:12px 16px 14px!important;cursor:pointer;outline:0}
+#page-home .xp-newsbox #se2-news .se2-nc:focus-visible{box-shadow:inset 0 0 0 2px var(--xp-a)}
+#page-home .xp-newsbox .xp-nmeta{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+#page-home .xp-newsbox .se2-nc .xp-card{margin-top:8px}
+#page-home .xp-newsbox .se2-nc:hover .xp-cardtxt strong{text-decoration:underline}
+#page-article-detail.news-mode .art-author-row,#page-article-detail.news-mode .art-more-btn{display:none}
 #page-home .xp-empty{padding:40px 16px;text-align:center;color:var(--xp-m);font-size:15px}
 #page-home .xp-rail{position:sticky;top:calc(var(--xp-top) + 6px);display:flex;flex-direction:column;gap:14px;padding:0 0 24px}
 #page-home .xp-search{display:flex;align-items:center;gap:12px;height:44px;padding:0 16px;border-radius:999px;background:transparent;border:1px solid var(--xp-line);color:var(--xp-m);cursor:text;margin:0}
@@ -1658,10 +1766,315 @@ html.light #page-home{--xp-bg:rgba(255,255,255,.95);--xp-line:#eff3f4;--xp-t:#0f
 document.documentElement.style.setProperty('--ba-logo','url("'+u+'")');
 function ap(){var i=document.querySelector('#sidebar-content .sb-avatar img');if(i)i.src=u}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ap);else ap();}catch(e){}})();</script>
+<style id="ba-icononly-css">
+/* Sidebar mode ikon: teks selalu hilang (seperti rail ikon), tidak melebar saat di-hover */
+@media (min-width:768px){
+  html.ba-collapsed header.sticky:hover{width:var(--ba-sb)!important;--ba-pad:10px;box-shadow:inset -1px 0 0 rgba(255,255,255,.05)!important}
+  html.ba-collapsed header.sticky>nav>div>div:nth-child(1) a span,
+  html.ba-collapsed header.sticky .nav-link>span:not(.nav-ico),
+  html.ba-collapsed header.sticky .nav-link .fa-chevron-down,
+  html.ba-collapsed header.sticky>nav>div>div:nth-child(2)::before,
+  html.ba-collapsed header.sticky>nav>div>div:nth-child(3)::before,
+  html.ba-collapsed header.sticky .group>div.absolute,
+  html.ba-collapsed header.sticky .xp-acct .hp-cap,
+  html.ba-collapsed header.sticky .xp-acct .xp-ell{display:none!important}
+  html.ba-collapsed header.sticky .nav-link{justify-content:center;padding:11px 0!important}
+  html.ba-collapsed header.sticky>nav>div>div:nth-child(1),
+  html.ba-collapsed header.sticky>nav>div>div:nth-child(3){display:flex;justify-content:center;padding-left:0;padding-right:0}
+  html.ba-collapsed header.sticky a.xp-acct{justify-content:center;padding:8px 0}
+}
+</style>
+<style id="xp-width-css">
+/* Tata letak Beranda sejajar dengan Live Tick & bar atas: tepi kiri kolom tengah = tombol « / breadcrumb, tepi kanan panel samping = pil LIVE.
+   Kolom tengah mengisi ruang (min 500px, maks 760px); panel kanan 250-350px. */
+#page-home .xp{grid-template-columns:minmax(500px,760px) minmax(250px,350px);justify-content:space-between;gap:0 28px;width:100%}
+#page-home .xp-feed{width:100%;max-width:none;justify-self:stretch}
+#page-home .xp-rail{width:100%}
+@media(min-width:1024px) and (max-width:1139px){
+  html:not(.ba-collapsed) #page-home .xp{grid-template-columns:minmax(0,1fr)}
+  html:not(.ba-collapsed) #page-home .xp-rail{display:none}
+  html:not(.ba-collapsed) #page-home .xp-sbar{display:flex}
+}
+@media(max-width:1023px){#page-home .xp{grid-template-columns:minmax(0,1fr);justify-content:stretch}}
+</style>
+<style id="ba-xcard-css">
+/* Kartu semua halaman = gaya kartu beranda (mis. "Pantau Pasar Lebih Cepat"): hitam, garis tipis, sudut 16px, judul tebal, tombol pil outline */
+html{--xc-bg:rgba(0,0,0,.9);--xc-line:#2f3336;--xc-t:#e7e9ea;--xc-m:#71767b;--xc-hov:rgba(231,233,234,.05);--xc-btn:#536471;--xc-inv:#eff3f4;--xc-invt:#0f1419}
+html.light{--xc-bg:rgba(255,255,255,.95);--xc-line:#eff3f4;--xc-t:#0f1419;--xc-m:#536471;--xc-hov:rgba(15,20,25,.03);--xc-btn:#cfd9de;--xc-inv:#0f1419;--xc-invt:#fff}
+html #page-crypto-market .bg-card-dark:not(.ba-oldnav):not(.ba-oldnav),
+html #page-crypto-market .bg-deep-gray,
+html #page-crypto-market .ms-card,
+html #page-crypto-market .st-card,
+html #page-crypto-market .mlc-panel,
+html #page-crypto-market .mlc-card,
+html #page-crypto-market [class*="from-black/80"][class*="to-deep-gray"],
+html #page-stock-exchange .bg-card-dark:not(.ba-oldnav):not(.ba-oldnav),
+html #page-stock-exchange .bg-deep-gray,
+html #page-stock-exchange .ms-card,
+html #page-stock-exchange .st-card,
+html #page-stock-exchange .mlc-panel,
+html #page-stock-exchange .mlc-card,
+html #page-stock-exchange [class*="from-black/80"][class*="to-deep-gray"],
+html #page-global-market .bg-card-dark:not(.ba-oldnav):not(.ba-oldnav),
+html #page-global-market .bg-deep-gray,
+html #page-global-market .ms-card,
+html #page-global-market .st-card,
+html #page-global-market .mlc-panel,
+html #page-global-market .mlc-card,
+html #page-global-market [class*="from-black/80"][class*="to-deep-gray"],
+html #page-market-stat .bg-card-dark:not(.ba-oldnav):not(.ba-oldnav),
+html #page-market-stat .bg-deep-gray,
+html #page-market-stat .ms-card,
+html #page-market-stat .st-card,
+html #page-market-stat .mlc-panel,
+html #page-market-stat .mlc-card,
+html #page-market-stat [class*="from-black/80"][class*="to-deep-gray"],
+html #page-profile .bg-card-dark:not(.ba-oldnav):not(.ba-oldnav),
+html #page-profile .bg-deep-gray,
+html #page-profile .ms-card,
+html #page-profile .st-card,
+html #page-profile .mlc-panel,
+html #page-profile .mlc-card,
+html #page-profile [class*="from-black/80"][class*="to-deep-gray"],
+html #page-settings .bg-card-dark:not(.ba-oldnav):not(.ba-oldnav),
+html #page-settings .bg-deep-gray,
+html #page-settings .ms-card,
+html #page-settings .st-card,
+html #page-settings .mlc-panel,
+html #page-settings .mlc-card,
+html #page-settings [class*="from-black/80"][class*="to-deep-gray"]{
+  background:var(--xc-bg)!important;background-color:var(--xc-bg)!important;background-image:none!important;
+  border:1px solid var(--xc-line)!important;border-radius:16px!important;box-shadow:none!important;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+html #page-crypto-market div[class*="border-card-border"].bg-black,
+html #page-crypto-market div[class*="border-card-border"][class*="bg-black/"],
+html #page-crypto-market div[class*="border-card-border"].bg-neutral-900,
+html #page-crypto-market .liq-kpi,
+html #page-stock-exchange div[class*="border-card-border"].bg-black,
+html #page-stock-exchange div[class*="border-card-border"][class*="bg-black/"],
+html #page-stock-exchange div[class*="border-card-border"].bg-neutral-900,
+html #page-stock-exchange .liq-kpi,
+html #page-global-market div[class*="border-card-border"].bg-black,
+html #page-global-market div[class*="border-card-border"][class*="bg-black/"],
+html #page-global-market div[class*="border-card-border"].bg-neutral-900,
+html #page-global-market .liq-kpi,
+html #page-market-stat div[class*="border-card-border"].bg-black,
+html #page-market-stat div[class*="border-card-border"][class*="bg-black/"],
+html #page-market-stat div[class*="border-card-border"].bg-neutral-900,
+html #page-market-stat .liq-kpi,
+html #page-profile div[class*="border-card-border"].bg-black,
+html #page-profile div[class*="border-card-border"][class*="bg-black/"],
+html #page-profile div[class*="border-card-border"].bg-neutral-900,
+html #page-profile .liq-kpi,
+html #page-settings div[class*="border-card-border"].bg-black,
+html #page-settings div[class*="border-card-border"][class*="bg-black/"],
+html #page-settings div[class*="border-card-border"].bg-neutral-900,
+html #page-settings .liq-kpi{border-color:var(--xc-line)!important;border-radius:12px!important;box-shadow:none!important}
+html #page-crypto-market :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav),.bg-deep-gray,.ms-card,.st-card) :is(h2,h3):not([class*="text-xs"]):not([class*="text-sm"]):not([class*="text-[1"]),
+html #page-stock-exchange :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav),.bg-deep-gray,.ms-card,.st-card) :is(h2,h3):not([class*="text-xs"]):not([class*="text-sm"]):not([class*="text-[1"]),
+html #page-global-market :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav),.bg-deep-gray,.ms-card,.st-card) :is(h2,h3):not([class*="text-xs"]):not([class*="text-sm"]):not([class*="text-[1"]),
+html #page-market-stat :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav),.bg-deep-gray,.ms-card,.st-card) :is(h2,h3):not([class*="text-xs"]):not([class*="text-sm"]):not([class*="text-[1"]),
+html #page-profile :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav),.bg-deep-gray,.ms-card,.st-card) :is(h2,h3):not([class*="text-xs"]):not([class*="text-sm"]):not([class*="text-[1"]),
+html #page-settings :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav),.bg-deep-gray,.ms-card,.st-card) :is(h2,h3):not([class*="text-xs"]):not([class*="text-sm"]):not([class*="text-[1"]){font-size:20px;line-height:24px;font-weight:800!important;text-transform:none!important;letter-spacing:0!important;color:var(--xc-t)}
+html [id^="page-"] .border-b.border-card-border{border-color:var(--xc-line)!important}
+html #page-crypto-market :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"],
+html #page-stock-exchange :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"],
+html #page-global-market :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"],
+html #page-market-stat :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"],
+html #page-profile :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"],
+html #page-settings :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"]{height:36px;padding:0 18px!important;border-radius:999px!important;border:1px solid var(--xc-btn)!important;background:transparent!important;color:var(--xc-t)!important;font-size:15px!important;font-weight:700!important}
+html #page-crypto-market :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"]:hover,
+html #page-stock-exchange :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"]:hover,
+html #page-global-market :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"]:hover,
+html #page-market-stat :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"]:hover,
+html #page-profile :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"]:hover,
+html #page-settings :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"]:hover{background:var(--xc-hov)!important}
+html #page-crypto-market :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"].bg-brand-primary,
+html #page-stock-exchange :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"].bg-brand-primary,
+html #page-global-market :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"].bg-brand-primary,
+html #page-market-stat :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"].bg-brand-primary,
+html #page-profile :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"].bg-brand-primary,
+html #page-settings :is(.bg-card-dark:not(.ba-oldnav):not(.ba-oldnav)) button[class*="rounded-lg"][class*="px-4"].bg-brand-primary{background:var(--xc-inv)!important;border-color:var(--xc-inv)!important;color:var(--xc-invt)!important}
+</style>
+<style id="ba-nobg-nav-css">
+/* Navigasi sub-halaman: tanpa latar (biru/hitam/kotak). Tab aktif hanya ditandai teks tebal + garis pink. */
+html body div.ba-oldnav.bg-card-dark{background:transparent!important;background-color:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+html body .ba-oldnav button,html body .ba-oldnav .cr-sublink,html body #page-market-stat .ms-jump button{background:transparent!important;background-color:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;color:#71767b!important;font-weight:500}
+html body #page-market-stat .ms-jump{background:transparent!important;box-shadow:none!important}
+html body .ba-oldnav button:hover,html body .ba-oldnav .cr-sublink:hover,html body #page-market-stat .ms-jump button:hover{background:transparent!important;color:#e7e9ea!important}
+html body .ba-oldnav button.bg-brand-primary,html body .ba-oldnav .cr-sublink.is-active,html body #page-market-stat .ms-jump button.is-active{background:transparent!important;color:#e7e9ea!important;font-weight:700!important;box-shadow:inset 0 -3px 0 #f91880!important}
+html.light body .ba-oldnav button,html.light body .ba-oldnav .cr-sublink,html.light body #page-market-stat .ms-jump button{color:#536471!important}
+html.light body .ba-oldnav button:hover,html.light body .ba-oldnav .cr-sublink:hover,html.light body #page-market-stat .ms-jump button:hover,
+html.light body .ba-oldnav button.bg-brand-primary,html.light body .ba-oldnav .cr-sublink.is-active,html.light body #page-market-stat .ms-jump button.is-active{color:#0f1419!important}
+html body .ba-oldnav .cr-dot{display:none}
+</style>
+<style id="ba-white-theme-css">
+/* TEMA PUTIH: seluruh permukaan putih murni; satu-satunya warna lain = biru langit (aksen, garis, penanda aktif).
+   Warna naik/turun harga (hijau/merah) dibiarkan agar data tetap terbaca. */
+html.light{--xp-pk:#0ea5e9;--xc-line:#bae6fd;--xc-hov:rgba(14,165,233,.07);--xc-btn:#7dd3fc;--xc-inv:#0ea5e9;--xc-invt:#fff;--xt-pk:#0ea5e9}
+html.light #page-home{--xp-pk:#0ea5e9;--xp-line:#bae6fd;--xp-soft:#fff;--xp-hov:rgba(14,165,233,.07);--xp-inv:#0ea5e9;--xp-invt:#fff;--xp-a:#0284c7}
+html.light,html.light body[class],html.light body{background:#fff!important;background-color:#fff!important}
+html.light .bg-black,html.light [class*="bg-black/"],html.light .bg-neutral-900,html.light .bg-pure-black,html.light [class*="bg-pure-black/"],
+html.light .liq-kpi,html.light #gm-sub-1 .gm1-bar,html.light #gm-sub-3 .gm1-bar,html.light .mlc-tbl thead th,html.light .mlc-tbl tfoot td{background:#fff!important;background-color:#fff!important}
+html.light [class*="bg-pure-black/"]{background-color:rgba(255,255,255,.94)!important}
+html.light .bg-neutral-800,html.light .bg-neutral-700,html.light .bg-neutral-600,html.light .liq-bar,html.light .liq-heat i,html.light .mlc-cb,html.light [style*="#1f1f1f"]{background:#e0f2fe!important;background-color:#e0f2fe!important}
+html.light [class*="hover:bg-neutral"]:hover,html.light [class*="hover:bg-card-dark"]:hover,html.light [class*="hover:bg-black"]:hover{background-color:#f0f9ff!important}
+html.light [class*="bg-gradient-to"][class*="from-black"]:not(.absolute),html.light [class*="bg-gradient-to"][class*="from-neutral"]:not(.absolute){background-image:none!important;background-color:#fff!important}
+html.light .mlc-tbl tbody tr:nth-child(even){background:rgba(14,165,233,.04)!important}
+html.light [class*="border-card-border"],html.light [class*="divide-card-border"]>*,html.light .liq-kpi,html.light .mlc-panel,html.light .mlc-card,
+html.light #gm-sub-1 .gm1-bar,html.light #gm-sub-3 .gm1-bar,html.light .gm-chip,html.light .liq-btn,html.light .mlc-in{border-color:#bae6fd!important}
+html.light .gm-row,html.light .mlc-row,html.light .mlc-tbl thead th,html.light .mlc-tbl tbody td{border-bottom-color:#e0f2fe!important}
+html.light .border-neutral-800,html.light .border-neutral-700,html.light .border-gray-700,html.light .border-gray-800{border-color:#bae6fd!important}
+html.light body [class*="bg-indigo-"],
+html.light body [class*="bg-violet-"],
+html.light body [class*="bg-purple-"],
+html.light body [class*="bg-fuchsia-"],
+html.light body [class*="bg-pink-"],
+html.light body [class*="bg-amber-"],
+html.light body [class*="bg-orange-"],
+html.light body [class*="bg-yellow-"],
+html.light body [class*="bg-blue-"],
+html.light body [class*="bg-cyan-"],
+html.light body [class*="bg-teal-"],
+html.light body [class*="bg-lime-"]{background-color:rgba(14,165,233,.12)!important}
+html.light body [class*="bg-indigo-4"],
+html.light body [class*="bg-indigo-5"],
+html.light body [class*="bg-indigo-6"],
+html.light body [class*="bg-indigo-7"],
+html.light body [class*="bg-indigo-8"],
+html.light body [class*="bg-violet-4"],
+html.light body [class*="bg-violet-5"],
+html.light body [class*="bg-violet-6"],
+html.light body [class*="bg-violet-7"],
+html.light body [class*="bg-violet-8"],
+html.light body [class*="bg-purple-4"],
+html.light body [class*="bg-purple-5"],
+html.light body [class*="bg-purple-6"],
+html.light body [class*="bg-purple-7"],
+html.light body [class*="bg-purple-8"],
+html.light body [class*="bg-fuchsia-4"],
+html.light body [class*="bg-fuchsia-5"],
+html.light body [class*="bg-fuchsia-6"],
+html.light body [class*="bg-fuchsia-7"],
+html.light body [class*="bg-fuchsia-8"],
+html.light body [class*="bg-pink-4"],
+html.light body [class*="bg-pink-5"],
+html.light body [class*="bg-pink-6"],
+html.light body [class*="bg-pink-7"],
+html.light body [class*="bg-pink-8"],
+html.light body [class*="bg-amber-4"],
+html.light body [class*="bg-amber-5"],
+html.light body [class*="bg-amber-6"],
+html.light body [class*="bg-amber-7"],
+html.light body [class*="bg-amber-8"],
+html.light body [class*="bg-orange-4"],
+html.light body [class*="bg-orange-5"],
+html.light body [class*="bg-orange-6"],
+html.light body [class*="bg-orange-7"],
+html.light body [class*="bg-orange-8"],
+html.light body [class*="bg-yellow-4"],
+html.light body [class*="bg-yellow-5"],
+html.light body [class*="bg-yellow-6"],
+html.light body [class*="bg-yellow-7"],
+html.light body [class*="bg-yellow-8"],
+html.light body [class*="bg-blue-4"],
+html.light body [class*="bg-blue-5"],
+html.light body [class*="bg-blue-6"],
+html.light body [class*="bg-blue-7"],
+html.light body [class*="bg-blue-8"],
+html.light body [class*="bg-cyan-4"],
+html.light body [class*="bg-cyan-5"],
+html.light body [class*="bg-cyan-6"],
+html.light body [class*="bg-cyan-7"],
+html.light body [class*="bg-cyan-8"],
+html.light body [class*="bg-teal-4"],
+html.light body [class*="bg-teal-5"],
+html.light body [class*="bg-teal-6"],
+html.light body [class*="bg-teal-7"],
+html.light body [class*="bg-teal-8"],
+html.light body [class*="bg-lime-4"],
+html.light body [class*="bg-lime-5"],
+html.light body [class*="bg-lime-6"],
+html.light body [class*="bg-lime-7"],
+html.light body [class*="bg-lime-8"],
+html.light body .bg-brand-primary,html.light body .bg-brand-accent{background-color:#0ea5e9!important;color:#fff!important}
+html.light body [class*="bg-brand-primary/"]{background-color:rgba(14,165,233,.12)!important}
+html.light body [class*="text-indigo-"],
+html.light body [class*="text-violet-"],
+html.light body [class*="text-purple-"],
+html.light body [class*="text-fuchsia-"],
+html.light body [class*="text-pink-"],
+html.light body [class*="text-amber-"],
+html.light body [class*="text-orange-"],
+html.light body [class*="text-yellow-"],
+html.light body [class*="text-blue-"],
+html.light body [class*="text-cyan-"],
+html.light body [class*="text-teal-"],
+html.light body [class*="text-lime-"],
+html.light .text-brand-primary,html.light .text-brand-accent{color:#0284c7!important}
+html.light body [class*="border-indigo-"],
+html.light body [class*="border-violet-"],
+html.light body [class*="border-purple-"],
+html.light body [class*="border-fuchsia-"],
+html.light body [class*="border-pink-"],
+html.light body [class*="border-amber-"],
+html.light body [class*="border-orange-"],
+html.light body [class*="border-yellow-"],
+html.light body [class*="border-blue-"],
+html.light body [class*="border-cyan-"],
+html.light body [class*="border-teal-"],
+html.light body [class*="border-lime-"],
+html.light .border-brand-primary,html.light [class*="border-brand-primary/"],html.light [class*="border-brand-accent"]{border-color:#7dd3fc!important}
+html.light body [class*="from-indigo-"],
+html.light body [class*="via-indigo-"],
+html.light body [class*="to-indigo-"],
+html.light body [class*="from-violet-"],
+html.light body [class*="via-violet-"],
+html.light body [class*="to-violet-"],
+html.light body [class*="from-purple-"],
+html.light body [class*="via-purple-"],
+html.light body [class*="to-purple-"],
+html.light body [class*="from-fuchsia-"],
+html.light body [class*="via-fuchsia-"],
+html.light body [class*="to-fuchsia-"],
+html.light body [class*="from-pink-"],
+html.light body [class*="via-pink-"],
+html.light body [class*="to-pink-"],
+html.light body [class*="from-amber-"],
+html.light body [class*="via-amber-"],
+html.light body [class*="to-amber-"],
+html.light body [class*="from-orange-"],
+html.light body [class*="via-orange-"],
+html.light body [class*="to-orange-"],
+html.light body [class*="from-yellow-"],
+html.light body [class*="via-yellow-"],
+html.light body [class*="to-yellow-"],
+html.light body [class*="from-blue-"],
+html.light body [class*="via-blue-"],
+html.light body [class*="to-blue-"],
+html.light body [class*="from-cyan-"],
+html.light body [class*="via-cyan-"],
+html.light body [class*="to-cyan-"],
+html.light body [class*="from-teal-"],
+html.light body [class*="via-teal-"],
+html.light body [class*="to-teal-"],
+html.light body [class*="from-lime-"],
+html.light body [class*="via-lime-"],
+html.light body [class*="to-lime-"]{--tw-gradient-from:#0ea5e9!important;--tw-gradient-via:#38bdf8!important;--tw-gradient-to:#7dd3fc!important;--tw-gradient-stops:#0ea5e9,#38bdf8!important}
+html.light .tt{background:#e0f2fe;border-color:#7dd3fc}
+html.light .tt-knob{background:#0ea5e9}
+html.light ::-webkit-scrollbar-track{background:#fff}
+html.light ::-webkit-scrollbar-thumb{background:#7dd3fc}
+html.light ::-webkit-scrollbar-thumb:hover{background:#38bdf8}
+/* navigasi sub-halaman tanpa latar: garis penanda aktif biru langit */
+html.light body .ba-oldnav button.bg-brand-primary,html.light body .ba-oldnav .cr-sublink.is-active,html.light body #page-market-stat .ms-jump button.is-active{background:transparent!important;background-color:transparent!important;color:#0f172a!important;box-shadow:inset 0 -3px 0 #0ea5e9!important}
+html.light body .ba-oldnav button:hover,html.light body .ba-oldnav .cr-sublink:hover,html.light body #page-market-stat .ms-jump button:hover{background:#f0f9ff!important}
+html.light body .ba-oldnav button,html.light body .ba-oldnav .cr-sublink,html.light body #page-market-stat .ms-jump button{background:transparent!important}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-splash" aria-hidden="true"><div class="ba-ring"><img class="lg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
-<script>(function(){var s=document.getElementById('ba-splash');try{var im=s.querySelector('.lg');if(im)im.src=window.__BA_ICON192}catch(e){}try{if(sessionStorage.getItem('ba-splash')){s.remove();return}sessionStorage.setItem('ba-splash','1')}catch(e){}var t0=Date.now();function hide(){if(!s)return;s.classList.add('out');setTimeout(function(){if(s){s.remove();s=null}},300)}function go(){requestAnimationFrame(function(){setTimeout(hide,Math.max(0,((window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)?150:700)-(Date.now()-t0)))})}if(document.readyState==='complete')go();else window.addEventListener('load',go);setTimeout(hide,3500)})();</script>
+<script>(function(){var s=document.getElementById('ba-splash');try{var im=s.querySelector('.lg');if(im)im.src=window.__BA_ICON192}catch(e){}try{if(sessionStorage.getItem('ba-splash')){s.remove();return}sessionStorage.setItem('ba-splash','1')}catch(e){}var t0=Date.now(),h=document.documentElement;function hide(){if(!s)return;s.classList.add('out');setTimeout(function(){if(s){s.remove();s=null}},130)}function go(){requestAnimationFrame(function(){(function w(){if(!h.classList.contains('ba-pre')||Date.now()-t0>1300)hide();else setTimeout(w,30)})()})}if(document.readyState==='complete')go();else window.addEventListener('load',go);setTimeout(hide,1700)})();</script>
 <canvas id="bg3d" aria-hidden="true"></canvas>
     <!-- ⚡ LIVE STREAMING TICKS TICKER BAR -->
     <div id="ba-ticker-bar" class="bg-card-dark border-b border-card-border py-2 text-xs overflow-hidden z-40 relative">
@@ -1866,21 +2279,24 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
                 <div class="xp-tabs" role="tablist">
                     <button type="button" role="tab" class="on" data-xp-tab="all" aria-selected="true"><span>Untuk Anda<svg class="xi xp-chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
                     <button type="button" role="tab" data-xp-tab="artikel" aria-selected="false"><span>Artikel</span></button>
+                    <button type="button" role="tab" data-xp-tab="status" aria-selected="false"><span>Status</span></button>
                 </div>
 
-                <div class="xp-compose">
+                <label class="xp-sbar"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg><input id="xp-q3" type="search" placeholder="Cari artikel &amp; status" aria-label="Cari di beranda" autocomplete="off"></label>
+                <div class="xp-compose" id="xp-compose">
                     <div class="xp-av"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b1220%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231e293b%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%22124%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-size%3D%2284%22%20font-weight%3D%22800%22%20fill%3D%22%2338BDF8%22%3EAE%3C%2Ftext%3E%3C%2Fsvg%3E" data-avatar alt="Achmad Efendi, SE, MM"></div>
                     <div class="xp-cbody">
-                        <input id="xp-q" class="xp-in" type="search" placeholder="Apa yang sedang terjadi?" aria-label="Cari di beranda" autocomplete="off">
-                        <div class="xp-crow">
-                            <div class="xp-quick">
-                                <a href="#" class="nav-link" data-page="crypto-market" title="Crypto Market" aria-label="Crypto Market"><svg class="xi " viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 7.5v9m0-9h3a2.2 2.2 0 010 4.4H10m3 0a2.3 2.3 0 010 4.6h-3m1-10V6m0 12v-1.5"/></svg></a>
-                                <a href="#" class="nav-link" data-page="stock-exchange" title="Stock Exchange" aria-label="Stock Exchange"><svg class="xi " viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 4l9 5.5M5.5 10.5v7M10 10.5v7M14 10.5v7M18.5 10.5v7M3 20h18"/></svg></a>
-                                <a href="#" class="nav-link" data-page="global-market" title="Global Market" aria-label="Global Market"><svg class="xi " viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 3.9 5.5 3.9 9s-1.3 6.5-3.9 9c-2.6-2.5-3.9-5.5-3.9-9S9.4 5.5 12 3z"/></svg></a>
-                                <a href="#" class="nav-link" data-page="market-stat" title="Market Statistik" aria-label="Market Statistik"><svg class="xi " viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V11M12 20V4M19 20v-6"/></svg></a>
-                            </div>
-                            <button type="button" class="xp-go" id="xp-go">Cari</button>
+                        <div class="xp-cfields" id="xp-cfields" hidden>
+                            <input id="xp-ct" class="xp-cin" type="text" maxlength="120" placeholder="Judul artikel" aria-label="Judul artikel" autocomplete="off">
+                            <select id="xp-cc" class="xp-cin" aria-label="Kategori artikel"><option>Web3 &amp; DeFi</option><option>Crypto Market</option><option>Stock Exchange</option><option>Global Market</option><option>Ekonomi Makro</option></select>
                         </div>
+                        <textarea id="xp-q" class="xp-in" rows="1" maxlength="500" placeholder="Apa yang sedang terjadi?" aria-label="Tulis status atau artikel"></textarea>
+                        <div class="xp-cprev" id="xp-cprev" hidden><img id="xp-cimg" alt="Pratinjau foto"><button type="button" id="xp-crm" aria-label="Hapus foto">&times;</button></div>
+                        <div class="xp-crow">
+                            <div class="xp-tools" id="xp-tools" role="toolbar" aria-label="Alat postingan"><label class="xp-pick" title="Foto" aria-label="Foto"><input type="file" id="xp-cfile" accept="image/*" hidden><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 17l5-5 4 4 2.5-2.5L20 17"/></svg></label><button type="button" data-tool="gif" title="GIF" aria-label="GIF"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3.5"/><text x="12" y="15.2" text-anchor="middle" font-size="7.2" font-weight="800" fill="currentColor" stroke="none" font-family="Inter,Arial,sans-serif">GIF</text></svg></button><button type="button" data-tool="emoji" title="Emoji" aria-label="Emoji"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor"/><circle cx="15" cy="10" r=".6" fill="currentColor"/><path d="M8.3 14c.9 1.6 2.1 2.3 3.7 2.3s2.8-.7 3.7-2.3"/></svg></button><button type="button" data-tool="sticker" title="Stiker" aria-label="Stiker"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14a1 1 0 011 1v9l-6 6H5a1 1 0 01-1-1V5a1 1 0 011-1z"/><path d="M20 14h-5a1 1 0 00-1 1v5"/><path d="M8.5 11.5c.7 1 1.5 1.5 2.5 1.5"/></svg></button><button type="button" data-tool="poll" title="Polling" aria-label="Polling"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6h9M5 12h14M5 18h6" stroke-width="2.6"/></svg></button><button type="button" data-tool="quote" title="Kutipan" aria-label="Kutipan"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 011 1v9a1 1 0 01-1 1h-6l-4 3.5V16H4a1 1 0 01-1-1V6a1 1 0 011-1z"/><path d="M8.5 9.5c-.9 0-1.4.6-1.4 1.4s.5 1.3 1.3 1.3M14 9.5c-.9 0-1.4.6-1.4 1.4s.5 1.3 1.3 1.3"/></svg></button><button type="button" data-tool="note" title="Catatan" aria-label="Catatan"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M9 12h6M9 16h6"/></svg><i class="xp-dot" aria-hidden="true"></i></button><button type="button" data-tool="loc" title="Lokasi" aria-label="Lokasi"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0113 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/></svg></button><button type="button" data-tool="music" title="Musik" aria-label="Musik"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></button></div>
+                            <button type="button" class="xp-go" id="xp-go" disabled>Posting</button><span class="xp-cnt" id="xp-cnt" aria-live="polite">500</span>
+                        </div>
+                        <div class="xp-emo" id="xp-emo" hidden></div>
                     </div>
                 </div>
 
@@ -2036,15 +2452,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
                     <a href="#" class="nav-link xp-trend" data-page="global-market"><span class="xp-tk">Sedang tren · Global Market</span><b>Indeks Likuiditas &amp; Komposit</b><span class="xp-ts">Cakupan pasar global</span><span class="xp-tm" aria-hidden="true"><svg class="xi " viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/></svg></span></a>
                     <a href="#" class="nav-link xp-trend" data-page="market-stat"><span class="xp-tk">Sedang tren · Statistik</span><b>Market Statistik</b><span class="xp-ts">Ringkasan otomatis dari data terbaru</span><span class="xp-tm" aria-hidden="true"><svg class="xi " viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/></svg></span></a>
                 </section>
-                <section class="xp-box xp-newsbox" data-xp-kind="news">
-                    <!-- Berita Pasar AS (Online) dipindah ke Beranda -->
-  <div class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl space-y-3">
-    <div class="flex items-center justify-between gap-3 border-b border-card-border pb-3"><div><h3 class="text-sm font-bold text-white uppercase tracking-wide">Berita Pasar AS (Online)</h3><p class="text-[11px] text-gray-400">Dikelompokkan otomatis menurut kejadian di AS &bull; <span id="se2-nts">--</span></p></div><button id="se2-nrf" type="button" class="text-[10px] px-2.5 py-1 rounded-lg bg-black border border-card-border text-gray-300 hover:text-white">Muat ulang</button></div>
-    <div id="se2-nfilt" class="flex flex-wrap gap-1.5 text-[10px]"></div>
-    <div id="se2-news" class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs"><p class="text-gray-500">Memuat berita...</p></div>
-    <div id="se2-npg" class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-card-border text-[11px]"></div>
-  </div>
-                </section>
+                <!-- Berita Pasar AS (Online) dihapus dari Beranda -->
                 <p class="xp-foot">Berita Angin · 1% Issue 99% Fact</p>
             </aside>
           </div>
@@ -2067,7 +2475,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
                     <h1 id="detail-title" class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
                         Judul Artikel Lengkap
                     </h1>
-                    <div class="flex items-center space-x-3 pt-2">
+                    <div class="art-author-row flex items-center space-x-3 pt-2">
                         <div class="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0">
                             <img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b1220%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231e293b%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%22124%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-size%3D%2284%22%20font-weight%3D%22800%22%20fill%3D%22%2338BDF8%22%3EAE%3C%2Ftext%3E%3C%2Fsvg%3E" data-avatar alt="Author" class="w-full h-full rounded-full object-cover border-2 border-brand-accent shadow-sm">
                         </div>
@@ -2091,7 +2499,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
                             <a id="share-linkedin" href="#" target="_blank" class="w-9 h-9 bg-card-dark border border-card-border hover:bg-blue-700 hover:text-white text-blue-400 rounded-lg flex items-center justify-center transition-all" title="Bagikan ke LinkedIn"><i class="fa-brands fa-linkedin-in text-sm"></i></a>
                         </div>
                     </div>
-                    <button onclick="goBackToHome()" class="bg-brand-primary hover:bg-brand-primary-light text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-all shadow-lg">
+                    <button onclick="goBackToHome()" class="art-more-btn bg-brand-primary hover:bg-brand-primary-light text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-all shadow-lg">
                         Baca Artikel Lainnya
                     </button>
                 </div>
@@ -2350,7 +2758,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
                 </div>
             </div>
             <!-- Navigasi Halaman Crypto Market (posisi & tata letak sama dengan halaman lain, model list) -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-card-dark border border-card-border p-3 rounded-xl">
+            <div class="ba-oldnav flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-card-dark border border-card-border p-3 rounded-xl">
                 <div class="flex items-center gap-2 text-xs font-medium text-gray-300">
                     <span class="text-brand-accent font-bold">Navigasi Halaman Crypto:</span>
                     <span id="crypto-subpage-indicator" class="px-2 py-0.5 rounded bg-brand-primary/20 text-brand-accent">Halaman 1 dari 2</span>
@@ -2947,7 +3355,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
         </section>
         <!-- 4. Halaman Stock Exchange -->
         <section id="page-stock-exchange" class="page space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-card-dark border border-card-border p-3 rounded-xl">
+            <div class="ba-oldnav flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-card-dark border border-card-border p-3 rounded-xl">
                 <div class="flex items-center gap-2 text-xs font-medium text-gray-300">
                     <span class="text-brand-accent font-bold">Navigasi Halaman Stock Exchange:</span>
                     <span id="se-sub-ind" class="px-2 py-0.5 rounded bg-brand-primary/20 text-brand-accent">Halaman 1 dari 2</span>
@@ -3390,7 +3798,7 @@ html.light #se3-wrap .se3-p b{color:#0f172a}
                     <span id="gm-clock" class="px-3 py-1 bg-card-dark border border-card-border rounded-lg text-emerald-400">● LIVE --:--:--</span>
                 </div>
             </div>
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-card-dark border border-card-border p-3 rounded-xl">
+            <div class="ba-oldnav flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-card-dark border border-card-border p-3 rounded-xl">
                 <div class="flex items-center gap-2 text-xs font-medium text-gray-300">
                     <span class="text-brand-accent font-bold">Navigasi Halaman Global Market:</span>
                     <span id="gm-sub-ind" class="px-2 py-0.5 rounded bg-brand-primary/20 text-brand-accent">Halaman 1 dari 3</span>
@@ -4596,6 +5004,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
         function openArticle(key) {
             const article = articlesData[key];
             if (!article) return;
+            document.getElementById('page-article-detail').classList.remove('news-mode');
             document.getElementById('detail-category').innerText = article.category;
             document.getElementById('detail-date').innerText = article.date;
             document.getElementById('detail-title').innerText = article.title;
@@ -9657,14 +10066,22 @@ var US_RE=/\b(u\.?s\.?|america|american|wall street|fed|federal reserve|nyse|nas
 var WLR=WL.map(function(w){return {s:w[0],rs:w[0].length>1?new RegExp('\\b'+w[0]+'\\b'):null,rn:new RegExp('\\b'+w[1].replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'\\b','i')}});
 function evtOf(t){for(var i=0;i<EVT.length;i++)if(EVT[i][3].test(t))return EVT[i];return null}
 function relT(d){var m=Math.max(0,Math.round((Date.now()-d.getTime())/60000));return m<1?'baru saja':m<60?m+' mnt lalu':m<1440?Math.floor(m/60)+' jam lalu':Math.floor(m/1440)+' hari lalu'}
+function nImgH(h){var m=/<img[^>]+src=["']([^"']+)["']/i.exec(String(h||''));return m?m[1]:''}
+function nTxt(h){try{var d=new DOMParser().parseFromString(String(h||''),'text/html');return (d.body.textContent||'').replace(/\s+/g,' ').trim()}catch(x){return ''}}
+function nImg(it){var s=['media:content','media:thumbnail','enclosure'],i,k,l,e,u,tp;
+  for(i=0;i<s.length;i++){l=it.getElementsByTagName(s[i]);for(k=0;k<l.length;k++){e=l[k];u=e.getAttribute('url');tp=e.getAttribute('type')||'';
+    if(u&&/^https?:/i.test(u)&&(/image/i.test(tp)||/\.(jpe?g|png|webp|gif)(\?|$)/i.test(u)||(!tp&&s[i]!=='enclosure')))return u}}
+  var d=it.getElementsByTagName('description')[0];return d?nImgH(d.textContent):''}
+function nPh(n){var c=(n.e&&n.e[2])||'#38BDF8',a=(n.e&&n.e[1])||'Pasar AS',t=String(n.src||'').slice(0,28);
+  return 'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1220"/><stop offset="1" stop-color="'+c+'" stop-opacity=".55"/></linearGradient></defs><rect width="800" height="450" fill="url(#g)"/><text x="400" y="220" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="46" font-weight="800" fill="#fff">'+esc(t)+'</text><text x="400" y="272" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="26" fill="#cbd5e1">'+esc(a)+'</text></svg>')}
 function fetchFeed(f){if(!window.__BA_PROXY)return fetchFeedOrig(f);
   return fetch('/api/proxy?url='+encodeURIComponent(f[1])).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){var x=new DOMParser().parseFromString(t,'text/xml');
-    var a=[].slice.call(x.querySelectorAll('item')).map(function(it){var g=function(k){var e=it.querySelector(k);return e?e.textContent:''},d=new Date(g('pubDate'));return {title:g('title'),link:g('link'),date:isNaN(d)?new Date():d,src:f[0]}});
+    var a=[].slice.call(x.querySelectorAll('item')).map(function(it){var g=function(k){var e=it.querySelector(k);return e?e.textContent:''},d=new Date(g('pubDate'));return {title:g('title'),link:g('link'),date:isNaN(d)?new Date():d,src:f[0],img:nImg(it),desc:nTxt(g('description'))}});
     if(!a.length)throw 0;return a}).catch(function(){return fetchFeedOrig(f)})}
 function fetchFeedOrig(f){var ok=function(a){if(!a.length)throw 0;return a};
-  return fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(f[1])).then(function(r){return r.json()}).then(function(j){return ok((j.items||[]).map(function(i){var d=i.pubDate?new Date(i.pubDate.replace(' ','T')+'Z'):new Date();return {title:i.title,link:i.link,date:isNaN(d)?new Date():d,src:f[0]}}))})
+  return fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(f[1])).then(function(r){return r.json()}).then(function(j){return ok((j.items||[]).map(function(i){var d=i.pubDate?new Date(i.pubDate.replace(' ','T')+'Z'):new Date();return {title:i.title,link:i.link,date:isNaN(d)?new Date():d,src:f[0],img:i.thumbnail||((i.enclosure&&/image/i.test(i.enclosure.type||'')&&i.enclosure.link)||'')||nImgH(i.content||i.description),desc:nTxt(i.description||i.content)}}))})
   .catch(function(){return fetch('https://api.allorigins.win/raw?url='+encodeURIComponent(f[1])).then(function(r){return r.text()}).then(function(t){var x=new DOMParser().parseFromString(t,'text/xml');
-    return ok([].slice.call(x.querySelectorAll('item')).map(function(it){var g=function(k){var e=it.querySelector(k);return e?e.textContent:''},d=new Date(g('pubDate'));return {title:g('title'),link:g('link'),date:isNaN(d)?new Date():d,src:f[0]}}))}).catch(function(){return []})})}
+    return ok([].slice.call(x.querySelectorAll('item')).map(function(it){var g=function(k){var e=it.querySelector(k);return e?e.textContent:''},d=new Date(g('pubDate'));return {title:g('title'),link:g('link'),date:isNaN(d)?new Date():d,src:f[0],img:nImg(it),desc:nTxt(g('description'))}}))}).catch(function(){return []})})}
 function rPg(total,pages){var el=$('se2-npg');if(!el)return;
   if(total<=NPS){el.innerHTML=total?'<span class="text-gray-500">'+total+' berita</span>':'';return}
   var from=(NP-1)*NPS+1,to=Math.min(total,NP*NPS),B='px-2.5 py-1 rounded-lg border min-w-[30px] text-center ',
@@ -9684,11 +10101,25 @@ function rNews(){var box=$('se2-news'),fl=$('se2-nfilt');if(!box)return;
   var NPG=Math.max(1,Math.ceil(L.length/NPS));if(NP>NPG)NP=NPG;if(NP<1)NP=1;
   var PGL=L.slice((NP-1)*NPS,NP*NPS);rPg(L.length,NPG);
   if(!L.length){box.innerHTML='<p class="text-gray-500 md:col-span-2">'+(NLOAD?'Memuat berita...':'Berita online belum dapat dimuat (koneksi/CORS). Akan dicoba lagi otomatis setiap 3 menit.')+'</p>';return}
-  box.innerHTML=PGL.map(function(n){var e=n.e,sc=n.sn>0?[UP,'▲ POSITIF']:n.sn<0?[DN,'▼ NEGATIF']:['#9ca3af','● NETRAL'];
-   return '<div class="se2-nc p-3 bg-black/50 border border-card-border rounded-xl hover:border-brand-accent space-y-1.5"><div class="flex items-center justify-between gap-2"><span class="se2-tag" style="color:'+e[2]+';border-color:'+e[2]+'66;background:'+e[2]+'14">'+esc(e[1].toUpperCase())+'</span><span class="se2-tag" style="color:'+sc[0]+';border-color:'+sc[0]+'55">'+sc[1]+'</span></div>'+
-    '<a href="'+esc(n.link)+'" target="_blank" rel="noopener noreferrer" class="block text-gray-200 font-semibold leading-snug hover:text-white">'+esc(n.title)+'</a>'+
-    '<div class="flex flex-wrap items-center gap-1.5 text-[10px]"><span class="text-gray-500">'+esc(n.src)+' · '+relT(n.date)+'</span>'+(e[4]?'<button type="button" data-sym="'+e[4]+'" class="px-1.5 py-0.5 rounded border border-card-border bg-black text-gray-300 hover:text-white" title="Sektor terdampak">Sektor '+e[4]+'</button>':'')+n.tk.map(function(t){return '<button type="button" data-sym="'+t+'" class="px-1.5 py-0.5 rounded border border-card-border bg-black font-mono text-brand-accent hover:text-white">'+t+'</button>'}).join('')+'</div></div>'}).join('')}
-function news(){NLOAD=true;if(!NEWS.length)rNews();
+  window.__NV=PGL;
+  box.innerHTML=PGL.map(function(n,i){var e=n.e,sc=n.sn>0?[UP,'▲ POSITIF']:n.sn<0?[DN,'▼ NEGATIF']:['#9ca3af','● NETRAL'],ph=nPh(n);
+   return '<article class="se2-nc xp-nitem" data-news="'+i+'" tabindex="0" role="link" aria-label="'+esc(n.title)+'"><div class="xp-nmeta"><span class="se2-tag" style="color:'+e[2]+';border-color:'+e[2]+'66;background:'+e[2]+'14">'+esc(e[1].toUpperCase())+'</span><span class="se2-tag" style="color:'+sc[0]+';border-color:'+sc[0]+'55">'+sc[1]+'</span></div>'+
+    '<div class="xp-card"><div class="xp-media"><img src="'+esc(n.img||ph)+'" data-ph="'+esc(ph)+'" alt="'+esc(n.title)+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=this.getAttribute(\'data-ph\')"></div>'+
+    '<div class="xp-cardtxt"><small>'+esc(n.src)+' · '+relT(n.date)+'</small><strong>'+esc(n.title)+'</strong></div></div></article>'}).join('')}
+function openNews(n){var g=function(i){return document.getElementById(i)},pg=g('page-article-detail');if(!pg||!n)return;
+  var e=n.e,sc=n.sn>0?[UP,'Positif']:n.sn<0?[DN,'Negatif']:['#9ca3af','Netral'],ph=nPh(n),im=g('detail-image'),
+      dt=n.date.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}),
+      lead=(n.desc&&n.desc.length>20&&n.desc.toLowerCase()!==String(n.title).toLowerCase())?n.desc:'Berita pasar AS ini dikelompokkan otomatis sebagai '+e[1]+' dan bersumber dari '+n.src+'. Buka laporan lengkap di sumber untuk membaca detailnya.';
+  g('detail-category').textContent=e[1];g('detail-date').textContent=dt;g('detail-read-time').textContent=n.src+' · '+relT(n.date);g('detail-title').textContent=n.title;
+  im.onerror=function(){im.onerror=null;im.src=ph};im.referrerPolicy='no-referrer';im.src=n.img||ph;im.alt=n.title;
+  var rows='<li>Kejadian: <b>'+esc(e[1])+'</b></li><li>Sentimen judul: <b style="color:'+sc[0]+'">'+sc[1]+'</b></li>'+(e[4]?'<li>Sektor terdampak: <b>'+esc(e[4])+'</b></li>':'')+(n.tk&&n.tk.length?'<li>Saham terkait: <b>'+n.tk.map(esc).join(', ')+'</b></li>':'');
+  g('detail-content').innerHTML='<p class="lead">'+esc(lead)+'</p><div class="art-box"><b>Ringkasan Berita</b><ul>'+rows+'</ul></div>'+
+    '<p><a href="'+esc(n.link)+'" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-light text-white font-semibold px-5 py-2.5 rounded-xl text-sm">Baca laporan lengkap di '+esc(n.src)+' &rarr;</a></p>';
+  var u=encodeURIComponent(n.link),t=encodeURIComponent(n.title);
+  [['share-whatsapp','https://api.whatsapp.com/send?text='+t+'%20-%20'+u],['share-twitter','https://twitter.com/intent/tweet?text='+t+'&url='+u],['share-facebook','https://www.facebook.com/sharer/sharer.php?u='+u],['share-linkedin','https://www.linkedin.com/shareArticle?mini=true&url='+u+'&title='+t]].forEach(function(x){var a=g(x[0]);if(a)a.href=x[1]});
+  Array.prototype.forEach.call(document.querySelectorAll('.page'),function(p){p.classList.remove('active')});
+  pg.classList.add('news-mode');pg.classList.add('active');window.scrollTo(0,0)}
+function news(){if(!$('se2-news'))return;NLOAD=true;if(!NEWS.length)rNews();
   Promise.all(FEEDS.map(fetchFeed)).then(function(a){NLOAD=false;var seen={},all=[];
    a.forEach(function(x){x.forEach(function(n){if(!n.title||!/^https?:\/\//.test(n.link||''))return;var k=n.title.toLowerCase().slice(0,60);if(seen[k])return;seen[k]=1;all.push(n)})});
    var out=[];all.forEach(function(n){var t=n.title,e=evtOf(t),us=US_RE.test(t);if(NON_US.test(t)&&!us)return;if(!e&&!us)return;
@@ -9742,6 +10173,8 @@ document.addEventListener('click',safe(function(e){var t=e.target,a=t.closest&&t
   if(t.closest&&t.closest('#se2-go')){var v=($('se2-q').value||'').toUpperCase().trim();if(/^[A-Z0-9.\-^=]{1,10}$/.test(v)){M.sym=v;M.range=M.range;msg('Memuat '+v+'...');genSim();loadMain();chips()}return}
   if(t.closest&&t.closest('#se2-nrf')){news()}}));
 document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target&&e.target.id==='se2-q'){var b=$('se2-go');if(b)b.click()}});
+document.addEventListener('click',safe(function(e){var c=e.target.closest&&e.target.closest('#se2-news [data-news]');if(!c)return;e.preventDefault();openNews((window.__NV||[])[+c.getAttribute('data-news')])}));
+document.addEventListener('keydown',safe(function(e){if(e.key!=='Enter'&&e.key!==' ')return;var c=e.target.closest&&e.target.closest('#se2-news [data-news]');if(!c)return;e.preventDefault();openNews((window.__NV||[])[+c.getAttribute('data-news')])}));
 /* ---------- status aktif ikon navigasi ---------- */
 function navSync(){var a=document.querySelector('.page.active'),n=a?a.id.replace('page-',''):'';if(n==='article-detail')n='home';
   Array.prototype.forEach.call(document.querySelectorAll('a.nav-item'),function(l){l.classList.toggle('is-active',l.getAttribute('data-page')===n)})}
@@ -11731,15 +12164,15 @@ button:not(:disabled):active,[role=button]:active,.nav-link:active,.sb-link:acti
   function reveal(){if(done)return;done=true;
     requestAnimationFrame(function(){requestAnimationFrame(function(){
       h.classList.add('ba-fade');h.classList.remove('ba-pre');
-      setTimeout(function(){h.classList.remove('ba-fade');window.__baBoot=false},450);
+      setTimeout(function(){h.classList.remove('ba-fade');window.__baBoot=false},150);
     })});}
   function fontsThenReveal(){
-    var f=(document.fonts&&document.fonts.ready)?Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,700)})]):Promise.resolve();
-    f.then(function(){setTimeout(reveal,120)});}
+    var f=(document.fonts&&document.fonts.ready)?Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,250)})]):Promise.resolve();
+    f.then(function(){setTimeout(reveal,0)});}
   function check(){
     var ok=Array.prototype.every.call(document.querySelectorAll('link[rel=stylesheet]'),function(l){return l.media!=='print'});
     var loaded=document.readyState==='complete';
-    if((ok&&loaded)||Date.now()-t0>2200)fontsThenReveal();else setTimeout(check,40);}
+    if((ok&&loaded)||Date.now()-t0>1200)fontsThenReveal();else setTimeout(check,30);}
   if(document.readyState!=='loading')check();else document.addEventListener('DOMContentLoaded',check);
 })();
 </script>
@@ -11884,6 +12317,89 @@ html body .nav-link,html body .sb-link,html body .ba-tab,html body .hp-btn,html 
 })();
 </script>
 
+<script id="xp-timeline-js">
+/* Timeline Beranda: buat Status/Artikel baru, urut terbaru di atas, artikel naik-turun seperti lini masa. Tersimpan di browser. */
+(function(){
+  var root=document.getElementById('page-home'),feed=root&&root.querySelector('.xp-feed');if(!feed)return;
+  var KEY='xp-tl-posts',posts=[],AUTH='Achmad Efendi, SE, MM';
+  var $=function(i){return document.getElementById(i)};
+  var esc=function(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+  try{posts=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(posts))posts=[]}catch(e){posts=[]}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(posts));return true}catch(e){return false}}
+  var seeds=[].slice.call(feed.querySelectorAll('.xp-post[data-xp-kind="artikel"]')),tpl=seeds[0]&&seeds[0].cloneNode(true);
+  if(!tpl)return;
+  var OFF=[6,38,90,170,300,520];
+  seeds.forEach(function(p,i){p.dataset.ts=Date.now()-(OFF[i]||600+i*60)*60000});
+  function ph(cat,lbl){return 'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1220"/><stop offset="1" stop-color="#1d9bf0" stop-opacity=".6"/></linearGradient></defs><rect width="800" height="450" fill="url(#g)"/><text x="400" y="225" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="54" font-weight="800" fill="#fff">'+esc(lbl)+'</text><text x="400" y="285" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="28" fill="#cbd5e1">'+esc(cat)+'</text></svg>')}
+  function rel(ts){var m=Math.floor((Date.now()-ts)/60000);return m<1?'baru saja':m<60?m+' mnt':m<1440?Math.floor(m/60)+' j':Math.floor(m/1440)+' h'}
+  function paras(t){var P=String(t).split(/\n{2,}/).filter(function(x){return x.trim()});return P.map(function(x,i){return '<p'+(i?'':' class="lead"')+'>'+esc(x.trim()).replace(/\n/g,'<br>')+'</p>'}).join('')}
+  function reg(o){if(typeof articlesData==='undefined')return;
+    var d=new Date(o.ts).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
+    articlesData[o.id]=o.kind==='artikel'
+      ?{category:o.cat,date:d,title:o.title,author:AUTH,image:o.img||ph(o.cat,'ARTIKEL'),readTime:o.rt+' Menit Baca',content:paras(o.text)}
+      :{category:'Status',date:d,title:o.text.split('\n')[0].slice(0,90),author:AUTH,image:o.img||ph('Status','STATUS'),readTime:'',content:paras(o.text)}}
+  var TRASH='<svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13M10 11v6M14 11v6"/></svg>';
+  function mk(o){var el=tpl.cloneNode(true),body=el.querySelector('.xp-body'),isA=o.kind==='artikel';
+    el.setAttribute('data-xp-kind',o.kind);el.setAttribute('data-open',o.id);el.setAttribute('aria-label',isA?o.title:o.text.slice(0,80));el.dataset.ts=o.ts;el.dataset.own='1';
+    el.querySelector('.xp-tag').textContent=isA?o.cat:'Status';
+    var tx=body.querySelector('.xp-text');tx.textContent=isA?(o.text.length>180?o.text.slice(0,180).replace(/\s+\S*$/,'')+'…':o.text):o.text;
+    var card=body.querySelector('.xp-card'),im=card.querySelector('.xp-media img'),ct=card.querySelector('.xp-cardtxt');
+    if(isA){im.removeAttribute('onerror');im.src=o.img||ph(o.cat,'ARTIKEL');im.alt=o.title;ct.innerHTML='<small>Berita Angin · '+o.rt+' menit baca</small><strong>'+esc(o.title)+'</strong>'}
+    else if(o.img){im.removeAttribute('onerror');im.src=o.img;im.alt='Foto status';ct.remove()}
+    else card.remove();
+    el.querySelectorAll('[data-id]').forEach(function(b){b.setAttribute('data-id',o.id)});
+    var v=el.querySelector('.xp-v');if(v){if(isA)v.querySelector('span').textContent=o.rt+' mnt';else v.remove()}
+    var grp=el.querySelector('.xp-grp'),del=document.createElement('button');del.type='button';del.className='xp-act xp-del';del.setAttribute('data-act','del');del.setAttribute('data-pid',o.id);del.title='Hapus';del.setAttribute('aria-label','Hapus postingan');del.innerHTML=TRASH;grp.parentNode.insertBefore(del,grp);
+    return el}
+  function stamp(){feed.querySelectorAll('.xp-post[data-ts]').forEach(function(p){var t=p.querySelector('time.xp-time');
+    if(!t){var m=p.querySelector('.xp-meta'),more=m.querySelector('.xp-more'),sp=document.createElement('span');sp.className='xp-dotsep';sp.textContent='·';t=document.createElement('time');t.className='xp-time';m.insertBefore(sp,more);m.insertBefore(t,more)}
+    t.textContent=rel(+p.dataset.ts);t.setAttribute('datetime',new Date(+p.dataset.ts).toISOString())})}
+  function sortFeed(){var ref=$('xp-empty');[].slice.call(feed.querySelectorAll('.xp-post:not(.xp-pin)')).sort(function(a,b){return b.dataset.ts-a.dataset.ts}).forEach(function(p){feed.insertBefore(p,ref)})}
+  function refilter(){var q=$('xp-q3');if(q)q.dispatchEvent(new Event('input'))}
+  /* muat postingan tersimpan */
+  posts.slice().reverse().forEach(function(o){if(!o||!o.id||!o.text)return;reg(o);feed.insertBefore(mk(o),$('xp-empty'))});
+  sortFeed();stamp();
+  /* ---------- timeline hidup ---------- */
+  var pill=document.createElement('button');pill.type='button';pill.className='xp-pill';pill.hidden=true;pill.innerHTML='&uarr; <span id="xp-pn">0</span> postingan baru';
+  var tabs=feed.querySelector('.xp-tabs');tabs.parentNode.insertBefore(pill,tabs.nextSibling);
+  var pend=0;
+  function apply(){sortFeed();stamp();feed.querySelectorAll('[data-fresh]').forEach(function(p){p.removeAttribute('data-fresh');p.classList.add('xp-new');setTimeout(function(){p.classList.remove('xp-new')},2500)});pend=0;pill.hidden=true;refilter()}
+  function resurf(){if(document.hidden||!root.classList.contains('active'))return;
+    var s=seeds.reduce(function(a,b){return +a.dataset.ts<=+b.dataset.ts?a:b});s.dataset.ts=Date.now();s.dataset.fresh='1';pend++;
+    if(window.pageYOffset<120)apply();else{$('xp-pn').textContent=pend;pill.hidden=false}}
+  pill.addEventListener('click',function(){apply();window.scrollTo({top:0,behavior:'smooth'})});
+  setInterval(resurf,75000);setInterval(function(){if(!document.hidden)stamp()},30000);
+  window.__xpTimeline={resurf:resurf,apply:apply};
+  /* ---------- kotak posting ---------- */
+  var mode='status',img='',ta=$('xp-q'),ti=$('xp-ct'),ca=$('xp-cc'),go=$('xp-go'),cnt=$('xp-cnt'),prev=$('xp-cprev'),pimg=$('xp-cimg'),fl=$('xp-cfile'),flds=$('xp-cfields');
+  function lim(){return mode==='status'?500:5000}
+  function sync(){var n=ta.value.length,t=ta.value.trim().length,ok=mode==='status'?(t>0&&n<=500):(ti.value.trim().length>=5&&t>=40&&n<=5000);
+    go.disabled=!ok;go.classList.toggle('on',ok);var left=lim()-n;cnt.textContent=left;cnt.classList.toggle('warn',left<20);
+    ta.style.setProperty('height','auto','important');ta.style.setProperty('height',Math.min(ta.scrollHeight,mode==='status'?240:380)+'px','important')}
+  function setMode(m){mode=m;[].forEach.call(root.querySelectorAll('.xp-cmode [data-cm]'),function(b){var on=b.getAttribute('data-cm')===m;b.classList.toggle('on',on);b.setAttribute('aria-selected',on)});
+    flds.hidden=m!=='artikel';$('xp-compose').classList.toggle('is-art',m==='artikel');ta.maxLength=lim();ta.placeholder=m==='status'?'Apa yang sedang terjadi?':'Tulis isi artikel (pisahkan paragraf dengan baris kosong)…';go.textContent=m==='status'?'Posting':'Terbitkan';sync()}
+  var _cm=root.querySelector('.xp-cmode');if(_cm)_cm.addEventListener('click',function(e){var b=e.target.closest('[data-cm]');if(b)setMode(b.getAttribute('data-cm'))});
+  [ta,ti].forEach(function(x){x.addEventListener('input',sync)});
+  var _qk=root.querySelector('.xp-quick');if(_qk)_qk.addEventListener('click',function(e){var b=e.target.closest('[data-tag]');if(!b)return;ta.focus();ta.setRangeText((ta.value&&!/\s$/.test(ta.value)?' ':'')+b.getAttribute('data-tag')+' ',ta.selectionStart,ta.selectionEnd,'end');sync()});
+  if(fl)fl.addEventListener('change',function(){var f=fl.files&&fl.files[0];fl.value='';if(!f||!/^image\//.test(f.type))return;
+    var fr=new FileReader();fr.onload=function(){if(f.type==='image/gif'&&f.size<1500000){img=fr.result;pimg.src=img;prev.hidden=false;return}var im=new Image();im.onload=function(){var k=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
+      c.getContext('2d').drawImage(im,0,0,c.width,c.height);img=c.toDataURL('image/jpeg',.72);pimg.src=img;prev.hidden=false};im.src=fr.result};fr.readAsDataURL(f)});
+  $('xp-crm').addEventListener('click',function(){img='';pimg.removeAttribute('src');prev.hidden=true});
+  function submit(){if(go.disabled)return;var t=ta.value.trim(),o={id:'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),kind:mode,ts:Date.now(),text:t,img:img};
+    if(mode==='artikel'){o.title=ti.value.trim();o.cat=ca.value;o.rt=Math.max(1,Math.ceil(t.split(/\s+/).length/200))}
+    posts.unshift(o);if(!save()&&o.img){o.img='';save()}
+    reg(o);var el=mk(o),first=feed.querySelector('.xp-post:not(.xp-pin)');feed.insertBefore(el,first||$('xp-empty'));el.classList.add('xp-new');setTimeout(function(){el.classList.remove('xp-new')},2500);stamp();
+    ta.value='';ti.value='';img='';prev.hidden=true;pimg.removeAttribute('src');sync();
+    var cur=root.querySelector('.xp-tabs [data-xp-tab].on'),want=cur&&cur.getAttribute('data-xp-tab');
+    if(want&&want!=='all'&&want!==mode){var tb=root.querySelector('.xp-tabs [data-xp-tab="'+(mode==='artikel'?'artikel':'status')+'"]');if(tb)tb.click()}else refilter()}
+  go.addEventListener('click',submit);
+  ta.addEventListener('keydown',function(e){if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();submit()}});
+  /* hapus postingan sendiri */
+  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#page-home .xp-del');if(!b)return;e.stopPropagation();e.preventDefault();
+    if(!window.confirm('Hapus postingan ini?'))return;var id=b.getAttribute('data-pid'),p=b.closest('.xp-post');posts=posts.filter(function(x){return x.id!==id});save();try{delete articlesData[id]}catch(x){}if(p)p.remove();refilter()},true);
+  setMode('status');
+})();
+</script>
 <script id="xp-home-js">
 (function(){
   var root=document.getElementById('page-home');if(!root||!root.querySelector('.xp'))return;
@@ -11892,7 +12408,7 @@ html body .nav-link,html body .sb-link,html body .ba-tab,html body .hp-btn,html 
   function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
   function off(){var b=document.getElementById('ba-topbar');var h=(b&&b.offsetParent!==null)?b.offsetHeight:0;root.style.setProperty('--xp-top',h+'px')}
   off();window.addEventListener('resize',off);setTimeout(off,500);setTimeout(off,1800);
-  var tab='all',q1=document.getElementById('xp-q'),q2=document.getElementById('xp-q2'),empty=document.getElementById('xp-empty');
+  var tab='all',q1=document.getElementById('xp-q3'),q2=document.getElementById('xp-q2'),empty=document.getElementById('xp-empty');
   function paint(){
     root.querySelectorAll('.xp-act[data-id]').forEach(function(b){
       var id=b.getAttribute('data-id'),k=b.getAttribute('data-act'),on=k==='like'?!!S.likes[id]:!!S.marks[id];
@@ -11903,7 +12419,7 @@ html body .nav-link,html body .sb-link,html body .ba-tab,html body .hp-btn,html 
   function filter(){
     var q=(q1.value||'').trim().toLowerCase(),shown=0;
     root.querySelectorAll('.xp-post').forEach(function(p){
-      var kind=p.getAttribute('data-xp-kind'),okTab=tab==='all'||(tab==='artikel'&&kind==='artikel'),okQ=!q||p.textContent.toLowerCase().indexOf(q)>-1,v=okTab&&okQ;
+      var kind=p.getAttribute('data-xp-kind'),okTab=tab==='all'||(tab==='artikel'&&kind==='artikel')||(tab==='status'&&kind==='status'),okQ=!q||p.textContent.toLowerCase().indexOf(q)>-1,v=okTab&&okQ;
       p.style.display=v?'':'none';if(v)shown++;
     });
     var nb=root.querySelector('.xp-newsbox');
@@ -11939,6 +12455,172 @@ html body .nav-link,html body .sb-link,html body .ba-tab,html body .hp-btn,html 
   paint();filter();
 })();
 </script>
+<script id="xp-tools-js">
+(function(){
+  var root=document.getElementById('page-home');if(!root)return;
+  var bar=document.getElementById('xp-tools'),ta=document.getElementById('xp-q'),emo=document.getElementById('xp-emo'),fl=document.getElementById('xp-cfile');if(!bar||!ta||!emo)return;
+  var E=['😀','😁','😂','🤣','😊','😍','🤩','😎','🤔','😅','😢','😡','👍','👏','🙏','💪','🔥','🚀','💎','🌙','📈','📉','💰','💵','🪙','🏦','🌍','📰','⚡','✅','⚠️','🎯'];
+  var K=['🚀','💎','🐂','🐻','🔥','📈','📉','💰','🪙','🏆','🎉','⚡','🌍','🧠','🤝'];
+  function put(t,back){ta.focus();var a=ta.selectionStart,e=ta.selectionEnd,pre=(a>0&&!/\s$/.test(ta.value.slice(0,a))&&t.charAt(0)!=='\n')?' ':'';
+    ta.setRangeText(pre+t,a,e,'end');if(back){var c=ta.selectionStart-back;ta.setSelectionRange(c,c)}ta.dispatchEvent(new Event('input',{bubbles:true}))}
+  function showEmo(kind,btn){var open=!emo.hidden&&emo.dataset.k===kind;[].forEach.call(bar.querySelectorAll('button.on'),function(x){x.classList.remove('on')});
+    if(open){emo.hidden=true;return}
+    emo.dataset.k=kind;emo.className='xp-emo'+(kind==='sticker'?' stk':'');emo.innerHTML=(kind==='sticker'?K:E).map(function(x){return '<button type="button" data-e="'+x+'">'+x+'</button>'}).join('');emo.hidden=false;btn.classList.add('on')}
+  bar.addEventListener('click',function(e){var b=e.target.closest('button[data-tool]');if(!b)return;var t=b.getAttribute('data-tool');
+    if(t==='emoji'||t==='sticker')return showEmo(t,b);
+    emo.hidden=true;
+    if(t==='gif'){if(fl){fl.accept='image/gif';fl.click();setTimeout(function(){fl.accept='image/*'},1500)}return}
+    if(t==='poll')return put('📊 Polling: \n▫️ Opsi 1\n▫️ Opsi 2',0);
+    if(t==='quote')return put('“”',1);
+    if(t==='note')return put('📝 Catatan: ',0);
+    if(t==='loc')return put('📍 ',0);
+    if(t==='music')return put('🎵 ',0)});
+  emo.addEventListener('click',function(e){var b=e.target.closest('button[data-e]');if(b)put(b.getAttribute('data-e'),0)});
+  document.addEventListener('click',function(e){if(!emo.hidden&&!e.target.closest('#xp-emo,#xp-tools')){emo.hidden=true;[].forEach.call(bar.querySelectorAll('button.on'),function(x){x.classList.remove('on')})}});
+})();
+</script>
+<script id="da-daily-js">
+/* ARTIKEL HARIAN: tiap hari tampil artikel baru dengan tata letak berbeda-beda (hero, split, kutipan, statistik, daftar, linimasa, tanya-jawab, peluang-vs-risiko).
+   Sumber, berurutan: (1) window.__DAILY.articles dari data.js, (2) articles.json di server (di-cache-bust per hari), (3) rotasi artikel bawaan per tanggal.
+   Skema item: {t,c,lead,pts:[[judul,teks],..3],opp,risk,body:[paragraf,..],layout?} */
+(function(){
+  var root=document.getElementById('page-home'),feed=root&&root.querySelector('.xp-feed');if(!feed)return;
+  var $=function(i){return document.getElementById(i)};
+  var esc=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+  var D=window.__DAILY||null;
+  var MON=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  var tpl=feed.querySelector('.xp-post[data-xp-kind="artikel"]');if(!tpl)return;tpl=tpl.cloneNode(true);tpl.removeAttribute('data-own');tpl.removeAttribute('data-ts');tpl.removeAttribute('data-fresh');
+  var PAL=[['#0b1220','#1d9bf0'],['#1a0b2e','#a855f7'],['#052e1b','#22c55e'],['#2a1305','#f59e0b'],['#2b0a14','#f43f5e'],['#06242b','#06b6d4'],['#14171c','#94a3b8'],['#0f1b3d','#6366f1']];
+  function cover(i,lbl){var p=PAL[i%PAL.length],k=i%4,s='';
+    if(k===0)for(var a=0;a<9;a++)s+='<circle cx="'+(90+a*85)+'" cy="'+(120+((a*53+i*37)%220))+'" r="'+(18+(a*17+i*7)%46)+'" fill="'+p[1]+'" opacity=".22"/>';
+    else if(k===1)for(var b=0;b<14;b++)s+='<path d="M'+(b*70-120)+' 450L'+(b*70+180)+' 0" stroke="'+p[1]+'" stroke-width="'+(2+b%3*2)+'" opacity=".25"/>';
+    else if(k===2)for(var c=0;c<10;c++){var h=60+((c*71+i*29)%260);s+='<rect x="'+(60+c*72)+'" y="'+(450-h)+'" width="44" height="'+h+'" rx="6" fill="'+p[1]+'" opacity=".28"/>'}
+    else for(var y=0;y<6;y++)for(var x=0;x<11;x++)s+='<circle cx="'+(50+x*70)+'" cy="'+(50+y*70)+'" r="'+(2+((x*y+i)%4)*2)+'" fill="'+p[1]+'" opacity=".35"/>';
+    return 'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+p[0]+'"/><stop offset="1" stop-color="'+p[1]+'" stop-opacity=".55"/></linearGradient></defs><rect width="800" height="450" fill="url(#g)"/>'+s+'<text x="40" y="410" font-family="Inter,Arial,sans-serif" font-size="38" font-weight="800" fill="#fff" opacity=".9">'+esc(lbl)+'</text></svg>')}
+  /* ---- artikel bawaan (rotasi per tanggal) ---- */
+  var POOL=[
+  {t:'Self-Custody: Mengapa Kunci Dompet Harus Anda Pegang Sendiri',c:'Web3 & DeFi',lead:'Menyimpan aset di bursa itu praktis, tetapi kendali penuh baru Anda miliki saat private key berada di tangan sendiri.',
+   pts:[['Kunci = kuasa','Siapa memegang private key, dialah yang menguasai aset.'],['Cadangan frasa','Tulis seed phrase di media fisik, simpan di dua tempat aman.'],['Uji kecil dulu','Kirim nominal kecil sebelum memindahkan dana besar.']],
+   opp:'Aset tidak bergantung pada kebijakan atau kegagalan pihak ketiga.',risk:'Frasa pemulihan hilang berarti dana tidak bisa dipulihkan siapa pun.',
+   body:['Self-custody berarti Anda sendiri yang menjaga akses ke aset digital, tanpa perantara. Prinsipnya sederhana: yang tidak Anda kendalikan kuncinya, belum sepenuhnya milik Anda.','Tanggung jawabnya juga bergeser ke pengguna. Tidak ada layanan pelanggan yang bisa mereset sandi dompet. Karena itu disiplin pencadangan dan kewaspadaan terhadap tautan palsu menjadi kebiasaan wajib.']},
+  {t:'Stablecoin: Jembatan antara Rupiah, Dolar, dan Dunia Kripto',c:'Crypto Market',lead:'Aset yang nilainya dipatok ke mata uang tertentu ini menjadi pintu masuk dan keluar utama bagi pasar kripto.',
+   pts:[['Dipatok','Dirancang stabil terhadap acuan seperti dolar AS.'],['Cadangan','Kualitas dan transparansi cadangan menentukan kepercayaan.'],['Likuiditas','Dipakai sebagai pasangan utama di banyak bursa.']],
+   opp:'Transfer lintas negara cepat dengan biaya relatif rendah.',risk:'Patokan bisa lepas bila cadangan diragukan atau ada gangguan hukum.',
+   body:['Stablecoin memudahkan pengguna berpindah posisi tanpa harus menarik dana ke rekening bank setiap kali. Karena itu volumenya sering menjadi indikator likuiditas pasar.','Meski disebut stabil, risikonya nyata: penerbit, regulasi, dan kualitas cadangan. Periksa laporan atestasi penerbit dan jangan menaruh seluruh dana pada satu jenis stablecoin.']},
+  {t:'Diversifikasi: Saham, Kripto, dan Kas dalam Satu Portofolio',c:'Stock Exchange',lead:'Menyebar dana ke beberapa kelas aset tidak menghilangkan risiko, tetapi mencegah satu kejutan merusak seluruh portofolio.',
+   pts:[['Tentukan porsi','Tetapkan alokasi sesuai profil risiko dan jangka waktu.'],['Rebalancing','Kembalikan porsi secara berkala, misalnya tiap kuartal.'],['Dana darurat','Sisihkan kas sebelum mengambil aset berisiko.']],
+   opp:'Fluktuasi portofolio lebih halus karena aset tidak selalu bergerak searah.',risk:'Terlalu banyak instrumen yang tidak dipahami justru menambah kebingungan.',
+   body:['Saham, kripto, obligasi, dan kas punya karakter berbeda. Ada masa ketika semuanya naik bersama, ada pula masa ketika korelasinya meningkat saat pasar panik.','Mulailah dari tujuan: untuk apa dana ini dan kapan dibutuhkan. Alokasi yang baik adalah yang bisa Anda pertahankan saat pasar turun.']},
+  {t:'Inflasi dan Suku Bunga: Dua Angka yang Menggerakkan Semua Pasar',c:'Ekonomi Makro',lead:'Keputusan bank sentral soal suku bunga merambat ke saham, obligasi, kurs, hingga harga aset kripto.',
+   pts:[['Bunga naik','Biaya pinjaman naik, aset berisiko cenderung tertekan.'],['Bunga turun','Likuiditas longgar, minat pada aset berisiko biasanya naik.'],['Ekspektasi','Pasar sering bergerak lebih dulu dari keputusan resmi.']],
+   opp:'Memahami arah kebijakan membantu menimbang waktu masuk dan keluar.',risk:'Menebak keputusan bank sentral secara spekulatif sering keliru.',
+   body:['Inflasi menggerus daya beli, sehingga bank sentral menaikkan suku bunga untuk meredamnya. Sebaliknya saat ekonomi melemah, bunga diturunkan untuk mendorong aktivitas.','Bagi investor, yang penting bukan menebak angka, melainkan memahami bagaimana setiap skenario memengaruhi aset yang dipegang.']},
+  {t:'Audit Smart Contract: Cek Ini Sebelum Menyetor Dana ke Protokol DeFi',c:'Web3 & DeFi',lead:'Kode yang mengelola dana tidak boleh dipercaya hanya karena imbal hasilnya tinggi.',
+   pts:[['Laporan audit','Cari audit dari pihak independen dan baca temuannya.'],['Riwayat','Protokol yang bertahan lama biasanya sudah teruji.'],['Batas izin','Cabut izin token yang tidak lagi dipakai.']],
+   opp:'Protokol terbuka dapat diperiksa siapa saja, termasuk Anda.',risk:'Audit bukan jaminan; celah baru tetap bisa muncul setelah pembaruan.',
+   body:['Smart contract berjalan otomatis sesuai kode. Bila kodenya cacat, dana bisa terkuras tanpa ada pihak yang dapat membatalkan transaksi.','Mulailah dengan nominal kecil, hindari menyetor seluruh dana ke satu protokol, dan waspadai imbal hasil yang terdengar terlalu bagus.']},
+  {t:'Kurs Rupiah dan Dolar: Mengapa Pergerakannya Terasa di Dompet Kita',c:'Global Market',lead:'Dolar AS menjadi acuan perdagangan dunia, sehingga naik-turunnya ikut memengaruhi harga impor, utang, dan investasi.',
+   pts:[['Impor','Dolar menguat, harga barang impor ikut terdorong.'],['Arus modal','Investor asing bisa masuk atau keluar sesuai selisih bunga.'],['Lindung nilai','Sebagian dana dapat disimpan dalam aset valas.']],
+   opp:'Eksportir dan pemegang aset valas mendapat keuntungan saat rupiah melemah.',risk:'Pelemahan tajam menekan perusahaan yang berutang dalam dolar.',
+   body:['Kurs dipengaruhi selisih suku bunga, neraca perdagangan, dan sentimen global. Itu sebabnya data ekonomi AS bisa menggerakkan rupiah dalam hitungan jam.','Bagi individu, memahami eksposur terhadap dolar, misalnya cicilan atau kebutuhan sekolah di luar negeri, membantu merencanakan lindung nilai sederhana.']},
+  {t:'Leverage dan Likuidasi: Cara Cepat Kehilangan Modal di Pasar Kripto',c:'Crypto Market',lead:'Pinjaman untuk memperbesar posisi memperbesar untung sekaligus rugi, dan posisi bisa ditutup paksa tanpa aba-aba.',
+   pts:[['Margin','Jaminan menipis, posisi dilikuidasi otomatis.'],['Funding','Biaya berkala bisa menggerus posisi yang ditahan lama.'],['Stop-loss','Tentukan batas rugi sebelum membuka posisi.']],
+   opp:'Modal kecil dapat mengendalikan posisi lebih besar.',risk:'Gerakan harga kecil saja bisa menghapus seluruh modal.',
+   body:['Dengan leverage 10x, penurunan harga sekitar 10% sudah cukup untuk melikuidasi posisi. Pasar kripto yang berjalan 24 jam membuat pergerakan semacam itu bisa terjadi saat Anda tidur.','Bila tetap ingin mencoba, gunakan modal yang siap hilang, leverage rendah, dan rencana keluar yang tertulis.']},
+  {t:'Dividen: Memahami Pembagian Laba Perusahaan Tercatat',c:'Stock Exchange',lead:'Dividen adalah bagian laba yang dibagikan kepada pemegang saham, tetapi besarnya tidak pernah dijamin.',
+   pts:[['Cum date','Anda harus memegang saham pada tanggal ini untuk berhak.'],['Payout ratio','Porsi laba yang dibagikan menunjukkan keberlanjutannya.'],['Harga turun','Harga saham biasanya menyesuaikan setelah ex-date.']],
+   opp:'Memberi arus kas rutin di luar kenaikan harga saham.',risk:'Dividen tinggi bisa menandakan harga turun, bukan perusahaan sehat.',
+   body:['Perusahaan yang matang biasanya membagikan sebagian laba, sedangkan perusahaan yang sedang tumbuh sering menahannya untuk ekspansi.','Lihat konsistensi arus kas dan rasio pembayaran selama beberapa tahun, bukan hanya persentase imbal hasil pada satu periode.']},
+  {t:'Layer-2: Mengapa Transaksi di Jaringan Kripto Bisa Jauh Lebih Murah',c:'Web3 & DeFi',lead:'Jaringan lapis kedua memproses transaksi di luar rantai utama, lalu menyetor ringkasannya agar tetap aman.',
+   pts:[['Rollup','Ribuan transaksi dibungkus menjadi satu bukti.'],['Biaya turun','Biaya gas dibagi banyak pengguna.'],['Jembatan','Berpindah jaringan perlu kehati-hatian ekstra.']],
+   opp:'Aplikasi terdesentralisasi menjadi terjangkau untuk transaksi kecil.',risk:'Jembatan antarjaringan pernah menjadi target peretasan besar.',
+   body:['Rantai utama membatasi jumlah transaksi per detik sehingga biaya melonjak saat ramai. Layer-2 mengurangi beban itu tanpa meninggalkan keamanan rantai utama.','Pelajari cara kerja penarikan kembali ke rantai utama sebelum memindahkan dana dalam jumlah besar.']},
+  {t:'Membaca Laporan Keuangan Emiten untuk Pemula',c:'Stock Exchange',lead:'Tiga laporan inti cukup untuk menilai apakah sebuah perusahaan sehat atau hanya ramai dibicarakan.',
+   pts:[['Laba rugi','Apakah pendapatan dan laba bertumbuh konsisten?'],['Neraca','Seberapa besar utang dibanding modal sendiri?'],['Arus kas','Apakah laba benar-benar menjadi uang tunai?']],
+   opp:'Keputusan berbasis data mengurangi ketergantungan pada rumor.',risk:'Angka bagus satu kuartal belum tentu berkelanjutan.',
+   body:['Mulailah dengan tren beberapa tahun, bukan satu periode. Bandingkan juga dengan perusahaan sejenis di sektor yang sama.','Catatan atas laporan keuangan sering memuat informasi penting seperti utang jatuh tempo dan transaksi dengan pihak berelasi.']},
+  {t:'Phishing Kripto: Pola Penipuan yang Paling Sering Berulang',c:'Web3 & DeFi',lead:'Sebagian besar kehilangan aset terjadi karena pengguna tertipu, bukan karena sistem blockchain dibobol.',
+   pts:[['Tautan palsu','Selalu buka situs dari penanda yang Anda simpan sendiri.'],['Hadiah gratis','Airdrop yang meminta frasa pemulihan adalah penipuan.'],['Tanda tangan','Baca setiap permintaan tanda tangan sebelum menyetujui.']],
+   opp:'Kebiasaan aman sederhana menutup sebagian besar celah penipuan.',risk:'Satu klik ceroboh dapat menguras dompet dalam hitungan detik.',
+   body:['Penipu meniru akun resmi, situs bursa, bahkan layanan dukungan. Pesan yang menekan Anda untuk bertindak cepat adalah tanda bahaya utama.','Gunakan dompet terpisah untuk eksperimen, aktifkan autentikasi dua langkah, dan jangan pernah membagikan frasa pemulihan kepada siapa pun.']},
+  {t:'Imbal Hasil Obligasi AS: Angka Kecil yang Mengguncang Pasar Dunia',c:'Global Market',lead:'Imbal hasil obligasi pemerintah AS dianggap tingkat bebas risiko, sehingga perubahannya mengubah harga semua aset lain.',
+   pts:[['Yield naik','Aset berisiko jadi relatif kurang menarik.'],['Kurva terbalik','Sering dibaca sebagai sinyal perlambatan ekonomi.'],['Dolar','Yield tinggi cenderung menarik dana ke dolar.']],
+   opp:'Menjadi indikator dini arah selera risiko investor global.',risk:'Sinyal ini tidak selalu tepat waktu dan sering disalahartikan.',
+   body:['Saat yield naik, investor punya alternatif aman dengan imbal hasil lebih baik, sehingga valuasi saham teknologi dan aset spekulatif biasanya terkoreksi.','Pantau yield bersama data inflasi dan pernyataan bank sentral, bukan sebagai sinyal tunggal.']}
+  ];
+  var LAY=['hero','split','quote','list','timeline','qa','vs'];
+  function nf(n,d){return (+n).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function sg(c){return (c>=0?'+':'')+(+c).toFixed(2)+'%'}
+  function digest(now){
+    var cr=(D&&D.crypto)||{},gl=(D&&D.global)||{},btc=cr.btc,eth=cr.eth,sp=gl['S&P 500'],nq=gl['NASDAQ Composite'],st=[],ln=[];
+    function add(lbl,u,pre,dec){if(u&&typeof u.v==='number'||u&&typeof u.p==='number'){var v=typeof u.p==='number'?u.p:u.v;st.push([pre+nf(v,dec),lbl+(typeof u.c==='number'?' · '+sg(u.c):'')]);ln.push(lbl+' '+pre+nf(v,dec)+(typeof u.c==='number'?' ('+sg(u.c)+')':''))}}
+    add('Bitcoin',btc,'$',0);add('Ethereum',eth,'$',0);add('S&P 500',sp,'',2);if(st.length<3)add('NASDAQ',nq,'',2);
+    var d=now.getDate()+' '+MON[now.getMonth()]+' '+now.getFullYear();
+    return {t:'Ringkasan Pasar Hari Ini, '+d,c:'Global Market',layout:'stats',
+      lead:ln.length?'Posisi terakhir: '+ln.join(', ')+'. Angka diperbarui otomatis setiap hari.':'Pantau pergerakan kripto, saham, dan pasar global pada halaman pasar masing-masing. Angka ringkasan tampil otomatis ketika data harian tersedia.',
+      stats:st.length?st:[['Kripto','Lihat Crypto Market'],['Saham','Lihat Stock Exchange'],['Global','Lihat Global Market']],
+      pts:[['Kripto','Bitcoin dan Ethereum menjadi acuan sentimen aset digital.'],['Saham','Indeks utama AS memengaruhi bursa Asia pada pembukaan berikutnya.'],['Global','Kurs dan imbal hasil obligasi menentukan selera risiko.']],
+      opp:'Satu layar ringkas untuk membaca arah pasar sebelum beraktivitas.',risk:'Angka harian bersifat sesaat dan bukan saran investasi.',
+      body:['Ringkasan ini dibuat otomatis dari data pasar harian dan diperbarui setiap hari. Gunakan sebagai gambaran awal, lalu cek halaman pasar untuk detail.','Selalu bandingkan dengan sumber resmi sebelum mengambil keputusan.']}}
+  function norm(a,i,lay){if(!a||!a.t||!a.lead)return null;var o={t:String(a.t),c:a.c||'Web3 & DeFi',lead:String(a.lead),pts:(a.pts||[]).slice(0,3),stats:a.stats||null,opp:a.opp||'',risk:a.risk||'',body:(a.body||[]).map(String),layout:a.layout||lay,i:i};
+    if(!o.stats)o.stats=o.pts.map(function(p){return [p[0],p[1]]});
+    var w=(o.lead+' '+o.body.join(' ')+' '+o.pts.map(function(p){return p.join(' ')}).join(' ')).split(/\s+/).length;o.rt=Math.max(2,Math.ceil(w/110));return o}
+  /* ---- tata letak ---- */
+  var R={
+   hero:function(a,cv){return '<div class="da da-hero"><img src="'+cv+'" alt="" decoding="sync" width="800" height="450"><div class="da-ov"><small>'+esc(a.c)+' · '+a.rt+' menit baca</small><strong>'+esc(a.t)+'</strong></div></div>'},
+   split:function(a,cv){return '<div class="da da-split"><img src="'+cv+'" alt="" decoding="sync" width="800" height="450"><div><small>'+esc(a.c)+' · '+a.rt+' menit baca</small><strong>'+esc(a.t)+'</strong></div></div>'},
+   quote:function(a){return '<div class="da da-quote"><div class="da-qm" aria-hidden="true">&ldquo;</div><blockquote>'+esc(a.lead)+'</blockquote><small>'+esc(a.t)+' · '+a.rt+' menit baca</small></div>'},
+   stats:function(a){return '<div class="da da-stats"><strong>'+esc(a.t)+'</strong><div class="da-tiles">'+a.stats.slice(0,3).map(function(s){return '<div><b>'+esc(s[0])+'</b><span>'+esc(s[1])+'</span></div>'}).join('')+'</div></div>'},
+   list:function(a){return '<div class="da da-list"><strong>'+esc(a.t)+'</strong><ol>'+a.pts.map(function(p){return '<li><b>'+esc(p[0])+'</b> '+esc(p[1])+'</li>'}).join('')+'</ol></div>'},
+   timeline:function(a){return '<div class="da da-time"><strong>'+esc(a.t)+'</strong><ul>'+a.pts.map(function(p){return '<li><i></i><div><b>'+esc(p[0])+'</b><span>'+esc(p[1])+'</span></div></li>'}).join('')+'</ul></div>'},
+   qa:function(a){return '<div class="da da-qa"><div class="q"><small>Pertanyaan</small>Apa intinya soal &ldquo;'+esc(a.t)+'&rdquo;?</div><div class="a"><small>Jawaban singkat</small>'+esc(a.lead)+'</div></div>'},
+   vs:function(a){return '<div class="da da-vs"><strong>'+esc(a.t)+'</strong><div><section class="up"><small>Peluang</small>'+esc(a.opp||(a.pts[0]&&a.pts[0][1])||'')+'</section><section class="dn"><small>Waspadai</small>'+esc(a.risk||(a.pts[2]&&a.pts[2][1])||'')+'</section></div></div>'}
+  };
+  var cur='';
+  function dayKey(n){return n.getFullYear()+'-'+('0'+(n.getMonth()+1)).slice(-2)+'-'+('0'+n.getDate()).slice(-2)}
+  function build(src,now){var key=dayKey(now),N=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/864e5),out=[],dg=norm(digest(now),0,'stats');out.push(dg);
+    var list=src&&src.length?src:null,n=5,start=(N*n)%POOL.length;
+    for(var i=0;i<n;i++){var raw=list?list[i%list.length]:POOL[(start+i)%POOL.length];if(list&&i>=list.length)break;var a=norm(raw,i+1,LAY[(N+i)%LAY.length]);if(a){if(!R[a.layout]||a.layout==='stats'&&raw.layout!=='stats')a.layout=LAY[(N+i)%LAY.length];out.push(a)}}
+    return out.map(function(a,k){a.i=k;a.id='da-'+key+'-'+k;return a})}
+  function render(src){
+    var now=new Date(),key=dayKey(now),arts=build(src,now),ref=$('xp-empty'),dateTxt=now.getDate()+' '+MON[now.getMonth()]+' '+now.getFullYear();
+    [].slice.call(feed.querySelectorAll('.da-gen')).forEach(function(p){p.remove()});
+    arts.forEach(function(a,k){
+      var cv=cover(a.i+now.getDate(),a.c),el=tpl.cloneNode(true);
+      el.classList.add('da-gen');el.setAttribute('data-xp-kind','artikel');el.setAttribute('data-open',a.id);el.setAttribute('aria-label',a.t);
+      el.dataset.ts=Date.now()-(k+1)*2.5*60000;
+      el.querySelectorAll('[data-id]').forEach(function(b){b.setAttribute('data-id',a.id)});
+      var tg=el.querySelector('.xp-tag');if(tg){tg.textContent=a.c;tg.className='xp-tag'}
+      var tx=el.querySelector('.xp-body > .xp-text'),card=el.querySelector('.xp-card');
+      if(card){var w=document.createElement('div');w.innerHTML=R[a.layout](a,cv);card.replaceWith(w.firstChild)}
+      if(tx){if(a.layout==='quote'||a.layout==='qa'||a.layout==='hero')tx.remove();else tx.textContent=a.lead}
+      var v=el.querySelector('.xp-v span');if(v)v.textContent=a.rt+' mnt';
+      var badge=document.createElement('span');badge.className='da-badge';badge.textContent='Hari ini';var m=el.querySelector('.xp-tag');if(m)m.after(badge);
+      feed.insertBefore(el,ref);
+      if(typeof articlesData!=='undefined'){
+        var html='<p class="lead">'+esc(a.lead)+'</p>'+a.body.map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+(a.pts.length?'<h3>Poin penting</h3><ul>'+a.pts.map(function(p){return '<li><strong>'+esc(p[0])+'</strong>: '+esc(p[1])+'</li>'}).join('')+'</ul>':'')+(a.opp||a.risk?'<p><strong>Peluang:</strong> '+esc(a.opp)+'</p><p><strong>Risiko:</strong> '+esc(a.risk)+'</p>':'')+'<p><em>Artikel edukasi, bukan saran investasi.</em></p>';
+        articlesData[a.id]={title:a.t,category:a.c,date:dateTxt,readTime:a.rt+' Menit Baca',author:'Berita Angin Team',image:cv,content:html}}
+    });
+    cur=key;
+    if(window.__xpTimeline&&window.__xpTimeline.apply)window.__xpTimeline.apply();
+  }
+  var key0=dayKey(new Date());
+  var CK='da-remote',cursig='';
+  function sig(a){try{return JSON.stringify(a)}catch(e){return ''}}
+  function cached(){try{var o=JSON.parse(localStorage.getItem(CK)||'null');if(o&&o.d===dayKey(new Date())&&Array.isArray(o.a)&&o.a.length)return o.a}catch(e){}return null}
+  function hiddenNow(){var c=document.documentElement.classList;return c.contains('ba-pre')||c.contains('ba-fade')}
+  var first=cached()||(D&&D.articles);cursig=sig(first);
+  render(first);
+  /* sumber online harian: articles.json (di-cache-bust per hari) */
+  function remote(){try{fetch('articles.json?d='+dayKey(new Date()),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){var arr=j&&(Array.isArray(j)?j:j.articles);if(!arr||!arr.length)return;
+    try{localStorage.setItem(CK,JSON.stringify({d:dayKey(new Date()),a:arr}))}catch(e){}
+    /* ganti tampilan hanya saat halaman masih tersembunyi (boot); kalau sudah tampil, dipakai pada pemuatan berikutnya agar tidak berkedip */
+    if(hiddenNow()&&sig(arr)!==cursig){cursig=sig(arr);render(arr)}}).catch(function(){})}catch(e){}}
+  if(location.protocol.indexOf('http')===0)remote();
+  setInterval(function(){if(dayKey(new Date())!==cur){var c2=cached()||(D&&D.articles);cursig=sig(c2);render(c2);remote()}},300000);
+})();
+</script>
+
 
 <script id="xp-nav-icons">
 (function(){
