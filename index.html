@@ -2071,6 +2071,27 @@ html.light body .ba-oldnav button.bg-brand-primary,html.light body .ba-oldnav .c
 html.light body .ba-oldnav button:hover,html.light body .ba-oldnav .cr-sublink:hover,html.light body #page-market-stat .ms-jump button:hover{background:#f0f9ff!important}
 html.light body .ba-oldnav button,html.light body .ba-oldnav .cr-sublink,html.light body #page-market-stat .ms-jump button{background:transparent!important}
 </style>
+<style id="nw-css">
+/* Status Berita (Peristiwa · Keuangan · Global) di Beranda */
+#page-home .xp-post[data-nw] .xp-tag{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:0 9px;line-height:20px;font-size:12px;font-weight:700;letter-spacing:.2px}
+#page-home .xp-post[data-nw="peristiwa"] .xp-tag{background:rgba(244,63,94,.14);color:#f43f5e}
+#page-home .xp-post[data-nw="keuangan"] .xp-tag{background:rgba(0,186,124,.14);color:#00ba7c}
+#page-home .xp-post[data-nw="global"] .xp-tag{background:rgba(29,155,240,.14);color:#1d9bf0}
+#page-home .xp-post[data-nw] .xp-tag::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;animation:nwp 1.6s ease-in-out infinite}
+@keyframes nwp{0%,100%{opacity:1}50%{opacity:.25}}
+#page-home .nw-media{position:relative;margin-top:12px;aspect-ratio:16/9;border:1px solid var(--xp-line);border-radius:16px;overflow:hidden;background:linear-gradient(135deg,#0b1220,#1e293b)}
+#page-home .nw-media>img,#page-home .nw-media>video,#page-home .nw-media>iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0;display:block;background:#000}
+#page-home .nw-badge{position:absolute;left:10px;top:10px;z-index:2;display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;background:rgba(0,0,0,.65);color:#fff;font:700 11px/16px inherit;font-family:inherit;letter-spacing:.4px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#page-home .nw-badge i{width:7px;height:7px;border-radius:50%;background:#f43f5e;animation:nwp 1.2s ease-in-out infinite}
+#page-home .nw-play{position:absolute;inset:0;z-index:1;display:grid;place-items:center;width:100%;height:100%;border:0;padding:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.45));cursor:pointer}
+#page-home .nw-play span{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.92);color:#0f1419;box-shadow:0 8px 28px rgba(0,0,0,.45);transition:transform .15s}
+#page-home .nw-play:hover span,#page-home .nw-play:focus-visible span{transform:scale(1.08)}
+#page-home .nw-play svg{width:26px;height:26px;margin-left:3px}
+#page-home .nw-cap{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:22px 14px 10px;background:linear-gradient(0deg,rgba(0,0,0,.78),transparent);color:#fff;font-size:14px;font-weight:700;line-height:19px;pointer-events:none}
+#page-home .nw-meta{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px;font-size:13px;line-height:16px;color:var(--xp-m)}
+#page-home .nw-meta a{color:var(--xp-a);text-decoration:none}#page-home .nw-meta a:hover{text-decoration:underline}
+#page-home .nw-title{display:block;margin:2px 0 0;font-size:16px;line-height:22px;font-weight:700;color:var(--xp-t)}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-splash" aria-hidden="true"><div class="ba-ring"><img class="lg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
@@ -12314,6 +12335,80 @@ html body .nav-link,html body .sb-link,html body .ba-tab,html body .hp-btn,html 
   };
   /* Saat tab kembali aktif, gambar ulang grafik halaman aktif */
   D.addEventListener('visibilitychange',function(){if(!D.hidden)fit(D.querySelector('.page.active'))});
+})();
+</script>
+
+<script id="nw-news-js">
+/* STATUS BERITA di Beranda: Berita Peristiwa · Keuangan · Global, lengkap dengan foto dan video.
+   Sumber, berurutan: (1) window.__NEWS dari data.js, (2) news.json di server (cache-bust per hari), (3) contoh bawaan di bawah.
+   Skema item: {cat:'peristiwa'|'keuangan'|'global', title, text, img?, src?, link?, ago?(menit lalu),
+                video?:{yt:'channel:UCxxxx'|'id:VIDEOID'|'file:berita.mp4', poster?}}
+   Foto/video lokal: taruh di folder yang sama, mis. img:'peristiwa1.jpg' atau video:{yt:'file:berita1.mp4'}. */
+(function(){
+  var root=document.getElementById('page-home'),feed=root&&root.querySelector('.xp-feed');if(!feed)return;
+  var tpl0=feed.querySelector('.xp-post[data-xp-kind="artikel"]');if(!tpl0)return;
+  var tpl=tpl0.cloneNode(true);['data-own','data-ts','data-fresh'].forEach(function(a){tpl.removeAttribute(a)});
+  var esc=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+  var CAT={peristiwa:'Peristiwa',keuangan:'Keuangan',global:'Global'};
+  var PAL={peristiwa:['#2b0a14','#f43f5e'],keuangan:['#052e1b','#22c55e'],global:['#0f1b3d','#1d9bf0']};
+  var U=function(id){return 'https://images.unsplash.com/'+id+'?w=900&auto=format&fit=crop&q=80'};
+  var SEED=[
+    {cat:'peristiwa',ago:4,title:'Musim Laporan Kuartal III Dimulai: Pasar Menunggu Proyeksi Emiten',text:'Emiten besar biasanya mulai merilis kinerja kuartal III pada pertengahan Oktober. Sorotan pasar: pertumbuhan pendapatan, margin laba, dan proyeksi kuartal berikutnya.',img:U('photo-1590283603385-17ffb3a7f29f'),src:'Pantauan Berita Angin'},
+    {cat:'keuangan',ago:12,title:'Arus Dana ETF Kripto Jadi Indikator Selera Risiko Investor',text:'Arus masuk dan keluar dana ETF kripto kini ikut dibaca bersama harga aset digital sebagai penanda sentimen institusi. Pantau konsistensinya, bukan satu hari saja.',img:U('photo-1621761191319-c6fb62004040'),src:'Pantauan Berita Angin'},
+    {cat:'keuangan',ago:21,title:'Siaran Langsung Pasar Keuangan Global',text:'Tonton siaran berita pasar langsung untuk memantau pergerakan bursa, mata uang, dan komoditas.',img:U('photo-1526304640581-d334cdbbf45e'),video:{yt:'channel:UCIALMKvObZNtJ6AmdCLP7Lg'},src:'Bloomberg Television · YouTube'},
+    {cat:'global',ago:33,title:'Dolar AS, Imbal Hasil Obligasi, dan Emas Jadi Sorotan Pasar Global',text:'Pergerakan dolar AS dan imbal hasil obligasi pemerintah menentukan arah arus dana global, termasuk ke saham, emas, dan aset kripto.',img:U('photo-1451187580459-43490279c0fa'),src:'Pantauan Berita Angin'},
+    {cat:'global',ago:47,title:'Siaran Berita Dunia Langsung',text:'Ikuti perkembangan peristiwa dunia yang dapat memengaruhi sentimen pasar: geopolitik, energi, dan kebijakan ekonomi.',img:U('photo-1504711434969-e33886168f5c'),video:{yt:'channel:UCNye-wNBqNL5ZzHSJj3l8Bg'},src:'Al Jazeera English · YouTube'},
+    {cat:'peristiwa',ago:62,title:'Agenda Pekan Ini: Data Inflasi, Tenaga Kerja, dan Pidato Pejabat Bank Sentral',text:'Rilis data ekonomi utama dan pernyataan pejabat bank sentral sering memicu volatilitas jangka pendek. Cek kalender pasar sebelum mengambil posisi.',img:U('photo-1444653389962-8149286c578a'),src:'Pantauan Berita Angin'},
+    {cat:'peristiwa',ago:85,title:'Berita Dunia Terkini dari DW News',text:'Ringkasan peristiwa internasional terbaru dalam format video.',img:U('photo-1495020689067-958852a7765e'),video:{yt:'channel:UCknLrEdhRCp1aegoMqRaCZg'},src:'DW News · YouTube'}
+  ];
+  function ph(cat,lbl){var p=PAL[cat]||PAL.global;return 'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+p[0]+'"/><stop offset="1" stop-color="'+p[1]+'" stop-opacity=".6"/></linearGradient></defs><rect width="800" height="450" fill="url(#g)"/><g stroke="'+p[1]+'" opacity=".3" stroke-width="3" fill="none"><path d="M0 330L120 270 240 300 360 200 480 240 600 120 720 160 800 90"/><path d="M0 380L120 340 240 360 360 290 480 320 600 230 720 260 800 210"/></g><text x="40" y="410" font-family="Inter,Arial,sans-serif" font-size="34" font-weight="800" fill="#fff" opacity=".9">'+esc(lbl)+'</text></svg>')}
+  var PLAY='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  function ytUrl(v){var m=/^(channel|id):(.+)$/.exec(v||'');if(!m)return null;
+    return m[1]==='channel'?{embed:'https://www.youtube-nocookie.com/embed/live_stream?channel='+m[2]+'&autoplay=1&rel=0&playsinline=1',open:'https://www.youtube.com/channel/'+m[2]+'/live'}
+      :{embed:'https://www.youtube-nocookie.com/embed/'+m[2]+'?autoplay=1&rel=0&playsinline=1',open:'https://www.youtube.com/watch?v='+m[2]}}
+  function id(o,i){return 'nw-'+(o.cat||'x')+'-'+i}
+  function reg(o,key,ts){if(typeof articlesData==='undefined')return;
+    var yt=o.video&&ytUrl(o.video.yt),link=o.link||(yt&&yt.open)||'';
+    articlesData[key]={category:'Berita '+CAT[o.cat],date:new Date(ts).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}),title:o.title,author:o.src||'Berita Angin',
+      image:o.img||ph(o.cat,CAT[o.cat].toUpperCase()),readTime:o.video?'Video':'',
+      content:'<p class="lead">'+esc(o.text)+'</p>'+(link?'<p><a href="'+esc(link)+'" target="_blank" rel="noopener noreferrer">'+(o.video?'Tonton di sumber asli':'Baca di sumber asli')+'</a></p>':'')+'<p><small>Sumber: '+esc(o.src||'Berita Angin')+'</small></p>'}}
+  function mk(o,i){
+    var cat=CAT[o.cat]?o.cat:'global',key=id(o,i),ts=Date.now()-(o.ago==null?10+i*15:o.ago)*60000,el=tpl.cloneNode(true),body=el.querySelector('.xp-body');
+    o.cat=cat;
+    el.setAttribute('data-xp-kind','status');el.setAttribute('data-nw',cat);el.setAttribute('data-open',key);el.dataset.ts=ts;el.setAttribute('aria-label',o.title);
+    var tg=el.querySelector('.xp-tag');if(tg){tg.className='xp-tag';tg.textContent=CAT[cat]}
+    var tx=body.querySelector('.xp-text');tx.innerHTML='<strong class="nw-title">'+esc(o.title)+'</strong>'+esc(o.text);
+    var card=body.querySelector('.xp-card'),m=document.createElement('div'),poster=o.img||(o.video&&o.video.poster)||ph(cat,CAT[cat].toUpperCase()),yt=o.video&&ytUrl(o.video.yt),file=o.video&&/^file:/.test(o.video.yt||'')?o.video.yt.slice(5):'';
+    m.className='nw-media';
+    var im='<img src="'+esc(poster)+'" alt="'+esc(o.title)+'" loading="lazy" decoding="async">';
+    if(yt||file){m.dataset.embed=yt?yt.embed:'';m.dataset.file=file;m.dataset.poster=poster;
+      m.innerHTML=im+'<span class="nw-badge"><i></i>VIDEO</span><button type="button" class="nw-play" aria-label="Putar video: '+esc(o.title)+'"><span>'+PLAY+'</span></button>'}
+    else m.innerHTML=im+'<span class="nw-badge" style="background:rgba(0,0,0,.55)">FOTO</span>';
+    m.querySelector('img').addEventListener('error',function(){this.onerror=null;this.src=ph(cat,CAT[cat].toUpperCase())});
+    if(card)card.replaceWith(m);else tx.after(m);
+    var meta=document.createElement('div');meta.className='nw-meta';
+    meta.innerHTML='<span>'+esc(o.src||'Berita Angin')+'</span>'+((o.link||(yt&&yt.open))?'<a href="'+esc(o.link||yt.open)+'" target="_blank" rel="noopener noreferrer">'+(yt?'Buka di YouTube':'Sumber')+'</a>':'');
+    m.after(meta);
+    el.querySelectorAll('[data-id]').forEach(function(b){b.setAttribute('data-id',key)});
+    var v=el.querySelector('.xp-v');if(v)v.remove();
+    reg(o,key,ts);return el}
+  function render(list){
+    [].forEach.call(feed.querySelectorAll('.xp-post[data-nw]'),function(p){p.remove()});
+    var ref=document.getElementById('xp-empty');
+    list.slice(0,24).forEach(function(o,i){if(!o||!o.title)return;feed.insertBefore(mk(o,i),ref)});
+    var t=document.getElementById('xp-q3');if(t)t.dispatchEvent(new Event('input'))}
+  /* klik tombol putar: muat video hanya saat diminta (hemat data) */
+  feed.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.nw-play');if(!b)return;e.stopPropagation();e.preventDefault();
+    var m=b.closest('.nw-media');if(!m)return;var badge=m.querySelector('.nw-badge');
+    if(m.dataset.file){var v=document.createElement('video');v.src=m.dataset.file;v.poster=m.dataset.poster||'';v.controls=true;v.autoplay=true;v.playsInline=true;v.preload='metadata';b.remove();m.appendChild(v)}
+    else if(m.dataset.embed){var f=document.createElement('iframe');f.src=m.dataset.embed;f.title='Video berita';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';b.remove();m.appendChild(f)}
+    if(badge)m.appendChild(badge)},true);
+  render(SEED);
+  /* data harian: data.js (window.__NEWS) atau news.json */
+  function ok(a){return Array.isArray(a)&&a.length&&a.every(function(x){return x&&x.title&&x.text})}
+  if(window.__NEWS&&ok(window.__NEWS.items||window.__NEWS)){render(window.__NEWS.items||window.__NEWS)}
+  else if(window.fetch&&/^https?:$/.test(location.protocol)){var d=new Date(),k=d.getFullYear()+''+(d.getMonth()+1)+d.getDate();
+    fetch('news.json?d='+k,{cache:'no-cache'}).then(function(r){return r.ok?r.json():null}).then(function(j){var a=j&&(j.items||j);if(ok(a))render(a)}).catch(function(){})}
 })();
 </script>
 
