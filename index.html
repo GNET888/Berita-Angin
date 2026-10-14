@@ -8181,9 +8181,13 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     function mv(e) { var r = cv.getBoundingClientRect(), p = e.touches ? e.touches[0] : e; s.mx = p.clientX - r.left; s.my = p.clientY - r.top; }
     cv.addEventListener('mousemove', mv); cv.addEventListener('touchstart', mv, { passive: true }); cv.addEventListener('touchmove', mv, { passive: true });
     cv.addEventListener('mouseleave', function () { s.mx = -1; }); cv.addEventListener('touchend', function () { s.mx = -1; });
+    var vis = true, last = 0, slow = window.matchMedia && matchMedia('(max-width: 820px), (pointer: coarse)').matches;
+    if (window.IntersectionObserver) new IntersectionObserver(function (e) { vis = e[0].isIntersecting; }).observe(cv);
     (function f(now) {
+      if (!cv.isConnected) return;
       requestAnimationFrame(f);
-      if (cv.offsetParent === null || document.hidden) return;
+      if (!vis || cv.offsetParent === null || document.hidden) return;
+      if (slow && now - last < 30) return; last = now;
       var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
       if (w !== s.w || h !== s.h) { s.w = w; s.h = h; dpr = Math.min(window.devicePixelRatio || 1, 2); cv.width = Math.floor(w * dpr); cv.height = Math.floor(h * dpr); }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h); ctx.lineJoin = 'round';
@@ -11405,6 +11409,7 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     cv.addEventListener('mousemove', mv); cv.addEventListener('touchstart', mv, { passive: true }); cv.addEventListener('touchmove', mv, { passive: true });
     cv.addEventListener('mouseleave', lv); cv.addEventListener('touchend', lv);
     if (W.ResizeObserver) new ResizeObserver(function () { draw(); }).observe(cv.parentNode);
+    if (W.IntersectionObserver) new IntersectionObserver(function (e) { vis = e[0].isIntersecting; if (vis) draw(); }).observe(cv);
     var pg = cv.closest('.page');
     if (pg) new MutationObserver(function () { if (pg.classList.contains('active')) requestAnimationFrame(draw); }).observe(pg, { attributes: true, attributeFilter: ['class'] });
     new MutationObserver(function () { draw(); }).observe(D.documentElement, { attributes: true, attributeFilter: ['class'] });
@@ -11423,6 +11428,8 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
   }
   /* Mode otomatis + data online: candle 30 menit dari CoinGecko (dominasi = mcap BTC / mcap global), diperbarui otomatis */
   var DK = null, DKreal = false, slotMs = 18e5;
+  /* tampil instan: pakai candle 24j terakhir yang tersimpan di perangkat (maks 6 jam), data online menyusul */
+  try { var _kc = JSON.parse(localStorage.getItem('ba-dom-k1') || 'null'); if (_kc && Date.now() - _kc.at < 216e5 && _kc.k && _kc.k.length >= 8) { DK = _kc.k; DKreal = true; slotMs = _kc.slot || slotMs; } } catch (e) {}
   function live() { if (!DK) { var k = candles(); if (k.length >= 3) DK = k; else return k; } return DK; }
   function loadIntraday() {
     return Promise.all([get(CG + 'global/market_cap_chart?days=1', 9000), get(CG + 'coins/bitcoin/market_chart?vs_currency=usd&days=1', 9000)]).then(function (r) {
@@ -11438,7 +11445,9 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
         out.push({ t: g[g.length - 1][0], d: new Date(g[0][0]).toISOString().slice(0, 10), o: o, c: vs[vs.length - 1], h: Math.max.apply(null, vs.concat(o)), l: Math.min.apply(null, vs.concat(o)) });
       }
       if (out.length < 8) return;
-      DK = out.slice(-48); DKreal = true; slotMs = G * 3e5; draw();
+      DK = out.slice(-48); DKreal = true; slotMs = G * 3e5;
+      try { localStorage.setItem('ba-dom-k1', JSON.stringify({ at: Date.now(), slot: slotMs, k: DK })); } catch (e) {}
+      draw();
     });
   }
   function stepLive() {
@@ -11449,12 +11458,14 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     l.c += (tgt - l.c) * .35;
     if (l.c > l.h) l.h = l.c; if (l.c < l.l) l.l = l.c;
     txt('stat-btc-dom', l.c.toFixed(1) + '%');
-    draw();
+    if (Math.abs(l.c - (l._p == null ? -1 : l._p)) > 5e-4) { l._p = l.c; draw(); }
   }
   setInterval(stepLive, 1500);
   loadIntraday().catch(function () {}); setInterval(function () { if (!D.hidden) loadIntraday().catch(function () {}); }, 3e5);
-  function draw() {
-    if (!cv || !cv.offsetParent) return;
+  var _rq = 0, vis = true, SC = null, SK = '';
+  function draw() { if (_rq) return; _rq = requestAnimationFrame(function () { _rq = 0; paint(); }); }
+  function paint() {
+    if (!cv || !cv.offsetParent || D.hidden || !vis) return;
     var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
     var dpr = Math.min(W.devicePixelRatio || 1, 2), c = ctx, P = pal(), i;
     if (cv.width !== Math.floor(w * dpr) || cv.height !== Math.floor(h * dpr)) { cv.width = Math.floor(w * dpr); cv.height = Math.floor(h * dpr); }
@@ -11467,6 +11478,12 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     var pad = (hi - lo) * .12 + .05; lo -= pad; hi += pad;
     var X = function (j) { return L + (j + .5) * pw / n; }, Y = function (v) { return T + (hi - v) / (hi - lo) * ph; };
     var bw = Math.max(1.5, pw / n * .62);
+    var lk = K[n - 1], key = [w, h, dpr, P.l ? 1 : 0, n, DKreal ? 1 : 0, lk.c.toFixed(3), lk.h.toFixed(3), lk.l.toFixed(3), K[0].o.toFixed(3), K[0].h.toFixed(3)].join('|');
+    var hit = SC && SK === key;
+    if (!hit) {
+      if (!SC) SC = D.createElement('canvas');
+      if (SC.width !== cv.width || SC.height !== cv.height) { SC.width = cv.width; SC.height = cv.height; }
+      var mainC = c; c = SC.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h); c.lineJoin = 'round';
     /* latar tipis + judul */
     var bg = c.createLinearGradient(0, 0, w, 0); bg.addColorStop(0, 'rgba(244,63,94,.07)'); bg.addColorStop(1, 'rgba(59,130,246,.07)');
     c.fillStyle = bg; c.fillRect(0, 0, w, h);
@@ -11495,6 +11512,9 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     var lc = K[last].c, ly = Y(lc), up = lc >= K[last].o;
     c.setLineDash([2, 3]); c.strokeStyle = up ? P.up : P.dn; c.beginPath(); c.moveTo(L, ly); c.lineTo(L + pw, ly); c.stroke(); c.setLineDash([]);
     c.fillStyle = up ? P.up : P.dn; c.fillRect(L + pw + 1, ly - 6, Rr - 2, 12); Tx(c, lc.toFixed(1) + '%', L + pw + Rr / 2, ly, P.l ? '#fff' : '#0f172a', 'center', 8, 700);
+      c = mainC; SK = key;
+    }
+    c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, cv.width, cv.height); c.drawImage(SC, 0, 0); c.setTransform(dpr, 0, 0, dpr, 0, 0);
     /* crosshair + tooltip */
     if (mx >= L && mx <= L + pw && my >= 0) {
       var j = clamp(Math.floor((mx - L) / pw * n), 0, n - 1), k = K[j], x = X(j);
