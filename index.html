@@ -12160,5 +12160,15 @@ html.light #xps-ov .xps-x:hover{background:rgba(15,20,25,.08)}
   if(document.readyState==='complete')setTimeout(deep,500);else window.addEventListener('load',function(){setTimeout(deep,500)});
 })();
 </script>
+<style id="ba-crumb-underline">
+/* Garis pink di bawah tulisan "Dashboard" (gaya seperti tab aktif "Untuk Anda") */
+#ba-topbar .ba-crumb-root{position:relative;display:inline-block;padding:6px 2px 8px;font-weight:700;color:#f8fafc}
+#ba-topbar .ba-crumb-root::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;border-radius:999px;background:#f91880}
+html.light #ba-topbar .ba-crumb-root{color:#0f172a}
+/* Navbar atas tidak mengambang: ikut tergulung bersama halaman */
+html #ba-topbar{position:relative!important;top:auto!important}
+/* Tab "Untuk Anda/Artikel" & sidebar kanan menempel ke tepi atas layar karena navbar tidak lagi menempel */
+#page-home{--xp-top:env(safe-area-inset-top,0px)!important}
+</style>
 </body>
 </html>
