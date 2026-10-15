@@ -2,7 +2,13 @@
 <html lang="id" class="dark">
 <head>
 <script>/* ANTI-KEDIP: tahan tampilan (opacity 0) sampai CSS, font & ikon siap, lalu munculkan sekali dengan halus. Pengaman 4 dtk. */
-(function(){var h=document.documentElement;h.classList.add('ba-pre');setTimeout(function(){h.classList.remove('ba-pre')},1500)})();</script>
+(function(){var h=document.documentElement;h.classList.add('ba-pre');setTimeout(function(){h.classList.remove('ba-pre')},3500)})();</script>
+<script>/* ANTI-KEDIP URL: baca tujuan dari URL (#halaman, ?page=, ?a=) SEBELUM halaman digambar, sehingga Beranda tidak sempat tampil lalu berpindah. */
+(function(){try{var h=document.documentElement,q=new URLSearchParams(location.search),k=location.hash.slice(1),r=null;
+if(q.get('a')){r='article-detail';window.__baRoutePending=true}
+else if(q.get('page')){r=q.get('page');window.__baRoutePending=true}
+else if(k&&k!=='home'&&k!=='article-detail')r=k;
+if(r)h.setAttribute('data-ba-route',r)}catch(e){}})();</script>
 <script>/* ANTI-KEDIP: tentukan sidebar ikon/lebar SEBELUM halaman digambar, supaya konten tidak bergeser setelah loading. */
 (function(){try{var h=document.documentElement,p=null;try{p=localStorage.getItem('ba-sb')}catch(e){}
 if(p==='collapsed'||window.matchMedia('(max-width:1023px)').matches)h.classList.add('ba-collapsed')}catch(e){}})();</script>
@@ -14,6 +20,8 @@ html.ba-pre body>*:not(#ba-splash){opacity:0!important}
 html.ba-fade body>*:not(#ba-splash){transition:opacity .1s ease-out}
 /* ANTI-KEDIP v2: halaman pertama & menu samping langsung tampil final (tanpa animasi masuk) */
 html .page.active[data-ba-first]{animation:none!important}
+/* ANTI-KEDIP URL: selama menuju halaman lain, Beranda bawaan tidak digambar sama sekali */
+html[data-ba-route]:not([data-ba-route="home"]) #page-home.active{display:none!important}
 html header.sticky>nav>div>div:nth-child(2)>*{opacity:1!important;transform:none!important;animation:none!important}
 </style>
 <noscript><style>html.ba-pre body>*{opacity:1!important}</style></noscript>
@@ -1796,6 +1804,14 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   html:not(.ba-collapsed) #page-home .xp-sbar{display:flex}
 }
 @media(max-width:1023px){#page-home .xp{grid-template-columns:minmax(0,1fr);justify-content:stretch}}
+/* ===== MODE IKON: seluruh card/kolom melebar mengikuti lebar halaman (responsive) ===== */
+@media(min-width:1024px){
+  html.ba-collapsed #page-home .xp{grid-template-columns:minmax(0,1fr) clamp(280px,26vw,420px);gap:0 clamp(20px,2.2vw,40px);justify-content:stretch;width:100%;max-width:none}
+  html.ba-collapsed #page-home .xp-feed,
+  html.ba-collapsed #page-home .xp-rail{width:100%;max-width:none;min-width:0}
+  html.ba-collapsed .page .max-w-4xl,
+  html.ba-collapsed .page .max-w-7xl{max-width:none!important}
+}
 </style>
 <style id="ba-xcard-css">
 /* Kartu semua halaman = gaya kartu beranda (mis. "Pantau Pasar Lebih Cepat"): hitam, garis tipis, sudut 16px, judul tebal, tombol pil outline */
@@ -8181,13 +8197,9 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     function mv(e) { var r = cv.getBoundingClientRect(), p = e.touches ? e.touches[0] : e; s.mx = p.clientX - r.left; s.my = p.clientY - r.top; }
     cv.addEventListener('mousemove', mv); cv.addEventListener('touchstart', mv, { passive: true }); cv.addEventListener('touchmove', mv, { passive: true });
     cv.addEventListener('mouseleave', function () { s.mx = -1; }); cv.addEventListener('touchend', function () { s.mx = -1; });
-    var vis = true, last = 0, slow = window.matchMedia && matchMedia('(max-width: 820px), (pointer: coarse)').matches;
-    if (window.IntersectionObserver) new IntersectionObserver(function (e) { vis = e[0].isIntersecting; }).observe(cv);
     (function f(now) {
-      if (!cv.isConnected) return;
       requestAnimationFrame(f);
-      if (!vis || cv.offsetParent === null || document.hidden) return;
-      if (slow && now - last < 30) return; last = now;
+      if (cv.offsetParent === null || document.hidden) return;
       var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
       if (w !== s.w || h !== s.h) { s.w = w; s.h = h; dpr = Math.min(window.devicePixelRatio || 1, 2); cv.width = Math.floor(w * dpr); cv.height = Math.floor(h * dpr); }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h); ctx.lineJoin = 'round';
@@ -11409,7 +11421,6 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     cv.addEventListener('mousemove', mv); cv.addEventListener('touchstart', mv, { passive: true }); cv.addEventListener('touchmove', mv, { passive: true });
     cv.addEventListener('mouseleave', lv); cv.addEventListener('touchend', lv);
     if (W.ResizeObserver) new ResizeObserver(function () { draw(); }).observe(cv.parentNode);
-    if (W.IntersectionObserver) new IntersectionObserver(function (e) { vis = e[0].isIntersecting; if (vis) draw(); }).observe(cv);
     var pg = cv.closest('.page');
     if (pg) new MutationObserver(function () { if (pg.classList.contains('active')) requestAnimationFrame(draw); }).observe(pg, { attributes: true, attributeFilter: ['class'] });
     new MutationObserver(function () { draw(); }).observe(D.documentElement, { attributes: true, attributeFilter: ['class'] });
@@ -11428,8 +11439,6 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
   }
   /* Mode otomatis + data online: candle 30 menit dari CoinGecko (dominasi = mcap BTC / mcap global), diperbarui otomatis */
   var DK = null, DKreal = false, slotMs = 18e5;
-  /* tampil instan: pakai candle 24j terakhir yang tersimpan di perangkat (maks 6 jam), data online menyusul */
-  try { var _kc = JSON.parse(localStorage.getItem('ba-dom-k1') || 'null'); if (_kc && Date.now() - _kc.at < 216e5 && _kc.k && _kc.k.length >= 8) { DK = _kc.k; DKreal = true; slotMs = _kc.slot || slotMs; } } catch (e) {}
   function live() { if (!DK) { var k = candles(); if (k.length >= 3) DK = k; else return k; } return DK; }
   function loadIntraday() {
     return Promise.all([get(CG + 'global/market_cap_chart?days=1', 9000), get(CG + 'coins/bitcoin/market_chart?vs_currency=usd&days=1', 9000)]).then(function (r) {
@@ -11445,9 +11454,7 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
         out.push({ t: g[g.length - 1][0], d: new Date(g[0][0]).toISOString().slice(0, 10), o: o, c: vs[vs.length - 1], h: Math.max.apply(null, vs.concat(o)), l: Math.min.apply(null, vs.concat(o)) });
       }
       if (out.length < 8) return;
-      DK = out.slice(-48); DKreal = true; slotMs = G * 3e5;
-      try { localStorage.setItem('ba-dom-k1', JSON.stringify({ at: Date.now(), slot: slotMs, k: DK })); } catch (e) {}
-      draw();
+      DK = out.slice(-48); DKreal = true; slotMs = G * 3e5; draw();
     });
   }
   function stepLive() {
@@ -11458,14 +11465,12 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     l.c += (tgt - l.c) * .35;
     if (l.c > l.h) l.h = l.c; if (l.c < l.l) l.l = l.c;
     txt('stat-btc-dom', l.c.toFixed(1) + '%');
-    if (Math.abs(l.c - (l._p == null ? -1 : l._p)) > 5e-4) { l._p = l.c; draw(); }
+    draw();
   }
   setInterval(stepLive, 1500);
   loadIntraday().catch(function () {}); setInterval(function () { if (!D.hidden) loadIntraday().catch(function () {}); }, 3e5);
-  var _rq = 0, vis = true, SC = null, SK = '';
-  function draw() { if (_rq) return; _rq = requestAnimationFrame(function () { _rq = 0; paint(); }); }
-  function paint() {
-    if (!cv || !cv.offsetParent || D.hidden || !vis) return;
+  function draw() {
+    if (!cv || !cv.offsetParent) return;
     var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
     var dpr = Math.min(W.devicePixelRatio || 1, 2), c = ctx, P = pal(), i;
     if (cv.width !== Math.floor(w * dpr) || cv.height !== Math.floor(h * dpr)) { cv.width = Math.floor(w * dpr); cv.height = Math.floor(h * dpr); }
@@ -11478,12 +11483,6 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     var pad = (hi - lo) * .12 + .05; lo -= pad; hi += pad;
     var X = function (j) { return L + (j + .5) * pw / n; }, Y = function (v) { return T + (hi - v) / (hi - lo) * ph; };
     var bw = Math.max(1.5, pw / n * .62);
-    var lk = K[n - 1], key = [w, h, dpr, P.l ? 1 : 0, n, DKreal ? 1 : 0, lk.c.toFixed(3), lk.h.toFixed(3), lk.l.toFixed(3), K[0].o.toFixed(3), K[0].h.toFixed(3)].join('|');
-    var hit = SC && SK === key;
-    if (!hit) {
-      if (!SC) SC = D.createElement('canvas');
-      if (SC.width !== cv.width || SC.height !== cv.height) { SC.width = cv.width; SC.height = cv.height; }
-      var mainC = c; c = SC.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, w, h); c.lineJoin = 'round';
     /* latar tipis + judul */
     var bg = c.createLinearGradient(0, 0, w, 0); bg.addColorStop(0, 'rgba(244,63,94,.07)'); bg.addColorStop(1, 'rgba(59,130,246,.07)');
     c.fillStyle = bg; c.fillRect(0, 0, w, h);
@@ -11512,9 +11511,6 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     var lc = K[last].c, ly = Y(lc), up = lc >= K[last].o;
     c.setLineDash([2, 3]); c.strokeStyle = up ? P.up : P.dn; c.beginPath(); c.moveTo(L, ly); c.lineTo(L + pw, ly); c.stroke(); c.setLineDash([]);
     c.fillStyle = up ? P.up : P.dn; c.fillRect(L + pw + 1, ly - 6, Rr - 2, 12); Tx(c, lc.toFixed(1) + '%', L + pw + Rr / 2, ly, P.l ? '#fff' : '#0f172a', 'center', 8, 700);
-      c = mainC; SK = key;
-    }
-    c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, cv.width, cv.height); c.drawImage(SC, 0, 0); c.setTransform(dpr, 0, 0, dpr, 0, 0);
     /* crosshair + tooltip */
     if (mx >= L && mx <= L + pw && my >= 0) {
       var j = clamp(Math.floor((mx - L) / pw * n), 0, n - 1), k = K[j], x = X(j);
@@ -11880,7 +11876,7 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
   W.addEventListener('hashchange',fromHash);
   W.addEventListener('load',function(){setTimeout(fromHash,400)});
   /* Parameter ?page=settings untuk aplikasi terpasang */
-  try{if(/[?&]page=settings\b/.test(location.search))setTimeout(openSettings,500)}catch(_){}
+  try{if(/[?&]page=settings\b/.test(location.search)){openSettings();window.__baRoutePending=false}}catch(_){}
   /* Pintasan Ctrl/Cmd + , sudah ada; tambah Alt+S sebagai cadangan */
   D.addEventListener('keydown',function(e){
     if(e.altKey&&!e.ctrlKey&&!e.metaKey&&(e.key==='s'||e.key==='S')){var t=e.target;if(t&&(/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)||t.isContentEditable))return;e.preventDefault();openSettings()}
@@ -12204,16 +12200,16 @@ button:not(:disabled):active,[role=button]:active,.nav-link:active,.sb-link:acti
     if(window.MutationObserver){var mo=new MutationObserver(function(){if(!fp.classList.contains('active')){fp.removeAttribute('data-ba-first');mo.disconnect()}});mo.observe(fp,{attributes:true,attributeFilter:['class']})}}}catch(e){}
   function reveal(){if(done)return;done=true;
     requestAnimationFrame(function(){requestAnimationFrame(function(){
-      h.classList.add('ba-fade');h.classList.remove('ba-pre');
+      h.classList.add('ba-fade');h.classList.remove('ba-pre');h.removeAttribute('data-ba-route');
       setTimeout(function(){h.classList.remove('ba-fade');window.__baBoot=false},150);
     })});}
   function fontsThenReveal(){
-    var f=(document.fonts&&document.fonts.ready)?Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,250)})]):Promise.resolve();
+    var f=(document.fonts&&document.fonts.ready)?Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,700)})]):Promise.resolve();
     f.then(function(){setTimeout(reveal,0)});}
   function check(){
     var ok=Array.prototype.every.call(document.querySelectorAll('link[rel=stylesheet]'),function(l){return l.media!=='print'});
     var loaded=document.readyState==='complete';
-    if((ok&&loaded)||Date.now()-t0>1200)fontsThenReveal();else setTimeout(check,30);}
+    if((ok&&loaded&&!window.__baRoutePending)||Date.now()-t0>2800)fontsThenReveal();else setTimeout(check,30);}
   if(document.readyState!=='loading')check();else document.addEventListener('DOMContentLoaded',check);
 })();
 </script>
@@ -12954,7 +12950,9 @@ html.light #xps-ov .xps-x:hover{background:rgba(15,20,25,.08)}
   /* tautan bersama (?a=kunci) membuka artikelnya */
   function deep(){try{var k=new URLSearchParams(location.search).get('a');if(k&&typeof openArticle==='function')openArticle(k)}catch(e){}}
   paintC();
-  if(document.readyState==='complete')setTimeout(deep,500);else window.addEventListener('load',function(){setTimeout(deep,500)});
+  /* ANTI-KEDIP URL: buka artikel langsung saat skrip siap (bukan 500 md setelah load), tampilan baru muncul setelahnya */
+  deep();window.__baRoutePending=false;
+  if(document.readyState!=='complete')window.addEventListener('load',function(){if(!document.querySelector('#page-article-detail.active'))setTimeout(deep,300)});
 })();
 </script>
 <style id="ba-crumb-underline">
