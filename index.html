@@ -12965,5 +12965,72 @@ html #ba-topbar{position:relative!important;top:auto!important}
 /* Tab "Untuk Anda/Artikel" & sidebar kanan menempel ke tepi atas layar karena navbar tidak lagi menempel */
 #page-home{--xp-top:env(safe-area-inset-top,0px)!important}
 </style>
+<style id="ba-x-final">
+/* ===== TAMPILAN APLIKASI X (final): token, font, warna, kartu, tab, sidebar, tab bar HP ===== */
+html{--x-font:"TwitterChirp",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--x-bg:#000;--x-text:#e7e9ea;--x-mut:#71767b;--x-line:#2f3336;--x-hov:rgba(231,233,234,.1);--x-blue:#1d9bf0;--x-up:#00ba7c;--x-dn:#f4212e;--x-inv:#eff3f4;--x-invt:#0f1419;
+ --xp-pk:#1d9bf0;--xc-line:#2f3336;--xt-pk:#1d9bf0;--ba-ac:29 155 240;--ba-ac2:29 155 240;--ba-ac3:29 155 240}
+html.light{--x-bg:#fff;--x-text:#0f1419;--x-mut:#536471;--x-line:#eff3f4;--x-hov:rgba(15,20,25,.1);--x-inv:#0f1419;--x-invt:#fff;--xc-line:#eff3f4;--xp-line:#eff3f4;--xp-pk:#1d9bf0;--xc-inv:#0f1419;--xp-inv:#0f1419;--xp-a:#1d9bf0}
+html body,html body button,html body input,html body textarea,html body select{font-family:var(--x-font)!important}
+html body{letter-spacing:0;-webkit-font-smoothing:antialiased}
+html:not(.light) body{background:#000!important;color:var(--x-text)}
+html.light body{color:var(--x-text)}
+#bg3d{display:none!important}
+*{scrollbar-width:thin;scrollbar-color:#3e4144 transparent}
+html.light *{scrollbar-color:#cfd9de transparent}
+html body h1,html body h2,html body h3{letter-spacing:-.01em;font-weight:800}
+
+/* Kartu: datar ala X (garis tipis, tanpa bayangan/gradasi) */
+html body .bg-card-dark,html body .bg-deep-gray,html body .ms-card,html body .st-card,html body .mlc-panel,html body .mlc-card,html body .liq-kpi,
+html body [class*="from-black/80"][class*="to-deep-gray"]{background:transparent!important;background-image:none!important;border:1px solid var(--x-line)!important;border-radius:16px!important;box-shadow:none!important;backdrop-filter:none!important}
+html body [class*="border-card-border"],html body .border-neutral-800,html body .border-gray-800{border-color:var(--x-line)!important}
+html body table td,html body table th,html body .gm-row,html body .mlc-row{border-color:var(--x-line)!important}
+html body table tbody tr:hover,html body .gm-row:hover{background:var(--x-hov)}
+html body header.sticky,html body #ba-topbar{background:rgba(0,0,0,.65)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;border-color:var(--x-line)!important;box-shadow:none!important}
+html.light body header.sticky,html.light body #ba-topbar{background:rgba(255,255,255,.85)!important}
+
+/* Tombol & chip = pil */
+html body .liq-btn,html body .gm-chip,html body .ap-btn,html body .ms-btn,html body .mlc-in,html body .xps-btn{border-radius:9999px!important;font-weight:700}
+html body .gm-chip.on,html body .bg-brand-primary,html body [class*="bg-indigo-5"],html body [class*="bg-indigo-6"]{background:var(--x-inv)!important;border-color:var(--x-inv)!important;color:var(--x-invt)!important}
+
+/* Warna: biru X, hijau/merah X */
+html body .text-indigo-400,html body .text-indigo-300,html body .text-violet-400,html body .text-purple-400,html body .text-sky-400,html body .text-sky-300,html body .text-cyan-400,html body .text-cyan-300,html body .text-blue-400,html body .text-brand-accent{color:var(--x-blue)!important}
+html body .text-emerald-400,html body .text-emerald-500,html body .text-green-400,html body .text-green-500{color:var(--x-up)!important}
+html body .text-rose-400,html body .text-rose-500,html body .text-red-400,html body .text-red-500{color:var(--x-dn)!important}
+html body .text-gray-400,html body .text-gray-500{color:var(--x-mut)!important}
+
+/* Tab aktif: teks tebal + garis biru tebal */
+html body .ba-oldnav button.bg-brand-primary,html body .ba-oldnav .cr-sublink.is-active,html body #page-market-stat .ms-jump button.is-active{box-shadow:inset 0 -4px 0 var(--x-blue)!important;background:transparent!important;color:var(--x-text)!important}
+#ba-topbar .ba-crumb-root::after{background:var(--x-blue)!important}
+html body .xp-tabs button:hover{background:var(--x-hov)}
+
+/* Sidebar kiri (desktop, mode teks): item besar, hover pil */
+@media(min-width:768px){
+ html:not(.ba-collapsed) body header.sticky .nav-link{font-size:19px!important;font-weight:400!important;padding:11px 16px!important;border-radius:9999px!important;color:var(--x-text)!important}
+ html:not(.ba-collapsed) body header.sticky .nav-link:hover{background:var(--x-hov)!important}
+ html:not(.ba-collapsed) body header.sticky .nav-link.ba-active,html:not(.ba-collapsed) body header.sticky .nav-link.is-active{font-weight:800!important}
+ html body header.sticky .nav-ico svg{stroke-width:1.9}
+}
+
+/* Tab bar HP: ikon saja, garis atas, tanpa pil latar */
+html body #ba-tabbar{background:var(--x-bg)!important;border-top:1px solid var(--x-line)!important;box-shadow:none!important;backdrop-filter:none!important}
+html body .ba-tab{color:var(--x-mut)}
+html body .ba-tab>span:last-child:not(.ba-tab-ico){display:none}
+html body .ba-tab.on{color:var(--x-text)}
+html body .ba-tab.on .ba-tab-ico{background:transparent}
+
+/* Tombol tulis mengambang (HP, hanya di Beranda) */
+#x-fab{display:none;position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:45;width:56px;height:56px;border:0;border-radius:9999px;background:var(--x-blue);color:#fff;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(29,155,240,.45);cursor:pointer}
+#x-fab:active{transform:scale(.94)}
+#x-fab svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:767px){body:has(#page-home.active) #x-fab{display:flex}}
+@media(prefers-reduced-motion:reduce){#x-fab{transition:none}}
+</style>
+<button id="x-fab" type="button" aria-label="Tulis postingan"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+<script id="ba-x-final-js">
+(function(){var b=document.getElementById('x-fab');if(!b)return;
+b.addEventListener('click',function(){var q=document.getElementById('xp-q');
+if(q){try{q.scrollIntoView({block:'center'});q.focus()}catch(e){}}});})();
+</script>
+
 </body>
 </html>
