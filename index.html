@@ -540,6 +540,13 @@ html.light .apc .ap-seg{border-color:#cbd5e1}
 .live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#34d399;margin-right:4px;vertical-align:middle;animation:livePulse 1.4s ease-in-out infinite}
 @keyframes livePulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(52,211,153,.6)}50%{opacity:.5;box-shadow:0 0 0 4px rgba(52,211,153,0)}}
 </style>
+<style id="ba-dropdown-bg">
+/* Dropdown navigasi: latar disamakan dengan latar halaman (bukan abu-abu #0b0b0b) */
+html{--dd-bg:var(--ba-bg,#000)}
+html.light{--dd-bg:#fff}
+html header .group>div.absolute>div.bg-card-dark:not(#sidebar-content),
+html header.sticky .group>div.absolute>div:not(#sidebar-content){background-color:var(--dd-bg)!important;background-image:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+</style>
 <style id="ba-dashboard-css">
 /* ===== BERITA ANGIN · SIDEBAR DASHBOARD GLASS (responsive, dinamis, transparan) ===== */
 :root{--ba-sb:264px;--ba-line:rgba(255,255,255,.10);--ba-glass:rgba(10,12,20,.34);--ba-acc:#38BDF8;--ba-acc2:#0EA5E9}
