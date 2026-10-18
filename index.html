@@ -13392,60 +13392,6 @@ html.light .bal-gnext[disabled]{background:#b0b0b0;color:#6e6e6e}
   .bal-gl{align-items:flex-start;padding:28px 24px}
 }
 
-/* ---- Form pendaftaran ringkas bertahap (gaya X) ---- */
-.bal-step{display:grid;gap:12px}.bal-step[hidden]{display:none}
-.bal-prog{display:flex;gap:6px}
-.bal-prog i{flex:1;height:3px;border-radius:3px;background:rgba(148,163,184,.25);transition:background .2s}
-.bal-prog i.on{background:#38BDF8}
-.bal-dsec{margin:2px 0 0;font:800 20px Inter,system-ui,sans-serif;letter-spacing:-.01em}
-.bal-dsub{margin:-6px 0 2px;font:400 14px/1.4 Inter,system-ui,sans-serif;color:#71767b}
-.bal-d2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.bal-d2>div,.bal-step>div{min-width:0}
-.bal-dl{display:block;margin:0 0 6px;font:600 12px Inter,system-ui,sans-serif;color:#71767b}
-.bal-step select{width:100%;box-sizing:border-box;padding:14px 10px;border-radius:6px;border:1px solid #333639;background:transparent;color:inherit;font:400 15px Inter,system-ui,sans-serif;outline:none;color-scheme:dark;transition:border-color .15s,box-shadow .15s}
-html.light .bal-step select{border-color:#cfd9de;color-scheme:light}
-.bal-step select option{background:#0b0f17;color:#e7e9ea}
-html.light .bal-step select option{background:#fff;color:#0f1419}
-.bal-step select:focus{border-color:#0ea5e9;box-shadow:0 0 0 1px #0ea5e9}
-.bal-gin input[type="date"],.bal-in input[type="date"]{color-scheme:dark;font-size:15px}
-html.light .bal-gin input[type="date"],html.light .bal-in input[type="date"]{color-scheme:light}
-.bal-chips{display:flex;flex-wrap:wrap;gap:8px}
-.bal-chip{position:relative}
-.bal-chip input{position:absolute;opacity:0;pointer-events:none}
-.bal-chip span{display:inline-block;padding:8px 14px;border:1px solid #333639;border-radius:999px;font:600 13px Inter,system-ui,sans-serif;color:#a1a8ae;cursor:pointer;user-select:none;transition:all .15s}
-html.light .bal-chip span{border-color:#cfd9de;color:#536471}
-.bal-chip input:checked+span{background:rgba(56,189,248,.16);border-color:#38BDF8;color:#38BDF8}
-.bal-chip input:focus-visible+span{box-shadow:0 0 0 2px #0ea5e9}
-.bal-stnav{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.bal-gl{align-items:flex-start}.bal-gwrap{margin:auto 0}
-@media(max-width:420px){.bal-d2{grid-template-columns:1fr}}
-
-/* ---- Kalender tanggal lahir ---- */
-.bal-dobbtn{display:flex;align-items:center;gap:10px;width:100%;box-sizing:border-box;padding:14px 12px;border-radius:6px;border:1px solid #333639;background:transparent;color:#71767b;font:400 15px Inter,system-ui,sans-serif;text-align:left;cursor:pointer;outline:none;transition:border-color .15s,box-shadow .15s}
-html.light .bal-dobbtn{border-color:#cfd9de;color:#536471}
-.bal-dobbtn.has{color:inherit}
-.bal-dobbtn i{color:#38BDF8}
-.bal-dobbtn:focus,.bal-dobbtn[aria-expanded="true"]{border-color:#0ea5e9;box-shadow:0 0 0 1px #0ea5e9}
-.bal-dobbtn[aria-invalid="true"]{border-color:#f4212e;box-shadow:0 0 0 1px #f4212e}
-.bal-cal{display:block;margin-top:8px;padding:10px;border:1px solid rgba(148,163,184,.28);border-radius:14px;background:#0b0f17;color:#e7e9ea}
-.bal-cal[hidden]{display:none}
-html.light .bal-cal{background:#fff;color:#0f1419;border-color:#cfd9de}
-.bal-cal-h{display:flex;align-items:center;gap:6px;margin-bottom:8px}
-.bal-cal-h select{flex:1;min-width:0;padding:8px 6px;border-radius:8px;border:1px solid rgba(148,163,184,.28);background:transparent;color:inherit;font:600 13px Inter,system-ui,sans-serif;color-scheme:dark}
-html.light .bal-cal-h select{color-scheme:light}
-.bal-cal-h select option{background:#0b0f17;color:#e7e9ea}
-html.light .bal-cal-h select option{background:#fff;color:#0f1419}
-.bal-cal-h button{flex:0 0 34px;height:34px;border:0;border-radius:50%;background:rgba(148,163,184,.14);color:inherit;font:700 18px/1 Inter,system-ui,sans-serif;cursor:pointer}
-.bal-cal-h button:hover{background:rgba(56,189,248,.25)}
-.bal-cal-w,.bal-cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
-.bal-cal-w span{padding:4px 0;font:700 11px Inter,system-ui,sans-serif;color:#71767b}
-.bal-cal-g button,.bal-cal-g span{aspect-ratio:1;min-height:34px}
-.bal-cd{border:0;border-radius:50%;background:transparent;color:inherit;font:500 14px Inter,system-ui,sans-serif;cursor:pointer}
-.bal-cd:hover:not([disabled]){background:rgba(56,189,248,.2)}
-.bal-cd.on{background:#38BDF8;color:#04121c;font-weight:800}
-.bal-cd[disabled]{opacity:.28;cursor:not-allowed}
-.bal-cal-f{display:flex;justify-content:space-between;margin-top:8px}
-
 /* ---- Anti-kedip login: selama terkunci, isi website tidak digambar sama sekali ---- */
 html.bal-lock body>*:not(#bal-ov):not(#bal-toast):not(#bal-menu):not(#ba-splash):not(script):not(style):not(link):not(noscript){visibility:hidden!important}
 #bal-ov.gate{transition:none!important}
@@ -13554,7 +13500,7 @@ html.light .bal-tag{color:#0f1419}
 
   function openModal(m,note){
     mode=m;lastFocus=document.activeElement;closeMenu();clearTimeout(hideT);
-    if(m==='out')renderOut();else if(m==='done')renderDone();else render(m,note);
+    if(m==='out')renderOut();else render(m,note);
     ov.hidden=false;requestAnimationFrame(function(){ov.classList.add('on')});
     setTimeout(function(){var f=box.querySelector('input,button.bal-danger,button.bal-submit');if(f)try{f.focus()}catch(e){}},60);
   }
@@ -13566,150 +13512,7 @@ html.light .bal-tag{color:#0f1419}
     if(lastFocus&&lastFocus.focus)try{lastFocus.focus()}catch(e){}
   }
 
-  /* ---------- FORM PENDAFTARAN RINGKAS (3 langkah) ---------- */
-  var DF_COUNTRIES=[['ID','Indonesia'],['MY','Malaysia'],['SG','Singapura'],['US','Amerika Serikat'],['GB','Inggris'],['JP','Jepang'],['AU','Australia'],['IN','India'],['XX','Lainnya']];
-  var DF_GENDER=[['','Pilih'],['L','Laki-laki'],['P','Perempuan'],['-','Tidak ingin menyebutkan']];
-  function uf(g,name,type,ac,label,ph,extra){
-    var id='bal-'+name,at='id="'+id+'" name="'+name+'" type="'+type+'" autocomplete="'+ac+'" '+((extra||'').indexOf('maxlength')<0?'maxlength="120" ':'')+(extra||'');
-    if(g){return (type==='date'?'<div><label class="bal-dl" for="'+id+'">'+label+'</label>':'<div>')+'<div class="bal-gin"><input '+at+(type==='date'?'':' placeholder="'+ph+'"')+'></div><div class="bal-err" data-e="'+name+'"></div></div>'}
-    return '<div class="bal-fld"><label for="'+id+'">'+label+'</label><div class="bal-in"><input '+at+(ph?' placeholder="'+ph+'"':'')+'></div><div class="bal-err" data-e="'+name+'"></div></div>';
-  }
-  function upw(g,name,ac,label){
-    var id='bal-'+name;
-    if(g)return '<div>'+pwField(id,name,ac,label)+'<div class="bal-err" data-e="'+name+'"></div></div>';
-    return '<div class="bal-fld"><label for="'+id+'">'+label+'</label><div class="bal-in pw"><input id="'+id+'" name="'+name+'" type="password" autocomplete="'+ac+'" maxlength="100"><button type="button" class="bal-eye" data-eye aria-label="Tampilkan kata sandi"><i class="fa-regular fa-eye"></i></button></div><div class="bal-err" data-e="'+name+'"></div></div>';
-  }
-  function dfSel(name,label,opts,ac,sel){return '<div><label class="bal-dl" for="bal-'+name+'">'+label+'</label><select id="bal-'+name+'" name="'+name+'" autocomplete="'+ac+'">'+opts.map(function(o){return '<option value="'+o[0]+'"'+(o[0]===sel?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select></div>'}
-  var DF_TERMS='<label class="bal-gchk" style="align-items:flex-start"><input type="checkbox" name="terms" id="bal-terms" style="margin-top:2px;flex:0 0 auto"><span>Saya menyetujui Ketentuan Layanan dan Kebijakan Privasi Berita Angin.</span></label><div class="bal-err" data-e="terms"></div>';
-  function upSteps(g){
-    var today=new Date().toISOString().slice(0,10);
-    return '<div class="bal-prog" aria-hidden="true"><i></i><i></i><i></i></div>'
-      +'<div class="bal-step" data-s="1"><p class="bal-dsec">Buat akun Anda</p>'
-      +uf(g,'name','text','name','Nama lengkap','Nama lengkap','')
-      +uf(g,'email','email','email','Email','Email','inputmode="email"')
-      +dobField('Tanggal lahir')
-      +'<p class="bal-dsub">Tanggal lahir tidak ditampilkan ke publik. Usia minimal 13 tahun.</p>'
-      +'<button type="button" class="bal-gp" data-next>Berikutnya</button></div>'
-      +'<div class="bal-step" data-s="2" hidden><p class="bal-dsec">Tentang Anda</p><p class="bal-dsub">Opsional, bisa dilewati.</p>'
-      +'<div class="bal-d2">'+dfSel('country','Negara',DF_COUNTRIES,'country','ID')+dfSel('gender','Jenis kelamin',DF_GENDER,'sex','')+'</div>'
-      +'<button type="button" class="bal-gp" data-next>Berikutnya</button>'
-      +'<div class="bal-stnav"><button type="button" class="bal-glink" data-prev>&larr; Kembali</button><button type="button" class="bal-glink" data-next>Lewati untuk saat ini</button></div></div>'
-      +'<div class="bal-step" data-s="3" hidden><p class="bal-dsec">Buat nama pengguna dan kata sandi</p>'
-      +uf(g,'username','text','username','Nama pengguna','Nama pengguna (mis. budi_angin)','autocapitalize="none" spellcheck="false" maxlength="20"')
-      +upw(g,'password','new-password','Kata sandi (min. 8, huruf &amp; angka)')
-      +upw(g,'password2','new-password','Ulangi kata sandi')
-      +DF_TERMS
-      +'<div class="bal-err" data-e="form" role="alert"></div>'
-      +'<button type="submit" class="'+(g?'bal-gnext':'bal-submit')+'">'+(g?'Daftar':'Sign Up')+'</button>'
-      +'<div class="bal-stnav"><button type="button" class="bal-glink" data-prev>&larr; Kembali</button></div></div>';
-  }
-
-  /* ---------- kalender tanggal lahir ---------- */
-  var DOB_MN=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-  var DOB_WD=['Sen','Sel','Rab','Kam','Jum','Sab','Min'];
-  function dobField(label){
-    return '<div class="bal-dob"><label class="bal-dl" for="bal-birth-btn">'+label+'</label>'
-      +'<input type="hidden" name="birth" id="bal-birth" value="">'
-      +'<button type="button" class="bal-dobbtn" id="bal-birth-btn" data-dobfor="birth" aria-haspopup="dialog" aria-expanded="false"><i class="fa-regular fa-calendar"></i><span data-dobtxt>Pilih dari kalender</span></button>'
-      +'<div class="bal-cal" role="dialog" aria-label="Kalender tanggal lahir" hidden></div>'
-      +'<div class="bal-err" data-e="birth"></div></div>';
-  }
-  function dobInit(form){
-    var wrap=form.querySelector('.bal-dob');if(!wrap||wrap.__dob)return;wrap.__dob=1;
-    var inp=wrap.querySelector('input[name="birth"]'),btn=wrap.querySelector('.bal-dobbtn'),txt=wrap.querySelector('[data-dobtxt]'),pan=wrap.querySelector('.bal-cal');
-    var now=new Date(),maxY=now.getFullYear(),vy=2000,vm=0,sel=null;
-    function pad(n){return n<10?'0'+n:''+n}
-    function draw(focusSel){
-      var lead=(new Date(vy,vm,1).getDay()+6)%7,dim=new Date(vy,vm+1,0).getDate(),h='';
-      h+='<div class="bal-cal-h"><button type="button" data-cm="-1" aria-label="Bulan sebelumnya">&lsaquo;</button><select data-cmo aria-label="Bulan">'
-        +DOB_MN.map(function(n,i){return '<option value="'+i+'"'+(i===vm?' selected':'')+'>'+n+'</option>'}).join('')+'</select><select data-cy aria-label="Tahun">';
-      for(var y=maxY;y>=1900;y--)h+='<option value="'+y+'"'+(y===vy?' selected':'')+'>'+y+'</option>';
-      h+='</select><button type="button" data-cm="1" aria-label="Bulan berikutnya">&rsaquo;</button></div><div class="bal-cal-w">'
-        +DOB_WD.map(function(w){return '<span>'+w+'</span>'}).join('')+'</div><div class="bal-cal-g">';
-      for(var i=0;i<lead;i++)h+='<span></span>';
-      for(var d=1;d<=dim;d++){
-        var dis=new Date(vy,vm,d)>now,on=sel&&sel.y===vy&&sel.m===vm&&sel.d===d;
-        h+='<button type="button" class="bal-cd'+(on?' on':'')+'" data-d="'+d+'"'+(dis?' disabled':'')+'>'+d+'</button>';
-      }
-      h+='</div><div class="bal-cal-f"><button type="button" class="bal-glink" data-clr>Hapus</button><button type="button" class="bal-glink" data-close>Tutup</button></div>';
-      pan.innerHTML=h;
-      if(focusSel){var f=pan.querySelector(focusSel);if(f)try{f.focus()}catch(e){}}
-    }
-    function setVal(y,m,d){
-      sel=y==null?null:{y:y,m:m,d:d};
-      inp.value=sel?(y+'-'+pad(m+1)+'-'+pad(d)):'';
-      txt.textContent=sel?(d+' '+DOB_MN[m]+' '+y):'Pilih dari kalender';
-      btn.classList.toggle('has',!!sel);
-      if(sel)setErr(form,'birth','');
-    }
-    function toggle(open){
-      pan.hidden=!open;btn.setAttribute('aria-expanded',open?'true':'false');
-      if(open){if(sel){vy=sel.y;vm=sel.m}draw()}
-    }
-    btn.addEventListener('click',function(){toggle(pan.hidden)});
-    pan.addEventListener('click',function(e){
-      var t=e.target.closest&&e.target.closest('button');if(!t||!pan.contains(t))return;e.preventDefault();e.stopPropagation();
-      if(t.hasAttribute('data-cm')){vm+=+t.getAttribute('data-cm');if(vm<0){vm=11;vy--}if(vm>11){vm=0;vy++}vy=Math.max(1900,Math.min(maxY,vy));draw()}
-      else if(t.hasAttribute('data-d')){setVal(vy,vm,+t.getAttribute('data-d'));toggle(false);btn.focus()}
-      else if(t.hasAttribute('data-clr')){setVal(null);draw()}
-      else if(t.hasAttribute('data-close')){toggle(false);btn.focus()}
-    });
-    pan.addEventListener('change',function(e){
-      if(e.target.hasAttribute('data-cmo')){vm=+e.target.value;draw('[data-cmo]')}
-      else if(e.target.hasAttribute('data-cy')){vy=+e.target.value;draw('[data-cy]')}
-    });
-  }
-
-  function stepShow(form,n,quiet){
-    form.__st=n;
-    [].forEach.call(form.querySelectorAll('.bal-step'),function(s){s.hidden=(+s.getAttribute('data-s')!==n)});
-    [].forEach.call(form.querySelectorAll('.bal-prog i'),function(d,i){d.className=i<n?'on':''});
-    [].forEach.call(box.querySelectorAll('.bal-g,.bal-or'),function(x){x.style.display=n===1?'':'none'});
-    if(!quiet){var f=form.querySelector('.bal-step:not([hidden]) input:not([type=checkbox]),.bal-step:not([hidden]) select');if(f)try{f.focus()}catch(e){}}
-  }
-  function stepNext(form){
-    var n=form.__st||1;clearErrs(form);
-    if(n===1){
-      var E=form.elements,name=E['name'].value.trim(),email=E['email'].value.trim().toLowerCase(),birth=E['birth'].value,ok=true;
-      if(name.length<2){setErr(form,'name','Masukkan nama lengkap Anda.');ok=false}
-      if(!EMAIL_RE.test(email)){setErr(form,'email','Format email tidak valid.');ok=false}
-      else if(readUsers()[email]){setErr(form,'email',dupMsg(email));ok=false}
-      if(!birth){setErr(form,'birth','Isi tanggal lahir Anda.');ok=false}
-      else{var bd=new Date(birth+'T00:00:00'),now=new Date();
-        if(isNaN(bd.getTime())||bd>now||bd.getFullYear()<1900){setErr(form,'birth','Tanggal lahir tidak valid.');ok=false}
-        else{var age=now.getFullYear()-bd.getFullYear();if(now.getMonth()<bd.getMonth()||(now.getMonth()===bd.getMonth()&&now.getDate()<bd.getDate()))age--;
-          if(age<13){setErr(form,'birth','Usia minimal 13 tahun untuk membuat akun.');ok=false}}}
-      if(!ok){var bad=form.querySelector('[aria-invalid="true"]');if(bad)bad.focus();return}
-    }
-    stepShow(form,Math.min(3,n+1));
-  }
-  function setupSteps(form){
-    dobInit(form);
-    stepShow(form,1,true);
-    form.addEventListener('click',function(e){
-      var t=e.target.closest&&e.target.closest('[data-next],[data-prev]');if(!t||!form.contains(t))return;
-      e.preventDefault();
-      if(t.hasAttribute('data-next'))stepNext(form);else stepShow(form,Math.max(1,(form.__st||1)-1));
-    });
-  }
-  function renderAuthUp(note){
-    box.innerHTML=
-      '<div class="bal-hd"><div><h2 id="bal-title">Buat akun</h2><p>Daftar gratis untuk menyimpan penanda, suka, dan komentar Anda.</p></div>'
-      +'<button type="button" class="bal-x" data-x aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button></div>'
-      +'<div class="bal-tabs" role="tablist"><button type="button" role="tab" data-t="in" aria-selected="false">Sign In</button><button type="button" role="tab" data-t="up" aria-selected="true">Sign Up</button></div>'
-      +'<form class="bal-form" novalidate autocomplete="on">'
-      +(note?'<p class="bal-note">'+esc(note)+'</p>':'')
-      +'<div class="bal-g"><button type="button" class="bal-gbtn" data-gfb>'+GSVG+'Lanjutkan dengan Google</button></div><div class="bal-or"><span>atau dengan email</span></div>'
-      +upSteps(false)
-      +'<p class="bal-alt">Sudah punya akun? <button type="button" data-t="in">Sign In</button></p>'
-      +'<p class="bal-hint" style="text-align:center">Akun disimpan di browser perangkat ini (tanpa server).</p></form>';
-    var form=box.querySelector('form');
-    form.addEventListener('submit',function(e){e.preventDefault();doSignUp(form)});
-    renderGoogle(form);setupSteps(form);
-  }
-
   function renderAuth(m,note){
-    if(m==='up')return renderAuthUp(note);
     var up=m==='up';
     box.innerHTML=
       '<div class="bal-hd"><div>'+(gated?'<p class="bal-brand">Berita Angin</p>':'')+'<h2 id="bal-title">'+(up?'Buat akun':'Sign In')+'</h2>'
@@ -13742,7 +13545,7 @@ html.light .bal-tag{color:#0f1419}
   var gEmail='';
   function findUsers(v){v=String(v).trim().toLowerCase().replace(/^@/,'');var us=readUsers();if(!v)return [];
     if(v.indexOf('@')>-1&&us[v])return [us[v]];
-    return Object.keys(us).filter(function(k){var u=us[k];return k.split('@')[0]===v||String(u.name||'').trim().toLowerCase()===v||String(u.username||'').toLowerCase()===v}).map(function(k){return us[k]})}
+    return Object.keys(us).filter(function(k){var u=us[k];return k.split('@')[0]===v||String(u.name||'').trim().toLowerCase()===v}).map(function(k){return us[k]})}
   function findUser(v){var m=findUsers(v);return m.length===1?m[0]:null}
   function pwField(id,name,ac,ph){return '<div class="bal-gin pw"><input id="'+id+'" name="'+name+'" type="password" autocomplete="'+ac+'" placeholder="'+ph+'" maxlength="100"><button type="button" class="bal-eye" data-eye aria-label="Tampilkan kata sandi"><i class="fa-regular fa-eye"></i></button></div>'}
   function gField(id,name,type,ac,ph,extra){return '<div class="bal-gin"><input id="'+id+'" name="'+name+'" type="'+type+'" autocomplete="'+ac+'" placeholder="'+ph+'" maxlength="120" '+(extra||'')+'></div><div class="bal-err" data-e="'+name+'"></div>'}
@@ -13797,7 +13600,13 @@ html.light .bal-tag{color:#0f1419}
     }else if(view==='up'){
       h='Bergabunglah hari ini.';
       body=GOOGLE_ROW+'<div class="bal-or"><span>atau</span></div>'
-        +'<form class="bal-gform" novalidate autocomplete="on">'+upSteps(true)+'</form>'
+        +'<form class="bal-gform" novalidate autocomplete="on">'
+        +gField('bal-name','name','text','name','Nama lengkap','')
+        +gField('bal-email','email','email','email','Email','inputmode="email"')
+        +pwField('bal-pw','password','new-password','Kata sandi (min. 8, huruf & angka)')+'<div class="bal-err" data-e="password"></div>'
+        +pwField('bal-pw2','password2','new-password','Ulangi kata sandi')+'<div class="bal-err" data-e="password2"></div>'
+        +'<div class="bal-err" data-e="form" role="alert"></div>'
+        +'<button type="submit" class="bal-gnext">Daftar</button></form>'+TERMS
         +'<p class="bal-gsw">Sudah punya akun? <button type="button" class="bal-glink" data-t="in">Sign In</button></p>';
     }else{
       h='1%Issue 99%Fact';
@@ -13815,7 +13624,6 @@ html.light .bal-tag{color:#0f1419}
       +'<h1 class="bal-gh" id="bal-title">'+h+'</h1><div class="bal-gcol">'+body+'</div></div></div>'
       +'<div class="bal-gr"><img class="bal-glogo" src="'+BA_LOGO+'" alt="Berita Angin"><p class="bal-tag">'+TAGLINE+'</p></div>';
     var form=box.querySelector('form'),nxt=form.querySelector('.bal-gnext');
-    if(view==='up')setupSteps(form);
     form.addEventListener('submit',function(e){
       e.preventDefault();
       if(view==='up')return doSignUp(form);
@@ -13859,9 +13667,9 @@ html.light .bal-tag{color:#0f1419}
   /* ---------- validasi & kesalahan ---------- */
   function setErr(form,field,msg){
     var el=form.querySelector('[data-e="'+field+'"]');if(el)el.textContent=msg||'';
-    var inp=form.querySelector('[name="'+field+'"]');if(inp&&inp.type==='hidden')inp=form.querySelector('[data-dobfor="'+field+'"]');if(inp){if(msg)inp.setAttribute('aria-invalid','true');else inp.removeAttribute('aria-invalid')}
+    var inp=form.querySelector('[name="'+field+'"]');if(inp){if(msg)inp.setAttribute('aria-invalid','true');else inp.removeAttribute('aria-invalid')}
   }
-  function clearErrs(form){['name','username','email','phone','birth','gender','country','city','experience','password','password2','terms','form'].forEach(function(f){setErr(form,f,'')})}
+  function clearErrs(form){['name','email','password','password2','form'].forEach(function(f){setErr(form,f,'')})}
   function busy(form,on,label){var b=form.querySelector('.bal-submit,.bal-gnext');b.disabled=on;b.classList.toggle('ld',on);b.textContent=on?'Memproses…':label}
 
   /* ---------- batas percobaan gagal ---------- */
@@ -13871,39 +13679,22 @@ html.light .bal-tag{color:#0f1419}
 
   /* ---------- Sign Up ---------- */
   function doSignUp(form){
-    if(form.querySelector('.bal-step')&&(form.__st||1)<3)return stepNext(form);
     clearErrs(form);
-    var E=form.elements,g=function(n){return E[n]?String(E[n].value||'').trim():''};
-    var btn=form.querySelector('.bal-submit,.bal-gnext'),lbl=btn?btn.textContent:'Sign Up';
-    var name=g('name'),username=g('username').toLowerCase().replace(/^@/,''),email=g('email').toLowerCase(),
-        pw=E['password'].value,pw2=E['password2'].value,phone=g('phone').replace(/[\s().-]/g,''),
-        birth=g('birth'),gender=g('gender'),country=g('country')||'ID',city=g('city'),exp=g('experience')||'pemula',ok=true;
-    var news=!!(E['news']&&E['news'].checked),terms=!!(E['terms']&&E['terms'].checked);
+    var name=form.name.value.trim(),email=form.email.value.trim().toLowerCase(),pw=form.password.value,pw2=form.password2.value,ok=true;
     if(name.length<2){setErr(form,'name','Masukkan nama lengkap Anda.');ok=false}
-    if(!/^[a-z0-9_.]{3,20}$/.test(username)){setErr(form,'username','Nama pengguna 3-20 karakter: huruf kecil, angka, titik, atau garis bawah.');ok=false}
     if(!EMAIL_RE.test(email)){setErr(form,'email','Format email tidak valid.');ok=false}
-    if(false&&phone&&!/^\+?\d{8,15}$/.test(phone)){setErr(form,'phone','Nomor HP tidak valid (8-15 digit).');ok=false}
-    if(birth){
-      var bd=new Date(birth+'T00:00:00'),now=new Date();
-      if(isNaN(bd.getTime())||bd>now||bd.getFullYear()<1900){setErr(form,'birth','Tanggal lahir tidak valid.');ok=false}
-      else{var age=now.getFullYear()-bd.getFullYear();if(now.getMonth()<bd.getMonth()||(now.getMonth()===bd.getMonth()&&now.getDate()<bd.getDate()))age--;
-        if(age<13){setErr(form,'birth','Usia minimal 13 tahun untuk membuat akun.');ok=false}}
-    }
     if(pw.length<8||!/[A-Za-z]/.test(pw)||!/\d/.test(pw)){setErr(form,'password','Minimal 8 karakter dengan huruf dan angka.');ok=false}
     if(pw2!==pw){setErr(form,'password2','Kata sandi tidak sama.');ok=false}
-    if(!terms){setErr(form,'terms','Anda perlu menyetujui ketentuan untuk melanjutkan.');ok=false}
-    if(!ok){var bad=form.querySelector('[aria-invalid="true"]');if(bad){var st=bad.closest('.bal-step');if(st)stepShow(form,+st.getAttribute('data-s'));bad.focus()}return}
+    if(!ok){var bad=form.querySelector('[aria-invalid="true"]');if(bad)bad.focus();return}
     var users=readUsers();
-    if(users[email]){stepShow(form,1);setErr(form,'email',dupMsg(email));E['email'].focus();return}
-    var taken=Object.keys(users).some(function(k){return String(users[k].username||'').toLowerCase()===username});
-    if(taken){setErr(form,'username','Nama pengguna ini sudah dipakai. Coba yang lain.');E['username'].focus();return}
-    busy(form,true,lbl);
+    if(users[email]){setErr(form,'email','Email ini sudah terdaftar. Silakan Sign In.');form.email.focus();return}
+    busy(form,true,'Sign Up');
     var salt=b64(rand(16));
     hashPw(pw,salt).then(function(h){
-      users[email]={name:name,username:username,email:email,phone:phone,birth:birth,gender:gender,country:country,city:city,experience:exp,newsletter:news,salt:salt,hash:h,created:Date.now()};
-      if(!writeUsers(users)){busy(form,false,lbl);setErr(form,'form','Penyimpanan browser tidak tersedia. Nonaktifkan mode privat lalu coba lagi.');return}
+      users[email]={name:name,email:email,salt:salt,hash:h,created:Date.now()};
+      if(!writeUsers(users)){busy(form,false,'Sign Up');setErr(form,'form','Penyimpanan browser tidak tersedia. Nonaktifkan mode privat lalu coba lagi.');return}
       setSession(users[email],true);afterAuth('Akun dibuat. Selamat datang, '+name.split(' ')[0]+'!');
-    }).catch(function(){busy(form,false,lbl);setErr(form,'form','Terjadi kesalahan. Coba lagi.')});
+    }).catch(function(){busy(form,false,'Sign Up');setErr(form,'form','Terjadi kesalahan. Coba lagi.')});
   }
 
   /* ---------- Sign In ---------- */
@@ -13951,53 +13742,12 @@ html.light .bal-tag{color:#0f1419}
       var p=jwtPayload(resp.credential.split('.')[1]);
       if(p.aud!==GOOGLE_CLIENT_ID||!/accounts\.google\.com$/.test(p.iss||'')||p.exp*1000<Date.now()||!p.email||p.email_verified===false)throw new Error('bad');
       var email=String(p.email).toLowerCase(),users=readUsers(),old=users[email]||{};
-      var firstTime=!old.profileDone&&!old.profileAsked&&!old.birth;
-      var u=Object.assign({},old,{name:p.name||old.name||email.split('@')[0],username:old.username||suggestUser(email,users),email:email,picture:old.customPic?old.picture:(p.picture||old.picture||''),provider:old.hash?'password+google':'google',gsub:p.sub||old.gsub||'',synced:Date.now(),created:old.created||Date.now(),profileAsked:old.profileAsked||firstTime});
+      var u=Object.assign({},old,{name:p.name||old.name||email.split('@')[0],email:email,picture:old.customPic?old.picture:(p.picture||old.picture||''),provider:'google',gsub:p.sub||old.gsub||'',synced:Date.now(),created:old.created||Date.now()});
       users[email]=u;
       if(!writeUsers(users)){toast('Penyimpanan browser tidak tersedia.');return}
-      setSession(u,true);afterAuth((firstTime?'Akun Google terhubung. Selamat datang, ':'Berhasil masuk dengan Google. Halo, ')+u.name.split(' ')[0]+'!');
-      if(firstTime)setTimeout(function(){openModal('done')},420);
+      setSession(u,true);afterAuth('Berhasil masuk dengan Google. Halo, '+u.name.split(' ')[0]+'!');
     }catch(e){toast('Login Google gagal. Coba lagi.')}
   }
-  /* ---------- sinkronisasi akun Google dengan data pendaftaran ---------- */
-  function suggestUser(email,users){
-    var base=String(email).split('@')[0].toLowerCase().replace(/[^a-z0-9_.]/g,'').slice(0,16);if(base.length<3)base=(base+'user').slice(0,8);
-    var taken=function(x){return Object.keys(users).some(function(k){return String(users[k].username||'').toLowerCase()===x})},n=base,i=0;
-    while(taken(n)){i++;n=base+i}return n;
-  }
-  function dupMsg(e){var u=readUsers()[e];return u&&!u.hash?'Email ini terdaftar lewat Google. Pilih "Lanjutkan dengan Google".':'Email ini sudah terdaftar. Silakan Sign In.'}
-  function renderDone(){
-    var s=getSession();if(!s){closeModal();return}
-    var us=readUsers(),u=us[s.email]||{},today=new Date().toISOString().slice(0,10);
-    box.innerHTML='<div class="bal-hd"><div><h2 id="bal-title">Lengkapi profil Anda</h2><p>Akun Google <b>'+esc(s.email)+'</b> sudah terhubung. Isi data singkat ini agar sama dengan data pendaftaran.</p></div>'
-      +'<button type="button" class="bal-x" data-x aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button></div>'
-      +'<form class="bal-form" novalidate autocomplete="on"><div class="bal-step">'
-      +uf(false,'username','text','username','Nama pengguna','mis. budi_angin','autocapitalize="none" spellcheck="false" maxlength="20" value="'+esc(u.username||'')+'"')
-      +dobField('Tanggal lahir (opsional)')
-      +'<div class="bal-d2">'+dfSel('country','Negara',DF_COUNTRIES,'country','ID')+dfSel('gender','Jenis kelamin',DF_GENDER,'sex','')+'</div>'
-      +'<div class="bal-err" data-e="form" role="alert"></div>'
-      +'<button type="submit" class="bal-submit">Simpan</button>'
-      +'<p class="bal-alt"><button type="button" data-skipdone>Lewati untuk saat ini</button></p></div></form>';
-    var form=box.querySelector('form');dobInit(form);
-    form.addEventListener('submit',function(e){
-      e.preventDefault();clearErrs(form);
-      var E=form.elements,un=String(E['username'].value||'').trim().toLowerCase().replace(/^@/,''),birth=E['birth'].value,ok=true;
-      var all=readUsers(),me=all[s.email];if(!me){closeModal();return}
-      if(!/^[a-z0-9_.]{3,20}$/.test(un)){setErr(form,'username','Nama pengguna 3-20 karakter: huruf kecil, angka, titik, atau garis bawah.');ok=false}
-      else if(Object.keys(all).some(function(k){return k!==s.email&&String(all[k].username||'').toLowerCase()===un})){setErr(form,'username','Nama pengguna ini sudah dipakai. Coba yang lain.');ok=false}
-      if(birth){var bd=new Date(birth+'T00:00:00'),now=new Date();
-        if(isNaN(bd.getTime())||bd>now||bd.getFullYear()<1900){setErr(form,'birth','Tanggal lahir tidak valid.');ok=false}
-        else{var age=now.getFullYear()-bd.getFullYear();if(now.getMonth()<bd.getMonth()||(now.getMonth()===bd.getMonth()&&now.getDate()<bd.getDate()))age--;
-          if(age<13){setErr(form,'birth','Usia minimal 13 tahun untuk memakai akun.');ok=false}}}
-      if(!ok){var bad=form.querySelector('[aria-invalid="true"]');if(bad)bad.focus();return}
-      me.username=un;me.birth=birth;me.country=E['country'].value||'ID';me.gender=E['gender'].value||'';
-      me.profileDone=true;all[s.email]=me;
-      if(!writeUsers(all)){setErr(form,'form','Penyimpanan browser tidak tersedia.');return}
-      paint();closeModal();toast('Profil disimpan.');
-    });
-    form.querySelector('[data-skipdone]').addEventListener('click',function(){closeModal()});
-  }
-
   function renderGoogle(form){
     var host=form.querySelector('.bal-g');if(!host||!GOOGLE_CLIENT_ID||getSession())return;
     loadGoogle().then(function(){
@@ -14225,5 +13975,19 @@ html.ba-collapsed a.nav-link.ba-pf .ba-pf-txt,html.ba-collapsed a.nav-link.ba-pf
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(start,300)});else setTimeout(start,300);
 })();
 </script>
+<style id="ba-pf-fix">
+/* Perbaikan kartu profil sidebar: hapus garis oval/pil bertumpuk, rapikan susunan avatar - nama - @handle - titik tiga */
+a.nav-link.ba-pf,a.nav-link.ba-pf *{outline:0!important;box-shadow:none!important;text-shadow:none!important}
+a.nav-link.ba-pf{display:flex!important;align-items:center!important;gap:10px!important;width:100%;min-width:0;border:0!important;background:none!important;border-radius:999px!important;padding:10px 8px!important}
+a.nav-link.ba-pf::before,a.nav-link.ba-pf::after{display:none!important}
+a.nav-link.ba-pf .ba-pf-av{flex:0 0 40px!important;width:40px!important;height:40px!important;border:0!important;border-radius:50%!important;padding:0!important;margin:0!important;overflow:hidden}
+a.nav-link.ba-pf .ba-pf-av::before{display:none!important}
+a.nav-link.ba-pf .ba-pf-txt,a.nav-link.ba-pf .ba-pf-txt b,a.nav-link.ba-pf .ba-pf-txt span,a.nav-link.ba-pf .ba-pf-dots{border:0!important;background:none!important;border-radius:0!important;padding:0!important;margin:0!important;min-height:0!important;height:auto!important}
+a.nav-link.ba-pf .ba-pf-txt{flex:1 1 auto!important;min-width:0!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:1px!important;overflow:hidden!important}
+a.nav-link.ba-pf .ba-pf-txt b,a.nav-link.ba-pf .ba-pf-txt span{display:block!important;max-width:100%!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;line-height:1.25!important}
+a.nav-link.ba-pf .ba-pf-txt b{font-size:15px!important;font-weight:800!important}
+a.nav-link.ba-pf .ba-pf-txt span{font-size:14px!important;font-weight:400!important}
+a.nav-link.ba-pf .ba-pf-dots{flex:0 0 auto!important;width:auto!important;display:inline-block!important;font-size:14px!important;line-height:1!important}
+</style>
 </body>
 </html>
