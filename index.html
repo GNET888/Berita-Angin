@@ -2435,7 +2435,14 @@ function finish(){if(fin)return;fin=true;
         <!-- 1. Halaman Beranda (gaya aplikasi X) -->
         <section id="page-home" class="page active">
           <div class="xp">
-            <div class="xp-feed" role="feed" aria-label="Lini masa Berita Angin">
+            <section id="dp-dash" class="dp-dash" aria-label="Ringkasan dashboard">
+<div class="dp-head"><div><p class="dp-eyebrow">Ringkasan Pasar</p><h2 id="dp-date">Hari ini</h2></div><span class="dp-live"><i></i>LIVE</span></div>
+<div class="dp-grid"><div class="dp-kpi" data-dp="BTC"><div class="dp-k-top"><span class="dp-k-n">Bitcoin</span><span class="dp-k-s">BTC/USDT</span></div><div class="dp-k-v">--</div><div class="dp-k-bot"><span class="dp-k-c">0.00%</span><svg class="dp-spark" viewBox="0 0 80 24" preserveAspectRatio="none"><polyline points=""/></svg></div></div><div class="dp-kpi" data-dp="ETH"><div class="dp-k-top"><span class="dp-k-n">Ethereum</span><span class="dp-k-s">ETH/USDT</span></div><div class="dp-k-v">--</div><div class="dp-k-bot"><span class="dp-k-c">0.00%</span><svg class="dp-spark" viewBox="0 0 80 24" preserveAspectRatio="none"><polyline points=""/></svg></div></div><div class="dp-kpi" data-dp="SOL"><div class="dp-k-top"><span class="dp-k-n">Solana</span><span class="dp-k-s">SOL/USDT</span></div><div class="dp-k-v">--</div><div class="dp-k-bot"><span class="dp-k-c">0.00%</span><svg class="dp-spark" viewBox="0 0 80 24" preserveAspectRatio="none"><polyline points=""/></svg></div></div><div class="dp-kpi" data-dp="MIX"><div class="dp-k-top"><span class="dp-k-n">Terakhir</span><span class="dp-k-s">Tick terbaru</span></div><div class="dp-k-v">--</div><div class="dp-k-bot"><span class="dp-k-c">0.00%</span><svg class="dp-spark" viewBox="0 0 80 24" preserveAspectRatio="none"><polyline points=""/></svg></div></div></div>
+<div class="dp-sec"><h3>Akses Cepat</h3></div>
+<div class="dp-quick"><a href="#" class="nav-link dp-q" data-page="crypto-market"><span class="dp-qi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.7 7.6v8.8M9.7 7.6h3.1a2.2 2.2 0 0 1 0 4.4H9.7m3.4 0a2.2 2.2 0 0 1 0 4.4H9.7"/></svg></span><span>Crypto</span></a><a href="#" class="nav-link dp-q" data-page="stock-exchange"><span class="dp-qi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9.2 12 4l9 5.2"/><path d="M6 11.5v6M10 11.5v6M14 11.5v6M18 11.5v6"/><path d="M4 20.5h16"/></svg></span><span>Saham</span></a><a href="#" class="nav-link dp-q" data-page="global-market"><span class="dp-qi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg></span><span>Global</span></a><a href="#" class="nav-link dp-q" data-page="market-stat"><span class="dp-qi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V11M12 21V3M19 21v-7"/></svg></span><span>Statistik</span></a></div>
+<div class="dp-sec"><h3>Berita Terbaru</h3></div>
+</section>
+<div class="xp-feed" role="feed" aria-label="Lini masa Berita Angin">
                 <div class="xp-tabs" role="tablist">
                     <button type="button" role="tab" class="on" data-xp-tab="all" aria-selected="true"><span>Untuk Anda<svg class="xi xp-chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></button>
                     <button type="button" role="tab" data-xp-tab="artikel" aria-selected="false"><span>Artikel</span></button>
@@ -14272,5 +14279,111 @@ a.nav-link.ba-pf .ba-pf-dots{flex:0 0 auto!important;width:auto!important;displa
   html #ba-topbar,html.light #ba-topbar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 }
 </style>
+<style id="ba-dash-pro">
+.dp-dash{display:none}
+@media (max-width:767px){
+  .dp-dash{display:block;margin:2px 0 4px}
+  .dp-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:4px 2px 12px}
+  .dp-eyebrow{margin:0;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#71767b}
+  .dp-head h2{margin:2px 0 0;font-size:20px;line-height:1.2;font-weight:800;color:#e7e9ea}
+  .dp-live{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;border:1px solid rgba(52,211,153,.35);background:rgba(52,211,153,.10);color:#34d399;font-size:10px;font-weight:800;letter-spacing:.08em}
+  .dp-live i{width:7px;height:7px;border-radius:50%;background:#34d399;animation:baPulse 1.8s infinite}
+  .dp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .dp-kpi{padding:12px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);min-width:0}
+  .dp-k-top{display:flex;flex-direction:column;gap:1px}
+  .dp-k-n{font-size:13px;font-weight:700;color:#e7e9ea}
+  .dp-k-s{font-size:10.5px;color:#71767b;letter-spacing:.02em}
+  .dp-k-v{margin-top:8px;font-size:18px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dp-k-bot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:6px}
+  .dp-k-c{font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;color:#94a3b8}
+  .dp-kpi.up .dp-k-c{color:#34d399}.dp-kpi.dn .dp-k-c{color:#f43f5e}
+  .dp-spark{width:64px;height:22px;flex:none;overflow:visible}
+  .dp-spark polyline{fill:none;stroke:#94a3b8;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .dp-kpi.up .dp-spark polyline{stroke:#34d399}.dp-kpi.dn .dp-spark polyline{stroke:#f43f5e}
+  .dp-sec{padding:18px 2px 8px}.dp-sec h3{margin:0;font-size:15px;font-weight:800;color:#e7e9ea}
+  .dp-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .dp-q{display:flex;flex-direction:column;align-items:center;gap:7px;padding:12px 4px;border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.03);color:#e7e9ea;font-size:11.5px;font-weight:700;text-decoration:none}
+  .dp-qi{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:rgba(56,189,248,.12);color:#38bdf8}
+  .dp-qi svg{width:20px;height:20px}
+  .dp-q:active{background:rgba(56,189,248,.10)}
+  html.light .dp-head h2,html.light .dp-k-n,html.light .dp-sec h3,html.light .dp-q{color:#0f1419}
+  html.light .dp-k-v{color:#0f1419}
+  html.light .dp-kpi,html.light .dp-q{background:#fff;border-color:rgba(15,23,42,.10)}
+  /* feed di bawah dashboard: tab dibuat lebih rapi */
+  #page-home .xp-feed{margin-top:0}
+}
+@media (max-width:360px){.dp-k-v{font-size:16px}.dp-spark{width:48px}}
+</style>
+<script id="ba-dash-pro-js">
+(function(){
+  var H={BTC:[],ETH:[],SOL:[]},base={},last='';
+  function el(k){return document.querySelector('.dp-kpi[data-dp="'+k+'"]')}
+  function fmt(v){return '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+  function paint(k,price){
+    var n=el(k);if(!n)return;var h=H[k]||(H[k]=[]);h.push(price);if(h.length>30)h.shift();
+    if(base[k]==null)base[k]=price;
+    var ch=base[k]?(price-base[k])/base[k]*100:0;
+    n.querySelector('.dp-k-v').textContent=fmt(price);
+    n.querySelector('.dp-k-c').textContent=(ch>=0?'+':'')+ch.toFixed(2)+'%';
+    n.classList.toggle('up',ch>0);n.classList.toggle('dn',ch<0);
+    var mn=Math.min.apply(null,h),mx=Math.max.apply(null,h),r=(mx-mn)||1;
+    n.querySelector('polyline').setAttribute('points',h.map(function(v,i){return (i/(Math.max(h.length-1,1))*80).toFixed(1)+','+(22-((v-mn)/r)*20).toFixed(1)}).join(' '));
+  }
+  function read(){
+    var tk=document.getElementById('live-ticks-ticker');if(!tk)return;
+    Array.prototype.forEach.call(tk.children,function(it){
+      var s=it.querySelectorAll('span');if(s.length<2)return;
+      var pair=(s[0].textContent||'').trim(),p=parseFloat((s[1].textContent||'').replace(/[^0-9.]/g,''));
+      if(!(p>0))return;var k=pair.split('/')[0];
+      if(H[k])paint(k,p);
+    });
+    var m=el('MIX');
+    if(m){var f=tk.children[(window.__tkI||0)%Math.max(tk.children.length,1)];
+      if(f){var s2=f.querySelectorAll('span');if(s2.length>=2){m.querySelector('.dp-k-n').textContent=(s2[0].textContent||'').split('/')[0]||'Terakhir';m.querySelector('.dp-k-s').textContent=s2[0].textContent;m.querySelector('.dp-k-v').textContent=s2[1].textContent;
+        var up=/emerald|green/.test(s2[1].className||''),dn=/red|rose/.test(s2[1].className||'');m.classList.toggle('up',up);m.classList.toggle('dn',dn);m.querySelector('.dp-k-c').textContent=up?'Naik':dn?'Turun':'Tick';}}}
+  }
+  function date(){
+    var d=document.getElementById('dp-date');if(!d)return;
+    try{d.textContent=window.__baDate?window.__baDate(new Date()):new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'})}catch(e){}
+  }
+  date();read();setInterval(read,1200);setInterval(date,60000);
+})();
+</script>
+<style id="ba-app-fit">
+/* ===== Penyesuaian mode aplikasi (PWA/layar penuh) untuk header & drawer baru ===== */
+@media (max-width:767px){
+  /* warna header mengikuti tema/latar (sama dengan area status bar), bukan hitam tetap */
+  html #ba-topbar,html.light #ba-topbar{background:var(--ba-bg,#000)!important}
+  /* bila ticker dimatikan, header sendiri menjaga jarak dari poni/status bar */
+  html.ba-no-ticker #ba-topbar{padding-top:calc(8px + env(safe-area-inset-top,0px))!important;min-height:calc(56px + env(safe-area-inset-top,0px))}
+  html #ba-topbar .bal-top{-webkit-tap-highlight-color:transparent;touch-action:manipulation;min-width:44px;min-height:44px;justify-content:flex-start}
+  /* halaman di belakang tidak ikut menggulung saat drawer terbuka */
+  html:has(#mobile-sidebar:not(.hidden)){overflow:hidden!important}
+  html #mobile-sidebar{overscroll-behavior:contain;touch-action:pan-y}
+  html.light #sidebar-content .bal-drw .bal-txt b{color:#0f1419}
+  html.light #sidebar-content #close-sidebar-btn{border-color:rgba(15,23,42,.3);color:#0f1419}
+  html #sidebar-content{padding-left:env(safe-area-inset-left,0px)}
+}
+/* layar sentuh: ticker "live ticks" tidak berhenti karena sisa efek hover setelah disentuh */
+@media (hover:none){
+  .animate-marquee:hover,#live-ticks-ticker:hover{animation-play-state:running!important}
+}
+</style>
+<script id="ba-app-fit-js">
+(function(){
+  /* kembali dari latar belakang (app dibuka lagi): jam & ticker dipastikan berjalan */
+  function resume(){
+    try{
+      var tk=document.getElementById('live-ticks-ticker');if(tk)tk.style.animationPlayState='running';
+      var c=document.getElementById('ba-clock');
+      if(c&&window.__baTime)c.textContent=window.__baTime(new Date());
+      var d=document.getElementById('ba-date');if(d&&window.__baDate)d.textContent=window.__baDate(new Date());
+    }catch(e){}
+  }
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)resume()});
+  window.addEventListener('pageshow',resume);
+  window.addEventListener('focus',resume);
+})();
+</script>
 </body>
 </html>
