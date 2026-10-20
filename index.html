@@ -11,7 +11,7 @@ if(!ok)h.classList.add('bal-lock')}catch(e){document.documentElement.classList.a
 html.bal-lock body>*:not(#bal-ov):not(#bal-toast):not(#bal-menu):not(#ba-splash):not(script):not(style):not(link):not(noscript){visibility:hidden!important}
 html.bal-lock #bal-ov{transition:none!important}html.bal-lock #bal-ov .bal-box{transition:none!important}</style>
 <script>/* ANTI-KEDIP: tahan tampilan (opacity 0) sampai CSS, font & ikon siap, lalu munculkan sekali dengan halus. Pengaman 4 dtk. */
-(function(){var h=document.documentElement;h.classList.add('ba-pre');var __t0=Date.now();(function __rel(){var e=Date.now()-__t0;if((e<3500||document.readyState==='loading')&&e<12000)setTimeout(__rel,100);else h.classList.remove('ba-pre')})();
+(function(){var h=document.documentElement;h.classList.add('ba-pre');var __t0=Date.now();(function __rel(){var e=Date.now()-__t0;if(e<14000)setTimeout(__rel,100);else h.classList.remove('ba-pre')})();
 /* SPLASH: tampil sekali per sesi. Mode mobile/aplikasi (layar <=1023px atau PWA terpasang) = durasi lebih panjang */
 try{var seen=false;try{seen=!!sessionStorage.getItem('ba-splash')}catch(e){}
 if(!seen){var mm=function(q){return window.matchMedia&&matchMedia(q).matches};
@@ -2390,7 +2390,7 @@ html.light .ms-sublink.is-active{color:#0f1419!important}
 try{var im=s.querySelector('.lg');if(im)im.src=window.__BA_ICON512||window.__BA_ICON192}catch(e){}
 if(!h.classList.contains('ba-sp')){s.remove();return}
 try{sessionStorage.setItem('ba-splash','1')}catch(e){}
-var M=h.classList.contains('ba-sp-m'),MIN=M?2800:1000,MAX=M?7000:3000,t0=Date.now(),fin=false;
+var M=h.classList.contains('ba-sp-m'),MIN=M?2800:1000,MAX=13000,t0=Date.now(),fin=false;
 /* siap = halaman sudah tampil penuh DI BALIK splash (tanpa cross-fade) */
 function ready(){return document.readyState==='complete'&&!h.classList.contains('ba-pre')&&!h.classList.contains('ba-fade')}
 function finish(){if(fin)return;fin=true;
@@ -12538,7 +12538,8 @@ button:not(:disabled):active,[role=button]:active,.nav-link:active,.sb-link:acti
   function check(){
     var ok=Array.prototype.every.call(document.querySelectorAll('link[rel=stylesheet]'),function(l){return l.media!=='print'});
     var loaded=document.readyState==='complete';
-    if((ok&&loaded&&!window.__baRoutePending)||Date.now()-t0>2800)fontsThenReveal();else setTimeout(check,30);}
+    var dd=document.getElementById('dp-date'),app=!dd||dd.textContent.trim()!=='';
+    if((ok&&loaded&&app&&!window.__baRoutePending)||Date.now()-t0>11000)fontsThenReveal();else setTimeout(check,30);}
   if(document.readyState!=='loading')check();else document.addEventListener('DOMContentLoaded',check);
 })();
 </script>
