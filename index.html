@@ -2122,6 +2122,17 @@ html.light body .ba-oldnav button,html.light body .ba-oldnav .cr-sublink,html.li
 #page-home .nw-meta a{color:var(--xp-a);text-decoration:none}#page-home .nw-meta a:hover{text-decoration:underline}
 #page-home .nw-title{display:block;margin:2px 0 0;font-size:16px;line-height:22px;font-weight:700;color:var(--xp-t)}
 </style>
+<style id="ba-mobile-avatar-fix">
+/* Mobile/aplikasi: foto akun dirapikan & diberi jarak dari titik tiga dan tepi layar */
+@media(max-width:767px){
+  html #ba-topbar .ba-top-right{gap:10px!important;align-items:center!important}
+  html #ba-topbar .bal-top.bal-top3{display:inline-flex!important;align-items:center!important;gap:10px!important;height:40px!important;padding:0 2px 0 6px!important;margin-left:4px!important;margin-right:0!important}
+  html #ba-topbar .bal-top.bal-top3 .bal-av{width:36px!important;height:36px!important;flex:none!important;border-radius:50%!important;box-shadow:0 0 0 2px rgba(255,255,255,.14)!important}
+  html #ba-topbar .bal-top.bal-top3 .bal-av img{width:100%!important;height:100%!important;object-fit:cover!important;border-radius:50%!important}
+  html #ba-topbar .bal-top3d{font-size:16px!important;width:14px;text-align:center;flex:none}
+  html #ba-topbar{padding-right:calc(18px + env(safe-area-inset-right,0px))!important}
+}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-splash" aria-hidden="true"><div class="ba-ring"><img class="lg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
