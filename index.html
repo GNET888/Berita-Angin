@@ -14178,5 +14178,99 @@ a.nav-link.ba-pf .ba-pf-dots{flex:0 0 auto!important;width:auto!important;displa
   setTimeout(mark,0);
 })();
 </script>
+<style id="ba-x-header">
+/* ===== HEADER GAYA X (mobile & aplikasi): foto profil kiri, logo X di tengah, LIVE + jam tetap aktif di kanan ===== */
+@media (max-width:767px){
+  html #ba-topbar{position:relative!important;display:flex!important;align-items:center!important;justify-content:space-between!important;min-height:56px;
+    padding:8px calc(14px + env(safe-area-inset-right,0px)) 8px calc(14px + env(safe-area-inset-left,0px))!important;
+    background:#000!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;border-bottom:1px solid rgba(255,255,255,.12)!important}
+  html.light #ba-topbar{background:#fff!important;border-bottom-color:rgba(15,23,42,.10)!important}
+  /* judul halaman & tombol ciut disembunyikan (tetap ada di DOM, jadi skrip lama tidak error) */
+  html #ba-topbar .ba-left,html #ba-topbar .ba-date{display:none!important}
+  /* kelompok kanan jadi baris penuh: avatar paling kiri, LIVE + jam di ujung kanan */
+  html #ba-topbar .ba-top-right{flex:1 1 auto!important;display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:8px!important;justify-content:flex-start!important}
+  html #ba-topbar .bal-top.bal-top3{order:-1!important;margin:0 auto 0 0!important;padding:0!important;height:38px!important;gap:0!important}
+  html #ba-topbar .bal-top.bal-top3 .bal-av{width:38px!important;height:38px!important;box-shadow:none!important}
+  html #ba-topbar .bal-top3d{display:none!important}
+  html #ba-topbar .ba-live{order:1;padding:4px 9px!important;font-size:10px!important}
+  html #ba-topbar .ba-clock{order:2;display:inline-flex!important;padding:4px 9px!important;font-size:11px!important;white-space:nowrap}
+  html #ba-topbar .ba-clock .ba-tzl{display:none!important}
+  /* logo X di tengah */
+  html #ba-topbar::after{content:"";position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%);pointer-events:none;
+    background:#e7e9ea;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'/%3E%3C/svg%3E") center/contain no-repeat;
+    mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z'/%3E%3C/svg%3E") center/contain no-repeat}
+  html.light #ba-topbar::after{background:#0f1419}
+  /* running ticker "live ticks" tetap tampil & berjalan */
+  html:not(.ba-no-ticker) .ba-tickwrap{display:block!important}
+}
+@media (max-width:360px){
+  html #ba-topbar .ba-clock{display:inline-flex!important;font-size:10px!important;padding:3px 7px!important}
+}
+@media (max-width:330px){
+  html #ba-topbar .ba-clock{display:none!important}
+}
+</style>
+<style id="ba-x-drawer">
+/* ===== Ikon Berita Angin di header + foto profil membuka/menutup dashboard (drawer) — mobile & aplikasi ===== */
+@media (max-width:767px){
+  /* ikon bawaan Berita Angin menggantikan logo X */
+  html #ba-topbar::after,html.light #ba-topbar::after{width:32px;height:32px;border-radius:9px;
+    background:var(--ba-brand,linear-gradient(135deg,#38bdf8,#0ea5e9)) center/cover no-repeat!important;
+    -webkit-mask:none!important;mask:none!important;box-shadow:0 4px 14px -6px rgba(56,189,248,.7)}
+  /* drawer tampil di HP (sebelumnya disembunyikan) */
+  html #mobile-sidebar:not(.hidden){display:block!important;background:rgba(91,112,131,.40)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  html #sidebar-content{display:flex!important;flex-direction:column;width:86%!important;max-width:340px!important;background:#000!important;border-right:1px solid rgba(255,255,255,.12)!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;overflow-y:auto;overscroll-behavior:contain;
+    padding-top:env(safe-area-inset-top,0px);padding-bottom:calc(86px + env(safe-area-inset-bottom,0px))}
+  html.light #sidebar-content{background:#fff!important}
+  /* tombol tutup di pojok kanan atas, kepala merek disembunyikan */
+  html #sidebar-content .sb-head{order:0;position:static;height:0;min-height:0;padding:0!important;border:0!important;overflow:visible}
+  html #sidebar-content .sb-brand{display:none!important}
+  html #sidebar-content #close-sidebar-btn{position:absolute;top:calc(env(safe-area-inset-top,0px) + 14px);right:14px;z-index:3;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:none;color:#e7e9ea}
+  /* blok akun/profil di paling atas */
+  html #sidebar-content .bal-drw{order:-1;margin:0!important;padding:22px 20px 16px!important;border:0!important;border-bottom:1px solid rgba(255,255,255,.12)!important;border-radius:0!important;background:none!important}
+  html #sidebar-content .bal-drw .bal-who{flex-direction:column;align-items:flex-start;gap:10px}
+  html #sidebar-content .bal-drw .bal-av{width:60px;height:60px;font-size:22px}
+  html #sidebar-content .bal-drw .bal-txt b{font-size:21px;font-weight:800;display:block}
+  html #sidebar-content .bal-drw .bal-txt span{font-size:14px;color:#71767b}
+  html #sidebar-content .sb-status{order:1}
+  html #sidebar-content .sb-nav{order:2;padding:6px 14px}
+  html #sidebar-content .sb-foot{order:3}
+  /* menu besar bergaya X */
+  html #sidebar-content .sb-link{font-size:20px!important;font-weight:700!important;min-height:56px;gap:18px!important;color:#e7e9ea!important}
+  html.light #sidebar-content .sb-link{color:#0f1419!important}
+  html #sidebar-content .sb-link .sb-chev{display:none!important}
+  html #sidebar-content .sb-link .nav-ico{width:30px!important;height:30px!important;background:none!important;border:0!important}
+  html #sidebar-content .sb-link .nav-ico svg{width:26px;height:26px}
+}
+</style>
+<script id="ba-x-drawer-js">
+(function(){
+  try{document.documentElement.style.setProperty('--ba-brand','url("'+(window.__BA_ICON192||'icon-192.png')+'")')}catch(e){}
+  var mq=window.matchMedia('(max-width:767px)');
+  function sb(){return document.getElementById('mobile-sidebar')}
+  function tog(o){if(typeof toggleSidebar==='function')toggleSidebar(o)}
+  /* foto profil = buka/tutup dashboard (menggantikan menu akun lama; akun tetap ada di dalam drawer) */
+  document.addEventListener('click',function(e){
+    if(!mq.matches)return;var t=e.target;if(!t||!t.closest)return;var m=sb();if(!m)return;
+    if(t.closest('#ba-topbar .bal-top')){e.preventDefault();e.stopImmediatePropagation();tog(m.classList.contains('hidden'));return}
+    if(t===m&&!m.classList.contains('hidden'))tog(false);
+  },true);
+  /* geser ke kiri / tombol Esc menutup drawer */
+  var x0=null;
+  document.addEventListener('touchstart',function(e){var c=document.getElementById('sidebar-content');if(c&&c.contains(e.target))x0=e.touches[0].clientX;else x0=null},{passive:true});
+  document.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;x0=null;if(dx<-70)tog(false)},{passive:true});
+  document.addEventListener('keydown',function(e){var m=sb();if(e.key==='Escape'&&m&&!m.classList.contains('hidden'))tog(false)});
+})();
+</script>
+<style id="ba-icon-clean">
+/* Ikon header menyatu dengan latar: tanpa card, tanpa glow/blur */
+@media (max-width:767px){
+  html #ba-topbar::after{width:42px!important;height:42px!important;border-radius:0!important;box-shadow:none!important;filter:none!important;
+    background:var(--ba-brand,none) center/contain no-repeat!important;-webkit-mask:none!important;mask:none!important;mix-blend-mode:screen}
+  html.light #ba-topbar::after{filter:invert(1)!important;mix-blend-mode:multiply}
+  html #ba-topbar,html.light #ba-topbar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+}
+</style>
 </body>
 </html>
