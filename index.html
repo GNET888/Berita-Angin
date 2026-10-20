@@ -2133,6 +2133,66 @@ html.light body .ba-oldnav button,html.light body .ba-oldnav .cr-sublink,html.li
   html #ba-topbar{padding-right:calc(18px + env(safe-area-inset-right,0px))!important}
 }
 </style>
+<style id="ba-settings-nav-css">
+.st-nav{display:flex;gap:8px;overflow-x:auto;padding:4px 0 2px;margin:2px 0 6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.st-nav::-webkit-scrollbar{display:none}
+.st-nav button{flex:none;display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#cbd5e1;font:600 13px Inter,system-ui,sans-serif;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.st-nav button:hover{background:rgba(255,255,255,.1)}
+.st-nav button.is-on{background:rgba(var(--ba-ac,56 189 248)/.16);border-color:rgb(var(--ba-ac,56 189 248));color:rgb(var(--ba-ac3,125 211 252))}
+html.light .st-nav button{background:#fff;color:#334155;border-color:#cbd5e1}
+html.light .st-nav button.is-on{background:rgba(var(--ba-ac,56 189 248)/.14);color:#0369a1}
+.st-pane-profil[hidden],#st-pane-tampilan[hidden]{display:none!important}
+.st-pane-profil textarea.st-in{resize:vertical;min-height:90px;font-family:inherit}
+html.light .st-pane-profil .st-in{background:#fff;color:#0f172a;border-color:#cbd5e1}
+</style>
+<style id="ba-edit-profil-css">
+.pf-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.pf-bar b{display:block;font-size:16px}.pf-bar small{display:block;color:#8b95a5;font-size:12px;margin-top:2px}
+.pf-bar-btns{display:flex;gap:8px;flex-wrap:wrap}
+.pf-bar-b{margin:16px 0 0}
+.pf-err{color:#fb7185;font-size:13px;margin:0 0 12px;padding:10px 12px;border:1px solid rgba(251,113,133,.4);border-radius:10px;background:rgba(251,113,133,.08)}
+.pf-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start}
+@media(min-width:1024px){.pf-grid{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}}
+.pf-col{display:grid;gap:20px;min-width:0}
+.pf-show{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font:600 12px Inter,system-ui,sans-serif;color:#8b95a5;cursor:pointer}
+.pf-cnt{color:#8b95a5;font-size:11.5px;text-align:right}
+.pf-list{display:grid;gap:12px}
+.pf-item{border:1px solid rgba(255,255,255,.1);background:rgba(0,0,0,.35);border-radius:14px;padding:12px;display:grid;gap:8px}
+.pf-item-h{display:flex;align-items:center;gap:6px}
+.pf-item-h b{flex:1;font-size:12px;color:#8b95a5;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.pf-ib{width:30px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#cbd5e1;cursor:pointer;display:inline-grid;place-items:center;font-size:12px}
+.pf-ib:hover{background:rgba(255,255,255,.12)}.pf-ib.x:hover{color:#fb7185}.pf-ib[disabled]{opacity:.35;cursor:default}
+.pf-item label{font-size:11.5px;color:#8b95a5;font-weight:600;display:grid;gap:4px}
+.pf-2{display:grid;gap:8px;grid-template-columns:1fr}
+@media(min-width:640px){.pf-2{grid-template-columns:1fr 1fr}}
+.pf-bgrid,.pf-list{margin-top:14px}.pf-bgrid{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:640px){.pf-bgrid{grid-template-columns:1fr 1fr}.pf-bgrid .w{grid-column:1/-1}}
+.pf-bgrid label{font-size:11.5px;color:#8b95a5;font-weight:600;display:grid;gap:4px}
+.pf-add{margin-top:12px}
+.pf-empty{font-size:12.5px;color:#8b95a5;margin:0}
+.st-pane-profil textarea.st-in{resize:vertical;min-height:70px;font-family:inherit}
+html.light .pf-item{background:#f8fafc;border-color:#cbd5e1}
+html.light .pf-ib{background:#fff;color:#334155;border-color:#cbd5e1}
+html.light .st-pane-profil .st-in{background:#fff;color:#0f172a;border-color:#cbd5e1}
+</style>
+<style id="ba-settings-split-css">.st-col[hidden]{display:none!important}#st-pane-tampilan{grid-template-columns:minmax(0,1fr)!important;max-width:820px}</style>
+<style id="ba-settings-tabs-css">
+.st-tabs{display:flex;gap:6px;overflow-x:auto;padding:0 18px;margin:2px 0 8px;border-radius:16px;background:#101114;border:1px solid rgba(255,255,255,.06);scrollbar-width:none}
+.st-tabs::-webkit-scrollbar{display:none}
+.st-tabs button{flex:none;position:relative;padding:15px 18px 14px;border:0;background:none;color:#8b95a5;font:600 14px Inter,system-ui,sans-serif;cursor:pointer;transition:color .2s}
+.st-tabs button:hover{color:#e7e9ea}
+.st-tabs button.is-on{color:#fff;font-weight:700;box-shadow:inset 0 -4px 0 #f91880;border-radius:0}
+html.light .st-tabs{background:#fff;border-color:#e2e8f0}
+html.light .st-tabs button{color:#536471}html.light .st-tabs button:hover,html.light .st-tabs button.is-on{color:#0f1419}
+.st-sublink.is-active{color:#fff!important;font-weight:700}
+html.light .st-sublink.is-active{color:#0f1419!important}
+#sidebar-content .st-sublink.is-active,#mobile-sidebar .st-sublink.is-active{background:rgba(249,24,128,.10);color:#f91880!important}
+</style>
+<style id="ba-ms-sub-css">
+.ms-sublink.is-active{color:#fff!important;font-weight:700}
+html.light .ms-sublink.is-active{color:#0f1419!important}
+#sidebar-content .ms-sublink.is-active,#mobile-sidebar .ms-sublink.is-active{background:rgba(249,24,128,.10);color:#f91880!important}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-splash" aria-hidden="true"><div class="ba-ring"><img class="lg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
@@ -2227,14 +2287,33 @@ function finish(){if(fin)return;fin=true;
                             </div>
                         </div>
                     </div>
-                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="market-stat">
+                    <div class="relative group">
+                        <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="market-stat">
                         <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V11M12 21V3M19 21v-7"/></svg></span>
                         <span>Market Statistik</span>
+                            <i class="fa-solid fa-chevron-down text-[9px] text-gray-500"></i>
                     </a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="settings">
+                        <div class="absolute left-0 top-full pt-2 hidden group-hover:block z-50">
+                            <div class="w-64 bg-card-dark border border-card-border rounded-xl shadow-2xl p-1.5 text-sm">
+                                <a href="#" data-ms-go="ms-sec-ringkas" class="ms-sublink flex items-center space-x-2.5 px-3 py-2 rounded-lg text-gray-300 hover:bg-neutral-800 hover:text-white"><span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span><span>Ringkasan</span></a>
+                                <a href="#" data-ms-go="ba-data-hub-card" class="ms-sublink flex items-center space-x-2.5 px-3 py-2 rounded-lg text-gray-300 hover:bg-neutral-800 hover:text-white"><span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span>Riwayat harian</span></a>
+                                <a href="#" data-ms-go="analyst-toolkit" class="ms-sublink flex items-center space-x-2.5 px-3 py-2 rounded-lg text-gray-300 hover:bg-neutral-800 hover:text-white"><span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"/><path d="M7 20v-6M12 20V6M17 20v-9"/></svg></span><span>Analyst Toolkit</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <a href="#" class="nav-link text-gray-300 hover:text-white transition-colors flex items-center space-x-2" data-page="settings">
                         <span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
                         <span>Setting</span>
+                            <i class="fa-solid fa-chevron-down text-[9px] text-gray-500"></i>
                     </a>
+                        <div class="absolute left-0 top-full pt-2 hidden group-hover:block z-50">
+                            <div class="w-64 bg-card-dark border border-card-border rounded-xl shadow-2xl p-1.5 text-sm">
+                                <a href="#" data-st-sub="tampilan" class="st-sublink flex items-center space-x-2.5 px-3 py-2 rounded-lg text-gray-300 hover:bg-neutral-800 hover:text-white"><span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg></span><span>Tampilan</span></a>
+                                <a href="#" data-st-sub="profil" class="st-sublink flex items-center space-x-2.5 px-3 py-2 rounded-lg text-gray-300 hover:bg-neutral-800 hover:text-white"><span class="nav-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4"/><path d="M4.5 21v-1.3c0-3 3.4-5.2 7.5-5.2s7.5 2.2 7.5 5.2V21z"/></svg></span><span>Edit Profil</span></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="flex items-center ml-3 flex-shrink-0">
                     <button id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Ganti tema terang atau gelap" title="Ganti tema (Terang / Gelap)" class="tt">
@@ -2326,6 +2405,11 @@ function finish(){if(fin)return;fin=true;
                         <span class="sb-badge">LIVE</span>
                         <i class="fa-solid fa-chevron-right text-[9px] sb-chev"></i>
                     </a>
+                    <div class="sb-sub">
+                        <a href="#" data-ms-go="ms-sec-ringkas" class="ms-sublink sb-sublink flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span class="sb-dot"></span><span>Ringkasan</span></a>
+                        <a href="#" data-ms-go="ba-data-hub-card" class="ms-sublink sb-sublink flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span class="sb-dot"></span><span>Riwayat harian</span></a>
+                        <a href="#" data-ms-go="analyst-toolkit" class="ms-sublink sb-sublink flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span class="sb-dot"></span><span>Analyst Toolkit</span></a>
+                    </div>
                 </div>
                 <p class="sb-label">Sistem</p>
                 <div class="space-y-1">
@@ -2334,6 +2418,10 @@ function finish(){if(fin)return;fin=true;
                         <span class="flex-1">Setting</span>
                         <i class="fa-solid fa-chevron-right text-[9px] sb-chev"></i>
                     </a>
+                    <div class="sb-sub">
+                        <a href="#" data-st-sub="tampilan" class="st-sublink sb-sublink flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span class="sb-dot"></span><span>Tampilan</span></a>
+                        <a href="#" data-st-sub="profil" class="st-sublink sb-sublink flex items-center gap-2 px-3 py-2 rounded-lg text-xs text-gray-400 hover:bg-card-dark hover:text-brand-accent transition-colors"><span class="sb-dot"></span><span>Edit Profil</span></a>
+                    </div>
                 </div>
             </nav>
             <div class="sb-foot">
@@ -4520,7 +4608,68 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                 </div>
                 <button type="button" class="st-btn dng" id="st-reset"><i class="fa-solid fa-rotate-left"></i>Reset ke bawaan</button>
             </div>
-            <div class="st-grid">
+            <nav id="st-nav" class="st-tabs" role="tablist" aria-label="Halaman pengaturan">
+                <button type="button" role="tab" class="is-on" data-stnav="tampilan" aria-selected="true">Tampilan</button>
+                <button type="button" role="tab" data-stnav="profil" aria-selected="false">Edit Profil</button>
+            </nav>
+            <div id="st-pane-profil" class="st-pane-profil" role="tabpanel" hidden>
+                <div class="pf-bar">
+                    <div><b>Edit Profil</b><small>Susunannya sama dengan halaman Profile. Tekan Simpan agar tampil di halaman Profile.</small></div>
+                    <div class="pf-bar-btns">
+                        <button type="button" class="st-btn pri" data-pf="save"><i class="fa-solid fa-floppy-disk"></i>Simpan profil</button>
+                        <button type="button" class="st-btn" data-pf="undo"><i class="fa-solid fa-rotate-left"></i>Batalkan</button>
+                        <button type="button" class="st-btn" data-pf="view"><i class="fa-solid fa-arrow-up-right-from-square"></i>Lihat Profile</button>
+                    </div>
+                </div>
+                <p class="pf-err" id="pf-err" role="alert" style="display:none"></p>
+                <div class="pf-grid">
+                    <div class="pf-col">
+                        <div class="st-card pf-sec">
+                            <div class="st-h"><i class="fa-solid fa-user"></i>Kartu Info Utama</div>
+                            <div class="st-row first col"><div class="st-ava"><img data-avatar alt="Foto profil" src="">
+                                <div style="display:grid;gap:8px"><b style="font-size:13px">Foto profil</b>
+                                <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="st-btn pri" data-avatar-change><i class="fa-solid fa-camera"></i>Ganti foto</button><button type="button" class="st-btn dng" data-avatar-reset style="display:none"><i class="fa-solid fa-trash"></i>Hapus</button></div>
+                                <small style="color:#8b95a5;font-size:11.5px">Foto langsung tersimpan dan tampil di halaman Profile.</small></div></div></div>
+                            <div class="st-row col"><label for="pf-name"><b>Nama tampilan</b><small>Judul kartu profil, kartu beranda, dan sidebar.</small></label><input id="pf-name" class="st-in" type="text" maxlength="60" autocomplete="name" data-pf-f="name"></div>
+                            <div class="st-row col"><label for="pf-role"><b>Jabatan singkat</b></label><input id="pf-role" class="st-in" type="text" maxlength="50" autocomplete="organization-title" data-pf-f="role"></div>
+                            <div class="st-row col"><label for="pf-bio"><b>Tentang saya</b></label><textarea id="pf-bio" class="st-in" rows="4" maxlength="300" data-pf-f="bio"></textarea><small id="pf-cnt" class="pf-cnt"></small></div>
+                            <div class="st-row col"><label for="pf-gh"><b>GitHub</b></label><input id="pf-gh" class="st-in" type="url" inputmode="url" data-pf-f="gh" placeholder="https://github.com/namaanda"></div>
+                            <div class="st-row col"><label for="pf-li"><b>LinkedIn</b></label><input id="pf-li" class="st-in" type="url" inputmode="url" data-pf-f="li" placeholder="https://linkedin.com/in/namaanda"></div>
+                            <div class="st-row col"><label for="pf-x"><b>X (Twitter)</b></label><input id="pf-x" class="st-in" type="url" inputmode="url" data-pf-f="x" placeholder="https://x.com/namaanda"></div>
+                            <div class="st-row col"><label for="pf-em"><b>Email (ikon surat)</b></label><input id="pf-em" class="st-in" type="email" inputmode="email" data-pf-f="em" placeholder="nama@email.com" autocomplete="email"></div>
+                        </div>
+                        <div class="st-card pf-sec">
+                            <div class="st-h"><i class="fa-solid fa-code"></i>Keahlian &amp; Teknologi<label class="pf-show"><input type="checkbox" class="st-sw" data-pf-show="skills" role="switch" aria-label="Tampilkan Keahlian di halaman Profile"><span>Tampilkan</span></label></div>
+                            <div id="pf-skills" class="pf-list"></div>
+                            <button type="button" class="st-btn pf-add" data-pf-add="skills"><i class="fa-solid fa-plus"></i>Tambah keahlian</button>
+                        </div>
+                    </div>
+                    <div class="pf-col">
+                        <div class="st-card pf-sec">
+                            <div class="st-h"><i class="fa-solid fa-id-card"></i>Keterangan Biodata Lengkap<label class="pf-show"><input type="checkbox" class="st-sw" data-pf-show="b" role="switch" aria-label="Tampilkan Biodata di halaman Profile"><span>Tampilkan</span></label></div>
+                            <div id="pf-biodata" class="pf-bgrid"></div>
+                        </div>
+                        <div class="st-card pf-sec">
+                            <div class="st-h"><i class="fa-solid fa-folder-open"></i>Portofolio<label class="pf-show"><input type="checkbox" class="st-sw" data-pf-show="port" role="switch" aria-label="Tampilkan Portofolio di halaman Profile"><span>Tampilkan</span></label></div>
+                            <div id="pf-port" class="pf-list"></div>
+                            <button type="button" class="st-btn pf-add" data-pf-add="port"><i class="fa-solid fa-plus"></i>Tambah portofolio</button>
+                        </div>
+                        <div class="st-card pf-sec">
+                            <div class="st-h"><i class="fa-solid fa-award"></i>Keterangan Sertifikat &amp; Pelatihan<label class="pf-show"><input type="checkbox" class="st-sw" data-pf-show="certs" role="switch" aria-label="Tampilkan Sertifikat di halaman Profile"><span>Tampilkan</span></label></div>
+                            <div id="pf-certs" class="pf-list"></div>
+                            <button type="button" class="st-btn pf-add" data-pf-add="certs"><i class="fa-solid fa-plus"></i>Tambah sertifikat / pelatihan</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="pf-bar pf-bar-b">
+                    <div class="pf-bar-btns">
+                        <button type="button" class="st-btn pri" data-pf="save"><i class="fa-solid fa-floppy-disk"></i>Simpan profil</button>
+                        <button type="button" class="st-btn" data-pf="undo"><i class="fa-solid fa-rotate-left"></i>Batalkan</button>
+                        <button type="button" class="st-btn dng" data-pf="reset"><i class="fa-solid fa-eraser"></i>Kembalikan profil ke bawaan</button>
+                    </div>
+                </div>
+            </div>
+            <div class="st-grid" id="st-pane-tampilan">
                 <div class="st-col">
                     <div class="st-card">
                         <div class="st-h"><i class="fa-solid fa-palette"></i>Tampilan</div>
@@ -13878,5 +14027,156 @@ a.nav-link.ba-pf .ba-pf-txt b{font-size:15px!important;font-weight:800!important
 a.nav-link.ba-pf .ba-pf-txt span{font-size:14px!important;font-weight:400!important}
 a.nav-link.ba-pf .ba-pf-dots{flex:0 0 auto!important;width:auto!important;display:inline-block!important;font-size:14px!important;line-height:1!important}
 </style>
+<script id="ba-edit-profil-js">
+/* Edit Profil: mengikuti susunan halaman Profile, tersimpan (localStorage 'ba-profile') & ditampilkan di halaman Profile */
+(function(){
+  var S=window.__BA_S,page=document.getElementById('page-settings'),prof=document.getElementById('page-profile');
+  var $=function(q,c){return (c||document).querySelector(q)},$$=function(q,c){return Array.prototype.slice.call((c||document).querySelectorAll(q))};
+  if(!S||!page||!prof)return;
+  var KEY='ba-profile';
+  function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function clone(o){return JSON.parse(JSON.stringify(o))}
+  function tx(el){return el?el.textContent.replace(/\s+/g,' ').trim():''}
+  /* ---------- elemen halaman Profile ---------- */
+  var card=$('#prof-col-left',prof),bioEl=card&&card.querySelector('p.text-xs.text-gray-400');
+  var LK={gh:'GitHub',li:'LinkedIn',x:'X (Twitter)',em:'Email'};
+  function aOf(k){return card&&card.querySelector('a[title="'+LK[k]+'"]')}
+  var bioCard=null;$$('h3',prof).forEach(function(h){if(/Keterangan Biodata/i.test(h.textContent))bioCard=h.closest('.bg-card-dark')});
+  var bioGrid=bioCard&&bioCard.querySelector('.grid');
+  var notesEl=$('#skill-notes',prof),skillCard=notesEl&&notesEl.closest('.bg-card-dark'),chipsEl=skillCard&&skillCard.querySelector('.flex.flex-wrap.gap-2'),notesUl=notesEl&&notesEl.querySelector('ul');
+  var portCard=$('#prof-portfolio',prof),portGrid=portCard&&portCard.querySelector('.grid'),certCard=$('#prof-certs',prof),certGrid=certCard&&certCard.querySelector('.grid');
+  /* ---------- nilai bawaan: dibaca dari isi halaman Profile sebelum diubah ---------- */
+  var DEF={bio:tx(bioEl),b:[],skills:[],port:[],certs:[],show:{b:true,skills:true,port:true,certs:true}};
+  ['gh','li','x','em'].forEach(function(k){var a=aOf(k);DEF[k]=a?(a.getAttribute('href')||'').replace(/^mailto:/,''):''});
+  if(bioGrid)$$(':scope > div',bioGrid).forEach(function(c){var s=c.querySelectorAll('span');DEF.b.push({l:tx(s[0]),v:tx(s[1]),w:c.className.indexOf('sm:col-span-2')>-1})});
+  if(chipsEl){var notes=notesUl?$$('li',notesUl):[];
+    $$('span',chipsEl).forEach(function(c,i){var n=tx(c),d='',li=notes[i];
+      if(li){var t=tx(li.querySelector('span:last-child')),b=tx(li.querySelector('b'));if(b===n)d=t.slice(b.length).replace(/^\s*[—–-]\s*/,'')}
+      DEF.skills.push({n:n,d:d})})}
+  if(portGrid)$$(':scope > div',portGrid).forEach(function(c){var ic=(c.querySelector('h4 i')||{className:''}).className.match(/fa-(?!solid)[a-z0-9-]+/);
+    var h=c.querySelector('h4'),t=h?tx(h):'';
+    DEF.port.push({ic:ic?ic[0]:'fa-folder',t:t,p:tx(c.querySelector('h4+span')),d:tx(c.querySelector('p')),g:$$('.flex.flex-wrap span',c).map(tx).join(', ')})});
+  if(certGrid)$$(':scope > div',certGrid).forEach(function(c){var h=c.querySelector('h4');
+    DEF.certs.push({t:h?tx(h):'',p:tx(c.querySelector('h4+span')),d:tx(c.querySelector('p')),pt:$$('li',c).map(tx).join('\n')})});
+  /* ---------- simpan / muat ---------- */
+  function load(){var o=null;try{o=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}
+    if(!o||typeof o!=='object')return null;
+    var d=clone(DEF);['bio','gh','li','x','em'].forEach(function(k){if(typeof o[k]==='string')d[k]=o[k]});
+    ['b','skills','port','certs'].forEach(function(k){if(Array.isArray(o[k]))d[k]=o[k]});
+    if(o.show&&typeof o.show==='object')for(var k in d.show)if(typeof o.show[k]==='boolean')d.show[k]=o.show[k];
+    return d}
+  function put(d){try{localStorage.setItem(KEY,JSON.stringify(d));return true}catch(e){return false}}
+  /* ---------- tampilkan ke halaman Profile ---------- */
+  function tags(g){return String(g||'').split(',').map(function(x){return x.trim()}).filter(Boolean)}
+  function apply(d){
+    if(bioEl)bioEl.textContent=d.bio||DEF.bio;
+    ['gh','li','x','em'].forEach(function(k){var a=aOf(k);if(!a)return;var v=d[k]||DEF[k];a.href=(k==='em'?'mailto:':'')+v});
+    if(bioGrid)bioGrid.innerHTML=d.b.map(function(c){return '<div class="bg-black/40 border border-card-border rounded-xl p-4'+(c.w?' sm:col-span-2':'')+' space-y-1"><span class="text-xs text-gray-400 block">'+esc(c.l)+'</span><span class="text-white font-medium">'+esc(c.v||'-')+'</span></div>'}).join('');
+    if(chipsEl)chipsEl.innerHTML=d.skills.map(function(s){return '<span class="bg-black border border-card-border text-gray-300 text-xs px-3 py-1.5 rounded-lg">'+esc(s.n)+'</span>'}).join('');
+    if(notesUl){var withD=d.skills.filter(function(s){return s.d});
+      notesUl.innerHTML=withD.map(function(s){return '<li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span><b class="text-white font-semibold">'+esc(s.n)+'</b> &mdash; '+esc(s.d)+'</span></li>'}).join('');
+      if(notesEl)notesEl.style.display=withD.length?'':'none'}
+    if(portGrid)portGrid.innerHTML=d.port.map(function(p){var g=tags(p.g);
+      return '<div class="bg-black/40 border border-card-border rounded-xl p-4 space-y-2 hover:border-brand-accent transition-colors"><div class="flex items-start justify-between gap-2"><h4 class="font-bold text-white text-sm"><i class="fa-solid '+esc(p.ic||'fa-folder')+' text-brand-accent mr-1.5"></i>'+esc(p.t)+'</h4>'+(p.p?'<span class="text-[10px] bg-brand-primary/20 text-brand-accent px-2 py-0.5 rounded-full whitespace-nowrap">'+esc(p.p)+'</span>':'')+'</div>'+(p.d?'<p class="text-xs text-gray-400 font-light">'+esc(p.d)+'</p>':'')+(g.length?'<div class="flex flex-wrap gap-1.5">'+g.map(function(t){return '<span class="bg-black border border-card-border text-gray-300 text-[10px] px-2 py-0.5 rounded-md">'+esc(t)+'</span>'}).join('')+'</div>':'')+'</div>'}).join('');
+    if(certGrid)certGrid.innerHTML=d.certs.map(function(c){var pts=String(c.pt||'').split('\n').map(function(x){return x.trim()}).filter(Boolean);
+      return '<div class="bg-black/40 border border-card-border rounded-xl p-4 space-y-2"><div class="flex items-start justify-between gap-2"><h4 class="font-bold text-white text-sm"><i class="fa-solid fa-certificate text-brand-accent mr-1.5"></i>'+esc(c.t)+'</h4>'+(c.p?'<span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full whitespace-nowrap">'+esc(c.p)+'</span>':'')+'</div>'+(c.d?'<p class="text-xs text-gray-400 font-light">'+esc(c.d)+'</p>':'')+(pts.length?'<ul class="text-xs text-gray-400 font-light space-y-1">'+pts.map(function(t){return '<li class="flex items-start gap-2"><span class="mt-1.5 w-1 h-1 rounded-full bg-brand-accent flex-shrink-0"></span><span>'+esc(t)+'</span></li>'}).join('')+'</ul>':'')+'</div>'}).join('');
+    [[bioCard,'b'],[skillCard,'skills'],[portCard,'port'],[certCard,'certs']].forEach(function(p){if(p[0])p[0].style.display=d.show[p[1]]?'':'none'})
+  }
+  /* ---------- editor ---------- */
+  var saved=load(),draft=clone(saved||DEF);
+  var err=$('#pf-err'),pane=$('#st-pane-profil'),F={name:$('#pf-name'),role:$('#pf-role')};
+  function showErr(m){err.textContent=m;err.style.display=m?'block':'none';if(m)err.scrollIntoView({block:'nearest',behavior:'smooth'})}
+  function toast(m){var t=document.getElementById('st-toast');if(!t){t=document.createElement('div');t.id='st-toast';t.setAttribute('role','status');document.body.appendChild(t)}t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('on')},1700)}
+  function ibtns(sec,i,n){return '<button type="button" class="pf-ib" data-pf-mv="'+sec+':'+i+':-1" aria-label="Naik" '+(i===0?'disabled':'')+'><i class="fa-solid fa-arrow-up"></i></button><button type="button" class="pf-ib" data-pf-mv="'+sec+':'+i+':1" aria-label="Turun" '+(i===n-1?'disabled':'')+'><i class="fa-solid fa-arrow-down"></i></button><button type="button" class="pf-ib x" data-pf-del="'+sec+':'+i+'" aria-label="Hapus"><i class="fa-solid fa-trash"></i></button>'}
+  function inp(sec,i,f,label,val,ph,tag){return '<label>'+label+(tag==='ta'?'<textarea class="st-in" rows="3" data-s="'+sec+'" data-i="'+i+'" data-f="'+f+'" placeholder="'+esc(ph||'')+'">'+esc(val)+'</textarea>':'<input class="st-in" type="text" data-s="'+sec+'" data-i="'+i+'" data-f="'+f+'" value="'+esc(val)+'" placeholder="'+esc(ph||'')+'">')+'</label>'}
+  function render(){
+    F.name.value=(draft.name!==undefined?draft.name:S.name)||'';F.name.placeholder=tx($('#prof-col-left h2',prof))&&($('#prof-col-left h2',prof).dataset.orig||tx($('#prof-col-left h2',prof)));
+    F.role.value=(draft.role!==undefined?draft.role:S.role)||'';var h2=$('#prof-col-left h2',prof),pr=h2&&h2.nextElementSibling;F.role.placeholder=pr?(pr.dataset.orig||tx(pr)):'';
+    ['bio','gh','li','x','em'].forEach(function(k){var el=$('[data-pf-f="'+k+'"]');if(el)el.value=draft[k]||''});
+    $('#pf-cnt').textContent=(draft.bio||'').length+'/300';
+    $$('[data-pf-show]').forEach(function(c){c.checked=!!draft.show[c.getAttribute('data-pf-show')]});
+    $('#pf-biodata').innerHTML=draft.b.map(function(c,i){return '<label class="'+(c.w?'w':'')+'">'+esc(c.l)+(c.w?'<textarea class="st-in" rows="2" data-s="b" data-i="'+i+'" data-f="v">'+esc(c.v)+'</textarea>':'<input class="st-in" type="text" data-s="b" data-i="'+i+'" data-f="v" value="'+esc(c.v)+'">')+'</label>'}).join('');
+    $('#pf-skills').innerHTML=draft.skills.length?draft.skills.map(function(s,i){return '<div class="pf-item"><div class="pf-item-h"><b>Keahlian '+(i+1)+'</b>'+ibtns('skills',i,draft.skills.length)+'</div>'+inp('skills',i,'n','Nama keahlian',s.n,'mis. Solidity')+inp('skills',i,'d','Keterangan (opsional)',s.d,'Penjelasan singkat','ta')+'</div>'}).join(''):'<p class="pf-empty">Belum ada keahlian.</p>';
+    $('#pf-port').innerHTML=draft.port.length?draft.port.map(function(p,i){return '<div class="pf-item"><div class="pf-item-h"><b>Portofolio '+(i+1)+'</b>'+ibtns('port',i,draft.port.length)+'</div><div class="pf-2">'+inp('port',i,'t','Judul',p.t,'Nama proyek')+inp('port',i,'p','Periode',p.p,'2024 – Sekarang')+'</div>'+inp('port',i,'d','Deskripsi',p.d,'Ringkasan proyek','ta')+inp('port',i,'g','Teknologi (pisahkan dengan koma)',p.g,'Tailwind CSS, Chart.js')+'</div>'}).join(''):'<p class="pf-empty">Belum ada portofolio.</p>';
+    $('#pf-certs').innerHTML=draft.certs.length?draft.certs.map(function(c,i){return '<div class="pf-item"><div class="pf-item-h"><b>Sertifikat '+(i+1)+'</b>'+ibtns('certs',i,draft.certs.length)+'</div><div class="pf-2">'+inp('certs',i,'t','Judul',c.t,'Nama sertifikat / pelatihan')+inp('certs',i,'p','Periode',c.p,'2019 – 2024')+'</div>'+inp('certs',i,'d','Deskripsi',c.d,'Ringkasan','ta')+inp('certs',i,'pt','Poin (satu baris satu poin)',c.pt,'','ta')+'</div>'}).join(''):'<p class="pf-empty">Belum ada sertifikat.</p>';
+    showErr('')
+  }
+  var NEW={skills:{n:'',d:''},port:{ic:'fa-folder',t:'',p:'',d:'',g:''},certs:{t:'',p:'',d:'',pt:''}};
+  function fixUrl(v){v=(v||'').trim();if(!v)return '';if(!/^https?:\/\//i.test(v))v='https://'+v;try{var u=new URL(v);return /\./.test(u.hostname)?u.href:null}catch(e){return null}}
+  function save(){
+    var em=(draft.em||'').trim(),d=clone(draft),LB={gh:'GitHub',li:'LinkedIn',x:'X (Twitter)'};
+    if(em&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){showErr('Format email (ikon surat) tidak valid.');$('#pf-em').focus();return}
+    for(var k in LB){var u=fixUrl(draft[k]);if(u===null){showErr('Tautan '+LB[k]+' tidak valid.');$('#pf-'+(k==='gh'?'gh':k)).focus();return}d[k]=u}
+    d.em=em;d.bio=(draft.bio||'').trim();
+    d.skills=d.skills.filter(function(s){return (s.n||'').trim()}).map(function(s){return {n:s.n.trim(),d:(s.d||'').trim()}});
+    d.port=d.port.filter(function(p){return (p.t||'').trim()}).map(function(p){return {ic:p.ic||'fa-folder',t:p.t.trim(),p:(p.p||'').trim(),d:(p.d||'').trim(),g:tags(p.g).join(', ')}});
+    d.certs=d.certs.filter(function(c){return (c.t||'').trim()}).map(function(c){return {t:c.t.trim(),p:(c.p||'').trim(),d:(c.d||'').trim(),pt:String(c.pt||'').split('\n').map(function(x){return x.trim()}).filter(Boolean).join('\n')}});
+    d.b=d.b.map(function(c){return {l:c.l,v:(c.v||'').trim(),w:!!c.w}});delete d.name;delete d.role;
+    /* nama tampilan & jabatan lewat kolom pengaturan yang sudah ada agar kartu beranda, sidebar & halaman Profile ikut berubah */
+    var sn=$('#st-name'),sr=$('#st-role');
+    [[sn,F.name.value.trim()],[sr,F.role.value.trim()]].forEach(function(p){if(!p[0])return;p[0].value=p[1];p[0].dispatchEvent(new Event('input',{bubbles:true}))});
+    if(!put(d)){toast('Gagal menyimpan: penyimpanan browser penuh atau dinonaktifkan');return}
+    saved=d;draft=clone(d);apply(d);render();toast('Profil tersimpan dan tampil di halaman Profile')
+  }
+  /* ---------- peristiwa ---------- */
+  pane.addEventListener('input',function(e){var el=e.target,s=el.getAttribute('data-s'),f=el.getAttribute('data-f'),pf=el.getAttribute('data-pf-f');
+    if(s&&f){draft[s][+el.getAttribute('data-i')][f]=el.value;return}
+    if(pf){draft[pf]=el.value;if(pf==='bio')$('#pf-cnt').textContent=el.value.length+'/300'}});
+  pane.addEventListener('change',function(e){var c=e.target.closest('[data-pf-show]');if(c)draft.show[c.getAttribute('data-pf-show')]=c.checked});
+  pane.addEventListener('click',function(e){
+    var b=e.target.closest('[data-pf]');
+    if(b){var a=b.getAttribute('data-pf');
+      if(a==='save')save();
+      else if(a==='undo'){draft=clone(saved||DEF);render();toast('Perubahan dibatalkan')}
+      else if(a==='view'){var l=document.querySelector('header a.nav-link[data-page="profile"]')||document.querySelector('a.nav-link[data-page="profile"]');if(l)l.click()}
+      else if(a==='reset'&&confirm('Kembalikan Biodata, Keahlian, Portofolio, dan Sertifikat ke isi bawaan? (Nama, jabatan, dan foto tidak diubah.)')){try{localStorage.removeItem(KEY)}catch(x){}saved=null;draft=clone(DEF);apply(DEF);render();toast('Profil dikembalikan ke bawaan')}
+      return}
+    var add=e.target.closest('[data-pf-add]');if(add){var s=add.getAttribute('data-pf-add');draft[s].push(clone(NEW[s]));render();var items=$$('#pf-'+s+' .pf-item');var last=items[items.length-1];if(last){var i0=last.querySelector('input,textarea');if(i0)i0.focus()}return}
+    var del=e.target.closest('[data-pf-del]');if(del){var p=del.getAttribute('data-pf-del').split(':');draft[p[0]].splice(+p[1],1);render();return}
+    var mv=e.target.closest('[data-pf-mv]');if(mv){var q=mv.getAttribute('data-pf-mv').split(':'),i=+q[1],j=i+(+q[2]),arr=draft[q[0]];if(j<0||j>=arr.length)return;var t=arr[i];arr[i]=arr[j];arr[j]=t;render()}
+  });
+  /* navigasi halaman pengaturan */
+  var paneT=document.getElementById('st-pane-tampilan'),nav=document.getElementById('st-nav');
+  function show(w){var p=w==='profil',cols=$$('.st-col',paneT);paneT.hidden=p;pane.hidden=!p;if(cols[0])cols[0].hidden=(w!=='tampilan');if(cols[1])cols[1].hidden=(w!=='umum');
+    $$('button',nav).forEach(function(b){var on=b.getAttribute('data-stnav')===w;b.classList.toggle('is-on',on);b.setAttribute('aria-selected',on)});
+    if(p){draft=clone(saved||DEF);render()}}
+  nav.addEventListener('click',function(e){var b=e.target.closest('[data-stnav]');if(b)show(b.getAttribute('data-stnav'))});
+  if(saved)apply(saved);
+  show('tampilan');
+})();
+</script>
+<script id="ba-settings-sub-js">
+/* Submenu Setting (Tampilan / Edit Profil) di sidebar: membuka halaman Pengaturan lalu memilih tab */
+(function(){
+  var nav=document.getElementById('st-nav');if(!nav)return;
+  function mark(w){Array.prototype.forEach.call(document.querySelectorAll('[data-st-sub]'),function(a){a.classList.toggle('is-active',a.getAttribute('data-st-sub')===w)})}
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('[data-st-sub]');
+    if(a){e.preventDefault();var w=a.getAttribute('data-st-sub'),pg=document.getElementById('page-settings');
+      if(pg&&!pg.classList.contains('active')){Array.prototype.forEach.call(document.querySelectorAll('.page'),function(p){p.classList.remove('active')});pg.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+      try{if(typeof toggleSidebar==='function')toggleSidebar(false)}catch(x){}
+      var b=nav.querySelector('[data-stnav="'+w+'"]');if(b)b.click();return}
+    var t=e.target.closest&&e.target.closest('[data-stnav]');if(t)mark(t.getAttribute('data-stnav'))
+  });
+  mark('tampilan');
+})();
+</script>
+<script id="ba-ms-sub-js">
+/* Submenu Market Statistik di sidebar: membuka halamannya lalu memilih bagian */
+(function(){
+  var jump=document.querySelector('#page-market-stat .ms-jump');if(!jump)return;
+  function mark(){var on=jump.querySelector('button.is-active'),k=on&&on.getAttribute('data-ms-go');
+    Array.prototype.forEach.call(document.querySelectorAll('.ms-sublink'),function(a){a.classList.toggle('is-active',a.getAttribute('data-ms-go')===k)})}
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('.ms-sublink');if(!a)return;
+    e.preventDefault();var pg=document.getElementById('page-market-stat');
+    if(pg&&!pg.classList.contains('active')){Array.prototype.forEach.call(document.querySelectorAll('.page'),function(p){p.classList.remove('active')});pg.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
+    try{if(typeof toggleSidebar==='function')toggleSidebar(false)}catch(x){}
+    setTimeout(mark,0)
+  });
+  new MutationObserver(mark).observe(jump,{attributes:true,attributeFilter:['class'],subtree:true});
+  setTimeout(mark,0);
+})();
+</script>
 </body>
 </html>
