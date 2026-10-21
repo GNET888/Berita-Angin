@@ -83,6 +83,10 @@ html header.sticky>nav>div>div:nth-child(2)>*{opacity:1!important;transform:none
 })();
 </script>
     <meta charset="UTF-8">
+<script>/* BACKEND CLOUD (Supabase): isi URL & anon key dari Project Settings > API. Selama belum diisi, situs tetap berjalan lokal seperti biasa. */
+window.BA_SUPABASE={url:'ISI_URL_SUPABASE',anonKey:'ISI_ANON_PUBLIC_KEY'};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script defer src="ba-cloud.js"></script>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" type="image/png" href="icon-192.png">
@@ -12826,6 +12830,8 @@ html body .nav-link,html body .sb-link,html body .ba-tab,html body .hp-btn,html 
   function idbGet(k){return tx('readonly',function(s){return s.get(k)})}
   function idbDel(k){return tx('readwrite',function(s){return s['delete'](k)})}
   function getBlob(k){return cache[k]?Promise.resolve(cache[k]):idbGet(k)}
+  /* sumber media: URL cloud (lintas perangkat) dulu, lalu blob lokal */
+  function getSrc(o,k){var c=o&&o.cloud&&o.cloud[k];if(c)return Promise.resolve(c);return getBlob(o.id+':'+k).then(function(b){return b?URL.createObjectURL(b):null})}
   /* ---------- polling: suara tersimpan di browser ini ---------- */
   function pStore(){try{return JSON.parse(localStorage.getItem('xp-x-polls')||'{}')}catch(e){return {}}}
   function pSave(s){try{localStorage.setItem('xp-x-polls',JSON.stringify(s))}catch(e){}}
@@ -12845,13 +12851,13 @@ html body .nav-link,html body .sb-link,html body .ba-tab,html body .hp-btn,html 
     if(a.n)w.insertAdjacentHTML('beforeend','<div class="xp-nt">'+(a.n.t?'<b>📝 '+esc(a.n.t)+'</b>':'<b>📝 Catatan</b>')+(a.n.b?'<div>'+esc(a.n.b)+'</div>':'')+'</div>');
     if(a.loc)w.insertAdjacentHTML('beforeend','<a class="xp-lc" href="'+esc(mapUrl(a.loc))+'" target="_blank" rel="noopener noreferrer">📍 '+esc(a.loc.n)+'</a>');
     if(a.med){var s=document.createElement('div');s.className='xp-md';s.innerHTML='<small>Memuat '+(a.med.k==='video'?'video':'GIF')+'…</small>';w.appendChild(s);
-      getBlob(o.id+':med').then(function(b){if(!b){s.innerHTML='<small>Media tidak ada di browser ini.</small>';return}
-        var u=URL.createObjectURL(b);s.innerHTML='';
+      getSrc(o,'med').then(function(u){if(!u){s.innerHTML='<small>Media tidak ada di browser ini.</small>';return}
+        s.innerHTML='';
         if(a.med.k==='video'){var v=document.createElement('video');v.controls=true;v.playsInline=true;v.preload='metadata';v.src=u;v.onerror=function(){s.innerHTML='<small>Format video tidak didukung browser ini.</small>'};s.appendChild(v)}
         else{var im=new Image();im.alt='GIF';im.src=u;s.appendChild(im)}
       }).catch(function(){s.innerHTML='<small>Media tidak dapat dimuat.</small>'})}
     if(a.mus){var m=document.createElement('div');m.className='xp-ms';m.innerHTML='<b>🎵 '+esc(a.mus.n)+'</b>';w.appendChild(m);
-      getBlob(o.id+':mus').then(function(b){if(!b)return;var au=document.createElement('audio');au.controls=true;au.preload='metadata';au.src=URL.createObjectURL(b);m.appendChild(au)}).catch(function(){})}
+      getSrc(o,'mus').then(function(u){if(!u)return;var au=document.createElement('audio');au.controls=true;au.preload='metadata';au.src=u;m.appendChild(au)}).catch(function(){})}
     if(a.poll){var pb=document.createElement('div');pb.className='xp-poll';w.appendChild(pb);drawPoll(pb,o.id,a.poll);
       pb.addEventListener('click',function(e){var b=e.target.closest('.xp-pv');if(!b)return;var s=pStore(),st=s[o.id]||{c:a.poll.o.map(function(){return 0}),my:-1};if(st.my>=0)return;
         var i=+b.getAttribute('data-i');st.c[i]++;st.my=i;s[o.id]=st;pSave(s);drawPoll(pb,o.id,a.poll)})}
@@ -12989,7 +12995,7 @@ html body .nav-link,html body .sb-link,html body .ba-tab,html body .hp-btn,html 
     has:has,
     decorate:decorate,
     detail:detail,
-    take:function(o){if(!has())return;var a={};
+    take:function(o){if(!has())return;var a={};window.__baPend=window.__baPend||{};window.__baPend[o.id]={med:S.med.f||null,mus:S.mus.f||null};
       if(S.sticker)a.st=S.sticker;
       if(pollOk())a.poll={o:S.poll.o.map(function(x){return x.trim()}).filter(Boolean),end:Date.now()+S.poll.dur};
       if(S.q.t.trim())a.q={t:S.q.t.trim(),s:S.q.s.trim()};
@@ -13035,7 +13041,7 @@ html body .nav-link,html body .sb-link,html body .ba-tab,html body .hp-btn,html 
     else card.remove();
     el.querySelectorAll('[data-id]').forEach(function(b){b.setAttribute('data-id',o.id)});
     var v=el.querySelector('.xp-v');if(v){if(isA)v.querySelector('span').textContent=o.rt+' mnt';else v.remove()}
-    var grp=el.querySelector('.xp-grp'),del=document.createElement('button');del.type='button';del.className='xp-act xp-del';del.setAttribute('data-act','del');del.setAttribute('data-pid',o.id);del.title='Hapus';del.setAttribute('aria-label','Hapus postingan');del.innerHTML=TRASH;grp.parentNode.insertBefore(del,grp);
+    var grp=el.querySelector('.xp-grp'),del=document.createElement('button');del.type='button';del.className='xp-act xp-del';del.setAttribute('data-act','del');del.setAttribute('data-pid',o.id);del.title='Hapus';del.setAttribute('aria-label','Hapus postingan');del.innerHTML=TRASH;if(!o.uid||!window.__baMe||o.uid===window.__baMe)grp.parentNode.insertBefore(del,grp);
     if(window.__xpX)window.__xpX.decorate(el,o);
     return el}
   function stamp(){feed.querySelectorAll('.xp-post[data-ts]').forEach(function(p){var t=p.querySelector('time.xp-time');
@@ -13074,6 +13080,7 @@ html body .nav-link,html body .sb-link,html body .ba-tab,html body .hp-btn,html 
   $('xp-crm').addEventListener('click',function(){img='';pimg.removeAttribute('src');prev.hidden=true});
   function submit(){if(go.disabled)return;var t=ta.value.trim(),o={id:'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),kind:mode,ts:Date.now(),text:t,img:img};if(window.__xpX)window.__xpX.take(o);
     if(mode==='artikel'){o.title=ti.value.trim();o.cat=ca.value;o.rt=Math.max(1,Math.ceil(t.split(/\s+/).length/200))}
+    if(window.__baPush)window.__baPush(o);
     posts.unshift(o);if(!save()&&o.img){o.img='';save()}
     reg(o);var el=mk(o),first=feed.querySelector('.xp-post:not(.xp-pin)');feed.insertBefore(el,first||$('xp-empty'));el.classList.add('xp-new');setTimeout(function(){el.classList.remove('xp-new')},2500);stamp();
     ta.value='';ti.value='';img='';prev.hidden=true;pimg.removeAttribute('src');sync();
@@ -13081,9 +13088,17 @@ html body .nav-link,html body .sb-link,html body .ba-tab,html body .hp-btn,html 
     if(want&&want!=='all'&&want!==mode){var tb=root.querySelector('.xp-tabs [data-xp-tab="'+(mode==='artikel'?'artikel':'status')+'"]');if(tb)tb.click()}else refilter()}
   go.addEventListener('click',submit);
   ta.addEventListener('keydown',function(e){if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();submit()}});
+  /* API untuk sinkron cloud (dipakai ba-cloud.js) */
+  window.__baTL={
+    has:function(id){return posts.some(function(x){return x&&x.id===id})},
+    add:function(o){if(!o||!o.id||!(o.text||o.att||o.img)||this.has(o.id))return;posts.push(o);save();reg(o);feed.insertBefore(mk(o),$('xp-empty'));sortFeed();stamp();refilter()},
+    remove:function(id){posts=posts.filter(function(x){return x.id!==id});save();try{delete articlesData[id]}catch(e){}var p=feed.querySelector('.xp-post[data-open="'+id+'"]');if(p)p.remove();refilter()},
+    synced:function(){return posts.filter(function(x){return x&&x.synced})},
+    persist:function(){save()}
+  };
   /* hapus postingan sendiri */
   document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#page-home .xp-del');if(!b)return;e.stopPropagation();e.preventDefault();
-    if(!window.confirm('Hapus postingan ini?'))return;var id=b.getAttribute('data-pid'),p=b.closest('.xp-post');if(window.__xpX)window.__xpX.drop(id);posts=posts.filter(function(x){return x.id!==id});save();try{delete articlesData[id]}catch(x){}if(p)p.remove();refilter()},true);
+    if(!window.confirm('Hapus postingan ini?'))return;var id=b.getAttribute('data-pid'),p=b.closest('.xp-post');if(window.__xpX)window.__xpX.drop(id);if(window.__baDrop)window.__baDrop(id);posts=posts.filter(function(x){return x.id!==id});save();try{delete articlesData[id]}catch(x){}if(p)p.remove();refilter()},true);
   setMode('status');
 })();
 </script>
@@ -13884,7 +13899,7 @@ html.light .bal-tag{color:#0f1419}
       clearErrs(form);
       var raw=form.email.value.trim(),ms=findUsers(raw),u=ms.length===1?ms[0]:null;
       if(ms.length>1){setErr(form,'form','Ada beberapa akun dengan nama itu. Masukkan alamat email lengkap.');return}
-      if(u&&!u.hash){setErr(form,'form','Akun ini terdaftar lewat Google. Pilih "Lanjutkan dengan Google".');return}
+      if(u&&!u.hash&&u.provider!=='cloud'){setErr(form,'form','Akun ini terdaftar lewat Google. Pilih "Lanjutkan dengan Google".');return}
       if(u)form.email.value=u.email;
       else if(!EMAIL_RE.test(raw.toLowerCase())){setErr(form,'form','Kami tidak menemukan akun itu. Periksa nama/email Anda atau pilih Buat akun.');return}
       doSignIn(form);
@@ -13927,6 +13942,21 @@ html.light .bal-tag{color:#0f1419}
   var fails=0;
   function noteFail(){fails++;if(fails>=5){lsSet(LOCK_KEY,String(Date.now()+30000),sessionStorage);fails=0}}
   /* ---------- Sign Up ---------- */
+  function cloudMsg(e){var m=String(e&&e.message||'');
+    if(/already|registered/i.test(m))return 'Email ini sudah terdaftar. Silakan Sign In.';
+    if(/not confirmed/i.test(m))return 'Email belum diverifikasi. Cek kotak masuk Anda.';
+    if(/invalid login|credentials/i.test(m))return 'Email atau kata sandi salah.';
+    if(/rate limit|too many/i.test(m))return 'Terlalu banyak percobaan. Coba lagi nanti.';
+    return 'Terjadi kesalahan. Coba lagi.'}
+  function cloudSignUp(form,users,name,email,pw){
+    busy(form,true,'Sign Up');
+    BACloud.auth.signUp(email,pw,name).then(function(d){
+      if(!d||!d.session){busy(form,false,'Sign Up');setErr(form,'form','Akun dibuat. Cek email Anda untuk verifikasi, lalu Sign In.');return}
+      users[email]={name:name,email:email,provider:'cloud',created:Date.now()};
+      if(!writeUsers(users)){busy(form,false,'Sign Up');setErr(form,'form','Penyimpanan browser tidak tersedia. Nonaktifkan mode privat lalu coba lagi.');return}
+      setSession(users[email],true);afterAuth('Akun dibuat. Selamat datang, '+name.split(' ')[0]+'!');
+    }).catch(function(e){busy(form,false,'Sign Up');setErr(form,'form',cloudMsg(e))});
+  }
   function doSignUp(form){
     clearErrs(form);
     var name=form.name.value.trim(),email=form.email.value.trim().toLowerCase(),pw=form.password.value,pw2=form.password2.value,ok=true;
@@ -13937,6 +13967,7 @@ html.light .bal-tag{color:#0f1419}
     if(!ok){var bad=form.querySelector('[aria-invalid="true"]');if(bad)bad.focus();return}
     var users=readUsers();
     if(users[email]){setErr(form,'email','Email ini sudah terdaftar. Silakan Sign In.');form.email.focus();return}
+    if(window.BACloud&&BACloud.ready)return cloudSignUp(form,users,name,email,pw);
     busy(form,true,'Sign Up');
     var salt=b64(rand(16));
     hashPw(pw,salt).then(function(h){
@@ -13947,6 +13978,20 @@ html.light .bal-tag{color:#0f1419}
   }
   /* ---------- Sign In ---------- */
   function doSignIn(form){
+    if(!(window.BACloud&&BACloud.ready))return doSignInLocal(form);
+    clearErrs(form);
+    var left=lockLeft();if(left>0){setErr(form,'form','Terlalu banyak percobaan. Coba lagi dalam '+left+' detik.');return}
+    var email=form.email.value.trim().toLowerCase(),pw=form.password.value;
+    if(!EMAIL_RE.test(email)||!pw)return doSignInLocal(form);
+    var rem=form.querySelector('#bal-rem').checked;
+    busy(form,true,'Sign In');
+    BACloud.auth.signIn(email,pw).then(function(cu){
+      var us=readUsers(),old=us[email]||{},md=cu.user_metadata||{};
+      us[email]=Object.assign({},old,{name:old.name||md.name||md.full_name||email.split('@')[0],email:email,provider:old.provider||'cloud',created:old.created||Date.now()});
+      writeUsers(us);fails=0;setSession(us[email],rem);afterAuth('Berhasil Sign In. Halo, '+us[email].name.split(' ')[0]+'!');
+    }).catch(function(){busy(form,false,'Sign In');doSignInLocal(form)}); /* akun lama yang hanya lokal tetap bisa masuk */
+  }
+  function doSignInLocal(form){
     clearErrs(form);
     var left=lockLeft();if(left>0){setErr(form,'form','Terlalu banyak percobaan. Coba lagi dalam '+left+' detik.');return}
     var email=form.email.value.trim().toLowerCase(),pw=form.password.value,ok=true;
@@ -13957,7 +14002,7 @@ html.light .bal-tag{color:#0f1419}
     busy(form,true,'Sign In');
     var salt=u?u.salt:b64(rand(16));
     hashPw(pw,salt).then(function(h){
-      if(!u||u.hash!==h){busy(form,false,'Sign In');noteFail();setErr(form,'form',u&&!u.hash?'Akun ini terdaftar lewat Google. Gunakan tombol "Lanjutkan dengan Google".':'Email atau kata sandi salah.');form.password.value='';form.password.focus();return}
+      if(!u||u.hash!==h){busy(form,false,'Sign In');noteFail();setErr(form,'form',u&&!u.hash&&u.provider!=='cloud'?'Akun ini terdaftar lewat Google. Gunakan tombol "Lanjutkan dengan Google".':'Email atau kata sandi salah.');form.password.value='';form.password.focus();return}
       fails=0;setSession(u,rem);afterAuth('Berhasil Sign In. Halo, '+u.name.split(' ')[0]+'!');
     }).catch(function(){busy(form,false,'Sign In');setErr(form,'form','Terjadi kesalahan. Coba lagi.')});
   }
@@ -13991,6 +14036,7 @@ html.light .bal-tag{color:#0f1419}
       var u=Object.assign({},old,{name:p.name||old.name||email.split('@')[0],email:email,picture:old.customPic?old.picture:(p.picture||old.picture||''),provider:'google',gsub:p.sub||old.gsub||'',synced:Date.now(),created:old.created||Date.now()});
       users[email]=u;
       if(!writeUsers(users)){toast('Penyimpanan browser tidak tersedia.');return}
+      if(window.BACloud&&BACloud.ready)BACloud.auth.signInGoogleIdToken(resp.credential).catch(function(){toast('Masuk berhasil, tetapi sinkron cloud belum aktif.')});
       setSession(u,true);afterAuth('Berhasil masuk dengan Google. Halo, '+u.name.split(' ')[0]+'!');
     }catch(e){toast('Login Google gagal. Coba lagi.')}
   }
@@ -14006,6 +14052,7 @@ html.light .bal-tag{color:#0f1419}
   /* ---------- Sign Out ---------- */
   function signOut(){
     var who=getSession();
+    if(window.BACloud&&BACloud.ready)BACloud.auth.signOut().catch(function(){});
     try{if(window.google&&google.accounts&&google.accounts.id)google.accounts.id.disableAutoSelect()}catch(e){}
     clearSession();window.__balTap=0;closeModal();closeMenu();paint();toast(who?('Sign Out berhasil: '+(who.name||who.email)):'Anda telah Sign Out');gate();
   }
