@@ -1,8 +1,5 @@
 # Berita Angin: Sinkron Web ↔ Mobile (Supabase)
-
-`index.html` di sini sudah terhubung ke cloud. Selama URL/kunci Supabase belum diisi, situs berjalan lokal seperti semula.
-
-## Langkah pasang (±10 menit)
+## Langkah:
 
 1. Buat proyek di https://supabase.com.
 2. **SQL Editor → New query** → tempel `supabase_schema.sql` → **Run**.
