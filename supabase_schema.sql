@@ -1,10 +1,5 @@
 -- =====================================================================
--- BERITA ANGIN - Skema Supabase (v2, cocok dengan index.html terhubung)
--- Jalankan di: Supabase Dashboard > SQL Editor > New query > Run
---
--- Jika SEBELUMNYA sudah menjalankan skema versi lama dan belum ada data
--- penting, jalankan dulu baris ini (hapus tabel posts lama):
---   drop table if exists public.posts cascade;
+-- BERITA ANGIN 
 -- =====================================================================
 
 -- 1) PROFIL PENGGUNA (otomatis dibuat saat daftar) ----------------------
