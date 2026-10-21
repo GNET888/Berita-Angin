@@ -18,11 +18,11 @@ Login Google (opsional): aktifkan provider Google di Supabase dengan Client ID y
 
 ## Yang berubah di index.html
 
-| Bagian | Perubahan |
+| Perubahan |
 |---|---|
 | `<head>` | Konfigurasi Supabase, supabase-js (v2.45.4, jsDelivr), `ba-cloud.js` |
 | Posting | Foto, video, GIF, audio diunggah ke bucket `media`; teks, polling, lokasi, dll. disimpan di tabel `posts` |
-| Tampilan media | Memakai URL cloud lebih dulu; IndexedDB hanya cadangan |
+| Tampilan media | Memakai URL cloud lebih dulu; IndexedDB cadangan |
 | Lini masa | Memuat postingan dari server, update langsung (realtime), hapus ikut tersinkron |
 | Tombol hapus | Hanya muncul di postingan milik sendiri |
 | Sign Up / Sign In / Google / Sign Out | Memakai akun cloud; akun lama yang hanya lokal tetap bisa masuk |
