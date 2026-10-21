@@ -30,7 +30,7 @@
   }
 
   /* ---------- notifikasi kecil ---------- */
-  function notify(msg) {
+  function notify(msg, ms) {
     try {
       var d = document.createElement('div');
       d.textContent = msg;
@@ -39,7 +39,7 @@
         'max-width:90vw;padding:10px 16px;border-radius:12px;background:#111827;color:#fff;' +
         'font:500 13px/1.4 Inter,Arial,sans-serif;box-shadow:0 8px 30px rgba(0,0,0,.45);border:1px solid #334155';
       document.body.appendChild(d);
-      setTimeout(function () { d.remove(); }, 4500);
+      setTimeout(function () { d.remove(); }, ms || 4500);
     } catch (e) {}
   }
 
@@ -203,6 +203,7 @@
   async function pull() {
     try {
       var rows = await fetchPosts(100), ids = {};
+      W.__baRows = rows.length;
       rows.forEach(function (r) { ids[r.id] = 1; W.__baTL.add(toPost(r)); });
       var oldest = rows.length ? Date.parse(rows[rows.length - 1].created_at) : 0;
       W.__baTL.synced().forEach(function (p) { // dihapus di perangkat lain
@@ -211,11 +212,47 @@
     } catch (e) { notify('Gagal memuat postingan dari cloud.'); }
   }
 
+  /* unggah postingan lama yang baru tersimpan di browser ini */
+  async function migrate() {
+    if (!W.__baTL || !W.__baTL.unsynced) return;
+    var list = W.__baTL.unsynced(), n = 0;
+    for (var i = 0; i < list.length; i++) {
+      var o = list[i];
+      try {
+        var pend = (W.__xpX && W.__xpX.pend) ? await W.__xpX.pend(o.id) : null;
+        var res = await push(Object.assign({}, o), pend);
+        o.synced = 1; o.uid = res.uid; o.cloud = res.cloud; n++;
+      } catch (e) {
+        if (e && (e.code === '23505' || /duplicate/i.test(String(e.message)))) o.synced = 1; // sudah ada di server
+        else console.warn('[BACloud] migrasi gagal untuk', o.id, e);
+      }
+    }
+    W.__baTL.persist();
+    if (n) notify(n + ' postingan lama diunggah ke cloud.');
+  }
+
+  /* akun lama yang hanya lokal: sambungkan ke cloud memakai email & kata sandi yang sama */
+  async function upgrade(email, password, name) {
+    if (!sb) return;
+    try {
+      if (await Auth.user()) return;
+      try { await Auth.signIn(email, password); return; }
+      catch (e) { if (!/invalid login|credentials/i.test(String(e && e.message))) throw e; }
+      var d = await Auth.signUp(email, password, name);
+      if (!d.session) notify('Akun cloud dibuat. Cek email untuk verifikasi, lalu Sign In ulang agar tersinkron.', 8000);
+      else notify('Akun tersambung ke cloud.');
+    } catch (e) {
+      var m = String(e && e.message || e);
+      if (/already/i.test(m)) m = 'Email ini sudah ada di cloud dengan kata sandi berbeda. Sign In memakai kata sandi cloud-nya.';
+      notify('Sinkron cloud gagal: ' + m, 8000);
+    }
+  }
+
   function startSync(user) {
     if (!sb || !W.__baTL || !user || startedFor === user.id) return;
     startedFor = user.id;
     W.__baMe = user.id;
-    pull();
+    pull().then(migrate);
     if (live) live();
     live = subscribe({
       onInsert: function (o) { W.__baTL.add(o); },
@@ -241,7 +278,25 @@
     removePost(id).catch(function () {});
   };
 
+  function diagnose() {
+    if (!/[?&]cloud=debug/.test(W.location.search)) return;
+    if (!sb) {
+      var why = !(CFG.url && /^https:\/\//.test(CFG.url)) ? 'URL Supabase belum diisi di index.html'
+              : !(CFG.anonKey && CFG.anonKey.length > 40) ? 'anon key belum diisi di index.html'
+              : !(W.supabase && W.supabase.createClient) ? 'library supabase-js gagal dimuat (cek koneksi/cache)'
+              : 'tidak diketahui';
+      notify('CLOUD TIDAK AKTIF: ' + why, 12000);
+      return;
+    }
+    Auth.user().then(function (u) {
+      notify(u ? 'Cloud aktif. Login cloud: ' + u.email
+               : 'Cloud aktif, tetapi BELUM login ke cloud. Sign Out lalu Sign In lagi.', 12000);
+      if (u) setTimeout(function () { notify('Postingan di server: ' + (W.__baRows == null ? '...' : W.__baRows), 12000); }, 3500);
+    }).catch(function (e) { notify('Cek cloud gagal: ' + (e && e.message), 12000); });
+  }
+
   function init() {
+    diagnose();
     if (!sb) return;
     Auth.onChange(function (user) {
       setTimeout(function () { // jangan memanggil API Supabase langsung di dalam callback ini
@@ -266,6 +321,8 @@
     removePost: removePost,
     subscribe: subscribe,
     setAvatar: setAvatar,
-    startSync: startSync
+    startSync: startSync,
+    upgrade: upgrade,
+    migrate: migrate
   };
 })(window);
