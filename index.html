@@ -11,12 +11,18 @@ if(!ok)h.classList.add('bal-lock')}catch(e){document.documentElement.classList.a
 html.bal-lock body>*:not(#bal-ov):not(#bal-toast):not(#bal-menu):not(#ba-splash):not(script):not(style):not(link):not(noscript){visibility:hidden!important}
 html.bal-lock #bal-ov{transition:none!important}html.bal-lock #bal-ov .bal-box{transition:none!important}</style>
 <script>/* ANTI-KEDIP: tahan tampilan (opacity 0) sampai CSS, font & ikon siap, lalu munculkan sekali dengan halus. Pengaman 4 dtk. */
-(function(){var h=document.documentElement;h.classList.add('ba-pre');var __t0=Date.now();(function __rel(){var e=Date.now()-__t0;if(e<14000)setTimeout(__rel,100);else h.classList.remove('ba-pre')})();
-/* SPLASH: tampil sekali per sesi. Mode mobile/aplikasi (layar <=1023px atau PWA terpasang) = durasi lebih panjang */
-try{var seen=false;try{seen=!!sessionStorage.getItem('ba-splash')}catch(e){}
-if(!seen){var mm=function(q){return window.matchMedia&&matchMedia(q).matches};
+(function(){var h=document.documentElement;h.classList.add('ba-pre');var __t0=Date.now();
+/* MODE CEPAT (HP / aplikasi terpasang): tanpa splash, tampilan + profil langsung muncul. Ubah SPLASH_MOBILE ke true untuk mengaktifkan splash lagi di HP. */
+var SPLASH_MOBILE=false,fast=false;
+try{var mm=function(q){return window.matchMedia&&matchMedia(q).matches};
 var m=mm('(max-width:1023px)')||mm('(display-mode: standalone)')||mm('(display-mode: fullscreen)')||navigator.standalone===true;
-h.classList.add('ba-sp');if(m)h.classList.add('ba-sp-m')}}catch(e){h.classList.add('ba-sp')}
+if(m&&!SPLASH_MOBILE){fast=true;window.__BA_FAST=true;h.classList.add('ba-fast')}}catch(e){}
+var LIM=fast?3000:14000;
+(function __rel(){var e=Date.now()-__t0;if(e<LIM)setTimeout(__rel,100);else h.classList.remove('ba-pre')})();
+/* SPLASH: tampil sekali per sesi (desktop; HP hanya bila SPLASH_MOBILE=true). */
+try{if(!fast){var seen=false;try{seen=!!sessionStorage.getItem('ba-splash')}catch(e){}
+if(!seen){var m2=mm('(max-width:1023px)')||mm('(display-mode: standalone)')||mm('(display-mode: fullscreen)')||navigator.standalone===true;
+h.classList.add('ba-sp');if(m2)h.classList.add('ba-sp-m')}}}catch(e){h.classList.add('ba-sp')}
 })();</script>
 <script>/* ANTI-KEDIP URL: baca tujuan dari URL (#halaman, ?page=, ?a=) SEBELUM halaman digambar, sehingga Beranda tidak sempat tampil lalu berpindah. */
 (function(){try{var h=document.documentElement,q=new URLSearchParams(location.search),k=location.hash.slice(1),r=null;
@@ -13050,13 +13056,15 @@ button:not(:disabled):active,[role=button]:active,.nav-link:active,.sb-link:acti
       setTimeout(function(){h.classList.remove('ba-fade');window.__baBoot=false},150);
     })});}
   function fontsThenReveal(){
-    var f=(document.fonts&&document.fonts.ready)?Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,700)})]):Promise.resolve();
+    var fastNow=window.__BA_FAST&&!h.hasAttribute('data-ba-route');
+    var f=(document.fonts&&document.fonts.ready)?Promise.race([document.fonts.ready,new Promise(function(r){setTimeout(r,fastNow?120:700)})]):Promise.resolve();
     f.then(function(){setTimeout(reveal,0)});}
   function check(){
     var ok=Array.prototype.every.call(document.querySelectorAll('link[rel=stylesheet]'),function(l){return l.media!=='print'});
-    var loaded=document.readyState==='complete';
+    var fastNow=window.__BA_FAST&&!h.hasAttribute('data-ba-route');
+    var loaded=fastNow?document.readyState!=='loading':document.readyState==='complete';
     var dd=document.getElementById('dp-date'),app=!dd||dd.textContent.trim()!=='';
-    if((ok&&loaded&&app&&!window.__baRoutePending)||Date.now()-t0>11000)fontsThenReveal();else setTimeout(check,30);}
+    if((ok&&loaded&&app&&!window.__baRoutePending)||Date.now()-t0>(fastNow?3000:11000))fontsThenReveal();else setTimeout(check,fastNow?10:30);}
   if(document.readyState!=='loading')check();else document.addEventListener('DOMContentLoaded',check);
 })();
 </script>
@@ -14802,7 +14810,7 @@ html.ba-collapsed a.nav-link.ba-pf .ba-pf-txt,html.ba-collapsed a.nav-link.ba-pf
     window.addEventListener('storage',later);
     window.baSyncUser=sync;
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(start,300)});else setTimeout(start,300);
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
 </script>
 <style id="ba-pf-fix">
