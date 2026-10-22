@@ -2450,8 +2450,9 @@ html body #ba-tabbar{display:none!important}
 #ba-ticker-bar>div:first-child{z-index:20!important;background:var(--ba-bg,#000)!important;isolation:isolate}
 /* PERFORMA: hilangkan blur kaca (berat di GPU HP), render kartu di luar layar belakangan */
 @media (max-width:1023px){*,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}
-.xp-post{content-visibility:auto;contain-intrinsic-size:auto 420px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+/* LIVE + JAM di topbar dihilangkan */
+html body #ba-topbar .ba-live,html body #ba-topbar .ba-clock{display:none!important}
 </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
@@ -15006,6 +15007,50 @@ a.nav-link.ba-pf .ba-pf-dots{flex:0 0 auto!important;width:auto!important;displa
   }
   var t=new Image();t.onload=function(){gif=true;paint()};t.src='profil.gif';
   paint();window.addEventListener('load',paint);setInterval(paint,1000);
+})();
+</script>
+<style id="ba-dots-css">
+#ba-dots{display:none}
+@media (max-width:767px){
+  html body #ba-topbar #ba-dots{display:inline-flex;order:99;flex:none;align-items:center;justify-content:center;width:40px;height:40px;margin:0 -8px 0 auto;padding:0;border:0;border-radius:50%;background:transparent;color:#e7e9ea;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:background-color .12s,scale .09s}
+  html.light body #ba-topbar #ba-dots{color:#0f172a}
+  html body #ba-topbar #ba-dots:active{background:rgba(148,163,184,.18);scale:.9}
+  #ba-dots svg{width:24px;height:24px;display:block;fill:currentColor}
+}
+</style>
+<script id="ba-dots-js">
+/* Tombol titik tiga (⋮) di pojok kanan atas: membuka menu akun yang sama dengan avatar (Ubah foto profil, Pengaturan, Sign Out). */
+(function(){
+  var D=document;
+  function build(bar){
+    if(D.getElementById('ba-dots'))return true;
+    var b=D.createElement('button');b.id='ba-dots';b.type='button';
+    b.setAttribute('aria-label','Menu akun');b.setAttribute('aria-haspopup','menu');b.setAttribute('data-bal-menu','');
+    b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="12" cy="19" r="2.2"/></svg>';
+    bar.appendChild(b);return true}
+  var n=0,iv=setInterval(function(){var bar=D.getElementById('ba-topbar');if((bar&&build(bar))||++n>100)clearInterval(iv)},100);
+})();
+</script>
+<script id="ba-nokedip-js">
+/* ANTI-KEDIP: layar loading dilepas hanya setelah bar atas, avatar, tombol ⋮ & font ikon benar-benar siap (maks. +2,5 dtk). */
+(function(){
+  var D=document,orig=window.__baMLoadHide,called=false;
+  if(typeof orig!=='function')return;
+  function iconsOk(){try{return !D.fonts||!D.fonts.check||D.fonts.check('900 16px "Font Awesome 6 Free"')}catch(e){return true}}
+  function ready(){
+    var bar=D.getElementById('ba-topbar');
+    if(!bar)return false;
+    if(!bar.querySelector('.bal-av'))return false;
+    if(!D.getElementById('ba-dots'))return false;
+    return D.readyState==='complete'&&iconsOk();
+  }
+  window.__baMLoadHide=function(){
+    if(called)return;called=true;var t=Date.now();
+    (function w(){
+      if(ready()||Date.now()-t>2500){requestAnimationFrame(function(){requestAnimationFrame(orig)})}
+      else setTimeout(w,50);
+    })();
+  };
 })();
 </script>
 </body>
