@@ -15254,7 +15254,12 @@ html.ba-fast:not(.ba-tabs-ok) #ba-tabbar{visibility:hidden!important}
   html body #ba-tabbar .ba-tab-ico{transition:transform .09s ease-out!important}
   html body #ba-tabbar .ba-tab.ba-press .ba-tab-ico{background:none!important}
   /* latar navigasi mode aplikasi: tanpa putih, ikut warna latar halaman (gelap = hitam, terang = abu muda halaman) */
-  html body #ba-tabbar,html.light body #ba-tabbar{background:transparent!important;border-top-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  /* tab bar: solid mengikuti tema (hitam di tema gelap), tanpa putih, tanpa blur */
+  html body #ba-tabbar,html.light body #ba-tabbar{background:var(--ba-bg,#000)!important;border-top-color:rgba(148,163,184,.14)!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  /* ikon saat diklik / aktif / fokus: tanpa latar putih, tanpa kilap, tanpa bingkai */
+  html body #ba-tabbar .ba-tab,html body #ba-tabbar .ba-tab:hover,html body #ba-tabbar .ba-tab:active,html body #ba-tabbar .ba-tab:focus,html body #ba-tabbar .ba-tab.on,html body #ba-tabbar .ba-tab.ba-press{background:transparent!important;outline:0!important;box-shadow:none!important;-webkit-tap-highlight-color:transparent!important}
+  html body #ba-tabbar .ba-tab-ico,html body #ba-tabbar .ba-tab:hover .ba-tab-ico,html body #ba-tabbar .ba-tab:active .ba-tab-ico,html body #ba-tabbar .ba-tab:focus .ba-tab-ico,html body #ba-tabbar .ba-tab.on .ba-tab-ico,html body #ba-tabbar .ba-tab.ba-press .ba-tab-ico{background:transparent!important;border:0!important;box-shadow:none!important;filter:none!important}
+  html body #ba-tabbar .ba-tab-ico::before,html body #ba-tabbar .ba-tab-ico::after,html body #ba-tabbar .ba-tab.on .ba-tab-ico::before{display:none!important;content:none!important;background:none!important}
   html body #ba-sheet,html.light body #ba-sheet{background:var(--ba-bg,#000)!important;border-top-color:rgba(148,163,184,.14)!important}
 }
 </style>
