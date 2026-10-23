@@ -15262,6 +15262,12 @@ html.ba-fast:not(.ba-tabs-ok) #ba-tabbar{visibility:hidden!important}
   html body #ba-tabbar .ba-tab-ico::before,html body #ba-tabbar .ba-tab-ico::after,html body #ba-tabbar .ba-tab.on .ba-tab-ico::before{display:none!important;content:none!important;background:none!important}
   html body #ba-sheet,html.light body #ba-sheet{background:var(--ba-bg,#000)!important;border-top-color:rgba(148,163,184,.14)!important}
 }
+/* ===== Menu "Lainnya": ikon polos outline seperti sidebar (tanpa kotak/latar berwarna) ===== */
+html body #ba-sheet .ba-row{gap:18px;font-size:17px;font-weight:600;color:#e7e9ea}
+html.light body #ba-sheet .ba-row{color:#0f1419}
+html body #ba-sheet .ba-row i,html body #ba-sheet .ba-row .nav-ico{flex:0 0 30px;width:30px;height:30px;display:grid;place-items:center;background:none!important;border:0!important;border-radius:0;box-shadow:none!important;color:#e7e9ea!important;font-size:22px}
+html.light body #ba-sheet .ba-row i,html.light body #ba-sheet .ba-row .nav-ico{color:#0f1419!important}
+html body #ba-sheet .ba-row .nav-ico svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
 </style>
 <script id="ba-nav-stable-js">
 (function(){
@@ -15269,6 +15275,15 @@ html.ba-fast:not(.ba-tabs-ok) #ba-tabbar{visibility:hidden!important}
   /* tab final (5 tab dashboard) sudah terpasang -> skrip tab lama berhenti mengubah status aktif */
   if(nav&&nav.querySelector('.ba-tab[data-k="stock-exchange"]'))nav.setAttribute('data-ba2','1');
   h.classList.add('ba-tabs-ok');
+  /* menu Lainnya: pakai ikon outline yang sama dengan sidebar */
+  try{
+    var MAP={'profile':'profile','market-stat':'market-stat','settings':'settings','stock-exchange':'stock-exchange','global-market':'global-market'};
+    if(window.__baDual)Array.prototype.forEach.call(document.querySelectorAll('#ba-sheet .ba-row[data-go]'),function(r){
+      var k=MAP[r.getAttribute('data-go')],i=r.querySelector('i');if(!k||!i)return;
+      var t=document.createElement('div');t.innerHTML=window.__baDual(k);var off=t.querySelector('.di-off');if(!off)return;
+      var sp=document.createElement('span');sp.className='nav-ico';sp.appendChild(off);i.replaceWith(sp);
+    });
+  }catch(e){}
 })();
 </script>
 </body>
