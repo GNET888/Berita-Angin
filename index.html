@@ -2441,10 +2441,9 @@ html.light #ba-mload{background:#fff!important;color:#0f172a!important}
 #ba-mload .mlg{display:block;width:132px;height:132px;border-radius:50%;object-fit:cover;background:#000}
 html.light #ba-mload .mlg{background:#fff}
 @media (prefers-reduced-motion:reduce){#ba-mload .ba-mring::before{animation-duration:2.4s}}
-/* NAVIGASI BAWAH (HP) TAMPIL: menempel penuh di bawah, selalu terlihat, tanpa efek melayang */
+/* NAVIGASI BAWAH (HP) TAMPIL: menempel penuh di bawah; sembunyi saat scroll turun, muncul saat scroll naik (lihat ba-dash-tabbar) */
 @media (max-width:767px){
-  html body #ba-tabbar{display:grid!important;transform:none!important;transition:none!important;z-index:50}
-  html body #ba-tabbar.ba-hide{transform:none!important}
+  html body #ba-tabbar{display:grid!important;z-index:50}
   html body>main{padding-bottom:calc(var(--ba-tab-h,66px) + 20px + env(safe-area-inset-bottom,0px))!important}
   html body #ba-install{bottom:calc(var(--ba-tab-h,66px) + 12px + env(safe-area-inset-bottom,0px))!important}
 }
@@ -2462,7 +2461,7 @@ html body #ba-topbar .ba-live,html body #ba-topbar .ba-clock{display:none!import
 html body .page,html body .page.active,html body .page.ba-enter,html body .page.ba-in{animation:none!important;transform:none!important;filter:none!important}
 html body header.sticky>nav>div>div:nth-child(2)>*,html body #ba-topbar,html body #ba-topbar *,html body .dp-dash{animation:none!important}
 @media (max-width:1023px){
-  html body #ba-topbar,html body>main,html body #ba-tabbar,html body #ba-topbar .bal-top{transition:none!important}
+  html body #ba-topbar,html body>main,html body #ba-topbar .bal-top{transition:none!important}
   html body #ba-topbar .bal-top .bal-av img{content-visibility:auto}
 }
 @media (max-width:1023px){html #bg3d{display:none!important}}
@@ -2488,6 +2487,28 @@ if(/^https?:/.test(pic)){var l=document.createElement('link');l.rel='preload';l.
   html body #ba-tabbar .di svg{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
   html body #ba-tabbar .ba-tab.on .di svg.di-on{fill:currentColor}
 }
+</style>
+<style id="ba-dash-tabbar">
+/* ===== NAVIGASI HP (MODE APLIKASI) = NAVIGASI DASHBOARD =====
+   Menu, urutan, ikon & penanda aktif disamakan dengan sidebar dashboard.
+   Sembunyi saat scroll ke bawah, muncul saat scroll ke atas. */
+@media (max-width:767px){
+  html body #ba-tabbar{
+    grid-template-columns:repeat(var(--ba-n,7),minmax(0,1fr))!important;
+    transition:transform .28s cubic-bezier(.2,.8,.2,1)!important;will-change:transform}
+  html body #ba-tabbar.ba-hide{transform:translateY(calc(100% + 2px))!important}
+  html body #ba-tabbar .ba-tab{min-width:0}
+  html body #ba-tabbar .ba-tab-ico{width:100%!important;max-width:50px;height:40px!important;border-radius:12px!important;transition:background-color .2s,transform .09s ease-out!important}
+  html body #ba-tabbar .di{width:24px;height:24px}
+  html body #ba-tabbar .ba-tab .di{color:#94a3b8}
+  html.light body #ba-tabbar .ba-tab .di{color:#64748b}
+  html body #ba-tabbar .ba-tab.on .di{color:rgb(var(--ba-ac,56 189 248))}
+  html.light body #ba-tabbar .ba-tab.on .di{color:#0284c7}
+  /* penanda aktif sama seperti sidebar dashboard (gradien lembut) */
+  html body #ba-tabbar .ba-tab.on .ba-tab-ico{background:linear-gradient(90deg,rgb(var(--ba-ac,56 189 248)/.24),rgb(var(--ba-ac,56 189 248)/.10))!important}
+  html.light body #ba-tabbar .ba-tab.on .ba-tab-ico{background:linear-gradient(90deg,rgba(2,132,199,.18),rgba(2,132,199,.07))!important}
+}
+@media (prefers-reduced-motion:reduce){html body #ba-tabbar{transition:none!important}}
 </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
@@ -12727,6 +12748,40 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
   if(mq.addEventListener) mq.addEventListener('change', function(){ setHidden(false); });
   /* ketuk tab / pindah halaman: tampilkan lagi */
   document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.ba-tab')){ setHidden(false); last = y(); } }, true);
+})();
+</script>
+<script id="ba-dash-tabbar-js">
+/* Tab bar HP dibangun dari menu sidebar dashboard (header a.nav-link[data-page]) -> selalu sama dengan dashboard. */
+(function(){
+  var D=document,W=window,nav=D.getElementById('ba-tabbar'),main=D.querySelector('body>main');
+  if(!nav||!main)return;
+  function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
+  var seen={},list=[];
+  Array.prototype.forEach.call(D.querySelectorAll('header a.nav-link[data-page]'),function(a){
+    var k=a.getAttribute('data-page'),ico=a.querySelector('.nav-ico');
+    if(!ico||seen[k])return;seen[k]=1;
+    var lb=ico.nextElementSibling;
+    list.push({k:k,svg:ico.innerHTML,label:((lb&&lb.textContent)||k).trim()});
+  });
+  if(list.length<2)return; /* menu dashboard tidak ditemukan: biarkan tab bar lama */
+  nav.style.setProperty('--ba-n',list.length);
+  nav.innerHTML=list.map(function(t){
+    return '<button type="button" class="ba-tab" data-k="'+esc(t.k)+'" aria-label="'+esc(t.label)+'" title="'+esc(t.label)+'"><span class="ba-tab-ico"><span class="di">'+t.svg+'</span></span><span>'+esc(t.label)+'</span></button>';
+  }).join('');
+  Array.prototype.forEach.call(nav.querySelectorAll('.di'),function(d){
+    if(!d.querySelector('.di-off')){var f=d.querySelector('svg');if(f)f.setAttribute('class','di-off')}
+  });
+  function cur(){var p=main.querySelector('.page.active');var k=p?p.id.replace('page-',''):'home';return k==='article-detail'?'home':k}
+  function sync(){
+    var k=cur();
+    Array.prototype.forEach.call(nav.querySelectorAll('.ba-tab'),function(b){
+      var on=b.getAttribute('data-k')===k;b.classList.toggle('on',on);
+      if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');
+    });
+  }
+  new MutationObserver(function(m){for(var i=0;i<m.length;i++){var t=m[i].target;if(t.classList&&t.classList.contains('page')){sync();return}}})
+    .observe(main,{attributes:true,attributeFilter:['class'],subtree:true});
+  sync();
 })();
 </script>
 <script id="ba-liq-daily">
