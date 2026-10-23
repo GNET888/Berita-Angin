@@ -11571,7 +11571,7 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     var last=null,fromPop=false;
     function sync(){
       var k=cur(),main4=['home','crypto-market','profile'],tk=main4.indexOf(k)>-1?k:'more';
-      Array.prototype.forEach.call(nav.querySelectorAll('.ba-tab'),function(b){var on=b.getAttribute('data-k')===tk;b.classList.toggle('on',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+      if(!nav.hasAttribute('data-ba2'))Array.prototype.forEach.call(nav.querySelectorAll('.ba-tab'),function(b){var on=b.getAttribute('data-k')===tk;b.classList.toggle('on',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
       if(k!==last){
         var pg=D.getElementById('page-'+k);
         if(pg){pg.classList.remove('ba-enter');void pg.offsetWidth;pg.classList.add('ba-enter');}
@@ -12719,37 +12719,55 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
 })();
 </script>
 <script id="ba-tabbar-autohide-js">
-/* Tab bar HP: auto-hide saat scroll.
-   Jari geser ke atas (halaman turun)  -> tab bar sembunyi
-   Jari geser ke bawah (halaman naik)  -> tab bar muncul
-   Ubah HIDE_ON_DOWN ke false untuk membalik arah. */
+/* Tab bar HP: auto-hide saat scroll (versi ANTI-KEDIP).
+   - Baru berubah setelah geser searah >= STEP px (bukan getaran 4px)
+   - Abaikan scroll otomatis (pindah halaman / scrollTo), perubahan tinggi konten, dan pantulan di ujung layar
+   - Resize akibat bar alamat / keyboard tidak lagi memunculkan tab bar
+   - Jeda minimal antar perubahan (MIN_GAP) supaya tidak bolak-balik
+   Ubah AUTOHIDE ke false untuk mematikan fitur sembunyi sama sekali. */
 (function(){
-  var HIDE_ON_DOWN = true, THRESHOLD = 4, TOP_ZONE = 60;
-  var mq = window.matchMedia('(max-width:767px)');
-  var last = 0, ticking = false;
+  var AUTOHIDE=true, HIDE_ON_DOWN=true, STEP=28, TOP_ZONE=60, LOCK_MS=400, MIN_GAP=300;
+  var mq=window.matchMedia('(max-width:767px)');
+  var last=0, acc=0, dir=0, ticking=false, lockUntil=0, lastToggle=0, lastH=0, lastW=window.innerWidth, hidden=false;
   function nav(){ return document.getElementById('ba-tabbar'); }
-  function y(){ var s = document.scrollingElement || document.documentElement; return s.scrollTop || window.pageYOffset || 0; }
-  function setHidden(h){ var n = nav(); if(n) n.classList.toggle('ba-hide', h); }
-  function sheetOpen(){ var s = document.getElementById('ba-sheet'); return !!(s && s.classList.contains('open')); }
-  function update(){
-    ticking = false;
-    var n = nav(); if(!n) return;
-    if(!mq.matches || sheetOpen()){ n.classList.remove('ba-hide'); last = y(); return; }
-    var cur = y(), d = cur - last;
-    var se = document.scrollingElement || document.documentElement;
-    var atBottom = cur + window.innerHeight >= se.scrollHeight - 4;
-    if(cur < TOP_ZONE || atBottom){ setHidden(false); last = cur; return; }   /* di paling atas / bawah: selalu tampil */
-    if(Math.abs(d) < THRESHOLD) return;
-    setHidden(HIDE_ON_DOWN ? d > 0 : d < 0);
-    last = cur;
+  function se(){ return document.scrollingElement || document.documentElement; }
+  function y(){ return se().scrollTop || window.pageYOffset || 0; }
+  function sheetOpen(){ var s=document.getElementById('ba-sheet'); return !!(s && s.classList.contains('open')); }
+  function setHidden(h, force){
+    var n=nav(); if(!n || hidden===h) return;
+    var now=Date.now(); if(!force && now-lastToggle<MIN_GAP) return;
+    hidden=h; lastToggle=now; n.classList.toggle('ba-hide', h);
   }
-  function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+  function reset(){ acc=0; dir=0; last=y(); lastH=se().scrollHeight; }
+  function lock(){ lockUntil=Date.now()+LOCK_MS; reset(); }
+  function update(){
+    ticking=false;
+    var n=nav(); if(!n) return;
+    if(!AUTOHIDE || !mq.matches || sheetOpen()){ if(hidden){hidden=false; n.classList.remove('ba-hide');} reset(); return; }
+    var s=se(), cur=y(), h=s.scrollHeight, max=h-window.innerHeight;
+    if(Date.now()<lockUntil || Math.abs(h-lastH)>2){ lastH=h; last=cur; acc=0; dir=0; return; }  /* scroll otomatis / konten berubah tinggi */
+    if(cur<0 || cur>max+1){ last=Math.min(Math.max(cur,0),Math.max(max,0)); return; }              /* pantulan di ujung layar */
+    if(cur<TOP_ZONE || cur>=max-4){ setHidden(false,true); last=cur; acc=0; dir=0; return; }       /* paling atas / bawah: selalu tampil */
+    var d=cur-last; last=cur; if(!d) return;
+    var nd=d>0?1:-1; if(nd!==dir){ dir=nd; acc=0; }
+    acc+=Math.abs(d); if(acc<STEP) return;
+    setHidden(HIDE_ON_DOWN ? dir>0 : dir<0);
+  }
+  function onScroll(){ if(!ticking){ ticking=true; requestAnimationFrame(update); } }
   window.addEventListener('scroll', onScroll, {passive:true});
-  window.addEventListener('resize', function(){ setHidden(false); last = y(); });
-  window.addEventListener('orientationchange', function(){ setHidden(false); });
-  if(mq.addEventListener) mq.addEventListener('change', function(){ setHidden(false); });
-  /* ketuk tab / pindah halaman: tampilkan lagi */
-  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.ba-tab')){ setHidden(false); last = y(); } }, true);
+  /* resize: hanya tampilkan kembali bila lebar berubah (rotasi); perubahan tinggi dari bar alamat/keyboard diabaikan */
+  window.addEventListener('resize', function(){ if(window.innerWidth!==lastW){ lastW=window.innerWidth; setHidden(false,true); } lock(); });
+  window.addEventListener('orientationchange', function(){ setHidden(false,true); lock(); });
+  if(mq.addEventListener) mq.addEventListener('change', function(){ setHidden(false,true); lock(); });
+  /* ketuk tab / pindah halaman: tampilkan lagi dan abaikan scroll otomatis sesudahnya */
+  document.addEventListener('click', function(e){ if(e.target.closest && e.target.closest('.ba-tab')){ setHidden(false,true); lock(); } }, true);
+  try{
+    var main=document.querySelector('body>main');
+    if(main && window.MutationObserver) new MutationObserver(function(m){
+      for(var i=0;i<m.length;i++){ var t=m[i].target; if(t.classList && t.classList.contains('page')){ lock(); return; } }
+    }).observe(main,{attributes:true,attributeFilter:['class'],subtree:true});
+  }catch(e){}
+  reset();
 })();
 </script>
 <script id="ba-dash-tabbar-js">
@@ -12765,9 +12783,9 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
   nav.innerHTML=TABS.map(function(k){
     return '<button type="button" class="ba-tab" data-k="'+k+'" aria-label="'+NAME[k]+'" title="'+NAME[k]+'"><span class="ba-tab-ico">'+W.__baDual(k)+'</span><span>'+NAME[k]+'</span></button>';
   }).join('');
-  /* ikon tab Stock Exchange = candlestick (grafik pasar saham), outline -> solid saat aktif */
+  /* ikon tab Stock Exchange = grafik tren naik, outline -> solid (garis + area) saat aktif */
   var se=nav.querySelector('.ba-tab[data-k="stock-exchange"] .ba-tab-ico');
-  if(se)se.innerHTML='<span class="di"><svg class="di-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5v3.5M6 15v3.5M12 2v4M12 14v5.5M18 5.5v3.5M18 17v3.5"/><rect x="4" y="7" width="4" height="8" rx="1"/><rect x="10" y="6" width="4" height="8" rx="1"/><rect x="16" y="9" width="4" height="8" rx="1"/></svg><svg class="di-on" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.3" y="7.5" width="3.4" height="7" rx="1"/><rect x="5.15" y="3" width="1.7" height="18" rx=".8" transform="translate(0 0)" opacity="0"/><rect x="5.15" y="3.5" width="1.7" height="3.4" rx=".8"/><rect x="5.15" y="15.1" width="1.7" height="3.4" rx=".8"/><rect x="10.3" y="6.5" width="3.4" height="7" rx="1"/><rect x="11.15" y="2" width="1.7" height="3.8" rx=".8"/><rect x="11.15" y="14.2" width="1.7" height="5.3" rx=".8"/><rect x="16.3" y="9.5" width="3.4" height="7" rx="1"/><rect x="17.15" y="5.5" width="1.7" height="3.4" rx=".8"/><rect x="17.15" y="17.1" width="1.7" height="3.4" rx=".8"/></svg></span>';
+  if(se)se.innerHTML='<span class="di"><svg class="di-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg><svg class="di-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19l6-6 4 4 8-8v12H3z"/><path d="M3 15.5l6-6 4 4 6.5-6.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 5.5h5.5V11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
   /* menu "Lainnya": hapus yang sudah jadi tab */
   Array.prototype.forEach.call(D.querySelectorAll('#ba-sheet .ba-row[data-go="stock-exchange"],#ba-sheet .ba-row[data-go="global-market"]'),function(r){r.remove()});
   function cur(){var p=main.querySelector('.page.active');var k=p?p.id.replace('page-',''):'home';return k==='article-detail'?'home':k}
@@ -13031,7 +13049,7 @@ button:not(:disabled):active,[role=button]:active,.nav-link:active,.sb-link:acti
     if(e.button>0)return;
     var t=e.target&&e.target.closest?e.target.closest(SEL):null;
     if(!t||t.disabled)return;
-    if(!reduce){
+    if(!reduce&&!t.closest('#ba-tabbar')){
       var r=d.createElement('span');r.className='ba-pro-rip';
       r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
       d.body.appendChild(r);setTimeout(function(){if(r.parentNode)r.parentNode.removeChild(r)},520);
@@ -15151,6 +15169,34 @@ a.nav-link.ba-pf .ba-pf-dots{flex:0 0 auto!important;width:auto!important;displa
       else setTimeout(w,16);
     })();
   };
+})();
+</script>
+<style id="ba-nav-stable-css">
+/* ===== ANTI-KEDIP NAVIGASI MODE APLIKASI (tab bar HP) ===== */
+/* tab bar sementara (versi lama) tidak pernah terlihat: tampil hanya setelah tab final terpasang */
+html.ba-fast:not(.ba-tabs-ok) #ba-tabbar{visibility:hidden!important}
+@media (max-width:767px){
+  /* ikon aktif berganti seketika: tanpa fade/putar/pantul */
+  html body #ba-tabbar .di,
+  html body #ba-tabbar .di svg,
+  html body #ba-tabbar .ba-tab .di .di-on,
+  html body #ba-tabbar .ba-tab .di .di-off,
+  html body #ba-tabbar .ba-tab.on .di .di-on,
+  html body #ba-tabbar .ba-tab.on .di .di-off{transition:none!important;animation:none!important}
+  html body #ba-tabbar .ba-tab .di.ba-wig{animation:none!important}
+  html body #ba-tabbar .ba-tab,
+  html body #ba-tabbar .ba-tab::before{transition:none!important}
+  /* umpan balik sentuh tetap ada (skala), tanpa kilatan latar */
+  html body #ba-tabbar .ba-tab-ico{transition:transform .09s ease-out!important}
+  html body #ba-tabbar .ba-tab.ba-press .ba-tab-ico{background:none!important}
+}
+</style>
+<script id="ba-nav-stable-js">
+(function(){
+  var h=document.documentElement,nav=document.getElementById('ba-tabbar');
+  /* tab final (5 tab dashboard) sudah terpasang -> skrip tab lama berhenti mengubah status aktif */
+  if(nav&&nav.querySelector('.ba-tab[data-k="stock-exchange"]'))nav.setAttribute('data-ba2','1');
+  h.classList.add('ba-tabs-ok');
 })();
 </script>
 </body>
