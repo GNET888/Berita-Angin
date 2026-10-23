@@ -2465,6 +2465,7 @@ html body header.sticky>nav>div>div:nth-child(2)>*,html body #ba-topbar,html bod
   html body #ba-topbar,html body>main,html body #ba-tabbar,html body #ba-topbar .bal-top{transition:none!important}
   html body #ba-topbar .bal-top .bal-av img{content-visibility:auto}
 }
+@media (max-width:1023px){html #bg3d{display:none!important}}
 /* profil & ikon: ruang tetap supaya tidak bergeser saat gambar/font datang */
 html body #ba-topbar .bal-av{contain:layout paint;background-color:rgba(56,189,248,.25)}
 html body #ba-tabbar .ba-tab-ico{contain:layout paint}
@@ -2472,6 +2473,22 @@ html body #ba-tabbar .ba-tab-ico{contain:layout paint}
 <script id="ba-preload-avatar">/* Foto profil dimuat paling awal (sebelum JS akun berjalan) -> avatar langsung tampil di HP */
 (function(){try{var r=localStorage.getItem('ba-auth-session')||sessionStorage.getItem('ba-auth-session');if(!r)return;var s=JSON.parse(r),u=JSON.parse(localStorage.getItem('ba-users')||'{}'),pic=(s&&((u[s.email]&&u[s.email].picture)||s.picture))||'';
 if(/^https?:/.test(pic)){var l=document.createElement('link');l.rel='preload';l.as='image';l.href=pic;l.referrerPolicy='no-referrer';document.head.appendChild(l)}else if(pic){var i=new Image();i.src=pic}}catch(e){}})();</script>
+<style id="ba-xnav">
+/* NAVIGASI BAWAH gaya X: hitam polos, 5 ikon putih, tab aktif terisi */
+@media (max-width:767px){
+  :root{--ba-tab-h:54px}
+  html body #ba-tabbar{background:#000!important;border-top:1px solid #2f3336!important;padding-left:0!important;padding-right:0!important}
+  html.light body #ba-tabbar{background:#fff!important;border-top-color:#eff3f4!important}
+  html body #ba-tabbar .ba-tab{height:var(--ba-tab-h)!important;min-height:var(--ba-tab-h)!important}
+  html body #ba-tabbar .ba-tab-ico{width:64px!important;height:44px!important;background:none!important}
+  html body #ba-tabbar .di{width:28px;height:28px;position:relative}
+  html body #ba-tabbar .ba-tab .di,html body #ba-tabbar .ba-tab.on .di{color:#e7e9ea}
+  html.light body #ba-tabbar .ba-tab .di,html.light body #ba-tabbar .ba-tab.on .di{color:#0f1419}
+  html body #ba-tabbar .ba-tab::after,html body #ba-tabbar .ba-tab.on::before{display:none!important}
+  html body #ba-tabbar .di svg{fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+  html body #ba-tabbar .ba-tab.on .di svg.di-on{fill:currentColor}
+}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-mload" role="status" aria-live="polite" aria-label="Memuat"><div class="ba-mring"><img class="mlg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
@@ -11484,13 +11501,23 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
         var mf={name:'Berita Angin',short_name:'Berita Angin',description:'Berita, pasar kripto, saham, dan pasar global real-time.',start_url:base,scope:base.replace(/[^\/]*$/,''),display:'standalone',orientation:'portrait',background_color:'#000000',theme_color:'#000000',lang:'id',shortcuts:[{name:'Pengaturan',short_name:'Pengaturan',url:base+'#settings',icons:[{src:a,sizes:'192x192',type:'image/png'}]}],icons:[{src:a,sizes:'192x192',type:'image/png',purpose:'any maskable'},{src:b,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
         var ml=D.createElement('link');ml.rel='manifest';ml.href=URL.createObjectURL(new Blob([JSON.stringify(mf)],{type:'application/manifest+json'}));D.head.appendChild(ml);}
     }catch(e){}
-    var TABS=[['home','home','Beranda'],['crypto-market','crypto-market','Kripto'],['stock-exchange','stock-exchange','Saham'],['global-market','global-market','Global'],['more','more','Lainnya']];
+    var XI={
+      home:['<path d="M3.6 10.4 12 3.6l8.4 6.8V20a.9.9 0 0 1-.9.9h-4.6v-6h-5.8v6H4.5a.9.9 0 0 1-.9-.9z"/>','<path d="M12 2.6 2.8 10a.9.9 0 0 0-.3.7V20.1c0 .8.7 1.5 1.5 1.5h5.2a.9.9 0 0 0 .9-.9v-5h3.8v5a.9.9 0 0 0 .9.9H20c.8 0 1.5-.7 1.5-1.5V10.7a.9.9 0 0 0-.3-.7z"/>'],
+      search:['<circle cx="10.6" cy="10.6" r="7"/><path d="M15.8 15.8 21 21"/>','<circle cx="10.6" cy="10.6" r="7" stroke-width="2.6"/><path d="M15.8 15.8 21 21" stroke-width="2.6"/>'],
+      explore:['<circle cx="12" cy="12" r="9"/><path d="M4.6 19.4 19.4 4.6"/><path d="M14.8 9.2 13 13l-3.8 1.8L11 11z"/>','<circle cx="12" cy="12" r="9" stroke-width="2.4"/><path d="M4.2 19.8 19.8 4.2" stroke-width="2.4"/><path d="M14.8 9.2 13 13l-3.8 1.8L11 11z" fill="currentColor"/>'],
+      bell:['<path d="M6 9.5a6 6 0 0 1 12 0c0 4.5 1.8 5.8 2 6.5H4c.2-.7 2-2 2-6.5z"/><path d="M10 19.6a2.2 2.2 0 0 0 4 0"/>','<path d="M6 9.5a6 6 0 0 1 12 0c0 4.5 1.8 5.8 2 6.5H4c.2-.7 2-2 2-6.5z" fill="currentColor"/><path d="M10 19.6a2.2 2.2 0 0 0 4 0"/>'],
+      chat:['<path d="M4.2 12a7.8 7.6 0 0 1 7.8-7.6 7.8 7.6 0 0 1 7.8 7.6 7.8 7.6 0 0 1-7.8 7.6c-1.3 0-2.5-.3-3.6-.8L4.2 20l1.2-3.7A7.4 7.4 0 0 1 4.2 12z"/>','<path d="M4.2 12a7.8 7.6 0 0 1 7.8-7.6 7.8 7.6 0 0 1 7.8 7.6 7.8 7.6 0 0 1-7.8 7.6c-1.3 0-2.5-.3-3.6-.8L4.2 20l1.2-3.7A7.4 7.4 0 0 1 4.2 12z" fill="currentColor"/>']
+    };
+    function xdual(k){var d=XI[k];return '<span class="di"><svg class="di-off" viewBox="0 0 24 24" aria-hidden="true">'+d[0]+'</svg><svg class="di-on" viewBox="0 0 24 24" aria-hidden="true">'+d[1]+'</svg></span>';}
+    var TABS=[['home','home','Beranda'],['search','search','Cari'],['crypto-market','explore','Jelajah pasar'],['more','bell','Notifikasi dan menu'],['profile','chat','Profil']];
     var nav=D.createElement('nav');nav.id='ba-tabbar';nav.setAttribute('aria-label','Navigasi aplikasi');
-    nav.innerHTML=TABS.map(function(t){return '<button type="button" class="ba-tab" data-k="'+t[0]+'"><span class="ba-tab-ico">'+W.__baDual(t[1])+'</span><span>'+t[2]+'</span></button>';}).join('');
+    nav.innerHTML=TABS.map(function(t){return '<button type="button" class="ba-tab" data-k="'+t[0]+'"><span class="ba-tab-ico">'+xdual(t[1])+'</span><span>'+t[2]+'</span></button>';}).join('');
     D.body.appendChild(nav);
     var scrim=D.createElement('div');scrim.id='ba-scrim';D.body.appendChild(scrim);
     var sheet=D.createElement('div');sheet.id='ba-sheet';sheet.setAttribute('role','dialog');sheet.setAttribute('aria-label','Menu lainnya');
-    sheet.innerHTML='<div class="grab"></div><h3>Lainnya</h3>'
+    sheet.innerHTML='<div class="grab"></div><h3>Menu</h3>'
+      +'<button type="button" class="ba-row" data-go="stock-exchange"><i class="fa-solid fa-landmark"></i><span>Saham<small>Bursa dan indeks saham</small></span></button>'
+      +'<button type="button" class="ba-row" data-go="global-market"><i class="fa-solid fa-globe"></i><span>Global<small>Pasar dunia dan makro</small></span></button>'
       +'<button type="button" class="ba-row" data-go="profile"><i class="fa-solid fa-user"></i><span>Profil &amp; Portofolio<small>Ringkasan portofolio dan statistik</small></span></button>'
       +'<button type="button" class="ba-row" data-go="market-stat"><i class="fa-solid fa-chart-pie"></i><span>Market Statistik<small>Data dan perbandingan pasar</small></span></button>'
       +'<button type="button" class="ba-row" data-go="settings"><i class="fa-solid fa-sliders"></i><span>Pengaturan<small>Warna, tema, tampilan, dan data</small></span></button>'
@@ -11506,6 +11533,7 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
       var t=e.target.closest('.ba-tab');if(!t)return;var k=t.getAttribute('data-k');
       if(navigator.vibrate){try{navigator.vibrate(8);}catch(_){}}
       if(k==='more'){openSheet(!sheet.classList.contains('open'));return;}
+      if(k==='search'){openSheet(false);if(cur()!=='home')go('home');setTimeout(function(){var q=D.getElementById('xp-q3');if(q){try{q.scrollIntoView({block:'center'});}catch(_){}q.focus();}},cur()==='home'?0:120);return;}
       if(k===cur())W.scrollTo({top:0,behavior:'smooth'});else go(k);
     });
     var evt=null;
@@ -11519,7 +11547,7 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
     });
     var last=null,fromPop=false;
     function sync(){
-      var k=cur(),main4=['home','crypto-market','stock-exchange','global-market'],tk=main4.indexOf(k)>-1?k:'more';
+      var k=cur(),main4=['home','crypto-market','profile'],tk=main4.indexOf(k)>-1?k:'more';
       Array.prototype.forEach.call(nav.querySelectorAll('.ba-tab'),function(b){var on=b.getAttribute('data-k')===tk;b.classList.toggle('on',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
       if(k!==last){
         var pg=D.getElementById('page-'+k);
