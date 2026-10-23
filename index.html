@@ -12847,9 +12847,9 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
   nav.innerHTML=TABS.map(function(k){
     return '<button type="button" class="ba-tab" data-k="'+k+'" aria-label="'+NAME[k]+'" title="'+NAME[k]+'"><span class="ba-tab-ico">'+W.__baDual(k)+'</span><span>'+NAME[k]+'</span></button>';
   }).join('');
-  /* ikon tab Stock Exchange = grafik tren naik, outline -> solid (garis + area) saat aktif */
+  /* ikon tab Stock Exchange = ikon gedung bursa berpilar (sama dengan ikon desktop) */
   var se=nav.querySelector('.ba-tab[data-k="stock-exchange"] .ba-tab-ico');
-  if(se)se.innerHTML='<span class="di"><svg class="di-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg><svg class="di-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19l6-6 4 4 8-8v12H3z"/><path d="M3 15.5l6-6 4 4 6.5-6.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 5.5h5.5V11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+  if(se)se.innerHTML='<span class="di"><svg class="di-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5M5.5 10.5v7M10 10.5v7M14 10.5v7M18.5 10.5v7M3 20h18"/></svg><svg class="di-on" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9.5 12 4l9 5.5M5.5 10.5v7M10 10.5v7M14 10.5v7M18.5 10.5v7M3 20h18"/></svg></span>';
   /* menu "Lainnya": hapus yang sudah jadi tab */
   Array.prototype.forEach.call(D.querySelectorAll('#ba-sheet .ba-row[data-go="stock-exchange"],#ba-sheet .ba-row[data-go="global-market"]'),function(r){r.remove()});
   function cur(){var p=main.querySelector('.page.active');var k=p?p.id.replace('page-',''):'home';return k==='article-detail'?'home':k}
@@ -15286,5 +15286,63 @@ html body #ba-sheet .ba-row .nav-ico svg{width:26px;height:26px;fill:none;stroke
   }catch(e){}
 })();
 </script>
+<style id="ba-nav-v3">
+/* ===== NAVIGASI HP v3: lebih besar & responsif, ikon tanpa latar putih (warna ikon saja), animasi saat diklik ===== */
+@media (max-width:767px){
+  :root{--ba-tab-h:clamp(68px,17vw,88px)}
+  html body #ba-tabbar{grid-template-columns:repeat(var(--ba-n,5),minmax(0,1fr))!important}
+  html body #ba-tabbar .ba-tab{height:var(--ba-tab-h)!important;min-height:var(--ba-tab-h)!important}
+  html body #ba-tabbar .ba-tab-ico{width:100%!important;max-width:96px;height:clamp(48px,12vw,60px)!important;overflow:visible!important;background:none!important}
+  html body #ba-tabbar .di{width:clamp(30px,8.6vw,40px)!important;height:clamp(30px,8.6vw,40px)!important;transform-origin:50% 50%}
+  html body #ba-tabbar .ba-tab .di svg.di-on{display:none!important}
+  html body #ba-tabbar .ba-tab .di svg.di-off{display:block!important;opacity:1!important;transform:none!important;fill:none!important;stroke:currentColor!important;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:stroke-width .15s}
+  html body #ba-tabbar .ba-tab .di{color:#8b98a5!important}
+  html.light body #ba-tabbar .ba-tab .di{color:#536471!important}
+  html body #ba-tabbar .ba-tab.on .di,html.light body #ba-tabbar .ba-tab.on .di{color:rgb(var(--ba-ac,56 189 248))!important}
+  html body #ba-tabbar .ba-tab.on .di svg.di-off{stroke-width:2.4}
+  html body #ba-tabbar .ba-tab.on::before{width:clamp(28px,8vw,40px)!important;margin-left:calc(clamp(28px,8vw,40px)/-2)!important}
+  html body #ba-tabbar .ba-tab .di.ba-go{animation:baNavHop .6s cubic-bezier(.3,1.4,.5,1) 1!important}
+  html body #ba-tabbar .ba-tab[data-k="crypto-market"] .di.ba-go{animation:baNavFlip .7s cubic-bezier(.4,0,.2,1) 1!important}
+  html body #ba-tabbar .ba-tab[data-k="stock-exchange"] .di.ba-go{animation:baNavRise .6s cubic-bezier(.3,1.4,.5,1) 1!important}
+  html body #ba-tabbar .ba-tab[data-k="global-market"] .di.ba-go{animation:baNavSpin .8s cubic-bezier(.4,0,.2,1) 1!important}
+  html body #ba-tabbar .ba-tab[data-k="more"] .di.ba-go{animation:baNavPop .5s cubic-bezier(.3,1.6,.5,1) 1!important}
+  html.ba-calm body #ba-tabbar .ba-tab .di.ba-go{animation:none!important}
+}
+@media (max-width:900px) and (max-height:480px){
+  :root{--ba-tab-h:56px}
+  html body #ba-tabbar .ba-tab{height:56px!important;min-height:56px!important}
+  html body #ba-tabbar .ba-tab-ico{height:42px!important}
+  html body #ba-tabbar .di{width:30px!important;height:30px!important}
+}
+@keyframes baNavHop{0%{transform:translateY(0) scale(1)}30%{transform:translateY(-9px) scale(1.2) rotate(-8deg)}55%{transform:translateY(1px) scale(.94) rotate(6deg)}78%{transform:translateY(-2px) scale(1.05)}100%{transform:none}}
+@keyframes baNavFlip{0%{transform:perspective(240px) rotateY(0)}100%{transform:perspective(240px) rotateY(360deg)}}
+@keyframes baNavRise{0%{transform:translateY(0) scale(1)}35%{transform:translateY(-8px) scale(1.2)}60%{transform:translateY(2px) scale(.92)}100%{transform:none}}
+@keyframes baNavSpin{0%{transform:rotate(0) scale(1)}50%{transform:rotate(180deg) scale(1.18)}100%{transform:rotate(360deg) scale(1)}}
+@keyframes baNavPop{0%{transform:scale(1)}40%{transform:scale(1.35)}70%{transform:scale(.88)}100%{transform:scale(1)}}
+</style>
+<script id="ba-nav-v3-js">
+/* animasi ikon tab bar saat diklik (mati bila "Kurangi animasi" aktif di Pengaturan) */
+(function(){
+  document.addEventListener('click',function(e){
+    var t=e.target.closest&&e.target.closest('#ba-tabbar .ba-tab');if(!t)return;
+    var d=t.querySelector('.di');if(!d)return;
+    d.classList.remove('ba-go');void d.offsetWidth;d.classList.add('ba-go');
+    var done=function(){d.classList.remove('ba-go');d.removeEventListener('animationend',done)};
+    d.addEventListener('animationend',done);
+    setTimeout(done,1000);
+  },true);
+})();
+</script>
+<style id="ba-topbar-v2">
+/* ===== NAVBAR ATAS HP: foto profil kiri, logo tengah, satu tombol titik tiga (menu akun) di kanan ===== */
+@media (max-width:767px){
+  html #ba-topbar .ba-live,html #ba-topbar .ba-clock{display:none!important}
+  html #ba-topbar{min-height:clamp(58px,15vw,68px)!important}
+  html #ba-topbar .bal-top.bal-top3,html #ba-topbar .bal-top.bal-top3 .bal-av{width:clamp(38px,10.5vw,46px)!important;height:clamp(38px,10.5vw,46px)!important}
+  html #ba-topbar::after{width:clamp(42px,11.5vw,50px)!important;height:clamp(42px,11.5vw,50px)!important}
+  html body #ba-topbar #ba-dots{width:44px;height:44px}
+  html body #ba-topbar #ba-dots svg{width:26px;height:26px}
+}
+</style>
 </body>
 </html>
