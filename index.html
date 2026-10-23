@@ -15,13 +15,20 @@ html.bal-lock body>*:not(#bal-ov):not(#bal-toast):not(#bal-menu):not(#ba-splash)
 html.bal-lock #bal-ov{transition:none!important}html.bal-lock #bal-ov .bal-box{transition:none!important}</style>
 <script>/* ANTI-KEDIP: tahan tampilan (opacity 0) sampai CSS, font & ikon siap, lalu munculkan sekali dengan halus. Pengaman 4 dtk. */
 (function(){var h=document.documentElement;h.classList.add('ba-pre');var __t0=Date.now();
+/* KECEPATAN INTERNET: batas waktu pengaman mengikuti jaringan (tipe koneksi + lama unduh HTML), bukan angka tetap. */
+(function(){var c=navigator.connection||navigator.mozConnection||navigator.webkitConnection,k=1,et=c&&c.effectiveType;
+try{if(et==='slow-2g')k=5;else if(et==='2g')k=4;else if(et==='3g')k=2.5;if(c&&c.downlink&&c.downlink<1.5)k=Math.max(k,2.5);if(c&&c.saveData)k=Math.max(k,2)}catch(e){}
+window.__baNet={k:k,t:et||''};
+window.__baMax=function(fast,base){base=base||(fast?2500:14000);var kk=k;
+try{var n=performance.getEntriesByType('navigation')[0];if(n){if(!n.responseEnd&&document.readyState==='loading')kk=Math.max(kk,6);else if(n.responseEnd)kk=Math.max(kk,Math.min(6,(n.responseEnd-n.startTime)/1500))}}catch(e){}
+return Math.min(45000,Math.round(base*Math.max(1,kk)))}})();
 /* MODE CEPAT (HP / aplikasi terpasang): tanpa splash, tampilan + profil langsung muncul. Ubah SPLASH_MOBILE ke true untuk mengaktifkan splash lagi di HP. */
 var SPLASH_MOBILE=false,fast=false;
 try{var mm=function(q){return window.matchMedia&&matchMedia(q).matches};
 var m=mm('(max-width:1023px)')||mm('(display-mode: standalone)')||mm('(display-mode: fullscreen)')||navigator.standalone===true;
 if(m&&!SPLASH_MOBILE){fast=true;window.__BA_FAST=true;h.classList.add('ba-fast');h.classList.add('ba-mload');window.__baMT0=Date.now()}}catch(e){}
 var LIM=fast?2500:14000;
-(function __rel(){var e=Date.now()-__t0;if(e<LIM)setTimeout(__rel,100);else h.classList.remove('ba-pre')})();
+(function __rel(){var e=Date.now()-__t0;if(e<window.__baMax(fast,LIM))setTimeout(__rel,100);else h.classList.remove('ba-pre')})();
 /* SPLASH: tampil sekali per sesi (desktop; HP hanya bila SPLASH_MOBILE=true). */
 try{if(!fast){var seen=false;try{seen=!!sessionStorage.getItem('ba-splash')}catch(e){}
 if(!seen){var m2=mm('(max-width:1023px)')||mm('(display-mode: standalone)')||mm('(display-mode: fullscreen)')||navigator.standalone===true;
@@ -2516,24 +2523,81 @@ if(/^https?:/.test(pic)){var l=document.createElement('link');l.rel='preload';l.
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-mload" role="status" aria-live="polite" aria-label="Memuat"><div class="ba-mring"><img class="mlg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
 <script>(function(){try{var i=document.querySelector("#ba-mload .mlg");if(i)i.src=window.__BA_ICON512||window.__BA_ICON192||""}catch(e){}})();</script>
-<script>(function(){var h=document.documentElement,el=document.getElementById('ba-mload'),gone=false,MIN=1600;
+<script>(function(){var h=document.documentElement,el=document.getElementById('ba-mload'),gone=false;
 if(!el)return;if(!h.classList.contains('ba-mload')){el.remove();window.__baMLoadHide=function(){};return}
-/* loader tampil minimal MIN ms (tidak berkedip) dan dicabut setelah halaman final tampil penuh */
-window.__baMLoadHide=function(){if(gone)return;gone=true;var w=Math.max(0,MIN-(Date.now()-(window.__baMT0||Date.now())));
- setTimeout(function(){el.classList.add('out');setTimeout(function(){try{el.remove()}catch(e){}h.classList.remove('ba-mload')},280)},w)};
-setTimeout(window.__baMLoadHide,3000)})();</script>
+/* loader dilepas saat halaman final siap; angka naik sampai 100% dulu (lama = sesuai kecepatan muat sebenarnya) */
+window.__baMLoadHide=function(){if(gone)return;gone=true;
+ var go=function(){el.classList.add('out');setTimeout(function(){try{el.remove()}catch(e){}h.classList.remove('ba-mload')},280)};
+ if(window.__baProg)window.__baProg.complete(go);else go()};
+setTimeout(function(){window.__baMLoadHide()},window.__baMax(true,3000)+2500)})();</script>
 <div id="ba-splash" aria-hidden="true"><div class="ba-ring"><img class="lg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
 <script>(function(){var s=document.getElementById('ba-splash');if(!s)return;var h=document.documentElement;
 try{var im=s.querySelector('.lg');if(im)im.src=window.__BA_ICON512||window.__BA_ICON192}catch(e){}
 if(!h.classList.contains('ba-sp')){s.remove();return}
 try{sessionStorage.setItem('ba-splash','1')}catch(e){}
-var M=h.classList.contains('ba-sp-m'),MIN=M?2800:1000,MAX=13000,t0=Date.now(),fin=false;
+var M=h.classList.contains('ba-sp-m'),MIN=0,t0=Date.now(),fin=false;
 /* siap = halaman sudah tampil penuh DI BALIK splash (tanpa cross-fade) */
 function ready(){return document.readyState==='complete'&&!h.classList.contains('ba-pre')&&!h.classList.contains('ba-fade')}
 function finish(){if(fin)return;fin=true;
- setTimeout(function(){s.classList.add('out');setTimeout(function(){s.remove();h.classList.remove('ba-sp','ba-sp-m')},600)},280)}
-(function w(){var el=Date.now()-t0;if((el>=MIN&&ready())||el>=MAX)finish();else setTimeout(w,40)})();
+ var go=function(){s.classList.add('out');setTimeout(function(){s.remove();h.classList.remove('ba-sp','ba-sp-m')},600)};
+ if(window.__baProg)window.__baProg.complete(go);else setTimeout(go,280)}
+(function w(){var el=Date.now()-t0;if((el>=MIN&&ready())||el>=window.__baMax(false,13000))finish();else setTimeout(w,40)})();
 })();</script>
+<style id="ba-prog-css">
+.ba-pg{display:none!important;width:min(240px,62vw);display:grid;gap:9px;justify-items:center;margin-top:12px}
+.ba-pg-bar{width:100%;height:4px;border-radius:4px;background:rgba(148,163,184,.22);overflow:hidden}
+.ba-pg-bar>div{height:100%;width:100%;border-radius:4px;transform-origin:0 50%;transform:scaleX(0);background:linear-gradient(90deg,#38bdf8,#0ea5e9);transition:transform .12s linear}
+.ba-pg em{font:700 13px/1 Inter,'Inter Fallback',system-ui,sans-serif;font-style:normal;font-variant-numeric:tabular-nums;color:#e2e8f0;letter-spacing:.02em}
+html.light .ba-pg em{color:#0f172a}
+</style>
+<script id="ba-prog-js">
+/* PERSEN LOADING NYATA: naik mengikuti tahap muat sebenarnya (HTML diurai -> font/ikon -> semua sumber -> halaman tampil -> bilah atas siap),
+   merayap pelan di antara tahap supaya tidak terlihat macet di jaringan lambat, lalu 100% sebelum layar dibuka. */
+(function(){
+  var W=window,D=document,h=D.documentElement,HOLD=260,els=[];
+  [D.getElementById('ba-mload'),D.getElementById('ba-splash')].forEach(function(o){
+    if(!o||!o.isConnected)return;
+    var w=D.createElement('div');w.className='ba-pg';w.setAttribute('aria-hidden','true');
+    w.innerHTML='<div class="ba-pg-bar"><div></div></div><em>0%</em>';o.appendChild(w);
+    els.push({bar:w.firstChild.firstChild,txt:w.lastChild});
+  });
+  var cbs=[],done=false;
+  if(!els.length){W.__baProg={complete:function(f){f()}};return}
+  var S=[4,40,55,78,88,94,100],stage=4,tS=Date.now(),shown=0,finished=false,hold=0,last=-1,fontsOk=false,timer;
+  var tau=1400*Math.max(1,(W.__baNet&&W.__baNet.k)||1);
+  if(D.fonts&&D.fonts.ready)D.fonts.ready.then(function(){fontsOk=true},function(){fontsOk=true});else fontsOk=true;
+  function up(v){if(v>stage){stage=v;tS=Date.now()}}
+  function poll(){
+    var rs=D.readyState,rev=!h.classList.contains('ba-pre');
+    if(rs!=='loading')up(40);
+    if(rs!=='loading'&&fontsOk)up(55);
+    if(rs==='complete')up(78);
+    if(rs!=='loading'&&rev)up(88);
+    var b=D.getElementById('ba-topbar');
+    if(rs!=='loading'&&rev&&b&&b.querySelector('.bal-av')&&D.getElementById('ba-dots'))up(94);
+  }
+  function nextOf(s){for(var i=0;i<S.length;i++)if(S[i]>s)return S[i];return 100}
+  function target(){if(finished)return 100;var n=nextOf(stage),cap=Math.max(stage,n-2);return stage+(cap-stage)*(1-Math.exp(-(Date.now()-tS)/tau))}
+  function paint(v){if(v===last)return;last=v;els.forEach(function(e){e.txt.textContent=v+'%';e.bar.style.transform='scaleX('+(v/100)+')'})}
+  function fire(){done=true;clearInterval(timer);var f=cbs.splice(0);f.forEach(function(c){try{c()}catch(e){}})}
+  function tick(){
+    poll();
+    var t=target(),d=t-shown;
+    if(d>0)shown+=Math.max(d*(finished?0.35:0.16),finished?1.5:0.12);
+    if(shown>t)shown=t;
+    if(finished&&D.hidden)shown=100;
+    var v=(finished&&shown>=99.4)?100:Math.min(finished?100:99,Math.floor(shown));
+    paint(v);
+    if(v===100){if(!hold)hold=Date.now();if(Date.now()-hold>=HOLD)fire()}
+  }
+  timer=setInterval(tick,40);tick();
+  W.__baProg={complete:function(cb){
+    if(done){cb();return}
+    cbs.push(cb);finished=true;
+    if(!els.some(function(e){return e.txt.isConnected}))fire();
+  }};
+})();
+</script>
 <canvas id="bg3d" aria-hidden="true"></canvas>
     <!-- ⚡ LIVE STREAMING TICKS TICKER BAR -->
     <div id="ba-ticker-bar" class="bg-card-dark border-b border-card-border py-2 text-xs overflow-hidden z-40 relative">
@@ -13090,7 +13154,7 @@ button:not(:disabled):active,[role=button]:active,.nav-link:active,.sb-link:acti
     var fastNow=window.__BA_FAST&&!h.hasAttribute('data-ba-route');
     var loaded=window.__BA_FAST?document.readyState!=='loading':document.readyState==='complete';
     var dd=document.getElementById('dp-date'),app=!dd||dd.textContent.trim()!=='';
-    if((ok&&loaded&&app&&!window.__baRoutePending)||Date.now()-t0>(fastNow?2000:11000))fontsThenReveal();else setTimeout(check,fastNow?10:30);}
+    if((ok&&loaded&&app&&!window.__baRoutePending)||Date.now()-t0>window.__baMax(fastNow,fastNow?2000:11000))fontsThenReveal();else setTimeout(check,fastNow?10:30);}
   if(document.readyState!=='loading')check();else document.addEventListener('DOMContentLoaded',check);
 })();
 </script>
@@ -15165,7 +15229,7 @@ a.nav-link.ba-pf .ba-pf-dots{flex:0 0 auto!important;width:auto!important;displa
   window.__baMLoadHide=function(){
     if(called)return;called=true;var t=Date.now();
     (function w(){
-      if(ready()||Date.now()-t>(window.__BA_FAST?900:2500)){requestAnimationFrame(orig)}
+      if(ready()||Date.now()-t>window.__baMax(!!window.__BA_FAST,window.__BA_FAST?900:2500)){requestAnimationFrame(orig)}
       else setTimeout(w,16);
     })();
   };
@@ -15189,6 +15253,9 @@ html.ba-fast:not(.ba-tabs-ok) #ba-tabbar{visibility:hidden!important}
   /* umpan balik sentuh tetap ada (skala), tanpa kilatan latar */
   html body #ba-tabbar .ba-tab-ico{transition:transform .09s ease-out!important}
   html body #ba-tabbar .ba-tab.ba-press .ba-tab-ico{background:none!important}
+  /* latar navigasi mode aplikasi: tanpa putih, ikut warna latar halaman (gelap = hitam, terang = abu muda halaman) */
+  html body #ba-tabbar,html.light body #ba-tabbar{background:transparent!important;border-top-color:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  html body #ba-sheet,html.light body #ba-sheet{background:var(--ba-bg,#000)!important;border-top-color:rgba(148,163,184,.14)!important}
 }
 </style>
 <script id="ba-nav-stable-js">
