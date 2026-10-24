@@ -3307,6 +3307,15 @@ html.light .ba-pg em{color:#0f172a}
                     <a href="#" class="nav-link xp-trend" data-page="global-market"><span class="xp-tk">Trending Topic · Global Market</span><b>Indeks Likuiditas &amp; Komposit</b><span class="xp-ts">Cakupan pasar global</span><span class="xp-tm" aria-hidden="true"><svg class="xi " viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/></svg></span></a>
                     <a href="#" class="nav-link xp-trend" data-page="market-stat"><span class="xp-tk">Trending Topic · Statistik</span><b>Market Statistik</b><span class="xp-ts">Ringkasan otomatis dari data terbaru</span><span class="xp-tm" aria-hidden="true"><svg class="xi " viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/></svg></span></a>
                 </section>
+                <section class="xp-box" id="xp-jam">
+                    <h2>Jam Pasar</h2>
+                    <div class="xp-live xp-mkt" data-tz="UTC" data-mode="247"><span><b>Crypto Market</b><small class="xp-mh">24 jam · 7 hari</small></span><span class="xp-lp"><i></i>BUKA</span></div>
+                    <div class="xp-live xp-mkt" data-tz="Asia/Jakarta" data-open="09:00" data-close="15:50"><span><b>Bursa Efek Indonesia</b><small class="xp-mh">09:00–15:50 WIB</small></span><span class="xp-lp"><i></i>BUKA</span></div>
+                    <div class="xp-live xp-mkt" data-tz="Asia/Tokyo" data-open="09:00" data-close="15:30"><span><b>Tokyo Stock Exchange</b><small class="xp-mh">09:00–15:30 JST</small></span><span class="xp-lp"><i></i>BUKA</span></div>
+                    <div class="xp-live xp-mkt" data-tz="Europe/London" data-open="08:00" data-close="16:30"><span><b>London Stock Exchange</b><small class="xp-mh">08:00–16:30 waktu London</small></span><span class="xp-lp"><i></i>BUKA</span></div>
+                    <div class="xp-live xp-mkt" data-tz="America/New_York" data-open="09:30" data-close="16:00"><span><b>Wall Street (NYSE/Nasdaq)</b><small class="xp-mh">09:30–16:00 waktu New York</small></span><span class="xp-lp"><i></i>BUKA</span></div>
+                    <p class="xp-mnote">Jadwal reguler Senin–Jumat, belum termasuk hari libur bursa.</p>
+                </section>
                 <!-- Berita Pasar AS (Online) dihapus dari Beranda -->
                 <p class="xp-foot">Berita Angin · 1% Issue 99% Fact</p>
             </aside>
@@ -14177,6 +14186,20 @@ html.light body:has(#page-home.active) #ba-topbar::before{background:#bae6fd}
 #ba-topbar .ba-crumb-ul{position:relative;display:inline-block;padding:6px 2px 8px}
 #ba-topbar .ba-crumb-ul::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;border-radius:999px;background:#f91880}
 }
+/* Ikon menu sidebar (desktop & drawer HP) diperbesar */
+html header.sticky a.nav-link>.nav-ico,html #sidebar-content .sb-link>.nav-ico{width:38px!important;height:38px!important}
+html header.sticky a.nav-link>.nav-ico svg,html #sidebar-content .sb-link>.nav-ico svg{width:34px!important;height:34px!important}
+html header.sticky a.nav-link>.nav-ico svg.di-on,html #sidebar-content .sb-link>.nav-ico svg.di-on{margin:-17px 0 0 -17px!important}
+/* Logo "G" di atas sidebar diperbesar */
+@media (min-width:768px){
+html header.sticky>nav>div>div:nth-child(1) a::before{width:72px!important;height:72px!important;flex:0 0 72px!important}
+}
+/* Baris menu sidebar tidak boleh menyusut/menumpuk di layar pendek: tinggi tetap, sisanya bisa digulir */
+@media (min-width:768px){
+html header.sticky>nav>div>div:nth-child(2)>*{flex:0 0 auto!important}
+html header.sticky>nav>div>div:nth-child(2){overflow-y:auto;scrollbar-width:none}
+html header.sticky>nav>div>div:nth-child(2)::-webkit-scrollbar{display:none}
+}
 /* Navbar atas tidak mengambang: ikut tergulung bersama halaman */
 html #ba-topbar{position:relative!important;top:auto!important}
 /* Tab "Untuk Anda/Artikel" & sidebar kanan menempel ke tepi atas layar karena navbar tidak lagi menempel */
@@ -15360,6 +15383,98 @@ html body #ba-sheet .ba-row .nav-ico svg{width:26px;height:26px;fill:none;stroke
   html #ba-topbar::after{width:clamp(42px,11.5vw,50px)!important;height:clamp(42px,11.5vw,50px)!important}
   html body #ba-topbar #ba-dots{width:44px;height:44px}
   html body #ba-topbar #ba-dots svg{width:26px;height:26px}
+}
+</style>
+<style id="ba-logo-bigger">
+/* Logo/ikon navigasi diperbesar (tampilan HP: ikon di tengah topbar) */
+@media (max-width:767px){
+  html body #ba-topbar::after{width:clamp(56px,15vw,68px)!important;height:clamp(56px,15vw,68px)!important}
+  html body #ba-topbar{min-height:calc(clamp(56px,15vw,68px) + 8px)!important}
+}
+</style>
+<style id="ba-mkt-css">
+#page-home .xp-mkt b{display:block}
+#page-home .xp-mh{display:block;color:var(--xp-m);font-size:13px;line-height:16px;margin-top:1px}
+#page-home .xp-lp.off{border-color:var(--xp-line)}
+#page-home .xp-lp.off i{background:#71767b}
+#page-home .xp-mnote{margin:0;padding:6px 16px 14px;color:var(--xp-m);font-size:12.5px;line-height:16px}
+</style>
+<script id="ba-mkt-js">
+(function(){
+  function parts(tz){
+    var f=new Intl.DateTimeFormat('en-GB',{timeZone:tz,weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date()),o={};
+    f.forEach(function(x){o[x.type]=x.value});
+    return {wd:o.weekday,min:(+o.hour%24)*60+(+o.minute)};
+  }
+  function toMin(t){var a=t.split(':');return +a[0]*60+ +a[1]}
+  function tick(){
+    try{
+      document.querySelectorAll('#xp-jam .xp-mkt').forEach(function(r){
+        var open=true;
+        if(r.getAttribute('data-mode')!=='247'){
+          var p=parts(r.getAttribute('data-tz'));
+          open=p.wd!=='Sat'&&p.wd!=='Sun'&&p.min>=toMin(r.getAttribute('data-open'))&&p.min<toMin(r.getAttribute('data-close'));
+        }
+        var pill=r.querySelector('.xp-lp');
+        pill.classList.toggle('off',!open);
+        pill.lastChild.nodeValue=open?'BUKA':'TUTUP';
+      });
+    }catch(e){}
+  }
+  tick();setInterval(tick,30000);
+})();
+</script>
+<style id="ba-livepill-fix">
+/* Pil "● LIVE": titik hijau dan tulisan sepenuhnya di dalam garis (outline), tidak menempel/menimpa garis */
+#page-home .xp-live .xp-lp{box-sizing:border-box;position:relative;z-index:1;overflow:visible;gap:8px;padding:4px 14px 4px 12px;border:2px solid #7856ff;line-height:16px;background:transparent;white-space:nowrap}
+#page-home .xp-live .xp-lp i{flex:0 0 8px;margin:0}
+#page-home .xp-live .xp-lp.off{border-color:var(--xp-line)}
+</style>
+<style id="ba-livetick-inside">
+/* Label "● LIVE TICKS" berada di dalam garis kolom (di kanan garis kiri), bukan menempel/melewati garis */
+@media (min-width:1024px){
+  html #ba-ticker-bar>div:first-child{padding-left:48px!important}
+  html #ba-ticker-bar>div.overflow-hidden{padding-left:calc(7rem + 32px)!important}
+}
+</style>
+<style id="ba-lines-up">
+/* Garis kolom kiri & kanan diteruskan sampai ke atas, menutup area bar "LIVE TICKS" */
+@media (min-width:1024px){
+  body:has(#page-home.active) #ba-ticker-bar::before,
+  body:has(#page-home.active) #ba-ticker-bar::after{content:"";position:absolute;top:0;bottom:0;width:1px;background:#2f3336;z-index:30;pointer-events:none}
+  body:has(#page-home.active) #ba-ticker-bar::before{left:32px}
+  body:has(#page-home.active) #ba-ticker-bar::after{left:var(--ba-rline,-9999px)}
+  html.light body:has(#page-home.active) #ba-ticker-bar::before,
+  html.light body:has(#page-home.active) #ba-ticker-bar::after{background:#bae6fd}
+}
+</style>
+<script id="ba-lines-up-js">
+(function(){
+  function upd(){
+    try{
+      var f=document.querySelector('#page-home .xp-feed'),b=document.getElementById('ba-ticker-bar');
+      if(!f||!b)return;
+      var fr=f.getBoundingClientRect(),br=b.getBoundingClientRect();
+      if(!fr.width)return;
+      document.documentElement.style.setProperty('--ba-rline',Math.round(fr.right-br.left-1)+'px');
+    }catch(e){}
+  }
+  upd();
+  window.addEventListener('resize',upd);
+  window.addEventListener('load',upd);
+  try{
+    var f=document.querySelector('#page-home .xp-feed');
+    if(f&&window.ResizeObserver)new ResizeObserver(upd).observe(f);
+    new MutationObserver(upd).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+  }catch(e){}
+  setInterval(upd,1500);
+})();
+</script>
+<style id="ba-livetick-noline">
+/* Bar LIVE TICKS: garis tambahan (garis bawah & garis di kanan label) dihilangkan; hanya garis kolom kiri/kanan yang tersisa */
+@media (min-width:1024px){
+  html #ba-ticker-bar{border-bottom:0!important;border-color:transparent!important;box-shadow:none!important}
+  html #ba-ticker-bar>div:first-child{border-right:0!important;box-shadow:none!important}
 }
 </style>
 </body>
