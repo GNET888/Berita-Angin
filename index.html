@@ -2469,7 +2469,7 @@ html body .page,html body .page.active,html body .page.ba-enter,html body .page.
 html body header.sticky>nav>div>div:nth-child(2)>*,html body #ba-topbar,html body #ba-topbar *,html body .dp-dash{animation:none!important}
 @media (max-width:1023px){
   html body #ba-topbar,html body>main,html body #ba-topbar .bal-top{transition:none!important}
-  html body #ba-topbar .bal-top .bal-av img{content-visibility:auto}
+  html body #ba-topbar .bal-top .bal-av img{content-visibility:visible}
 }
 @media (max-width:1023px){html #bg3d{display:none!important}}
 /* profil & ikon: ruang tetap supaya tidak bergeser saat gambar/font datang */
@@ -2518,6 +2518,18 @@ if(/^https?:/.test(pic)){var l=document.createElement('link');l.rel='preload';l.
   html.light body #ba-sheet{background:#fff!important;border-top-color:#eff3f4}
 }
 @media (prefers-reduced-motion:reduce){html body #ba-tabbar{transition:none!important}}
+</style>
+<style id="ba-avatar-noflicker">
+/* ANTI-KEDIP FOTO PROFIL SAAT SCROLL: tiap avatar dipromosikan ke layer GPU sendiri, tanpa contain/content-visibility */
+html body #ba-topbar .bal-av{contain:none!important;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden;will-change:transform}
+html body #ba-topbar .bal-av img,html body .bal-av img,html body .xp-av img,html body .sb-avatar img,html body .ba-pf-av img,html body .st-ava img,html body .hp-photo img{content-visibility:visible!important;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden;image-rendering:auto}
+html body .xp-av,html body .sb-avatar,html body .ba-pf-av,html body .bal-drw .bal-av{transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
+/* foto profil di sidebar desktop (background dari --ba-avatar) */
+@media (min-width:768px){
+  header.sticky>nav>div>div:nth-child(1) a::before{transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden;will-change:transform}
+}
+/* topbar sticky + blur: isolasi supaya konten yang di-scroll di belakangnya tidak membuat avatar ikut repaint */
+html body #ba-topbar{isolation:isolate;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
 </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
@@ -14762,7 +14774,7 @@ html.light .bal-tag{color:#0f1419}
     }
     if(topBtn){
       topBtn.classList.add('av','bal-top3');
-      topBtn.innerHTML=(s?avHtml(s):'<span class="bal-av bal-guest"><i class="fa-solid fa-user"></i></span>')+'<i class="fa-solid fa-ellipsis-vertical bal-top3d"></i>';
+      var __h=(s?avHtml(s):'<span class="bal-av bal-guest"><i class="fa-solid fa-user"></i></span>')+'<i class="fa-solid fa-ellipsis-vertical bal-top3d"></i>';if(topBtn.__baHtml!==__h){topBtn.innerHTML=__h;topBtn.__baHtml=__h}
       topBtn.setAttribute('aria-label',s?'Menu akun':'Menu akun tamu');topBtn.setAttribute('aria-haspopup','menu');topBtn.setAttribute('data-bal-menu','');topBtn.removeAttribute('data-bal-open')
     }
     if(drw){
