@@ -152,11 +152,23 @@ window.BA_SUPABASE={url:'ISI_URL_SUPABASE',anonKey:'ISI_ANON_PUBLIC_KEY'};</scri
 /* Pengambilan data online yang cepat di hosting statis (GitHub Pages): rute dicoba bertahap-paralel, hasil dibagi antar modul 30 dtk */
 (function(){
   var CK={};
+  /* Isi URL Worker Cloudflare Anda di sini (contoh: 'https://ba-proxy.nama.workers.dev'), atau simpan lewat konsol: localStorage.setItem('ba-worker','https://...') */
+  window.__BA_WORKER='';try{window.__BA_WORKER=window.__BA_WORKER||localStorage.getItem('ba-worker')||''}catch(e){}
   window.__baFetch=function(routes,u,txt,ms){
     var key=u,hit=CK[key];
     if(hit&&Date.now()-hit.t<30000)return hit.p.then(function(t){return txt?t:JSON.parse(t)});
     var p=new Promise(function(res,rej){
-      var urls=[];routes.forEach(function(f){var x=null;try{x=f(u)}catch(e){}if(x&&urls.indexOf(x)<0)urls.push(x)});
+      var rs=routes.slice(),WK=window.__BA_WORKER||'',enc=encodeURIComponent;
+      /* Worker pribadi (Cloudflare) = rute paling andal; diprioritaskan bila diisi */
+      if(WK)rs.unshift(function(x){return WK.replace(/\/+$/,'')+'/?url='+enc(x)});
+      /* Cadangan tambahan khusus Yahoo/Kraken: host query2 + proxy publik lain */
+      if(/finance\.yahoo\.com|api\.kraken\.com/.test(u)){
+        rs.push(function(x){return 'https://api.allorigins.win/raw?url='+enc(x)});
+        rs.push(function(x){return 'https://corsproxy.io/?'+enc(x.replace('query1.','query2.'))});
+        rs.push(function(x){return 'https://api.codetabs.com/v1/proxy?quest='+enc(x.replace('query1.','query2.'))});
+        rs.push(function(x){return 'https://thingproxy.freeboard.io/fetch/'+x});
+      }
+      var urls=[];rs.forEach(function(f){var x=null;try{x=f(u)}catch(e){}if(x&&urls.indexOf(x)<0)urls.push(x)});
       if(!urls.length)return rej(new Error('offline'));
       var done=false,fails=0,next=0,ctr=[],tm;
       function launch(){
@@ -2622,10 +2634,7 @@ html.light .ba-pg em{color:#0f172a}
         </div>
         <div class="overflow-hidden whitespace-nowrap pl-28">
             <div id="live-ticks-ticker" class="animate-marquee flex items-center space-x-8 text-gray-300">
-                <div class="flex items-center space-x-2"><span class="font-bold text-white">BTC/USDT</span><span class="text-emerald-400">$85,897.72</span></div>
-                <div class="flex items-center space-x-2"><span class="font-bold text-white">ETH/USDT</span><span class="text-emerald-400">$2,720.10</span></div>
-                <div class="flex items-center space-x-2"><span class="font-bold text-white">NVDA</span><span class="text-emerald-400">$228.87</span></div>
-                <div class="flex items-center space-x-2"><span class="font-bold text-white">SOL/USDT</span><span class="text-emerald-400">$120.73</span></div>
+                <div class="flex items-center space-x-2" data-tk="_L"><span class="text-gray-400">Memuat data pasar…</span></div>
             </div>
         </div>
     </div>
@@ -3724,13 +3733,14 @@ html.light #cxp-root .cxp-dn,html.light #cxp-root #cxp-ohlc b.cxp-dn{color:#E036
                                 <p class="text-xs text-gray-400 mt-0.5">Indeks komposit kripto • candlestick OHLC dengan indikator teknikal.</p>
                             </div>
                             <div class="flex items-center space-x-2 bg-black/40 border border-card-border px-3 py-1.5 rounded-xl text-xs font-mono">
-                                <span class="text-gray-400">Indeks Komposit:</span>
+                                <span id="cxp-lbl" class="text-gray-400">BTC/USDT:</span>
                                 <span id="live-index-val" class="text-emerald-400 font-bold">$85,897.72</span>
                                 <span id="cxp-hchg" class="cxp-badge">--</span>
                             </div>
                         </div>
                         <div class="cxp-bar">
                             <div class="cxp-grp">
+                                <div id="cxp-asset" class="cxp-seg" title="Pilih aset (daftar mengikuti market cap CoinGecko harian)"></div>
                                 <div id="cxp-tf" class="cxp-seg"><button type="button" data-tf="3s" class="cxp-b">3s</button><button type="button" data-tf="6s" class="cxp-b">6s</button><button type="button" data-tf="15s" class="cxp-b">15s</button><button type="button" data-tf="30s" class="cxp-b">30s</button></div>
                                 <div id="cxp-type" class="cxp-seg"><button type="button" data-type="candle" class="cxp-b">CANDLE</button><button type="button" data-type="area" class="cxp-b">AREA</button></div>
                             </div>
@@ -3745,7 +3755,7 @@ html.light #cxp-root .cxp-dn,html.light #cxp-root #cxp-ohlc b.cxp-dn{color:#E036
                         </div>
                         <div class="grid grid-cols-4 lg:grid-cols-8 gap-2"><div class="bg-black/40 border border-card-border rounded-lg px-2.5 py-2"><div class="text-[9px] text-gray-500 uppercase tracking-wider">Open</div><div id="cxp-open" class="text-xs font-mono font-bold text-white">--</div></div><div class="bg-black/40 border border-card-border rounded-lg px-2.5 py-2"><div class="text-[9px] text-gray-500 uppercase tracking-wider">High</div><div id="cxp-high" class="text-xs font-mono font-bold text-white">--</div></div><div class="bg-black/40 border border-card-border rounded-lg px-2.5 py-2"><div class="text-[9px] text-gray-500 uppercase tracking-wider">Low</div><div id="cxp-low" class="text-xs font-mono font-bold text-white">--</div></div><div class="bg-black/40 border border-card-border rounded-lg px-2.5 py-2"><div class="text-[9px] text-gray-500 uppercase tracking-wider">Perubahan</div><div id="cxp-chg" class="text-xs font-mono font-bold text-white">--</div></div><div class="bg-black/40 border border-card-border rounded-lg px-2.5 py-2"><div class="text-[9px] text-gray-500 uppercase tracking-wider">Volume</div><div id="cxp-vol" class="text-xs font-mono font-bold text-white">--</div></div><div class="bg-black/40 border border-card-border rounded-lg px-2.5 py-2"><div class="text-[9px] text-gray-500 uppercase tracking-wider">RSI 14</div><div id="cxp-rsi" class="text-xs font-mono font-bold text-white">--</div></div><div class="bg-black/40 border border-card-border rounded-lg px-2.5 py-2"><div class="text-[9px] text-gray-500 uppercase tracking-wider">ATR 14</div><div id="cxp-atr" class="text-xs font-mono font-bold text-white">--</div></div><div class="bg-black/40 border border-card-border rounded-lg px-2.5 py-2"><div class="text-[9px] text-gray-500 uppercase tracking-wider">Sinyal</div><div id="cxp-sig" class="text-xs font-mono font-bold text-white">--</div></div></div>
                         <div class="flex flex-wrap items-center justify-between gap-2 text-[10px] font-mono text-gray-500">
-                            <span>OHLC • MA20 • EMA9 • Bollinger • Volume • RSI • Seret = geser • Ctrl+scroll = zoom • Data simulasi ilustratif berbasis harga BTC terkini</span>
+                            <span>OHLC • MA20 • EMA9 • Bollinger • Volume • RSI • Seret = geser • Ctrl+scroll = zoom • Data pasar nyata: candle &amp; harga live dari Binance (WebSocket) • high/low/perubahan 24 jam • daftar aset mengikuti market cap CoinGecko harian</span>
                             <span id="cxp-status">AUTO</span>
                         </div>
                     </div>
@@ -4285,7 +4295,7 @@ html.light .gas-k{background:rgba(255,255,255,.35);border-color:#e2e8f0}html.lig
                         <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">RSI 14</div><div id="tm-rsi" class="text-white font-bold text-xs truncate">--</div></div>
                         <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">ATR 14</div><div id="tm-atr" class="text-white font-bold text-xs truncate">--</div></div>
                         <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">Volatility</div><div id="tm-vola" class="text-white font-bold text-xs truncate">--</div></div>
-                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">Ticks / s</div><div id="tm-tps" class="text-white font-bold text-xs truncate">--</div></div>
+                        <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">Candles</div><div id="tm-tps" class="text-white font-bold text-xs truncate">--</div></div>
                         <div class="bg-black/50 border border-card-border rounded-lg px-2 py-1.5 min-w-0"><div class="text-gray-500 uppercase tracking-wider truncate">Signal</div><div id="tm-sig" class="text-white font-bold text-xs truncate">--</div></div>
                     </div>
                     <div class="flex flex-wrap items-center gap-2 text-[10px] font-mono">
@@ -6698,7 +6708,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                 }
             }
         }
-        setInterval(appendLiveTick, 1200);
+        /* generator tick acak dimatikan: Live Ticks kini memakai data pasar asli (lihat skrip ba-live-ticks-real) */
         let isStockTicksPaused = false;
         function toggleStockLiveTicks() {
             isStockTicksPaused = !isStockTicksPaused;
@@ -6722,6 +6732,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                 period: '1D', price: 228.87, candles: [], ticks: 0, tickTimes: [], auto: true,
                 ind: { sma: true, ema: true, vwap: true }, hover: -1, hoverY: 0, last: Date.now(),
                 sessionOpen: 228.87, sHigh: 228.87, sLow: 228.87, cumPV: 0, cumV: 0, geo: null,
+                gen: 0, dayOpen: 0, prevClose: 0, mkt: { open: false }, loaded: false, err: false, src: '', lastY: 0,
                 advance(ts) {
                     const cfg = CFG[this.period];
                     let cur = this.candles[this.candles.length - 1];
@@ -6737,25 +6748,65 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                     cur.v += tv; this.cumPV += this.price * tv; this.cumV += tv; cur.vw = this.cumPV / this.cumV;
                     this.sHigh = Math.max(this.sHigh, this.price); this.sLow = Math.min(this.sLow, this.price);
                 },
-                seed() {
-                    const cfg = CFG[this.period], endPrice = this.price, n = MAXC - 1, now = Date.now();
-                    this.candles = []; this.cumPV = 0; this.cumV = 0;
-                    this.price = endPrice + (Math.random() - 0.5) * cfg.vol * 3;
-                    this.sessionOpen = this.price; this.sHigh = this.sLow = this.price;
-                    for (let i = 0; i < n; i++) for (let k = 0; k < 6; k++) this.advance(now - (n - i) * cfg.bucket + k * (cfg.bucket / 6));
-                    const shift = endPrice - this.price;
-                    this.candles.forEach(c => { c.o += shift; c.h += shift; c.l += shift; c.c += shift; c.vw += shift; });
-                    this.price = endPrice; this.sessionOpen += shift; this.sHigh += shift; this.sLow += shift; this.cumPV += shift * this.cumV;
+                seed() { this.candles = []; this.cumPV = 0; this.cumV = 0; this.loaded = false; this.load(); },
+                step() { this.load(); },
+                /* DATA NYATA: candle NVDA dari Yahoo Finance (1D=5m, 1W=30m, 1M=1j, 1Y=1h), digabung maks. 60 candle; dimuat ulang otomatis */
+                load() {
+                    const per = this.period, gen = ++this.gen, P = { '1D': ['1d', '5m'], '1W': ['5d', '30m'], '1M': ['1mo', '1h'], '1Y': ['1y', '1d'] }[per];
+                    const enc = encodeURIComponent;
+                    if (!window.__baFetch) { this.err = true; return Promise.resolve(); }
+                    /* SUMBER 1: Yahoo Finance (NASDAQ: NVDA) via rute langsung + query2 + proxy bertahap */
+                    const u = 'https://query1.finance.yahoo.com/v8/finance/chart/NVDA?range=' + P[0] + '&interval=' + P[1] + '&includePrePost=false';
+                    const R = [f => window.__BA_PROXY ? '/api/proxy?url=' + enc(f) : null, f => f, f => f.replace('query1.', 'query2.'), f => 'https://api.codetabs.com/v1/proxy?quest=' + enc(f), f => 'https://corsproxy.io/?' + enc(f), f => 'https://api.allorigins.win/raw?url=' + enc(f)];
+                    /* SUMBER 2 (cadangan, tanpa API key): Kraken NVDAx = token saham NVDA, harga mengikuti NASDAQ (24/5); dimuat paralel */
+                    const KP = { '1D': [5, 576], '1W': [30, 240], '1M': [60, 720], '1Y': [1440, 365] }[per];
+                    const ku = 'https://api.kraken.com/0/public/OHLC?pair=NVDAxUSD&interval=' + KP[0] + '&asset_class=tokenized_asset';
+                    const KR = [f => f, f => 'https://api.codetabs.com/v1/proxy?quest=' + enc(f), f => 'https://corsproxy.io/?' + enc(f)];
+                    const nyOpen = () => { try { const p = {}; new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date()).forEach(x => p[x.type] = x.value); const mn = (+p.hour % 24) * 60 + +p.minute; return !/Sat|Sun/.test(p.weekday) && mn >= 570 && mn < 960; } catch (e) { return false; } };
+                    const yahoo = () => window.__baFetch(R, u, false, 9000).then(j => {
+                        const r = j.chart.result[0], m = r.meta, q = r.indicators.quote[0], ts = r.timestamp || [], raw = [];
+                        for (let i = 0; i < ts.length; i++) if (q.close[i] != null && q.open[i] != null) raw.push({ x: ts[i] * 1000, o: q.open[i], h: q.high[i], l: q.low[i], c: q.close[i], v: (q.volume[i] || 0) / 1000 });
+                        if (!raw.length) throw 0;
+                        const tp = m.currentTradingPeriod && m.currentTradingPeriod.regular, now = Date.now() / 1000;
+                        return { raw, src: 'Yahoo Finance', px: m.regularMarketPrice, pc: m.chartPreviousClose || m.previousClose, hi: m.regularMarketDayHigh, lo: m.regularMarketDayLow, open: !!(tp && now >= tp.start && now <= tp.end), t: m.regularMarketTime ? m.regularMarketTime * 1000 : Date.now() };
+                    });
+                    const kraken = () => window.__baFetch(KR, ku, false, 9000).then(j => {
+                        const res = j && j.result, key = res && Object.keys(res).find(k => k !== 'last'), rows = key ? res[key] : null;
+                        if (!rows || !rows.length) throw 0;
+                        let raw = rows.slice(-KP[1]).map(a => ({ x: a[0] * 1000, o: +a[1], h: +a[2], l: +a[3], c: +a[4], v: (+a[6] || 0) / 1000 })).filter(a => a.c > 0 && a.o > 0);
+                        if (!raw.length) throw 0;
+                        const last = raw[raw.length - 1];
+                        let pc = raw[0].o;
+                        if (per === '1D') { const old = raw.filter(a => a.x <= last.x - 864e5); if (old.length) pc = old[old.length - 1].c; raw = raw.filter(a => a.x > last.x - 864e5); }
+                        return { raw, src: 'Kraken NVDAx', px: last.c, pc, hi: 0, lo: 0, open: nyOpen(), t: last.x };
+                    });
+                    const apply = d => {
+                        if (gen !== this.gen) return;
+                        const per0 = per, raw = d.raw, g = Math.ceil(raw.length / MAXC), cs = [];
+                        for (let i = 0; i < raw.length; i += g) {
+                            const b = raw.slice(i, i + g);
+                            cs.push({ x: b[0].x, o: b[0].o, h: Math.max(...b.map(a => a.h)), l: Math.min(...b.map(a => a.l)), c: b[b.length - 1].c, v: b.reduce((a, c) => a + c.v, 0), vw: 0 });
+                        }
+                        const px = d.px > 0 ? d.px : cs[cs.length - 1].c, lc = cs[cs.length - 1];
+                        lc.c = px; lc.h = Math.max(lc.h, px); lc.l = Math.min(lc.l, px);
+                        let cpv = 0, cvv = 0; cs.forEach(c => { const tp = (c.h + c.l + c.c) / 3, vv = c.v || 0.001; cpv += tp * vv; cvv += vv; c.vw = cpv / cvv; });
+                        this.candles = cs; this.cumPV = cpv; this.cumV = cvv; this.price = px;
+                        this.prevClose = d.pc || cs[0].o; this.sessionOpen = this.prevClose; this.dayOpen = cs[0].o;
+                        this.sHigh = per0 === '1D' && d.hi > 0 ? d.hi : Math.max(...cs.map(c => c.h));
+                        this.sLow = per0 === '1D' && d.lo > 0 ? d.lo : Math.min(...cs.map(c => c.l));
+                        this.mkt = { open: d.open }; this.last = d.t; this.src = d.src;
+                        this.loaded = true; this.err = false; this.ticks++;
+                        window.stockLive.price = px; window.stockLive.open = this.sessionOpen; window.stockLive.period = per0;
+                        this.draw(); this.updatePanel();
+                    };
+                    let yOk = false, fails = 0;
+                    const bad = () => { if (++fails >= 2 && gen === this.gen && !this.loaded) { this.err = true; this.draw(); this.updatePanel(); } };
+                    const yFresh = () => this.src === 'Yahoo Finance' && this.loaded && Date.now() - (this.lastY || 0) < 120000;
+                    const py = yahoo().then(d => { yOk = true; this.lastY = Date.now(); apply(d); }).catch(bad);
+                    const pk = kraken().then(d => { if (!yOk && !yFresh()) apply(d); }).catch(bad);
+                    return Promise.all([py, pk]);
                 },
-                step() {
-                    const now = Date.now();
-                    this.advance(now);
-                    this.ticks += 1; this.tickTimes.push(now);
-                    while (this.tickTimes.length && now - this.tickTimes[0] > 5000) this.tickTimes.shift();
-                    this.last = now;
-                    window.stockLive.price = this.price; window.stockLive.open = this.sessionOpen; window.stockLive.period = this.period;
-                    this.draw(); this.updatePanel();
-                },
+                lab(x) { const d = new Date(x); return this.period === '1D' ? d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) : d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }); },
                 updateTick() { this.step(); },
                 setPeriod(period) {
                     if (!CFG[period]) return;
@@ -6783,7 +6834,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                         el.classList.add(dir > 0 ? 'text-emerald-400' : dir < 0 ? 'text-rose-400' : dir === 0 ? 'text-white' : 'text-amber-400'); };
                     tint('tm-last', '$' + this.price.toFixed(2), chg >= 0 ? 1 : -1);
                     tint('tm-chg', (chg >= 0 ? '+' : '') + chg.toFixed(2) + ' (' + (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%)', chg >= 0 ? 1 : -1);
-                    tint('tm-open', this.sessionOpen.toFixed(2), 0);
+                    tint('tm-open', (this.dayOpen || this.sessionOpen).toFixed(2), 0);
                     tint('tm-high', this.sHigh.toFixed(2), 1);
                     tint('tm-low', this.sLow.toFixed(2), -1);
                     tint('tm-vwap', (this.cumPV / (this.cumV || 1)).toFixed(2), this.price >= this.cumPV / (this.cumV || 1) ? 1 : -1);
@@ -6791,11 +6842,11 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                     tint('tm-rsi', rsi.toFixed(1), rsi >= 70 ? -1 : rsi <= 30 ? 1 : 0);
                     tint('tm-atr', atr.toFixed(3), 0);
                     tint('tm-vola', (sd * 100).toFixed(3) + '%', 0);
-                    tint('tm-tps', tps.toFixed(1), 0);
+                    tint('tm-tps', String(n), 0);
                     tint('tm-sig', sig, sig === 'BULLISH' ? 1 : sig === 'BEARISH' ? -1 : 2);
                     const statusEl = $('intraday-telemetry-status'), feedEl = $('intraday-telemetry-feed'), timeEl = $('intraday-telemetry-time');
-                    if (statusEl) statusEl.textContent = (this.auto ? 'AUTO' : 'PAUSED') + ' • ' + this.ticks.toLocaleString('id-ID') + ' Ticks';
-                    if (feedEl) feedEl.textContent = 'Candlestick Feed ' + (this.auto ? 'Online' : 'Paused') + ' • ' + this.period;
+                    if (statusEl) statusEl.textContent = (this.auto ? 'AUTO' : 'PAUSED') + ' • ' + this.ticks.toLocaleString('id-ID') + ' Update • ' + (this.src || 'Yahoo Finance');
+                    if (feedEl) feedEl.textContent = 'Data nyata NVDA' + (this.src === 'Kraken NVDAx' ? ' (NVDAx)' : '') + ' ' + (!this.auto ? 'Paused' : (this.err && !this.loaded ? 'Offline' : (this.mkt.open ? 'Online' : 'Pasar tutup · penutupan terakhir'))) + ' • ' + this.period;
                     if (timeEl) timeEl.textContent = new Date(this.last).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 },
                 resize() {
@@ -6824,7 +6875,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                         [['SMA9', C.sma, this.ind.sma], ['EMA21', C.ema, this.ind.ema], ['VWAP', C.vwap, this.ind.vwap]].forEach(t => {
                             if (!t[2]) return; ctx.fillStyle = t[1]; ctx.fillText('— ' + t[0], lx, 14); lx += ctx.measureText('— ' + t[0]).width + 14; });
                     }
-                    if (!n) return;
+                    if (!n) { ctx.font = '12px ' + MONO; ctx.textAlign = 'center'; ctx.fillStyle = C.axis; ctx.fillText(this.err ? 'Yahoo Finance & Kraken belum terjangkau — mencoba lagi otomatis…' : 'Memuat data pasar NVDA…', w / 2, h / 2); ctx.textAlign = 'left'; return; }
                     let min = Infinity, max = -Infinity; cs.forEach(c => { min = Math.min(min, c.l); max = Math.max(max, c.h); });
                     const pad = (max - min) * 0.08 || 0.05; min -= pad; max += pad;
                     const span = max - min, toY = v => priceBottom - ((v - min) / span) * (priceBottom - top);
@@ -6871,7 +6922,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                     const labels = w < 480 ? 3 : 5;
                     for (let i = 0; i < labels; i++) {
                         const idx = Math.floor(i * (n - 1) / Math.max(1, labels - 1));
-                        ctx.fillText(new Date(cs[idx].x).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }), Math.min(xAt(idx) - 18, right - 40), volBottom + 13);
+                        ctx.fillText(this.lab(cs[idx].x), Math.min(xAt(idx) - 18, right - 40), volBottom + 13);
                     }
                     const hc = this.hover >= 0 && this.hover < n ? cs[this.hover] : lc, hd = hc.c - hc.o;
                     const parts = [['O ' + hc.o.toFixed(2), C.text], ['H ' + hc.h.toFixed(2), C.text], ['L ' + hc.l.toFixed(2), C.text], ['C ' + hc.c.toFixed(2), C.text],
@@ -6904,12 +6955,12 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
             const autoBtn = $('tm-auto-btn');
             const paintAuto = () => { if (!autoBtn) return; autoBtn.innerHTML = state.auto ? '&#9679; AUTO ON' : '&#10074;&#10074; PAUSED';
                 autoBtn.classList.toggle('text-emerald-400', state.auto); autoBtn.classList.toggle('text-amber-400', !state.auto); };
-            if (autoBtn) autoBtn.addEventListener('click', () => { state.auto = !state.auto; paintAuto(); state.draw(); state.updatePanel(); });
+            if (autoBtn) autoBtn.addEventListener('click', () => { state.auto = !state.auto; paintAuto(); if (state.auto) state.load(); state.draw(); state.updatePanel(); });
             document.querySelectorAll('.tm-ind').forEach(b => b.addEventListener('click', () => {
                 const key = b.getAttribute('data-ind'); state.ind[key] = !state.ind[key]; b.classList.toggle('off', !state.ind[key]); state.draw(); }));
             state.seed(); state.resize(); state.updatePanel();
             window.stockLive.price = state.price;
-            setInterval(() => { if (state.auto && !document.hidden) state.step(); }, 300);
+            setInterval(() => { if (state.auto && !document.hidden) state.load(); }, 30000);
             window.addEventListener('resize', () => state.resize(), { passive: true });
             if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => state.resize()).observe(canvas.parentElement || canvas);
             if (typeof MutationObserver !== 'undefined') new MutationObserver(() => state.draw()).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
@@ -9899,12 +9950,14 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   var S = { tf: '3s', type: 'candle', price: BASE, open: BASE, hi: BASE, lo: BASE, cs: [], auto: true, drift: 0, ticks: 0,
     hover: -1, mx: 0, my: 0, g: null, last: Date.now(), vis: VIS0, off: 0, drag: null,
     ind: { ma: true, ema: true, bb: false, vol: true, rsi: true } };
+  S.gen = 0; S.sym = 'BTCUSDT'; S.coin = 'btc'; S.title = 'BTC/USDT · BINANCE'; S.real = true; S.sim = false; S.skew = 0; S.t24 = null; S.lastTrade = 0;
+  try { var __c = localStorage.getItem('ba-cxp-coin'); if (__c && /^[a-z0-9]{2,10}$/.test(__c)) { S.coin = __c; S.sym = __c.toUpperCase() + 'USDT'; S.title = __c.toUpperCase() + '/USDT · BINANCE'; } } catch (e) {}
   var rnd = function () { return Math.random() - .5; };
   var fmt = function (v, d) { d = d == null ? 2 : d; return v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); };
   var hms = function (t) { return new Date(t).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); };
   var al = function (hex, a) { var h = hex.replace('#', ''); return 'rgba(' + parseInt(h.substr(0, 2), 16) + ',' + parseInt(h.substr(2, 2), 16) + ',' + parseInt(h.substr(4, 2), 16) + ',' + a + ')'; };
   /* ---------- data ---------- */
-  function advance(ts) {
+  function advanceSim(ts) {
     var b = TF[S.tf], c = S.cs[S.cs.length - 1];
     if (!c || ts - c.t >= b) {
       c = { t: ts, o: S.price, h: S.price, l: S.price, c: S.price, v: 0 }; S.cs.push(c);
@@ -9917,13 +9970,130 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     c.c = S.price; c.h = Math.max(c.h, S.price); c.l = Math.min(c.l, S.price);
     c.v += 1 + Math.random() * 6 + Math.abs(d) * .2;
   }
-  function seed() {
+  function seedSim() {
     var b = TF[S.tf], now = Date.now(), n = VIS0 + 160;
     S.cs = []; S.price = (window.__BA_BTC || BASE) + rnd() * 400; S.drift = 0; S.off = 0;
-    for (var i = 0; i < n; i++) for (var k = 0; k < 8; k++) advance(now - (n - i) * b + k * (b / 8));
+    for (var i = 0; i < n; i++) for (var k = 0; k < 8; k++) advanceSim(now - (n - i) * b + k * (b / 8));
     S.open = S.cs[0].o; S.hi = -Infinity; S.lo = Infinity;
     S.cs.forEach(function (c) { S.hi = Math.max(S.hi, c.h); S.lo = Math.min(S.lo, c.l); });
   }
+  /* ---------- DATA PASAR NYATA (Binance) ----------
+     Candle awal = klines 1 detik nyata (diagregasi ke 3/6/15/30 dtk), lalu tiap transaksi live (WebSocket @trade) membentuk candle.
+     Cadangan: polling harga tiap 1,5 dtk. High/Low/Open/Perubahan = statistik 24 jam bursa. Jika semua sumber tak terjangkau -> simulasi (diberi label). */
+  var HOSTS = ['https://api.binance.com', 'https://data-api.binance.vision'];
+  function jf(path, ms) {
+    return new Promise(function (res, rej) {
+      var i = 0;
+      (function next() {
+        if (i >= HOSTS.length) return rej(new Error('offline'));
+        var c = new AbortController(), t = setTimeout(function () { c.abort(); }, ms || 8000);
+        fetch(HOSTS[i++] + path, { signal: c.signal, cache: 'no-store' }).then(function (r) { clearTimeout(t); if (r.status === 400) throw 'bad'; if (!r.ok) throw 0; return r.json(); })
+          .then(res, function (e) { clearTimeout(t); if (e === 'bad') return rej('bad'); next(); });
+      })();
+    });
+  }
+  function status(t) { var e = $('cxp-status'); if (e) e.textContent = t; }
+  function closeFeeds() {
+    if (S.ws) { try { S.ws.onclose = null; S.ws.close(); } catch (e) {} S.ws = null; }
+    clearInterval(S.poll); clearInterval(S.t24i);
+  }
+  function pushCandle(bucket, price) {
+    S.cs.push({ t: bucket, o: price, h: price, l: price, c: price, v: 0 });
+    if (S.off > 0) S.off++;
+    if (S.cs.length > MAX) S.cs.shift();
+  }
+  function onTrade(p, q, t) {
+    if (!(p > 0) || !S.auto) return;
+    var b = TF[S.tf], bucket = Math.floor(t / b) * b, c = S.cs[S.cs.length - 1];
+    if (c && bucket < c.t) return;
+    if (!c || bucket > c.t) { pushCandle(bucket, p); c = S.cs[S.cs.length - 1]; }
+    S.price = p; c.c = p; c.h = Math.max(c.h, p); c.l = Math.min(c.l, p); c.v += (q || 0) / 1000;
+    S.ticks++; S.last = t; S.lastTrade = Date.now();
+  }
+  function advanceReal(ts) {
+    var b = TF[S.tf], bucket = Math.floor((ts + S.skew) / b) * b, c = S.cs[S.cs.length - 1];
+    if (S.price > 0 && (!c || bucket > c.t)) pushCandle(bucket, S.price);
+  }
+  function advance(ts) { if (S.sim) advanceSim(ts); else advanceReal(ts); }
+  function openWS(gen) {
+    if (typeof WebSocket === 'undefined') return;
+    var sym = S.sym.toLowerCase(), n = 0,
+      urls = ['wss://stream.binance.com:9443/ws/' + sym + '@trade', 'wss://data-stream.binance.vision/ws/' + sym + '@trade'];
+    (function conn() {
+      if (gen !== S.gen) return;
+      var w; try { w = new WebSocket(urls[n++ % urls.length]); } catch (e) { return; }
+      S.ws = w;
+      w.onmessage = function (m) { var d; try { d = JSON.parse(m.data); } catch (e) { return; } if (d && d.p) { S.skew = d.T - Date.now(); onTrade(+d.p, +d.q, d.T); } };
+      w.onclose = function () { if (gen === S.gen) setTimeout(conn, 2500); };
+      w.onerror = function () { try { w.close(); } catch (e) {} };
+    })();
+  }
+  function startPoll(gen) {
+    clearInterval(S.poll);
+    S.poll = setInterval(function () {
+      if (gen !== S.gen || document.hidden || Date.now() - S.lastTrade < 4000) return;
+      jf('/api/v3/ticker/price?symbol=' + S.sym, 5000).then(function (d) { if (gen === S.gen) onTrade(+d.price, 0, Date.now() + S.skew); }).catch(function () {});
+    }, 1500);
+  }
+  function load24(gen) {
+    jf('/api/v3/ticker/24hr?symbol=' + S.sym, 6000).then(function (d) {
+      if (gen !== S.gen) return;
+      S.t24 = { open: +d.openPrice, hi: +d.highPrice, lo: +d.lowPrice, vol: +d.volume, pct: +d.priceChangePercent };
+    }).catch(function () {});
+  }
+  function lbl() { var e = $('cxp-lbl'); if (e) e.textContent = S.coin.toUpperCase() + '/USDT:'; }
+  function offline(gen, e) {
+    if (gen !== S.gen) return;
+    if (e === 'bad' && S.coin !== 'btc') { setAsset('btc'); status('Pair tidak tersedia di Binance — kembali ke BTC'); return; }
+    S.sim = true; S.real = false; S.t24 = null; seedSim(); S.title = S.coin.toUpperCase() + '/USDT · SIMULASI (OFFLINE)'; mark(); draw(); panel();
+  }
+  function seed() {
+    var gen = ++S.gen, b = TF[S.tf];
+    closeFeeds(); S.cs = []; S.off = 0; S.t24 = null; S.sim = false; S.real = true; S.lastTrade = 0; S.ticks = 0; S.price = 0;
+    S.title = S.coin.toUpperCase() + '/USDT · BINANCE'; lbl();
+    status('Memuat data pasar ' + S.sym + '…'); draw();
+    jf('/api/v3/klines?symbol=' + S.sym + '&interval=1s&limit=1000').then(function (k) {
+      if (gen !== S.gen) return;
+      var cs = [];
+      k.forEach(function (x) {
+        var t = Math.floor(x[0] / b) * b, c = cs[cs.length - 1];
+        if (c && c.t === t) { c.h = Math.max(c.h, +x[2]); c.l = Math.min(c.l, +x[3]); c.c = +x[4]; c.v += +x[5] / 1000; }
+        else cs.push({ t: t, o: +x[1], h: +x[2], l: +x[3], c: +x[4], v: +x[5] / 1000 });
+      });
+      if (!cs.length) throw 0;
+      S.cs = cs; S.price = cs[cs.length - 1].c; S.skew = k[k.length - 1][0] - Date.now();
+    }).catch(function (e) {
+      if (e === 'bad') throw e;
+      return jf('/api/v3/ticker/price?symbol=' + S.sym, 6000).then(function (d) { if (gen === S.gen) { S.price = +d.price; S.skew = 0; } });
+    }).then(function () {
+      if (gen !== S.gen) return;
+      if (!(S.price > 0)) throw new Error('offline');
+      if (!S.cs.length) pushCandle(Math.floor((Date.now() + S.skew) / b) * b, S.price);
+      S.open = S.cs[0].o; S.hi = -Infinity; S.lo = Infinity;
+      S.cs.forEach(function (c) { S.hi = Math.max(S.hi, c.h); S.lo = Math.min(S.lo, c.l); });
+      openWS(gen); startPoll(gen); load24(gen); S.t24i = setInterval(function () { load24(gen); }, 60000);
+      mark(); draw(); panel();
+    }).catch(function (e) { offline(gen, e); });
+  }
+  function setAsset(coin) {
+    coin = String(coin || 'btc').toLowerCase(); S.coin = coin; S.sym = coin.toUpperCase() + 'USDT'; S.hover = -1;
+    try { localStorage.setItem('ba-cxp-coin', coin); } catch (e) {}
+    document.querySelectorAll('#cxp-asset [data-coin]').forEach(function (b) { setOn(b, b.dataset.coin === coin); });
+    seed();
+  }
+  /* daftar aset = top market cap harian (CoinGecko, modul ba-crypto-daily); cadangan: daftar bawaan */
+  var DEFA = ['btc', 'eth', 'sol', 'bnb', 'xrp', 'doge', 'ada', 'trx'];
+  function buildAssets(list) {
+    var box = $('cxp-asset'); if (!box) return;
+    if (list.indexOf(S.coin) < 0) list = list.concat([S.coin]);
+    box.innerHTML = list.map(function (c) { return '<button type="button" data-coin="' + c + '" class="cxp-b' + (c === S.coin ? ' on' : '') + '">' + c.toUpperCase() + '</button>'; }).join('');
+    box.querySelectorAll('[data-coin]').forEach(function (b) { b.addEventListener('click', function () { if (b.dataset.coin !== S.coin) setAsset(b.dataset.coin); }); });
+  }
+  window.__cxpAssets = function (coins) {
+    var l = []; (coins || []).forEach(function (c) { var x = String(c.s || c.symbol || '').toLowerCase(); if (/^[a-z0-9]{2,10}$/.test(x) && l.indexOf(x) < 0 && l.length < 8) l.push(x); });
+    if (l.length >= 4) buildAssets(l);
+  };
+  (function () { var l = DEFA; try { var sn = JSON.parse(localStorage.getItem('ba-crypto-daily-v1')); if (sn && sn.coins) { var t = []; sn.coins.forEach(function (c) { if (t.length < 8 && /^[a-z0-9]{2,10}$/.test(c.s)) t.push(c.s); }); if (t.length >= 4) l = t; } } catch (e) {} buildAssets(l); })();
   /* ---------- indikator ---------- */
   function sma(a, n) { var o = [], s = 0; for (var i = 0; i < a.length; i++) { s += a[i]; if (i >= n) s -= a[i - n]; o.push(i >= n - 1 ? s / n : null); } return o; }
   function ema(a, n) { var k = 2 / (n + 1), o = [], e = a[0]; for (var i = 0; i < a.length; i++) { e = i ? a[i] * k + e * (1 - k) : a[0]; o.push(i >= n - 1 ? e : null); } return o; }
@@ -9964,6 +10134,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   function draw() {
     if (cv.offsetParent === null) return;
     var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
+    if (!S.cs.length) { ctx.clearRect(0, 0, w, h); ctx.font = '12px ' + MONO; ctx.textAlign = 'center'; ctx.fillStyle = '#8B97A8'; ctx.fillText('Memuat data pasar ' + S.sym + ' dari Binance…', w / 2, h / 2); return; }
     var C = colors(), all = S.cs, N = all.length, I = S.ind, vis = S.vis, i, j;
     S.off = Math.max(0, Math.min(S.off, Math.max(0, N - 20)));
     var end = N - S.off, s0 = Math.max(0, end - vis), cs = all.slice(s0, end), n = cs.length, area = S.type === 'area';
@@ -10088,7 +10259,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     }
     /* ===== judul + legenda indikator ===== */
     ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left'; ctx.font = '700 10px ' + MONO; ctx.fillStyle = C.title;
-    var ttl = 'CRYPTO COMPOSITE INDEX'; ctx.fillText(ttl, L + 2, 14);
+    var ttl = S.title; ctx.fillText(ttl, L + 2, 14);
     var lx = L + 2 + ctx.measureText(ttl).width + 8; ctx.font = '10px ' + MONO; ctx.fillStyle = C.ax; ctx.fillText('· ' + S.tf, lx, 14);
     lx += ctx.measureText('· ' + S.tf).width + 14;
     if (w > 640) {
@@ -10129,12 +10300,14 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     e.classList.add(dir > 0 ? 'text-emerald-400' : dir < 0 ? 'text-rose-400' : dir === 0 ? 'text-white' : 'text-amber-400');
   }
   function panel() {
+    if (!S.cs.length) return;
     var all = S.cs, N = all.length, cl = all.map(function (c) { return c.c; });
     var r = rsi(cl, 14)[N - 1]; r = r == null ? 50 : r;
     var m = sma(cl, 20)[N - 1], e = ema(cl, 9)[N - 1], atr = 0, q = 0;
     for (var i = Math.max(1, N - 14); i < N; i++) { atr += Math.max(all[i].h - all[i].l, Math.abs(all[i].h - all[i - 1].c), Math.abs(all[i].l - all[i - 1].c)); q++; }
     atr = q ? atr / q : 0;
-    var chg = S.price - S.open, pct = chg / S.open * 100, vol = all.reduce(function (a, c) { return a + c.v; }, 0);
+    if (S.t24) { S.open = S.t24.open; S.hi = Math.max(S.t24.hi, S.price); S.lo = Math.min(S.t24.lo, S.price); }
+    var chg = S.price - S.open, pct = chg / S.open * 100, vol = S.t24 ? S.t24.vol / 1000 : all.reduce(function (a, c) { return a + c.v; }, 0);
     var sig = m != null && e > m && r >= 50 ? 'BULLISH' : (m != null && e < m && r < 50 ? 'BEARISH' : 'NETRAL');
     S.hi = Math.max(S.hi, S.price); S.lo = Math.min(S.lo, S.price);
     tint('cxp-open', fmt(S.open), 0); tint('cxp-high', fmt(S.hi), 1); tint('cxp-low', fmt(S.lo), -1);
@@ -10144,7 +10317,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     var lv = $('live-index-val');
     if (lv) { lv.textContent = '$' + fmt(S.price); lv.classList.remove('text-emerald-400', 'text-rose-400'); lv.classList.add(chg >= 0 ? 'text-emerald-400' : 'text-rose-400'); }
     var hc = $('cxp-hchg'); if (hc) { hc.textContent = (chg >= 0 ? '▲ +' : '▼ ') + pct.toFixed(2) + '%'; hc.className = 'cxp-badge ' + (chg >= 0 ? 'cxp-up' : 'cxp-dn'); }
-    var st = $('cxp-status'); if (st) st.textContent = (S.auto ? 'AUTO' : 'PAUSED') + ' • ' + S.ticks.toLocaleString('id-ID') + ' tick • ' + hms(S.last);
+    var st = $('cxp-status'); if (st) st.textContent = (S.sim ? 'SIMULASI OFFLINE' : (S.auto ? 'LIVE BINANCE' : 'PAUSED')) + ' • ' + S.ticks.toLocaleString('id-ID') + ' tick • ' + hms(S.last);
   }
   /* ---------- kontrol ---------- */
   function setOn(el, on) { if (el) el.classList.toggle('on', !!on); }
@@ -10184,7 +10357,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   seed(); mark(); resize(); panel();
   setInterval(function () {
     if (!S.auto || document.hidden) return;
-    S.last = Date.now(); advance(S.last); S.ticks++; panel(); draw();
+    if (S.sim) { S.last = Date.now(); S.ticks++; } advance(Date.now()); panel(); draw();
   }, 300);
   window.addEventListener('resize', resize, { passive: true });
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(resize).observe(cv.parentElement || cv);
@@ -10283,10 +10456,18 @@ canvas.cx-mini[data-kind="stock"]{width:96px;flex-basis:96px}
       SS[s.symbol] = { c: cd, pc: pc, target: price, shown: price, vol: price * .0016, n: 0 };
     });
   }
+  /* mini-chart saham dari candle intraday nyata (dipanggil modul ba-stock-live-real) */
+  window.__cxStkReal = function (sym, o, h, l, c, pc) {
+    var st = SS[sym]; if (!st || !c || c.length < 4 || !(pc > 0)) return;
+    var g = Math.ceil(c.length / NC), out = [];
+    for (var i = 0; i < c.length; i += g) { var j = Math.min(c.length, i + g), hi = -Infinity, lo = Infinity; for (var k = i; k < j; k++) { hi = Math.max(hi, h[k]); lo = Math.min(lo, l[k]); } out.push({ o: o[i], c: c[j - 1], h: hi, l: lo }); }
+    st.c = out; st.pc = pc; st.target = c[c.length - 1]; st.shown = st.target; st.real = true;
+  };
   function tickStocks() {
     Object.keys(SS).forEach(function (sym) {
       var st = SS[sym], s = stocks[sym], k = st.c[st.c.length - 1];
       st.n++;
+      if (st.real) { var kk = st.c[st.c.length - 1]; kk.c = st.target; kk.h = Math.max(kk.h, kk.c); kk.l = Math.min(kk.l, kk.c); if (s._lp > 0) { s.price = s._lp; s.change = (s._lc >= 0 ? '+' : '') + s._lc.toFixed(2) + '%'; } return; }
       if (st.n % 4 === 0) { st.c.push({ o: k.c, c: k.c, h: k.c, l: k.c }); st.c.shift(); k = st.c[st.c.length - 1]; }
       k.c = Math.max(.01, k.c + rnd() * st.vol * 2 + (st.target - k.c) * .05);
       k.h = Math.max(k.h, k.c); k.l = Math.min(k.l, k.c);
@@ -10710,6 +10891,10 @@ function mk(sym,name,base){var r=rng(hash(sym+new Date().toDateString())),vol=sy
 IDX.concat(SEC.map(function(s){return [s[0],s[1],100]}),WL,EX).forEach(function(a){mk(a[0],a[1],a[2])});
 /* ---------- fetch online ---------- */
 var ROUTES=[function(u){return window.__BA_PROXY?'/api/proxy?url='+encodeURIComponent(u):u},function(u){return u},function(u){return u.replace('query1.','query2.')},function(u){return 'https://api.codetabs.com/v1/proxy?quest='+encodeURIComponent(u)},function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u)},function(u){return 'https://api.allorigins.win/raw?url='+encodeURIComponent(u)}],ri=0,deadUntil=0;
+/* Worker pribadi (jika diisi) jadi rute pertama; tambah proxy cadangan lain */
+if(window.__BA_WORKER){ROUTES.unshift(function(u){return window.__BA_WORKER.replace(/\/+$/,'')+'/?url='+encodeURIComponent(u)})}
+ROUTES.push(function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u.replace('query1.','query2.'))},function(u){return 'https://thingproxy.freeboard.io/fetch/'+u});
+
 function seqJ(u){return new Promise(function(res,rej){if(Date.now()<deadUntil)return rej(new Error('offline'));var k=0,nf=false;
   (function next(){if(k>=ROUTES.length){if(!nf)deadUntil=Date.now()+30000;return rej(new Error(nf?'notfound':'offline'))}
    var idx=(ri+k)%ROUTES.length;k++;var c=new AbortController(),t=setTimeout(function(){c.abort()},4500);
@@ -11817,7 +12002,7 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
       if(hit<5)throw 0;
       var cmp=function(a,b){return (b._mc||0)-(a._mc||0)};allStockDirectory.sort(cmp);if(filteredStockData!==allStockDirectory)filteredStockData.sort(cmp);
       renderStockTable();badge('ba-live-st','stock-table-body',true,'Yahoo Finance · '+hit+' emiten · urut market cap · '+hm());
-    }).catch(function(){badge('ba-live-st','stock-table-body',false,'Yahoo Finance tidak terjangkau')})}
+    }).catch(function(){if(!(W.__stkRealAt&&Date.now()-W.__stkRealAt<6e5))badge('ba-live-st','stock-table-body',false,'Yahoo Finance tidak terjangkau')})}
   /* ---------- 3. KOMPONEN LIKUIDITAS MAKRO ---------- */
   function fred(id){return get('https://fred.stlouisfed.org/graph/fredgraph.csv?id='+id+'&cosd='+new Date(Date.now()-120*864e5).toISOString().slice(0,10),1).then(function(t){
     var L=t.trim().split('\n');for(var i=L.length-1;i>0;i--){var v=parseFloat(L[i].split(',')[1]);if(isFinite(v))return v}throw 0})}
@@ -12643,6 +12828,7 @@ D.addEventListener('visibilitychange',function(){if(!D.hidden)poll()});
       cryptoPagesData[k].splice.apply(cryptoPagesData[k], [0, cryptoPagesData[k].length].concat(arr));
     });
     if (W.__cxInit) W.__cxInit();
+    if (W.__cxpAssets) { try { W.__cxpAssets(sn.coins); } catch (e) {} }
     if (W.__baCryptoResync) { try { W.__baCryptoResync(); } catch (e) {} }
     try { if (typeof changeCryptoPage === 'function') changeCryptoPage(cryptoCurrentPage); else if (typeof renderCryptoTable === 'function') renderCryptoTable(); } catch (e) {}
     var lu = D.getElementById('crypto-last-updated'); if (lu) lu.textContent = 'Terakhir diperbarui: ' + dlab(sn.day) + ' ' + hm(sn.t);
@@ -15489,5 +15675,165 @@ html body #ba-sheet .ba-row .nav-ico svg{width:26px;height:26px;fill:none;stroke
   html #ba-ticker-bar>div:first-child{border-right:0!important;box-shadow:none!important}
 }
 </style>
+<script id="ba-live-ticks-real">
+/* LIVE TICKS dari data pasar asli (tanpa angka acak):
+   - Crypto: Binance (24j) -> cadangan CoinGecko   - Saham, indeks, emas, kurs: Yahoo Finance
+   - Fallback offline: cache hari yang sama, lalu data harian data.js (window.__DAILY)
+   - Pembaruan: crypto 45 dtk, saham/indeks 5 mnt, ganti hari otomatis; tabel Live Ticks kripto = transaksi nyata Binance */
+(function(){
+  var W=window,D=document,enc=encodeURIComponent,CK='ba-ticks-v1';
+  var tz=function(){return (W.__BA_S&&W.__BA_S.tz)||'Asia/Jakarta'};
+  var CRY=[['BTC','BTC/USDT','bitcoin','BTCUSDT'],['ETH','ETH/USDT','ethereum','ETHUSDT'],['SOL','SOL/USDT','solana','SOLUSDT'],['BNB','BNB/USDT','binancecoin','BNBUSDT'],['XRP','XRP/USDT','ripple','XRPUSDT']];
+  var STK=[['NVDA','NVDA','NVDA','$'],['AAPL','AAPL','AAPL','$'],['MSFT','MSFT','MSFT','$'],['TSLA','TSLA','TSLA','$'],['SPX','S&P 500','^GSPC',''],['IXIC','NASDAQ','^IXIC',''],['JKSE','IHSG','^JKSE',''],['GOLD','GOLD','GC=F','$'],['IDR','USD/IDR','USDIDR=X','Rp ']];
+  var META={},ORDER=[];
+  CRY.forEach(function(c){META[c[0]]={l:c[1],pre:'$'};ORDER.push(c[0])});
+  STK.forEach(function(c){META[c[0]]={l:c[1],pre:c[3]};ORDER.push(c[0])});
+  var V={},lastLive=0,lastDay='';
+  function nf(v,d){return v.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})}
+  function fmt(p){return nf(p,p>=1?2:4)}
+  function day(){try{return new Date().toLocaleDateString('en-CA',{timeZone:tz()})}catch(e){return new Date().toISOString().slice(0,10)}}
+  function hm(t){try{return new Date(t).toLocaleTimeString('id-ID',{hour12:false,timeZone:tz()}).replace(/\./g,':')}catch(e){return new Date(t).toTimeString().slice(0,8)}}
+  function stamp(){try{var d=new Date().toLocaleString('id-ID',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit',hour12:false,timeZone:tz()}).replace(/\./g,':').replace(',','');
+    return 'Update '+d+(tz()==='Asia/Jakarta'?' WIB':'')}catch(e){return 'Update '+new Date().toLocaleString()}}
+  function jf(u,ms){return new Promise(function(res,rej){var c=new AbortController(),t=setTimeout(function(){c.abort()},ms||8000);
+    fetch(u,{signal:c.signal,cache:'no-store'}).then(function(r){clearTimeout(t);if(!r.ok)throw 0;return r.json()}).then(res,function(e){clearTimeout(t);rej(e||new Error('x'))})})}
+  function first(list){return list.reduce(function(p,f){return p.catch(function(){return f()})},Promise.reject())}
+  var R=[function(u){return W.__BA_PROXY?'/api/proxy?url='+enc(u):null},function(u){return u},function(u){return 'https://api.codetabs.com/v1/proxy?quest='+enc(u)},function(u){return 'https://corsproxy.io/?'+enc(u)},function(u){return 'https://api.allorigins.win/raw?url='+enc(u)}];
+  function setV(k,p,c,src,extra){if(!(p>0))return;var o=V[k]||{};o.p=p;o.c=(typeof c==='number'&&isFinite(c))?c:null;o.src=src;o.t=Date.now();o.stale=false;
+    if(extra)for(var x in extra)o[x]=extra[x];V[k]=o}
+  /* ---------- cache & data harian ---------- */
+  function loadCache(){try{var o=JSON.parse(localStorage.getItem(CK)||'null');if(o&&o.v){var old=o.d!==day();for(var k in o.v){if(META[k]){V[k]=o.v[k];V[k].stale=old}}}}catch(e){}}
+  function saveCache(){try{localStorage.setItem(CK,JSON.stringify({d:day(),t:Date.now(),v:V}))}catch(e){}}
+  function fromDaily(){var Dd=W.__DAILY;if(!Dd)return;
+    CRY.forEach(function(c){var u=Dd.crypto&&Dd.crypto[c[0].toLowerCase()];if(u&&u.p>0&&(!V[c[0]]||V[c[0]].stale))setV(c[0],u.p,u.c,'data harian')});
+    STK.forEach(function(c){var u=Dd.stocks&&Dd.stocks[c[0]];if(c[0]==='SPX'&&Dd.global&&Dd.global['S&P 500']){var g=Dd.global['S&P 500'];u={v:g.v,c:g.c}}
+      if(u&&u.v>0&&(!V[c[0]]||V[c[0]].stale))setV(c[0],u.v,u.c,'data harian')})}
+  /* ---------- tampilan ---------- */
+  function itemHTML(k){return '<div class="flex items-center space-x-2" data-tk="'+k+'" style="display:none"><span class="font-bold text-white">'+META[k].l.replace(/&/g,'&amp;')+'</span><span data-p></span><span data-c class="text-[10px]"></span></div>'}
+  function build(){var tk=D.getElementById('live-ticks-ticker');if(!tk)return;
+    var half='<div class="flex items-center space-x-2" data-tk="_U"><span class="text-gray-500" data-u></span></div><div class="flex items-center space-x-2" data-tk="_L"><span class="text-gray-400">Memuat data pasar…</span></div>'+ORDER.map(itemHTML).join('');
+    tk.innerHTML=half+half;tk.__built=true}
+  function paint(){var tk=D.getElementById('live-ticks-ticker');if(!tk)return;if(!tk.__built)build();
+    var any=false;
+    ORDER.forEach(function(k){var v=V[k],els=tk.querySelectorAll('[data-tk="'+k+'"]');
+      Array.prototype.forEach.call(els,function(el){
+        if(!v){el.style.display='none';return}
+        any=true;el.style.display='';el.style.opacity=v.stale?'.55':'';
+        var up=v.c===null?true:v.c>=0,cls=up?'text-emerald-400':'text-rose-400';
+        var pe=el.querySelector('[data-p]'),ce=el.querySelector('[data-c]');
+        pe.className=cls;pe.textContent=META[k].pre+fmt(v.p);
+        ce.className='text-[10px] '+cls;ce.textContent=v.c===null?'':((up?'▲ ':'▼ ')+Math.abs(v.c).toFixed(2)+'%');
+        el.title=META[k].l+' · sumber: '+v.src+(v.stale?' · data hari sebelumnya':'')});
+    });
+    var ls=tk.querySelectorAll('[data-tk="_L"]');Array.prototype.forEach.call(ls,function(e){e.style.display=any?'none':''});
+    var us=tk.querySelectorAll('[data-u]');Array.prototype.forEach.call(us,function(e){e.textContent=any?(lastLive?stamp():'Data tersimpan'):''});
+    var bar=D.getElementById('ba-ticker-bar');if(bar)bar.title='Sumber: Binance/CoinGecko (crypto), Yahoo Finance (saham, indeks, emas, kurs). Diperbarui otomatis; perubahan = 24 jam / vs penutupan sebelumnya.'}
+  /* ---------- crypto ---------- */
+  function liveCrypto(){
+    var bq=enc(JSON.stringify(CRY.map(function(c){return c[3]})));
+    function parseBin(a){var n=0;a.forEach(function(x){CRY.forEach(function(c){if(c[3]===x.symbol){setV(c[0],parseFloat(x.lastPrice),parseFloat(x.priceChangePercent),'Binance');n++}})});if(!n)throw 0}
+    function parseCG(j){var n=0;CRY.forEach(function(c){var x=j[c[2]];if(x&&x.usd>0){setV(c[0],x.usd,x.usd_24h_change,'CoinGecko');n++}});if(!n)throw 0}
+    var ids=CRY.map(function(c){return c[2]}).join(',');
+    return first([
+      function(){return jf('https://api.binance.com/api/v3/ticker/24hr?symbols='+bq).then(parseBin)},
+      function(){return jf('https://data-api.binance.vision/api/v3/ticker/24hr?symbols='+bq).then(parseBin)},
+      function(){return jf('https://api.coingecko.com/api/v3/simple/price?ids='+ids+'&vs_currencies=usd&include_24hr_change=true').then(parseCG)}
+    ]).then(function(){lastLive=Date.now()}).catch(function(){})}
+  /* ---------- saham, indeks, emas, kurs (Yahoo Finance) ---------- */
+  var stkRows={};
+  function liveStocks(){
+    if(!W.__baFetch)return Promise.resolve();
+    return Promise.all(STK.map(function(c){
+      return W.__baFetch(R,'https://query1.finance.yahoo.com/v8/finance/chart/'+enc(c[2])+'?range=1d&interval=5m',false,8000).then(function(j){
+        var m=j.chart.result[0].meta,p=m.regularMarketPrice,pc=m.chartPreviousClose||m.previousClose;
+        if(!(p>0))return;
+        setV(c[0],p,pc>0?(p/pc-1)*100:null,'Yahoo Finance',{mt:(m.regularMarketTime||0)*1000,vol:m.regularMarketVolume||0,ex:m.exchangeName||''});
+        lastLive=Date.now();
+      }).catch(function(){})}))
+    .then(function(){stockRows()})}
+  /* ---------- tabel Live Ticks ---------- */
+  var cnt=0,rot=0,lastId={};
+  function cntEl(){var e=D.getElementById('crypto-tick-count');if(e)e.textContent=cnt+' TICKS'}
+  function cap(b){while(b.children.length>20)b.lastElementChild.remove()}
+  function cryptoTrades(){
+    if(D.hidden||(typeof isCryptoTicksPaused!=='undefined'&&isCryptoTicksPaused))return;
+    var b=D.getElementById('crypto-live-ticks-body');if(!b)return;
+    var c=CRY[rot++%3],q='/api/v3/trades?symbol='+c[3]+'&limit=8';
+    first([function(){return jf('https://api.binance.com'+q)},function(){return jf('https://data-api.binance.vision'+q)}]).then(function(a){
+      if(!a||!a.length)return;var last=lastId[c[3]]||0;
+      var fresh=last?a.filter(function(t){return t.id>last}):a;fresh=fresh.slice(-3);lastId[c[3]]=a[a.length-1].id;
+      fresh.forEach(function(t){var buy=!t.isBuyerMaker,sc=buy?'text-emerald-400':'text-rose-400';
+        b.insertAdjacentHTML('afterbegin','<tr><td class="py-1.5 pr-3 text-gray-400">'+hm(t.time)+'</td><td class="py-1.5 px-3 font-bold text-white">'+c[1]+'</td><td class="py-1.5 px-3 text-right font-mono text-white">$'+nf(parseFloat(t.price),parseFloat(t.price)>=1?2:4)+'</td><td class="py-1.5 px-3 text-right font-mono text-gray-300">'+parseFloat(t.qty).toFixed(4)+'</td><td class="py-1.5 px-3 text-right font-bold '+sc+'">'+(buy?'BUY':'SELL')+'</td><td class="py-1.5 pl-3 text-right text-gray-400">Binance</td></tr>');
+        cnt++});
+      cap(b);cntEl()}).catch(function(){})}
+  function vol(v){return v>=1e9?(v/1e9).toFixed(2)+'B':v>=1e6?(v/1e6).toFixed(2)+'M':v>=1e3?(v/1e3).toFixed(1)+'K':String(v)}
+  function stockRows(){
+    if(typeof isStockTicksPaused!=='undefined'&&isStockTicksPaused)return;
+    var b=D.getElementById('stock-live-ticks-body');if(!b)return;
+    ['NVDA','AAPL','MSFT','TSLA'].forEach(function(k){var v=V[k];if(!v||v.src!=='Yahoo Finance')return;
+      var key=v.p+'|'+v.mt;if(stkRows[k]===key)return;stkRows[k]=key;
+      b.insertAdjacentHTML('afterbegin','<tr><td class="py-1.5 pr-2 text-gray-400">'+hm(v.mt||Date.now())+'</td><td class="py-1.5 px-2 font-bold text-white">'+k+'</td><td class="py-1.5 px-2 text-right font-mono '+(v.c>=0?'text-emerald-400':'text-rose-400')+'">$'+nf(v.p,2)+'</td><td class="py-1.5 px-2 text-right font-mono text-gray-300">'+(v.vol?vol(v.vol):'—')+'</td><td class="py-1.5 pl-2 text-right text-gray-400">'+(v.ex||'—')+'</td></tr>')});
+    cap(b)}
+  /* ---------- jadwal ---------- */
+  function refresh(all){return Promise.all([liveCrypto(),all?liveStocks():null]).then(function(){fromDaily();paint();saveCache()})}
+  function init(){
+    loadCache();fromDaily();build();paint();lastDay=day();
+    refresh(true);
+    setInterval(function(){if(!D.hidden)refresh(false)},45000);
+    setInterval(function(){if(!D.hidden)liveStocks().then(function(){paint();saveCache()})},300000);
+    setInterval(cryptoTrades,2500);
+    setInterval(function(){var d=day();if(d!==lastDay){lastDay=d;refresh(true)}},60000); /* ganti hari -> segarkan penuh */
+    D.addEventListener('visibilitychange',function(){if(!D.hidden&&Date.now()-lastLive>60000)refresh(true)});
+    W.addEventListener('online',function(){refresh(true)});
+  }
+  if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+<script id="ba-stock-live-real">
+/* U.S. STOCK DIRECTORY: harga, perubahan harian, volume & mini-chart intraday dari data pasar nyata (Yahoo Finance, candle 5 menit),
+   dimuat ulang otomatis: tiap 60 dtk saat halaman Stock Exchange dibuka, tiap 5 mnt di latar. Kap. pasar: nilai pasti bila tersedia (v7 quote),
+   jika tidak diskalakan dari harga live (perkiraan). Pasar tutup = data penutupan terakhir. */
+(function(){
+  var W=window,D=document,enc=encodeURIComponent,busy=false,last=0,okN=0;
+  var R=[function(u){return W.__BA_PROXY?'/api/proxy?url='+enc(u):null},function(u){return u},function(u){return 'https://api.codetabs.com/v1/proxy?quest='+enc(u)},function(u){return 'https://corsproxy.io/?'+enc(u)},function(u){return 'https://api.allorigins.win/raw?url='+enc(u)}];
+  function money(v){return v>=1e12?'$'+(v/1e12).toFixed(2)+'T':v>=1e9?'$'+(v/1e9).toFixed(1)+'B':'$'+(v/1e6).toFixed(0)+'M'}
+  function cap(str){var m=String(str||'').match(/^\$([\d.,]+)([TBM])$/i);if(!m)return 0;return parseFloat(m[1].replace(/,/g,''))*({T:1e12,B:1e9,M:1e6}[m[2].toUpperCase()])}
+  function hm(t){return new Date(t).toLocaleTimeString('id-ID',{hour12:false}).replace(/\./g,':')}
+  function badge(ok,msg){var el=D.getElementById('ba-live-st');
+    if(!el){var a=D.getElementById('stock-table-body');a=a&&(a.closest('.overflow-x-auto')||a.closest('table')||a);if(!a||!a.parentNode)return;
+      el=D.createElement('div');el.id='ba-live-st';el.className='text-[10px] font-mono px-1 py-1';a.parentNode.insertBefore(el,a.nextSibling)}
+    el.style.color=ok?'#34d399':'#94a3b8';el.textContent=(ok?'● ':'○ ')+msg}
+  function one(s){
+    return W.__baFetch(R,'https://query1.finance.yahoo.com/v8/finance/chart/'+enc(s.symbol)+'?range=1d&interval=5m',false,9000).then(function(j){
+      var r=j.chart.result[0],m=r.meta,p=m.regularMarketPrice,pc=m.chartPreviousClose||m.previousClose;
+      if(!(p>0&&pc>0))return false;
+      if(s._bp===undefined){s._bp=+s.price;s._bm=cap(s.mktCap)}
+      s._lp=p;s._lc=(p/pc-1)*100;s._lv=m.regularMarketVolume||0;s._lt=m.regularMarketTime||0;s._lsrc='live';
+      s.price=p;s.change=(s._lc>=0?'+':'')+s._lc.toFixed(2)+'%';
+      if(!s._mc&&s._bm>0&&s._bp>0)s.mktCap=money(s._bm*p/s._bp);
+      var q=(r.indicators&&r.indicators.quote&&r.indicators.quote[0])||{},ts=r.timestamp||[],o=[],h=[],l=[],c=[];
+      for(var i=0;i<ts.length;i++){if(q.close[i]==null||q.open[i]==null)continue;o.push(q.open[i]);h.push(q.high[i]);l.push(q.low[i]);c.push(q.close[i])}
+      if(c.length>=4&&W.__cxStkReal)W.__cxStkReal(s.symbol,o,h,l,c,pc);
+      var tp=m.currentTradingPeriod&&m.currentTradingPeriod.regular,now=Date.now()/1000;
+      if(tp)W.__stkMktOpen=(now>=tp.start&&now<=tp.end);
+      return true}).catch(function(){return false})}
+  function refresh(){
+    if(busy||D.hidden||typeof allStockDirectory==='undefined'||!W.__baFetch)return;busy=true;
+    var q=allStockDirectory.slice(),n=0,w=function(){var s=q.shift();if(!s)return Promise.resolve();return one(s).then(function(ok){if(ok)n++}).then(w)};
+    Promise.all([w(),w(),w(),w(),w(),w()]).then(function(){
+      busy=false;last=Date.now();
+      if(n<5){badge(false,'Yahoo Finance belum terjangkau · memakai data terakhir · mencoba lagi otomatis');return}
+      W.__stkRealAt=Date.now();okN=n;
+      allStockDirectory.sort(function(a,b){return cap(b.mktCap)-cap(a.mktCap)});
+      try{if(typeof renderStockTable==='function')renderStockTable()}catch(e){}
+      badge(true,'Yahoo Finance · '+n+' emiten · '+(W.__stkMktOpen?'pasar buka · live':'pasar tutup · penutupan terakhir')+' · urut kap. pasar · diperbarui '+hm(Date.now()))
+    },function(){busy=false})}
+  function pageOn(){var p=D.getElementById('page-stock-exchange');return p&&p.classList.contains('active')}
+  setTimeout(refresh,2500);
+  setInterval(function(){if(D.hidden)return;var gap=pageOn()?60000:300000;if(Date.now()-last>=gap)refresh()},5000);
+  D.addEventListener('visibilitychange',function(){if(!D.hidden&&Date.now()-last>60000)refresh()});
+  W.addEventListener('online',refresh);
+})();
+</script>
 </body>
 </html>
