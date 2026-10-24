@@ -2,7 +2,7 @@
 <html lang="id" class="dark">
 <head>
 <script id="ba-perf-boot">/* HEMAT CPU/BATERAI: timer berkala berhenti saat tab/aplikasi tidak terlihat, lanjut otomatis saat kembali. */
-(function(){try{var si=window.setInterval;window.setInterval=function(f,t){if(typeof f!=='function')return si.apply(window,arguments);var a=Array.prototype.slice.call(arguments,2);return si(function(){if(document.hidden)return;f.apply(null,a)},t)}}catch(e){}})();
+(function(){try{var si=window.setInterval;window.setInterval=function(f,t){if(typeof f!=='function')return si.apply(window,arguments);var a=Array.prototype.slice.call(arguments,2);return si(function(){if(document.hidden||window.__baNavBusy)return;f.apply(null,a)},t)}}catch(e){}})();
 </script>
 <meta name="google-signin-client_id" content="">
 <script>/* ANTI-KEDIP LOGIN: tanpa sesi valid, kunci tampilan sejak awal (tidak ada kilatan Beranda sebelum layar login). */
@@ -6732,7 +6732,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                 period: '1D', price: 228.87, candles: [], ticks: 0, tickTimes: [], auto: true,
                 ind: { sma: true, ema: true, vwap: true }, hover: -1, hoverY: 0, last: Date.now(),
                 sessionOpen: 228.87, sHigh: 228.87, sLow: 228.87, cumPV: 0, cumV: 0, geo: null,
-                gen: 0, dayOpen: 0, prevClose: 0, mkt: { open: false }, loaded: false, err: false, src: '', lastY: 0,
+                gen: 0, dayOpen: 0, prevClose: 0, mkt: { open: false }, loaded: false, err: false, src: '', lastY: 0, retryN: 0, retryT: 0,
                 advance(ts) {
                     const cfg = CFG[this.period];
                     let cur = this.candles[this.candles.length - 1];
@@ -6748,7 +6748,12 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                     cur.v += tv; this.cumPV += this.price * tv; this.cumV += tv; cur.vw = this.cumPV / this.cumV;
                     this.sHigh = Math.max(this.sHigh, this.price); this.sLow = Math.min(this.sLow, this.price);
                 },
-                seed() { this.candles = []; this.cumPV = 0; this.cumV = 0; this.loaded = false; this.load(); },
+                seed() { this.candles = []; this.cumPV = 0; this.cumV = 0; this.loaded = false; this.err = false; this.src = ''; this.retryN = 0; clearTimeout(this.retryT); this.load(); },
+                /* Retry bertahap (4 dtk, 7 dtk, 12 dtk ... maks. 60 dtk) saat sumber data belum terjangkau */
+                scheduleRetry() { clearTimeout(this.retryT); if (!this.auto) return; const wait = Math.min(60000, Math.round(4000 * Math.pow(1.7, this.retryN++))); this.retryT = setTimeout(() => { if (document.hidden) { this.retryN = 0; return; } if (this.auto) this.load(); }, wait); },
+                isStale() { return this.err || /Snapshot|Simulasi|cache/i.test(this.src || ''); },
+                /* denyut ilustratif: hanya candle terakhir bergerak, dipakai saat data online belum terjangkau */
+                simTick() { const cs = this.candles, k = cs[cs.length - 1]; if (!k) return; const v = this.price * 0.0006; this.price = Math.max(1, this.price + (Math.random() - 0.5) * v * 2 + (this.simTarget - this.price) * 0.05); k.c = this.price; k.h = Math.max(k.h, k.c); k.l = Math.min(k.l, k.c); const tv = 1 + Math.random() * 9; k.v += tv; this.cumPV += this.price * tv; this.cumV += tv; k.vw = this.cumPV / this.cumV; this.sHigh = Math.max(this.sHigh, this.price); this.sLow = Math.min(this.sLow, this.price); this.last = Date.now(); this.draw(); this.updatePanel(); },
                 step() { this.load(); },
                 /* DATA NYATA: candle NVDA dari Yahoo Finance (1D=5m, 1W=30m, 1M=1j, 1Y=1h), digabung maks. 60 candle; dimuat ulang otomatis */
                 load() {
@@ -6794,19 +6799,41 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                         this.prevClose = d.pc || cs[0].o; this.sessionOpen = this.prevClose; this.dayOpen = cs[0].o;
                         this.sHigh = per0 === '1D' && d.hi > 0 ? d.hi : Math.max(...cs.map(c => c.h));
                         this.sLow = per0 === '1D' && d.lo > 0 ? d.lo : Math.min(...cs.map(c => c.l));
-                        this.mkt = { open: d.open }; this.last = d.t; this.src = d.src;
-                        this.loaded = true; this.err = false; this.ticks++;
+                        this.mkt = { open: d.open }; this.last = d.t; this.src = d.src; this.simTarget = px;
+                        this.loaded = true; this.err = false; if (!d.cached && !d.snap) { this.ticks++; this.retryN = 0; clearTimeout(this.retryT); try { localStorage.setItem('ba-tm-' + per0, JSON.stringify({ raw: d.raw.slice(-300), src: d.src, px: d.px, pc: d.pc, hi: d.hi, lo: d.lo, t: d.t, sv: Date.now() })); } catch (e) {} }
                         window.stockLive.price = px; window.stockLive.open = this.sessionOpen; window.stockLive.period = per0;
                         this.draw(); this.updatePanel();
                     };
+                    /* LAPIS CADANGAN 1: data nyata terakhir yang tersimpan di perangkat (maks. 14 hari) -> grafik langsung terisi, tidak kosong */
+                    const readCache = () => { try { const j = JSON.parse(localStorage.getItem('ba-tm-' + per) || 'null'); if (j && j.raw && j.raw.length && Date.now() - (j.sv || 0) < 14 * 864e5) return { raw: j.raw, src: (j.src || 'Yahoo Finance') + ' (cache)', px: j.px, pc: j.pc, hi: j.hi, lo: j.lo, open: false, t: j.t || j.sv, cached: true }; } catch (e) {} return null; };
+                    /* LAPIS CADANGAN 3: snapshot harian dari data.js (diperbarui GitHub Actions) -> candle harian, BUKAN real-time */
+                    const readSnap = () => { try { const H = window.__dailyHist && window.__dailyHist('NVDA', '3mo'); if (!H || !H.pts || H.pts.length < 5) return null;
+                        const pts = H.pts.map(a => [typeof a[0] === 'number' ? (a[0] < 1e11 ? a[0] * 1000 : a[0]) : Date.parse(a[0]), +a[1]]).filter(a => a[0] > 0 && a[1] > 0).slice(-60);
+                        if (pts.length < 5) return null; const raw = [];
+                        for (let i = 1; i < pts.length; i++) { const o = pts[i - 1][1], c = pts[i][1]; raw.push({ x: pts[i][0], o, h: Math.max(o, c), l: Math.min(o, c), c, v: 0 }); }
+                        return { raw, src: 'Snapshot harian', px: pts[pts.length - 1][1], pc: pts[pts.length - 2][1], hi: 0, lo: 0, open: false, t: pts[pts.length - 1][0], snap: true }; } catch (e) { return null; } };
+                    /* LAPIS CADANGAN 2: grafik mengikuti pergerakan mini-chart U.S. Stock Directory (harga & % NVDA dari tabel), ilustratif, bukan data pasar */
+                    const readSim = () => { try {
+                        const dir = (typeof allStockDirectory !== 'undefined' && allStockDirectory.find) ? allStockDirectory.find(x => x.symbol === 'NVDA') : null;
+                        const price = dir && +dir.price > 0 ? +dir.price : ((window.stockLive && window.stockLive.price) || 228.87), chg = dir ? (parseFloat(dir.change) || 0) : 0;
+                        const N = 60, step = { '1D': 3e5, '1W': 18e5, '1M': 36e5, '1Y': 864e5 }[per], tr = { '1D': chg / 100, '1W': 0.03, '1M': 0.07, '1Y': 0.30 }[per];
+                        const pc = per === '1D' ? price / (1 + chg / 100) : price / (1 + tr), nz = { '1D': 0.0035, '1W': 0.006, '1M': 0.009, '1Y': 0.02 }[per];
+                        let sd = (Math.floor(Date.now() / 864e5) * 7 + per.charCodeAt(1) * 131) >>> 0; const rnd = () => { sd = (sd + 0x6D2B79F5) >>> 0; let t = sd; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296 - 0.5; };
+                        const cl = [pc], t0 = Date.now() - N * step; for (let i = 1; i <= N; i++) { const t = i / N; cl.push(i === N ? price : pc + (price - pc) * t + rnd() * price * nz * 2 * (1 - t * 0.6)); }
+                        const raw = []; for (let i = 1; i <= N; i++) { const o = cl[i - 1], c = cl[i]; raw.push({ x: t0 + i * step, o, h: Math.max(o, c) + Math.abs(rnd()) * price * nz, l: Math.min(o, c) - Math.abs(rnd()) * price * nz, c, v: 200 + (rnd() + 0.5) * 900 }); }
+                        return { raw, src: 'Simulasi ilustratif', px: price, pc, hi: 0, lo: 0, open: false, t: Date.now(), snap: true }; } catch (e) { return null; } };
+                    if (!this.loaded) { const c0 = readCache(); if (c0) apply(c0); }
                     let yOk = false, fails = 0;
-                    const bad = () => { if (++fails >= 2 && gen === this.gen && !this.loaded) { this.err = true; this.draw(); this.updatePanel(); } };
+                    const bad = () => { if (++fails >= 2 && gen === this.gen) {
+                        if (!this.loaded) { const sn = readSim() || readSnap(); if (sn) apply(sn); else { this.err = true; this.draw(); this.updatePanel(); } }
+                        else this.updatePanel();
+                        this.scheduleRetry(); } };
                     const yFresh = () => this.src === 'Yahoo Finance' && this.loaded && Date.now() - (this.lastY || 0) < 120000;
                     const py = yahoo().then(d => { yOk = true; this.lastY = Date.now(); apply(d); }).catch(bad);
                     const pk = kraken().then(d => { if (!yOk && !yFresh()) apply(d); }).catch(bad);
                     return Promise.all([py, pk]);
                 },
-                lab(x) { const d = new Date(x); return this.period === '1D' ? d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) : d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }); },
+                lab(x) { const d = new Date(x); return this.period === '1D' && !/Snapshot/i.test(this.src || '') ? d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) : d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }); },
                 updateTick() { this.step(); },
                 setPeriod(period) {
                     if (!CFG[period]) return;
@@ -6814,7 +6841,8 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                     this.seed(); this.draw(); this.updatePanel();
                 },
                 updatePanel() {
-                    const cs = this.candles; if (!cs.length) return;
+                    const cs = this.candles;
+                    if (!cs.length) { const se0 = $('intraday-telemetry-status'), fe0 = $('intraday-telemetry-feed'); if (se0) se0.textContent = (this.auto ? 'AUTO' : 'PAUSED') + ' • 0 Update'; if (fe0) fe0.textContent = this.err ? 'Offline • mencoba lagi otomatis' : 'Memuat data NVDA…'; return; }
                     const closes = cs.map(c => c.c), n = closes.length;
                     const chg = this.price - this.sessionOpen, pct = chg / this.sessionOpen * 100;
                     const rsiN = 14; let g = 0, l = 0;
@@ -6846,7 +6874,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                     tint('tm-sig', sig, sig === 'BULLISH' ? 1 : sig === 'BEARISH' ? -1 : 2);
                     const statusEl = $('intraday-telemetry-status'), feedEl = $('intraday-telemetry-feed'), timeEl = $('intraday-telemetry-time');
                     if (statusEl) statusEl.textContent = (this.auto ? 'AUTO' : 'PAUSED') + ' • ' + this.ticks.toLocaleString('id-ID') + ' Update • ' + (this.src || 'Yahoo Finance');
-                    if (feedEl) feedEl.textContent = 'Data nyata NVDA' + (this.src === 'Kraken NVDAx' ? ' (NVDAx)' : '') + ' ' + (!this.auto ? 'Paused' : (this.err && !this.loaded ? 'Offline' : (this.mkt.open ? 'Online' : 'Pasar tutup · penutupan terakhir'))) + ' • ' + this.period;
+                    if (feedEl) feedEl.textContent = (/Snapshot|Simulasi/i.test(this.src) ? 'NVDA' : 'Data nyata NVDA') + (this.src === 'Kraken NVDAx' ? ' (NVDAx)' : '') + ' ' + (!this.auto ? 'Paused' : (this.err && !this.loaded ? 'Offline' : (/Simulasi/i.test(this.src) ? 'Simulasi ilustratif (data online belum terjangkau) · mencoba lagi' : /Snapshot/i.test(this.src) ? 'Snapshot harian (offline) · mencoba lagi' : (/cache/i.test(this.src) ? 'Cache terakhir · memperbarui…' : (this.mkt.open ? 'Online' : 'Pasar tutup · penutupan terakhir'))))) + ' • ' + this.period;
                     if (timeEl) timeEl.textContent = new Date(this.last).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
                 },
                 resize() {
@@ -6875,7 +6903,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                         [['SMA9', C.sma, this.ind.sma], ['EMA21', C.ema, this.ind.ema], ['VWAP', C.vwap, this.ind.vwap]].forEach(t => {
                             if (!t[2]) return; ctx.fillStyle = t[1]; ctx.fillText('— ' + t[0], lx, 14); lx += ctx.measureText('— ' + t[0]).width + 14; });
                     }
-                    if (!n) { ctx.font = '12px ' + MONO; ctx.textAlign = 'center'; ctx.fillStyle = C.axis; ctx.fillText(this.err ? 'Yahoo Finance & Kraken belum terjangkau — mencoba lagi otomatis…' : 'Memuat data pasar NVDA…', w / 2, h / 2); ctx.textAlign = 'left'; return; }
+                    if (!n) { ctx.font = '12px ' + MONO; ctx.textAlign = 'center'; ctx.fillStyle = C.axis; ctx.fillText(this.err ? 'Yahoo Finance & Kraken belum terjangkau — mencoba lagi otomatis…' : 'Memuat data pasar NVDA…', w / 2, h / 2); if (this.err) { ctx.font = '10px ' + MONO; ctx.fillStyle = C.dim; ctx.fillText('Ketuk grafik untuk mencoba sekarang', w / 2, h / 2 + 20); } ctx.textAlign = 'left'; return; }
                     let min = Infinity, max = -Infinity; cs.forEach(c => { min = Math.min(min, c.l); max = Math.max(max, c.h); });
                     const pad = (max - min) * 0.08 || 0.05; min -= pad; max += pad;
                     const span = max - min, toY = v => priceBottom - ((v - min) / span) * (priceBottom - top);
@@ -6958,9 +6986,13 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
             if (autoBtn) autoBtn.addEventListener('click', () => { state.auto = !state.auto; paintAuto(); if (state.auto) state.load(); state.draw(); state.updatePanel(); });
             document.querySelectorAll('.tm-ind').forEach(b => b.addEventListener('click', () => {
                 const key = b.getAttribute('data-ind'); state.ind[key] = !state.ind[key]; b.classList.toggle('off', !state.ind[key]); state.draw(); }));
+            canvas.addEventListener('click', () => { if (state.auto && state.isStale()) { state.retryN = 0; clearTimeout(state.retryT); state.load(); } });
+            window.addEventListener('online', () => { if (state.auto) { state.retryN = 0; state.load(); } });
+            document.addEventListener('visibilitychange', () => { if (!document.hidden && state.auto && state.isStale()) { state.retryN = 0; state.load(); } });
             state.seed(); state.resize(); state.updatePanel();
             window.stockLive.price = state.price;
             setInterval(() => { if (state.auto && !document.hidden) state.load(); }, 30000);
+            setInterval(() => { if (state.auto && !document.hidden && /Simulasi/i.test(state.src)) state.simTick(); }, 1500);
             window.addEventListener('resize', () => state.resize(), { passive: true });
             if (typeof ResizeObserver !== 'undefined') new ResizeObserver(() => state.resize()).observe(canvas.parentElement || canvas);
             if (typeof MutationObserver !== 'undefined') new MutationObserver(() => state.draw()).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
@@ -15846,6 +15878,57 @@ html body #ba-sheet .ba-row .nav-ico svg{width:26px;height:26px;fill:none;stroke
   setInterval(function(){if(D.hidden)return;var gap=pageOn()?60000:300000;if(Date.now()-last>=gap)refresh()},5000);
   D.addEventListener('visibilitychange',function(){if(!D.hidden&&Date.now()-last>60000)refresh()});
   W.addEventListener('online',refresh);
+})();
+</script>
+
+<style id="ba-hi-resp-css">
+/* RESPON TINGGI v4: sorotan instan pada menu & sub-menu, tanpa jeda ketuk */
+html .se-sublink,html .sb-sublink,html [data-se-sub],html [data-se-tab],html [data-gm-sub],html [data-gm-tab],html [data-cr-sub],html [data-st-sub],html [data-ms-go]{touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+html .nav-link.ba-hit,html .sb-link.ba-hit,html .sb-sublink.ba-hit,html .se-sublink.ba-hit,html [data-cr-sub].ba-hit,html [data-gm-sub].ba-hit,html [data-gm-tab].ba-hit,html [data-se-sub].ba-hit,html [data-se-tab].ba-hit,html [data-st-sub].ba-hit{background-color:rgba(56,189,248,.16)!important;transition:none!important}
+html .se-sublink,html .sb-sublink,html [data-se-sub],html [data-se-tab],html [data-gm-sub],html [data-gm-tab],html [data-st-sub]{transition-property:scale,background-color,color,border-color;transition-duration:.08s,.1s,.1s,.1s;transition-timing-function:ease-out}
+html .se-sublink:active,html .sb-sublink:active,html [data-se-sub]:active,html [data-se-tab]:active,html [data-gm-sub]:active,html [data-gm-tab]:active,html [data-st-sub]:active{scale:.97}
+@media (prefers-reduced-motion:reduce){html .se-sublink,html .sb-sublink,html [data-se-sub],html [data-se-tab],html [data-gm-sub],html [data-gm-tab],html [data-st-sub]{transition:none}}
+</style>
+<script id="ba-hi-resp-js">
+(function(){
+  'use strict';
+  if(window.__baHiResp)return;window.__baHiResp=1;
+  var D=document,W=window;
+  /* Selektor yang SUDAH ditangani skrip ba-fast-nav (jangan diproses dua kali -> hindari klik ganda) */
+  var OLD='a.nav-link[data-page],.hp-btn[data-page],.sb-link[data-page],.ba-tab,.tk-tab,[data-cr-sub],[data-ms-go]';
+  var NEW='[data-se-sub],[data-se-tab],[data-gm-sub],[data-gm-tab],[data-st-sub],.se-sublink,.sb-sublink';
+  var ALL=OLD+','+NEW+',.nav-link,.sb-link';
+  var skip=null,skipT=0,busyT=0,hit=null,hitT=0;
+  function busy(ms){W.__baNavBusy=true;clearTimeout(busyT);busyT=setTimeout(function(){W.__baNavBusy=false},ms||380)}
+  function clrHit(){if(hit){hit.classList.remove('ba-hit');hit=null}clearTimeout(hitT)}
+  /* 1) pointerdown: sorotan instan (semua perangkat) + jeda timer berkala sesaat; mouse: aktifkan saat tombol ditekan */
+  D.addEventListener('pointerdown',function(e){
+    if(e.button>0)return;
+    var el=e.target&&e.target.closest?e.target.closest(ALL):null;
+    if(!el||el.disabled)return;
+    if(!/^(A|BUTTON)$/.test(el.tagName)&&!el.hasAttribute('role'))return;
+    clrHit();hit=el;el.classList.add('ba-hit');hitT=setTimeout(clrHit,900);
+    busy(380);
+    if(e.pointerType==='mouse'&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey&&!e.altKey&&!el.closest(OLD)&&el.matches(NEW)){
+      skip=el;skipT=Date.now();el.click();
+    }
+  },{capture:true,passive:true});
+  ['pointerup','pointercancel','pointerleave'].forEach(function(n){D.addEventListener(n,function(){if(hit)setTimeout(clrHit,90)},{capture:true,passive:true})});
+  /* 2) klik asli sesudah aktivasi dini diabaikan sekali */
+  D.addEventListener('click',function(e){
+    if(!skip||!e.isTrusted)return;
+    var el=e.target.closest&&e.target.closest(NEW);
+    if(el===skip&&Date.now()-skipT<1500){skip=null;e.preventDefault();e.stopImmediatePropagation()}
+    else if(Date.now()-skipT>=1500)skip=null;
+  },true);
+  /* 3) Setelah halaman/sub-halaman berganti, lepas jeda secepatnya (dua frame) agar data live lanjut */
+  if(W.MutationObserver){
+    var mo=new MutationObserver(function(){if(!W.__baNavBusy)return;requestAnimationFrame(function(){requestAnimationFrame(function(){clearTimeout(busyT);busyT=setTimeout(function(){W.__baNavBusy=false},120)})})});
+    var watch=function(){Array.prototype.forEach.call(D.querySelectorAll('.page,.crypto-subpage'),function(p){mo.observe(p,{attributes:true,attributeFilter:['class','style','hidden']})})};
+    if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',watch);else watch();
+  }
+  /* pengaman: jeda tidak boleh menggantung (tab disembunyikan / event hilang) */
+  D.addEventListener('visibilitychange',function(){W.__baNavBusy=false;clrHit()});
 })();
 </script>
 </body>
