@@ -14169,6 +14169,9 @@ html.light #ba-topbar .ba-crumb-root{color:#0f172a}
 #ba-topbar{position:relative}
 body:has(#page-home.active) #ba-topbar::before{content:"";position:absolute;left:32px;top:0;bottom:-24px;width:1px;background:#2f3336;pointer-events:none}
 html.light body:has(#page-home.active) #ba-topbar::before{background:#bae6fd}
+/* Garis kanan kolom juga diteruskan ke atas (sisi kanan), sama seperti sisi kiri */
+#page-home .xp-feed{position:relative}
+#page-home .xp-feed::after{content:"";position:absolute;right:-1px;top:-82px;width:1px;height:82px;background:var(--xp-line);pointer-events:none}
 }
 @media (min-width:768px){
 #ba-topbar .ba-crumb-ul{position:relative;display:inline-block;padding:6px 2px 8px}
