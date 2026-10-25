@@ -3578,6 +3578,11 @@ html body #ba-sheet .ba-row[data-go="stock-exchange"] i{font-size:0!important;co
   background:transparent var(--ba-sx-logo) center/68% no-repeat!important;border-radius:13px;box-shadow:inset 0 0 0 1.5px rgba(148,163,184,.28)}
 html body #ba-sheet .ba-row[data-go="stock-exchange"] i::before{content:none!important;display:none!important}
 html body #ba-sheet .ba-row[data-go="stock-exchange"]:active i{transform:scale(.9);transition:transform .15s}
+/* logo G: semua keadaan (aktif/ditekan/fokus) berbentuk BULAT, bukan kotak */
+html body .ba-tab[data-k="stock-exchange"] .di,html body #ba-tabbar .ba-tab[data-k="stock-exchange"] .di{border-radius:50%!important}
+html body #ba-tabbar .ba-tab[data-k="stock-exchange"] .ba-tab-ico{border-radius:50%!important;width:44px!important;height:44px!important}
+html body a.nav-link[data-page="stock-exchange"]>.nav-ico.nav-ico,html body a.nav-link[data-page="stock-exchange"]>.dp-qi,html body #sidebar-content a.nav-link[data-page="stock-exchange"]>.nav-ico.nav-ico{border-radius:50%!important}
+html body #ba-sheet .ba-row[data-go="stock-exchange"] i{border-radius:50%!important}
 </style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
