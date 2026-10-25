@@ -9726,17 +9726,25 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   function pill(c, t, x, y, bg) { c.font = '700 11px ' + UI; var w = c.measureText(t).width + 14; rr(c, x, y - 10, w, 20, 10); c.fillStyle = bg; c.fill(); gt(c, t, x + 7, y + .5, '#fff', 'left', 11, 700); }
   function gtip(c, w, x, title, rows, P) {
     var bw = 130, bh = 34 + rows.length * 18, bx; c.font = '500 11px ' + UI;
-    rows.forEach(function (q) { bw = Math.max(bw, c.measureText(q[1]).width + c.measureText(q[2]).width + 44); });
+    rows.forEach(function (q) { bw = Math.max(bw, c.measureText(q[1]).width + c.measureText(q[2]).width + 66); });
     bx = x + 14 + bw > w - 4 ? x - 14 - bw : x + 14;
     c.save(); c.shadowColor = 'rgba(0,0,0,.35)'; c.shadowBlur = 18; c.shadowOffsetY = 6; rr(c, bx, 12, bw, bh, 10); c.fillStyle = P.l ? 'rgba(255,255,255,.98)' : 'rgba(17,19,26,.97)'; c.fill(); c.restore();
     rr(c, bx + .5, 12.5, bw, bh, 10); c.strokeStyle = P.l ? '#e2e8f0' : '#2a2f3a'; c.lineWidth = 1; c.stroke();
     gt(c, title, bx + 12, 28, P.mu, 'left', 10.5, 600);
     rows.forEach(function (q, i) { var y = 48 + i * 18; c.beginPath(); c.arc(bx + 16, y, 3.5, 0, TAU); c.fillStyle = q[0]; c.fill(); gt(c, q[1], bx + 26, y, P.mu, 'left', 11, 500); gt(c, q[2], bx + bw - 12, y, P.tx, 'right', 11, 700); });
   }
+  /* label harga ala terminal: persegi dengan takik panah di kiri */
+  function tagr(c, t, x, y, bg) {
+    c.font = '700 10.5px ' + UI; var tw = c.measureText(t).width + 12;
+    c.beginPath(); c.moveTo(x, y); c.lineTo(x + 5, y - 9); c.lineTo(x + 5 + tw, y - 9); c.lineTo(x + 5 + tw, y + 9); c.lineTo(x + 5, y + 9); c.closePath(); c.fillStyle = bg; c.fill();
+    gt(c, t, x + 11, y + .5, '#fff', 'left', 10.5, 700);
+  }
+  /* GAS FEE v4 — gaya terminal profesional: panel berbingkai tipis, legenda bernilai, garis tajam tanpa glow, zona ambang datar,
+     label harga bertakik, indeks kemacetan berupa batang berwarna per level (hijau < 40, kuning 40-66, merah > 66) */
   host('gas-pro-canvas', function (c, w, h, now, s, P) {
-    var N = G.N, D = G.d, all = GV.m === 'all', L = 8, R = w - (w < 420 ? 48 : 56), slot = (R - L) / (N - 1), prog = clamp((now - G.t0) / G.DUR, 0, 1), i, k;
+    var N = G.N, D = G.d, all = GV.m === 'all', L = 4, R = w - (w < 420 ? 52 : 64), slot = (R - L) / (N - 1), prog = clamp((now - G.t0) / G.DUR, 0, 1), i, k;
     var xAt = function (q) { return R - (N - q) * slot + slot * (1 - prog); };
-    var a1 = 10, b1 = Math.round(h * .7), a2 = b1 + 28, b2 = h - 24, cur = D[N];
+    var a1 = 40, b1 = Math.round(h * .68), a2 = b1 + 30, b2 = h - 24, cur = D[N];
     var ch = all ? null : CH.filter(function (x) { return x.k === GV.m; })[0];
     var ser = (all ? CH : [ch]).map(function (x) { return { c: x, f: all ? function (p) { return p[x.k] / x.hi * 100; } : function (p) { return p[x.k]; } }; });
     var mn = 1e9, mx = -1e9;
@@ -9744,46 +9752,64 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     (all ? [0, 100] : [ch.lo, ch.hi]).forEach(function (v) { mn = Math.min(mn, v); mx = Math.max(mx, v); });
     var pd = (mx - mn) * .1, rg = lerp(s, 'g' + GV.m, Math.max(0, mn - pd), mx + pd, .12); mn = rg.mn; mx = rg.mx;
     var yv = function (v) { return b1 - (v - mn) / (mx - mn) * (b1 - a1); }, dc = all ? 0 : dec(mn, mx), fm = function (v) { return all ? Math.round(v) + '%' : fmt(v, dc); };
-    [[a1, b1], [a2, b2]].forEach(function (z) { rr(c, L, z[0], R - L, z[1] - z[0], 10); c.fillStyle = P.bg; c.fill(); });
-    for (i = 0; i <= 4; i++) { var gv = mn + (mx - mn) * i / 4, gy = yv(gv); if (i > 0 && i < 4) hline(c, L + 1, R - 1, gy, P.gr, [2, 4]); gt(c, fm(gv), R + 8, clamp(gy, a1 + 6, b1 - 6), P.mu, 'left', 10.5, 500); }
-    /* --- panel utama --- */
-    c.save(); rr(c, L, a1, R - L, b1 - a1, 10); c.clip();
-    if (!all) {
-      var zh = yv(ch.hi), zl = yv(ch.lo), gz = c.createLinearGradient(0, a1, 0, zh);
-      gz.addColorStop(0, 'rgba(244,63,94,.13)'); gz.addColorStop(1, 'rgba(244,63,94,0)'); c.fillStyle = gz; c.fillRect(L, a1, R - L, Math.max(0, zh - a1));
-      gz = c.createLinearGradient(0, b1, 0, zl); gz.addColorStop(0, 'rgba(16,185,129,.13)'); gz.addColorStop(1, 'rgba(16,185,129,0)'); c.fillStyle = gz; c.fillRect(L, zl, R - L, Math.max(0, b1 - zl));
-    }
-    (all ? [[100, P.dn, 'Ambang 100%']] : [[ch.hi, P.dn, 'Mahal ≥ ' + fG(ch.hi)], [ch.lo, P.up, 'Murah ≤ ' + fG(ch.lo)]]).forEach(function (t) {
-      var y = yv(t[0]); if (y > a1 + 22 && y < b1 - 4) { c.globalAlpha = .6; hline(c, L, R, y, t[1], [4, 4]); c.globalAlpha = 1; gt(c, t[2], L + 12, y - 8, t[1], 'left', 10, 600); }
-    });
+    var edge = P.l ? 'rgba(15,23,42,.16)' : 'rgba(148,163,184,.18)';
+    var ci = Math.round(gcong(cur) * 100), cc = ci > 66 ? P.dn : ci > 40 ? P.am : P.up;
+    var lvl = function (v) { return v > 66 ? P.dn : v > 40 ? P.am : P.up; };
+    /* --- kepala: judul + legenda bernilai --- */
+    var ttl = all ? 'BEBAN RELATIF' : ch.name.toUpperCase() + ' · GWEI';
+    gt(c, ttl, L + 2, 11, P.tx, 'left', 11.5, 700); var hx = L + 2 + c.measureText(ttl).width + 8;
+    gt(c, all ? '% dari ambang tinggi' : '— EMA 8 putus-putus', hx, 11, P.mu, 'left', 10.5, 500);
+    var lx = L + 2;
     ser.forEach(function (z) {
-      var pts = D.map(function (p, q) { return [xAt(q), yv(z.f(p))]; }), col = z.c.col, g = c.createLinearGradient(0, a1, 0, b1);
-      g.addColorStop(0, col); g.addColorStop(1, col + '00');
-      c.beginPath(); sp(c, pts, 1); c.lineTo(pts[N][0], b1); c.lineTo(pts[0][0], b1); c.closePath(); c.globalAlpha = all ? .10 : .30; c.fillStyle = g; c.fill(); c.globalAlpha = 1;
-      c.shadowColor = col; c.shadowBlur = P.l ? 0 : 10; c.lineWidth = all ? 2 : 2.6; c.lineCap = 'round'; c.strokeStyle = col; c.beginPath(); sp(c, pts, 1); c.stroke(); c.shadowBlur = 0;
+      var v = fm(z.f(cur)); c.fillStyle = z.c.col; rr(c, lx, 23, 9, 9, 2); c.fill();
+      gt(c, z.c.name, lx + 14, 28, P.mu, 'left', 10.5, 500); lx += 14 + c.measureText(z.c.name).width + 5;
+      gt(c, v, lx, 28, P.tx, 'left', 10.5, 700); lx += c.measureText(v).width + 16;
+    });
+    /* --- bingkai panel --- */
+    [[a1, b1], [a2, b2]].forEach(function (z) { c.fillStyle = P.bg; c.fillRect(L, z[0], R - L, z[1] - z[0]); c.strokeStyle = edge; c.lineWidth = 1; c.strokeRect(L + .5, z[0] + .5, R - L - 1, z[1] - z[0] - 1); });
+    /* --- grid horizontal + sumbu kanan --- */
+    for (i = 0; i <= 4; i++) { var gv = mn + (mx - mn) * i / 4, gy = yv(gv); if (i > 0 && i < 4) hline(c, L + 1, R - 1, gy, P.gr, []); gt(c, fm(gv), R + 8, clamp(gy, a1 + 6, b1 - 6), P.mu, 'left', 10.5, 500); }
+    /* --- grid vertikal + sumbu waktu --- */
+    c.lineWidth = 1;
+    for (i = N; i >= 0; i -= 12) { var xx = xAt(i); if (xx > L + 26 && xx < R - 26) { var xr = Math.round(xx) + .5; c.strokeStyle = P.gr; c.beginPath(); c.moveTo(xr, a1 + 1); c.lineTo(xr, b1 - 1); c.moveTo(xr, a2 + 1); c.lineTo(xr, b2 - 1); c.stroke(); c.strokeStyle = edge; c.beginPath(); c.moveTo(xr, b2); c.lineTo(xr, b2 + 4); c.stroke(); gt(c, hms(D[i].t), xx, h - 8, P.mu, 'center', 10.5, 500); } }
+    /* --- panel utama --- */
+    c.save(); c.beginPath(); c.rect(L + 1, a1 + 1, R - L - 2, b1 - a1 - 2); c.clip();
+    var zones = all ? [[100, P.dn, 'AMBANG 100%', 'hi']] : [[ch.hi, P.dn, 'MAHAL ≥ ' + fG(ch.hi), 'hi'], [ch.lo, P.up, 'MURAH ≤ ' + fG(ch.lo), 'lo']];
+    zones.forEach(function (t) { var y = yv(t[0]); c.fillStyle = t[3] === 'hi' ? 'rgba(244,63,94,.07)' : 'rgba(16,185,129,.07)'; if (t[3] === 'hi') c.fillRect(L + 1, a1, R - L - 2, Math.max(0, y - a1)); else c.fillRect(L + 1, y, R - L - 2, Math.max(0, b1 - y)); });
+    zones.forEach(function (t) {
+      var y = yv(t[0]); if (y > a1 + 4 && y < b1 - 4) { c.globalAlpha = .75; hline(c, L + 1, R - 1, y, t[1], [5, 4]); c.globalAlpha = 1; gt(c, t[2], R - 8, y + (t[3] === 'hi' ? -8 : 9), t[1], 'right', 9.5, 700); }
+    });
+    c.lineJoin = 'round'; c.lineCap = 'round';
+    ser.forEach(function (z) {
+      var pts = D.map(function (p, q) { return [xAt(q), yv(z.f(p))]; }), col = z.c.col;
+      if (!all) { var g = c.createLinearGradient(0, a1, 0, b1); g.addColorStop(0, col + '3a'); g.addColorStop(1, col + '00'); c.beginPath(); sp(c, pts, 1); c.lineTo(pts[N][0], b1); c.lineTo(pts[0][0], b1); c.closePath(); c.fillStyle = g; c.fill(); }
+      c.lineWidth = all ? 1.9 : 2.3; c.strokeStyle = col; c.beginPath(); sp(c, pts, 1); c.stroke();
     });
     if (!all) { var ea = ema(D.map(function (p) { return p[ch.k]; }), 8); c.setLineDash([5, 4]); c.lineWidth = 1.2; c.strokeStyle = P.am; c.beginPath(); sp(c, ea.map(function (v, q) { return [xAt(q), yv(v)]; }), 1); c.stroke(); c.setLineDash([]); }
     c.restore();
-    var tl = all ? 'BEBAN RELATIF · % DARI AMBANG TINGGI' : ch.name.toUpperCase() + ' · GWEI'; gt(c, tl, L + 12, a1 + 14, P.mu, 'left', 10.5, 700);
-    if (!all) gt(c, '– – EMA 8', L + 24 + c.measureText(tl).width, a1 + 14, P.am, 'left', 10.5, 600);
     var tg = ser.map(function (z) { var p0 = D[N - 1], vb = z.f(p0) + (z.f(cur) - z.f(p0)) * prog; return { y: yv(vb), c: z.c.col, t: fm(vb) }; }).sort(function (p, q) { return p.y - q.y; });
-    tg.forEach(function (q, j) { dot(c, R, q.y, q.c, now); if (j && q.y < tg[j - 1].y + 22) q.y = tg[j - 1].y + 22; pill(c, q.t, R + 6, clamp(q.y, a1 + 10, b1 - 10), q.c); });
-    /* --- panel indeks kemacetan --- */
-    var yc = function (v) { return b2 - 4 - v / 100 * (b2 - a2 - 12); }, ci = Math.round(gcong(cur) * 100), cc = ci > 66 ? P.dn : ci > 40 ? P.am : P.up;
-    c.save(); rr(c, L, a2, R - L, b2 - a2, 10); c.clip();
-    [40, 66].forEach(function (v) { c.globalAlpha = .5; hline(c, L, R, yc(v), v > 50 ? P.dn : P.am, [2, 4]); c.globalAlpha = 1; });
-    var cp = D.map(function (p, q) { return [xAt(q), yc(gcong(p) * 100)]; }), g3 = c.createLinearGradient(0, a2, 0, b2); g3.addColorStop(0, cc); g3.addColorStop(1, cc + '00');
-    c.beginPath(); sp(c, cp, 1); c.lineTo(cp[N][0], b2); c.lineTo(cp[0][0], b2); c.closePath(); c.globalAlpha = .28; c.fillStyle = g3; c.fill(); c.globalAlpha = 1;
-    c.lineWidth = 1.8; c.strokeStyle = cc; c.beginPath(); sp(c, cp, 1); c.stroke(); c.restore();
-    gt(c, 'INDEKS KEMACETAN', L + 12, a2 + 13, P.mu, 'left', 10.5, 700); pill(c, ci + '%', R + 6, clamp(yc(ci), a2 + 10, b2 - 10), cc);
-    for (i = N; i >= 0; i -= 12) { var xx = xAt(i); if (xx > L + 26 && xx < R - 26) gt(c, hms(D[i].t), xx, h - 9, P.mu, 'center', 10.5, 500); }
-    /* --- crosshair + tooltip kartu --- */
+    tg.forEach(function (q, j) { dot(c, R, q.y, q.c, now); if (j && q.y < tg[j - 1].y + 22) q.y = tg[j - 1].y + 22; tagr(c, q.t, R + 2, clamp(q.y, a1 + 10, b1 - 10), q.c); });
+    /* --- panel indeks kemacetan: batang per level --- */
+    var yc = function (v) { return b2 - 2 - v / 100 * (b2 - a2 - 6); };
+    gt(c, 'INDEKS KEMACETAN', L + 2, b1 + 16, P.tx, 'left', 11, 700);
+    gt(c, 'hijau < 40 · kuning 40–66 · merah > 66', L + 2 + 128, b1 + 16, P.mu, 'left', 10, 500);
+    c.save(); c.beginPath(); c.rect(L + 1, a2 + 1, R - L - 2, b2 - a2 - 2); c.clip();
+    var bwid = Math.max(1.5, slot * .72);
+    for (i = 0; i <= N; i++) { var cv = gcong(D[i]) * 100, bx = xAt(i) - bwid; if (bx + bwid < L || bx > R) continue; c.fillStyle = lvl(cv); c.globalAlpha = i === N ? 1 : .85; c.fillRect(bx, yc(cv), bwid, b2 - 1 - yc(cv)); }
+    c.globalAlpha = 1;
+    [40, 66].forEach(function (v) { c.globalAlpha = .55; hline(c, L + 1, R - 1, yc(v), v > 50 ? P.dn : P.am, [3, 4]); c.globalAlpha = 1; });
+    c.restore();
+    [0, 40, 66, 100].forEach(function (v) { gt(c, String(v), R + 8, clamp(yc(v), a2 + 6, b2 - 6), P.mu, 'left', 9.5, 500); });
+    tagr(c, ci + '%', R + 2, clamp(yc(ci), a2 + 10, b2 - 10), cc);
+    /* --- crosshair + label sumbu + tooltip kartu --- */
     if (s.mx >= L && s.mx <= R) {
       k = clamp(Math.round(N - (R + slot * (1 - prog) - s.mx) / slot), 0, N); var x = xAt(k), p = D[k], rows = [];
-      c.save(); c.setLineDash([4, 4]); c.strokeStyle = P.mu; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(x) + .5, a1); c.lineTo(Math.round(x) + .5, b2); c.stroke(); c.restore();
+      c.save(); c.setLineDash([4, 4]); c.strokeStyle = P.mu; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(x) + .5, a1); c.lineTo(Math.round(x) + .5, b1); c.moveTo(Math.round(x) + .5, a2); c.lineTo(Math.round(x) + .5, b2); c.stroke(); c.restore();
       ser.forEach(function (z) { var y = yv(z.f(p)); c.beginPath(); c.arc(x, y, 4.5, 0, TAU); c.fillStyle = P.l ? '#fff' : '#0b0b0f'; c.fill(); c.lineWidth = 2; c.strokeStyle = z.c.col; c.stroke(); rows.push([z.c.col, z.c.name, fG(p[z.c.k]) + ' Gwei' + (all ? ' · ' + Math.round(z.f(p)) + '%' : '')]); });
       if (!all && ch.k === 'e') { rows.push([P.mu, 'Base fee', fG(p.eb)]); rows.push([P.mu, 'Priority tip', fG(p.pe)]); }
-      rows.push([cc, 'Kemacetan', Math.round(gcong(p) * 100) + '%']); gtip(c, w, x, hms(p.t), rows, P);
+      rows.push([lvl(gcong(p) * 100), 'Kemacetan', Math.round(gcong(p) * 100) + '%']);
+      var tt = hms(p.t); c.font = '700 10.5px ' + UI; var tw2 = c.measureText(tt).width + 12; rr(c, clamp(x - tw2 / 2, L, R - tw2 + 20), b2 + 4, tw2, 17, 3); c.fillStyle = P.l ? '#0f172a' : '#e2e8f0'; c.fill(); gt(c, tt, clamp(x - tw2 / 2, L, R - tw2 + 20) + tw2 / 2, b2 + 13, P.l ? '#fff' : '#0b0b0f', 'center', 10.5, 700);
+      gtip(c, w, x, tt, rows, P);
     }
   });
   /* ================= 2. INDEKS SAHAM AS ================= */
@@ -10051,9 +10077,21 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     clearInterval(S.poll); clearInterval(S.t24i);
   }
   function pushCandle(bucket, price) {
-    S.cs.push({ t: bucket, o: price, h: price, l: price, c: price, v: 0 });
+    var b = TF[S.tf], last = S.cs[S.cs.length - 1];
+    if (last) {
+      /* MODEL BURSA: bucket waktu yang terlewat (tab di-background / feed sepi) diisi candle datar di close terakhir, sumbu waktu tetap akurat */
+      var miss = Math.min(Math.round((bucket - last.t) / b) - 1, 60);
+      for (var q = miss; q >= 1; q--) {
+        var tt = bucket - q * b; if (tt <= last.t) continue;
+        S.cs.push({ t: tt, o: last.c, h: last.c, l: last.c, c: last.c, v: 0 }); if (S.off > 0) S.off++;
+      }
+      last = S.cs[S.cs.length - 1];
+    }
+    /* open = close candle sebelumnya (kontinuitas harga), perubahan harga membentuk badan + sumbu */
+    var o = last ? last.c : price;
+    S.cs.push({ t: bucket, o: o, h: Math.max(o, price), l: Math.min(o, price), c: price, v: 0 });
     if (S.off > 0) S.off++;
-    if (S.cs.length > MAX) S.cs.shift();
+    while (S.cs.length > MAX) S.cs.shift();
   }
   function onTrade(p, q, t) {
     if (!(p > 0) || !S.auto) return;
@@ -10085,9 +10123,9 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   function startPoll(gen) {
     clearInterval(S.poll);
     S.poll = setInterval(function () {
-      if (gen !== S.gen || document.hidden || Date.now() - S.lastTrade < 4000) return;
+      if (gen !== S.gen || document.hidden || Date.now() - S.lastTrade < 2000) return;
       jf('/api/v3/ticker/price?symbol=' + S.sym, 5000).then(function (d) { if (gen === S.gen) onTrade(+d.price, 0, Date.now() + S.skew); }).catch(function () {});
-    }, 1500);
+    }, 1000);
   }
   function load24(gen) {
     jf('/api/v3/ticker/24hr?symbol=' + S.sym, 6000).then(function (d) {
@@ -10167,8 +10205,8 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     for (var i = 0; i < a.length; i++) {
       if (!i) { o.push(null); continue; }
       var d = a[i] - a[i - 1], G = d > 0 ? d : 0, L = d < 0 ? -d : 0;
-      if (i <= n) { g += G; l += L; if (i === n) { g /= n; l /= n; o.push(l ? 100 - 100 / (1 + g / l) : 100); } else o.push(null); }
-      else { g = (g * (n - 1) + G) / n; l = (l * (n - 1) + L) / n; o.push(l ? 100 - 100 / (1 + g / l) : 100); }
+      if (i <= n) { g += G; l += L; if (i === n) { g /= n; l /= n; o.push(l ? 100 - 100 / (1 + g / l) : (g ? 100 : 50)); } else o.push(null); }
+      else { g = (g * (n - 1) + G) / n; l = (l * (n - 1) + L) / n; o.push(l ? 100 - 100 / (1 + g / l) : (g ? 100 : 50)); }
     }
     return o;
   }
@@ -10207,7 +10245,9 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
       min = Math.min(min, area ? c.c : c.l); max = Math.max(max, area ? c.c : c.h);
       if (I.bb && bo.u[s0 + k] != null) { min = Math.min(min, bo.l[s0 + k]); max = Math.max(max, bo.u[s0 + k]); }
     });
-    var pad = (max - min) * .1 || 1; min -= pad; max += pad;
+    var refP = S.price > 0 ? S.price : cs[n - 1].c, minSpan = refP * 0.0006;       /* rentang minimum 0,06% harga */
+    if (max - min < minSpan) { var mid = (max + min) / 2; min = mid - minSpan / 2; max = mid + minSpan / 2; }
+    var pad = (max - min) * .12 || 1; min -= pad; max += pad;
     var toY = function (v) { return pBot - (v - min) / (max - min) * (pBot - T); };
     var slot = (R - L) / (vis + 3), xAt = function (k) { return L + (vis - n + k + .5) * slot; };
     var hk = S.hover >= 0 && S.hover < n ? s0 + S.hover : end - 1;
@@ -10262,7 +10302,8 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     } else {
       var bw = Math.max(1, Math.floor(slot * .7)); if (bw > 1 && bw % 2 === 0) bw--; bw = Math.min(bw, 17);
       cs.forEach(function (c, k) {
-        var cx = Math.round(xAt(k)), col = c.c >= c.o ? C.up : C.dn;
+        var pcl = (s0 + k) > 0 ? all[s0 + k - 1].c : c.o;
+        var cx = Math.round(xAt(k)), col = c.c > c.o ? C.up : c.c < c.o ? C.dn : (c.c >= pcl ? C.up : C.dn);
         var yo = Math.round(toY(c.o)), yc = Math.round(toY(c.c)), yh = Math.round(toY(c.h)), yl = Math.round(toY(c.l));
         ctx.fillStyle = col;
         ctx.fillRect(cx, yh, 1, Math.max(1, yl - yh + 1));                                           /* sumbu */
@@ -10416,6 +10457,10 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     if (!S.auto || document.hidden) return;
     if (S.sim) { S.last = Date.now(); S.ticks++; } advance(Date.now()); panel(); draw();
   }, 300);
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden || !S.real || S.sim || !S.cs.length) return;
+    if (Date.now() + S.skew - S.cs[S.cs.length - 1].t > 30000) seed();      /* backfill candle nyata setelah tab tersembunyi */
+  });
   window.addEventListener('resize', resize, { passive: true });
   if (typeof ResizeObserver !== 'undefined') new ResizeObserver(resize).observe(cv.parentElement || cv);
   if (typeof MutationObserver !== 'undefined') new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
