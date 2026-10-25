@@ -3699,7 +3699,7 @@ html.light .ba-pg em{color:#0f172a}
 #cxp-root .cxp-b{padding:5px 10px;border:0;border-radius:8px;background:transparent;color:#94a3b8;font:700 10px/1.2 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em;cursor:pointer;transition:background .15s,color .15s}
 #cxp-root .cxp-b:hover{color:#e2e8f0;background:rgba(148,163,184,.12)}
 #cxp-root .cxp-b.on{background:rgba(56,189,248,.18);color:#38bdf8}
-#cxp-root .cxp-wrap{position:relative;height:500px;width:100%;border-radius:12px;overflow:hidden}
+#cxp-root .cxp-wrap{position:relative;height:clamp(420px,62vh,680px);width:100%;border-radius:12px;overflow:hidden}
 #cxp-root .cxp-wrap canvas{display:block;width:100%;height:100%;cursor:crosshair;touch-action:pan-y;-webkit-user-select:none;user-select:none}
 #cxp-root .cxp-wrap canvas.cxp-grab{cursor:grabbing}
 #cxp-root #cxp-ohlc{font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#94a3b8;white-space:nowrap;overflow-x:auto;scrollbar-width:none}
@@ -3717,7 +3717,7 @@ html.light #cxp-root #cxp-ohlc,html.light #cxp-root #cxp-ohlc .cxp-k{color:#6474
 html.light #cxp-root #cxp-ohlc b{color:#0f172a}
 html.light #cxp-root .cxp-up,html.light #cxp-root #cxp-ohlc b.cxp-up{color:#0E9F6E}
 html.light #cxp-root .cxp-dn,html.light #cxp-root #cxp-ohlc b.cxp-dn{color:#E0364F}
-@media (max-width:640px){#cxp-root .cxp-wrap{height:420px}}
+@media (max-width:640px){#cxp-root .cxp-wrap{height:clamp(380px,60vh,520px)}}
 </style>
 <div class="grid grid-cols-1 lg:grid-cols-1 gap-6 items-start">
                     <div id="cxp-root" class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4">
@@ -9995,7 +9995,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   var S = { tf: '3s', type: 'candle', price: BASE, open: BASE, hi: BASE, lo: BASE, cs: [], auto: true, drift: 0, ticks: 0,
     hover: -1, mx: 0, my: 0, g: null, last: Date.now(), vis: VIS0, off: 0, drag: null,
     ind: { ma: true, ema: true, bb: false, vol: true, rsi: true } };
-  S.gen = 0; S.sym = 'BTCUSDT'; S.coin = 'btc'; S.title = 'BTC/USDT · BINANCE'; S.real = true; S.sim = false; S.skew = 0; S.t24 = null; S.lastTrade = 0;
+  S.k = 1; S.zoomed = false; S.gen = 0; S.sym = 'BTCUSDT'; S.coin = 'btc'; S.title = 'BTC/USDT · BINANCE'; S.real = true; S.sim = false; S.skew = 0; S.t24 = null; S.lastTrade = 0;
   try { var __c = localStorage.getItem('ba-cxp-coin'); if (__c && /^[a-z0-9]{2,10}$/.test(__c)) { S.coin = __c; S.sym = __c.toUpperCase() + 'USDT'; S.title = __c.toUpperCase() + '/USDT · BINANCE'; } } catch (e) {}
   var rnd = function () { return Math.random() - .5; };
   var fmt = function (v, d) { d = d == null ? 2 : d; return v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); };
@@ -10037,6 +10037,14 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
       })();
     });
   }
+  /* SELARAS TABEL: harga acuan = baris koin yang sama di tabel Crypto Asset. Seri Binance dikalikan faktor k (selisih kecil) saat dimuat,
+     sehingga gerak naik-turun tetap dari pasar, tetapi level harga, Open, dan Perubahan 24j sama dengan tabel. Faktor di luar 0,9-1,1 diabaikan. */
+  function tableRef() {
+    try { if (typeof cryptoPagesData === 'undefined') return null;
+      var ks = Object.keys(cryptoPagesData); for (var i = 0; i < ks.length; i++) { var a = cryptoPagesData[ks[i]]; for (var j = 0; j < a.length; j++) if (a[j].symbol === S.coin && a[j].current_price > 0) return { p: +a[j].current_price, pct: +a[j].price_change_percentage_24h }; } } catch (e) {}
+    return null;
+  }
+  function anchorK(price) { var r = tableRef(); if (!r || !(price > 0)) return 1; var k = r.p / price; return (k > 0.9 && k < 1.1) ? k : 1; }
   function status(t) { var e = $('cxp-status'); if (e) e.textContent = t; }
   function closeFeeds() {
     if (S.ws) { try { S.ws.onclose = null; S.ws.close(); } catch (e) {} S.ws = null; }
@@ -10049,6 +10057,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   }
   function onTrade(p, q, t) {
     if (!(p > 0) || !S.auto) return;
+    p = p * S.k;
     var b = TF[S.tf], bucket = Math.floor(t / b) * b, c = S.cs[S.cs.length - 1];
     if (c && bucket < c.t) return;
     if (!c || bucket > c.t) { pushCandle(bucket, p); c = S.cs[S.cs.length - 1]; }
@@ -10083,7 +10092,8 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   function load24(gen) {
     jf('/api/v3/ticker/24hr?symbol=' + S.sym, 6000).then(function (d) {
       if (gen !== S.gen) return;
-      S.t24 = { open: +d.openPrice, hi: +d.highPrice, lo: +d.lowPrice, vol: +d.volume, pct: +d.priceChangePercent };
+      S.t24 = { open: +d.openPrice * S.k, hi: +d.highPrice * S.k, lo: +d.lowPrice * S.k, vol: +d.volume, pct: +d.priceChangePercent };
+      var tr = tableRef(); if (tr && isFinite(tr.pct) && S.k !== 1) S.t24.open = tr.p / (1 + tr.pct / 100);
     }).catch(function () {});
   }
   function lbl() { var e = $('cxp-lbl'); if (e) e.textContent = S.coin.toUpperCase() + '/USDT:'; }
@@ -10094,7 +10104,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   }
   function seed() {
     var gen = ++S.gen, b = TF[S.tf];
-    closeFeeds(); S.cs = []; S.off = 0; S.t24 = null; S.sim = false; S.real = true; S.lastTrade = 0; S.ticks = 0; S.price = 0;
+    closeFeeds(); S.cs = []; S.off = 0; S.t24 = null; S.sim = false; S.real = true; S.lastTrade = 0; S.ticks = 0; S.price = 0; S.k = 1;
     S.title = S.coin.toUpperCase() + '/USDT · BINANCE'; lbl();
     status('Memuat data pasar ' + S.sym + '…'); draw();
     jf('/api/v3/klines?symbol=' + S.sym + '&interval=1s&limit=1000').then(function (k) {
@@ -10106,17 +10116,18 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
         else cs.push({ t: t, o: +x[1], h: +x[2], l: +x[3], c: +x[4], v: +x[5] / 1000 });
       });
       if (!cs.length) throw 0;
+      S.k = anchorK(cs[cs.length - 1].c); if (S.k !== 1) cs.forEach(function (c) { c.o *= S.k; c.h *= S.k; c.l *= S.k; c.c *= S.k; });
       S.cs = cs; S.price = cs[cs.length - 1].c; S.skew = k[k.length - 1][0] - Date.now();
     }).catch(function (e) {
       if (e === 'bad') throw e;
-      return jf('/api/v3/ticker/price?symbol=' + S.sym, 6000).then(function (d) { if (gen === S.gen) { S.price = +d.price; S.skew = 0; } });
+      return jf('/api/v3/ticker/price?symbol=' + S.sym, 6000).then(function (d) { if (gen === S.gen) { S.k = anchorK(+d.price); S.price = +d.price * S.k; S.skew = 0; } });
     }).then(function () {
       if (gen !== S.gen) return;
       if (!(S.price > 0)) throw new Error('offline');
       if (!S.cs.length) pushCandle(Math.floor((Date.now() + S.skew) / b) * b, S.price);
       S.open = S.cs[0].o; S.hi = -Infinity; S.lo = Infinity;
       S.cs.forEach(function (c) { S.hi = Math.max(S.hi, c.h); S.lo = Math.min(S.lo, c.l); });
-      openWS(gen); startPoll(gen); load24(gen); S.t24i = setInterval(function () { load24(gen); }, 60000);
+      if (S.k !== 1) S.title += ' · selaras tabel'; openWS(gen); startPoll(gen); load24(gen); S.t24i = setInterval(function () { load24(gen); }, 60000);
       mark(); draw(); panel();
     }).catch(function (e) { offline(gen, e); });
   }
@@ -10336,6 +10347,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   }
   function resize() {
     var r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2); if (!r.width || !r.height) return;
+    if (!S.zoomed) S.vis = Math.max(40, Math.min(160, Math.round((r.width - 78) / 8))); /* jumlah candle menyesuaikan lebar kartu */
     cv.width = Math.floor(r.width * d); cv.height = Math.floor(r.height * d); ctx.setTransform(d, 0, 0, d, 0, 0); draw();
   }
   /* ---------- panel statistik (ID & format teks dipakai modul lain) ---------- */
@@ -10373,8 +10385,8 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     var p = $('cxp-pause'); if (p) { p.textContent = S.auto ? 'PAUSE' : 'RESUME'; setOn(p, !S.auto); }
     var lv = $('cxp-live'); if (lv) { lv.textContent = S.off > 0 ? '» LIVE' : '● LIVE'; setOn(lv, S.off === 0); }
   }
-  function zoom(d) { S.vis = Math.max(24, Math.min(200, Math.round(S.vis * (d > 0 ? 1.2 : 1 / 1.2)))); draw(); }
-  function reset() { S.off = 0; S.vis = VIS0; S.hover = -1; mark(); draw(); }
+  function zoom(d) { S.zoomed = true; S.vis = Math.max(24, Math.min(200, Math.round(S.vis * (d > 0 ? 1.2 : 1 / 1.2)))); draw(); }
+  function reset() { S.zoomed = false; S.off = 0; S.vis = VIS0; S.hover = -1; mark(); draw(); }
   document.querySelectorAll('#cxp-tf [data-tf]').forEach(function (b) { b.addEventListener('click', function () { S.tf = b.dataset.tf; S.hover = -1; seed(); mark(); draw(); panel(); }); });
   document.querySelectorAll('#cxp-type [data-type]').forEach(function (b) { b.addEventListener('click', function () { S.type = b.dataset.type; mark(); draw(); }); });
   document.querySelectorAll('#cxp-ind [data-ind]').forEach(function (b) { b.addEventListener('click', function () { S.ind[b.dataset.ind] = !S.ind[b.dataset.ind]; mark(); draw(); }); });
