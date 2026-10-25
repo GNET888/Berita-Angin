@@ -3717,7 +3717,16 @@ html.light #cxp-root #cxp-ohlc,html.light #cxp-root #cxp-ohlc .cxp-k{color:#6474
 html.light #cxp-root #cxp-ohlc b{color:#0f172a}
 html.light #cxp-root .cxp-up,html.light #cxp-root #cxp-ohlc b.cxp-up{color:#0E9F6E}
 html.light #cxp-root .cxp-dn,html.light #cxp-root #cxp-ohlc b.cxp-dn{color:#E0364F}
-@media (max-width:640px){#cxp-root .cxp-wrap{height:clamp(380px,60vh,520px)}}
+#cxp-root{background:linear-gradient(180deg,rgba(15,23,42,.55),rgba(2,6,23,.85))}
+#cxp-root .cxp-wrap{background:radial-gradient(120% 90% at 50% 0%,rgba(30,41,59,.35),rgba(0,0,0,.55));box-shadow:inset 0 0 0 1px rgba(148,163,184,.08)}
+#cxp-root .cxp-seg{max-width:100%;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#cxp-root .cxp-seg::-webkit-scrollbar{display:none}
+#cxp-root .cxp-b{white-space:nowrap;flex:0 0 auto}
+#cxp-root .cxp-b.on{box-shadow:inset 0 0 0 1px rgba(56,189,248,.35)}
+html.light #cxp-root{background:linear-gradient(180deg,#fff,#f8fafc)}
+html.light #cxp-root .cxp-wrap{background:#fff;box-shadow:inset 0 0 0 1px rgba(15,23,42,.08)}
+@media (max-width:640px){#cxp-root{padding:12px!important;border-radius:14px}#cxp-root .cxp-wrap{height:clamp(360px,58vh,520px);border-radius:10px}#cxp-root .cxp-grp{width:100%;flex-wrap:nowrap}#cxp-root .cxp-grp>.cxp-seg{flex:0 1 auto}#cxp-root .cxp-b{padding:8px 11px;font-size:10px}#cxp-root #cxp-ohlc{font-size:10px}}
+@media (min-width:1280px){#cxp-root .cxp-wrap{height:clamp(480px,66vh,720px)}}
 </style>
 <div class="grid grid-cols-1 lg:grid-cols-1 gap-6 items-start">
                     <div id="cxp-root" class="bg-card-dark border border-card-border rounded-2xl p-6 shadow-xl space-y-4">
@@ -3741,7 +3750,7 @@ html.light #cxp-root .cxp-dn,html.light #cxp-root #cxp-ohlc b.cxp-dn{color:#E036
                         <div class="cxp-bar">
                             <div class="cxp-grp">
                                 <div id="cxp-asset" class="cxp-seg" title="Pilih aset (daftar mengikuti market cap CoinGecko harian)"></div>
-                                <div id="cxp-tf" class="cxp-seg"><button type="button" data-tf="3s" class="cxp-b">3s</button><button type="button" data-tf="6s" class="cxp-b">6s</button><button type="button" data-tf="15s" class="cxp-b">15s</button><button type="button" data-tf="30s" class="cxp-b">30s</button></div>
+                                <div id="cxp-tf" class="cxp-seg"><button type="button" data-tf="3s" class="cxp-b">3s</button><button type="button" data-tf="6s" class="cxp-b">6s</button><button type="button" data-tf="15s" class="cxp-b">15s</button><button type="button" data-tf="30s" class="cxp-b">30s</button><button type="button" data-tf="1m" class="cxp-b">1m</button><button type="button" data-tf="5m" class="cxp-b">5m</button><button type="button" data-tf="15m" class="cxp-b">15m</button><button type="button" data-tf="1h" class="cxp-b">1j</button><button type="button" data-tf="4h" class="cxp-b">4j</button></div>
                                 <div id="cxp-type" class="cxp-seg"><button type="button" data-type="candle" class="cxp-b">CANDLE</button><button type="button" data-type="area" class="cxp-b">AREA</button></div>
                             </div>
                             <div class="cxp-grp">
@@ -6183,50 +6192,50 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
         }
         const cryptoPagesData = {
             1: [
-                { market_cap_rank: 1, name: 'Bitcoin', symbol: 'btc', current_price: 82721.62, price_change_percentage_24h: -1.7, total_volume: 23060000000, image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' },
-                { market_cap_rank: 2, name: 'Ethereum', symbol: 'eth', current_price: 2559.71, price_change_percentage_24h: -1.9, total_volume: 9200000000, image: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png' },
-                { market_cap_rank: 3, name: 'Solana', symbol: 'sol', current_price: 116.31, price_change_percentage_24h: -3.2, total_volume: 2270000000, image: 'https://assets.coingecko.com/coins/images/4128/large/solana.png' },
-                { market_cap_rank: 4, name: 'BNB', symbol: 'bnb', current_price: 787.14, price_change_percentage_24h: 0, total_volume: 1590000000, image: 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png' },
-                { market_cap_rank: 5, name: 'XRP', symbol: 'xrp', current_price: 1.42, price_change_percentage_24h: -4.8, total_volume: 1920000000, image: 'https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png' },
-                { market_cap_rank: 6, name: 'Cardano', symbol: 'ada', current_price: 0.2714, price_change_percentage_24h: 10.85, total_volume: 1140000000, image: 'https://assets.coingecko.com/coins/images/975/large/cardano.png' },
-                { market_cap_rank: 7, name: 'Dogecoin', symbol: 'doge', current_price: 0.08918, price_change_percentage_24h: -4.8, total_volume: 968960000, image: 'https://assets.coingecko.com/coins/images/5/large/dogecoin.png' },
-                { market_cap_rank: 8, name: 'Avalanche', symbol: 'avax', current_price: 10.98, price_change_percentage_24h: 0, total_volume: 620000000, image: 'https://assets.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png' },
-                { market_cap_rank: 9, name: 'Polkadot', symbol: 'dot', current_price: 1.21, price_change_percentage_24h: 0, total_volume: 230000000, image: 'https://assets.coingecko.com/coins/images/12171/large/polkadot.png' },
-                { market_cap_rank: 10, name: 'Chainlink', symbol: 'link', current_price: 12.96, price_change_percentage_24h: -2.87, total_volume: 234780000, image: 'https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png' }
+                { market_cap_rank: 1, name: 'Bitcoin', symbol: 'btc', current_price: 79606.38, price_change_percentage_24h: -2.44, total_volume: 23060000000, image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' },
+                { market_cap_rank: 2, name: 'Ethereum', symbol: 'eth', current_price: 2299.86, price_change_percentage_24h: -4.41, total_volume: 9200000000, image: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png' },
+                { market_cap_rank: 3, name: 'BNB', symbol: 'bnb', current_price: 720.56, price_change_percentage_24h: -3.74, total_volume: 1590000000, image: 'https://assets.coingecko.com/coins/images/825/large/bnb-icon2_2x.png' },
+                { market_cap_rank: 4, name: 'XRP', symbol: 'xrp', current_price: 1.27, price_change_percentage_24h: -3.52, total_volume: 1920000000, image: 'https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png' },
+                { market_cap_rank: 5, name: 'Solana', symbol: 'sol', current_price: 99.48, price_change_percentage_24h: -4.9, total_volume: 2270000000, image: 'https://assets.coingecko.com/coins/images/4128/large/solana.png' },
+                { market_cap_rank: 6, name: 'Tron', symbol: 'trx', current_price: 0.329, price_change_percentage_24h: -0.3, total_volume: 312690000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/trx.png' },
+                { market_cap_rank: 7, name: 'Hyperliquid', symbol: 'hype', current_price: 74.99, price_change_percentage_24h: -4.24, total_volume: 850000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/hype.png' },
+                { market_cap_rank: 8, name: 'Zcash', symbol: 'zec', current_price: 1140, price_change_percentage_24h: -7.66, total_volume: 790000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/zec.png' },
+                { market_cap_rank: 9, name: 'Dogecoin', symbol: 'doge', current_price: 0.077, price_change_percentage_24h: -2.57, total_volume: 968960000, image: 'https://assets.coingecko.com/coins/images/5/large/dogecoin.png' },
+                { market_cap_rank: 10, name: 'Cardano', symbol: 'ada', current_price: 0.2714, price_change_percentage_24h: 10.85, total_volume: 1140000000, image: 'https://assets.coingecko.com/coins/images/975/large/cardano.png' }
             ],
             2: [
-                { market_cap_rank: 11, name: 'Polygon', symbol: 'pol', alias: 'matic', current_price: 0.11, price_change_percentage_24h: 0, total_volume: 210000000, image: 'https://assets.coingecko.com/coins/images/4713/large/polygon.png' },
-                { market_cap_rank: 12, name: 'Shiba Inu', symbol: 'shib', current_price: 0.000005872, price_change_percentage_24h: 0, total_volume: 450000000, image: 'https://assets.coingecko.com/coins/images/11939/large/shiba.png' },
-                { market_cap_rank: 13, name: 'Litecoin', symbol: 'ltc', current_price: 70.13, price_change_percentage_24h: 0, total_volume: 310000000, image: 'https://assets.coingecko.com/coins/images/2/large/litecoin.png' },
-                { market_cap_rank: 14, name: 'Uniswap', symbol: 'uni', current_price: 9.04, price_change_percentage_24h: 0, total_volume: 190000000, image: 'https://assets.coingecko.com/coins/images/12504/large/uniswap-uni.png' },
-                { market_cap_rank: 15, name: 'NEAR Protocol', symbol: 'near', current_price: 5.37, price_change_percentage_24h: 5.4, total_volume: 280000000, image: 'https://assets.coingecko.com/coins/images/10365/large/near.png' },
-                { market_cap_rank: 16, name: 'Cosmos', symbol: 'atom', current_price: 1.77, price_change_percentage_24h: 0, total_volume: 120000000, image: 'https://assets.coingecko.com/coins/images/1481/large/cosmos_hub.png' },
-                { market_cap_rank: 17, name: 'Stellar', symbol: 'xlm', current_price: 0.22, price_change_percentage_24h: 0, total_volume: 85000000, image: 'https://assets.coingecko.com/coins/images/100/large/Stellar_symbol_black_RGB.png' },
-                { market_cap_rank: 18, name: 'Monero', symbol: 'xmr', current_price: 544.84, price_change_percentage_24h: 0, total_volume: 101030000, image: 'https://assets.coingecko.com/coins/images/69/large/monero_logo.png' },
-                { market_cap_rank: 19, name: 'Ethereum Classic', symbol: 'etc', current_price: 9.0, price_change_percentage_24h: 0, total_volume: 140000000, image: 'https://assets.coingecko.com/coins/images/453/large/ethereum-classic-logo.png' },
-                { market_cap_rank: 20, name: 'Filecoin', symbol: 'fil', current_price: 1.07, price_change_percentage_24h: 0, total_volume: 110000000, image: 'https://assets.coingecko.com/coins/images/12817/large/filecoin.png' }
+                { market_cap_rank: 11, name: 'Avalanche', symbol: 'avax', current_price: 10.98, price_change_percentage_24h: 0, total_volume: 620000000, image: 'https://assets.coingecko.com/coins/images/12559/large/Avalanche_Circle_RedWhite_Trans.png' },
+                { market_cap_rank: 12, name: 'Polkadot', symbol: 'dot', current_price: 1.21, price_change_percentage_24h: 0, total_volume: 230000000, image: 'https://assets.coingecko.com/coins/images/12171/large/polkadot.png' },
+                { market_cap_rank: 13, name: 'Chainlink', symbol: 'link', current_price: 12.96, price_change_percentage_24h: -2.87, total_volume: 234780000, image: 'https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png' },
+                { market_cap_rank: 14, name: 'Polygon', symbol: 'pol', alias: 'matic', current_price: 0.11, price_change_percentage_24h: 0, total_volume: 210000000, image: 'https://assets.coingecko.com/coins/images/4713/large/polygon.png' },
+                { market_cap_rank: 15, name: 'Shiba Inu', symbol: 'shib', current_price: 0.000005872, price_change_percentage_24h: 0, total_volume: 450000000, image: 'https://assets.coingecko.com/coins/images/11939/large/shiba.png' },
+                { market_cap_rank: 16, name: 'Litecoin', symbol: 'ltc', current_price: 70.13, price_change_percentage_24h: 0, total_volume: 310000000, image: 'https://assets.coingecko.com/coins/images/2/large/litecoin.png' },
+                { market_cap_rank: 17, name: 'Uniswap', symbol: 'uni', current_price: 9.04, price_change_percentage_24h: 0, total_volume: 190000000, image: 'https://assets.coingecko.com/coins/images/12504/large/uniswap-uni.png' },
+                { market_cap_rank: 18, name: 'NEAR Protocol', symbol: 'near', current_price: 5.37, price_change_percentage_24h: 5.4, total_volume: 280000000, image: 'https://assets.coingecko.com/coins/images/10365/large/near.png' },
+                { market_cap_rank: 19, name: 'Cosmos', symbol: 'atom', current_price: 1.77, price_change_percentage_24h: 0, total_volume: 120000000, image: 'https://assets.coingecko.com/coins/images/1481/large/cosmos_hub.png' },
+                { market_cap_rank: 20, name: 'Stellar', symbol: 'xlm', current_price: 0.22, price_change_percentage_24h: 0, total_volume: 85000000, image: 'https://assets.coingecko.com/coins/images/100/large/Stellar_symbol_black_RGB.png' }
             ],
             3: [
-                { market_cap_rank: 21, name: 'Internet Computer', symbol: 'icp', current_price: 3.31, price_change_percentage_24h: 0, total_volume: 95000000, image: 'https://assets.coingecko.com/coins/images/14495/large/Internet_Computer_logo.png' },
-                { market_cap_rank: 22, name: 'Hedera', symbol: 'hbar', current_price: 0.1028, price_change_percentage_24h: 0, total_volume: 75000000, image: 'https://assets.coingecko.com/coins/images/3688/large/hbar.png' },
-                { market_cap_rank: 23, name: 'Render', symbol: 'render', alias: 'rndr', current_price: 2.02, price_change_percentage_24h: 0, total_volume: 210000000, image: 'https://assets.coingecko.com/coins/images/11636/large/render.png' },
-                { market_cap_rank: 24, name: 'Immutable', symbol: 'imx', current_price: 0.103, price_change_percentage_24h: 0, total_volume: 68000000, image: 'https://assets.coingecko.com/coins/images/19590/large/immutablex.png' },
-                { market_cap_rank: 25, name: 'Injective', symbol: 'inj', current_price: 7.53, price_change_percentage_24h: 0, total_volume: 130000000, image: 'https://assets.coingecko.com/coins/images/12882/large/injective_logo.png' },
-                { market_cap_rank: 26, name: 'Maker', symbol: 'mkr', current_price: 1783.33, price_change_percentage_24h: 0, total_volume: 82000000, image: 'https://assets.coingecko.com/coins/images/1364/large/Mark_Maker.png' },
-                { market_cap_rank: 27, name: 'Aave', symbol: 'aave', current_price: 178.64, price_change_percentage_24h: 0, total_volume: 150000000, image: 'https://assets.coingecko.com/coins/images/12645/large/AAVE.png' },
-                { market_cap_rank: 28, name: 'Arbitrum', symbol: 'arb', current_price: 0.21, price_change_percentage_24h: 0, total_volume: 110000000, image: 'https://assets.coingecko.com/coins/images/16547/large/arbitrum_logo.png' },
-                { market_cap_rank: 29, name: 'Tron', symbol: 'trx', current_price: 0.3358, price_change_percentage_24h: 0, total_volume: 312690000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/trx.png' },
-                { market_cap_rank: 30, name: 'Toncoin', symbol: 'ton', current_price: 1.54, price_change_percentage_24h: 0, total_volume: 190000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/ton.png' }
+                { market_cap_rank: 21, name: 'Monero', symbol: 'xmr', current_price: 544.84, price_change_percentage_24h: 0, total_volume: 101030000, image: 'https://assets.coingecko.com/coins/images/69/large/monero_logo.png' },
+                { market_cap_rank: 22, name: 'Ethereum Classic', symbol: 'etc', current_price: 9.0, price_change_percentage_24h: 0, total_volume: 140000000, image: 'https://assets.coingecko.com/coins/images/453/large/ethereum-classic-logo.png' },
+                { market_cap_rank: 23, name: 'Filecoin', symbol: 'fil', current_price: 1.07, price_change_percentage_24h: 0, total_volume: 110000000, image: 'https://assets.coingecko.com/coins/images/12817/large/filecoin.png' },
+                { market_cap_rank: 24, name: 'Internet Computer', symbol: 'icp', current_price: 3.31, price_change_percentage_24h: 0, total_volume: 95000000, image: 'https://assets.coingecko.com/coins/images/14495/large/Internet_Computer_logo.png' },
+                { market_cap_rank: 25, name: 'Hedera', symbol: 'hbar', current_price: 0.1028, price_change_percentage_24h: 0, total_volume: 75000000, image: 'https://assets.coingecko.com/coins/images/3688/large/hbar.png' },
+                { market_cap_rank: 26, name: 'Render', symbol: 'render', alias: 'rndr', current_price: 2.02, price_change_percentage_24h: 0, total_volume: 210000000, image: 'https://assets.coingecko.com/coins/images/11636/large/render.png' },
+                { market_cap_rank: 27, name: 'Immutable', symbol: 'imx', current_price: 0.103, price_change_percentage_24h: 0, total_volume: 68000000, image: 'https://assets.coingecko.com/coins/images/19590/large/immutablex.png' },
+                { market_cap_rank: 28, name: 'Injective', symbol: 'inj', current_price: 7.53, price_change_percentage_24h: 0, total_volume: 130000000, image: 'https://assets.coingecko.com/coins/images/12882/large/injective_logo.png' },
+                { market_cap_rank: 29, name: 'Maker', symbol: 'mkr', current_price: 1783.33, price_change_percentage_24h: 0, total_volume: 82000000, image: 'https://assets.coingecko.com/coins/images/1364/large/Mark_Maker.png' },
+                { market_cap_rank: 30, name: 'Aave', symbol: 'aave', current_price: 178.64, price_change_percentage_24h: 0, total_volume: 150000000, image: 'https://assets.coingecko.com/coins/images/12645/large/AAVE.png' }
             ],
             4: [
-                { market_cap_rank: 31, name: 'Bitcoin Cash', symbol: 'bch', current_price: 315.88, price_change_percentage_24h: 0, total_volume: 260000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/bch.png' },
-                { market_cap_rank: 32, name: 'Aptos', symbol: 'apt', current_price: 0.81, price_change_percentage_24h: 0, total_volume: 165000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/apt.png' },
-                { market_cap_rank: 33, name: 'Sui', symbol: 'sui', current_price: 1.23, price_change_percentage_24h: 0, total_volume: 310000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/sui.png' },
-                { market_cap_rank: 34, name: 'VeChain', symbol: 'vet', current_price: 0.0076, price_change_percentage_24h: 0, total_volume: 58000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/vet.png' },
-                { market_cap_rank: 35, name: 'The Graph', symbol: 'grt', current_price: 0.015, price_change_percentage_24h: 0, total_volume: 72000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/grt.png' },
-                { market_cap_rank: 36, name: 'Algorand', symbol: 'algo', current_price: 0.13, price_change_percentage_24h: 0, total_volume: 64000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/algo.png' },
-                { market_cap_rank: 37, name: 'Stacks', symbol: 'stx', current_price: 0.38, price_change_percentage_24h: 0, total_volume: 88000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/stx.png' },
-                { market_cap_rank: 38, name: 'Optimism', symbol: 'op', current_price: 0.13439, price_change_percentage_24h: 1.06, total_volume: 70110000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/op.png' }
+                { market_cap_rank: 31, name: 'Arbitrum', symbol: 'arb', current_price: 0.21, price_change_percentage_24h: 0, total_volume: 110000000, image: 'https://assets.coingecko.com/coins/images/16547/large/arbitrum_logo.png' },
+                { market_cap_rank: 32, name: 'Toncoin', symbol: 'ton', current_price: 1.54, price_change_percentage_24h: 0, total_volume: 190000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/ton.png' },
+                { market_cap_rank: 33, name: 'Bitcoin Cash', symbol: 'bch', current_price: 315.88, price_change_percentage_24h: 0, total_volume: 260000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/bch.png' },
+                { market_cap_rank: 34, name: 'Aptos', symbol: 'apt', current_price: 0.81, price_change_percentage_24h: 0, total_volume: 165000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/apt.png' },
+                { market_cap_rank: 35, name: 'Sui', symbol: 'sui', current_price: 1.23, price_change_percentage_24h: 0, total_volume: 310000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/sui.png' },
+                { market_cap_rank: 36, name: 'VeChain', symbol: 'vet', current_price: 0.0076, price_change_percentage_24h: 0, total_volume: 58000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/vet.png' },
+                { market_cap_rank: 37, name: 'The Graph', symbol: 'grt', current_price: 0.015, price_change_percentage_24h: 0, total_volume: 72000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/grt.png' },
+                { market_cap_rank: 38, name: 'Algorand', symbol: 'algo', current_price: 0.13, price_change_percentage_24h: 0, total_volume: 64000000, image: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/algo.png' }
             ]
         };
         if (window.__dailyCrypto) window.__dailyCrypto(cryptoPagesData);
@@ -10017,15 +10026,21 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   var cv = document.getElementById('cryptoIndexPro'); if (!cv || window.__cxPro) return; window.__cxPro = true;
   var ctx = cv.getContext('2d'), $ = function (i) { return document.getElementById(i); };
   var MONO = 'ui-monospace,SFMono-Regular,Menlo,Consolas,monospace', BASE = 85897.72, MAX = 420, VIS0 = 80;
-  var TF = { '3s': 3000, '6s': 6000, '15s': 15000, '30s': 30000 };
-  var S = { tf: '3s', type: 'candle', price: BASE, open: BASE, hi: BASE, lo: BASE, cs: [], auto: true, drift: 0, ticks: 0,
+  var TF = { '3s': 3000, '6s': 6000, '15s': 15000, '30s': 30000, '1m': 60000, '5m': 300000, '15m': 900000, '1h': 3600000, '4h': 14400000 };
+  var KL = { '3s': ['1s', 1000], '6s': ['1s', 1000], '15s': ['1s', 1000], '30s': ['1s', 1000], '1m': ['1m', 400], '5m': ['5m', 400], '15m': ['15m', 400], '1h': ['1h', 400], '4h': ['4h', 400] };  /* candle nyata Binance */
+  var S = { tf: '1m', type: 'candle', price: BASE, open: BASE, hi: BASE, lo: BASE, cs: [], auto: true, drift: 0, ticks: 0,
     hover: -1, mx: 0, my: 0, g: null, last: Date.now(), vis: VIS0, off: 0, drag: null,
     ind: { ma: true, ema: true, bb: false, vol: true, rsi: true } };
   S.k = 1; S.zoomed = false; S.gen = 0; S.sym = 'BTCUSDT'; S.coin = 'btc'; S.title = 'BTC/USDT · BINANCE'; S.real = true; S.sim = false; S.skew = 0; S.t24 = null; S.lastTrade = 0;
   try { var __c = localStorage.getItem('ba-cxp-coin'); if (__c && /^[a-z0-9]{2,10}$/.test(__c)) { S.coin = __c; S.sym = __c.toUpperCase() + 'USDT'; S.title = __c.toUpperCase() + '/USDT · BINANCE'; } } catch (e) {}
   var rnd = function () { return Math.random() - .5; };
   var fmt = function (v, d) { d = d == null ? 2 : d; return v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); };
-  var hms = function (t) { return new Date(t).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); };
+  var hms = function (t) {
+    var d = new Date(t), tf = S.tf;
+    if (tf === '1h' || tf === '4h') return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false });
+    if (tf === '1m' || tf === '5m' || tf === '15m') return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false });
+    return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  };
   var al = function (hex, a) { var h = hex.replace('#', ''); return 'rgba(' + parseInt(h.substr(0, 2), 16) + ',' + parseInt(h.substr(2, 2), 16) + ',' + parseInt(h.substr(4, 2), 16) + ',' + a + ')'; };
   /* ---------- data ---------- */
   function advanceSim(ts) {
@@ -10070,7 +10085,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
       var ks = Object.keys(cryptoPagesData); for (var i = 0; i < ks.length; i++) { var a = cryptoPagesData[ks[i]]; for (var j = 0; j < a.length; j++) if (a[j].symbol === S.coin && a[j].current_price > 0) return { p: +a[j].current_price, pct: +a[j].price_change_percentage_24h }; } } catch (e) {}
     return null;
   }
-  function anchorK(price) { var r = tableRef(); if (!r || !(price > 0)) return 1; var k = r.p / price; return (k > 0.9 && k < 1.1) ? k : 1; }
+  function anchorK(price) { return 1; var r = tableRef(); if (!r || !(price > 0)) return 1; var k = r.p / price; return (k > 0.9 && k < 1.1) ? k : 1; }
   function status(t) { var e = $('cxp-status'); if (e) e.textContent = t; }
   function closeFeeds() {
     if (S.ws) { try { S.ws.onclose = null; S.ws.close(); } catch (e) {} S.ws = null; }
@@ -10141,11 +10156,11 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     S.sim = true; S.real = false; S.t24 = null; seedSim(); S.title = S.coin.toUpperCase() + '/USDT · SIMULASI (OFFLINE)'; mark(); draw(); panel();
   }
   function seed() {
-    var gen = ++S.gen, b = TF[S.tf];
+    var gen = ++S.gen, b = TF[S.tf], KI = KL[S.tf] || ['1s', 1000];
     closeFeeds(); S.cs = []; S.off = 0; S.t24 = null; S.sim = false; S.real = true; S.lastTrade = 0; S.ticks = 0; S.price = 0; S.k = 1;
     S.title = S.coin.toUpperCase() + '/USDT · BINANCE'; lbl();
     status('Memuat data pasar ' + S.sym + '…'); draw();
-    jf('/api/v3/klines?symbol=' + S.sym + '&interval=1s&limit=1000').then(function (k) {
+    jf('/api/v3/klines?symbol=' + S.sym + '&interval=' + KI[0] + '&limit=' + KI[1]).then(function (k) {
       if (gen !== S.gen) return;
       var cs = [];
       k.forEach(function (x) {
@@ -10235,7 +10250,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     var cl = all.map(function (c) { return c.c; });
     var ma = sma(cl, 20), em = ema(cl, 9), bo = bb(cl, 20, 2), rs = rsi(cl, 14);
     /* geometri panel */
-    var L = 6, R = w - 72, T = 26, B = h - 22, gap = 12, avail = B - T;
+    var narrow = w < 520, L = 6, R = w - (narrow ? 60 : 72), T = 26, B = h - 22, gap = 12, avail = B - T;
     var rH = I.rsi ? Math.max(56, Math.round(avail * .17)) : 0, vH = I.vol ? Math.max(46, Math.round(avail * .13)) : 0;
     var rTop = B - rH, vBot = rH ? rTop - gap : B, vTop = vH ? vBot - vH : vBot;
     var pBot = (vH ? vTop : rH ? rTop : B + gap) - gap;
@@ -10245,7 +10260,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
       min = Math.min(min, area ? c.c : c.l); max = Math.max(max, area ? c.c : c.h);
       if (I.bb && bo.u[s0 + k] != null) { min = Math.min(min, bo.l[s0 + k]); max = Math.max(max, bo.u[s0 + k]); }
     });
-    var refP = S.price > 0 ? S.price : cs[n - 1].c, minSpan = refP * 0.0006;       /* rentang minimum 0,06% harga */
+    var refP = S.price > 0 ? S.price : cs[n - 1].c, minSpan = refP * 0.0003;       /* rentang minimum 0,03% harga: skala mengikuti pergerakan nyata */
     if (max - min < minSpan) { var mid = (max + min) / 2; min = mid - minSpan / 2; max = mid + minSpan / 2; }
     var pad = (max - min) * .12 || 1; min -= pad; max += pad;
     var toY = function (v) { return pBot - (v - min) / (max - min) * (pBot - T); };
@@ -10253,7 +10268,9 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     var hk = S.hover >= 0 && S.hover < n ? s0 + S.hover : end - 1;
     var vm = 0; cs.forEach(function (c) { vm = Math.max(vm, c.v); }); vm = vm || 1;
     S.g = { L: L, R: R, slot: slot, vis: vis, n: n, T: T, pBot: pBot, B: B, vTop: vTop, vBot: vBot, rTop: rTop, min: min, max: max, vm: vm };
-    /* watermark */
+    /* watermark simbol */
+    ctx.save(); ctx.font = '800 ' + (narrow ? 34 : 56) + 'px ' + MONO; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = C.wm;
+    ctx.fillText(S.coin.toUpperCase() + '/USDT', (L + R) / 2, (T + pBot) / 2); ctx.restore();
     /* grid harga + label sumbu */
     ctx.font = '10px ' + MONO; ctx.lineWidth = 1; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     var tk = nice(min, max, Math.max(3, Math.round((pBot - T) / 52))), dec = tk.st < 1 ? 2 : 0;
@@ -10321,7 +10338,7 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
     }
     /* tag helper */
     var tag = function (x, y, t, bg, fg, wd) {
-      wd = wd || 66; ctx.fillStyle = bg; ctx.fillRect(x, Math.round(y) - 8, wd, 16);
+      wd = wd || Math.min(66, w - x); ctx.fillStyle = bg; ctx.fillRect(x, Math.round(y) - 8, wd, 16);
       ctx.fillStyle = fg; ctx.font = '700 10px ' + MONO; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillText(t, x + 6, Math.round(y) + .5); ctx.textBaseline = 'alphabetic';
     };
     /* ===== volume ===== */
@@ -10466,6 +10483,65 @@ html.light .gmk-wrap{background:rgba(248,250,252,.35);border-color:#e2e8f0}
   if (typeof MutationObserver !== 'undefined') new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 })();
 </script>
+<script>/* HARGA LIVE BINANCE UNTUK TABEL CRYPTO ASSET
+   WebSocket !miniTicker@arr (semua pair, ~1 dtk) -> harga, perubahan 24j, volume 24j (USDT) langsung dari bursa.
+   Cadangan: REST /ticker/24hr tiap 4 dtk. Peringkat tetap dari CoinGecko (market cap). Koin tanpa pair USDT di Binance tetap memakai harga CoinGecko (tanpa simulasi). */
+(function () {
+  'use strict';
+  if (window.__binTable) return; window.__binTable = true;
+  var map = {}, ws = null, lastMsg = 0, wsTry = 0, mapT = 0;
+  var HOSTS = ['https://api.binance.com', 'https://data-api.binance.vision'];
+  var WSU = ['wss://stream.binance.com:9443/ws/!miniTicker@arr', 'wss://data-stream.binance.vision/ws/!miniTicker@arr'];
+  function build() {
+    map = {}; mapT = Date.now();
+    if (typeof cryptoPagesData === 'undefined') return;
+    Object.keys(cryptoPagesData).forEach(function (k) { cryptoPagesData[k].forEach(function (c) {
+      if (!c || !c.symbol) return; var key = String(c.symbol).toUpperCase() + 'USDT'; (map[key] = map[key] || []).push(c);
+    }); });
+  }
+  function apply(sym, last, open, quoteVol) {
+    var a = map[sym]; if (!a || !(last > 0)) return;
+    a.forEach(function (c) {
+      c.current_price = last; if (open > 0) c.price_change_percentage_24h = (last / open - 1) * 100;
+      if (quoteVol > 0) c.total_volume = quoteVol; c._bin = 1;
+    });
+  }
+  function badge() {
+    var el = document.getElementById('ba-bin-badge');
+    if (!el) { var a = document.getElementById('crypto-table-body'); a = a && (a.closest('.overflow-x-auto') || a.closest('table') || a); if (!a || !a.parentNode) return;
+      el = document.createElement('div'); el.id = 'ba-bin-badge'; el.className = 'text-[10px] font-mono px-1 py-1'; a.parentNode.insertBefore(el, a.nextSibling); }
+    var live = Date.now() - lastMsg < 8000, n = 0; Object.keys(map).forEach(function (k) { if (map[k][0]._bin) n++; });
+    el.style.color = live ? '#34d399' : '#94a3b8';
+    el.textContent = live ? '● Harga live Binance · ' + n + ' aset (harga, 24j, volume) · peringkat: CoinGecko' : '○ Menunggu harga live Binance… (sementara memakai harga CoinGecko, tanpa simulasi)';
+  }
+  function onMsg(arr) {
+    if (Date.now() - mapT > 5000) build();
+    for (var i = 0; i < arr.length; i++) { var t = arr[i]; if (map[t.s]) apply(t.s, +t.c, +t.o, +t.q); }
+    lastMsg = Date.now();
+  }
+  function openWS() {
+    if (typeof WebSocket === 'undefined') return;
+    var w; try { w = new WebSocket(WSU[wsTry++ % WSU.length]); } catch (e) { return; }
+    ws = w;
+    w.onmessage = function (m) { var d; try { d = JSON.parse(m.data); } catch (e) { return; } if (Array.isArray(d)) onMsg(d); };
+    w.onclose = function () { setTimeout(openWS, 3000); };
+    w.onerror = function () { try { w.close(); } catch (e) {} };
+  }
+  function pollOnce() {
+    if (document.hidden || Date.now() - lastMsg < 4000) return;
+    if (Date.now() - mapT > 5000) build();
+    var syms = Object.keys(map); if (!syms.length) return;
+    var q = '/api/v3/ticker/24hr?symbols=' + encodeURIComponent(JSON.stringify(syms)), i = 0;
+    (function next() {
+      if (i >= HOSTS.length) return;
+      fetch(HOSTS[i++] + q, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+        .then(function (arr) { if (Array.isArray(arr)) { arr.forEach(function (t) { apply(t.symbol, +t.lastPrice, +t.openPrice, +t.quoteVolume); }); lastMsg = Date.now(); } }, next);
+    })();
+  }
+  function start() { build(); openWS(); setInterval(pollOnce, 4000); setInterval(badge, 2000); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else setTimeout(start, 0);
+})();
+</script>
 <style>.cx-ico{position:relative;width:24px;height:24px;flex:0 0 24px;border-radius:9999px;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
 .cx-ico b{font:800 7px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.02em}
 .cx-ico img{position:absolute;inset:0;width:100%;height:100%;border-radius:9999px;background:#0b0b0e;object-fit:cover}
@@ -10526,10 +10602,11 @@ canvas.cx-mini[data-kind="stock"]{width:96px;flex-basis:96px}
   function tickCrypto() {
     Object.keys(CS).forEach(function (sym) {
       var st = CS[sym], c = coins[sym];
-      st.cur = Math.max(st.cur * .2, st.cur * (1 + rnd() * st.vol * 2.2) + (st.target - st.cur) * .035);
-      if (c._real) st.s[st.s.length - 1] = st.cur; else { st.s.push(st.cur); st.s.shift(); }
-      c.current_price = st.cur; c.price_change_percentage_24h = (st.cur / st.open - 1) * 100;
-      c.total_volume = Math.max(1e6, c.total_volume * (1 + rnd() * .006));
+      /* DATA NYATA: koin Binance memakai harga/24j/volume live dari modul Binance (c._bin); selain itu harga CoinGecko ditahan, tanpa gerak acak */
+      if (c._bin) { st.cur = c.current_price; st.target = c.current_price; st.open = c.current_price / (1 + (c.price_change_percentage_24h || 0) / 100); }
+      else { st.cur = st.target; }
+      if (c._real || c._bin) st.s[st.s.length - 1] = st.cur; else { st.s.push(st.cur); st.s.shift(); }
+      if (!c._bin) c.price_change_percentage_24h = (st.cur / st.open - 1) * 100;
     });
     var tb = document.getElementById('crypto-table-body'); if (!tb || tb.offsetParent === null) return;
     tb.querySelectorAll('tr[data-cx]').forEach(function (tr) {
@@ -10859,10 +10936,11 @@ canvas.cx-mini[data-kind="stock"]{width:96px;flex-basis:96px}
   function tickCrypto() {
     Object.keys(CS).forEach(function (sym) {
       var st = CS[sym], c = coins[sym];
-      st.cur = Math.max(st.cur * .2, st.cur * (1 + rnd() * st.vol * 2.2) + (st.target - st.cur) * .035);
-      if (c._real) st.s[st.s.length - 1] = st.cur; else { st.s.push(st.cur); st.s.shift(); }
-      c.current_price = st.cur; c.price_change_percentage_24h = (st.cur / st.open - 1) * 100;
-      c.total_volume = Math.max(1e6, c.total_volume * (1 + rnd() * .006));
+      /* DATA NYATA: koin Binance memakai harga/24j/volume live dari modul Binance (c._bin); selain itu harga CoinGecko ditahan, tanpa gerak acak */
+      if (c._bin) { st.cur = c.current_price; st.target = c.current_price; st.open = c.current_price / (1 + (c.price_change_percentage_24h || 0) / 100); }
+      else { st.cur = st.target; }
+      if (c._real || c._bin) st.s[st.s.length - 1] = st.cur; else { st.s.push(st.cur); st.s.shift(); }
+      if (!c._bin) c.price_change_percentage_24h = (st.cur / st.open - 1) * 100;
     });
     var tb = document.getElementById('crypto-table-body'); if (!tb || tb.offsetParent === null) return;
     tb.querySelectorAll('tr[data-cx]').forEach(function (tr) {
@@ -12950,15 +13028,30 @@ D.addEventListener('visibilitychange',function(){if(!D.hidden)poll()});
       SNAP = { day: today(), t: Date.now(), coins: out }; save(); apply(SNAP);
       badge(true, 'Data harian online · ' + dlab(SNAP.day) + ' · diperbarui ' + hm(SNAP.t) + ' · ' + out.length + ' aset (CoinGecko)');
     }).catch(function () {
-      if (SNAP) badge(false, 'Snapshot harian ' + dlab(SNAP.day) + ' ' + hm(SNAP.t) + ' · CoinGecko belum terjangkau, mencoba lagi otomatis');
-      else badge(false, 'Menunggu data harian online (CoinGecko belum terjangkau)');
+      /* CADANGAN ONLINE: CoinPaprika (peringkat, harga, market cap, volume, perubahan 24j) bila CoinGecko tidak terjangkau */
+      return W.__baFetch(R, 'https://api.coinpaprika.com/v1/tickers?quotes=USD&limit=120', false, 12000).then(function (arr) {
+        var out = [];
+        (arr || []).slice().sort(function (a, b) { return (a.rank || 9999) - (b.rank || 9999); }).forEach(function (c) {
+          var q = (c.quotes || {}).USD || {}, sy = String(c.symbol || '').toLowerCase();
+          if (out.length >= TOTAL || !(q.price > 0) || !/^[a-z0-9]{2,10}$/.test(sy)) return;
+          if (SKIP_SYM.test(sy) || SKIP_NAME.test(c.name || '')) return;
+          out.push({ n: c.name, s: sy, p: q.price, c: q.percent_change_24h || 0, v: q.volume_24h || 0, m: q.market_cap || 0,
+            i: 'https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/128/color/' + sy + '.png', sp: null, r: out.length + 1 });
+        });
+        if (out.length < 20) throw 0;
+        SNAP = { day: today(), t: Date.now(), coins: out }; save(); apply(SNAP);
+        badge(true, 'Data harian online · ' + dlab(SNAP.day) + ' · diperbarui ' + hm(SNAP.t) + ' · ' + out.length + ' aset (CoinPaprika, cadangan)');
+      });
+    }).catch(function () {
+      if (SNAP) badge(false, 'Snapshot harian ' + dlab(SNAP.day) + ' ' + hm(SNAP.t) + ' · CoinGecko & CoinPaprika belum terjangkau, mencoba lagi otomatis');
+      else badge(false, 'Menunggu data harian online (CoinGecko & CoinPaprika belum terjangkau)');
     }).then(function () { busy = false; });
   }
   /* tampil instan dari snapshot hari ini / terakhir, lalu ambil data online */
   if (SNAP && apply(SNAP)) badge(SNAP.day === today(), 'Snapshot harian ' + dlab(SNAP.day) + ' · ' + hm(SNAP.t) + ' · menyinkronkan data online…');
   setTimeout(fetchDaily, 400);
-  setInterval(function () { if (!D.hidden) fetchDaily(); }, 36e5);
-  D.addEventListener('visibilitychange', function () { if (!D.hidden && (!SNAP || SNAP.day !== today() || Date.now() - SNAP.t > 36e5)) fetchDaily(); });
+  setInterval(function () { if (!D.hidden) fetchDaily(); }, 9e5);
+  D.addEventListener('visibilitychange', function () { if (!D.hidden && (!SNAP || SNAP.day !== today() || Date.now() - SNAP.t > 9e5)) fetchDaily(); });
 })();
 </script>
 <script id="ba-sw-reg">
