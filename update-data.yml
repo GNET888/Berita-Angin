@@ -1,0 +1,34 @@
+# Simpan sebagai .github/workflows/update-data.yml (gantikan update-data.yml lama)
+name: update-data
+on:
+  schedule:
+    - cron: "30 22 * * *"   # 05.30 WIB, sebelum pembaca bangun
+    - cron: "0 6 * * *"     # 13.00 WIB, penyegaran siang
+    - cron: "30 14 * * 1-5" # 21.30 WIB hari kerja, setelah bursa AS buka
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Berita pasar + foto -> articles.json
+        run: python update_articles.py || echo "articles dilewati"
+      - name: Semua data halaman -> data.js
+        run: python update_data.py
+      - name: Commit bila berubah
+        run: |
+          git config user.name "berita-angin-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data.js articles.json
+          git diff --staged --quiet || (git commit -m "data: pembaruan harian" && git pull --rebase origin ${{ github.ref_name }} && git push)
