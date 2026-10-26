@@ -3146,6 +3146,12 @@ html.light #xps-ov .xps-x:hover{background:rgba(15,20,25,.08)}
   #xps-ov .xps-box{border-radius:18px 18px 0 0;border-bottom:0;max-height:90vh}
 }
 </style>
+<style id="ba-crumb-arrow">
+/* Di halaman Beranda: tulisan "Beranda", garis pink, dan panah breadcrumb dihapus (desktop) */
+@media (min-width:768px){
+body:has(#page-home.active) #ba-topbar .ba-crumb{display:none!important}
+}
+</style>
 <style id="ba-crumb-underline">
 /* Garis pink di bawah tulisan "Dashboard" (gaya seperti tab aktif "Untuk Anda") */
 #ba-topbar .ba-crumb-root{position:relative;display:inline-block;padding:6px 2px 8px;font-weight:700;color:#f8fafc}
@@ -12430,7 +12436,7 @@ Array.prototype.forEach.call(m.querySelectorAll('.sb-link[data-page]'),function(
     var TITLES={'home':'Beranda','profile':'Profile & Portofolio','crypto-market':'Crypto Market','stock-exchange':'Stock Exchange','global-market':'Global Market','market-stat':'Market Statistik','settings':'Pengaturan','article-detail':'Detail Artikel'};
     var bar=document.createElement('div'); bar.id='ba-topbar';
     bar.innerHTML='<div class="ba-left"><button id="ba-collapse" type="button" aria-label="Ciutkan / lebarkan sidebar" title="Ciutkan / lebarkan sidebar ( [ )"><i class="fa-solid fa-angles-left"></i></button>'
-      +'<div class="ba-crumb"><span class="ba-crumb-ul"><b id="ba-page-title">Beranda</b></span><i class="fa-solid fa-chevron-right"></i></div></div>'
+      +'<div class="ba-crumb"><span class="ba-crumb-ul"><b id="ba-page-title">Beranda</b></span><i class="fa-solid fa-angles-right"></i></div></div>'
       +'<div class="ba-top-right"><span class="ba-live"><span class="ba-live-dot"></span>LIVE</span>'
       +'<span class="ba-date" id="ba-date"></span>'
       +'<span class="ba-clock"><i class="fa-regular fa-clock"></i><span id="ba-clock">--:--:--</span> <span class="ba-tzl">WIB</span></span></div>';
