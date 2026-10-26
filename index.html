@@ -14316,7 +14316,7 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
   function ytUrl(v){var m=/^(channel|id):(.+)$/.exec(v||'');if(!m)return null;
     return m[1]==='channel'?{embed:'https://www.youtube-nocookie.com/embed/live_stream?channel='+m[2]+'&autoplay=1&rel=0&playsinline=1',open:'https://www.youtube.com/channel/'+m[2]+'/live'}
       :{embed:'https://www.youtube-nocookie.com/embed/'+m[2]+'?autoplay=1&rel=0&playsinline=1',open:'https://www.youtube.com/watch?v='+m[2]}}
-  function id(o,i){return 'nw-'+(o.cat||'x')+'-'+i}
+  function id(o,i){var h=5381,t=String(o.title||i),k;for(k=0;k<t.length;k++)h=((h<<5)+h+t.charCodeAt(k))>>>0;return 'nw-'+h.toString(36)}
   function reg(o,key,ts){if(typeof articlesData==='undefined')return;
     var yt=o.video&&ytUrl(o.video.yt),link=o.link||(yt&&yt.open)||'';
     articlesData[key]={category:'Berita '+CAT[o.cat],date:new Date(ts).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'}),title:o.title,author:o.src||'Berita Angin',
@@ -14670,16 +14670,18 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
   var OFF=[6,38,90,170,300,520];
   seeds.forEach(function(p,i){p.dataset.ts=Date.now()-(OFF[i]||600+i*60)*60000});
   function ph(cat,lbl){return 'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1220"/><stop offset="1" stop-color="#1d9bf0" stop-opacity=".6"/></linearGradient></defs><rect width="800" height="450" fill="url(#g)"/><text x="400" y="225" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="54" font-weight="800" fill="#fff">'+esc(lbl)+'</text><text x="400" y="285" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="28" fill="#cbd5e1">'+esc(cat)+'</text></svg>')}
+  function avSvg(n){var p=String(n||'?').trim().split(/\s+/),i=((p[0]||'?').charAt(0)+(p.length>1?p[p.length-1].charAt(0):'')).toUpperCase();return 'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#1e293b"/><text x="100" y="124" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="84" font-weight="800" fill="#38BDF8">'+i.replace(/[<>&]/g,'')+'</text></svg>')}
   function rel(ts){var m=Math.floor((Date.now()-ts)/60000);return m<1?'baru saja':m<60?m+' mnt':m<1440?Math.floor(m/60)+' j':Math.floor(m/1440)+' h'}
   function paras(t){var P=String(t).split(/\n{2,}/).filter(function(x){return x.trim()});return P.map(function(x,i){return '<p'+(i?'':' class="lead"')+'>'+esc(x.trim()).replace(/\n/g,'<br>')+'</p>'}).join('')}
   function reg(o){if(typeof articlesData==='undefined')return;
     var d=new Date(o.ts).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'});
     articlesData[o.id]=o.kind==='artikel'
-      ?{category:o.cat,date:d,title:o.title,author:AUTH,image:o.img||ph(o.cat,'ARTIKEL'),readTime:o.rt+' Menit Baca',content:paras(o.text)}
-      :{category:'Status',date:d,title:o.text.split('\n')[0].slice(0,90)||'Status',author:AUTH,image:o.img||ph('Status','STATUS'),readTime:'',content:paras(o.text)+(window.__xpX?window.__xpX.detail(o):'')}}
+      ?{category:o.cat,date:d,title:o.title,author:o.an||AUTH,image:o.img||ph(o.cat,'ARTIKEL'),readTime:o.rt+' Menit Baca',content:paras(o.text)}
+      :{category:'Status',date:d,title:o.text.split('\n')[0].slice(0,90)||'Status',author:o.an||AUTH,image:o.img||ph('Status','STATUS'),readTime:'',content:paras(o.text)+(window.__xpX?window.__xpX.detail(o):'')}}
   var TRASH='<svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13M10 11v6M14 11v6"/></svg>';
   function mk(o){var el=tpl.cloneNode(true),body=el.querySelector('.xp-body'),isA=o.kind==='artikel';
     el.setAttribute('data-xp-kind',o.kind);el.setAttribute('data-open',o.id);el.setAttribute('aria-label',isA?o.title:o.text.slice(0,80));el.dataset.ts=o.ts;el.dataset.own='1';
+    var an=o.an||o.author_name||o.author||o.name;if(an&&typeof an==='string'){var nm=el.querySelector('.xp-name');if(nm)nm.textContent=an;var vf=el.querySelector('.xi-vf');if(vf)vf.remove();var avi=el.querySelector('.xp-av img');if(avi)avi.src=avSvg(an)}
     el.querySelector('.xp-tag').textContent=isA?o.cat:'Status';
     var tx=body.querySelector('.xp-text');tx.textContent=isA?(o.text.length>180?o.text.slice(0,180).replace(/\s+\S*$/,'')+'…':o.text):o.text;
     var card=body.querySelector('.xp-card'),im=card.querySelector('.xp-media img'),ct=card.querySelector('.xp-cardtxt');
@@ -14725,7 +14727,7 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
     var fr=new FileReader();fr.onload=function(){if(f.type==='image/gif'&&f.size<1500000){img=fr.result;pimg.src=img;prev.hidden=false;return}var im=new Image();im.onload=function(){var k=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
       c.getContext('2d').drawImage(im,0,0,c.width,c.height);img=c.toDataURL('image/jpeg',.72);pimg.src=img;prev.hidden=false};im.src=fr.result};fr.readAsDataURL(f)});
   $('xp-crm').addEventListener('click',function(){img='';pimg.removeAttribute('src');prev.hidden=true});
-  function submit(){if(go.disabled)return;var t=ta.value.trim(),o={id:'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),kind:mode,ts:Date.now(),text:t,img:img};if(window.__xpX)window.__xpX.take(o);
+  function submit(){if(go.disabled)return;var t=ta.value.trim(),o={id:'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),kind:mode,ts:Date.now(),text:t,img:img};if(window.__baName)o.an=window.__baName;if(window.__xpX)window.__xpX.take(o);
     if(mode==='artikel'){o.title=ti.value.trim();o.cat=ca.value;o.rt=Math.max(1,Math.ceil(t.split(/\s+/).length/200))}
     if(window.__baPush)window.__baPush(o);
     posts.unshift(o);if(!save()&&o.img){o.img='';save()}
@@ -14750,6 +14752,111 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
   setMode('status');
 })();
 </script>
+<style id="ba-social-css">
+html.bs-on #page-home .xp-l>span:not(.bs-n),html.bs-on #page-home .xps-n{display:none!important}
+#page-home .bs-n{margin-left:6px;font-size:13px}
+.bs-ov{position:fixed;inset:0;z-index:99990;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.6)}
+.bs-sh{width:min(560px,100%);max-height:86vh;display:flex;flex-direction:column;background:#0b0d12;color:#e7e9ea;border:1px solid #2f3336;border-radius:16px 16px 0 0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
+@media(min-width:700px){.bs-ov{align-items:center}.bs-sh{border-radius:16px}}
+.bs-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid #2f3336}
+.bs-x{border:0;background:none;color:inherit;font-size:24px;line-height:1;cursor:pointer}
+.bs-pv{margin:0;padding:10px 16px;font-size:13px;color:#71767b;border-bottom:1px solid #2f3336;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bs-list{flex:1;overflow:auto;padding:8px 16px;min-height:120px}
+.bs-empty{padding:28px 0;text-align:center;color:#71767b;font-size:14px}
+.bs-cm{display:flex;gap:10px;padding:10px 0}
+.bs-av{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#1e293b;color:#38bdf8;font-weight:800;font-size:13px}
+.bs-cb{min-width:0;flex:1}.bs-cb small{margin-left:8px;color:#71767b}
+.bs-cb p{margin:2px 0 0;white-space:pre-wrap;word-break:break-word;font-size:14.5px;line-height:1.4}
+.bs-del{border:0;background:none;color:#f4212e;font-size:12.5px;padding:2px 0;cursor:pointer}
+.bs-form{display:flex;gap:8px;align-items:flex-end;padding:12px 16px;border-top:1px solid #2f3336}
+.bs-form textarea{flex:1;resize:none;max-height:120px;padding:10px 12px;border-radius:12px;border:1px solid #2f3336;background:transparent;color:inherit;font:inherit}
+.bs-send{border:0;border-radius:999px;padding:9px 18px;background:#1d9bf0;color:#fff;font-weight:700;cursor:pointer}
+.bs-send:disabled{opacity:.5;cursor:default}
+.bs-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:99999;background:#1d9bf0;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px}
+</style>
+<script id="ba-social-js">
+/* SUKA & KOMENTAR lintas pengguna (Supabase). Aktif hanya bila BA_SUPABASE diisi dan pengguna login ke akun server.
+   Tabel: supabase_social.sql. Memakai sesi login yang sudah dibuat ba-cloud.js; tanpa itu, situs tetap lokal. */
+(function(){
+  var CFG=window.BA_SUPABASE||{};
+  if(!CFG.url||/ISI_/.test(CFG.url)||!CFG.anonKey||/ISI_/.test(CFG.anonKey))return;
+  var root=document.getElementById('page-home'),feed=root&&root.querySelector('.xp-feed');if(!feed)return;
+  var BASE=String(CFG.url).replace(/\/$/,'')+'/rest/v1/',ME=null,NAME='',ST={},MY={},busy=false;
+  var esc=function(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+  function note(t){var d=document.createElement('div');d.className='bs-toast';d.textContent=t;document.body.appendChild(d);setTimeout(function(){d.remove()},3200)}
+  function ini(n){var p=String(n||'?').trim().split(/\s+/);return ((p[0]||'?').charAt(0)+(p.length>1?p[p.length-1].charAt(0):'')).toUpperCase()}
+  function ago(iso){var m=Math.floor((Date.now()-new Date(iso).getTime())/60000);return m<1?'baru saja':m<60?m+' mnt':m<1440?Math.floor(m/60)+' j':Math.floor(m/1440)+' h'}
+  function fromLS(){try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);
+      if(!/^sb-.+-auth-token$/.test(k))continue;var j=JSON.parse(localStorage.getItem(k)),s=j&&(j.access_token?j:j.currentSession);
+      if(s&&s.access_token&&(!s.expires_at||s.expires_at*1000>Date.now()+5000))return s}}catch(e){}return null}
+  function sess(){var c=window.BACloud&&(BACloud.client||BACloud.sb||BACloud.supabase);
+    if(c&&c.auth&&c.auth.getSession)return c.auth.getSession().then(function(r){return (r&&r.data&&r.data.session)||fromLS()})['catch'](function(){return fromLS()});
+    return Promise.resolve(fromLS())}
+  function api(path,opt){return sess().then(function(s){
+      if(!s||!s.access_token)throw new Error('nologin');
+      var u=s.user||{},md=u.user_metadata||{};ME=u.id||ME;NAME=md.name||md.full_name||String(u.email||'Pengguna').split('@')[0];window.__baName=NAME;
+      opt=opt||{};opt.headers=Object.assign({apikey:CFG.anonKey,Authorization:'Bearer '+s.access_token,'Content-Type':'application/json'},opt.headers||{});
+      return fetch(BASE+path,opt)}).then(function(r){
+      if(!r.ok)return r.text().then(function(t){throw new Error(r.status+' '+t.slice(0,100))});
+      return r.status===204?null:r.text().then(function(t){return t?JSON.parse(t):null})})}
+  function inList(a){return encodeURIComponent('in.('+a.map(function(x){return '"'+String(x).replace(/["\\]/g,'')+'"'}).join(',')+')')}
+  function ids(){var seen={};return [].slice.call(feed.querySelectorAll('.xp-post[data-open]')).map(function(p){return p.getAttribute('data-open')}).filter(function(x){if(!x||seen[x])return false;seen[x]=1;return true}).slice(0,150)}
+  function paint(){
+    document.documentElement.classList.add('bs-on');window.__bsActive=true;
+    [].forEach.call(feed.querySelectorAll('.xp-post[data-open]'),function(p){var id=p.getAttribute('data-open'),s=ST[id]||{likes:0,comments:0};
+      [['like','likes'],['comment','comments']].forEach(function(x){var b=p.querySelector('.xp-act[data-act="'+x[0]+'"]');if(!b)return;
+        var n=b.querySelector('.bs-n');if(!n){n=document.createElement('span');n.className='bs-n';b.appendChild(n)}
+        n.textContent=s[x[1]]>0?String(s[x[1]]):'';b.classList.toggle('on',x[0]==='like'?!!MY[id]:s.comments>0)})})}
+  function pull(){var a=ids();if(!a.length||busy)return Promise.resolve();busy=true;
+    return api('bs_stats?select=post_id,likes,comments&post_id='+inList(a)).then(function(rows){
+      var n={};(rows||[]).forEach(function(r){n[r.post_id]={likes:r.likes,comments:r.comments}});a.forEach(function(id){ST[id]=n[id]||{likes:0,comments:0}});
+      return api('bs_likes?select=post_id&user_id=eq.'+ME+'&post_id='+inList(a))}).then(function(rows){
+      var m={};(rows||[]).forEach(function(r){m[r.post_id]=1});a.forEach(function(id){MY[id]=!!m[id]});paint()})
+      ['catch'](function(){})['finally'](function(){busy=false})}
+  /* ---- suka ---- */
+  root.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.xp-act[data-act="like"]');
+    if(!b||!window.__bsActive)return;var p=b.closest('.xp-post[data-open]');if(!p)return;
+    e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();
+    var id=p.getAttribute('data-open'),was=!!MY[id],s=ST[id]=ST[id]||{likes:0,comments:0};
+    MY[id]=!was;s.likes=Math.max(0,s.likes+(was?-1:1));paint();
+    var req=was?api('bs_likes?post_id=eq.'+encodeURIComponent(id)+'&user_id=eq.'+ME,{method:'DELETE'})
+               :api('bs_likes?on_conflict=post_id,user_id',{method:'POST',headers:{Prefer:'resolution=ignore-duplicates,return=minimal'},body:JSON.stringify({post_id:id})});
+    req['catch'](function(){MY[id]=was;s.likes=Math.max(0,s.likes+(was?1:-1));paint();note('Gagal menyimpan suka. Coba lagi.')})},true);
+  /* ---- komentar ---- */
+  function openC(p){
+    var id=p.getAttribute('data-open'),title=(p.getAttribute('aria-label')||'Postingan').slice(0,120),rows=[],timer=0;
+    var ov=document.createElement('div');ov.className='bs-ov';
+    ov.innerHTML='<div class="bs-sh" role="dialog" aria-modal="true" aria-label="Komentar"><div class="bs-hd"><b>Komentar</b><button type="button" class="bs-x" aria-label="Tutup">&times;</button></div><p class="bs-pv">'+esc(title)+'</p><div class="bs-list"><div class="bs-empty">Memuat…</div></div><div class="bs-form"><textarea rows="1" maxlength="500" placeholder="Tulis komentar Anda" aria-label="Tulis komentar"></textarea><button type="button" class="bs-send" disabled>Kirim</button></div></div>';
+    document.body.appendChild(ov);
+    var list=ov.querySelector('.bs-list'),ta=ov.querySelector('textarea'),sd=ov.querySelector('.bs-send');
+    function render(){list.innerHTML=rows.length?rows.map(function(r){return '<div class="bs-cm"><div class="bs-av">'+esc(ini(r.author_name))+'</div><div class="bs-cb"><b>'+esc(r.author_name)+'</b><small>'+ago(r.created_at)+'</small><p>'+esc(r.body)+'</p>'+(r.user_id===ME?'<button type="button" class="bs-del" data-d="'+esc(r.id)+'">Hapus</button>':'')+'</div></div>'}).join(''):'<div class="bs-empty">Belum ada komentar. Jadilah yang pertama.</div>'}
+    function sync(){var s=ST[id]=ST[id]||{likes:0,comments:0};s.comments=rows.length;paint()}
+    function load(){api('bs_comments?select=id,user_id,author_name,body,created_at&post_id=eq.'+encodeURIComponent(id)+'&order=created_at.asc&limit=200').then(function(r){
+        var end=list.scrollTop+list.clientHeight>=list.scrollHeight-8;rows=r||[];render();if(end)list.scrollTop=list.scrollHeight;sync()})['catch'](function(){if(!rows.length)list.innerHTML='<div class="bs-empty">Komentar tidak dapat dimuat.</div>'})}
+    function close(){clearInterval(timer);document.removeEventListener('keydown',key,true);ov.remove()}
+    function key(e){if(e.key==='Escape'){e.stopPropagation();close()}}
+    function send(){var v=ta.value.trim();if(!v)return;sd.disabled=true;
+      api('bs_comments',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({post_id:id,author_name:NAME||'Pengguna',body:v})}).then(function(r){
+        if(r&&r[0])rows.push(r[0]);ta.value='';ta.style.height='auto';render();list.scrollTop=list.scrollHeight;sync()})['catch'](function(){sd.disabled=false;note('Komentar gagal dikirim. Coba lagi.')})}
+    ov.addEventListener('click',function(e){if(e.target===ov||e.target.closest('.bs-x'))return close();
+      var d=e.target.closest('[data-d]');if(!d)return;var cid=d.getAttribute('data-d');
+      api('bs_comments?id=eq.'+encodeURIComponent(cid),{method:'DELETE'}).then(function(){rows=rows.filter(function(r){return r.id!==cid});render();sync()})['catch'](function(){note('Gagal menghapus komentar.')})});
+    ta.addEventListener('input',function(){sd.disabled=!ta.value.trim();ta.style.height='auto';ta.style.height=Math.min(ta.scrollHeight,120)+'px'});
+    ta.addEventListener('keydown',function(e){if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();send()}});
+    sd.addEventListener('click',send);document.addEventListener('keydown',key,true);
+    load();timer=setInterval(load,8000);setTimeout(function(){try{ta.focus()}catch(e){}},50)}
+  root.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.xp-act[data-act="comment"]');
+    if(!b||!window.__bsActive)return;var p=b.closest('.xp-post[data-open]');if(!p)return;
+    e.preventDefault();e.stopPropagation();e.stopImmediatePropagation();openC(p)},true);
+  /* ---- penyegaran ---- */
+  var deb=0;function later(){clearTimeout(deb);deb=setTimeout(function(){if(window.__bsActive)paint();pull()},600)}
+  if(window.MutationObserver)new MutationObserver(later).observe(feed,{childList:true});
+  setInterval(function(){if(!document.hidden)pull()},20000);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)pull()});
+  setTimeout(pull,1500);setTimeout(pull,6000);
+})();
+</script>
 <script id="xp-home-js">
 (function(){
   var root=document.getElementById('page-home');if(!root||!root.querySelector('.xp'))return;
@@ -14762,6 +14869,7 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
   function paint(){
     root.querySelectorAll('.xp-act[data-id]').forEach(function(b){
       var id=b.getAttribute('data-id'),k=b.getAttribute('data-act'),on=k==='like'?!!S.likes[id]:!!S.marks[id];
+      if(k==='like'&&window.__bsActive)return;
       b.classList.toggle('on',on);
       if(k==='like'){var s=b.querySelector('span');if(s)s.textContent=on?'1':''}
     });
@@ -15007,14 +15115,16 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
   var D=window.__DAILY||null,IDS=['page-crypto-market','page-stock-exchange','page-global-market','page-market-stat'];
   var MON=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],upd=D&&D.updated?Date.parse(D.updated):NaN,newer=false;
   var st=document.createElement('style');st.textContent='.ba-fresh{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0 0 6px;padding:8px 12px;border:1px solid;border-radius:10px;font:600 12px/16px Inter,system-ui,sans-serif;color:inherit}.ba-fresh i{width:8px;height:8px;border-radius:50%;flex:none}.ba-fresh button{font:inherit;border:0;border-radius:8px;padding:3px 10px;background:#1d9bf0;color:#fff;cursor:pointer}.ba-fresh.ok{border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.08)}.ba-fresh.ok i{background:#22c55e}.ba-fresh.warn{border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.10)}.ba-fresh.warn i{background:#f59e0b}.ba-fresh.old{border-color:rgba(244,63,94,.5);background:rgba(244,63,94,.10)}.ba-fresh.old i{background:#f43f5e}';
-  document.head.appendChild(st);
+  st.textContent+='@media (display-mode:standalone),(display-mode:fullscreen){.ba-fresh{display:none!important}}';document.head.appendChild(st);
   function wib(ms){var d=new Date(ms+7*36e5),p=function(n){return ('0'+n).slice(-2)};return d.getUTCDate()+' '+MON[d.getUTCMonth()]+' '+d.getUTCFullYear()+' '+p(d.getUTCHours())+'.'+p(d.getUTCMinutes())+' WIB'}
   function text(){if(isNaN(upd))return ['warn','Waktu pembaruan snapshot data harian tidak diketahui. Angka live tetap dicoba; jalankan update_data.py agar tercatat.'];
     var h=(Date.now()-upd)/36e5,dd=Math.floor(h/24);
     if(h<=30)return ['ok','Data harian diperbarui '+wib(upd)+'. Harga live diperbarui otomatis saat tersambung.'];
     if(h<=72)return ['warn','Snapshot data harian terakhir '+wib(upd)+' ('+(dd<1?'1':dd)+' hari lalu). Angka live tetap dicoba, cadangan mulai lama.'];
     return ['old','Snapshot data harian sudah lama ('+wib(upd)+', '+dd+' hari lalu). Bila angka live gagal dimuat, tampilan memakai angka lama. Periksa pembaruan otomatis (GitHub Actions).']}
+  function isApp(){try{return (window.matchMedia&&(matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches))||navigator.standalone===true}catch(e){return false}}
   function paint(){var t=text();IDS.forEach(function(id){var p=document.getElementById(id);if(!p)return;var b=p.querySelector('.ba-fresh');
+    if(isApp()){if(b)b.remove();return}
     if(!b){b=document.createElement('div');b.className='ba-fresh';b.setAttribute('role','status');p.insertBefore(b,p.firstChild)}
     b.className='ba-fresh '+t[0];b.innerHTML='<i aria-hidden="true"></i><span></span>'+(newer?'<button type="button">Data baru tersedia &middot; Muat ulang</button>':'');
     b.querySelector('span').textContent=t[1];var bt=b.querySelector('button');if(bt)bt.onclick=function(){location.reload()}})}
