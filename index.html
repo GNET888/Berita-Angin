@@ -3913,7 +3913,7 @@ function finish(){if(fin)return;fin=true;
                         <textarea id="xp-q" class="xp-in" rows="1" maxlength="500" placeholder="Apa yang sedang terjadi?" aria-label="Tulis status atau artikel"></textarea>
                         <div class="xp-cprev" id="xp-cprev" hidden><img id="xp-cimg" alt="Pratinjau foto"><button type="button" id="xp-crm" aria-label="Hapus foto">&times;</button></div>
                         <div class="xp-crow">
-                            <div class="xp-tools" id="xp-tools" role="toolbar" aria-label="Alat postingan"><label class="xp-pick" title="Foto" aria-label="Foto"><input type="file" id="xp-cfile" accept="image/*" hidden><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 17l5-5 4 4 2.5-2.5L20 17"/></svg></label><label class="xp-pick" title="Video" aria-label="Video"><input type="file" id="xp-cvid" accept="video/*" hidden><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="12.5" height="12" rx="2.5"/><path d="M15.5 10.5l5-3v9l-5-3z"/></svg></label><button type="button" data-tool="gif" title="GIF" aria-label="GIF"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3.5"/><text x="12" y="15.2" text-anchor="middle" font-size="7.2" font-weight="800" fill="currentColor" stroke="none" font-family="Inter,Arial,sans-serif">GIF</text></svg></button><button type="button" data-tool="emoji" title="Emoji" aria-label="Emoji"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor"/><circle cx="15" cy="10" r=".6" fill="currentColor"/><path d="M8.3 14c.9 1.6 2.1 2.3 3.7 2.3s2.8-.7 3.7-2.3"/></svg></button><button type="button" data-tool="sticker" title="Stiker" aria-label="Stiker"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14a1 1 0 011 1v9l-6 6H5a1 1 0 01-1-1V5a1 1 0 011-1z"/><path d="M20 14h-5a1 1 0 00-1 1v5"/><path d="M8.5 11.5c.7 1 1.5 1.5 2.5 1.5"/></svg></button><button type="button" data-tool="poll" title="Polling" aria-label="Polling"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6h9M5 12h14M5 18h6" stroke-width="2.6"/></svg></button><button type="button" data-tool="quote" title="Kutipan" aria-label="Kutipan"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 011 1v9a1 1 0 01-1 1h-6l-4 3.5V16H4a1 1 0 01-1-1V6a1 1 0 011-1z"/><path d="M8.5 9.5c-.9 0-1.4.6-1.4 1.4s.5 1.3 1.3 1.3M14 9.5c-.9 0-1.4.6-1.4 1.4s.5 1.3 1.3 1.3"/></svg></button></div>
+                            <div class="xp-tools" id="xp-tools" role="toolbar" aria-label="Alat postingan"><label class="xp-pick" title="Foto (sampai 4)" aria-label="Foto, pilih sampai 4"><input type="file" id="xp-cfile" accept="image/*" multiple hidden><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="15" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 17l5-5 4 4 2.5-2.5L20 17"/></svg></label><label class="xp-pick" title="Video (sampai 4)" aria-label="Video, pilih sampai 4"><input type="file" id="xp-cvid" accept="video/*" multiple hidden><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="12.5" height="12" rx="2.5"/><path d="M15.5 10.5l5-3v9l-5-3z"/></svg></label><button type="button" data-tool="gif" title="GIF" aria-label="GIF"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3.5"/><text x="12" y="15.2" text-anchor="middle" font-size="7.2" font-weight="800" fill="currentColor" stroke="none" font-family="Inter,Arial,sans-serif">GIF</text></svg></button><button type="button" data-tool="emoji" title="Emoji" aria-label="Emoji"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r=".6" fill="currentColor"/><circle cx="15" cy="10" r=".6" fill="currentColor"/><path d="M8.3 14c.9 1.6 2.1 2.3 3.7 2.3s2.8-.7 3.7-2.3"/></svg></button><button type="button" data-tool="sticker" title="Stiker" aria-label="Stiker"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h14a1 1 0 011 1v9l-6 6H5a1 1 0 01-1-1V5a1 1 0 011-1z"/><path d="M20 14h-5a1 1 0 00-1 1v5"/><path d="M8.5 11.5c.7 1 1.5 1.5 2.5 1.5"/></svg></button><button type="button" data-tool="poll" title="Polling" aria-label="Polling"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6h9M5 12h14M5 18h6" stroke-width="2.6"/></svg></button><button type="button" data-tool="quote" title="Kutipan" aria-label="Kutipan"><svg class="xi" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 011 1v9a1 1 0 01-1 1h-6l-4 3.5V16H4a1 1 0 01-1-1V6a1 1 0 011-1z"/><path d="M8.5 9.5c-.9 0-1.4.6-1.4 1.4s.5 1.3 1.3 1.3M14 9.5c-.9 0-1.4.6-1.4 1.4s.5 1.3 1.3 1.3"/></svg></button></div>
                             <button type="button" class="xp-go" id="xp-go" disabled>Posting</button><span class="xp-cnt" id="xp-cnt" aria-live="polite">500</span>
                         </div>
                         <div class="xp-emo" id="xp-emo" hidden></div>
@@ -14303,6 +14303,14 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
     {cat:'peristiwa',ago:62,title:'Agenda Pekan Ini: Data Inflasi, Tenaga Kerja, dan Pidato Pejabat Bank Sentral',text:'Rilis data ekonomi utama dan pernyataan pejabat bank sentral sering memicu volatilitas jangka pendek. Cek kalender pasar sebelum mengambil posisi.',img:U('photo-1444653389962-8149286c578a'),src:'Pantauan Berita Angin'},
     {cat:'peristiwa',ago:85,title:'Berita Dunia Terkini dari DW News',text:'Ringkasan peristiwa internasional terbaru dalam format video.',img:U('photo-1495020689067-958852a7765e'),video:{yt:'channel:UCknLrEdhRCp1aegoMqRaCZg'},src:'DW News · YouTube'}
   ];
+  /* UNGGAHAN REDAKSI: 2 foto + 2 video, selalu tampil paling atas (tidak ikut tergantikan berita harian).
+     Foto: 1.jpg, 2.jpg. Video: video1.mp4, video2.mp4 (poster = 3.jpg, 4.jpg). Semua taruh di folder yang sama dengan index.html. */
+  var UPL=[
+    {cat:'peristiwa',ago:1,title:'Unggahan Foto: Suasana Terbaru',text:'Dokumentasi foto terbaru dari redaksi Berita Angin.',img:'1.jpg',src:'Unggahan Berita Angin'},
+    {cat:'global',ago:2,title:'Unggahan Video: Rekaman Terbaru',text:'Rekaman video singkat dari redaksi. Ketuk tombol putar untuk menonton.',img:'3.jpg',video:{yt:'file:video1.mp4',poster:'3.jpg'},src:'Unggahan Berita Angin'},
+    {cat:'keuangan',ago:3,title:'Unggahan Foto: Dokumentasi Pasar',text:'Dokumentasi foto kedua dari redaksi Berita Angin.',img:'2.jpg',src:'Unggahan Berita Angin'},
+    {cat:'peristiwa',ago:4,title:'Unggahan Video: Liputan Singkat',text:'Liputan video singkat dari redaksi. Ketuk tombol putar untuk menonton.',img:'4.jpg',video:{yt:'file:video2.mp4',poster:'4.jpg'},src:'Unggahan Berita Angin'}
+  ];
   function ph(cat,lbl){var p=PAL[cat]||PAL.global;return 'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+p[0]+'"/><stop offset="1" stop-color="'+p[1]+'" stop-opacity=".6"/></linearGradient></defs><rect width="800" height="450" fill="url(#g)"/><g stroke="'+p[1]+'" opacity=".3" stroke-width="3" fill="none"><path d="M0 330L120 270 240 300 360 200 480 240 600 120 720 160 800 90"/><path d="M0 380L120 340 240 360 360 290 480 320 600 230 720 260 800 210"/></g><text x="40" y="410" font-family="Inter,Arial,sans-serif" font-size="34" font-weight="800" fill="#fff" opacity=".9">'+esc(lbl)+'</text></svg>')}
   var PLAY='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
   function ytUrl(v){var m=/^(channel|id):(.+)$/.exec(v||'');if(!m)return null;
@@ -14335,6 +14343,7 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
     var v=el.querySelector('.xp-v');if(v)v.remove();
     reg(o,key,ts);return el}
   function render(list){
+    list=UPL.concat((list||[]).filter(function(x){return !(x&&x.src==='Unggahan Berita Angin')}));
     [].forEach.call(feed.querySelectorAll('.xp-post[data-nw]'),function(p){p.remove()});
     var ref=document.getElementById('xp-empty');
     list.slice(0,24).forEach(function(o,i){if(!o||!o.title)return;feed.insertBefore(mk(o,i),ref)});
@@ -14354,6 +14363,33 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
 })();
 </script>
 
+<style id="xp-gal-css">
+/* ===== Galeri foto/video sampai 4 (gaya X / Threads) ===== */
+#page-home .xp-gprev{position:relative;margin:2px 0 8px}
+#page-home .xp-gprev[hidden]{display:none}
+#page-home .xp-ghint{display:block;margin-top:6px;color:var(--xp-m);font-size:12.5px}
+#page-home .xp-gal{display:grid;gap:2px;margin-top:12px;aspect-ratio:16/9;border:1px solid var(--xp-line);border-radius:16px;overflow:hidden;background:#000}
+#page-home .xp-gprev .xp-gal{margin-top:0}
+#page-home .xp-gal.n2{grid-template-columns:1fr 1fr}
+#page-home .xp-gal.n3{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+#page-home .xp-gal.n3>.g:first-child{grid-row:1/span 2}
+#page-home .xp-gal.n4{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+#page-home .xp-gal>.g{position:relative;min-width:0;min-height:0;overflow:hidden;background:#0b0d12;cursor:pointer}
+#page-home .xp-gal>.g:focus-visible{outline:2px solid var(--xp-a);outline-offset:-2px}
+#page-home .xp-gal>.g img,#page-home .xp-gal>.g video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+#page-home .xp-gld{position:absolute;inset:0;display:grid;place-items:center;padding:8px;text-align:center;color:#94a3b8;font-size:12.5px}
+#page-home .xp-gplay{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;background:rgba(0,0,0,.6);border:2px solid #fff;pointer-events:none}
+#page-home .xp-gplay::after{content:"";position:absolute;left:19px;top:14px;border-left:14px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent}
+#page-home .xp-grm{position:absolute;top:6px;right:6px;z-index:2;width:28px;height:28px;border:0;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;font-size:18px;line-height:1;cursor:pointer}
+.xp-lb{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.94)}
+.xp-lbm{max-width:96vw;max-height:92vh;display:flex;align-items:center;justify-content:center}
+.xp-lbm img,.xp-lbm video{max-width:96vw;max-height:92vh;object-fit:contain;border-radius:8px;background:#000}
+.xp-lbx,.xp-lbn{position:absolute;z-index:2;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;cursor:pointer;line-height:1}
+.xp-lbx{top:14px;left:14px;width:42px;height:42px;font-size:26px}
+.xp-lbn{top:50%;width:46px;height:46px;margin-top:-23px;font-size:32px}
+.xp-lbn.p{left:14px}.xp-lbn.n{right:14px}
+.xp-lbc{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#e7e9ea;font-size:13px}
+</style>
 <script id="xp-x-js">
 (function(){
   var root=document.getElementById('page-home');if(!root)return;
@@ -14398,6 +14434,7 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
         if(a.med.k==='video'){var v=document.createElement('video');v.controls=true;v.playsInline=true;v.preload='metadata';v.src=u;v.onerror=function(){s.innerHTML='<small>Format video tidak didukung browser ini.</small>'};s.appendChild(v)}
         else{var im=new Image();im.alt='GIF';im.src=u;s.appendChild(im)}
       }).catch(function(){s.innerHTML='<small>Media tidak dapat dimuat.</small>'})}
+    if(a.gal&&a.gal.k&&a.gal.k.length)buildGal(w,o,a.gal);
     if(a.mus){var m=document.createElement('div');m.className='xp-ms';m.innerHTML='<b>🎵 '+esc(a.mus.n)+'</b>';w.appendChild(m);
       getSrc(o,'mus').then(function(u){if(!u)return;var au=document.createElement('audio');au.controls=true;au.preload='metadata';au.src=u;m.appendChild(au)}).catch(function(){})}
     if(a.poll){var pb=document.createElement('div');pb.className='xp-poll';w.appendChild(pb);drawPoll(pb,o.id,a.poll);
@@ -14411,14 +14448,16 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
     if(a.n)h+='<p><b>'+esc(a.n.t||'Catatan')+'</b><br>'+esc(a.n.b||'')+'</p>';
     if(a.loc)h+='<p>📍 <a href="'+esc(mapUrl(a.loc))+'" target="_blank" rel="noopener noreferrer">'+esc(a.loc.n)+'</a></p>';
     if(a.poll)h+='<p>📊 Polling: '+a.poll.o.map(esc).join(' · ')+'</p>';
+    if(a.gal&&a.gal.m)h+=a.gal.m.filter(Boolean).map(function(u){return '<p><img src="'+esc(u)+'" alt="Foto" style="max-width:100%;border-radius:12px"></p>'}).join('');
     return h}
   /* ---------- status editor ---------- */
   var S,panel,chips,mprev,note,noteT,cur='',gifIn,audIn,vidIn=$('xp-cvid');
-  function fresh(){return {sticker:'',poll:{o:['',''],dur:86400000},q:{t:'',s:''},n:{t:'',b:''},loc:{n:'',la:null,ln:null},mus:{f:null,n:''},med:{f:null,k:'',url:''}}}
+  function fresh(){return {sticker:'',poll:{o:['',''],dur:86400000},q:{t:'',s:''},n:{t:'',b:''},loc:{n:'',la:null,ln:null},mus:{f:null,n:''},med:{f:null,k:'',url:''},gal:[]}}
   S=fresh();
   function pollOk(){return S.poll.o.filter(function(x){return x.trim()}).length>=2}
   function locOk(){return !!(S.loc.n.trim()||S.loc.la!=null)}
-  function has(){return !!(S.sticker||pollOk()||S.q.t.trim()||S.n.t.trim()||S.n.b.trim()||locOk()||S.mus.f||S.med.f)}
+  function galOk(){return S.gal.some(function(g){return g.k==='vid'||g.data})}
+  function has(){return !!(S.sticker||pollOk()||S.q.t.trim()||S.n.t.trim()||S.n.b.trim()||locOk()||S.mus.f||S.med.f||galOk())}
   /* elemen tambahan di kotak posting */
   mprev=document.createElement('div');mprev.className='xp-cprev';mprev.id='xp-mprev';mprev.hidden=true;
   chips=document.createElement('div');chips.className='xp-chips';chips.id='xp-chips';
@@ -14434,7 +14473,8 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
   function refresh(){
     var on={gif:S.med.k==='gif',sticker:!!S.sticker,poll:pollOk(),quote:!!S.q.t.trim(),note:!!(S.n.t.trim()||S.n.b.trim()),loc:locOk(),music:!!S.mus.f};
     [].forEach.call(bar.querySelectorAll('button[data-tool]'),function(b){b.classList.toggle('has',!!on[b.getAttribute('data-tool')])});
-    if(vidIn&&vidIn.parentNode)vidIn.parentNode.classList.toggle('has',S.med.k==='video');
+    if(vidIn&&vidIn.parentNode)vidIn.parentNode.classList.toggle('has',S.gal.some(function(g){return g.k==='vid'}));
+    if(fl&&fl.parentNode)fl.parentNode.classList.toggle('has',S.gal.some(function(g){return g.k==='img'}));
     var c=[];
     if(S.sticker)c.push(['sticker','Stiker '+S.sticker]);
     if(pollOk())c.push(['poll','📊 Polling · '+S.poll.o.filter(function(x){return x.trim()}).length+' opsi']);
@@ -14453,22 +14493,82 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
     if(k==='loc')S.loc={n:'',la:null,ln:null};
     if(k==='music')S.mus={f:null,n:''};
     if(k==='media'){if(S.med.url)URL.revokeObjectURL(S.med.url);S.med={f:null,k:'',url:''};mprev.innerHTML='';mprev.hidden=true}
+    if(k==='gal'){S.gal.forEach(function(g){if(g.url)URL.revokeObjectURL(g.url)});S.gal=[];paintGal()}
     if(cur===k)closePanel();refresh()}
-  function reset(){['sticker','poll','quote','note','loc','music','media'].forEach(function(k){clearOne(k)});closePanel();emo.hidden=true}
+  function reset(){['sticker','poll','quote','note','loc','music','media','gal'].forEach(function(k){clearOne(k)});closePanel();emo.hidden=true}
+  /* ---------- GALERI: sampai 4 foto/video sekaligus ---------- */
+  var GMAX=4,gprev=document.createElement('div');gprev.className='xp-gprev';gprev.id='xp-gprev';gprev.hidden=true;mprev.after(gprev);
+  function shrink(f,cb){var fr=new FileReader();fr.onerror=function(){cb('')};
+    fr.onload=function(){if(f.type==='image/gif'&&f.size<1500000){cb(fr.result);return}
+      var im=new Image();im.onerror=function(){cb('')};
+      im.onload=function(){var k=Math.min(1,1000/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));
+        c.getContext('2d').drawImage(im,0,0,c.width,c.height);cb(c.toDataURL('image/jpeg',.7))};
+      im.src=fr.result};
+    fr.readAsDataURL(f)}
+  function paintGal(){var n=S.gal.length;gprev.hidden=!n;
+    if(!n){gprev.innerHTML='';return}
+    gprev.innerHTML='<div class="xp-gal n'+n+'">'+S.gal.map(function(g,i){
+      var inner=g.k==='vid'?'<video muted playsinline preload="metadata" src="'+g.url+'#t=0.1"></video><span class="xp-gplay"></span>':(g.data?'<img alt="Pratinjau foto '+(i+1)+'" src="'+g.data+'">':'<span class="xp-gld">Memproses…</span>');
+      return '<div class="g">'+inner+'<button type="button" class="xp-grm" data-g="'+i+'" aria-label="Hapus item '+(i+1)+'">&times;</button></div>'}).join('')+'</div><small class="xp-ghint">'+n+' dari '+GMAX+' foto/video</small>'}
+  function addGal(files,kind){
+    if(!files.length)return;
+    var room=GMAX-S.gal.length;
+    if(room<=0){say('Maksimal '+GMAX+' foto/video per postingan. Hapus salah satu dulu.');return}
+    if(files.length>room)say('Maksimal '+GMAX+' foto/video per postingan. Hanya '+room+' file pertama yang dipakai.');
+    if(S.med.f)clearOne('media');
+    files.slice(0,room).forEach(function(f){
+      if(kind==='vid'){
+        if(!/^video\//.test(f.type)){say('"'+f.name+'" bukan video.');return}
+        if(f.size>LIM.video){say('"'+f.name+'" melebihi '+Math.round(LIM.video/1048576)+' MB.');return}
+        S.gal.push({k:'vid',f:f,url:URL.createObjectURL(f)})}
+      else{
+        if(!/^image\//.test(f.type)){say('"'+f.name+'" bukan foto.');return}
+        var it={k:'img',f:f,data:''};S.gal.push(it);
+        shrink(f,function(d){if(!d){S.gal=S.gal.filter(function(x){return x!==it});say('Format foto "'+f.name+'" tidak didukung browser.')}else it.data=d;paintGal();refresh()})}
+    });
+    paintGal();refresh()}
+  gprev.addEventListener('click',function(e){var b=e.target.closest('[data-g]');if(!b)return;var i=+b.getAttribute('data-g'),g=S.gal[i];if(!g)return;if(g.url)URL.revokeObjectURL(g.url);S.gal.splice(i,1);paintGal();refresh()});
+  function lightbox(items,start){
+    var i=start,prevOv=document.documentElement.style.overflow,ov=document.createElement('div');ov.className='xp-lb';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','Pratinjau media');
+    ov.innerHTML='<button type="button" class="xp-lbx" data-a="x" aria-label="Tutup">&times;</button>'+(items.length>1?'<button type="button" class="xp-lbn p" data-a="p" aria-label="Sebelumnya">&#8249;</button><button type="button" class="xp-lbn n" data-a="n" aria-label="Berikutnya">&#8250;</button><span class="xp-lbc"></span>':'')+'<div class="xp-lbm"></div>';
+    var m=ov.querySelector('.xp-lbm'),c=ov.querySelector('.xp-lbc');
+    function show(){m.innerHTML='';var it=items[i],el;
+      if(it.k==='v'){el=document.createElement('video');el.controls=true;el.autoplay=true;el.playsInline=true;el.src=it.src}
+      else{el=document.createElement('img');el.alt='Foto '+(i+1);el.src=it.src}
+      m.appendChild(el);if(c)c.textContent=(i+1)+' / '+items.length}
+    function close(){var v=m.querySelector('video');if(v)v.pause();document.removeEventListener('keydown',key,true);ov.remove();document.documentElement.style.overflow=prevOv}
+    function go(d){i=(i+d+items.length)%items.length;show()}
+    function key(e){if(e.key==='Escape'){e.stopPropagation();close()}else if(items.length>1&&e.key==='ArrowRight')go(1);else if(items.length>1&&e.key==='ArrowLeft')go(-1)}
+    ov.addEventListener('click',function(e){var a=e.target.closest('[data-a]');if(a){var t=a.getAttribute('data-a');if(t==='x')close();else go(t==='n'?1:-1);return}if(e.target===ov||e.target===m)close()});
+    document.addEventListener('keydown',key,true);document.documentElement.style.overflow='hidden';document.body.appendChild(ov);show()}
+  function buildGal(w,o,g){
+    var n=Math.min(GMAX,g.k.length),items=[],box=document.createElement('div');box.className='xp-gal n'+n;
+    for(var i=0;i<n;i++)(function(i){
+      var isV=g.k[i]==='v',cell=document.createElement('div'),it={k:isV?'v':'i',src:isV?'':((g.m&&g.m[i])||'')};
+      cell.className='g';cell.tabIndex=0;cell.setAttribute('role','button');cell.setAttribute('aria-label',(isV?'Putar video ':'Buka foto ')+(i+1));items.push(it);
+      if(isV){cell.innerHTML='<span class="xp-gld">Memuat video…</span>';
+        getSrc(o,'g'+i).then(function(u){if(!u){cell.innerHTML='<span class="xp-gld">Video tidak ada di browser ini.</span>';return}
+          it.src=u;cell.innerHTML='<video muted playsinline preload="metadata" src="'+esc(u)+'#t=0.1"></video><span class="xp-gplay"></span>'})['catch'](function(){cell.innerHTML='<span class="xp-gld">Video tidak dapat dimuat.</span>'})}
+      else cell.innerHTML=it.src?'<img alt="Foto '+(i+1)+'" loading="lazy" decoding="async" src="'+esc(it.src)+'">':'<span class="xp-gld">Foto tidak tersedia.</span>';
+      box.appendChild(cell)})(i);
+    function open(c){var i=[].indexOf.call(box.children,c);if(items[i]&&items[i].src)lightbox(items,i)}
+    box.addEventListener('click',function(e){var c=e.target.closest('.g');if(c)open(c)});
+    box.addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')return;var c=e.target.closest('.g');if(c){e.preventDefault();open(c)}});
+    w.appendChild(box)}
   /* ---------- video & GIF ---------- */
   function setMedia(f,k){
     var lim=k==='video'?LIM.video:LIM.gif;
     if(k==='video'&&!/^video\//.test(f.type)){say('File yang dipilih bukan video.');return}
     if(k==='gif'&&f.type!=='image/gif'){say('Pilih file berformat GIF.');return}
     if(f.size>lim){say('Ukuran maksimal '+Math.round(lim/1048576)+' MB untuk '+(k==='video'?'video':'GIF')+'.');return}
-    clearOne('media');var rm=$('xp-crm');if(cprev&&!cprev.hidden&&rm)rm.click();
+    clearOne('media');clearOne('gal');var rm=$('xp-crm');if(cprev&&!cprev.hidden&&rm)rm.click();
     var u=URL.createObjectURL(f);S.med={f:f,k:k,url:u};
     mprev.innerHTML=(k==='video'?'<video controls playsinline preload="metadata" src="'+u+'"></video>':'<img alt="Pratinjau GIF" src="'+u+'">')+'<button type="button" data-rm="media" aria-label="Hapus media">&times;</button>';
     var v=mprev.querySelector('video');if(v)v.onerror=function(){say('Format video ini tidak didukung browser. Coba MP4 atau WebM.')};
     mprev.hidden=false;refresh()}
-  if(vidIn)vidIn.addEventListener('change',function(){var f=vidIn.files&&vidIn.files[0];vidIn.value='';if(f)setMedia(f,'video')});
+  if(vidIn)vidIn.addEventListener('change',function(){var fs=[].slice.call(vidIn.files||[]);vidIn.value='';addGal(fs,'vid')});
   gifIn.addEventListener('change',function(){var f=gifIn.files&&gifIn.files[0];gifIn.value='';if(f)setMedia(f,'gif')});
-  if(fl)fl.addEventListener('change',function(){if(fl.files&&fl.files[0])clearOne('media')});
+  if(fl)fl.addEventListener('change',function(e){e.stopImmediatePropagation();var fs=[].slice.call(fl.files||[]);fl.value='';addGal(fs,'img')});
   audIn.addEventListener('change',function(){var f=audIn.files&&audIn.files[0];audIn.value='';if(!f)return;
     if(!/^audio\//.test(f.type)){say('File yang dipilih bukan audio.');return}
     if(f.size>LIM.audio){say('Ukuran audio maksimal 30 MB.');return}
@@ -14545,10 +14645,14 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
       if(locOk())a.loc={n:S.loc.n.trim()||'Lokasi saya',la:S.loc.la,ln:S.loc.ln};
       if(S.mus.f){a.mus={n:S.mus.n.trim()||S.mus.f.name.replace(/\.[^.]+$/,'')};store(o.id+':mus',S.mus.f)}
       if(S.med.f){a.med={k:S.med.k};store(o.id+':med',S.med.f)}
+      var G=S.gal.filter(function(g){return g.k==='vid'||g.data});
+      if(G.length){a.gal={k:G.map(function(g){return g.k==='vid'?'v':'i'}),m:G.map(function(g){return g.k==='img'?g.data:''})};
+        window.__baPend[o.id].gal=G.map(function(g){return g.k==='vid'?g.f:null});
+        G.forEach(function(g,i){if(g.k==='vid')store(o.id+':g'+i,g.f)})}
       o.att=a;
       S.med.url='';S.med.f=null;S.mus.f=null;reset()},
-    pend:function(id){return Promise.all([getBlob(id+':med')['catch'](function(){return null}),getBlob(id+':mus')['catch'](function(){return null})]).then(function(r){return {med:r[0]||null,mus:r[1]||null}})},
-    drop:function(id){[':med',':mus'].forEach(function(s){delete cache[id+s];idbDel(id+s)['catch'](function(){})});var s=pStore();if(s[id]){delete s[id];pSave(s)}}
+    pend:function(id){var ks=[':med',':mus',':g0',':g1',':g2',':g3'];return Promise.all(ks.map(function(k){return getBlob(id+k)['catch'](function(){return null})})).then(function(r){return {med:r[0]||null,mus:r[1]||null,gal:r.slice(2).map(function(x){return x||null})}})},
+    drop:function(id){[':med',':mus',':g0',':g1',':g2',':g3'].forEach(function(s){delete cache[id+s];idbDel(id+s)['catch'](function(){})});var s=pStore();if(s[id]){delete s[id];pSave(s)}}
   };
 })();
 </script>
