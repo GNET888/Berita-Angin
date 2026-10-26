@@ -15109,31 +15109,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   setInterval(function(){if(dayKey(new Date())!==cur){curated=!!(cached()||(D&&D.articles&&D.articles.length));var c2=cached()||(D&&D.articles)||cachedLive();liveShown=!curated&&!!c2;cursig=sig(c2);render(c2);remote()}},300000);
 })();
 </script>
-<script id="ba-fresh-js">
-/* PENANDA KESEGARAN DATA: tiap halaman pasar menampilkan kapan snapshot data harian (data.js) dibuat, memberi peringatan bila sudah lama, dan mengabarkan bila data.js terbaru sudah tersedia saat tab dibiarkan terbuka. */
-(function(){
-  var D=window.__DAILY||null,IDS=['page-crypto-market','page-stock-exchange','page-global-market','page-market-stat'];
-  var MON=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],upd=D&&D.updated?Date.parse(D.updated):NaN,newer=false;
-  var st=document.createElement('style');st.textContent='.ba-fresh{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0 0 6px;padding:8px 12px;border:1px solid;border-radius:10px;font:600 12px/16px Inter,system-ui,sans-serif;color:inherit}.ba-fresh i{width:8px;height:8px;border-radius:50%;flex:none}.ba-fresh button{font:inherit;border:0;border-radius:8px;padding:3px 10px;background:#1d9bf0;color:#fff;cursor:pointer}.ba-fresh.ok{border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.08)}.ba-fresh.ok i{background:#22c55e}.ba-fresh.warn{border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.10)}.ba-fresh.warn i{background:#f59e0b}.ba-fresh.old{border-color:rgba(244,63,94,.5);background:rgba(244,63,94,.10)}.ba-fresh.old i{background:#f43f5e}';
-  st.textContent+='@media (display-mode:standalone),(display-mode:fullscreen){.ba-fresh{display:none!important}}';document.head.appendChild(st);
-  function wib(ms){var d=new Date(ms+7*36e5),p=function(n){return ('0'+n).slice(-2)};return d.getUTCDate()+' '+MON[d.getUTCMonth()]+' '+d.getUTCFullYear()+' '+p(d.getUTCHours())+'.'+p(d.getUTCMinutes())+' WIB'}
-  function text(){if(isNaN(upd))return ['warn','Waktu pembaruan snapshot data harian tidak diketahui. Angka live tetap dicoba; jalankan update_data.py agar tercatat.'];
-    var h=(Date.now()-upd)/36e5,dd=Math.floor(h/24);
-    if(h<=30)return ['ok','Data harian diperbarui '+wib(upd)+'. Harga live diperbarui otomatis saat tersambung.'];
-    if(h<=72)return ['warn','Snapshot data harian terakhir '+wib(upd)+' ('+(dd<1?'1':dd)+' hari lalu). Angka live tetap dicoba, cadangan mulai lama.'];
-    return ['old','Snapshot data harian sudah lama ('+wib(upd)+', '+dd+' hari lalu). Bila angka live gagal dimuat, tampilan memakai angka lama. Periksa pembaruan otomatis (GitHub Actions).']}
-  function isApp(){try{return (window.matchMedia&&(matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches))||navigator.standalone===true}catch(e){return false}}
-  function paint(){var t=text();IDS.forEach(function(id){var p=document.getElementById(id);if(!p)return;var b=p.querySelector('.ba-fresh');
-    if(isApp()){if(b)b.remove();return}
-    if(!b){b=document.createElement('div');b.className='ba-fresh';b.setAttribute('role','status');p.insertBefore(b,p.firstChild)}
-    b.className='ba-fresh '+t[0];b.innerHTML='<i aria-hidden="true"></i><span></span>'+(newer?'<button type="button">Data baru tersedia &middot; Muat ulang</button>':'');
-    b.querySelector('span').textContent=t[1];var bt=b.querySelector('button');if(bt)bt.onclick=function(){location.reload()}})}
-  function check(){if(location.protocol.indexOf('http')!==0)return;try{fetch('data.js?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(x){var m=/"updated":"([^"]+)"/.exec(x||'');if(!m)return;var t=Date.parse(m[1]);if(!isNaN(t)&&(isNaN(upd)||t>upd+36e5)&&!newer){newer=true;paint()}}).catch(function(){})}catch(e){}}
-  paint();setInterval(paint,600000);setInterval(check,1800000);
-  document.addEventListener('visibilitychange',function(){if(!document.hidden){paint();check()}});
-  setTimeout(check,4000);
-})();
-</script>
 <script id="xp-nav-icons">
 (function(){
   var G='style="fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"';
