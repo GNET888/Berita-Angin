@@ -6989,7 +6989,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
             document.getElementById('detail-date').innerText = article.date;
             document.getElementById('detail-title').innerText = article.title;
             document.getElementById('detail-author').innerText = article.author;
-            {const di=document.getElementById('detail-image');di.onerror=function(){baImgFB(this)};di.setAttribute('data-fb',article.imageFb||'');di.setAttribute('data-ph',article.imagePh||'');di.src = article.image;}
+            {const di=document.getElementById('detail-image');di.onerror=function(){baImgFB(this)};di.referrerPolicy='no-referrer';di.setAttribute('data-fb',article.imageFb||'');di.setAttribute('data-ph',article.imagePh||'');di.src = article.image;}
             document.getElementById('detail-read-time').innerText = article.readTime || '';
             const box = document.getElementById('detail-content');
             box.innerHTML = article.content;
@@ -12246,7 +12246,7 @@ function news(){if(!$('se2-news'))return;NLOAD=true;if(!NEWS.length)rNews();
     n.e=e||['umum','Pasar AS Umum','#94a3b8','',''];n.sn=(BULL.test(t)?1:0)-(BEAR.test(t)?1:0);
     n.tk=WLR.filter(function(w){return (w.rs&&w.rs.test(t))||w.rn.test(t)}).map(function(w){return w.s}).slice(0,3);out.push(n)});
    out.sort(function(x,y){return y.date-x.date});
-   if(out.length){NEWS=out.slice(0,48);var u=$('se2-nts');if(u)u.textContent='diperbarui '+new Date().toLocaleTimeString('id-ID',{hour12:false});if(NF!=='all'&&!NEWS.some(function(n){return n.e[0]===NF}))NF='all'}
+   if(out.length){NEWS=out.slice(0,48);try{window.__BA_NEWS=NEWS;window.dispatchEvent(new CustomEvent('ba-news'))}catch(x){}var u=$('se2-nts');if(u)u.textContent='diperbarui '+new Date().toLocaleTimeString('id-ID',{hour12:false});if(NF!=='all'&&!NEWS.some(function(n){return n.e[0]===NF}))NF='all'}
    rNews()})}
 /* ---------- siklus otomatis (berjalan sendiri sejak halaman dimuat) ---------- */
 var PI=5,pre=false,polling=false,LT=[],LTs='',tapeChart;
@@ -14811,13 +14811,13 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
       pts:[['Kripto','Bitcoin dan Ethereum menjadi acuan sentimen aset digital.'],['Saham','Indeks utama AS memengaruhi bursa Asia pada pembukaan berikutnya.'],['Global','Kurs dan imbal hasil obligasi menentukan selera risiko.']],
       opp:'Satu layar ringkas untuk membaca arah pasar sebelum beraktivitas.',risk:'Angka harian bersifat sesaat dan bukan saran investasi.',
       body:['Ringkasan ini dibuat otomatis dari data pasar harian dan diperbarui setiap hari. Gunakan sebagai gambaran awal, lalu cek halaman pasar untuk detail.','Selalu bandingkan dengan sumber resmi sebelum mengambil keputusan.']}}
-  function norm(a,i,lay){if(!a||!a.t||!a.lead)return null;var o={t:String(a.t),c:a.c||'Web3 & DeFi',lead:String(a.lead),pts:(a.pts||[]).slice(0,3),stats:a.stats||null,opp:a.opp||'',risk:a.risk||'',body:(a.body||[]).map(String),layout:a.layout||lay,i:i,img:String(a.img||a.image||'')};
+  function norm(a,i,lay){if(!a||!a.t||!a.lead)return null;var o={t:String(a.t),c:a.c||'Web3 & DeFi',lead:String(a.lead),pts:(a.pts||[]).slice(0,3),stats:a.stats||null,opp:a.opp||'',risk:a.risk||'',body:(a.body||[]).map(String),layout:a.layout||lay,i:i,img:String(a.img||a.image||''),url:String(a.url||a.link||''),src:String(a.src||a.source||'')};
     if(!o.stats)o.stats=o.pts.map(function(p){return [p[0],p[1]]});
     var w=(o.lead+' '+o.body.join(' ')+' '+o.pts.map(function(p){return p.join(' ')}).join(' ')).split(/\s+/).length;o.rt=Math.max(2,Math.ceil(w/110));return o}
   /* ---- tata letak ---- */
   var R={
-   hero:function(a,cv){return '<div class="da da-hero"><img src="'+cv+'" alt="" decoding="sync" width="800" height="450"><div class="da-ov"><small>'+esc(a.c)+' · '+a.rt+' menit baca</small><strong>'+esc(a.t)+'</strong></div></div>'},
-   split:function(a,cv){return '<div class="da da-split"><img src="'+cv+'" alt="" decoding="sync" width="800" height="450"><div><small>'+esc(a.c)+' · '+a.rt+' menit baca</small><strong>'+esc(a.t)+'</strong></div></div>'},
+   hero:function(a,cv){return '<div class="da da-hero"><img src="'+cv+'" alt="" decoding="sync" width="800" height="450" referrerpolicy="no-referrer"><div class="da-ov"><small>'+esc(a.c)+' · '+a.rt+' menit baca</small><strong>'+esc(a.t)+'</strong></div></div>'},
+   split:function(a,cv){return '<div class="da da-split"><img src="'+cv+'" alt="" decoding="sync" width="800" height="450" referrerpolicy="no-referrer"><div><small>'+esc(a.c)+' · '+a.rt+' menit baca</small><strong>'+esc(a.t)+'</strong></div></div>'},
    quote:function(a){return '<div class="da da-quote"><div class="da-qm" aria-hidden="true">&ldquo;</div><blockquote>'+esc(a.lead)+'</blockquote><small>'+esc(a.t)+' · '+a.rt+' menit baca</small></div>'},
    stats:function(a){return '<div class="da da-stats"><strong>'+esc(a.t)+'</strong><div class="da-tiles">'+a.stats.slice(0,3).map(function(s){return '<div><b>'+esc(s[0])+'</b><span>'+esc(s[1])+'</span></div>'}).join('')+'</div></div>'},
    list:function(a){return '<div class="da da-list"><strong>'+esc(a.t)+'</strong><ol>'+a.pts.map(function(p){return '<li><b>'+esc(p[0])+'</b> '+esc(p[1])+'</li>'}).join('')+'</ol></div>'},
@@ -14828,7 +14828,7 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
   var cur='';
   function dayKey(n){return n.getFullYear()+'-'+('0'+(n.getMonth()+1)).slice(-2)+'-'+('0'+n.getDate()).slice(-2)}
   function build(src,now){var key=dayKey(now),N=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/864e5),out=[],dg=norm(digest(now),0,'stats');out.push(dg);
-    var list=src&&src.length?src:null,n=5,start=(N*n)%POOL.length;
+    var list=src&&src.length?src:null,n=list?Math.min(list.length,8):5,start=(N*5)%POOL.length;
     for(var i=0;i<n;i++){var raw=list?list[i%list.length]:POOL[(start+i)%POOL.length];if(list&&i>=list.length)break;var a=norm(raw,i+1,LAY[(N+i)%LAY.length]);if(a){if(!R[a.layout]||a.layout==='stats'&&raw.layout!=='stats')a.layout=LAY[(N+i)%LAY.length];out.push(a)}}
     return out.map(function(a,k){a.i=k;a.id='da-'+key+'-'+k;return a})}
   function render(src){
@@ -14843,34 +14843,81 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
       var tx=el.querySelector('.xp-body > .xp-text'),card=el.querySelector('.xp-card');
       var pu=a.img||photo(a,a.i+now.getDate());
       if(card){var w=document.createElement('div'),inner=R[a.layout](a,pu);
-        if(a.layout!=='hero'&&a.layout!=='split')inner='<div class="da-fx"><div class="da-pic"><img src="'+esc(pu)+'" alt="'+esc(a.t)+'" loading="lazy" decoding="async"></div>'+inner+'</div>';
+        if(a.layout!=='hero'&&a.layout!=='split')inner='<div class="da-fx"><div class="da-pic"><img src="'+esc(pu)+'" alt="'+esc(a.t)+'" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div>'+inner+'</div>';
         w.innerHTML=inner;card.replaceWith(w.firstChild)}
       [].forEach.call(el.querySelectorAll('.da img'),function(im){im.setAttribute('alt',a.t);im.removeAttribute('decoding');im.setAttribute('loading','lazy');im.addEventListener('error',function(){this.onerror=null;this.src=cv},{once:true})});
       if(tx){if(a.layout==='quote'||a.layout==='qa'||a.layout==='hero')tx.remove();else tx.textContent=a.lead}
       var v=el.querySelector('.xp-v span');if(v)v.textContent=a.rt+' mnt';
-      var badge=document.createElement('span');badge.className='da-badge';badge.textContent='Hari ini';var m=el.querySelector('.xp-tag');if(m)m.after(badge);
+      var badge=document.createElement('span');badge.className='da-badge';badge.textContent=a.url?'Berita pasar':'Hari ini';var m=el.querySelector('.xp-tag');if(m)m.after(badge);
       feed.insertBefore(el,ref);
       if(typeof articlesData!=='undefined'){
-        var html='<p class="lead">'+esc(a.lead)+'</p>'+a.body.map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+(a.pts.length?'<h3>Poin penting</h3><ul>'+a.pts.map(function(p){return '<li><strong>'+esc(p[0])+'</strong>: '+esc(p[1])+'</li>'}).join('')+'</ul>':'')+(a.opp||a.risk?'<p><strong>Peluang:</strong> '+esc(a.opp)+'</p><p><strong>Risiko:</strong> '+esc(a.risk)+'</p>':'')+'<p><em>Artikel edukasi, bukan saran investasi.</em></p>';
+        var html='<p class="lead">'+esc(a.lead)+'</p>'+a.body.map(function(p){return '<p>'+esc(p)+'</p>'}).join('')+(a.pts.length?'<h3>Poin penting</h3><ul>'+a.pts.map(function(p){return '<li><strong>'+esc(p[0])+'</strong>: '+esc(p[1])+'</li>'}).join('')+'</ul>':'')+(a.opp||a.risk?'<p><strong>Peluang:</strong> '+esc(a.opp)+'</p><p><strong>Risiko:</strong> '+esc(a.risk)+'</p>':'')+(a.url?'<p>Sumber: <b>'+esc(a.src||'Berita pasar')+'</b> &middot; <a href="'+esc(a.url)+'" target="_blank" rel="noopener noreferrer">Baca laporan lengkap &rarr;</a></p><p><em>Ringkasan otomatis dari berita pasar, bukan saran investasi.</em></p>':'<p><em>Artikel edukasi, bukan saran investasi.</em></p>');
         articlesData[a.id]={title:a.t,category:a.c,date:dateTxt,readTime:a.rt+' Menit Baca',author:'Berita Angin Team',image:pu,imageFb:'',imagePh:cv,content:html}}
     });
     cur=key;
     if(window.__xpTimeline&&window.__xpTimeline.apply)window.__xpTimeline.apply();
   }
   var key0=dayKey(new Date());
-  var CK='da-remote',cursig='';
+  var CK='da-remote',CL='da-live',cursig='';
   function sig(a){try{return JSON.stringify(a)}catch(e){return ''}}
   function cached(){try{var o=JSON.parse(localStorage.getItem(CK)||'null');if(o&&o.d===dayKey(new Date())&&Array.isArray(o.a)&&o.a.length)return o.a}catch(e){}return null}
   function hiddenNow(){var c=document.documentElement.classList;return c.contains('ba-pre')||c.contains('ba-fade')}
-  var first=cached()||(D&&D.articles);cursig=sig(first);
+  function cachedLive(){try{var o=JSON.parse(localStorage.getItem(CL)||'null');if(o&&o.d===dayKey(new Date())&&Array.isArray(o.a)&&o.a.length)return o.a}catch(e){}return null}
+  var curated=!!(cached()||(D&&D.articles&&D.articles.length)),liveShown=false;
+  var first=cached()||(D&&D.articles)||cachedLive();if(!curated&&first)liveShown=true;cursig=sig(first);
   render(first);
+  /* BERITA PASAR HARI INI (dibaca browser dari RSS Yahoo Finance/CNBC/dll. oleh blok Stock Exchange): dijadikan artikel Beranda lengkap dengan foto beritanya */
+  var CATE={fed:'Ekonomi Makro',makro:'Ekonomi Makro',tarif:'Ekonomi Makro',energi:'Ekonomi Makro',kripto:'Crypto Market',tech:'Stock Exchange',laba:'Stock Exchange',bank:'Stock Exchange',sehat:'Stock Exchange',pasar:'Stock Exchange',umum:'Global Market'};
+  function clip(s,n){s=String(s||'').replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n-1).replace(/\s+\S*$/,'')+'\u2026':s}
+  function fromNews(L){var out=[],used={},cutoff=Date.now()-48*36e5,pool=L.filter(function(n){return n&&n.title&&n.link&&(!n.date||+n.date>=cutoff)});if(pool.length<4)pool=L.slice();
+    /* utamakan berita yang punya foto, dan sebar ke beragam kejadian pasar */
+    var withImg=pool.filter(function(n){return n.img}),noImg=pool.filter(function(n){return !n.img});
+    function take(n){if(out.length>=8||used[n.link])return;used[n.link]=1;out.push(n)}
+    withImg.forEach(function(n){var k=n.e&&n.e[0];if(!used['e:'+k]){used['e:'+k]=1;take(n)}});
+    withImg.concat(noImg).forEach(take);
+    return out.map(function(n){var e=n.e||['umum','Pasar AS Umum','#94a3b8','',''],sn=n.sn||0,d=n.desc&&n.desc.length>30&&n.desc.toLowerCase()!==String(n.title).toLowerCase()?clip(n.desc,260):'Berita pasar AS terbaru bertema '+e[1]+' dari '+n.src+'. Buka laporan lengkap di sumber untuk detailnya.';
+      var tm='';try{tm=new Date(n.date).toLocaleString('id-ID',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'})}catch(x){}
+      return {t:clip(n.title,150),c:CATE[e[0]]||'Stock Exchange',lead:d,
+        pts:[['Tema',e[1]],['Sentimen judul',sn>0?'Positif, judul memuat kata kenaikan.':sn<0?'Negatif, judul memuat kata penurunan.':'Netral, tidak ada kata arah yang dominan.'],['Terkait',n.tk&&n.tk.length?n.tk.join(', '):(e[4]?'Sektor '+e[4]:'Pasar AS secara luas')]],
+        opp:sn>0?'Sentimen positif dapat menopang minat beli jika didukung data dan volume.':'Berita ini membantu membaca arah sentimen sebelum mengambil keputusan.',
+        risk:sn<0?'Tekanan jual bisa berlanjut bila kabar buruk lain menyusul.':'Satu berita belum tentu mengubah tren; cek data pasar pada halaman terkait.',
+        body:[d,'Dirangkum otomatis dari '+n.src+(tm?' \u00b7 '+tm:'')+'. Judul dan isi mengikuti sumber aslinya.'],
+        img:n.img||'',url:n.link,src:n.src}})}
+  function onNews(){var L=window.__BA_NEWS;if(!L||!L.length)return;var arr;try{arr=fromNews(L)}catch(e){return}if(!arr.length)return;
+    try{localStorage.setItem(CL,JSON.stringify({d:dayKey(new Date()),a:arr}))}catch(e){}
+    if(curated||liveShown)return;                  /* sudah ada tampilan hari ini: dipakai pada pemuatan berikutnya (tanpa kedip) */
+    if(hiddenNow()||(window.pageYOffset||0)<200){liveShown=true;cursig=sig(arr);render(arr)}}
+  window.addEventListener('ba-news',onNews);onNews();
   /* sumber online harian: articles.json (di-cache-bust per hari) */
   function remote(){try{fetch('articles.json?d='+dayKey(new Date()),{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(j){var arr=j&&(Array.isArray(j)?j:j.articles);if(!arr||!arr.length)return;
     try{localStorage.setItem(CK,JSON.stringify({d:dayKey(new Date()),a:arr}))}catch(e){}
     /* ganti tampilan hanya saat halaman masih tersembunyi (boot); kalau sudah tampil, dipakai pada pemuatan berikutnya agar tidak berkedip */
     if(hiddenNow()&&sig(arr)!==cursig){cursig=sig(arr);render(arr)}}).catch(function(){})}catch(e){}}
   if(location.protocol.indexOf('http')===0)remote();
-  setInterval(function(){if(dayKey(new Date())!==cur){var c2=cached()||(D&&D.articles);cursig=sig(c2);render(c2);remote()}},300000);
+  setInterval(function(){if(dayKey(new Date())!==cur){curated=!!(cached()||(D&&D.articles&&D.articles.length));var c2=cached()||(D&&D.articles)||cachedLive();liveShown=!curated&&!!c2;cursig=sig(c2);render(c2);remote()}},300000);
+})();
+</script>
+<script id="ba-fresh-js">
+/* PENANDA KESEGARAN DATA: tiap halaman pasar menampilkan kapan snapshot data harian (data.js) dibuat, memberi peringatan bila sudah lama, dan mengabarkan bila data.js terbaru sudah tersedia saat tab dibiarkan terbuka. */
+(function(){
+  var D=window.__DAILY||null,IDS=['page-crypto-market','page-stock-exchange','page-global-market','page-market-stat'];
+  var MON=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],upd=D&&D.updated?Date.parse(D.updated):NaN,newer=false;
+  var st=document.createElement('style');st.textContent='.ba-fresh{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0 0 6px;padding:8px 12px;border:1px solid;border-radius:10px;font:600 12px/16px Inter,system-ui,sans-serif;color:inherit}.ba-fresh i{width:8px;height:8px;border-radius:50%;flex:none}.ba-fresh button{font:inherit;border:0;border-radius:8px;padding:3px 10px;background:#1d9bf0;color:#fff;cursor:pointer}.ba-fresh.ok{border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.08)}.ba-fresh.ok i{background:#22c55e}.ba-fresh.warn{border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.10)}.ba-fresh.warn i{background:#f59e0b}.ba-fresh.old{border-color:rgba(244,63,94,.5);background:rgba(244,63,94,.10)}.ba-fresh.old i{background:#f43f5e}';
+  document.head.appendChild(st);
+  function wib(ms){var d=new Date(ms+7*36e5),p=function(n){return ('0'+n).slice(-2)};return d.getUTCDate()+' '+MON[d.getUTCMonth()]+' '+d.getUTCFullYear()+' '+p(d.getUTCHours())+'.'+p(d.getUTCMinutes())+' WIB'}
+  function text(){if(isNaN(upd))return ['warn','Waktu pembaruan snapshot data harian tidak diketahui. Angka live tetap dicoba; jalankan update_data.py agar tercatat.'];
+    var h=(Date.now()-upd)/36e5,dd=Math.floor(h/24);
+    if(h<=30)return ['ok','Data harian diperbarui '+wib(upd)+'. Harga live diperbarui otomatis saat tersambung.'];
+    if(h<=72)return ['warn','Snapshot data harian terakhir '+wib(upd)+' ('+(dd<1?'1':dd)+' hari lalu). Angka live tetap dicoba, cadangan mulai lama.'];
+    return ['old','Snapshot data harian sudah lama ('+wib(upd)+', '+dd+' hari lalu). Bila angka live gagal dimuat, tampilan memakai angka lama. Periksa pembaruan otomatis (GitHub Actions).']}
+  function paint(){var t=text();IDS.forEach(function(id){var p=document.getElementById(id);if(!p)return;var b=p.querySelector('.ba-fresh');
+    if(!b){b=document.createElement('div');b.className='ba-fresh';b.setAttribute('role','status');p.insertBefore(b,p.firstChild)}
+    b.className='ba-fresh '+t[0];b.innerHTML='<i aria-hidden="true"></i><span></span>'+(newer?'<button type="button">Data baru tersedia &middot; Muat ulang</button>':'');
+    b.querySelector('span').textContent=t[1];var bt=b.querySelector('button');if(bt)bt.onclick=function(){location.reload()}})}
+  function check(){if(location.protocol.indexOf('http')!==0)return;try{fetch('data.js?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(x){var m=/"updated":"([^"]+)"/.exec(x||'');if(!m)return;var t=Date.parse(m[1]);if(!isNaN(t)&&(isNaN(upd)||t>upd+36e5)&&!newer){newer=true;paint()}}).catch(function(){})}catch(e){}}
+  paint();setInterval(paint,600000);setInterval(check,1800000);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden){paint();check()}});
+  setTimeout(check,4000);
 })();
 </script>
 <script id="xp-nav-icons">
