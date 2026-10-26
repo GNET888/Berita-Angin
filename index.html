@@ -15109,6 +15109,31 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   setInterval(function(){if(dayKey(new Date())!==cur){curated=!!(cached()||(D&&D.articles&&D.articles.length));var c2=cached()||(D&&D.articles)||cachedLive();liveShown=!curated&&!!c2;cursig=sig(c2);render(c2);remote()}},300000);
 })();
 </script>
+<script id="ba-fresh-js">
+/* PENANDA KESEGARAN DATA: tiap halaman pasar menampilkan kapan snapshot data harian (data.js) dibuat, memberi peringatan bila sudah lama, dan mengabarkan bila data.js terbaru sudah tersedia saat tab dibiarkan terbuka. */
+(function(){
+  var D=window.__DAILY||null,IDS=['page-crypto-market','page-stock-exchange','page-global-market','page-market-stat'];
+  var MON=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],upd=D&&D.updated?Date.parse(D.updated):NaN,newer=false;
+  var st=document.createElement('style');st.textContent='.ba-fresh{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:0 0 6px;padding:8px 12px;border:1px solid;border-radius:10px;font:600 12px/16px Inter,system-ui,sans-serif;color:inherit}.ba-fresh i{width:8px;height:8px;border-radius:50%;flex:none}.ba-fresh button{font:inherit;border:0;border-radius:8px;padding:3px 10px;background:#1d9bf0;color:#fff;cursor:pointer}.ba-fresh.ok{border-color:rgba(34,197,94,.45);background:rgba(34,197,94,.08)}.ba-fresh.ok i{background:#22c55e}.ba-fresh.warn{border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.10)}.ba-fresh.warn i{background:#f59e0b}.ba-fresh.old{border-color:rgba(244,63,94,.5);background:rgba(244,63,94,.10)}.ba-fresh.old i{background:#f43f5e}';
+  st.textContent+='@media (display-mode:standalone),(display-mode:fullscreen){.ba-fresh{display:none!important}}';document.head.appendChild(st);
+  function wib(ms){var d=new Date(ms+7*36e5),p=function(n){return ('0'+n).slice(-2)};return d.getUTCDate()+' '+MON[d.getUTCMonth()]+' '+d.getUTCFullYear()+' '+p(d.getUTCHours())+'.'+p(d.getUTCMinutes())+' WIB'}
+  function text(){if(isNaN(upd))return ['warn','Waktu pembaruan snapshot data harian tidak diketahui. Angka live tetap dicoba; jalankan update_data.py agar tercatat.'];
+    var h=(Date.now()-upd)/36e5,dd=Math.floor(h/24);
+    if(h<=30)return ['ok','Data harian diperbarui '+wib(upd)+'. Harga live diperbarui otomatis saat tersambung.'];
+    if(h<=72)return ['warn','Snapshot data harian terakhir '+wib(upd)+' ('+(dd<1?'1':dd)+' hari lalu). Angka live tetap dicoba, cadangan mulai lama.'];
+    return ['old','Snapshot data harian sudah lama ('+wib(upd)+', '+dd+' hari lalu). Bila angka live gagal dimuat, tampilan memakai angka lama. Periksa pembaruan otomatis (GitHub Actions).']}
+  function isApp(){try{return (window.matchMedia&&(matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches))||navigator.standalone===true}catch(e){return false}}
+  function paint(){var t=text();IDS.forEach(function(id){var p=document.getElementById(id);if(!p)return;var b=p.querySelector('.ba-fresh');
+    if(isApp()){if(b)b.remove();return}
+    if(!b){b=document.createElement('div');b.className='ba-fresh';b.setAttribute('role','status');p.insertBefore(b,p.firstChild)}
+    b.className='ba-fresh '+t[0];b.innerHTML='<i aria-hidden="true"></i><span></span>'+(newer?'<button type="button">Data baru tersedia &middot; Muat ulang</button>':'');
+    b.querySelector('span').textContent=t[1];var bt=b.querySelector('button');if(bt)bt.onclick=function(){location.reload()}})}
+  function check(){if(location.protocol.indexOf('http')!==0)return;try{fetch('data.js?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():''}).then(function(x){var m=/"updated":"([^"]+)"/.exec(x||'');if(!m)return;var t=Date.parse(m[1]);if(!isNaN(t)&&(isNaN(upd)||t>upd+36e5)&&!newer){newer=true;paint()}}).catch(function(){})}catch(e){}}
+  paint();setInterval(paint,600000);setInterval(check,1800000);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden){paint();check()}});
+  setTimeout(check,4000);
+})();
+</script>
 <script id="xp-nav-icons">
 (function(){
   var G='style="fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"';
@@ -15368,7 +15393,7 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
       +'<div class="bal-err" data-e="form" role="alert"></div>'
       +'<button type="submit" class="bal-submit">'+(up?'Sign Up':'Sign In')+'</button>'
       +'<p class="bal-alt">'+(up?'Sudah punya akun? <button type="button" data-t="in">Sign In</button>':'Belum punya akun? <button type="button" data-t="up">Sign Up</button>')+'</p>'
-      +'<p class="bal-hint" style="text-align:center">Akun disimpan di browser perangkat ini (tanpa server).</p>'
+      +'<p class="bal-hint" style="text-align:center">'+((window.BACloud&&BACloud.ready)?'Akun tersinkron di semua perangkat Anda (komputer & aplikasi).':'Akun disimpan di browser perangkat ini (tanpa server).')+'</p>'
       +'</form>';
     var form=box.querySelector('form');
     form.addEventListener('submit',function(e){e.preventDefault();up?doSignUp(form):doSignIn(form)});
@@ -15580,6 +15605,7 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   }
   function afterAuth(msg){
     var p=pending;pending=null;ungate();closeModal(true);paint();toast(msg);
+    setTimeout(function(){baPullProfile()},400);
     purgeLoginExtras();setTimeout(purgeLoginExtras,400);
     if(p&&document.contains(p))setTimeout(function(){try{p.click()}catch(e){}},260);
   }
@@ -15681,8 +15707,40 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
     var s=getSession();if(!s)return false;var us=readUsers(),u=us[s.email];if(!u)return false;
     u.picture=pic;u.customPic=!!custom;us[s.email]=u;
     if(!writeUsers(us)){toast('Penyimpanan browser penuh atau tidak tersedia.');return false}
-    paint();return true;
+    paint();baPushPic(s.email,pic,custom);return true;
   }
+  /* ---------- SINKRON PROFIL KE CLOUD (nama + foto): komputer & aplikasi memakai data yang sama ---------- */
+  function cloudOn(){return !!(window.BACloud&&BACloud.ready)}
+  function setLocalUser(email,patch){var us=readUsers(),u=us[email];if(!u)return false;Object.assign(u,patch);us[email]=u;writeUsers(us);return true}
+  function baPushPic(email,pic,custom){
+    if(!cloudOn())return;
+    BACloud.auth.user().then(function(cu){
+      if(!cu||String(cu.email).toLowerCase()!==email)return;
+      if(!pic){return BACloud.client().from('profiles').update({avatar_url:null}).eq('id',cu.id)}
+      if(String(pic).indexOf('data:')!==0)return;
+      return fetch(pic).then(function(r){return r.blob()}).then(function(b){return BACloud.setAvatar(b)}).then(function(url){
+        setLocalUser(email,{picture:url,customPic:!!custom});paint()})
+    })['catch'](function(){toast('Foto tersimpan di perangkat ini; sinkron cloud gagal.')})
+  }
+  var pullBusy=false;
+  function baPullProfile(){
+    if(!cloudOn()||pullBusy)return;pullBusy=true;
+    BACloud.auth.user().then(function(cu){
+      if(!cu)return;var email=String(cu.email||'').toLowerCase(),us=readUsers(),lu=us[email];if(!lu)return;
+      return BACloud.client().from('profiles').select('*').eq('id',cu.id).maybeSingle().then(function(r){
+        var row=r&&r.data;if(!row)return;var patch={};
+        if(row.name&&row.name!==lu.name)patch.name=row.name;
+        if(row.avatar_url){if(row.avatar_url!==lu.picture){patch.picture=row.avatar_url;patch.customPic=true}}
+        else if(lu.customPic&&lu.picture&&String(lu.picture).indexOf('data:')===0){baPushPic(email,lu.picture,true)} /* foto lama lokal -> naik ke cloud */
+        if(Object.keys(patch).length){setLocalUser(email,patch);paint()}
+      })
+    })['catch'](function(){}).then(function(){pullBusy=false})
+  }
+  function hookCloudProfile(){
+    if(!cloudOn())return;
+    try{BACloud.auth.onChange(function(u){if(u)setTimeout(baPullProfile,0)})}catch(e){}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hookCloudProfile);else hookCloudProfile();
   fileIn.addEventListener('change',function(){
     var f=fileIn.files&&fileIn.files[0];fileIn.value='';if(!f)return;
     if(!/^image\//.test(f.type)){toast('Pilih file gambar (JPG, PNG, atau WebP).');return}
