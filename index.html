@@ -81,6 +81,13 @@ html.ba-mload.ba-pre .page.active{animation:none!important}
 </style>
 <script>function baImgFB(i){try{var f=(i.getAttribute('data-fb')||'').split('|').filter(Boolean);if(f.length){var n=f.shift();i.setAttribute('data-fb',f.join('|'));i.src=n;return}var p=i.getAttribute('data-ph');if(p){i.removeAttribute('data-ph');i.src=p;return}i.onerror=null;i.style.display='none'}catch(e){}}</script>
 <noscript><style>html.ba-pre body>*{opacity:1!important}</style></noscript>
+<script id="ba-frame-gate">/* RESPONS NAVIGASI: loop kanvas permanen tidak boleh berebut CPU dengan ketukan. Mobile/aplikasi dibatasi 30 fps dan dijeda saat navigasi. */
+(function(){var W=window,m=false;try{m=W.matchMedia('(max-width:1023px)').matches||W.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){}
+var gap=m?32:0;
+W.__baSkip=function(fn,now){if(W.__baNavBusy)return true;if(!gap||!now)return false;if(now-(fn.__bt||0)<gap)return true;fn.__bt=now;return false};
+/* true bila kanvas berada di luar layar (tidak perlu digambar) */
+W.__baOff=function(el){try{var r=el.getBoundingClientRect();return r.bottom<-80||r.top>(W.innerHeight||800)+80}catch(e){return false}}})();
+</script>
 <script>document.write('<script src="data.js?d='+new Date().toISOString().slice(0,13)+'"><\/script>')</script>
 <script>/* PEMUAT DATA HARIAN: membaca data.js (dibuat update_data.py) dan menimpa nilai dasar. Gagal/tidak ada = pakai nilai tertanam. */
 (function(){
@@ -10058,6 +10065,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     }
     (function f(now) {
       requestAnimationFrame(f);
+      if (window.__baSkip(f, now)) return;
       var el = document.getElementById('gm-pro-' + key), s = S[key]; if (!el || !s || document.hidden) return;
       if (el !== cv) bind(el);
       if (el.offsetParent === null) return;
@@ -10211,6 +10219,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     cv.addEventListener('mouseleave', function () { s.mx = -1; }); cv.addEventListener('touchend', function () { s.mx = -1; });
     (function f(now) {
       requestAnimationFrame(f);
+      if (window.__baSkip(f, now)) return;
       if (cv.offsetParent === null || document.hidden) return;
       var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
       if (w !== s.w || h !== s.h) { s.w = w; s.h = h; dpr = Math.min(window.devicePixelRatio || 1, 2); cv.width = Math.floor(w * dpr); cv.height = Math.floor(h * dpr); }
@@ -10434,6 +10443,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     cv.addEventListener('mouseleave', function () { s.mx = -1; }); cv.addEventListener('touchend', function () { s.mx = -1; });
     (function f(now) {
       requestAnimationFrame(f);
+      if (window.__baSkip(f, now)) return;
       if (cv.offsetParent === null || document.hidden) return;
       var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return;
       if (w !== s.w || h !== s.h) { s.w = w; s.h = h; dpr = Math.min(window.devicePixelRatio || 1, 2); cv.width = Math.floor(w * dpr); cv.height = Math.floor(h * dpr); }
@@ -11518,9 +11528,9 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   var lastF = 0;
   function frame(now) {
     requestAnimationFrame(frame);
-    if (document.hidden || now - lastF < 33) return; lastF = now;
+    if (document.hidden || now - lastF < 33 || window.__baNavBusy) return; lastF = now;
     document.querySelectorAll('canvas.cx-mini').forEach(function (cv) {
-      if (cv.offsetParent === null) return;
+      if (cv.offsetParent === null || window.__baOff(cv)) return;
       try { cv.getAttribute('data-kind') === 'stock' ? drawStock(cv, now) : drawCrypto(cv, now); } catch (e) { }
     });
   }
@@ -11836,9 +11846,9 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   var lastF = 0;
   function frame(now) {
     requestAnimationFrame(frame);
-    if (document.hidden || now - lastF < 33) return; lastF = now;
+    if (document.hidden || now - lastF < 33 || window.__baNavBusy) return; lastF = now;
     document.querySelectorAll('canvas.cx-mini').forEach(function (cv) {
-      if (cv.offsetParent === null) return;
+      if (cv.offsetParent === null || window.__baOff(cv)) return;
       try { cv.getAttribute('data-kind') === 'stock' ? drawStock(cv, now) : drawCrypto(cv, now); } catch (e) { }
     });
   }
@@ -12739,7 +12749,7 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
       if(!nav.hasAttribute('data-ba2'))Array.prototype.forEach.call(nav.querySelectorAll('.ba-tab'),function(b){var on=b.getAttribute('data-k')===tk;b.classList.toggle('on',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
       if(k!==last){
         var pg=D.getElementById('page-'+k);
-        if(pg){pg.classList.remove('ba-enter');void pg.offsetWidth;pg.classList.add('ba-enter');}
+        
         if(last!==null&&!fromPop){try{(Date.now()-boot<2000?history.replaceState:history.pushState).call(history,{p:k},'','#'+k);}catch(_){}}
         last=k;
       }
