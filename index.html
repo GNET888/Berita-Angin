@@ -138,7 +138,7 @@ W.__baOff=function(el){try{var r=el.getBoundingClientRect();return r.bottom<-80|
 window.BA_SUPABASE={url:'ISI_URL_SUPABASE',anonKey:'ISI_ANON_PUBLIC_KEY'};</script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script defer src="ba-cloud.js"></script>
-<link rel="manifest" href="manifest.webmanifest">
+<link rel="manifest" href="manifest.webmanifest?v=2">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link rel="preload" as="font" type="font/woff2" crossorigin href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/webfonts/fa-solid-900.woff2">
@@ -12690,7 +12690,7 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
     try{
       var a=W.__BA_ICON192,b=W.__BA_ICON512;
       
-      if(location.protocol.indexOf('http')===0&&!D.querySelector('link[rel="manifest"][href="manifest.webmanifest"]')){var base=location.href.split('#')[0];
+      if(location.protocol.indexOf('http')===0&&!D.querySelector('link[rel="manifest"]')){var base=location.href.split('#')[0];
         var mf={name:'Berita Angin',short_name:'Berita Angin',description:'Berita, pasar kripto, saham, dan pasar global real-time.',start_url:base,scope:base.replace(/[^\/]*$/,''),display:'standalone',orientation:'any',background_color:'#000000',theme_color:'#000000',lang:'id',shortcuts:[{name:'Pengaturan',short_name:'Pengaturan',url:base+'#settings',icons:[{src:a,sizes:'192x192',type:'image/png'}]}],icons:[{src:a,sizes:'192x192',type:'image/png',purpose:'any maskable'},{src:b,sizes:'512x512',type:'image/png',purpose:'any maskable'}]};
         var ml=D.createElement('link');ml.rel='manifest';ml.href=URL.createObjectURL(new Blob([JSON.stringify(mf)],{type:'application/manifest+json'}));D.head.appendChild(ml);}
     }catch(e){}
