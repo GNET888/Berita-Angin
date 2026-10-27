@@ -16649,6 +16649,100 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   header.sticky>nav>div>div:nth-child(3){margin-top:6px!important;padding-top:8px}
 }
 </style>
+<style id="ba-landscape-pro">
+/* ===== LANSKAP PROFESIONAL (HP/aplikasi diputar) =====
+   Masalah: rail kiri (z-index 50) menimpa drawer (profil terpotong).
+   Solusi: drawer berada di lapisan atas rail, tata letak dua kolom (akun | menu),
+   rail dirapikan dengan penanda aktif yang jelas. */
+@media (orientation:landscape) and (pointer:coarse) and (max-height:500px){
+  :root{--ba-rail:80px;--ba-acc-w:260px;--ba-line:rgba(148,163,184,.16);--ba-ac-rgb:56,189,248}
+
+  /* 1) Lapisan: drawer di atas rail & sheet, scrim menutup seluruh layar */
+  html body #mobile-sidebar{z-index:80!important}
+  html body #mobile-sidebar:not(.hidden){background:rgba(2,6,12,.66)!important}
+
+  /* 2) Drawer dua kolom: kiri akun, kanan menu (bisa digulir sendiri) */
+  html body #sidebar-content{
+    display:grid!important;
+    grid-template-columns:var(--ba-acc-w) minmax(0,1fr);
+    grid-template-rows:auto auto minmax(0,1fr);
+    grid-template-areas:"acc nav" "sts nav" "ft nav";
+    width:min(600px,calc(100vw - 64px))!important;max-width:none!important;
+    padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)!important;
+    overflow:hidden!important;border-radius:0 18px 18px 0;
+    box-shadow:24px 0 48px -24px rgba(0,0,0,.7)}
+  html body #sidebar-content .sb-head{display:contents!important}
+  html body #sidebar-content .bal-drw{grid-area:acc;align-self:start;order:0}
+  html body #sidebar-content .sb-status{grid-area:sts;align-self:start;order:0}
+  html body #sidebar-content .sb-foot{grid-area:ft;align-self:end;order:0;margin:0!important;padding:10px 14px!important;
+    border-top:1px solid var(--ba-line)!important;text-align:left}
+  html body #sidebar-content .sb-nav{grid-area:nav;order:0;min-height:0;max-height:none!important;flex:none!important;
+    overflow-y:auto!important;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+    padding:8px 12px 14px 10px!important;border-left:1px solid var(--ba-line);background:rgba(255,255,255,.015);
+    scrollbar-width:thin;scrollbar-color:rgba(148,163,184,.3) transparent}
+
+  /* tombol tutup: di sudut kanan kolom akun, tidak menimpa menu */
+  html body #sidebar-content #close-sidebar-btn{
+    top:calc(env(safe-area-inset-top,0px) + 12px);right:auto;
+    left:calc(env(safe-area-inset-left,0px) + var(--ba-acc-w) - 46px);
+    width:34px;height:34px;border-radius:10px;font-size:14px;
+    border:1px solid var(--ba-line);background:rgba(255,255,255,.04);color:#cbd5e1}
+
+  /* kartu akun ringkas: avatar + nama sebaris, tombol bertumpuk */
+  html body #sidebar-content .bal-drw{padding:14px 14px 12px!important;gap:10px;border-bottom:1px solid var(--ba-line)!important}
+  html body #sidebar-content .bal-drw .bal-who{flex-direction:row;align-items:center;gap:10px;padding-right:36px}
+  html body #sidebar-content .bal-drw .bal-av{width:44px;height:44px;font-size:17px;flex:none}
+  html body #sidebar-content .bal-drw .bal-txt b{font-size:15px;font-weight:700;line-height:1.25}
+  html body #sidebar-content .bal-drw .bal-txt span{font-size:12px;line-height:1.3}
+  html body #sidebar-content .bal-drw .bal-btnrow{grid-template-columns:1fr;gap:8px}
+  html body #sidebar-content .bal-drw .bal-b{display:flex;align-items:center;justify-content:center;gap:8px;
+    height:36px;padding:0 12px;border-radius:10px;font:600 13px/1 Inter,system-ui,sans-serif;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  html body #sidebar-content .bal-drw .bal-b.out{background:rgba(244,33,46,.08);border-color:rgba(244,33,46,.38)}
+
+  /* status online + jam */
+  html body #sidebar-content .sb-status{margin:10px 14px 0;padding:7px 10px}
+
+  /* menu: ukuran proporsional untuk layar pendek */
+  html body #sidebar-content .sb-link{font-size:15px!important;font-weight:600!important;min-height:44px;gap:12px!important;padding:0 10px;border-radius:12px}
+  html body #sidebar-content .sb-link .nav-ico{width:26px!important;height:26px!important}
+  html body #sidebar-content .sb-link .nav-ico svg{width:22px;height:22px}
+  html body #sidebar-content .sb-sub .sb-sublink{font-size:14px!important;min-height:38px}
+  html body #sidebar-content .sb-label{margin:14px 0 4px;padding:0 10px;font:600 11px/1 Inter,system-ui,sans-serif;letter-spacing:.03em;text-transform:none;color:#7b8794}
+  html body #sidebar-content .sb-nav>.sb-label:first-child{margin-top:4px}
+
+  /* 3) Rail kiri: lebih rapi, penanda aktif jelas, label tidak berdesakan */
+  html body #ba-tabbar{background:rgba(7,10,17,.97)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+    border-right:1px solid var(--ba-line)!important}
+  html.light body #ba-tabbar{background:#f8fafc!important}
+  html body #ba-tabbar .ba-tab{max-height:68px;color:#8b98a5;transition:background .2s,color .2s}
+  html body #ba-tabbar .ba-tab>span:last-child{font-size:10px;line-height:1.15;font-weight:600;padding:0 4px;color:inherit}
+  html body #ba-tabbar .ba-tab.on{color:#e7e9ea;background:linear-gradient(90deg,rgba(var(--ba-ac-rgb),.16),rgba(var(--ba-ac-rgb),0) 90%)}
+  html.light body #ba-tabbar .ba-tab.on{color:#0f1419}
+  html body #ba-tabbar .ba-tab.on::before{background:rgb(var(--ba-ac-rgb))}
+
+  /* 4) Panel "Menu lainnya": tepi dan bayangan konsisten dengan drawer */
+  html body #ba-sheet{border-left:1px solid var(--ba-line);box-shadow:-24px 0 48px -24px rgba(0,0,0,.7)}
+
+  /* 5) Fokus keyboard terlihat (tombol fisik / DeX) */
+  html body #ba-tabbar .ba-tab:focus-visible,
+  html body #sidebar-content a:focus-visible,
+  html body #sidebar-content button:focus-visible{outline:2px solid rgb(var(--ba-ac-rgb));outline-offset:-2px}
+
+  /* tema terang */
+  html.light body #sidebar-content .sb-nav{border-left-color:rgba(15,23,42,.1);background:#f8fafc}
+  html.light body #sidebar-content .bal-drw,html.light body #sidebar-content .sb-foot{border-color:rgba(15,23,42,.1)!important}
+  html.light body #sidebar-content #close-sidebar-btn{border-color:rgba(15,23,42,.18);background:#fff;color:#0f1419}
+}
+@media (orientation:landscape) and (pointer:coarse) and (max-height:360px){
+  :root{--ba-acc-w:236px}
+  html body #sidebar-content .bal-drw{padding:10px 12px 10px!important;gap:8px}
+  html body #sidebar-content .bal-drw .bal-b{height:34px}
+  html body #sidebar-content .sb-status{margin-top:8px}
+  html body #sidebar-content .sb-foot-sub{display:none}
+  html body #sidebar-content .sb-link{min-height:42px}
+}
+</style>
 <script id="ba-rotate-js">
 (function(){
   var W=window,D=document,h=D.documentElement,t=0;
