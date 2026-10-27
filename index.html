@@ -3597,87 +3597,6 @@ html body #ba-tabbar .ba-tab[data-k="stock-exchange"] .ba-tab-ico{border-radius:
 html body a.nav-link[data-page="stock-exchange"]>.nav-ico.nav-ico,html body a.nav-link[data-page="stock-exchange"]>.dp-qi,html body #sidebar-content a.nav-link[data-page="stock-exchange"]>.nav-ico.nav-ico{border-radius:50%!important}
 html body #ba-sheet .ba-row[data-go="stock-exchange"] i{border-radius:50%!important}
 </style>
-<style id="ba-land-nav-accent">
-/* ===== Navigasi drawer (HP & lanskap): tombol X bulat 100% + state klik ikut Pengaturan Tampilan (aksen & tema) ===== */
-@media (max-width:767px), (orientation:landscape) and (pointer:coarse) and (max-height:500px){
-  /* Tombol X: lingkaran sempurna 100% */
-  html #sidebar-content #close-sidebar-btn{
-    box-sizing:border-box!important;flex:none!important;
-    width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;max-width:38px!important;max-height:38px!important;
-    aspect-ratio:1/1;padding:0!important;line-height:1!important;
-    border-radius:100%!important;overflow:hidden;
-    display:inline-flex!important;align-items:center;justify-content:center;
-    -webkit-tap-highlight-color:transparent;
-    transition:border-color .15s,color .15s,background-color .15s,scale .12s}
-  html #sidebar-content #close-sidebar-btn i{line-height:1;margin:0}
-  /* Saat disentuh/diklik/fokus -> warna aksen pilihan pengguna */
-  html #sidebar-content #close-sidebar-btn:hover,
-  html #sidebar-content #close-sidebar-btn:active,
-  html #sidebar-content #close-sidebar-btn:focus-visible{
-    border-color:rgb(var(--ba-ac,56 189 248))!important;
-    color:rgb(var(--ba-ac,56 189 248))!important;
-    background:rgb(var(--ba-ac,56 189 248) / .16)!important;outline:0}
-  html.light #sidebar-content #close-sidebar-btn:hover,
-  html.light #sidebar-content #close-sidebar-btn:active,
-  html.light #sidebar-content #close-sidebar-btn:focus-visible{
-    border-color:rgb(var(--ba-ac2,14 165 233))!important;
-    color:rgb(var(--ba-ac2,14 165 233))!important;
-    background:rgb(var(--ba-ac2,14 165 233) / .12)!important}
-
-  /* Menu navigasi: klik / aktif mengikuti aksen */
-  html #sidebar-content .sb-link,html #sidebar-content .sb-sublink{-webkit-tap-highlight-color:transparent}
-  html #sidebar-content .sb-link:hover,
-  html #sidebar-content .sb-link:active,
-  html #sidebar-content .sb-link:focus-visible,
-  html #sidebar-content .sb-link.is-active{
-    background:linear-gradient(90deg,rgb(var(--ba-ac,56 189 248) / .20),rgb(var(--ba-ac2,14 165 233) / .06))!important;
-    border-color:rgb(var(--ba-ac,56 189 248) / .35)!important;outline:0}
-  html #sidebar-content .sb-link:active,
-  html #sidebar-content .sb-link.is-active{color:rgb(var(--ba-ac,56 189 248))!important}
-  html #sidebar-content .sb-link:active>.nav-ico,
-  html #sidebar-content .sb-link.is-active>.nav-ico,
-  html #sidebar-content .sb-link:hover .sb-chev,
-  html #sidebar-content .sb-link.is-active .sb-chev{color:rgb(var(--ba-ac,56 189 248))!important}
-  html #sidebar-content .sb-link.is-active::before{background:rgb(var(--ba-ac,56 189 248))!important}
-  html #sidebar-content .sb-sublink:hover,
-  html #sidebar-content .sb-sublink:active,
-  html #sidebar-content .sb-sublink.is-active,
-  html #sidebar-content .st-sublink.is-active,
-  html #sidebar-content .ms-sublink.is-active,
-  html #mobile-sidebar .st-sublink.is-active,
-  html #mobile-sidebar .ms-sublink.is-active{
-    background:rgb(var(--ba-ac,56 189 248) / .14)!important;
-    color:rgb(var(--ba-ac,56 189 248))!important}
-  html #sidebar-content .sb-sublink:hover .sb-dot,
-  html #sidebar-content .sb-sublink:active .sb-dot,
-  html #sidebar-content .sb-sublink.is-active .sb-dot{
-    background:rgb(var(--ba-ac,56 189 248))!important;
-    box-shadow:0 0 0 3px rgb(var(--ba-ac,56 189 248) / .20)!important}
-
-  /* Tema terang: pakai aksen yang lebih gelap agar tetap terbaca */
-  html.light #sidebar-content .sb-link:hover,
-  html.light #sidebar-content .sb-link:active,
-  html.light #sidebar-content .sb-link:focus-visible,
-  html.light #sidebar-content .sb-link.is-active{
-    background:linear-gradient(90deg,rgb(var(--ba-ac2,14 165 233) / .16),rgb(var(--ba-ac2,14 165 233) / .04))!important;
-    border-color:rgb(var(--ba-ac2,14 165 233) / .35)!important}
-  html.light #sidebar-content .sb-link:active,
-  html.light #sidebar-content .sb-link.is-active,
-  html.light #sidebar-content .sb-link:active>.nav-ico,
-  html.light #sidebar-content .sb-link.is-active>.nav-ico,
-  html.light #sidebar-content .sb-sublink:hover,
-  html.light #sidebar-content .sb-sublink:active,
-  html.light #sidebar-content .sb-sublink.is-active,
-  html.light #sidebar-content .st-sublink.is-active,
-  html.light #sidebar-content .ms-sublink.is-active{color:rgb(var(--ba-ac2,14 165 233))!important}
-  html.light #sidebar-content .sb-sublink:hover,
-  html.light #sidebar-content .sb-sublink:active,
-  html.light #sidebar-content .sb-sublink.is-active,
-  html.light #sidebar-content .st-sublink.is-active,
-  html.light #sidebar-content .ms-sublink.is-active{background:rgb(var(--ba-ac2,14 165 233) / .12)!important}
-  html.light #sidebar-content .sb-link.is-active::before{background:rgb(var(--ba-ac2,14 165 233))!important}
-}
-</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-mload" role="status" aria-live="polite" aria-label="Memuat"><div class="ba-mring"><img class="mlg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
@@ -16730,6 +16649,45 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   header.sticky>nav>div>div:nth-child(3){margin-top:6px!important;padding-top:8px}
 }
 </style>
+<style id="ba-fab-all">
+/* ===== TOMBOL + : hanya mode aplikasi (terpasang) & HP/layar sentuh; tidak tampil di browser desktop. Klik = kotak posting asli muncul sebagai lembar ===== */
+#ba-fab{display:none}
+html body #ba-fab{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));
+  width:56px;height:56px;padding:0;border:0;border-radius:50%;align-items:center;justify-content:center;background:#1d9bf0;color:#fff;cursor:pointer;z-index:51;
+  box-shadow:none!important;filter:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  transition:bottom .28s cubic-bezier(.2,.8,.2,1),transform .12s ease-out,opacity .15s}
+@media (pointer:coarse),(display-mode:standalone),(display-mode:fullscreen),(display-mode:minimal-ui){html body #ba-fab.on{display:flex}}
+html.ba-appmode body #ba-fab.on{display:flex}
+html body #ba-fab:active{transform:scale(.92)}
+html body #ba-fab:focus-visible{outline:3px solid #fff;outline-offset:2px}
+html.bal-lock #ba-fab{display:none!important}
+@media (max-width:767px){
+  html:not(.ba-phone-land) body #ba-fab{width:clamp(48px,14vw,58px);height:clamp(48px,14vw,58px);bottom:calc(var(--ba-tab-h,66px) + 14px + env(safe-area-inset-bottom,0px))}
+  html:not(.ba-phone-land) body #ba-fab.lo{bottom:calc(18px + env(safe-area-inset-bottom,0px))}
+}
+/* ---- kotak posting asli sebagai lembar ---- */
+html.bac-on,html.bac-on body{overflow:hidden!important}
+html.bac-on #page-home .xp-feed{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+html.bac-on body>main,html.bac-on #page-home{isolation:auto!important;z-index:auto!important;contain:none!important;perspective:none!important;transform:none!important}
+#bac-bd{position:fixed;left:0;right:0;top:0;bottom:0;z-index:99984;background:rgba(0,0,0,.62);display:none}
+html.bac-on #bac-bd{display:block}
+html.bac-on #page-home #xp-compose{position:fixed!important;left:0;right:0;bottom:var(--bac-bot,0px);top:auto;margin:0 auto;width:min(600px,100%);box-sizing:border-box;z-index:99985;
+  max-height:var(--bac-vh,100%);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;background:#000;
+  border:1px solid #2f3336!important;border-bottom:0!important;border-radius:16px 16px 0 0;
+  padding:44px 16px calc(10px + env(safe-area-inset-bottom,0px))!important;animation:bacUp .22s cubic-bezier(.2,.8,.2,1)}
+html.light.bac-on #page-home #xp-compose{background:#fff;border-color:#dbe3ee!important}
+@keyframes bacUp{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+#bac-x{display:none;position:absolute;top:4px;right:6px;width:40px;height:40px;border:0;border-radius:50%;background:none;color:inherit;font-size:28px;line-height:1;cursor:pointer;z-index:2}
+html.bac-on #bac-x{display:block}
+#bac-x:hover{background:rgba(231,233,234,.1)}
+/* lanskap / layar pendek: lembar di atas, tinggi mengikuti ruang tersisa (di atas keyboard) */
+@media (orientation:landscape){
+  html.bac-on #page-home #xp-compose{top:calc(var(--bac-top,0px) + 6px);bottom:auto;border:1px solid #2f3336!important;border-radius:16px;max-height:calc(var(--bac-vh,100%) - 12px);padding:40px 12px 8px!important}
+  html.light.bac-on #page-home #xp-compose{border-color:#dbe3ee!important}
+}
+#bac-toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:99999;background:#1d9bf0;color:#fff;padding:10px 16px;border-radius:10px;font:600 14px/1.3 system-ui,sans-serif;max-width:90vw;text-align:center;pointer-events:none}
+@media (prefers-reduced-motion:reduce){html body #ba-fab{transition:none}html.bac-on #page-home #xp-compose{animation:none}}
+</style>
 <style id="ba-landscape-x">
 /* ===== LANSKAP GAYA X (HP/aplikasi diputar): rail ikon di kiri, header foto profil + logo tengah, tab bisa digeser, kolom konten tengah, tombol + di kanan bawah ===== */
 #ba-fab{display:none}
@@ -16804,7 +16762,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
     position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));
     width:54px;height:54px;padding:0;border:0;border-radius:50%;
     align-items:center;justify-content:center;background:#1d9bf0;color:#fff;cursor:pointer;z-index:49;
-    box-shadow:0 6px 18px rgba(29,155,240,.4),0 2px 6px rgba(0,0,0,.5);
+    box-shadow:none!important;
     -webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .12s ease-out,opacity .15s}
   html body #ba-fab:active{transform:scale(.92)}
   html body #ba-fab.on{display:flex}
@@ -16828,25 +16786,51 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 @media (prefers-reduced-motion:reduce){html body #ba-tabbar .ba-tab,html body #ba-fab{transition:none!important}}
 </style>
 <script id="ba-landscape-x-js">
-/* Tombol + (buat postingan): menggulir ke kotak "Apa yang sedang terjadi?" di Beranda lalu memfokuskannya. Tampil hanya saat HP lanskap (diatur CSS). */
+/* Tombol + (HP / mode aplikasi): menampilkan kotak posting asli sebagai lembar di atas layar. */
 (function(){
-  var D=document;
+  var D=document,W=window,H=D.documentElement,fab,bd,xb,ph,opened=false;
+  var $=function(i){return D.getElementById(i)};
+  try{var mm=function(q){return W.matchMedia&&W.matchMedia(q).matches};
+    if(navigator.standalone===true||mm('(display-mode: standalone)')||mm('(display-mode: fullscreen)')||mm('(display-mode: minimal-ui)'))H.classList.add('ba-appmode')}catch(e){}
+  function toast(t){var e=D.createElement('div');e.id='bac-toast';e.textContent=t;D.body.appendChild(e);setTimeout(function(){e.remove()},2000)}
+  function vv(){var v=W.visualViewport,h=(v&&v.height)||W.innerHeight,t=(v&&v.offsetTop)||0,b=(v&&(W.innerHeight-v.height-v.offsetTop))||0;
+    H.style.setProperty('--bac-vh',h+'px');H.style.setProperty('--bac-top',t+'px');H.style.setProperty('--bac-bot',Math.max(0,b)+'px')}
+  function open(){
+    var c=$('xp-compose'),q=$('xp-q');if(!c||!q||opened)return;
+    if(!bd){bd=D.createElement('div');bd.id='bac-bd';bd.addEventListener('click',close);D.body.appendChild(bd)}
+    if(!xb){xb=D.createElement('button');xb.id='bac-x';xb.type='button';xb.setAttribute('aria-label','Tutup');xb.innerHTML='&times;';xb.addEventListener('click',close)}
+    ph=D.createElement('div');ph.id='bac-ph';ph.style.height=c.offsetHeight+'px';c.parentNode.insertBefore(ph,c);
+    c.insertBefore(xb,c.firstChild);
+    opened=true;vv();H.classList.add('bac-on');sync();
+    setTimeout(function(){try{q.focus({preventScroll:true})}catch(e){q.focus()}},80);
+  }
+  function close(){
+    if(!opened)return;opened=false;H.classList.remove('bac-on');
+    if(ph&&ph.parentNode)ph.parentNode.removeChild(ph);ph=null;
+    try{var a=D.activeElement;if(a&&a.blur&&$('xp-compose')&&$('xp-compose').contains(a))a.blur()}catch(e){}
+    sync();
+  }
+  function sync(){
+    if(!fab)return;
+    var h=$('page-home'),sh=$('ba-sheet'),sb=$('mobile-sidebar'),tb=$('ba-tabbar'),ae=D.activeElement;
+    var show=!!(h&&h.classList.contains('active'))&&!opened&&!(sh&&sh.classList.contains('open'))&&!(sb&&!sb.classList.contains('hidden'))&&!(ae&&ae.id==='xp-q');
+    fab.classList.toggle('on',show);
+    fab.classList.toggle('lo',!tb||tb.classList.contains('ba-hide'));
+  }
   function make(){
-    if(D.getElementById('ba-fab')||!D.body)return;
-    var b=D.createElement('button');b.id='ba-fab';b.type='button';b.setAttribute('aria-label','Buat postingan');b.title='Buat postingan';
-    b.innerHTML='<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
-    b.addEventListener('click',function(){
-      var c=D.getElementById('xp-compose'),q=D.getElementById('xp-q');
-      if(c&&c.scrollIntoView){try{c.scrollIntoView({block:'center',behavior:'smooth'})}catch(e){c.scrollIntoView()}}
-      if(q)setTimeout(function(){try{q.focus({preventScroll:true})}catch(e){q.focus()}},200);
-    });
-    D.body.appendChild(b);
-    function sync(){
-      var h=D.getElementById('page-home'),sh=D.getElementById('ba-sheet'),sb=D.getElementById('mobile-sidebar'),ae=D.activeElement;
-      var show=!!(h&&h.classList.contains('active'))&&!(sh&&sh.classList.contains('open'))&&!(sb&&!sb.classList.contains('hidden'))&&!(ae&&ae.id==='xp-q');
-      b.classList.toggle('on',show);
-    }
-    try{new MutationObserver(sync).observe(D.body,{attributes:true,subtree:true,attributeFilter:['class']})}catch(e){}
+    if($('ba-fab')||!D.body)return;
+    fab=D.createElement('button');fab.id='ba-fab';fab.type='button';fab.setAttribute('aria-label','Buat postingan');fab.title='Buat postingan';
+    fab.innerHTML='<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+    fab.addEventListener('click',open);
+    D.body.appendChild(fab);
+    var go=$('xp-go');
+    /* setelah kiriman berhasil (kotak teks dikosongkan) tutup lembar */
+    if(go)go.addEventListener('click',function(){setTimeout(function(){var q=$('xp-q');if(opened&&q&&!q.value){close();toast('Terkirim ✓');try{W.scrollTo({top:0,behavior:'smooth'})}catch(e){W.scrollTo(0,0)}}},60)});
+    D.addEventListener('keydown',function(e){if(opened&&e.key==='Escape')close()});
+    if(W.visualViewport){W.visualViewport.addEventListener('resize',function(){if(opened)vv()});W.visualViewport.addEventListener('scroll',function(){if(opened)vv()})}
+    W.addEventListener('resize',function(){if(opened)vv()});
+    var t=0;function lazy(){if(t)return;t=requestAnimationFrame(function(){t=0;sync()})}
+    try{new MutationObserver(lazy).observe(D.body,{attributes:true,subtree:true,attributeFilter:['class']})}catch(e){}
     D.addEventListener('focusin',sync);D.addEventListener('focusout',function(){setTimeout(sync,50)});
     sync();
   }
