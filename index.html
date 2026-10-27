@@ -16743,6 +16743,52 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   html body #sidebar-content .sb-link{min-height:42px}
 }
 </style>
+<style id="ba-landscape-x">
+/* ===== LANSKAP GAYA X (HP diputar): rail ikon di kiri, konten satu kolom di tengah =====
+   Ikon navigasi TIDAK diubah (sama persis); hanya label teks disembunyikan secara visual
+   (tetap ada untuk pembaca layar lewat aria-label) dan tata letak dirapikan. */
+@media (orientation:landscape) and (pointer:coarse) and (max-height:500px){
+  :root{--ba-rail:72px}
+  body{--ba-col:820px}                                   /* halaman lain: kolom lebih lebar (tabel, grafik) */
+  body:has(#page-home.active){--ba-col:600px}            /* Beranda: kolom sempit ala X */
+
+  /* 1) Rail ikon: ikon berurutan dari atas, rata tengah, tanpa label */
+  html body #ba-tabbar{justify-content:flex-start!important;align-items:center!important;
+    padding-top:calc(env(safe-area-inset-top,0px) + 10px)!important}
+  html body #ba-tabbar .ba-tab{flex:0 0 auto!important;width:100%;height:56px!important;min-height:56px!important;max-height:none!important;
+    padding:0!important;gap:0!important;justify-content:center}
+  html body #ba-tabbar .ba-tab>span:last-child{position:absolute!important;width:1px!important;height:1px!important;margin:-1px!important;padding:0!important;
+    overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;white-space:nowrap!important;display:block!important}
+  html body #ba-tabbar .ba-tab-ico,
+  html body #ba-tabbar .ba-tab[data-k="stock-exchange"] .ba-tab-ico{width:52px!important;height:44px!important;border-radius:22px!important}
+  html body #ba-tabbar .ba-tab .di,
+  html body #ba-tabbar .ba-tab[data-k="stock-exchange"] .di{width:28px!important;height:28px!important}
+
+  /* 2) Konten: satu kolom di tengah area kanan rail */
+  html body>main{
+    padding-left:max(14px,calc((100vw - var(--ba-rail-total) - var(--ba-col))/2))!important;
+    padding-right:max(calc(14px + env(safe-area-inset-right,0px)),calc((100vw - var(--ba-rail-total) - var(--ba-col))/2))!important}
+  html body #ba-topbar{
+    padding-left:max(14px,calc((100vw - var(--ba-rail-total) - var(--ba-col))/2))!important;
+    padding-right:max(calc(14px + env(safe-area-inset-right,0px)),calc((100vw - var(--ba-rail-total) - var(--ba-col))/2))!important}
+  html body #ba-topbar::before{display:none!important}
+  html body>footer{padding-left:max(14px,calc((100vw - var(--ba-rail-total) - var(--ba-col))/2))!important}
+
+  /* Beranda: feed satu kolom, panel samping tidak membuat kolom kedua */
+  html body #page-home .xp{grid-template-columns:minmax(0,1fr)!important;justify-content:stretch!important;width:100%!important;max-width:none!important;gap:0!important}
+  html body #page-home .xp-feed{width:100%!important;max-width:none!important;justify-self:stretch}
+  html body #page-home .xp-rail{width:100%!important;position:static!important;padding:0}
+}
+@media (orientation:landscape) and (pointer:coarse) and (max-height:360px){
+  :root{--ba-rail:64px}
+  html body #ba-tabbar .ba-tab{height:48px!important;min-height:48px!important}
+  html body #ba-tabbar .ba-tab-ico,
+  html body #ba-tabbar .ba-tab[data-k="stock-exchange"] .ba-tab-ico{width:46px!important;height:38px!important}
+  html body #ba-tabbar .ba-tab .di,
+  html body #ba-tabbar .ba-tab[data-k="stock-exchange"] .di{width:26px!important;height:26px!important}
+}
+</style>
+
 <script id="ba-rotate-js">
 (function(){
   var W=window,D=document,h=D.documentElement,t=0;
