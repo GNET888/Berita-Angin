@@ -16460,6 +16460,24 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
 
 
 <style id="ba-rotate-css">
+/* ===== LOGIN / GATE saat HP landscape: dua kolom ringkas, bisa digulir ===== */
+@media (orientation:landscape) and (max-height:520px){
+  #bal-ov.gate{height:100vh;height:100dvh;padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+  #bal-ov.gate .bal-box{display:grid!important;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)!important;height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+  #bal-ov.gate .bal-gr{display:flex!important;order:-1;padding:12px 8px 12px 24px;align-items:center;justify-content:center}
+  #bal-ov.gate .bal-glogo{width:min(200px,32vw)!important}
+  #bal-ov.gate .bal-gr .bal-tag{display:none!important}
+  #bal-ov.gate .bal-glogo-s,#bal-ov.gate .bal-tag-s{display:none!important}
+  #bal-ov.gate .bal-gl{align-items:flex-start!important;padding:14px 24px 14px 12px!important}
+  #bal-ov.gate .bal-gwrap{margin:auto 0}
+  #bal-ov.gate .bal-gh{margin:0 0 10px;font-size:20px}
+  #bal-ov.gate .bal-gcol{gap:8px}
+  #bal-ov.gate .bal-gform{gap:8px}
+  #bal-ov.gate .bal-gin input{padding:10px 12px;font-size:16px}
+  #bal-ov.gate .bal-gbtn,#bal-ov.gate .bal-gp,#bal-ov.gate .bal-gnext{padding:9px 14px}
+  #bal-ov.gate .bal-gterms{margin:2px 0 0;font-size:12px}
+}
+
 /* ===== ROTASI HP/APLIKASI: tampilan mengikuti portrait & landscape ===== */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{--ba-vh:100vh}
@@ -16471,6 +16489,17 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   .page [class*="grid-cols-3"],.page [class*="grid-cols-5"],.page [class*="grid-cols-6"]{grid-template-columns:repeat(3,minmax(0,1fr))!important}
   #ba-sheet{max-height:92vh;max-height:92dvh}
   #custom-modal>div{max-height:calc(var(--ba-vh) - 16px);overflow:auto}
+}
+
+/* HP landscape: ticker disembunyikan & topbar diperkecil supaya konten punya ruang */
+@media (orientation:landscape) and (pointer:coarse) and (max-height:500px){
+  .ba-tickwrap,#ba-ticker-bar{display:none!important}
+  html #ba-topbar .ba-top-right,html #ba-topbar .bal-top,html #ba-topbar #ba-dots{min-height:36px!important;height:36px!important}
+  html #ba-topbar img{max-height:34px;width:auto}
+  html #ba-topbar{padding-top:4px!important;padding-bottom:4px!important}
+  html #ba-topbar .bal-top.bal-top3,html #ba-topbar .bal-top.bal-top3 .bal-av{width:32px!important;height:32px!important}
+  html #ba-topbar .ba-crumb b{font-size:16px}
+  body>main{padding-top:.5rem!important}
 }
 /* HP portrait */
 @media (orientation:portrait) and (max-width:767px){
