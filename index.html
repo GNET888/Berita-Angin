@@ -3597,6 +3597,87 @@ html body #ba-tabbar .ba-tab[data-k="stock-exchange"] .ba-tab-ico{border-radius:
 html body a.nav-link[data-page="stock-exchange"]>.nav-ico.nav-ico,html body a.nav-link[data-page="stock-exchange"]>.dp-qi,html body #sidebar-content a.nav-link[data-page="stock-exchange"]>.nav-ico.nav-ico{border-radius:50%!important}
 html body #ba-sheet .ba-row[data-go="stock-exchange"] i{border-radius:50%!important}
 </style>
+<style id="ba-land-nav-accent">
+/* ===== Navigasi drawer (HP & lanskap): tombol X bulat 100% + state klik ikut Pengaturan Tampilan (aksen & tema) ===== */
+@media (max-width:767px), (orientation:landscape) and (pointer:coarse) and (max-height:500px){
+  /* Tombol X: lingkaran sempurna 100% */
+  html #sidebar-content #close-sidebar-btn{
+    box-sizing:border-box!important;flex:none!important;
+    width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;max-width:38px!important;max-height:38px!important;
+    aspect-ratio:1/1;padding:0!important;line-height:1!important;
+    border-radius:100%!important;overflow:hidden;
+    display:inline-flex!important;align-items:center;justify-content:center;
+    -webkit-tap-highlight-color:transparent;
+    transition:border-color .15s,color .15s,background-color .15s,scale .12s}
+  html #sidebar-content #close-sidebar-btn i{line-height:1;margin:0}
+  /* Saat disentuh/diklik/fokus -> warna aksen pilihan pengguna */
+  html #sidebar-content #close-sidebar-btn:hover,
+  html #sidebar-content #close-sidebar-btn:active,
+  html #sidebar-content #close-sidebar-btn:focus-visible{
+    border-color:rgb(var(--ba-ac,56 189 248))!important;
+    color:rgb(var(--ba-ac,56 189 248))!important;
+    background:rgb(var(--ba-ac,56 189 248) / .16)!important;outline:0}
+  html.light #sidebar-content #close-sidebar-btn:hover,
+  html.light #sidebar-content #close-sidebar-btn:active,
+  html.light #sidebar-content #close-sidebar-btn:focus-visible{
+    border-color:rgb(var(--ba-ac2,14 165 233))!important;
+    color:rgb(var(--ba-ac2,14 165 233))!important;
+    background:rgb(var(--ba-ac2,14 165 233) / .12)!important}
+
+  /* Menu navigasi: klik / aktif mengikuti aksen */
+  html #sidebar-content .sb-link,html #sidebar-content .sb-sublink{-webkit-tap-highlight-color:transparent}
+  html #sidebar-content .sb-link:hover,
+  html #sidebar-content .sb-link:active,
+  html #sidebar-content .sb-link:focus-visible,
+  html #sidebar-content .sb-link.is-active{
+    background:linear-gradient(90deg,rgb(var(--ba-ac,56 189 248) / .20),rgb(var(--ba-ac2,14 165 233) / .06))!important;
+    border-color:rgb(var(--ba-ac,56 189 248) / .35)!important;outline:0}
+  html #sidebar-content .sb-link:active,
+  html #sidebar-content .sb-link.is-active{color:rgb(var(--ba-ac,56 189 248))!important}
+  html #sidebar-content .sb-link:active>.nav-ico,
+  html #sidebar-content .sb-link.is-active>.nav-ico,
+  html #sidebar-content .sb-link:hover .sb-chev,
+  html #sidebar-content .sb-link.is-active .sb-chev{color:rgb(var(--ba-ac,56 189 248))!important}
+  html #sidebar-content .sb-link.is-active::before{background:rgb(var(--ba-ac,56 189 248))!important}
+  html #sidebar-content .sb-sublink:hover,
+  html #sidebar-content .sb-sublink:active,
+  html #sidebar-content .sb-sublink.is-active,
+  html #sidebar-content .st-sublink.is-active,
+  html #sidebar-content .ms-sublink.is-active,
+  html #mobile-sidebar .st-sublink.is-active,
+  html #mobile-sidebar .ms-sublink.is-active{
+    background:rgb(var(--ba-ac,56 189 248) / .14)!important;
+    color:rgb(var(--ba-ac,56 189 248))!important}
+  html #sidebar-content .sb-sublink:hover .sb-dot,
+  html #sidebar-content .sb-sublink:active .sb-dot,
+  html #sidebar-content .sb-sublink.is-active .sb-dot{
+    background:rgb(var(--ba-ac,56 189 248))!important;
+    box-shadow:0 0 0 3px rgb(var(--ba-ac,56 189 248) / .20)!important}
+
+  /* Tema terang: pakai aksen yang lebih gelap agar tetap terbaca */
+  html.light #sidebar-content .sb-link:hover,
+  html.light #sidebar-content .sb-link:active,
+  html.light #sidebar-content .sb-link:focus-visible,
+  html.light #sidebar-content .sb-link.is-active{
+    background:linear-gradient(90deg,rgb(var(--ba-ac2,14 165 233) / .16),rgb(var(--ba-ac2,14 165 233) / .04))!important;
+    border-color:rgb(var(--ba-ac2,14 165 233) / .35)!important}
+  html.light #sidebar-content .sb-link:active,
+  html.light #sidebar-content .sb-link.is-active,
+  html.light #sidebar-content .sb-link:active>.nav-ico,
+  html.light #sidebar-content .sb-link.is-active>.nav-ico,
+  html.light #sidebar-content .sb-sublink:hover,
+  html.light #sidebar-content .sb-sublink:active,
+  html.light #sidebar-content .sb-sublink.is-active,
+  html.light #sidebar-content .st-sublink.is-active,
+  html.light #sidebar-content .ms-sublink.is-active{color:rgb(var(--ba-ac2,14 165 233))!important}
+  html.light #sidebar-content .sb-sublink:hover,
+  html.light #sidebar-content .sb-sublink:active,
+  html.light #sidebar-content .sb-sublink.is-active,
+  html.light #sidebar-content .st-sublink.is-active,
+  html.light #sidebar-content .ms-sublink.is-active{background:rgb(var(--ba-ac2,14 165 233) / .12)!important}
+  html.light #sidebar-content .sb-link.is-active::before{background:rgb(var(--ba-ac2,14 165 233))!important}
+}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-mload" role="status" aria-live="polite" aria-label="Memuat"><div class="ba-mring"><img class="mlg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
