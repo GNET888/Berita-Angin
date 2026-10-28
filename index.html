@@ -16650,50 +16650,49 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 }
 </style>
 <style id="ba-fab-all">
-/* ===== TOMBOL + (gaya X): otomatis tampil di Beranda saat HP/aplikasi portrait maupun lanskap; tidak tampil di browser desktop. Klik = layar tulis postingan ala X ===== */
+/* ===== TOMBOL + (gaya X): otomatis tampil di Beranda saat HP/aplikasi portrait maupun lanskap; tidak tampil di browser desktop. Klik = layar tulis postingan ala X.
+   CEPAT: status layar tulis hanya memakai kelas pada elemen terkait (bukan pada <html>) agar browser tidak menghitung ulang seluruh halaman. ===== */
 #ba-fab{display:none}
 html body #ba-fab{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));
   width:56px;height:56px;padding:0;border:0;border-radius:50%;align-items:center;justify-content:center;background:#1d9bf0;color:#fff;cursor:pointer;z-index:51;
-  box-shadow:none!important;filter:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;
-  transition:bottom .28s cubic-bezier(.2,.8,.2,1),transform .12s ease-out,opacity .15s}
+  box-shadow:none!important;filter:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;
+  transition:bottom .28s cubic-bezier(.2,.8,.2,1),transform .1s ease-out}
 html.ba-fab-ok body #ba-fab.on{display:flex!important}
-html body #ba-fab:active{transform:scale(.92)}
+html body #ba-fab:active{transform:scale(.9)}
 html body #ba-fab:focus-visible{outline:3px solid #fff;outline-offset:2px}
 html.bal-lock #ba-fab{display:none!important}
 @media (max-width:767px){
   html:not(.ba-phone-land) body #ba-fab{width:clamp(48px,14vw,58px);height:clamp(48px,14vw,58px);bottom:calc(var(--ba-tab-h,66px) + 14px + env(safe-area-inset-bottom,0px))}
   html:not(.ba-phone-land) body #ba-fab.lo{bottom:calc(18px + env(safe-area-inset-bottom,0px))}
 }
-/* ---- layar tulis ala X: Batal (kiri) · Posting (kanan) · kolom tulis · bilah alat di bawah ---- */
-html.bac-on,html.bac-on body{overflow:hidden!important}
-html.bac-on #page-home .xp-feed{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-html.bac-on body>main,html.bac-on #page-home{isolation:auto!important;z-index:auto!important;contain:none!important;perspective:none!important;transform:none!important}
-#bac-bd{position:fixed;left:0;right:0;top:0;bottom:0;z-index:99984;background:rgba(0,0,0,.62);display:none}
-html.bac-on #bac-bd{display:block}
-html.bac-on #page-home #xp-compose{position:fixed!important;left:0;right:0;top:var(--bac-top,0px);bottom:auto;height:var(--bac-vh,100%);width:100%;margin:0;box-sizing:border-box;z-index:99985;
+/* ---- layar tulis ala X ---- */
+/* HP/aplikasi: tanpa perspective 3D & blur pada leluhur kotak posting (efek miring hanya untuk mouse) supaya layar tulis (position:fixed) langsung menempel ke layar tanpa kerja ulang */
+html.ba-fab-ok body>main,html.ba-fab-ok #page-home{perspective:none!important}
+html.ba-fab-ok #page-home .xp-feed{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+#bac-bd{position:fixed;left:0;right:0;top:0;bottom:0;z-index:99984;background:rgba(0,0,0,.62);display:none;touch-action:none}
+html #page-home #xp-compose.bac-open{position:fixed!important;left:0;right:0;top:var(--bac-top,0px);bottom:auto;height:var(--bac-vh,100%);width:100%;margin:0;box-sizing:border-box;z-index:99985;
   display:flex;flex-direction:row;align-items:stretch;gap:10px;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;background:#000;border:0!important;border-radius:0;
-  padding:56px calc(14px + env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) calc(14px + env(safe-area-inset-left,0px))!important;animation:bacUp .2s cubic-bezier(.2,.8,.2,1)}
-html.light.bac-on #page-home #xp-compose{background:#fff}
-html.bac-on #page-home #xp-compose .xp-av{align-self:flex-start}
-html.bac-on #page-home #xp-compose .xp-cbody{position:static!important;display:flex;flex-direction:column;min-width:0}
-html.bac-on #page-home #xp-compose .xp-crow{position:static!important;margin-top:auto;border-top:1px solid #2f3336;padding-top:8px}
-html.light.bac-on #page-home #xp-compose .xp-crow{border-top-color:#eff3f4}
-html.bac-on #page-home #xp-compose #xp-go{position:absolute!important;top:9px;right:calc(12px + env(safe-area-inset-right,0px));z-index:3}
-html.bac-on #page-home #xp-compose #xp-go.on:not(:disabled){background:#1d9bf0!important;color:#fff!important;opacity:1}
-@keyframes bacUp{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
-#bac-x{display:none;position:absolute;top:9px;left:calc(8px + env(safe-area-inset-left,0px));height:36px;padding:0 12px;border:0;border-radius:999px;background:none;color:inherit;font:500 16px/36px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;cursor:pointer;z-index:3}
-html.bac-on #bac-x{display:block}
+  padding:56px calc(14px + env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) calc(14px + env(safe-area-inset-left,0px))!important;animation:bacUp .14s ease-out}
+html.light #page-home #xp-compose.bac-open{background:#fff}
+html #page-home #xp-compose.bac-open .xp-av{align-self:flex-start}
+html #page-home #xp-compose.bac-open .xp-cbody{position:static!important;display:flex;flex-direction:column;min-width:0}
+html #page-home #xp-compose.bac-open .xp-crow{position:static!important;margin-top:auto;border-top:1px solid #2f3336;padding-top:8px}
+html.light #page-home #xp-compose.bac-open .xp-crow{border-top-color:#eff3f4}
+html #page-home #xp-compose.bac-open #xp-go{position:absolute!important;top:9px;right:calc(12px + env(safe-area-inset-right,0px));z-index:3}
+html #page-home #xp-compose.bac-open #xp-go.on:not(:disabled){background:#1d9bf0!important;color:#fff!important;opacity:1}
+@keyframes bacUp{from{transform:translateY(14px);opacity:.4}to{transform:none;opacity:1}}
+#bac-x{display:none;position:absolute;top:9px;left:calc(8px + env(safe-area-inset-left,0px));height:36px;padding:0 12px;border:0;border-radius:999px;background:none;color:inherit;font:500 16px/36px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;cursor:pointer;z-index:3;touch-action:manipulation}
+#xp-compose.bac-open #bac-x{display:block}
 #bac-x:hover{background:rgba(231,233,234,.1)}
-/* layar lebar / tablet / lanskap: kartu di tengah-atas, tinggi mengikuti isi (di atas keyboard) */
 @media (min-width:700px),(orientation:landscape){
-  html.bac-on #page-home #xp-compose{top:calc(var(--bac-top,0px) + 6px);height:auto;max-height:calc(var(--bac-vh,100%) - 12px);width:min(640px,100%);margin:0 auto;border:1px solid #2f3336!important;border-radius:16px}
-  html.light.bac-on #page-home #xp-compose{border-color:#dbe3ee!important}
+  html #page-home #xp-compose.bac-open{top:calc(var(--bac-top,0px) + 6px);height:auto;max-height:calc(var(--bac-vh,100%) - 12px);width:min(640px,100%);margin:0 auto;border:1px solid #2f3336!important;border-radius:16px}
+  html.light #page-home #xp-compose.bac-open{border-color:#dbe3ee!important}
 }
 @media (orientation:landscape) and (max-height:500px){
-  html.bac-on #page-home #xp-compose{padding-top:50px!important;padding-bottom:6px!important}
+  html #page-home #xp-compose.bac-open{padding-top:50px!important;padding-bottom:6px!important}
 }
 #bac-toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:99999;background:#1d9bf0;color:#fff;padding:10px 16px;border-radius:10px;font:600 14px/1.3 system-ui,sans-serif;max-width:90vw;text-align:center;pointer-events:none}
-@media (prefers-reduced-motion:reduce){html body #ba-fab{transition:none}html.bac-on #page-home #xp-compose{animation:none}}
+@media (prefers-reduced-motion:reduce){html body #ba-fab{transition:none}html #page-home #xp-compose.bac-open{animation:none}}
 </style>
 <style id="ba-landscape-x">
 /* ===== LANSKAP GAYA X (HP/aplikasi diputar): rail ikon di kiri, header foto profil + logo tengah, tab bisa digeser, kolom konten tengah, tombol + di kanan bawah ===== */
@@ -16793,67 +16792,83 @@ html.bac-on #bac-x{display:block}
 @media (prefers-reduced-motion:reduce){html body #ba-tabbar .ba-tab,html body #ba-fab{transition:none!important}}
 </style>
 <script id="ba-landscape-x-js">
-/* Tombol + (HP / mode aplikasi): otomatis tampil di Beranda (portrait & lanskap), klik = layar tulis postingan ala X. */
+/* Tombol + (HP / mode aplikasi): otomatis tampil di Beranda (portrait & lanskap), respons instan saat disentuh, klik = layar tulis postingan ala X. */
 (function(){
-  var D=document,W=window,H=D.documentElement,fab,bd,xb,ph,opened=false;
+  var D=document,W=window,H=D.documentElement,fab,bd,xb,ph,opened=false,lastTouch=0,obs=null,watched=[],ovH='',ovB='';
   var $=function(i){return D.getElementById(i)};
   var mm=function(q){try{return !!(W.matchMedia&&W.matchMedia(q).matches)}catch(e){return false}};
-  /* HP / layar sentuh / aplikasi terpasang -> tombol boleh tampil; browser desktop (mouse) -> tidak */
   function env(){
     var app=navigator.standalone===true||mm('(display-mode: standalone)')||mm('(display-mode: fullscreen)')||mm('(display-mode: minimal-ui)');
     var touch=mm('(pointer: coarse)')||mm('(hover: none)')||((navigator.maxTouchPoints||0)>0&&Math.min(screen.width||9999,screen.height||9999)<=900);
     H.classList.toggle('ba-appmode',!!app);H.classList.toggle('ba-fab-ok',!!(app||touch));
   }
   function toast(t){var e=D.createElement('div');e.id='bac-toast';e.textContent=t;D.body.appendChild(e);setTimeout(function(){e.remove()},2000)}
-  function vv(){var v=W.visualViewport,h=(v&&v.height)||W.innerHeight,t=(v&&v.offsetTop)||0;
-    H.style.setProperty('--bac-vh',h+'px');H.style.setProperty('--bac-top',t+'px')}
+  var vvH=0,vvT=0;
+  function readVV(){var v=W.visualViewport;vvH=(v&&v.height)||W.innerHeight;vvT=(v&&v.offsetTop)||0}
+  function vv(fresh){var c=$('xp-compose');if(!c)return;if(fresh||!vvH)readVV();
+    c.style.setProperty('--bac-vh',vvH+'px');c.style.setProperty('--bac-top',vvT+'px')}
+  /* tinggi kotak posting di-cache (tanpa memaksa layout saat dibuka) */
+  var ch=0,ro=null;
+  function track(){var c=$('xp-compose');if(!c||ro===c)return;ro=c;
+    try{new ResizeObserver(function(){if(!opened)ch=c.offsetHeight||ch}).observe(c)}catch(e){ch=c.offsetHeight}}
   function open(){
     var c=$('xp-compose'),q=$('xp-q');if(!c||!q||opened)return;
+    opened=true;
     if(!bd){bd=D.createElement('div');bd.id='bac-bd';bd.addEventListener('click',close);D.body.appendChild(bd)}
     if(!xb){xb=D.createElement('button');xb.id='bac-x';xb.type='button';xb.textContent='Batal';xb.addEventListener('click',close)}
-    ph=D.createElement('div');ph.id='bac-ph';ph.style.height=c.offsetHeight+'px';c.parentNode.insertBefore(ph,c);
-    c.insertBefore(xb,c.firstChild);
-    opened=true;vv();H.classList.add('bac-on');sync();
-    setTimeout(function(){try{q.focus({preventScroll:true})}catch(e){q.focus()}},80);
+    ph=D.createElement('div');ph.id='bac-ph';ph.style.height=(ch||120)+'px';c.parentNode.insertBefore(ph,c);
+    if(xb.parentNode!==c)c.insertBefore(xb,c.firstChild);
+    vv(false);bd.style.display='block';c.classList.add('bac-open');
+    fab.classList.remove('on');
+    /* fokus setelah lembar tergambar (tidak menahan frame pertama) */
+    requestAnimationFrame(function(){setTimeout(function(){if(opened){try{q.focus({preventScroll:true})}catch(e){q.focus()}}},0)});
   }
   function close(){
-    if(!opened)return;opened=false;H.classList.remove('bac-on');
+    if(!opened)return;opened=false;
+    var c=$('xp-compose');
+    if(c){c.classList.remove('bac-open');c.style.removeProperty('--bac-vh');c.style.removeProperty('--bac-top')}
+    if(bd)bd.style.display='none';
     if(ph&&ph.parentNode)ph.parentNode.removeChild(ph);ph=null;
-    try{var a=D.activeElement,c=$('xp-compose');if(a&&a.blur&&c&&c.contains(a))a.blur()}catch(e){}
+    try{var a=D.activeElement;if(a&&a.blur&&c&&c.contains(a))a.blur()}catch(e){}
     sync();
   }
-  function homeVisible(){var h=$('page-home');if(!h)return false;if(h.classList.contains('active'))return true;try{return getComputedStyle(h).display!=='none'&&h.offsetParent!==null}catch(e){return false}}
   function sync(){
     if(!fab)return;
     if(!D.body.contains(fab))D.body.appendChild(fab);
-    var sh=$('ba-sheet'),sb=$('mobile-sidebar'),tb=$('ba-tabbar');
-    var show=homeVisible()&&!opened&&!(sh&&sh.classList.contains('open'))&&!(sb&&!sb.classList.contains('hidden'));
-    fab.classList.toggle('on',show);
-    fab.classList.toggle('lo',!tb||tb.classList.contains('ba-hide'));
+    var h=$('page-home'),sh=$('ba-sheet'),sb=$('mobile-sidebar'),tb=$('ba-tabbar');
+    var show=!!(h&&h.classList.contains('active'))&&!opened&&!(sh&&sh.classList.contains('open'))&&!(sb&&!sb.classList.contains('hidden'));
+    if(fab.classList.contains('on')!==show)fab.classList.toggle('on',show);
+    var lo=!tb||tb.classList.contains('ba-hide');if(fab.classList.contains('lo')!==lo)fab.classList.toggle('lo',lo);
   }
-  function refit(){env();if(opened)vv();sync()}
+  /* pantau hanya elemen yang relevan (bukan seluruh halaman) */
+  function watch(){
+    if(!obs){try{obs=new MutationObserver(function(){if(watch.t)return;watch.t=requestAnimationFrame(function(){watch.t=0;sync()})})}catch(e){return}}
+    ['page-home','ba-sheet','mobile-sidebar','ba-tabbar'].forEach(function(id){var e=$(id);if(e&&watched.indexOf(e)<0){watched.push(e);obs.observe(e,{attributes:true,attributeFilter:['class']})}});
+  }
+  function refit(){env();readVV();if(opened)vv(false);watch();track();sync()}
   function make(){
     if($('ba-fab')||!D.body)return;
     env();
     fab=D.createElement('button');fab.id='ba-fab';fab.type='button';fab.setAttribute('aria-label','Buat postingan');fab.title='Buat postingan';
     fab.innerHTML='<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
-    fab.addEventListener('click',open);
+    /* respons instan: buka saat jari terangkat (tanpa menunggu 'click'); 'click' tetap ada untuk mouse/keyboard */
+    fab.addEventListener('pointerup',function(e){if(e.pointerType==='mouse')return;lastTouch=Date.now();e.preventDefault();open()});
+    fab.addEventListener('click',function(){if(Date.now()-lastTouch<700)return;open()});
     D.body.appendChild(fab);
+    /* tahan 'klik hantu' setelah sentuhan (jika tidak, klik jatuh ke latar & langsung menutup lembar) */
+    D.addEventListener('click',function(e){if(Date.now()-lastTouch<350){e.stopPropagation();e.preventDefault()}},true);
     var go=$('xp-go');
-    /* setelah kiriman berhasil (kotak teks kosong) tutup layar tulis */
     if(go)go.addEventListener('click',function(){setTimeout(function(){var q=$('xp-q');if(opened&&q&&!q.value){close();toast('Terkirim ✓');try{W.scrollTo({top:0,behavior:'smooth'})}catch(e){W.scrollTo(0,0)}}},60)});
     D.addEventListener('keydown',function(e){if(opened&&e.key==='Escape')close()});
-    if(W.visualViewport){W.visualViewport.addEventListener('resize',refit);W.visualViewport.addEventListener('scroll',function(){if(opened)vv()})}
+    if(W.visualViewport){W.visualViewport.addEventListener('resize',refit);W.visualViewport.addEventListener('scroll',function(){readVV();if(opened)vv(false)})}
     W.addEventListener('resize',refit);W.addEventListener('orientationchange',function(){refit();setTimeout(refit,300)});
     W.addEventListener('pageshow',refit);W.addEventListener('hashchange',function(){setTimeout(sync,50)});
     D.addEventListener('visibilitychange',function(){if(!D.hidden)refit()});
-    D.addEventListener('click',function(){setTimeout(sync,60)},true);
-    var t=0;function lazy(){if(t)return;t=requestAnimationFrame(function(){t=0;sync()})}
-    try{new MutationObserver(lazy).observe(D.body,{attributes:true,childList:true,subtree:true,attributeFilter:['class','hidden','style']})}catch(e){}
+    D.addEventListener('click',function(){setTimeout(sync,80)},true);
     /* pengaman: pastikan tombol selalu ada & tampil otomatis di Beranda */
-    W.setInterval(refit,1500);
+    W.setInterval(refit,2000);
     [100,500,1200,2500,5000].forEach(function(ms){setTimeout(refit,ms)});
-    sync();
+    readVV();watch();track();sync();
   }
   if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',make);else make();
 })();
