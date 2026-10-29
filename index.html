@@ -16898,13 +16898,11 @@ html body #ba-fab.pr,html body #ba-fab:active{transform:translateZ(0) scale(.88)
     if(go)go.addEventListener('click',function(){setTimeout(function(){var q=$('xp-q');if(opened&&q&&!q.value){close();toast('Terkirim ✓');try{W.scrollTo({top:0,behavior:'smooth'})}catch(e){W.scrollTo(0,0)}}},60)});
     D.addEventListener('keydown',function(e){if(opened&&e.key==='Escape')close()});
     if(W.visualViewport){W.visualViewport.addEventListener('resize',refit);W.visualViewport.addEventListener('scroll',function(){readVV();if(opened)vv(false)})}
-    W.addEventListener('resize',refit);W.addEventListener('orientationchange',function(){refit();setTimeout(refit,300)});
+    var rt=0;W.addEventListener('resize',function(){if(rt)return;rt=requestAnimationFrame(function(){rt=0;refit()})},{passive:true});W.addEventListener('orientationchange',function(){setTimeout(refit,200)});
     W.addEventListener('pageshow',refit);W.addEventListener('hashchange',function(){setTimeout(sync,50)});
     D.addEventListener('visibilitychange',function(){if(!D.hidden)refit()});
-    D.addEventListener('click',function(){setTimeout(sync,80)},true);
     /* pengaman: pastikan tombol selalu ada & tampil otomatis di Beranda */
-    W.setInterval(function(){if(D.hidden||opened)return;refit()},2500);
-    [100,500,1200,2500,5000].forEach(function(ms){setTimeout(refit,ms)});
+    [150,900,2500].forEach(function(ms){setTimeout(refit,ms)});
     readVV();watch();track();sync();
   }
   if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',make);else make();
@@ -16931,5 +16929,32 @@ html body #ba-fab.pr,html body #ba-fab:active{transform:translateZ(0) scale(.88)
   try{if(screen.orientation&&screen.orientation.addEventListener)screen.orientation.addEventListener('change',onRot)}catch(e){}
 })();
 </script>
+
+<style id="ba-lite-landscape">
+/* ===== LANDSCAPE: IKON LOGIN SERAGAM + NAVIGASI & TOMBOL + RINGAN ===== */
+/* 1) Logo login landscape: persegi, di tengah kolom kiri, tinggi mengikuti layar (proporsi sama dengan tampilan portrait/desktop) */
+@media (orientation:landscape) and (max-height:520px){
+  #bal-ov.gate .bal-gr{padding:8px 10px!important;justify-content:center!important;align-items:center!important}
+  #bal-ov.gate .bal-glogo{width:auto!important;height:min(68vh,250px)!important;max-width:100%!important;aspect-ratio:1/1;object-fit:contain;margin:0 auto}
+  html:not(.light) #bal-ov.gate .bal-glogo,html:not(.light) #bal-ov.gate .bal-glogo-s{mix-blend-mode:normal!important}
+}
+/* 2) Ringan: tanpa animasi/gradien/transisi berat pada rail navigasi, pindah halaman, dan layar tulis status */
+@media (pointer:coarse){
+  .page.active{animation:none!important}
+  .ba-tab .di.ba-wig,.nav-ico.ba-wig{animation:none!important}
+  .ba-tab,.ba-tab-ico,.ba-tab .di{transition:none!important}
+  html body #ba-tabbar .ba-tab:active{opacity:.6;transform:none!important}
+  html #page-home #xp-compose.bac-open{animation:none!important}
+  html body #ba-fab{will-change:auto;transition:none!important}
+  html body #ba-fab.pr,html body #ba-fab:active{transform:scale(.9)}
+  html #page-home .xp-post.xp-new{animation:none!important}
+}
+@media (orientation:landscape) and (pointer:coarse) and (max-height:500px){
+  html body #ba-tabbar .ba-tab-ico{overflow:visible!important;isolation:auto!important}
+  html body #ba-tabbar .ba-tab-ico::before{display:none!important}
+  html body #ba-tabbar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  html body #bac-bd{background:rgba(0,0,0,.75)}
+}
+</style>
 </body>
 </html>
