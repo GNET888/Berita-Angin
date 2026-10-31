@@ -55,7 +55,6 @@ html .page.active[data-ba-first]{animation:none!important}
 /* ANTI-KEDIP URL: selama menuju halaman lain, Beranda bawaan tidak digambar sama sekali */
 html[data-ba-route]:not([data-ba-route="home"]) #page-home.active{display:none!important}
 html header.sticky>nav>div>div:nth-child(2)>*{opacity:1!important;transform:none!important;animation:none!important}
-
 /* ===== LOADING HP/APLIKASI + ANTI-LONCATAN (layout shift) ===== */
 html #ba-mload{display:none}
 html.ba-mload #ba-mload{display:flex}
@@ -405,7 +404,7 @@ html.light [class*="bg-black/6"],html.light [class*="bg-black/7"]{background-col
 </style>
 <script>/* Ikon perusahaan otomatis: logo dari domain resmi; bila gagal dimuat, tampil lencana ticker berwarna merek. */
 (function(){
-  var D={"NVDA": "nvidia.com", "AAPL": "apple.com", "MSFT": "microsoft.com", "AMZN": "amazon.com", "GOOGL": "google.com", "META": "meta.com", "TSLA": "tesla.com", "AMD": "amd.com", "NFLX": "netflix.com", "INTC": "intel.com", "PYPL": "paypal.com", "UBER": "uber.com", "JPM": "jpmorganchase.com", "V": "visa.com", "WMT": "walmart.com", "DIS": "disney.com", "BAC": "bankofamerica.com", "XOM": "exxonmobil.com", "CVX": "chevron.com", "KO": "coca-colacompany.com", "PEP": "pepsico.com", "PFE": "pfizer.com", "JNJ": "jnj.com", "ABBV": "abbvie.com", "TMO": "thermofisher.com", "COST": "costco.com", "AVGO": "broadcom.com", "CSCO": "cisco.com", "ADBE": "adobe.com", "CRM": "salesforce.com", "QCOM": "qualcomm.com", "TXN": "ti.com", "ACN": "accenture.com", "LIN": "linde.com", "NKE": "nike.com", "MCD": "mcdonalds.com", "IBM": "ibm.com", "SBUX": "starbucks.com", "GE": "geaerospace.com", "CAT": "caterpillar.com", "BA": "boeing.com", "HON": "honeywell.com", "UPS": "ups.com", "T": "att.com", "VZ": "verizon.com", "NEE": "nexteraenergy.com", "LOW": "lowes.com", "BLK": "blackrock.com", "SPGI": "spglobal.com", "MDT": "medtronic.com"}, C={"NVDA": "#76B900", "AAPL": "#555B66", "MSFT": "#00A4EF", "AMZN": "#FF9900", "GOOGL": "#4285F4", "META": "#0866FF", "TSLA": "#E82127", "AMD": "#ED1C24", "NFLX": "#E50914", "INTC": "#0071C5", "PYPL": "#003087", "UBER": "#276EF1", "JPM": "#0B4EA2", "V": "#1A1F71", "WMT": "#0071CE", "DIS": "#113CCF", "BAC": "#E31837", "XOM": "#ED1B2D", "CVX": "#0054A4", "KO": "#F40009", "PEP": "#004B93", "PFE": "#0093D0", "JNJ": "#D51900", "ABBV": "#071D49", "TMO": "#E4002B", "COST": "#E31837", "AVGO": "#CC092F", "CSCO": "#049FD9", "ADBE": "#FA0F00", "CRM": "#00A1E0", "QCOM": "#3253DC", "TXN": "#CC0000", "ACN": "#A100FF", "LIN": "#0067B1", "NKE": "#F36F21", "MCD": "#DA291C", "IBM": "#1F70C1", "SBUX": "#00704A", "GE": "#0B5FA5", "CAT": "#D9A400", "BA": "#1D439C", "HON": "#E4002B", "UPS": "#5A3A1B", "T": "#009FDB", "VZ": "#CD040B", "NEE": "#0079C1", "LOW": "#004990", "BLK": "#3C3C3C", "SPGI": "#D71920", "MDT": "#0072BC"};
+  var D={"NVDA": "nvidia.com", "AAPL": "apple.com", "MSFT": "microsoft.com", "AMZN": "amazon.com", "GOOGL": "google.com", "META": "meta.com", "TSLA": "tesla.com", "AMD": "amd.com", "NFLX": "netflix.com", "INTC": "intel.com", "PYPL": "paypal.com", "UBER": "uber.com", "JPM": "jpmorganchase.com", "V": "visa.com", "WMT": "walmart.com", "DIS": "disney.com", "BAC": "bankofamerica.com", "XOM": "exxonmobil.com", "CVX": "chevron.com", "KO": "coca-colacompany.com", "PEP": "pepsico.com", "PFE": "pfizer.com", "JNJ": "jnj.com", "ABBV": "abbvie.com", "TMO": "thermofisher.com", "COST": "costco.com", "AVGO": "broadcom.com", "CSCO": "cisco.com", "ADBE": "adobe.com", "CRM": "salesforce.com", "QCOM": "qualcomm.com", "TXN": "ti.com", "ACN": "accenture.com", "LIN": "linde.com", "NKE": "nike.com", "MCD": "mcdonalds.com", "IBM": "ibm.com", "SBUX": "starbucks.com", "GE": "geaerospace.com", "CAT": "caterpillar.com", "BA": "boeing.com", "HON": "honeywell.com", "UPS": "ups.com", "T": "att.com", "VZ": "verizon.com", "NEE": "nexteraenergy.com", "LOW": "lowes.com", "BLK": "blackrock.com", "SPGI": "spglobal.com", "MDT": "medtronic.com", "SPCX": "spacex.com"}, C={"NVDA": "#76B900", "AAPL": "#555B66", "MSFT": "#00A4EF", "AMZN": "#FF9900", "GOOGL": "#4285F4", "META": "#0866FF", "TSLA": "#E82127", "AMD": "#ED1C24", "NFLX": "#E50914", "INTC": "#0071C5", "PYPL": "#003087", "UBER": "#276EF1", "JPM": "#0B4EA2", "V": "#1A1F71", "WMT": "#0071CE", "DIS": "#113CCF", "BAC": "#E31837", "XOM": "#ED1B2D", "CVX": "#0054A4", "KO": "#F40009", "PEP": "#004B93", "PFE": "#0093D0", "JNJ": "#D51900", "ABBV": "#071D49", "TMO": "#E4002B", "COST": "#E31837", "AVGO": "#CC092F", "CSCO": "#049FD9", "ADBE": "#FA0F00", "CRM": "#00A1E0", "QCOM": "#3253DC", "TXN": "#CC0000", "ACN": "#A100FF", "LIN": "#0067B1", "NKE": "#F36F21", "MCD": "#DA291C", "IBM": "#1F70C1", "SBUX": "#00704A", "GE": "#0B5FA5", "CAT": "#D9A400", "BA": "#1D439C", "HON": "#E4002B", "UPS": "#5A3A1B", "T": "#009FDB", "VZ": "#CD040B", "NEE": "#0079C1", "LOW": "#004990", "BLK": "#3C3C3C", "SPGI": "#D71920", "MDT": "#0072BC", "SPCX": "#005288"};
   window.stkIcon=function(sym){
     var t=String(sym||'').toUpperCase(), d=D[t];
     return '<span class="stk-ico" style="background:'+(C[t]||'#475569')+'"><b>'+t.slice(0,4)+'</b>'+
@@ -2551,7 +2550,6 @@ html body .xp-av,html body .sb-avatar,html body .ba-pf-av,html body .bal-drw .ba
 /* topbar sticky + blur: isolasi supaya konten yang di-scroll di belakangnya tidak membuat avatar ikut repaint */
 html body #ba-topbar{isolation:isolate;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
 </style>
-
 <!-- CSS dipindah dari body ke head agar tampilan nav/ikon final sejak paint pertama (urutan cascade tetap) -->
 <style id="ba-prog-css">
 .ba-pg{display:none!important;width:min(240px,62vw);display:grid;gap:9px;justify-items:center;margin-top:12px}
@@ -3621,7 +3619,6 @@ function finish(){if(fin)return;fin=true;
  if(window.__baProg)window.__baProg.complete(go);else setTimeout(go,280)}
 (function w(){var el=Date.now()-t0;if((el>=MIN&&ready())||el>=window.__baMax(false,13000))finish();else setTimeout(w,40)})();
 })();</script>
-
 <script id="ba-prog-js">
 /* PERSEN LOADING NYATA: naik mengikuti tahap muat sebenarnya (HTML diurai -> font/ikon -> semua sumber -> halaman tampil -> bilah atas siap),
    merayap pelan di antara tahap supaya tidak terlihat macet di jaringan lambat, lalu 100% sebelum layar dibuka. */
@@ -4912,7 +4909,6 @@ function finish(){if(fin)return;fin=true;
   <button type="button" data-gasnet="p" class="gas-seg-b"><i style="background:#A855F7"></i>Polygon</button>
   <button type="button" data-gasnet="a" class="gas-seg-b"><i style="background:#10B981"></i>Arbitrum</button>
 </div>
-
 <span id="gas-chart-updated" class="text-[10px] text-gray-500 font-mono">Auto update: --</span>
                                 </div>
                                 <div id="gas-kpi" class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3"></div>
@@ -5673,7 +5669,6 @@ function finish(){if(fin)return;fin=true;
             <!-- SUB-HALAMAN 1: KPI, Indeks Likuiditas, Komponen Likuiditas Makro (tata letak dock) -->
             <div id="gm-sub-1" class="gm-sub">
             
-
             <div class="gm1-dock">
                 <div id="gm-kpis" class="gm1-kpis"></div>
                 <div class="gm1-row">
@@ -7223,6 +7218,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
             { symbol: 'GOOGL', name: 'Alphabet Inc.', sector: 'Internet Services', price: 178.90, change: '+1.30%', mktCap: '$2.21T' },
             { symbol: 'META', name: 'Meta Platforms, Inc.', sector: 'Social Media & AI', price: 512.40, change: '+3.10%', mktCap: '$1.30T' },
             { symbol: 'TSLA', name: 'Tesla, Inc.', sector: 'EV & Clean Energy', price: 248.30, change: '-1.85%', mktCap: '$789B' },
+            { symbol: 'SPCX', name: 'SpaceX (Space Exploration Technologies)', sector: 'Aerospace & Space', price: 134.72, change: '-6.37%', mktCap: '$1.83T' },
             { symbol: 'AMD', name: 'Advanced Micro Devices', sector: 'Semiconductor', price: 156.70, change: '+4.20%', mktCap: '$253B' },
             { symbol: 'NFLX', name: 'Netflix, Inc.', sector: 'Entertainment', price: 685.20, change: '+1.65%', mktCap: '$295B' },
             { symbol: 'INTC', name: 'Intel Corporation', sector: 'Semiconductor', price: 21.40, change: '-2.10%', mktCap: '$91B' },
@@ -9827,7 +9823,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   else setTimeout(start, 0);
 })();
 </script>
-
 <script>/* ============================================================
    GLOBAL MARKET KPI PRO — Kapitalisasi Pasar Global • DXY • Emas (XAU) • Minyak WTI
    Grafik canvas profesional multi-panel: candlestick/area + indikator (EMA, SMA, Bollinger, Donchian)
@@ -11367,7 +11362,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else setTimeout(start, 0);
 })();
 </script>
-
 <script>/* GRAFIK PROFESIONAL OTOMATIS
    • Crypto Asset → Perubahan 24j : area gradien halus + garis open 24j + titik live berdenyut
    • U.S. Stock Directory → CHANGE (%) : mini candlestick intraday + garis previous close
@@ -11693,7 +11687,6 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
 })();
 },{timeout:700});
 </script>
-
 <script>/* GRAFIK PROFESIONAL OTOMATIS
    • Crypto Asset → Perubahan 24j : area gradien halus + garis open 24j + titik live berdenyut
    • U.S. Stock Directory → CHANGE (%) : mini candlestick intraday + garis previous close
@@ -11883,7 +11876,6 @@ var ROUTES=[function(u){return window.__BA_PROXY?'/api/proxy?url='+encodeURIComp
 /* Worker pribadi (jika diisi) jadi rute pertama; tambah proxy cadangan lain */
 if(window.__BA_WORKER){ROUTES.unshift(function(u){return window.__BA_WORKER.replace(/\/+$/,'')+'/?url='+encodeURIComponent(u)})}
 ROUTES.push(function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u.replace('query1.','query2.'))},function(u){return 'https://thingproxy.freeboard.io/fetch/'+u});
-
 function seqJ(u){return new Promise(function(res,rej){if(Date.now()<deadUntil)return rej(new Error('offline'));var k=0,nf=false;
   (function next(){if(k>=ROUTES.length){if(!nf)deadUntil=Date.now()+30000;return rej(new Error(nf?'notfound':'offline'))}
    var idx=(ri+k)%ROUTES.length;k++;var c=new AbortController(),t=setTimeout(function(){c.abort()},4500);
@@ -12566,7 +12558,6 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
   document.addEventListener('mouseleave',reset);
 })();
 </script>
-
 <script id="ba-settings-js">
 /* Halaman Pengaturan: semua kontrol langsung diterapkan & disimpan (localStorage 'ba-settings') */
 (function(){
@@ -12641,7 +12632,6 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
   if(tgt&&tgt!=='home'&&tgt!=='settings'){setTimeout(function(){var a=$('a.nav-link[data-page="'+tgt+'"]');if(a)a.click()},60)}
 })();
 </script>
-
 <script id="ba-ext-js">
 /* Tema Putih/Dark Black cepat, koneksi data, layar penuh, putar halaman otomatis, pintasan keyboard */
 (function(){
@@ -12941,7 +12931,6 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
   setInterval(function(){if(!document.hidden){liveMacro();histMacro()}},6*36e5);
 })();
 </script>
-
 <script id="ba-data-hub">
 /* PUSAT DATA ONLINE HARIAN — satu sumber data untuk semua halaman.
    Menarik riwayat harian NYATA (CoinGecko, Yahoo Finance, FRED, Fear & Greed), disimpan per hari di localStorage
@@ -13748,7 +13737,6 @@ D.addEventListener('visibilitychange',function(){if(!D.hidden)poll()});
 (function(){try{if(!('serviceWorker' in navigator))return;var h=location.hostname;if(!(location.protocol==='https:'||h==='localhost'||h==='127.0.0.1'))return;
 window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}catch(e){}})();
 </script>
-
 <script id="ba-settings-app">
 /* Pengaturan khusus HP / aplikasi terpasang: tandai opsi yang tidak berlaku, beri umpan balik, tambah kartu Aplikasi */
 (function(){
@@ -13819,7 +13807,6 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
   }catch(err){}
 })();
 </script>
-
 <script id="ba-settings-nav">
 (function(){
   var D=document,W=window;
@@ -14122,7 +14109,6 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
   },true);
 })();
 </script>
-
 <script id="ba-app-pro-js">
 (function(){
   if(window.__baPro)return;window.__baPro=1;
@@ -14180,14 +14166,12 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
   if(document.readyState!=='loading')check();else document.addEventListener('DOMContentLoaded',check);
 })();
 </script>
-
 <script id="liq-smooth-scroll-js">
 (function(){var t,r=document.documentElement;
 document.addEventListener('scroll',function(e){var el=e.target;if(!el||el.id!=='liq-regions')return;
 window.__liqScroll=1;r.classList.add('liq-scrolling');clearTimeout(t);
 t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')},150)},{capture:true,passive:true});})();
 </script>
-
 <script id="ba-fast-nav">
 (function(){
   'use strict';
@@ -14226,7 +14210,6 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
   }
 })();
 </script>
-
 <script id="ba-stable-nav">
 (function(){
   'use strict';
@@ -14372,7 +14355,6 @@ t=setTimeout(function(){window.__liqScroll=0;r.classList.remove('liq-scrolling')
     fetch('news.json?d='+k,{cache:'no-cache'}).then(function(r){return r.ok?r.json():null}).then(function(j){var a=j&&(j.items||j);if(ok(a))render(a)}).catch(function(){})}
 })();
 </script>
-
 <style id="xp-gal-css">
 /* ===== Galeri foto/video sampai 4 (gaya X / Threads) ===== */
 #page-home .xp-gprev{position:relative;margin:2px 0 8px}
@@ -15026,7 +15008,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
     'Ekonomi Makro':['photo-1526304640581-d334cdbbf45e','photo-1444653389962-8149286c578a','photo-1590283603385-17ffb3a7f29f']
   };
   function photo(a,i){var L=PH[a.c]||PH['Global Market'];return UP(L[(i||0)%L.length])}
-
   /* ---- artikel bawaan (rotasi per tanggal) ---- */
   var POOL=[
   {t:'Self-Custody: Mengapa Kunci Dompet Harus Anda Pegang Sendiri',c:'Web3 & DeFi',lead:'Menyimpan aset di bursa itu praktis, tetapi kendali penuh baru Anda miliki saat private key berada di tangan sendiri.',
@@ -15204,7 +15185,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script>
-
 <script id="xps-js">
 (function(){
   var root=document.getElementById('page-home');if(!root)return;
@@ -15341,9 +15321,7 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   if(document.readyState!=='complete')window.addEventListener('load',function(){if(!document.querySelector('#page-article-detail.active'))setTimeout(deep,300)});
 })();
 </script>
-
 <!-- ===================== BA-AUTH: Sign In / Sign Up / Sign Out ===================== -->
-
 <div id="bal-ov" role="dialog" aria-modal="true" aria-labelledby="bal-title" hidden>
   <div class="bal-box" id="bal-box"></div>
 </div>
@@ -15863,8 +15841,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
 })();
 </script>
 <!-- ===================== /BA-AUTH ===================== -->
-
-
 <script id="ba-user-sync">
 /* Avatar, nama & handle otomatis mengikuti akun yang sedang login */
 (function(){
@@ -15915,7 +15891,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
 </script>
-
 <script id="ba-edit-profil-js">
 /* Edit Profil: mengikuti susunan halaman Profile, tersimpan (localStorage 'ba-profile') & ditampilkan di halaman Profile */
 (function(){
@@ -16190,7 +16165,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   paint();window.addEventListener('load',paint);setInterval(paint,1000);
 })();
 </script>
-
 <script id="ba-dots-js">
 /* Tombol titik tiga (⋮) di pojok kanan atas: membuka menu akun yang sama dengan avatar (Ubah foto profil, Pengaturan, Sign Out). */
 (function(){
@@ -16226,7 +16200,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   };
 })();
 </script>
-
 <script id="ba-nav-stable-js">
 (function(){
   var h=document.documentElement,nav=document.getElementById('ba-tabbar');
@@ -16244,7 +16217,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   }catch(e){}
 })();
 </script>
-
 <script id="ba-nav-v3-js">
 /* animasi ikon tab bar saat diklik (mati bila "Kurangi animasi" aktif di Pengaturan) */
 (function(){
@@ -16258,9 +16230,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   },true);
 })();
 </script>
-
-
-
 <script id="ba-mkt-js">
 (function(){
   function parts(tz){
@@ -16286,9 +16255,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   tick();setInterval(tick,30000);
 })();
 </script>
-
-
-
 <script id="ba-lines-up-js">
 (function(){
   function upd(){
@@ -16311,7 +16277,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   setInterval(upd,1500);
 })();
 </script>
-
 <script id="ba-live-ticks-real">
 /* LIVE TICKS dari data pasar asli (tanpa angka acak):
    - Crypto: Binance (24j) -> cadangan CoinGecko   - Saham, indeks, emas, kurs: Yahoo Finance
@@ -16472,8 +16437,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   W.addEventListener('online',refresh);
 })();
 </script>
-
-
 <script id="ba-hi-resp-js">
 (function(){
   'use strict';
@@ -16516,8 +16479,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   D.addEventListener('visibilitychange',function(){W.__baNavBusy=false;clrHit()});
 })();
 </script>
-
-
 <style id="ba-rotate-css">
 /* ===== LOGIN / GATE saat HP landscape: dua kolom ringkas, bisa digulir ===== */
 @media (orientation:landscape) and (max-height:520px){
@@ -16536,7 +16497,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   #bal-ov.gate .bal-gbtn,#bal-ov.gate .bal-gp,#bal-ov.gate .bal-gnext{padding:9px 14px}
   #bal-ov.gate .bal-gterms{margin:2px 0 0;font-size:12px}
 }
-
 /* ===== ROTASI HP/APLIKASI: tampilan mengikuti portrait & landscape ===== */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{--ba-vh:100vh}
@@ -16549,7 +16509,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   #ba-sheet{max-height:92vh;max-height:92dvh}
   #custom-modal>div{max-height:calc(var(--ba-vh) - 16px);overflow:auto}
 }
-
 /* HP landscape: ticker disembunyikan & topbar diperkecil supaya konten punya ruang */
 @media (orientation:landscape) and (pointer:coarse) and (max-height:500px){
   .ba-tickwrap,#ba-ticker-bar{display:none!important}
@@ -16570,7 +16529,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{--ba-rail:76px}
 @media (orientation:landscape) and (pointer:coarse) and (max-height:500px){
   :root{--ba-rail-total:calc(var(--ba-rail) + env(safe-area-inset-left,0px))}
-
   /* 1) Tab bawah -> rail vertikal di kiri; tinggi layar tidak lagi terpakai bilah bawah */
   html body #ba-tabbar{
     display:flex!important;flex-direction:column;align-items:stretch;justify-content:center;gap:0;
@@ -16584,7 +16542,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   html.light body #ba-tabbar{border-right-color:rgba(15,23,42,.1)!important;border-top:0!important}
   /* selalu terlihat (tanpa sembunyi saat scroll) */
   html body #ba-tabbar.ba-hide{transform:none!important}
-
   html body #ba-tabbar .ba-tab{
     flex:1 1 0;min-height:44px!important;height:auto!important;width:100%;
     flex-direction:column;justify-content:center;align-items:center;gap:2px!important;padding:4px 3px!important;overflow:hidden}
@@ -16601,7 +16558,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   html body #ba-tabbar .ba-tab[data-k="stock-exchange"] .di{width:22px!important;height:22px!important}
   /* penanda tab aktif: garis di sisi kiri */
   html body #ba-tabbar .ba-tab.on::before{top:50%!important;left:0!important;width:3px!important;height:26px!important;margin:-13px 0 0 0!important;border-radius:0 3px 3px 0!important}
-
   /* 2) Konten bergeser ke kanan rail, tanpa ruang kosong di bawah */
   html body>main{margin-left:var(--ba-rail-total)!important;width:calc(100% - var(--ba-rail-total))!important;max-width:none!important;
     padding-left:14px!important;padding-right:calc(14px + env(safe-area-inset-right,0px))!important;
@@ -16609,7 +16565,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   html body #ba-topbar{margin-left:var(--ba-rail-total)!important;padding-left:14px!important;padding-right:calc(14px + env(safe-area-inset-right,0px))!important}
   html body #bg3d+div,html body>footer{margin-left:var(--ba-rail-total)!important}
   html body #ba-install{bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;left:calc(50% + var(--ba-rail-total)/2)!important}
-
   /* 3) Menu "Lainnya": panel di sisi kanan, 2 kolom, bisa digulir -> semua baris terlihat */
   html body #ba-sheet{
     left:auto!important;right:0!important;top:0!important;bottom:0!important;
@@ -16626,7 +16581,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   html body #ba-sheet .ba-row small{display:none}
   html body #ba-sheet .ba-row[hidden]{display:none!important}
   html body #ba-sheet .ba-row>span{min-width:0}
-
   /* 4) Isi halaman muat di lebar yang tersisa */
   .page,.page>*{min-width:0;max-width:100%}
   .page [class*="grid-cols-2"],.page [class*="grid-cols-4"]{grid-template-columns:repeat(2,minmax(0,1fr))!important}
@@ -16699,7 +16653,6 @@ html #page-home #xp-compose.bac-open #xp-go.on:not(:disabled){background:#1d9bf0
 #ba-fab{display:none}
 @media (orientation:landscape) and (pointer:coarse) and (max-height:500px){
   :root{--ba-rail:clamp(52px,8vw,68px)}
-
   /* 1) RAIL: hanya ikon, tersebar merata dari atas ke bawah (label disembunyikan, tetap terbaca pembaca layar) */
   html body #ba-tabbar{
     justify-content:space-evenly!important;align-items:center!important;
@@ -16731,7 +16684,6 @@ html #page-home #xp-compose.bac-open #xp-go.on:not(:disabled){background:#1d9bf0
   html body #ba-tabbar .ba-tab .di{width:28px!important;height:28px!important}
   html body #ba-tabbar .ba-tab[data-k="stock-exchange"] .di{width:26px!important;height:26px!important}
   html body #ba-tabbar .ba-tab.on::before{display:none!important}
-
   /* 2) HEADER: foto profil di kiri, logo di tengah kolom konten, tanpa garis bawah */
   html body #ba-topbar{
     margin-left:var(--ba-rail-total)!important;min-height:48px!important;
@@ -16739,13 +16691,11 @@ html #page-home #xp-compose.bac-open #xp-go.on:not(:disabled){background:#1d9bf0
     background:var(--ba-bg,#000)!important;border-bottom:0!important}
   html.light body #ba-topbar{background:var(--ba-bg,#fff)!important}
   html body #ba-topbar::after{width:32px!important;height:32px!important}
-
   /* 3) KONTEN: kolom tengah, terpusat, tidak melebar berlebihan; tidak ada geser samping */
   html body>main{overflow-x:clip;
     padding-left:clamp(6px,1.4vw,14px)!important;padding-right:calc(clamp(6px,1.4vw,14px) + env(safe-area-inset-right,0px))!important;width:calc(100% - var(--ba-rail-total))!important}
   html body #page-home .xp{grid-template-columns:minmax(0,1fr)!important;justify-content:stretch!important;max-width:none!important;width:100%!important;margin:0!important}
   html body #page-home .xp-feed{border-left:0!important;border-right:0!important}
-
   /* tab beranda (Untuk Anda, Mengikuti, ...): satu baris, bisa digeser, garis aksen di bawah tab aktif */
   html body #page-home .xp-tabs{background:#000!important;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x}
   html body #page-home .xp-tabs::-webkit-scrollbar{display:none}
@@ -16753,16 +16703,13 @@ html #page-home #xp-compose.bac-open #xp-go.on:not(:disabled){background:#1d9bf0
   html body #page-home .xp-tabs button>span{height:44px!important}
   html.light body #page-home .xp-tabs{background:#fff!important}
   html body #page-home .xp-pill{top:calc(var(--xp-top) + 50px)!important}
-
   /* postingan & composer lebih ringkas supaya banyak yang terlihat di layar pendek */
   html body #page-home .xp-compose{padding:8px 12px 6px!important}
   html body #page-home .xp-post{padding:clamp(6px,1.6vh,10px) clamp(8px,1.6vw,14px)}
   html body #page-home .xp-feed{min-width:0;width:100%}
-
   /* 4) DRAWER profil/menu: di atas rail (tidak bertabrakan), aman dari poni/tepi */
   html body #mobile-sidebar{z-index:70!important}
   html body #sidebar-content{padding-top:env(safe-area-inset-top,0px);padding-left:env(safe-area-inset-left,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-
   /* 5) TOMBOL + (buat postingan) di kanan bawah, hanya di Beranda */
   html body #ba-fab{
     position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));
@@ -16929,7 +16876,6 @@ html body #ba-fab.pr,html body #ba-fab:active{transform:translateZ(0) scale(.88)
   try{if(screen.orientation&&screen.orientation.addEventListener)screen.orientation.addEventListener('change',onRot)}catch(e){}
 })();
 </script>
-
 <style id="ba-lite-landscape">
 /* ===== LANDSCAPE: IKON LOGIN SERAGAM + NAVIGASI & TOMBOL + RINGAN ===== */
 /* 1) Logo login landscape: persegi, di tengah kolom kiri, tinggi mengikuti layar (proporsi sama dengan tampilan portrait/desktop) */
