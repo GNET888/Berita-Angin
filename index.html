@@ -12509,8 +12509,11 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
 /* Foto profil: unggah sendiri (disimpan di browser). Tanpa foto -> monogram "AE", bukan foto stok. */
 (function(){
   var KEY='ba-avatar',root=document.documentElement,PH='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%20200%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%230b1220%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%231e293b%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Ctext%20x%3D%22100%22%20y%3D%22124%22%20text-anchor%3D%22middle%22%20font-family%3D%22Inter%2CArial%2Csans-serif%22%20font-size%3D%2284%22%20font-weight%3D%22800%22%20fill%3D%22%2338BDF8%22%3EAE%3C%2Ftext%3E%3C%2Fsvg%3E';
+  var cur=null,curC=false;
+  function store(d){try{if(d)localStorage.setItem(KEY,d);else localStorage.removeItem(KEY)}catch(e){}}
   function apply(src,custom){
-    document.querySelectorAll('img[data-avatar]').forEach(function(i){i.src=src});
+    cur=src;curC=!!custom;
+    document.querySelectorAll('img[data-avatar]').forEach(function(i){if(i.getAttribute('src')!==src)i.src=src});
     root.style.setProperty('--ba-avatar','url("'+src+'")');
     document.querySelectorAll('[data-avatar-reset]').forEach(function(b){b.style.display=custom?'':'none'});
   }
@@ -12532,8 +12535,10 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
         var m=Math.min(im.width,im.height),sx=(im.width-m)/2,sy=(im.height-m)/2;
         c.getContext('2d').drawImage(im,sx,sy,m,m,0,0,S,S);
         var d=c.toDataURL('image/jpeg',.88);
-        try{localStorage.setItem(KEY,d)}catch(e){}
+        store(d);
         apply(d,true);
+        /* SINKRON: foto yang diunggah dari Profil/Pengaturan ikut menjadi foto akun -> navbar, drawer, sidebar, cloud */
+        try{if(window.baAuth&&window.baAuth.setPicture)window.baAuth.setPicture(d,true)}catch(e){}
       };
       im.src=fr.result;
     };
@@ -12543,9 +12548,26 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
     var t=e.target.closest&&e.target.closest('[data-avatar-change],[data-avatar-reset]');
     if(!t)return;e.preventDefault();e.stopPropagation();
     if(t.hasAttribute('data-avatar-change'))inp.click();
-    else{try{localStorage.removeItem(KEY)}catch(x){}load()}
+    else{store(null);load();try{if(window.baAuth&&window.baAuth.setPicture)window.baAuth.setPicture('',false)}catch(x){}}
   });
   load();
+  /* API untuk sistem akun (BA-AUTH): satu sumber foto untuk dashboard, profil, dan navigasi */
+  window.baAvatar={
+    get:function(){try{return localStorage.getItem(KEY)}catch(e){return null}},
+    setLocal:function(d){store(d||null);if(d)apply(d,true);else load()},
+    show:function(u){apply(u,false)}
+  };
+  /* tab lain mengganti foto -> tab ini ikut berubah */
+  window.addEventListener('storage',function(e){if(e.key===KEY||e.key===null)load()});
+  /* elemen foto yang baru muncul (kartu/halaman dimuat belakangan) langsung memakai foto terkini */
+  try{var raf=0,pend=false;
+    new MutationObserver(function(ms){
+      if(pend)return;
+      for(var a=0;a<ms.length&&!pend;a++){var ad=ms[a].addedNodes;
+        for(var b=0;b<ad.length;b++){var n=ad[b];
+          if(n.nodeType===1&&((n.matches&&n.matches('img[data-avatar]'))||(n.querySelector&&n.querySelector('img[data-avatar]')))){pend=true;break}}}
+      if(pend)raf=requestAnimationFrame(function(){pend=false;if(cur)apply(cur,curC)});
+    }).observe(document.body,{childList:true,subtree:true})}catch(e){}
 })();
 /* Tilt 3D pada kartu berita */
 (function(){
@@ -15687,8 +15709,16 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
     var foot=document.querySelector('#sidebar-content .sb-foot');
     if(foot&&!drw){drw=document.createElement('div');drw.className='bal-drw';drw.id='bal-drw';foot.parentNode.insertBefore(drw,foot)}
   }
+  /* Samakan foto akun dengan foto di halaman Profil/dashboard (ba-avatar) */
+  function syncLegacy(s){
+    if(!s||!window.baAvatar)return;
+    var u=readUsers()[s.email]||{},leg=window.baAvatar.get(),ok=/^(data:image\/|https?:)/;
+    if(u.customPic&&u.picture){ if(leg!==u.picture)window.baAvatar.setLocal(u.picture) }      /* akun punya foto unggahan -> dipakai di mana-mana */
+    else if(leg&&ok.test(leg)){ savePic(leg,true) }                                             /* foto lama dari halaman Profil -> naik ke akun */
+    else if(u.picture&&!leg){ window.baAvatar.show(u.picture) }                                 /* foto Google: tampil juga di halaman Profil */
+  }
   function paint(){
-    ensureMounts();var s=getSession();
+    ensureMounts();var s=getSession();syncLegacy(s);
     root.classList.add('bal-on');root.classList.toggle('bal-ses',!!s);
     if(side){
       side.innerHTML=s
@@ -15734,7 +15764,10 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
     var s=getSession();if(!s)return false;var us=readUsers(),u=us[s.email];if(!u)return false;
     u.picture=pic;u.customPic=!!custom;us[s.email]=u;
     if(!writeUsers(us)){toast('Penyimpanan browser penuh atau tidak tersedia.');return false}
-    paint();baPushPic(s.email,pic,custom);return true;
+    /* SINKRON: foto akun = foto di halaman Profil & dashboard (ba-avatar) */
+    try{if(window.baAvatar)window.baAvatar.setLocal(pic&&custom?pic:null)}catch(e){}
+    paint();try{if(window.baSyncUser)window.baSyncUser()}catch(e){}
+    baPushPic(s.email,pic,custom);return true;
   }
   /* ---------- SINKRON PROFIL KE CLOUD (nama + foto): komputer & aplikasi memakai data yang sama ---------- */
   function cloudOn(){return !!(window.BACloud&&BACloud.ready)}
@@ -15775,10 +15808,10 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
     var url=URL.createObjectURL(f),img=new Image();
     img.onload=function(){
       try{
-        var N=256,c=document.createElement('canvas');c.width=c.height=N;
+        var N=480,c=document.createElement('canvas');c.width=c.height=N;
         var side=Math.min(img.width,img.height),sx=(img.width-side)/2,sy=(img.height-side)/2;
         var x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,N,N);x.drawImage(img,sx,sy,side,side,0,0,N,N);
-        if(savePic(c.toDataURL('image/jpeg',.86),true))toast('Foto profil diperbarui.');
+        if(savePic(c.toDataURL('image/jpeg',.88),true))toast('Foto profil diperbarui.');
       }catch(e){toast('Gagal memproses foto. Coba gambar lain.')}
       URL.revokeObjectURL(url);
     };
@@ -15842,7 +15875,7 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
     var n=0,iv=setInterval(function(){ensureMounts();if((side&&topBtn&&drw)||++n>20){clearInterval(iv);paint()}},250);
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-  window.baAuth={user:getSession,signIn:function(){openModal('in')},signUp:function(){openModal('up')},signOut:function(){if(getSession())signOut()}};
+  window.baAuth={setPicture:function(p,c){var ok=savePic(p,c);if(ok)toast(p?'Foto profil diperbarui.':'Foto profil dihapus.');return ok},user:getSession,signIn:function(){openModal('in')},signUp:function(){openModal('up')},signOut:function(){if(getSession())signOut()}};
 })();
 </script>
 <!-- ===================== /BA-AUTH ===================== -->
