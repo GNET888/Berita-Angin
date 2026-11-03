@@ -2948,6 +2948,8 @@ html.light .art-tbl td{border-top-color:rgba(15,23,42,.10)}
 #page-settings .st-row.ba-na .st-ctl,#page-settings .st-row.ba-na button{pointer-events:none}
 #page-settings .ba-note{display:block;margin-top:4px;font-size:11.5px;color:#f59e0b}
 #page-settings .st-btn[disabled]{opacity:.5;pointer-events:none}
+#st-account{display:none}html.bal-ses #st-account{display:block}
+#st-account [data-bal-who]{color:#fb7185;font-weight:700}
 #ba-app-card .ba-ios{display:none;font-size:12px;color:#8b95a5;line-height:1.5}
 </style>
 <style id="ba-settings-nav-css">
@@ -6315,6 +6317,10 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
                         <div class="st-h"><i class="fa-solid fa-database"></i>Data &amp; Cadangan</div>
                         <div class="st-row first col"><div><b>Ekspor / impor pengaturan</b><small>Simpan pengaturan (termasuk foto profil) ke file JSON dan pulihkan di browser lain.</small></div>
                             <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="st-btn" id="st-export"><i class="fa-solid fa-download"></i>Ekspor</button><button type="button" class="st-btn" id="st-import"><i class="fa-solid fa-upload"></i>Impor</button></div></div>
+                    </div>
+                    <div class="st-card" id="st-account">
+                        <div class="st-h"><i class="fa-solid fa-user-lock"></i>Akun</div>
+                        <div class="st-row first"><div><b>Sign Out <span data-bal-who></span></b><small>Keluar dari akun ini di perangkat ini.</small></div><button type="button" class="st-btn dng" data-bal-out><i class="fa-solid fa-right-from-bracket"></i>Sign Out</button></div>
                     </div>
                     <div class="st-card">
                         <div class="st-h"><i class="fa-regular fa-keyboard"></i>Pintasan keyboard</div>
@@ -15719,6 +15725,7 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   }
   function paint(){
     ensureMounts();var s=getSession();syncLegacy(s);
+    var __w=document.querySelector('#st-account [data-bal-who]');if(__w)__w.textContent=s?handle(s.email):'';
     root.classList.add('bal-on');root.classList.toggle('bal-ses',!!s);
     if(side){
       side.innerHTML=s
@@ -15732,20 +15739,21 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
     }
     if(drw){
       drw.innerHTML=s
-        ?'<div class="bal-who">'+avHtml(s)+'<span class="bal-txt"><b>'+esc(s.name)+'</b><span>'+esc(s.email)+'</span></span></div><div class="bal-btnrow"><button type="button" class="bal-b" data-bal-photo style="grid-column:1/-1"><i class="fa-solid fa-camera"></i> Ubah foto profil</button><button type="button" class="bal-b out" data-bal-out>Sign Out '+esc(handle(s.email))+'</button></div>'
+        ?'<div class="bal-who">'+avHtml(s)+'<span class="bal-txt"><b>'+esc(s.name)+'</b><span>'+esc(s.email)+'</span></span></div>'
         :'<p>Masuk untuk berkomentar, menyukai, dan menyimpan artikel.</p><div class="bal-btnrow"><button type="button" class="bal-b pri" data-bal-open="in">Sign In</button><button type="button" class="bal-b" data-bal-open="up">Sign Up</button></div>';
     }
   }
   /* ---------- menu akun ---------- */
   var menu=document.getElementById('bal-menu'),menuAnchor=null;
+  function appMode(){try{var m=window.matchMedia;return m('(max-width:1023px)').matches||m('(display-mode: standalone)').matches||m('(display-mode: fullscreen)').matches||navigator.standalone===true}catch(e){return false}}
   function openMenu(anchor){
-    var s=getSession();menuAnchor=anchor;
+    var s=getSession();menuAnchor=anchor;var app=appMode();
     menu.innerHTML=s
       ?'<div class="bal-mh"><b>'+esc(s.name)+'</b><span>'+esc(s.email)+'</span></div>'
-      +'<button type="button" role="menuitem" data-bal-photo><i class="fa-solid fa-camera"></i>Ubah foto profil</button>'
+      +(app?'':'<button type="button" role="menuitem" data-bal-photo><i class="fa-solid fa-camera"></i>Ubah foto profil</button>')
       +(s.picture?'<button type="button" role="menuitem" data-bal-photo-del><i class="fa-solid fa-trash-can"></i>Hapus foto profil</button>':'')
       +'<button type="button" role="menuitem" data-bal-settings><i class="fa-solid fa-gear"></i>Pengaturan</button>'
-      +'<button type="button" role="menuitem" class="out" data-bal-out><i class="fa-solid fa-right-from-bracket"></i>Sign Out '+esc(handle(s.email))+'</button>'
+      +(app?'':'<button type="button" role="menuitem" class="out" data-bal-out><i class="fa-solid fa-right-from-bracket"></i>Sign Out '+esc(handle(s.email))+'</button>')
       :'<div class="bal-mh"><b>Tamu</b><span>Belum Sign In</span></div>'
       +'<button type="button" role="menuitem" data-bal-open="in"><i class="fa-solid fa-right-to-bracket"></i>Sign In</button>'
       +'<button type="button" role="menuitem" data-bal-open="up"><i class="fa-solid fa-user-plus"></i>Sign Up</button>';
