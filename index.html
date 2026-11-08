@@ -20109,5 +20109,51 @@ html #market-mini-widgets{display:grid!important;gap:12px;align-items:stretch;gr
   D.addEventListener('click', function (e) { if (e.target && e.target.closest && e.target.closest('.nav-link')) setTimeout(wrap, 300); });
 })();
 </script>
+<style id="ba-se-smooth">
+/* ===== STOCK EXCHANGE: scroll ringan, tanpa kedip & patah-patah ===== */
+/* 1) Latar bursa: statis (animasi background-position + mask memaksa gambar ulang layar penuh tiap frame) */
+html body:after{animation:none!important;will-change:auto}
+/* 2) Blur kaca dimatikan di halaman ini: blur di atas konten yang terus berubah = penyebab utama kedip */
+html body #page-stock-exchange,
+html body #page-stock-exchange *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+/* header tabel tetap terbaca tanpa blur: pakai warna solid */
+html.dark body #page-stock-exchange thead th,
+html.dark body #page-stock-exchange thead.bg-card-dark{background-color:#0d1117!important}
+html.light body #page-stock-exchange thead th,
+html.light body #page-stock-exchange thead.bg-card-dark{background-color:#f1f5f9!important}
+/* 3) Perubahan isi satu kartu tidak memaksa hitung ulang tata letak seluruh halaman */
+html body #page-stock-exchange :is(#intraday-telemetry-card,#hm-card,#l2-card,#sd-dir-card){contain:layout style}
+/* konten yang diperbarui tidak membuat posisi scroll melompat */
+html body #page-stock-exchange{overflow-anchor:none}
+html body #page-stock-exchange canvas{backface-visibility:hidden}
+/* 4) Saat jari/mouse sedang menggulir: efek dekoratif dijeda, hover tidak dihitung */
+html.ba-scrolling body #page-stock-exchange *,
+html.ba-scrolling body #page-stock-exchange *::before,
+html.ba-scrolling body #page-stock-exchange *::after{animation-play-state:paused!important;transition:none!important}
+html.ba-scrolling body #page-stock-exchange{pointer-events:none}
+</style>
+<script id="ba-se-smooth-js">
+/* Saat menggulir di halaman Stock Exchange, timer pembaruan data dijeda sebentar
+   (memakai pengaman __baNavBusy yang sudah ada), lalu lanjut otomatis 160 ms setelah berhenti. */
+(function(){
+  var W=window,D=document,H=D.documentElement,t=null,mine=false;
+  function onSE(){var p=D.getElementById('page-stock-exchange');return !!(p&&p.classList.contains('active'))}
+  function start(){
+    if(!onSE())return;
+    if(!H.classList.contains('ba-scrolling'))H.classList.add('ba-scrolling');
+    if(!W.__baNavBusy){W.__baNavBusy=true;mine=true}
+    clearTimeout(t);t=setTimeout(end,160);
+  }
+  function end(){
+    H.classList.remove('ba-scrolling');
+    if(mine){W.__baNavBusy=false;mine=false}
+  }
+  W.addEventListener('scroll',start,{passive:true});
+  D.addEventListener('touchmove',start,{passive:true});
+  D.addEventListener('wheel',start,{passive:true});
+  /* pindah halaman / tab disembunyikan: pastikan tidak ada yang tertahan */
+  D.addEventListener('visibilitychange',function(){clearTimeout(t);end()});
+})();
+</script>
 </body>
 </html>
