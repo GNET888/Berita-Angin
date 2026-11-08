@@ -5992,15 +5992,272 @@ function finish(){if(fin)return;fin=true;
             <div id="se-sub-1" class="space-y-6">
             <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-card-border pb-3">
-                <div><h2 class="text-lg font-bold text-white uppercase tracking-wide">Overview Market</h2><p class="text-xs text-gray-400">Pergerakan pasar saham .</p></div>
-                <span class="text-xs text-emerald-400"><i class="fa-solid fa-circle animate-pulse mr-1"></i> AUTO UPDATE</span>
+                <div><h2 class="text-lg font-bold text-white uppercase tracking-wide">Overview Market</h2><p class="text-xs text-gray-400">Pergerakan saham NASDAQ, diperbarui otomatis dari data bursa.</p></div>
+                <span id="ovx-status" class="text-xs text-emerald-400" role="status"><i class="fa-solid fa-circle animate-pulse mr-1"></i><b id="ovx-st" class="font-semibold">AUTO UPDATE</b></span>
               </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
-                <div class="bg-black/50 border border-card-border rounded-xl p-4 min-w-0"><div class="flex justify-between items-center gap-2"><div class="text-[10px] text-gray-400 uppercase">NVIDIA (NVDA)</div><span class="text-[9px] text-gray-500 uppercase tracking-wider">Area • EMA • RSI</span></div><div class="flex justify-between items-end"><strong id="ov-nasdaq" class="text-xl text-white">$138.20</strong><span id="ov-nasdaq-chg" class="text-xs text-emerald-400">+0.82%</span></div><div id="ov-nasdaq-rng" class="text-[10px] text-gray-500 font-mono">H – • L –</div><div class="relative h-64 mt-2 rounded-lg overflow-hidden bg-black/30 border border-card-border"><canvas id="overview-pro-nasdaq" class="w-full h-full" aria-label="Grafik profesional otomatis"></canvas></div></div>
-                <div class="bg-black/50 border border-card-border rounded-xl p-4 min-w-0"><div class="flex justify-between items-center gap-2"><div class="text-[10px] text-gray-400 uppercase">Apple (AAPL)</div><span class="text-[9px] text-gray-500 uppercase tracking-wider">Candle • Vol • MACD</span></div><div class="flex justify-between items-end"><strong id="ov-sp" class="text-xl text-white">$228.50</strong><span id="ov-sp-chg" class="text-xs text-emerald-400">+0.35%</span></div><div id="ov-sp-rng" class="text-[10px] text-gray-500 font-mono">H – • L –</div><div class="relative h-64 mt-2 rounded-lg overflow-hidden bg-black/30 border border-card-border"><canvas id="overview-pro-sp" class="w-full h-full" aria-label="Grafik profesional otomatis"></canvas></div></div>
-                <div class="bg-black/50 border border-card-border rounded-xl p-4 min-w-0"><div class="flex justify-between items-center gap-2"><div class="text-[10px] text-gray-400 uppercase">Tesla (TSLA)</div><span class="text-[9px] text-gray-500 uppercase tracking-wider">Bollinger • %B • BBW</span></div><div class="flex justify-between items-end"><strong id="ov-dow" class="text-xl text-white">$245.60</strong><span id="ov-dow-chg" class="text-xs text-rose-400">−0.18%</span></div><div id="ov-dow-rng" class="text-[10px] text-gray-500 font-mono">H – • L –</div><div class="relative h-64 mt-2 rounded-lg overflow-hidden bg-black/30 border border-card-border"><canvas id="overview-pro-dow" class="w-full h-full" aria-label="Grafik profesional otomatis"></canvas></div></div>
-                <div class="bg-black/50 border border-card-border rounded-xl p-4 min-w-0"><div class="flex justify-between items-center gap-2"><div class="text-[10px] text-gray-400 uppercase">Microsoft (MSFT)</div><span class="text-[9px] text-gray-500 uppercase tracking-wider">Donchian • Stoch</span></div><div class="flex justify-between items-end"><strong id="ov-msft" class="text-xl text-white">$428.30</strong><span id="ov-msft-chg" class="text-xs text-emerald-400">+0.46%</span></div><div id="ov-msft-rng" class="text-[10px] text-gray-500 font-mono">H – • L –</div><div class="relative h-64 mt-2 rounded-lg overflow-hidden bg-black/30 border border-card-border"><canvas id="overview-pro-msft" class="w-full h-full" aria-label="Grafik profesional otomatis"></canvas></div></div>
-              </div>
+              <style id="ovx-css">
+#ovx{container-type:inline-size;--up:#10B981;--dn:#EF4444;--tx:#f4f4f5;--mu:#9ca3af;--grid:rgba(255,255,255,.07);--card:rgba(0,0,0,.45);--bd:#27272a;--tag:#18181b;--ac:rgb(var(--ba-ac,56 189 248))}
+html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fafc;--bd:#e2e8f0;--tag:#fff}
+#ovx .ovx-bar{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+#ovx .ovx-seg{display:inline-flex;border:1px solid var(--bd);border-radius:10px;overflow:hidden}
+#ovx .ovx-seg button{background:none;border:0;padding:6px 14px;font-size:12px;font-weight:600;color:var(--mu);cursor:pointer}
+#ovx .ovx-seg button[aria-pressed=true]{background:var(--ac);color:#04121a}
+#ovx button:focus-visible{outline:2px solid var(--ac);outline-offset:-2px}
+#ovx .ovx-info{font-size:11.5px;color:var(--mu)}
+@container (max-width:420px){#ovx .ovx-seg button{padding:6px 11px}#ovx .ovx-info{display:none}}
+#ovx .ovx-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin-top:12px}
+@container (min-width:520px){#ovx .ovx-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container (min-width:940px){#ovx .ovx-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+#ovx .ovx-c{container-type:inline-size;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px 12px 10px;min-width:0;color:var(--tx)}
+#ovx .ovx-h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#ovx .ovx-h>div{display:flex;align-items:baseline;min-width:0;overflow:hidden}
+#ovx .ovx-sym{font-size:14px;font-weight:700}
+#ovx .ovx-nm{margin-left:6px;font-size:11.5px;color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#ovx .ovx-tag{display:inline-flex;align-items:center;gap:5px;flex:none;font-size:10.5px;color:var(--mu);border:1px solid var(--bd);border-radius:999px;padding:1px 8px 1px 6px;white-space:nowrap}
+#ovx .ovx-tag i{width:6px;height:6px;border-radius:50%;background:var(--mu)}
+#ovx .ovx-tag.on i{background:var(--up)}
+#ovx .ovx-p{display:flex;align-items:baseline;gap:8px;margin-top:6px;flex-wrap:nowrap;white-space:nowrap}
+#ovx .ovx-p strong{font-size:clamp(20px,9.5cqw,28px);font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;border-radius:4px}
+#ovx .ovx-chg{font-size:12.5px!important;font-weight:600;font-variant-numeric:tabular-nums}
+#ovx .ovx-abs{font-size:11.5px;font-variant-numeric:tabular-nums}
+@container (max-width:215px){#ovx .ovx-abs{display:none}}
+#ovx .up{color:var(--up)!important}#ovx .dn{color:var(--dn)!important}
+#ovx .ovx-rng{font-size:10.5px;color:var(--mu);font-variant-numeric:tabular-nums;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#ovx .ovx-ohlc{display:block;height:34px;margin-top:8px;font:10.5px/17px ui-monospace,Menlo,Consolas,monospace;color:var(--mu);white-space:nowrap}
+#ovx .ovx-ohlc b{font-weight:500;color:var(--tx)}
+#ovx .ovx-ohlc .l1{display:flex;justify-content:space-between;gap:6px}
+#ovx .ovx-ohlc .l2{display:flex;justify-content:space-between;gap:4px}
+@container (max-width:235px){#ovx .ovx-ohlc{font-size:10px}}
+#ovx .ovx-cv{position:relative;height:clamp(190px,82cqw,250px);margin-top:2px;touch-action:pan-y}
+#ovx canvas{width:100%;height:100%;display:block}
+#ovx .ovx-msg{position:absolute;inset:0;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;text-align:center;font-size:12px;color:var(--mu);padding:12px;background:var(--card)}
+#ovx .ovx-msg button{background:none;border:1px solid var(--bd);color:var(--tx);border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer}
+#ovx .ovx-ma{display:flex;gap:4px 10px;font-size:10.5px;color:var(--mu);margin-top:4px;white-space:nowrap;overflow:hidden}
+#ovx .ovx-kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--bd);font-size:10.5px;color:var(--mu);white-space:nowrap}
+#ovx .ovx-kv span{display:block;font-size:12px;color:var(--tx);font-variant-numeric:tabular-nums;overflow:hidden;text-overflow:ellipsis}
+#ovx .ovx-note{margin-top:10px;font-size:11.5px;color:var(--mu)}
+@keyframes ovxu{from{background:rgba(16,185,129,.3)}}@keyframes ovxd{from{background:rgba(239,68,68,.3)}}
+#ovx .fu{animation:ovxu .8s}#ovx .fd{animation:ovxd .8s}
+@media(prefers-reduced-motion:reduce){#ovx .fu,#ovx .fd{animation:none}}
+</style>
+<div id="ovx">
+  <div class="ovx-bar">
+    <div class="ovx-seg" role="group" aria-label="Rentang waktu grafik" id="ovx-tf"></div>
+    <div class="ovx-info" id="ovx-info"></div>
+  </div>
+  <div class="ovx-grid" id="ovx-grid"></div>
+  <p class="ovx-note" id="ovx-note">Sumber: Yahoo Finance (NASDAQ). Data dapat tertunda beberapa menit dan bukan saran investasi.</p>
+</div>
+<script>
+/* OVERVIEW MARKET — grafik candlestick gaya bursa, data nyata Yahoo Finance via __baFetch.
+   Header harga & candle diperbarui otomatis (20 dtk saat pasar buka, 5 mnt saat tutup); candle harian baru muncul sendiri tiap hari bursa.
+   Data terakhir disimpan di perangkat agar tampil langsung dan tetap ada saat offline. Ubah daftar saham di SYMS. */
+(function () {
+  'use strict';
+  window.__liveIndexCards = true; /* matikan simulasi acak lama */
+  var root = document.getElementById('ovx'); if (!root) return;
+  var SYMS = [{ k: 'nasdaq', s: 'NVDA', n: 'NVIDIA' }, { k: 'sp', s: 'AAPL', n: 'Apple' }, { k: 'dow', s: 'TSLA', n: 'Tesla' }, { k: 'msft', s: 'MSFT', n: 'Microsoft' }];
+  var TFS = [
+    { k: '1d', l: '1H', t: '1 hari · candle 5 menit', r: '1d', i: '5m', ma: [9, 21], lm: 'hm', pc: 1 },
+    { k: '5d', l: '5H', t: '5 hari · candle 30 menit', r: '5d', i: '30m', ma: [9, 21], lm: 'd' },
+    { k: '1mo', l: '1B', t: '1 bulan · candle harian', r: '1mo', i: '1d', ma: [5, 10], lm: 'd' },
+    { k: '3mo', l: '3B', t: '3 bulan · candle harian', r: '3mo', i: '1d', ma: [20, 50], lm: 'd' },
+    { k: '1y', l: '1T', t: '1 tahun · candle mingguan', r: '1y', i: '1wk', ma: [10, 30], lm: 'my' }
+  ];
+  var $ = function (id) { return document.getElementById(id); };
+  var tfk = '3mo'; try { tfk = localStorage.getItem('ovx1:tf') || tfk; } catch (e) { }
+  if (!TFS.some(function (t) { return t.k === tfk; })) tfk = '3mo';
+  var cur = function () { return TFS.filter(function (t) { return t.k === tfk; })[0]; };
+  var tz = function () { return (window.__BA_S && window.__BA_S.tz) || 'Asia/Jakarta'; };
+  var fm = function (v, d) { d = d == null ? 2 : d; return v == null || isNaN(v) ? '–' : v.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }); };
+  var fv = function (v) { return v == null ? '–' : v >= 1e9 ? (v / 1e9).toFixed(2) + 'B' : v >= 1e6 ? (v / 1e6).toFixed(2) + 'M' : v >= 1e3 ? (v / 1e3).toFixed(1) + 'K' : String(v); };
+  var tfmt = function (t, m) {
+    var o = { timeZone: tz(), hour12: false };
+    if (m === 'hm' || m === 'hms') { o.hour = '2-digit'; o.minute = '2-digit'; if (m === 'hms') o.second = '2-digit'; }
+    else if (m === 'd') { o.day = '2-digit'; o.month = 'short'; }
+    else if (m === 'my') { o.month = 'short'; o.year = '2-digit'; }
+    else if (m === 'dmy') { o.day = '2-digit'; o.month = 'short'; o.year = '2-digit'; }
+    else { o.day = '2-digit'; o.month = 'short'; o.hour = '2-digit'; o.minute = '2-digit'; }
+    return new Date(t).toLocaleString('id-ID', o).replace(/\./g, ':');
+  };
+  var ld = function (k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } };
+  var sv = function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { } };
+
+  /* ---------- data ---------- */
+  function routes() {
+    var enc = encodeURIComponent;
+    return [function (f) { return window.__BA_PROXY ? '/api/proxy?url=' + enc(f) : null; }, function (f) { return f; }, function (f) { return f.replace('query1.', 'query2.'); },
+      function (f) { return 'https://api.codetabs.com/v1/proxy?quest=' + enc(f); }, function (f) { return 'https://corsproxy.io/?' + enc(f); }, function (f) { return 'https://api.allorigins.win/raw?url=' + enc(f); }];
+  }
+  function yf(sym, range, iv) {
+    if (!window.__baFetch) return Promise.reject(new Error('no-fetch'));
+    var u = 'https://query1.finance.yahoo.com/v8/finance/chart/' + sym + '?range=' + range + '&interval=' + iv + '&includePrePost=false';
+    return window.__baFetch(routes(), u, false, 8000).then(function (j) {
+      var r = j && j.chart && j.chart.result && j.chart.result[0]; if (!r || !r.timestamp) throw new Error('empty'); return r;
+    });
+  }
+  function bars(r) {
+    var q = r.indicators.quote[0], a = [];
+    r.timestamp.forEach(function (t, i) { if (q.close[i] != null && q.open[i] != null && q.high[i] != null && q.low[i] != null) a.push({ t: t * 1000, o: q.open[i], h: q.high[i], l: q.low[i], c: q.close[i], v: q.volume[i] || 0 }); });
+    return a;
+  }
+  /* kutipan harga selalu dari candle harian 5 hari: perubahan = vs penutupan sesi sebelumnya, apa pun rentang grafik */
+  function quote(sym) {
+    return yf(sym, '5d', '1d').then(function (r) {
+      var m = r.meta, b = bars(r), n = b.length; if (!n) throw new Error('empty');
+      var tp = m.currentTradingPeriod && m.currentTradingPeriod.regular, now = Date.now() / 1000, L = b[n - 1];
+      return { price: m.regularMarketPrice != null ? m.regularMarketPrice : L.c, prev: n >= 2 ? b[n - 2].c : m.chartPreviousClose,
+        hi: m.regularMarketDayHigh != null ? m.regularMarketDayHigh : L.h, lo: m.regularMarketDayLow != null ? m.regularMarketDayLow : L.l,
+        vol: m.regularMarketVolume != null ? m.regularMarketVolume : L.v, open: L.o, isOpen: !!tp && now >= tp.start && now <= tp.end, ts: (m.regularMarketTime || 0) * 1000 };
+    });
+  }
+  function chart(sym, t) { return yf(sym, t.r, t.i).then(function (r) { var b = bars(r); if (!b.length) throw new Error('empty'); return { cs: b.slice(-120), at: Date.now(), pc: r.meta.chartPreviousClose }; }); }
+
+  /* ---------- indikator ---------- */
+  function ema(a, n) { var k = 2 / (n + 1), p = a[0]; return a.map(function (v, i) { return i ? (p = v * k + p * (1 - k)) : v; }); }
+  function pal() { var cs = getComputedStyle(root), g = function (n) { return cs.getPropertyValue(n).trim(); }; return { up: g('--up'), dn: g('--dn'), tx: g('--tx'), mu: g('--mu'), grid: g('--grid'), tag: g('--tag') }; }
+  var EC = ['#f0b429', '#b08cff'];
+
+  /* ---------- UI ---------- */
+  var st = {}, grid = $('ovx-grid'), tfBox = $('ovx-tf');
+  TFS.forEach(function (t) {
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = t.l; b.title = t.t; b.setAttribute('aria-pressed', t.k === tfk ? 'true' : 'false'); b.dataset.k = t.k;
+    b.onclick = function () {
+      tfk = t.k; sv('ovx1:tf', tfk); Array.prototype.forEach.call(tfBox.children, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      info(); SYMS.forEach(function (y) { st[y.k].err[t.k] = false; loadCache(y); legend(y); draw(y); msg(y); }); again = true; refresh();
+    };
+    tfBox.appendChild(b);
+  });
+  function info() { var t = cur(); $('ovx-info').textContent = t.t + ' · EMA ' + t.ma[0] + ' & ' + t.ma[1]; }
+  SYMS.forEach(function (y) {
+    var id = 'ov-' + y.k, el = document.createElement('article'); el.className = 'ovx-c';
+    el.innerHTML = '<div class="ovx-h"><div><b class="ovx-sym">' + y.s + '</b><span class="ovx-nm">' + y.n + '</span></div><span class="ovx-tag" data-r="mk" title="NASDAQ"><i></i>NASDAQ</span></div>' +
+      '<div class="ovx-p"><strong id="' + id + '">$–</strong><span id="' + id + '-chg" class="ovx-chg">–</span><span class="ovx-abs" data-r="abs"></span></div>' +
+      '<div id="' + id + '-rng" class="ovx-rng">H – • L –</div>' +
+      '<span class="ovx-ohlc" data-r="ohlc"></span>' +
+      '<div class="ovx-cv"><canvas role="img" aria-label="Grafik candlestick ' + y.s + '"></canvas><div class="ovx-msg" data-r="ms">Memuat data…</div></div>' +
+      '<div class="ovx-ma" data-r="ma"></div>' +
+      '<div class="ovx-kv"><div>Buka<span data-r="op">–</span></div><div title="Tutup sesi sebelumnya">Tutup lalu<span data-r="pcv">–</span></div><div>Volume<span data-r="vo">–</span></div></div>';
+    grid.appendChild(el);
+    var S = st[y.k] = { el: el, cv: el.querySelector('canvas'), q: null, c: {}, hx: null, hy: null, err: {}, last: null };
+    S.r = function (n) { return el.querySelector('[data-r=' + n + ']'); };
+    var cv = S.cv;
+    cv.addEventListener('pointermove', function (e) { var r = cv.getBoundingClientRect(); S.hx = e.clientX - r.left; S.hy = e.clientY - r.top; draw(y); });
+    cv.addEventListener('pointerleave', function () { S.hx = null; legend(y); draw(y); });
+    new ResizeObserver(function () { draw(y); if (!lastAt && vis()) refresh(); }).observe(cv);
+    var cq = ld('ovx1:q:' + y.s); if (cq) { S.q = cq.d; head(y, true); }
+    loadCache(y);
+  });
+  function loadCache(y) { var S = st[y.k], t = cur(), c = ld('ovx1:c:' + y.s + ':' + t.k); if (c && !S.c[t.k]) S.c[t.k] = c.d; }
+  function msg(y) {
+    var S = st[y.k], t = cur(), m = S.r('ms'), has = S.c[t.k] && S.c[t.k].cs && S.c[t.k].cs.length;
+    if (has) { m.style.display = 'none'; return; }
+    m.style.display = 'flex';
+    if (S.err[t.k]) { m.innerHTML = 'Data grafik belum dapat dimuat. Mencoba lagi otomatis.<button type="button">Coba lagi</button>'; m.querySelector('button').onclick = function () { again = true; refresh(); }; }
+    else m.textContent = 'Memuat data…';
+  }
+  function head(y, cached) {
+    var S = st[y.k], q = S.q; if (!q) return; var id = 'ov-' + y.k, chg = q.price - q.prev, pct = chg / q.prev * 100, up = chg >= 0;
+    var v = $(id), c = $(id + '-chg'), r = $(id + '-rng');
+    v.textContent = '$' + fm(q.price);
+    if (!cached && S.last != null && S.last !== q.price) { v.classList.remove('fu', 'fd'); void v.offsetWidth; v.classList.add(q.price > S.last ? 'fu' : 'fd'); }
+    S.last = q.price;
+    c.textContent = (up ? '+' : '−') + Math.abs(pct).toFixed(2) + '%'; c.className = 'ovx-chg text-xs ' + (up ? 'text-emerald-400 up' : 'text-rose-400 dn');
+    var a = S.r('abs'); a.textContent = (up ? '+' : '−') + fm(Math.abs(chg)); a.className = 'ovx-abs ' + (up ? 'up' : 'dn');
+    r.textContent = 'H $' + fm(q.hi) + ' • L $' + fm(q.lo);
+    S.r('op').textContent = fm(q.open); S.r('pcv').textContent = fm(q.prev); S.r('vo').textContent = fv(q.vol);
+    var mk = S.r('mk'); mk.className = 'ovx-tag' + (q.isOpen ? ' on' : ''); mk.innerHTML = '<i></i>' + (q.isOpen ? 'Buka' : 'Tutup'); mk.title = 'NASDAQ · pasar ' + (q.isOpen ? 'buka' : 'tutup');
+  }
+  function legend(y, i) {
+    var S = st[y.k], t = cur(), c = S.c[t.k], o = S.r('ohlc'), ma = S.r('ma');
+    ma.innerHTML = '<span style="color:' + EC[0] + '">EMA ' + t.ma[0] + '</span><span style="color:' + EC[1] + '">EMA ' + t.ma[1] + '</span><span>' + t.t.split(' · ')[1] + '</span>';
+    if (!c || !c.cs || !c.cs.length) { o.innerHTML = ''; return; }
+    var cs = c.cs, n = cs.length; i = i == null ? n - 1 : i; var b = cs[i], pv = i > 0 ? cs[i - 1].c : b.o;
+    if (i === n - 1 && S.q && Math.abs(S.q.price / b.c - 1) < .2) b = { t: b.t, o: b.o, h: Math.max(b.h, S.q.price), l: Math.min(b.l, S.q.price), c: S.q.price, v: b.v };
+    var d = b.c - pv, p = d / pv * 100, up = d >= 0;
+    o.innerHTML = '<div class="l1"><span>' + tfmt(b.t, t.lm === 'hm' ? 'dmhm' : 'dmy') + '</span><span class="' + (up ? 'up' : 'dn') + '">' + (up ? '+' : '−') + Math.abs(p).toFixed(2) + '%</span></div><div class="l2"><span>O <b>' + fm(b.o) + '</b></span><span>H <b>' + fm(b.h) + '</b></span><span>L <b>' + fm(b.l) + '</b></span><span>C <b>' + fm(b.c) + '</b></span></div>';
+  }
+
+  /* ---------- grafik ---------- */
+  function draw(y) {
+    var S = st[y.k], t = cur(), c = S.c[t.k], cv = S.cv;
+    if (!c || !c.cs || !c.cs.length) { var z = cv.getContext('2d'); z.setTransform(1, 0, 0, 1, 0, 0); z.clearRect(0, 0, cv.width, cv.height); return; }
+    var W = cv.clientWidth, H = cv.clientHeight; if (!W || !H) return;
+    var dpr = window.devicePixelRatio || 1; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    var x = cv.getContext('2d'); x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var P = pal(), q = S.q, cs = c.cs.map(function (b) { return { t: b.t, o: b.o, h: b.h, l: b.l, c: b.c, v: b.v }; }), n = cs.length;
+    if (q && q.price && Math.abs(q.price / cs[n - 1].c - 1) < .2) { var lb = cs[n - 1]; lb.c = q.price; lb.h = Math.max(lb.h, q.price); lb.l = Math.min(lb.l, q.price); }
+    var R = W < 250 ? 46 : 54, pw = W - R, ax = 16, vh = Math.round(H * .17), vt = H - ax - vh, pb = vt - 8, pt = 8, i, hi = -1e9, lo = 1e9;
+    cs.forEach(function (b) { if (b.h > hi) hi = b.h; if (b.l < lo) lo = b.l; });
+    var pad = (hi - lo) * .07 || hi * .002; hi += pad; lo -= pad;
+    var Y = function (v) { return pt + (pb - pt) * (1 - (v - lo) / (hi - lo)); }, cw = pw / n, X = function (k) { return (k + .5) * cw; };
+    x.font = '10.5px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace'; x.textBaseline = 'middle'; x.lineWidth = 1;
+    var tag = function (s, yy, bg) { x.fillStyle = bg; x.fillRect(pw + 1, yy - 8, R - 2, 16); x.fillStyle = '#0b0f14'; x.textAlign = 'left'; x.fillText(s, pw + 5, yy); };
+    x.strokeStyle = P.grid; x.fillStyle = P.mu; x.textAlign = 'left';
+    for (i = 0; i <= 4; i++) { var v = lo + (hi - lo) * i / 4, yy = Math.round(Y(v)) + .5; x.beginPath(); x.moveTo(0, yy); x.lineTo(pw, yy); x.stroke(); if (Math.abs(yy - Y(cs[n - 1].c)) > 10) x.fillText(fm(v), pw + 6, yy); }
+    x.beginPath(); x.moveTo(pw + .5, 0); x.lineTo(pw + .5, H - ax); x.stroke();
+    x.beginPath(); x.moveTo(0, vt - 4.5); x.lineTo(pw, vt - 4.5); x.stroke();
+    var mv = 1; cs.forEach(function (b) { if (b.v > mv) mv = b.v; });
+    var bw = Math.max(1, Math.floor(cw * .66));
+    cs.forEach(function (b, k) { var h = Math.max(1, b.v / mv * (vh - 2)); x.fillStyle = (b.c >= b.o ? P.up : P.dn) + '80'; x.fillRect(Math.round(X(k) - bw / 2), H - ax - h, bw, h); });
+    var hk = n - 1; while (hk > 0 && !cs[hk].v) hk--; if (S.hx != null && S.hx >= 0 && S.hx < pw) hk = Math.max(0, Math.min(n - 1, Math.floor(S.hx / cw)));
+    x.fillStyle = P.mu; x.fillText('Vol ' + fv(cs[hk].v), 4, vt + 8);
+    var pc = t.pc ? (q && q.prev) : null;
+    if (pc && pc > lo && pc < hi) { x.setLineDash([3, 4]); x.strokeStyle = P.mu; x.beginPath(); x.moveTo(0, Math.round(Y(pc)) + .5); x.lineTo(pw, Math.round(Y(pc)) + .5); x.stroke(); x.setLineDash([]); x.fillStyle = P.mu; x.fillText('PC', 4, Y(pc) - 7); }
+    cs.forEach(function (b, k) {
+      var col = b.c >= b.o ? P.up : P.dn, cx = Math.round(X(k)) + .5; x.strokeStyle = col; x.fillStyle = col;
+      x.beginPath(); x.moveTo(cx, Y(b.h)); x.lineTo(cx, Y(b.l)); x.stroke();
+      var a = Y(Math.max(b.o, b.c)), z = Y(Math.min(b.o, b.c)); x.fillRect(Math.round(X(k) - bw / 2), Math.round(a), bw, Math.max(1, Math.round(z - a)));
+    });
+    var cl = cs.map(function (b) { return b.c; });
+    t.ma.forEach(function (p, m) { var e = ema(cl, p); x.strokeStyle = EC[m]; x.lineWidth = 1.4; x.beginPath(); e.forEach(function (val, k) { k ? x.lineTo(X(k), Y(val)) : x.moveTo(X(k), Y(val)); }); x.stroke(); });
+    x.lineWidth = 1;
+    var last = cs[n - 1].c, ly = Math.round(Y(last)) + .5, lc = last >= cs[n - 1].o ? P.up : P.dn;
+    x.setLineDash([2, 3]); x.strokeStyle = lc; x.beginPath(); x.moveTo(0, ly); x.lineTo(pw, ly); x.stroke(); x.setLineDash([]); tag(fm(last), ly, lc);
+    x.fillStyle = P.mu; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+    (pw < 150 ? [.15, .85] : pw < 280 ? [.12, .5, .88] : [.1, .37, .63, .9]).forEach(function (f) { var k = Math.round((n - 1) * f); x.fillText(tfmt(cs[k].t, t.lm), Math.min(Math.max(X(k), 24), pw - 24), H - 3); });
+    x.textBaseline = 'middle';
+    if (S.hx != null && S.hx >= 0 && S.hx < pw) {
+      var k = Math.max(0, Math.min(n - 1, Math.floor(S.hx / cw))), cx = Math.round(X(k)) + .5;
+      x.strokeStyle = P.mu; x.setLineDash([3, 3]); x.beginPath(); x.moveTo(cx, 0); x.lineTo(cx, H - ax); x.stroke();
+      if (S.hy != null && S.hy > pt && S.hy < pb) { x.beginPath(); x.moveTo(0, Math.round(S.hy) + .5); x.lineTo(pw, Math.round(S.hy) + .5); x.stroke(); x.setLineDash([]); tag(fm(lo + (hi - lo) * (1 - (S.hy - pt) / (pb - pt))), S.hy, P.mu); }
+      x.setLineDash([]); var lab = tfmt(cs[k].t, t.lm === 'hm' ? 'dmhm' : 'dmy'), tw = x.measureText(lab).width + 12, tx = Math.min(Math.max(cx, tw / 2), pw - tw / 2);
+      x.fillStyle = P.mu; x.fillRect(tx - tw / 2, H - ax, tw, ax); x.fillStyle = '#0b0f14'; x.textAlign = 'center'; x.fillText(lab, tx, H - ax / 2);
+      legend(y, k);
+    }
+    cv.setAttribute('aria-label', 'Grafik candlestick ' + y.s + ', ' + t.t + ', harga terakhir $' + fm(last));
+  }
+
+  /* ---------- siklus pembaruan ---------- */
+  var busy = false, again = false, lastAt = 0, lastOk = 0, sp = $('ovx-status'), stx = $('ovx-st');
+  var vis = function () { return !document.hidden && root.offsetParent !== null; };
+  var anyOpen = function () { return SYMS.some(function (y) { return st[y.k].q && st[y.k].q.isOpen; }); };
+  function status(ok) {
+    if (!sp) return; var open = anyOpen(), cls, txt;
+    if (ok) { lastOk = Date.now(); cls = open ? 'text-emerald-400' : 'text-sky-400'; txt = open ? 'LIVE · ' + tfmt(lastOk, 'hms') : 'PASAR TUTUP · ' + tfmt(lastOk, 'hm'); }
+    else { var has = SYMS.some(function (y) { return st[y.k].q; }); cls = has ? 'text-amber-400' : 'text-rose-400'; txt = has ? 'OFFLINE · DATA TERSIMPAN' : 'OFFLINE · MENCOBA LAGI'; }
+    sp.className = 'text-xs ' + cls; stx.textContent = txt;
+    var ts = 0; SYMS.forEach(function (y) { var q = st[y.k].q; if (q && q.ts > ts) ts = q.ts; });
+    if (ts) $('ovx-note').textContent = 'Harga terakhir ' + tfmt(ts, 'dmhm') + ' ' + (tz() === 'Asia/Jakarta' ? 'WIB' : tz()) + '. Sumber: Yahoo Finance (NASDAQ). Data dapat tertunda dan bukan saran investasi.';
+  }
+  function refresh() {
+    if (busy) return; busy = true; again = false; var t = cur();
+    var delay = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+    var jobs = SYMS.map(function (y, ix) {
+      var S = st[y.k];
+      var pq = delay(ix * 250).then(function () { return quote(y.s); }).then(function (q) { S.q = q; sv('ovx1:q:' + y.s, { t: Date.now(), d: q }); head(y); });
+      var pc = delay(ix * 250 + 120).then(function () { return chart(y.s, t); }).then(function (c) { S.c[t.k] = c; S.err[t.k] = false; sv('ovx1:c:' + y.s + ':' + t.k, { t: Date.now(), d: c }); }, function (e) { S.err[t.k] = true; throw e; });
+      return Promise.allSettled([pq, pc]).then(function (res) { if (t.k === tfk) { legend(y); draw(y); msg(y); } return res.some(function (r) { return r.status === 'fulfilled'; }); });
+    });
+    Promise.all(jobs).then(function (oks) { busy = false; lastAt = Date.now(); status(oks.some(Boolean)); if (again) refresh(); }, function () { busy = false; });
+  }
+  info(); SYMS.forEach(function (y) { legend(y); msg(y); });
+  window.setInterval(function () { if (!vis()) return; var bad = SYMS.some(function (y) { return st[y.k].err[tfk] || !st[y.k].q; }); if (Date.now() - lastAt > (bad ? 12000 : (anyOpen() || !lastOk ? 20000 : 300000))) refresh(); }, 3000);
+  new MutationObserver(function () { SYMS.forEach(function (y) { draw(y); }); }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  if (vis()) refresh();
+})();
+</script>
+
             </div>
             <div id="se-hidden-feed" hidden aria-hidden="true"><!-- Intraday Telemetry (grafik candlestick) disembunyikan: masih menjadi sumber data halaman Market Statistics -->
                 <div id="intraday-telemetry-card" class="lg:col-span-2 bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl terminal-glow font-mono space-y-3 w-full overflow-hidden">
@@ -18964,6 +19221,514 @@ html.light #scr-body tr:nth-child(even) td{background:rgba(15,23,42,.025)}
     else if (e.key === 'Enter' && tg && tg.id === 'scr-savename') { var b = $('scr-save'); if (b) b.click(); }
   });
   setInterval(function () { if (!D.hidden && visible()) { try { render(); } catch (e) {} } }, 3000);
+})();
+</script>
+<script id="ba-crypto-market-v3">
+/* ============================================================
+   CRYPTO MARKET v3 — 4 kartu bergaya pasar crypto (candlestick ala TradingView)
+   Data NYATA otomatis: CoinGecko (global, dominasi, mcap, altcoin season) + Binance Futures (OI, funding, L/S).
+   Cache per hari (UTC) di localStorage; ganti hari / >5 menit => ambil ulang sendiri. Gagal => pakai data tersimpan.
+   ============================================================ */
+(function () {
+  'use strict';
+  if (window.__cm3) return; window.__cm3 = 1;
+  var W = window, D = document, $ = function (i) { return D.getElementById(i); }, enc = encodeURIComponent, nop = function () {};
+  var CG = 'https://api.coingecko.com/api/v3/', BN = 'https://fapi.binance.com/', KEY = 'ba-cm3', MONO = 'ui-monospace,Menlo,monospace';
+  var R = [function (u) { return u; }, function (u) { return 'https://api.codetabs.com/v1/proxy?quest=' + enc(u); }, function (u) { return 'https://corsproxy.io/?' + enc(u); }];
+  var RT = [function (u) { return u; }, function (u) { return 'https://api.allorigins.win/raw?url=' + enc(u); }, function (u) { return 'https://corsproxy.io/?' + enc(u); }, function (u) { return 'https://api.codetabs.com/v1/proxy?quest=' + enc(u); }], MC = {};
+  /* FETCH CEPAT: rute langsung dulu, proxy menyusul paralel (700 ms atau begitu langsung gagal); yang pertama valid menang; hasil di-cache 45 dtk */
+  function get(u, v) {
+    var h = MC[u]; if (h && Date.now() - h.t < 45e3) return h.p;
+    var p = new Promise(function (res, rej) {
+      var done = 0, fails = 0, cs = [], started = 0;
+      function go(i) {
+        var c = new AbortController(), t = setTimeout(function () { c.abort(); }, 7000); cs.push(c);
+        fetch(RT[i](u), { signal: c.signal }).then(function (r) { if (!r.ok) throw 0; return r.text(); }).then(function (x) {
+          clearTimeout(t); var j = JSON.parse(x); if (v && !v(j)) throw 0; if (done) return; done = 1;
+          cs.forEach(function (k) { if (k !== c) try { k.abort(); } catch (e) {} }); res(j);
+        }).catch(function () { clearTimeout(t); if (i === 0) rest(); if (!done && ++fails === RT.length) rej(new Error('rute gagal')); });
+      }
+      function rest() { if (started) return; started = 1; for (var i = 1; i < RT.length; i++) go(i); }
+      go(0); setTimeout(rest, 700);
+    });
+    MC[u] = { t: Date.now(), p: p }; p.catch(function () { delete MC[u]; }); return p;
+  }
+  W.__fxGet = get;
+  var utc = function (t) { return new Date(t).toISOString().slice(0, 10); };
+  var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+  var dl = function (d) { return +d.slice(8) + ' ' + MON[+d.slice(5, 7) - 1]; };
+  var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
+  var DB = {}; try { DB = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+  var host = $('market-mini-widgets'); if (!host) return;
+  host.className = 'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3';
+  var SRC = {}, TRY = {}, FS = 1, isBusy = function () { return Object.keys(SRC).some(function (k) { return SRC[k]; }); };
+
+  /* ---------- KARTU ---------- */
+  function card(k, t, b, bc, f) {
+    return '<div class="bg-card-dark border border-card-border rounded-xl p-4"><div class="flex justify-between items-center"><span class="text-[10px] uppercase tracking-wider text-gray-400">' + t + '</span><span class="' + bc + ' text-xs">' + b + '</span></div>' +
+      '<div class="mt-2 flex justify-between items-end"><div><strong id="' + k + '-v" class="text-xl text-white">--</strong><div id="' + k + '-s" class="text-[10px] text-gray-500">Memuat…</div></div><span id="' + k + '-d" class="text-[10px] font-mono">--</span></div>' +
+      '<div class="relative mt-2 rounded-lg overflow-hidden bg-black/30 border border-card-border" style="height:clamp(190px,50vw,215px)"><canvas id="' + k + '-c" style="width:100%;height:100%;cursor:crosshair;touch-action:pan-y"></canvas></div>' + (f || '') + '</div>';
+  }
+  var dot = function (c, n) { return '<span><i class="inline-block w-1.5 h-1.5 rounded-full mr-1" style="background:' + c + '"></i>' + n + '</span>'; };
+  var lg = function (a) { return '<div class="grid grid-cols-' + a.length + ' gap-1 mt-2 text-[9px] text-gray-400 font-mono">' + a.join('') + '</div>'; };
+  host.innerHTML =
+    card('cd', 'Dominasi BTC (BTC.D) • 1D', '● LIVE', 'text-emerald-400', lg([
+      '<div class="flex flex-col">' + dot('#F7931A', 'BTC') + '<span id="cd-lb" class="text-gray-200">--</span></div>', '<div class="flex flex-col">' + dot('#627EEA', 'ETH') + '<span id="cd-le" class="text-gray-200">--</span></div>',
+      '<div class="flex flex-col">' + dot('#26A17B', 'Stable') + '<span id="cd-ls" class="text-gray-200">--</span></div>', '<div class="flex flex-col">' + dot('#64748B', 'Lain') + '<span id="cd-lo" class="text-gray-200">--</span></div>'])) +
+    card('ca', 'Altcoin Season Index', 'AUTO', 'text-sky-400', lg(['<div class="flex flex-col">' + dot('#E5E7EB', 'Harga BTC (kiri)') + '<span id="ca-lb" class="text-gray-200">--</span></div>', '<div class="flex flex-col">' + dot('#8B7CF6', 'Indeks (kanan)') + '<span id="ca-li" class="text-gray-200">--</span></div>'])) +
+    card('cm', 'Kapitalisasi Pasar Global • 1D', '● LIVE', 'text-emerald-400', lg(['<span>' + dot('#F59E0B', 'EMA 9') + '</span>', '<span>' + dot('#A78BFA', 'SMA 21') + '</span>'])) +
+    card('co', 'Derivatives (Open Int.) • BTC', '● LIVE', 'text-cyan-400', lg(['<span>' + dot('#22D3EE', 'Open Interest') + '</span>', '<span>' + dot('#26A69A', 'Funding') + '</span>', '<span>' + dot('#A78BFA', 'Long/Short') + '</span>']));
+  host.insertAdjacentHTML('beforebegin', '<div id="cm-upd" class="text-[10px] font-mono text-gray-500 -mb-3">Memuat data harian…</div>');
+
+  /* ---------- MESIN GRAFIK ---------- */
+  function P() { var l = D.documentElement.classList.contains('light'); return { l: l, tx: l ? '#0f172a' : '#E5E7EB', mu: l ? '#64748b' : '#8B93A1', gr: l ? 'rgba(15,23,42,.08)' : 'rgba(255,255,255,.06)', up: '#26A69A', dn: '#EF5350' }; }
+  var CH = [];
+  function mk(k, fn) {
+    var cv = $(k + '-c'), s = { x: -1, y: -1 };
+    function draw() {
+      var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return; FS = w < 250 ? .88 : 1;
+      var d = Math.min(W.devicePixelRatio || 1, 2), pw = Math.round(w * d), ph = Math.round(h * d);
+      if (cv.width !== pw || cv.height !== ph) { cv.width = pw; cv.height = ph; }
+      var c = cv.getContext('2d'); c.setTransform(d, 0, 0, d, 0, 0); c.clearRect(0, 0, w, h); c.lineJoin = 'round';
+      try { fn(c, w, h, P(), s); } catch (e) { console.warn('[cm3]', e); }
+    }
+    var raf = 0, sch = function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; draw(); }); };
+    var mv = function (e) { var r = cv.getBoundingClientRect(), p = e.touches ? e.touches[0] : e; s.x = p.clientX - r.left; s.y = p.clientY - r.top; sch(); };
+    cv.addEventListener('mousemove', mv); cv.addEventListener('touchmove', mv, { passive: true });
+    cv.addEventListener('mouseleave', function () { s.x = -1; sch(); }); cv.addEventListener('touchend', function () { s.x = -1; sch(); });
+    if (W.ResizeObserver) new ResizeObserver(sch).observe(cv.parentNode);
+    CH.push(draw); return draw;
+  }
+  function T(c, t, x, y, col, al, sz, wt) { c.font = (wt || 400) + ' ' + Math.round((sz || 9) * FS * 10) / 10 + 'px ' + MONO; c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, x, y); }
+  function tag(c, t, x, y, bg, fg) { c.font = '700 ' + 9 * FS + 'px ' + MONO; var w = c.measureText(t).width + 6; c.fillStyle = bg; c.fillRect(x, y - 7, w, 14); T(c, t, x + 3, y, fg || '#fff', 'left', 9, 700); }
+  function dash(c, x0, y0, x1, y1, col) { c.save(); c.setLineDash([3, 3]); c.strokeStyle = col; c.lineWidth = 1; c.beginPath(); c.moveTo(x0, y0); c.lineTo(x1, y1); c.stroke(); c.restore(); }
+  function nodata(c, w, h, p) { T(c, isBusy() ? 'Memuat data live…' : 'Data belum tersedia • tekan Refresh', w / 2, h / 2, p.mu, 'center', 10, 500); }
+  function ma(a, n, ema) { var o = [], k = 2 / (n + 1), i, j, s; for (i = 0; i < a.length; i++) { if (ema) o.push(i ? a[i] * k + o[i - 1] * (1 - k) : a[i]); else if (i < n - 1) o.push(null); else { for (s = 0, j = i - n + 1; j <= i; j++) s += a[j]; o.push(s / n); } } return o; }
+  function line(c, a, X, Y, col, wd) { c.strokeStyle = col; c.lineWidth = wd || 1.2; c.beginPath(); var go = 0; a.forEach(function (v, i) { if (v == null) { go = 0; return; } go ? c.lineTo(X(i), Y(v)) : c.moveTo(X(i), Y(v)); go = 1; }); c.stroke(); }
+
+  /* Candlestick + EMA9 + SMA21 + volume + crosshair OHLC (dipakai kartu 1 & 3) */
+  function candles(c, w, h, p, s, K, o) {
+    var n = K.length; if (n < 3) return nodata(c, w, h, p);
+    K = K.slice(-Math.round(clamp(w / 6.5, 28, 70))); n = K.length;
+    var L = 4, Rr = 42, top = 28, vh = o.vol ? 30 : 0, pw = w - L - Rr, ph = h - top - vh - 8, cl = K.map(function (k) { return k.c; }), e9 = ma(cl, 9, 1), s21 = ma(cl, 21), i;
+    var lo = Infinity, hi = -Infinity; K.forEach(function (k) { lo = Math.min(lo, k.l); hi = Math.max(hi, k.h); });
+    var pd = (hi - lo) * .1 + 1e-9; lo -= pd; hi += pd;
+    var X = function (j) { return L + (j + .5) * pw / n; }, Y = function (v) { return top + (hi - v) / (hi - lo) * ph; };
+    for (i = 0; i <= 4; i++) { var v = lo + (hi - lo) * i / 4, y = Math.round(Y(v)) + .5; c.strokeStyle = p.gr; c.lineWidth = 1; c.beginPath(); c.moveTo(L, y); c.lineTo(L + pw, y); c.stroke(); T(c, o.f(v), L + pw + 4, y, p.mu, 'left', 9); }
+    var vm = Math.max.apply(null, K.map(function (k) { return k.v || 0; })) || 1, bw = Math.max(2, pw / n * .64);
+    K.forEach(function (k, j) {
+      var up = k.c >= k.o, col = up ? p.up : p.dn, x = Math.round(X(j)) + .5;
+      if (o.vol && k.v) { c.globalAlpha = .35; c.fillStyle = col; var bh = k.v / vm * vh; c.fillRect(X(j) - bw / 2, h - 4 - bh, bw, bh); c.globalAlpha = 1; }
+      c.strokeStyle = col; c.lineWidth = 1; c.beginPath(); c.moveTo(x, Y(k.h)); c.lineTo(x, Y(k.l)); c.stroke();
+      c.fillStyle = col; var y0 = Y(Math.max(k.o, k.c)), y1 = Y(Math.min(k.o, k.c)); c.fillRect(X(j) - bw / 2, y0, bw, Math.max(1, y1 - y0));
+    });
+    line(c, e9, X, Y, '#F59E0B', 1.3); line(c, s21, X, Y, '#A78BFA', 1.3);
+    var last = K[n - 1], ly = Y(last.c), lc = last.c >= last.o ? p.up : p.dn;
+    dash(c, L, ly, L + pw, ly, lc); tag(c, o.f(last.c), L + pw + 2, clamp(ly, top, top + ph), lc);
+    var hv = s.x >= L && s.x <= L + pw ? clamp(Math.floor((s.x - L) / pw * n), 0, n - 1) : n - 1, k = K[hv], kc = k.c >= k.o ? p.up : p.dn;
+    if (s.x >= L && s.x <= L + pw) { dash(c, X(hv), top, X(hv), h - 4, p.mu); dash(c, L, s.y, L + pw, s.y, p.mu); }
+    T(c, dl(k.d), 4, 8, p.tx, 'left', 9, 700);
+    T(c, 'O ' + o.f(k.o) + '  H ' + o.f(k.h) + '  L ' + o.f(k.l) + '  C ' + o.f(k.c), 46, 8, kc, 'left', 9, 600);
+    T(c, 'EMA9 ' + o.f(e9[hv]), 4, 19, '#F59E0B', 'left', 9, 600);
+    if (s21[hv] != null) T(c, 'SMA21 ' + o.f(s21[hv]), 100, 19, '#A78BFA', 'left', 9, 600);
+    if (o.ex) o.ex(c, w, h, p, X, Y, K);
+  }
+
+  /* Altcoin Season: harga BTC (kiri) + indeks (kanan) + zona Altcoin >75 / Bitcoin <25 */
+  function altChart(c, w, h, p, s) {
+    var A = DB.alt; if (!A || A.length < 3) return nodata(c, w, h, p);
+    A = A.slice(-60); var n = A.length, L = 32, Rr = 30, top = 22, bt = 16, pw = w - L - Rr, ph = h - top - bt, i;
+    var bs = A.map(function (a) { return a.b; }), lo = Math.min.apply(null, bs), hi = Math.max.apply(null, bs), pd = (hi - lo) * .12 + .3; lo -= pd; hi += pd;
+    var X = function (j) { return L + j * pw / (n - 1); }, Yb = function (v) { return top + (hi - v) / (hi - lo) * ph; }, Yi = function (v) { return top + (100 - v) / 100 * ph; };
+    c.fillStyle = 'rgba(139,124,246,.10)'; c.fillRect(L, Yi(100), pw, Yi(75) - Yi(100)); c.fillStyle = 'rgba(245,158,11,.10)'; c.fillRect(L, Yi(25), pw, Yi(0) - Yi(25));
+    T(c, 'ALTCOIN SEASON', L + 4, Yi(88), 'rgba(167,139,250,.8)', 'left', 8, 700); T(c, 'BITCOIN SEASON', L + 4, Yi(12), 'rgba(245,158,11,.85)', 'left', 8, 700);
+    [0, 25, 50, 75, 100].forEach(function (v) { var y = Math.round(Yi(v)) + .5; c.strokeStyle = p.gr; c.lineWidth = 1; c.beginPath(); c.moveTo(L, y); c.lineTo(L + pw, y); c.stroke(); T(c, v, L + pw + 4, y, '#8B7CF6', 'left', 9); });
+    for (i = 0; i <= 3; i++) { var bv = lo + (hi - lo) * i / 3; T(c, bv.toFixed(0) + 'K', L - 3, Yb(bv), p.mu, 'right', 9); }
+    var g = c.createLinearGradient(0, top, 0, top + ph); g.addColorStop(0, p.l ? 'rgba(15,23,42,.14)' : 'rgba(229,231,235,.16)'); g.addColorStop(1, 'rgba(229,231,235,0)');
+    c.beginPath(); A.forEach(function (a, j) { j ? c.lineTo(X(j), Yb(a.b)) : c.moveTo(X(j), Yb(a.b)); }); c.lineTo(X(n - 1), top + ph); c.lineTo(X(0), top + ph); c.closePath(); c.fillStyle = g; c.fill();
+    line(c, bs, X, Yb, p.l ? '#334155' : '#E5E7EB', 1.2);
+    var ix = A.map(function (a) { return a.i; }), kn = ix.filter(function (v) { return v != null; }).length, li = ix.length - 1;
+    while (li > 0 && ix[li] == null) li--;
+    if (kn >= 2) line(c, ix, X, Yi, '#8B7CF6', 1.8); else if (kn === 1) { dash(c, X(li), Yi(ix[li]), X(n - 1), Yi(ix[li]), '#8B7CF6'); }
+    if (kn) { c.beginPath(); c.arc(X(li), Yi(ix[li]), 3, 0, 6.3); c.fillStyle = '#8B7CF6'; c.fill(); tag(c, String(ix[li]), L + pw + 2, Yi(ix[li]), '#8B7CF6'); }
+    tag(c, A[n - 1].b.toFixed(1) + 'K', 0, clamp(Yb(A[n - 1].b), top + 7, top + ph - 7), p.l ? '#334155' : '#E5E7EB', p.l ? '#fff' : '#0f172a');
+    T(c, dl(A[0].d), L, h - 7, p.mu, 'left', 9); T(c, dl(A[n - 1].d), L + pw, h - 7, p.mu, 'right', 9);
+    if (s.x >= L && s.x <= L + pw) { var j = clamp(Math.round((s.x - L) / pw * (n - 1)), 0, n - 1), a = A[j]; dash(c, X(j), top, X(j), top + ph, p.mu);
+      T(c, dl(a.d) + '  BTC $' + a.b.toFixed(1) + 'K  Indeks ' + (a.i == null ? '–' : a.i), L + 40, 9, p.tx, 'left', 9, 700); }
+    else T(c, '90H: BTC vs indeks altcoin', L + 4, 9, p.mu, 'left', 9);
+  }
+
+  /* Derivatives: Open Interest (area) + Funding (bar) + Long/Short (garis) */
+  function oiChart(c, w, h, p, s) {
+    var O = DB.oi; if (!O || O.length < 3) return nodata(c, w, h, p);
+    O = O.slice(-Math.round(clamp(w / 8, 24, 50))); var n = O.length, L = 4, Rr = 42, pw = w - L - Rr, i;
+    var t1 = 20, b1 = Math.round(h * .55), t2 = b1 + 14, b2 = Math.round(h * .76), t3 = b2 + 12, b3 = h - 6;
+    var oi = O.map(function (o) { return o.o; }), lo = Math.min.apply(null, oi), hi = Math.max.apply(null, oi), pd = (hi - lo) * .15 + .1; lo -= pd; hi += pd;
+    var X = function (j) { return L + (j + .5) * pw / n; }, Y = function (v) { return b1 - (v - lo) / (hi - lo) * (b1 - t1); };
+    for (i = 0; i <= 3; i++) { var v = lo + (hi - lo) * i / 3, y = Math.round(Y(v)) + .5; c.strokeStyle = p.gr; c.lineWidth = 1; c.beginPath(); c.moveTo(L, y); c.lineTo(L + pw, y); c.stroke(); T(c, v.toFixed(1), L + pw + 4, y, p.mu, 'left', 9); }
+    var g = c.createLinearGradient(0, t1, 0, b1); g.addColorStop(0, 'rgba(34,211,238,.35)'); g.addColorStop(1, 'rgba(34,211,238,0)');
+    c.beginPath(); oi.forEach(function (v, j) { j ? c.lineTo(X(j), Y(v)) : c.moveTo(X(j), Y(v)); }); c.lineTo(X(n - 1), b1); c.lineTo(X(0), b1); c.closePath(); c.fillStyle = g; c.fill();
+    line(c, oi, X, Y, '#22D3EE', 1.6);
+    var ly = Y(oi[n - 1]); dash(c, L, ly, L + pw, ly, '#22D3EE'); tag(c, oi[n - 1].toFixed(2), L + pw + 2, ly, '#0891B2');
+    var fm = Math.max(.005, Math.max.apply(null, O.map(function (o) { return Math.abs(o.f || 0); }))), mid = (t2 + b2) / 2, bw = Math.max(2, pw / n * .6);
+    T(c, 'FUND', L, t2 - 6, p.mu, 'left', 8, 700); dash(c, L, mid, L + pw, mid, p.gr);
+    O.forEach(function (o, j) { var f = o.f || 0, hh = Math.abs(f) / fm * (b2 - t2) / 2; c.fillStyle = f >= 0 ? p.up : p.dn; c.fillRect(X(j) - bw / 2, f >= 0 ? mid - hh : mid, bw, Math.max(1, hh)); });
+    var ls = O.map(function (o) { return o.l; }), lv = ls.filter(function (v) { return v != null; });
+    if (lv.length > 1) { var l0 = Math.min(1, Math.min.apply(null, lv)) - .03, l1 = Math.max(1, Math.max.apply(null, lv)) + .03, Yl = function (v) { return b3 - (v - l0) / (l1 - l0) * (b3 - t3); };
+      T(c, 'L/S', L, t3 - 6, p.mu, 'left', 8, 700); dash(c, L, Yl(1), L + pw, Yl(1), p.gr); line(c, ls, X, Yl, '#A78BFA', 1.5);
+      var q = ls[n - 1]; if (q != null) tag(c, q.toFixed(2), L + pw + 2, Yl(q), '#7C3AED'); }
+    var hv = s.x >= L && s.x <= L + pw ? clamp(Math.floor((s.x - L) / pw * n), 0, n - 1) : n - 1, o = O[hv];
+    if (s.x >= L && s.x <= L + pw) dash(c, X(hv), t1, X(hv), b3, p.mu);
+    T(c, dl(o.d) + '  OI $' + o.o.toFixed(2) + 'B  F ' + ((o.f || 0) >= 0 ? '+' : '') + (o.f || 0).toFixed(3) + '%  L/S ' + (o.l == null ? '–' : o.l.toFixed(2)), 4, 8, p.tx, 'left', 9, 700);
+  }
+
+  var drawD = mk('cd', function (c, w, h, p, s) { candles(c, w, h, p, s, DB.dom || [], { f: function (v) { return v == null ? '' : v.toFixed(2) + '%'; } }); });
+  var drawA = mk('ca', altChart);
+  var drawM = mk('cm', function (c, w, h, p, s) { candles(c, w, h, p, s, DB.mc || [], { vol: 1, f: function (v) { return v == null ? '' : v.toFixed(2) + 'T'; } }); });
+  var drawO = mk('co', oiChart);
+  var all = function () { CH.forEach(function (f) { f(); }); };
+
+  /* ---------- DATA ---------- */
+  function grp(a, vol) { /* titik per jam -> candle harian (UTC); open = close kemarin */
+    var m = {}, o = [], vm = {};
+    a.forEach(function (q) { var d = utc(q[0]); (m[d] = m[d] || []).push(q[1]); });
+    (vol || []).forEach(function (q) { vm[utc(q[0])] = q[1]; });
+    Object.keys(m).sort().forEach(function (d, i) { var v = m[d], op = i ? o[i - 1].c : v[0]; o.push({ d: d, o: op, h: Math.max.apply(null, v.concat(op)), l: Math.min.apply(null, v.concat(op)), c: v[v.length - 1], v: vm[d] }); });
+    return o;
+  }
+  var STB = /^(usdt|usdc|dai|usde|fdusd|usds|busd|tusd|steth|wsteth|wbtc|weth|wbeth|usdt0|usd1|pyusd|susds|bsc-usd)$/;
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) {} }
+  var isArr = function (j) { return Array.isArray(j); };
+  /* Tiap sumber jalan sendiri: grafik tampil begitu datanya masuk; gagal => coba lagi otomatis (5 dtk, 10, 20 ... maks 2 mnt) */
+  function job(name, fn) {
+    if (SRC[name]) return; SRC[name] = 1; var n = TRY[name] || 0; DB.ok = DB.ok || {};
+    fn().then(function () { TRY[name] = 0; DB.ok[name] = 1; DB.ts = Date.now(); DB.date = utc(DB.ts); save(); },
+      function () { TRY[name] = n + 1; DB.ok[name] = 0; setTimeout(function () { job(name, fn); }, Math.min(12e4, 5e3 * Math.pow(2, n))); })
+      .then(function () { SRC[name] = 0; render(); });
+  }
+  var mergedOld = 0;
+  function buildAlt() {
+    if (!DB.bp) return; DB.altH = DB.altH || {};
+    if (!mergedOld) { mergedOld = 1; try { (JSON.parse(localStorage.getItem('ba-alt-hist')) || []).forEach(function (q) { var d = utc(q[0]); if (DB.altH[d] == null) DB.altH[d] = Math.round(q[1]); }); } catch (e) {} }
+    DB.alt = DB.bp.slice(-60).map(function (q) { return { d: q[0], b: q[1] / 1000, i: DB.altH[q[0]] != null ? DB.altH[q[0]] : null }; });
+  }
+  function bybit() { /* cadangan bila Binance diblokir di wilayah pengguna */
+    var BY = 'https://api.bybit.com/v5/market/', ok = function (j) { return j && j.result && j.result.list; };
+    return Promise.all([get(BY + 'open-interest?category=linear&symbol=BTCUSDT&intervalTime=1d&limit=60', ok), get(BY + 'funding/history?category=linear&symbol=BTCUSDT&limit=200', ok).catch(function () { return null; }), get(BY + 'account-ratio?category=linear&symbol=BTCUSDT&period=1d&limit=60', ok).catch(function () { return null; })]).then(function (r) {
+      var px = {}, fm = {}, lm = {}, lp = DB.bp && DB.bp.length ? DB.bp[DB.bp.length - 1][1] : 0, out = [];
+      (DB.bp || []).forEach(function (q) { px[q[0]] = q[1]; });
+      ((r[1] && r[1].result.list) || []).forEach(function (x) { var d = utc(+x.fundingRateTimestamp); (fm[d] = fm[d] || []).push(+x.fundingRate * 100); });
+      ((r[2] && r[2].result.list) || []).forEach(function (x) { lm[utc(+x.timestamp)] = +x.buyRatio / +x.sellRatio; });
+      r[0].result.list.slice().reverse().forEach(function (x) { var d = utc(+x.timestamp), p = px[d] || lp, f = fm[d]; if (p) out.push({ d: d, o: +x.openInterest * p / 1e9, f: f ? f.reduce(function (a, b) { return a + b; }, 0) / f.length : null, l: lm[d] != null ? lm[d] : null }); });
+      if (out.length < 4) throw new Error('oi'); DB.oi = out;
+    });
+  }
+  var JOBS = {
+    g: function () { return get(CG + 'global', function (j) { return j && j.data; }).then(function (j) { var g = j.data, q = g.market_cap_percentage || {};
+      DB.g = { b: q.btc, e: q.eth, s: (q.usdt || 0) + (q.usdc || 0), mc: g.total_market_cap.usd / 1e12, v: g.total_volume.usd / 1e9, ch: g.market_cap_change_percentage_24h_usd }; }); },
+    mc: function () {
+      var cm = get(CG + 'global/market_cap_chart?days=90', function (j) { return j && j.market_cap_chart; }).catch(function () { return null; });
+      return Promise.all([cm, get(CG + 'coins/bitcoin/market_chart?vs_currency=usd&days=90', function (j) { return j && j.prices; })]).then(function (r) {
+        var mc = r[0] && r[0].market_cap_chart, B = r[1].market_caps || [], bm = {}, pts = [];
+        DB.bp = grp(r[1].prices || []).slice(-90).map(function (k) { return [k.d, k.c]; });
+        B.forEach(function (q) { bm[Math.round(q[0] / 36e5)] = q[1]; });
+        if (mc && (mc.market_cap || []).length > 20) {
+          mc.market_cap.forEach(function (q) { var b = bm[Math.round(q[0] / 36e5)]; if (b && q[1] > 0) pts.push([q[0], b / q[1] * 100]); });
+          if (pts.length > 20) DB.dom = grp(pts);
+          DB.mc = grp(mc.market_cap.map(function (q) { return [q[0], q[1] / 1e12]; }), (mc.volume || []).map(function (q) { return [q[0], q[1] / 1e9]; })); DB.est = 0;
+        } else { /* cadangan: mcap = mcap BTC / dominasi saat ini; dominasi = arsip harian modul lama */
+          var gb = (DB.g && DB.g.b) || 57; DB.mc = grp(B.map(function (q) { return [q[0], q[1] / (gb / 100) / 1e12]; })); DB.est = 1;
+          try { var od = (JSON.parse(localStorage.getItem('ba-daily-v1')) || {}).days || [], dp = od.filter(function (x) { return x && x.b > 0; }).map(function (x) { return [Date.parse(x.d + 'T12:00:00Z'), x.b]; }); if (dp.length > 20) DB.dom = grp(dp); } catch (e) {}
+        }
+      });
+    },
+    alt: function () { return get(CG + 'coins/markets?vs_currency=usd&order=market_cap_desc&per_page=60&page=1&price_change_percentage=30d', isArr).then(function (a) {
+      var b = a.filter(function (x) { return x.symbol === 'btc'; })[0], al = a.filter(function (x) { return x.symbol !== 'btc' && !STB.test(x.symbol); }).slice(0, 50);
+      if (!b || !al.length) throw new Error('alt'); var bt = b.price_change_percentage_30d_in_currency;
+      DB.altNow = Math.round(al.filter(function (x) { return (x.price_change_percentage_30d_in_currency || -1e9) > bt; }).length / al.length * 100);
+      DB.altH = DB.altH || {}; DB.altH[utc(Date.now())] = DB.altNow; }); },
+    oi: function () {
+      return Promise.all([get(BN + 'futures/data/openInterestHist?symbol=BTCUSDT&period=1d&limit=60', isArr), get(BN + 'fapi/v1/fundingRate?symbol=BTCUSDT&limit=180', isArr).catch(function () { return []; }),
+        get(BN + 'futures/data/globalLongShortAccountRatio?symbol=BTCUSDT&period=1d&limit=60', isArr).catch(function () { return []; })]).then(function (r) {
+        var fm = {}, lm = {}; (r[1] || []).forEach(function (x) { var d = utc(x.fundingTime); (fm[d] = fm[d] || []).push(+x.fundingRate * 100); });
+        (r[2] || []).forEach(function (x) { lm[utc(x.timestamp)] = +x.longShortRatio; });
+        if (!(r[0] && r[0].length > 3)) throw new Error('oi');
+        DB.oi = r[0].map(function (x) { var d = utc(x.timestamp), f = fm[d]; return { d: d, o: +x.sumOpenInterestValue / 1e9, f: f ? f.reduce(function (a, b) { return a + b; }, 0) / f.length : null, l: lm[d] != null ? lm[d] : null }; });
+      }).catch(bybit);
+    }
+  };
+  function refresh() { Object.keys(JOBS).forEach(function (k) { job(k, JOBS[k]); }); }
+  function drawAll() { all(); }
+
+  /* ---------- TEKS KARTU ---------- */
+  function tx(id, v, cls) { var e = $(id); if (!e) return; e.textContent = v; if (cls) e.className = cls; }
+  var dcl = function (v) { return 'text-[10px] font-mono ' + (v >= 0 ? 'text-emerald-400' : 'text-rose-400'); }, ar = function (v) { return v >= 0 ? '▲ ' : '▼ '; };
+  function render() {
+    buildAlt();
+    var g = DB.g, d = DB.dom, m = DB.mc, o = DB.oi, a = DB.alt, l;
+    if (g) {
+      tx('cd-lb', g.b.toFixed(1) + '%'); tx('cd-le', g.e.toFixed(1) + '%'); tx('cd-ls', g.s.toFixed(1) + '%'); tx('cd-lo', Math.max(0, 100 - g.b - g.e - g.s).toFixed(1) + '%');
+      tx('cm-v', '$' + g.mc.toFixed(2) + ' T'); tx('cm-s', 'Volume 24j $' + g.v.toFixed(1) + ' Miliar'); if (g.ch != null) tx('cm-d', ar(g.ch) + Math.abs(g.ch).toFixed(2) + '%', dcl(g.ch));
+    }
+    if (d && d.length > 1) { l = d[d.length - 1]; var dv = l.c - d[d.length - 2].c, z = l.c >= 57.5 ? 'BTC MEMIMPIN' : l.c <= 55.3 ? 'ROTASI ALTCOIN' : 'SEIMBANG';
+      tx('cd-v', (g ? g.b : l.c).toFixed(1) + '%'); tx('cd-s', z + ' • Hari ini'); tx('cd-d', ar(dv) + Math.abs(dv).toFixed(2) + ' pt', dcl(dv)); }
+    if (DB.altNow != null) { var an = DB.altNow; tx('ca-v', an + ' / 100'); tx('ca-s', an >= 75 ? 'Altcoin Season' : an <= 25 ? 'Bitcoin Season' : 'Neutral', 'text-[10px] ' + (an >= 75 ? 'text-violet-400' : an <= 25 ? 'text-amber-400' : 'text-gray-400')); tx('ca-li', an); tx('ca-d', 'Target 75', 'text-[10px] text-gray-500'); }
+    if (a && a.length) tx('ca-lb', '$' + a[a.length - 1].b.toFixed(1) + 'K');
+    if (o && o.length > 1) { l = o[o.length - 1]; var oc = (l.o / o[o.length - 2].o - 1) * 100;
+      tx('co-v', '$' + l.o.toFixed(1) + ' B'); tx('co-s', 'Funding ' + ((l.f || 0) >= 0 ? '+' : '') + (l.f || 0).toFixed(3) + '% • L/S ' + (l.l == null ? '–' : l.l.toFixed(2))); tx('co-d', ar(oc) + Math.abs(oc).toFixed(2) + '%', dcl(oc)); }
+    var u = $('cm-upd'); if (u) { var nm = { g: 'Global', mc: 'Chart', alt: 'Altcoin', oi: 'Derivatif' }, st = Object.keys(JOBS).map(function (k) { return nm[k] + (SRC[k] ? ' …' : DB.ok && DB.ok[k] ? ' ✓' : ' ✗'); }).join(' • ');
+      u.textContent = (DB.ts ? 'Data harian otomatis • per ' + dl(DB.date) + ' (UTC) • ' + new Date(DB.ts).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' • ' : 'Memuat • ') + st + (DB.est ? ' • Mcap estimasi dari BTC' : ''); }
+    all();
+  }
+
+  /* ---------- JADWAL OTOMATIS ---------- */
+  function tick() { if (D.hidden) return; if (utc(Date.now()) !== DB.date || Date.now() - (DB.ts || 0) > 3e5) refresh(); }
+  setInterval(tick, 6e4); D.addEventListener('visibilitychange', function () { tick(); all(); });
+  var rb = $('refresh-crypto-btn'); if (rb) rb.addEventListener('click', function () { refresh(); });
+  D.addEventListener('click', function (e) { if (e.target && e.target.closest && e.target.closest('.nav-link')) setTimeout(all, 150); });
+  new MutationObserver(all).observe(D.documentElement, { attributes: true, attributeFilter: ['class'] });
+  render(); refresh();
+})();
+
+</script>
+<script id="ba-global-market-v3">
+/* ============================================================
+   GLOBAL MARKET v3 — 4 grafik KPI bergaya terminal pasar (Kapitalisasi Global • DXY • Emas • WTI)
+   Data NYATA otomatis: Yahoo Finance OHLC harian (6 bulan). Cache per hari (UTC); ganti hari / >10 mnt => ambil ulang sendiri.
+   Gagal => pakai data tersimpan terakhir. Nilai KPI di kartu & tabel ikut disinkronkan ke harga terbaru.
+   ============================================================ */
+(function () {
+  'use strict';
+  if (window.__gmx3) return; window.__gmx3 = 1;
+  var W = window, D = document, $ = function (i) { return D.getElementById(i); }, enc = encodeURIComponent, nop = function () {};
+  var KEY = 'ba-gmx3', MONO = 'ui-monospace,Menlo,monospace', YH = 'https://query1.finance.yahoo.com/v8/finance/chart/';
+  var R = [function (u) { return u; }, function (u) { return 'https://api.codetabs.com/v1/proxy?quest=' + enc(u); }, function (u) { return 'https://corsproxy.io/?' + enc(u); }];
+  var get = function (u, v) { return W.__fxGet ? W.__fxGet(u, v) : W.__baFetch(R, u, false, 9000); };
+  var utc = function (t) { return new Date(t).toISOString().slice(0, 10); };
+  var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+  var dl = function (d) { return +d.slice(8) + ' ' + MON[+d.slice(5, 7) - 1]; };
+  var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); }, fin = function (v) { return v === v && isFinite(v); };
+  var N = 90, BASE = 108.4, BASE_D = '2026-10-23'; /* jangkar kapitalisasi: $108.4T pada snapshot 23 Okt 2026, bergerak mengikuti indeks ACWI */
+  var SYM = { mc: ['ACWI'], dxy: ['DX-Y.NYB'], xau: ['XAUUSD=X', 'GC=F'], wti: ['CL=F'] };
+  var NAME = { mc: 'Mcap Global', dxy: 'DXY', xau: 'XAU/USD', wti: 'WTI Crude' };
+  var DB = {}; try { DB = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+  DB.S = DB.S || {}; var SRC = {}, TRY = {}, FS = 1, YH2 = YH.replace('query1', 'query2');
+  (function () { var st = D.createElement('style'); st.textContent = '@media(max-width:600px){#gm-sub-1 .gm1-kpis{grid-template-columns:minmax(0,1fr)!important}}'; D.head.appendChild(st); })();
+
+  /* ---------- indikator ---------- */
+  function sma(a, n) { var o = [], s = 0, i; for (i = 0; i < a.length; i++) { s += a[i]; if (i >= n) s -= a[i - n]; o.push(i >= n - 1 ? s / n : NaN); } return o; }
+  function ema(a, n) { var o = [], k = 2 / (n + 1), i, p = NaN; for (i = 0; i < a.length; i++) { if (!fin(a[i])) { o.push(NaN); continue; } p = fin(p) ? a[i] * k + p * (1 - k) : a[i]; o.push(p); } return o; }
+  function boll(a, n, m) { var mid = sma(a, n), u = [], l = [], i, j, s; for (i = 0; i < a.length; i++) { if (!fin(mid[i])) { u.push(NaN); l.push(NaN); continue; } for (s = 0, j = i - n + 1; j <= i; j++) s += (a[j] - mid[i]) * (a[j] - mid[i]); s = Math.sqrt(s / n); u.push(mid[i] + m * s); l.push(mid[i] - m * s); } return [mid, u, l]; }
+  function rsi(a, n) { var o = [NaN], g = 0, l = 0, i, d; for (i = 1; i < a.length; i++) { d = a[i] - a[i - 1]; if (i <= n) { g += Math.max(d, 0) / n; l += Math.max(-d, 0) / n; } else { g = (g * (n - 1) + Math.max(d, 0)) / n; l = (l * (n - 1) + Math.max(-d, 0)) / n; } o.push(i < n ? NaN : l === 0 ? 100 : 100 - 100 / (1 + g / l)); } return o; }
+  function roll(a, n, f) { return a.map(function (_, i) { return i < n - 1 ? NaN : f.apply(null, a.slice(i - n + 1, i + 1)); }); }
+
+  /* ---------- kerangka grafik ---------- */
+  function P() { var l = D.documentElement.classList.contains('light'); return { l: l, tx: l ? '#0f172a' : '#E5E7EB', mu: l ? '#64748b' : '#8B95A7', gr: l ? 'rgba(15,23,42,.08)' : 'rgba(255,255,255,.06)', up: '#26D99A', dn: '#F4607A', amb: '#FBBF24', cy: '#22D3EE', vio: '#A78BFA', gld: '#F5B301', sky: '#38BDF8' }; }
+  function T(c, t, x, y, col, al, sz, wt) { c.font = (wt || 500) + ' ' + Math.round((sz || 9) * FS * 10) / 10 + 'px ' + MONO; c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, x, y); }
+  function tag(c, t, x, y, bg, fg) { c.font = '700 ' + 9 * FS + 'px ' + MONO; var w = c.measureText(t).width + 6; c.fillStyle = bg; c.fillRect(x, y - 7, w, 14); T(c, t, x + 3, y, fg || '#fff', 'left', 9, 700); }
+  function dash(c, x0, y0, x1, y1, col) { c.save(); c.setLineDash([3, 3]); c.strokeStyle = col; c.lineWidth = 1; c.beginPath(); c.moveTo(x0, y0); c.lineTo(x1, y1); c.stroke(); c.restore(); }
+  function ln(c, a, X, Y, col, wd, dsh) { c.save(); if (dsh) c.setLineDash(dsh); c.strokeStyle = col; c.lineWidth = wd || 1.2; c.beginPath(); var go = 0; a.forEach(function (v, i) { if (!fin(v)) { go = 0; return; } go ? c.lineTo(X(i), Y(v)) : c.moveTo(X(i), Y(v)); go = 1; }); c.stroke(); c.restore(); }
+  function band(c, u, l, X, Y, col) { c.beginPath(); var i, s = 0; for (i = 0; i < u.length; i++) if (fin(u[i])) { s ? c.lineTo(X(i), Y(u[i])) : c.moveTo(X(i), Y(u[i])); s = 1; } for (i = l.length - 1; i >= 0; i--) if (fin(l[i])) c.lineTo(X(i), Y(l[i])); c.closePath(); c.fillStyle = col; c.fill(); }
+  function geo(w, h, s) { var g = { L: 4, R: 46, top: 30, w: w, h: h }; g.pw = w - g.L - g.R; g.m1 = Math.round(h * .6); g.s0 = g.m1 + 18; g.s1 = h - 16; g.X = function (i) { return g.L + (i + .5) * g.pw / N; }; g.on = s.x >= g.L && s.x <= g.L + g.pw; g.hv = g.on ? clamp(Math.floor((s.x - g.L) / g.pw * N), 0, N - 1) : N - 1; return g; }
+  var ym = function (lo, hi, y0, y1) { return function (v) { return y0 + (hi - v) / (hi - lo) * (y1 - y0); }; };
+  function grid(c, g, p, lo, hi, y0, y1, f, k) { for (var i = 0; i <= k; i++) { var v = lo + (hi - lo) * i / k, y = Math.round(y0 + (hi - v) / (hi - lo) * (y1 - y0)) + .5; c.strokeStyle = p.gr; c.lineWidth = 1; c.beginPath(); c.moveTo(g.L, y); c.lineTo(g.L + g.pw, y); c.stroke(); T(c, f(v), g.L + g.pw + 4, y, p.mu, 'left', 9); } }
+  function frame(c, g, p, s, V, hdr) {
+    var k = V[g.hv], col = k.c >= k.o ? p.up : p.dn, f = hdr.f;
+    T(c, hdr.n, 4, 8, p.tx, 'left', 10, 700); T(c, dl(k.d) + '  O ' + f(k.o) + ' H ' + f(k.h) + ' L ' + f(k.l) + ' C ' + f(k.c), 4 + hdr.n.length * 6.6 + 8, 8, col, 'left', 9, 600);
+    T(c, hdr.sub, 4, 19, p.mu, 'left', 8, 600);
+    [0, Math.floor(N / 2), N - 1].forEach(function (i, q) { T(c, dl(V[i].d), clamp(g.X(i), 20, g.L + g.pw - 14), g.h - 6, p.mu, q === 0 ? 'left' : q === 2 ? 'right' : 'center', 9); });
+    if (g.on) { dash(c, g.X(g.hv), g.top, g.X(g.hv), g.s1, p.mu); if (s.y > g.top && s.y < g.s1) dash(c, g.L, s.y, g.L + g.pw, s.y, p.mu); }
+  }
+  function candles(c, g, p, V, Y) { var bw = Math.max(2, g.pw / N * .62); V.forEach(function (k, i) { var col = k.c >= k.o ? p.up : p.dn, x = Math.round(g.X(i)) + .5; c.strokeStyle = col; c.lineWidth = 1; c.beginPath(); c.moveTo(x, Y(k.h)); c.lineTo(x, Y(k.l)); c.stroke(); c.fillStyle = col; var a = Y(Math.max(k.o, k.c)), b = Y(Math.min(k.o, k.c)); c.fillRect(g.X(i) - bw / 2, a, bw, Math.max(1, b - a)); }); }
+  function last(c, g, Y, v, f, col) { var y = clamp(Y(v), g.top, g.m1); dash(c, g.L, y, g.L + g.pw, y, col); tag(c, f(v), g.L + g.pw + 2, y, col, '#06121a'); }
+  function subHead(c, g, p, parts) { var x = 4; parts.forEach(function (q) { T(c, q[0], x, g.s0 - 9, q[1], 'left', 8, 700); x += q[0].length * 5.4 + 8; }); }
+  function view(a, off) { return a.slice(off); }
+  function rng(arrs, V) { var lo = Infinity, hi = -Infinity; V.forEach(function (k) { lo = Math.min(lo, k.l); hi = Math.max(hi, k.h); }); arrs.forEach(function (a) { a.forEach(function (v) { if (fin(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); } }); }); var pd = (hi - lo) * .08 + 1e-9; return [lo - pd, hi + pd]; }
+
+  /* 1. Kapitalisasi global: candle + EMA9/SMA21 + volume */
+  function dMc(c, w, h, p, s, K) {
+    var g = geo(w, h, s), off = K.length - N, V = K.slice(off), cl = K.map(function (k) { return k.c; }), e9 = view(ema(cl, 9), off), s21 = view(sma(cl, 21), off), r = rng([e9, s21], V), lo = r[0], hi = r[1], Y = ym(lo, hi, g.top, g.m1);
+    var f = function (v) { return v.toFixed(1); }; grid(c, g, p, lo, hi, g.top, g.m1, f, 4);
+    var vo = K.map(function (k) { return k.v || 0; }), vm = view(sma(vo, 20), off), vmax = Math.max.apply(null, vo.slice(off)) || 1, Yv = ym(0, vmax, g.s0, g.s1), bw = Math.max(2, g.pw / N * .62);
+    V.forEach(function (k, i) { c.globalAlpha = .55; c.fillStyle = k.c >= k.o ? p.up : p.dn; c.fillRect(g.X(i) - bw / 2, Yv(k.v || 0), bw, Math.max(1, g.s1 - Yv(k.v || 0))); c.globalAlpha = 1; });
+    ln(c, vm, g.X, Yv, p.amb, 1.1);
+    candles(c, g, p, V, Y); ln(c, e9, g.X, Y, p.amb, 1.3); ln(c, s21, g.X, Y, p.vio, 1.3);
+    var kl = V[N - 1]; last(c, g, Y, kl.c, f, kl.c >= kl.o ? p.up : p.dn);
+    var hv = V[g.hv]; subHead(c, g, p, [['Volume ' + ((hv.v || 0) / 1e6).toFixed(1) + 'M', p.tx], ['MA20 ' + (fin(vm[g.hv]) ? (vm[g.hv] / 1e6).toFixed(1) + 'M' : '–'), p.amb]]);
+    frame(c, g, p, s, V, { n: NAME.mc + ' (T$)', sub: 'Candlestick • EMA 9 ' + (fin(e9[g.hv]) ? f(e9[g.hv]) : '–') + ' • SMA 21 ' + (fin(s21[g.hv]) ? f(s21[g.hv]) : '–'), f: f });
+  }
+  /* 2. DXY: garis + Bollinger(20,2) + RSI 14 */
+  function dDxy(c, w, h, p, s, K) {
+    var g = geo(w, h, s), off = K.length - N, V = K.slice(off), cl = K.map(function (k) { return k.c; }), b = boll(cl, 20, 2), bm = view(b[0], off), bu = view(b[1], off), bl = view(b[2], off), cv = view(cl, off), r = rng([bu, bl], V), lo = r[0], hi = r[1], Y = ym(lo, hi, g.top, g.m1), f = function (v) { return v.toFixed(2); };
+    grid(c, g, p, lo, hi, g.top, g.m1, f, 4); band(c, bu, bl, g.X, Y, 'rgba(56,189,248,.10)'); ln(c, bu, g.X, Y, p.sky, .9); ln(c, bl, g.X, Y, p.sky, .9); ln(c, bm, g.X, Y, p.mu, 1, [3, 3]); ln(c, cv, g.X, Y, p.cy, 1.8);
+    last(c, g, Y, cv[N - 1], f, p.cy);
+    var rs = view(rsi(cl, 14), off), Yr = ym(0, 100, g.s0, g.s1); [30, 70].forEach(function (v) { dash(c, g.L, Yr(v), g.L + g.pw, Yr(v), p.gr); T(c, v, g.L + g.pw + 4, Yr(v), p.mu, 'left', 9); });
+    c.fillStyle = 'rgba(167,139,250,.08)'; c.fillRect(g.L, Yr(70), g.pw, Yr(30) - Yr(70)); ln(c, rs, g.X, Yr, p.vio, 1.5);
+    var rv = rs[N - 1]; if (fin(rv)) tag(c, rv.toFixed(1), g.L + g.pw + 2, Yr(rv), '#7C3AED');
+    var rh = rs[g.hv]; subHead(c, g, p, [['RSI(14) ' + (fin(rh) ? rh.toFixed(1) : '–'), p.vio], [fin(rh) ? (rh > 70 ? 'Jenuh beli' : rh < 30 ? 'Jenuh jual' : 'Netral') : '', p.mu]]);
+    frame(c, g, p, s, V, { n: NAME.dxy, sub: 'Garis • Bollinger (20,2) • SMA20 ' + (fin(bm[g.hv]) ? f(bm[g.hv]) : '–'), f: f });
+  }
+  /* 3. Emas: area + EMA12/26 + MACD(12,26,9) */
+  function dXau(c, w, h, p, s, K) {
+    var g = geo(w, h, s), off = K.length - N, V = K.slice(off), cl = K.map(function (k) { return k.c; }), e12 = ema(cl, 12), e26 = ema(cl, 26), cv = view(cl, off), a = view(e12, off), b = view(e26, off), r = rng([a, b, cv], V.map(function (k) { return { l: k.c, h: k.c }; })), lo = r[0], hi = r[1], Y = ym(lo, hi, g.top, g.m1), f = function (v) { return v.toFixed(2); };
+    grid(c, g, p, lo, hi, g.top, g.m1, f, 4);
+    var gr = c.createLinearGradient(0, g.top, 0, g.m1); gr.addColorStop(0, 'rgba(245,179,1,.32)'); gr.addColorStop(1, 'rgba(245,179,1,0)');
+    c.beginPath(); cv.forEach(function (v, i) { i ? c.lineTo(g.X(i), Y(v)) : c.moveTo(g.X(i), Y(v)); }); c.lineTo(g.X(N - 1), g.m1); c.lineTo(g.X(0), g.m1); c.closePath(); c.fillStyle = gr; c.fill();
+    ln(c, cv, g.X, Y, p.gld, 1.8); ln(c, a, g.X, Y, p.amb, 1.1); ln(c, b, g.X, Y, p.vio, 1.1); last(c, g, Y, cv[N - 1], f, p.gld);
+    var mac = e12.map(function (v, i) { return v - e26[i]; }), sg = ema(mac, 9), hi2 = mac.map(function (v, i) { return v - sg[i]; }), mv = view(mac, off), sv = view(sg, off), hv2 = view(hi2, off);
+    var mm = Math.max.apply(null, mv.concat(sv, hv2).filter(fin).map(Math.abs)) * 1.15 || 1, Ym = ym(-mm, mm, g.s0, g.s1), bw = Math.max(2, g.pw / N * .6);
+    dash(c, g.L, Ym(0), g.L + g.pw, Ym(0), p.gr);
+    hv2.forEach(function (v, i) { if (!fin(v)) return; c.fillStyle = v >= 0 ? p.up : p.dn; c.globalAlpha = .75; c.fillRect(g.X(i) - bw / 2, Math.min(Ym(0), Ym(v)), bw, Math.max(1, Math.abs(Ym(v) - Ym(0)))); c.globalAlpha = 1; });
+    ln(c, mv, g.X, Ym, p.cy, 1.3); ln(c, sv, g.X, Ym, p.amb, 1.3);
+    var q = g.hv; subHead(c, g, p, [['MACD ' + (fin(mv[q]) ? mv[q].toFixed(2) : '–'), p.cy], ['Sinyal ' + (fin(sv[q]) ? sv[q].toFixed(2) : '–'), p.amb], ['Hist ' + (fin(hv2[q]) ? hv2[q].toFixed(2) : '–'), p.tx]]);
+    frame(c, g, p, s, V, { n: NAME.xau, sub: 'Area • EMA12 ' + f(a[q]) + ' • EMA26 ' + f(b[q]), f: f });
+  }
+  /* 4. WTI: candle + Donchian(20) + Stochastic(14,3) */
+  function dWti(c, w, h, p, s, K) {
+    var g = geo(w, h, s), off = K.length - N, V = K.slice(off), hs = K.map(function (k) { return k.h; }), ls = K.map(function (k) { return k.l; }), cl = K.map(function (k) { return k.c; });
+    var du = view(roll(hs, 20, Math.max), off), dlw = view(roll(ls, 20, Math.min), off), dm = du.map(function (v, i) { return (v + dlw[i]) / 2; }), r = rng([du, dlw], V), lo = r[0], hi = r[1], Y = ym(lo, hi, g.top, g.m1), f = function (v) { return v.toFixed(2); };
+    grid(c, g, p, lo, hi, g.top, g.m1, f, 4); band(c, du, dlw, g.X, Y, 'rgba(167,139,250,.09)'); ln(c, du, g.X, Y, p.vio, 1); ln(c, dlw, g.X, Y, p.vio, 1); ln(c, dm, g.X, Y, p.mu, 1, [3, 3]);
+    candles(c, g, p, V, Y); var kl = V[N - 1]; last(c, g, Y, kl.c, f, kl.c >= kl.o ? p.up : p.dn);
+    var kr = cl.map(function (v, i) { if (i < 13) return NaN; var hh = Math.max.apply(null, hs.slice(i - 13, i + 1)), ll = Math.min.apply(null, ls.slice(i - 13, i + 1)); return hh === ll ? 50 : 100 * (v - ll) / (hh - ll); }), dd = sma(kr.map(function (v) { return fin(v) ? v : 0; }), 3).map(function (v, i) { return i < 15 ? NaN : v; });
+    var kv = view(kr, off), dv = view(dd, off), Ys = ym(0, 100, g.s0, g.s1); [20, 80].forEach(function (v) { dash(c, g.L, Ys(v), g.L + g.pw, Ys(v), p.gr); T(c, v, g.L + g.pw + 4, Ys(v), p.mu, 'left', 9); });
+    ln(c, kv, g.X, Ys, p.sky, 1.4); ln(c, dv, g.X, Ys, p.amb, 1.4); var kz = kv[N - 1]; if (fin(kz)) tag(c, kz.toFixed(1), g.L + g.pw + 2, Ys(kz), '#0284C7');
+    var q = g.hv; subHead(c, g, p, [['%K ' + (fin(kv[q]) ? kv[q].toFixed(1) : '–'), p.sky], ['%D ' + (fin(dv[q]) ? dv[q].toFixed(1) : '–'), p.amb], [fin(kv[q]) ? (kv[q] > 80 ? 'Jenuh beli' : kv[q] < 20 ? 'Jenuh jual' : '') : '', p.mu]]);
+    frame(c, g, p, s, V, { n: NAME.wti, sub: 'Candlestick • Donchian (20) • Atas ' + (fin(du[q]) ? f(du[q]) : '–') + ' • Bawah ' + (fin(dlw[q]) ? f(dlw[q]) : '–'), f: f });
+  }
+  var DRAW = { mc: dMc, dxy: dDxy, xau: dXau, wti: dWti }, CV = {};
+
+  function mount() {
+    Object.keys(DRAW).forEach(function (k) {
+      var box = $('gm-ks-' + k); if (!box || $('gmx-' + k)) return;
+      box.innerHTML = '<div class="gmk-wrap" style="height:clamp(200px,52vw,250px)"><canvas id="gmx-' + k + '" class="gmk-cv"></canvas></div>';
+      var cv = $('gmx-' + k), st = { x: -1, y: -1 };
+      var dr = function () {
+        var w = cv.clientWidth, h = cv.clientHeight; if (!w || !h) return; FS = w < 250 ? .88 : 1; N = Math.round(clamp(w / 6.5, 32, 90));
+        var d = Math.min(W.devicePixelRatio || 1, 2), pw = Math.round(w * d), ph = Math.round(h * d); if (cv.width !== pw || cv.height !== ph) { cv.width = pw; cv.height = ph; }
+        var c = cv.getContext('2d'); c.setTransform(d, 0, 0, d, 0, 0); c.clearRect(0, 0, w, h); c.lineJoin = 'round';
+        var K = DB.S[k] && DB.S[k].K;
+        if (!K || K.length < N + 5) { T(c, Object.keys(SRC).some(function (q) { return SRC[q]; }) ? 'Memuat data live…' : 'Data belum tersedia • muat ulang', w / 2, h / 2, P().mu, 'center', 10, 500); return; }
+        try { DRAW[k](c, w, h, P(), st, K); } catch (e) { console.warn('[global-market]', e); }
+      };
+      var raf = 0, sc = function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; dr(); }); };
+      var mv = function (e) { var r = cv.getBoundingClientRect(), p = e.touches ? e.touches[0] : e; st.x = p.clientX - r.left; st.y = p.clientY - r.top; sc(); };
+      cv.addEventListener('mousemove', mv); cv.addEventListener('touchmove', mv, { passive: true });
+      cv.addEventListener('mouseleave', function () { st.x = -1; sc(); }); cv.addEventListener('touchend', function () { st.x = -1; sc(); });
+      if (W.ResizeObserver) new ResizeObserver(sc).observe(cv.parentNode);
+      CV[k] = dr; dr();
+    });
+  }
+  var all = function () { Object.keys(CV).forEach(function (k) { CV[k](); }); };
+
+  /* ---------- DATA ---------- */
+  function pull(sym) {
+    var vv = function (j) { return j && j.chart && j.chart.result && j.chart.result[0]; };
+    return get(YH + enc(sym) + '?range=6mo&interval=1d', vv).catch(function () { return get(YH2 + enc(sym) + '?range=6mo&interval=1d', vv); }).then(function (j) {
+      var r = j.chart.result[0], ts = r.timestamp || [], q = r.indicators.quote[0], K = [], i, m = r.meta || {};
+      for (i = 0; i < ts.length; i++) { var cl = q.close[i]; if (cl == null || !fin(cl)) continue; var o = q.open[i] != null ? q.open[i] : cl, hh = q.high[i] != null ? q.high[i] : cl, ll = q.low[i] != null ? q.low[i] : cl; K.push({ d: utc(ts[i] * 1000), o: o, h: Math.max(hh, o, cl), l: Math.min(ll, o, cl), c: cl, v: q.volume ? q.volume[i] || 0 : 0 }); }
+      if (K.length < 100) throw new Error('short');
+      var px = m.regularMarketPrice, L = K[K.length - 1]; if (px && m.regularMarketTime && utc(m.regularMarketTime * 1000) === L.d) { L.c = px; L.h = Math.max(L.h, px); L.l = Math.min(L.l, px); }
+      return K;
+    });
+  }
+  function one(k) { var ss = SYM[k].slice(), go = function () { var s = ss.shift(); return pull(s).then(function (K) { return { K: K, sym: s }; }, function (e) { if (ss.length) return go(); var h = W.__dailyHist && W.__dailyHist(SYM[k][0], '6mo'); if (h && h.pts.length >= 100) { var pc = null; return { est: 1, K: h.pts.map(function (q) { var o = pc == null ? q[1] : pc; pc = q[1]; return { d: q[0], o: o, h: Math.max(o, q[1]), l: Math.min(o, q[1]), c: q[1], v: 0 }; }) }; } throw e; }); }; return go(); }
+  function sync(k) { /* sinkron nilai KPI kartu & tabel ke harga terbaru */
+    var S = DB.S[k], GM = W.__GM; if (!S || !GM) return; var K = S.K, a = K[K.length - 1], b = K[K.length - 2], it;
+    if (k === 'mc') { var ref = K.filter(function (x) { return x.d <= BASE_D; }).pop() || K[0], f = BASE / ref.c; it = GM.mc; if (it) { it.v = a.c * f; it.p = b.c * f; } }
+    else { it = GM.by({ dxy: 'US Dollar Index (DXY)', xau: 'Spot Gold (XAU)', wti: 'Crude Oil WTI' }[k]); if (it) { it.v = a.c; it.p = b.c; } }
+    if (it) { it.live = true; it.h = K.slice(-40).map(function (x) { return x.c * (k === 'mc' ? BASE / (K.filter(function (y) { return y.d <= BASE_D; }).pop() || K[0]).c : 1); }); }
+  }
+  function runOne(k) { /* tiap simbol mandiri: grafik tampil begitu datanya masuk; gagal => coba lagi otomatis (maks 2 mnt) */
+    if (SRC[k]) return; SRC[k] = 1; var n = TRY[k] || 0; DB.ok = DB.ok || {};
+    one(k).then(function (r) { DB.S[k] = r; TRY[k] = 0; DB.ok[k] = 1; DB.ts = Date.now(); DB.date = utc(DB.ts); try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) {} },
+      function () { TRY[k] = n + 1; DB.ok[k] = 0; setTimeout(function () { runOne(k); }, Math.min(12e4, 5e3 * Math.pow(2, n))); }).then(function () { SRC[k] = 0; apply(); });
+  }
+  function refresh() { Object.keys(SYM).forEach(runOne); }
+  function apply() {
+    Object.keys(SYM).forEach(function (k) { try { sync(k); } catch (e) {} });
+    var u = $('gmx-upd'); if (u) { var st = Object.keys(SYM).map(function (k) { return NAME[k] + (SRC[k] ? ' …' : DB.ok && DB.ok[k] ? ' ✓' : ' ✗'); }).join(' • ');
+      u.textContent = (DB.ts ? 'Data harian otomatis • per ' + dl(DB.date) + ' (UTC) • ' + new Date(DB.ts).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' • ' : 'Memuat • ') + st + ' • Mcap = estimasi ACWI berjangkar $108.4T (23 Okt 2026)'; }
+    mount(); all();
+  }
+
+  /* ---------- JADWAL OTOMATIS ---------- */
+  function tick() { if (D.hidden) return; mount(); if (utc(Date.now()) !== DB.date || Date.now() - (DB.ts || 0) > 6e5) refresh(); }
+  var waitT = setInterval(function () { var b = $('gm-kpis'); if (b && !$('gmx-upd')) b.insertAdjacentHTML('beforebegin', '<div id="gmx-upd" class="text-[10px] font-mono text-gray-500 mb-2">Memuat data harian…</div>'); mount(); if (CV.mc && CV.dxy && CV.xau && CV.wti) { clearInterval(waitT); apply(); } }, 400);
+  setInterval(function () { mount(); Object.keys(SYM).forEach(function (k) { try { sync(k); } catch (e) {} }); }, 3000); /* pasang ulang bila kartu dirender ulang; sinkron KPI */
+  setInterval(tick, 6e4); D.addEventListener('visibilitychange', function () { tick(); all(); });
+  D.addEventListener('click', function (e) { if (e.target && e.target.closest && (e.target.closest('.nav-link') || e.target.closest('[data-gm-sub]'))) setTimeout(function () { mount(); all(); }, 200); });
+  new MutationObserver(all).observe(D.documentElement, { attributes: true, attributeFilter: ['class'] });
+  apply(); refresh();
+})();
+
+</script>
+<style id="ba-resp-v1">
+/* ===== RESPONSIF MENYELURUH (desktop • lanskap • aplikasi terpasang • HP): mengikuti lebar jendela, bukan jenis perangkat ===== */
+:root{--ba-cmin:250px}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:hidden}
+img,canvas,svg,video,iframe{max-width:100%}
+button,a,[role=button]{touch-action:manipulation}
+main{padding-left:max(1rem,env(safe-area-inset-left))!important;padding-right:max(1rem,env(safe-area-inset-right))!important;padding-bottom:max(2.5rem,env(safe-area-inset-bottom))}
+.page,.page>*{min-width:0}
+.page [class*="grid-cols-"]>*{min-width:0}
+/* Grid kartu cair: jumlah kolom menyesuaikan lebar (4 → 3 → 2 → 1), kecuali tata letak yang memakai col-span */
+#market-mini-widgets,#gm-kpis{grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--ba-cmin)),1fr))!important}
+.page :is([class*="grid-cols-"],.gm1-kpis):has(>.bg-card-dark):not(:has(>[class*="col-span"])){grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--ba-cmin)),1fr))!important}
+/* Sub-navigasi halaman: satu baris yang bisa digeser di layar sempit */
+.ba-oldnav{min-width:0}
+.ba-oldnav [role=list],.ba-oldnav [class*="sub-row"]{overflow-x:auto;flex-wrap:nowrap;max-width:100%;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.ba-oldnav [role=list]::-webkit-scrollbar,.ba-oldnav [class*="sub-row"]::-webkit-scrollbar{display:none}
+.ba-oldnav [role=list]>*,.ba-oldnav [class*="sub-row"]>*{white-space:nowrap;flex:0 0 auto}
+.page .overflow-x-auto{-webkit-overflow-scrolling:touch;max-width:100%}
+.page h1{font-size:clamp(1.35rem,5.5vw,1.875rem);line-height:1.2}
+@media(hover:none){.card-3d{transform:none!important}}
+@media(max-width:640px){
+  .page.space-y-6>:not([hidden])~:not([hidden]){margin-top:1rem!important}
+  .page .bg-card-dark.p-6,.page .bg-card-dark.p-5{padding:.875rem!important}
+}
+@media(max-width:480px){
+  .page .text-3xl{font-size:1.5rem;line-height:2rem}
+  .page .text-2xl{font-size:1.25rem;line-height:1.75rem}
+}
+/* Lanskap HP / jendela pendek: rapatkan jarak & pendekkan grafik agar kartu muat di layar */
+@media(orientation:landscape) and (max-height:520px){
+  :root{--ba-cmin:230px}
+  main{padding-top:.75rem!important;padding-bottom:.75rem!important}
+  .gmk-wrap{height:clamp(150px,52vh,210px)!important}
+  #market-mini-widgets>div>div[style*="height"]{height:clamp(140px,50vh,190px)!important}
+}
+</style>
+<script id="ba-resp-v1-js">
+/* Responsif menyeluruh: pantau ukuran jendela nyata (resize, rotasi, jendela aplikasi) dan sesuaikan layout seperti di HP. */
+(function () {
+  'use strict';
+  if (window.__baResp) return; window.__baResp = 1;
+  var W = window, D = document, H = D.documentElement, last = null, t;
+  function fit() {
+    var w = W.innerWidth || H.clientWidth, narrow = w < 1024;
+    H.setAttribute('data-ba-w', w < 480 ? 'xs' : w < 640 ? 'sm' : w < 1024 ? 'md' : w < 1280 ? 'lg' : 'xl');
+    H.classList.toggle('ba-phone', w < 640);
+    if (last !== null && last !== narrow) { /* lewat batas 1024px: sidebar ikut menciut / kembali sesuai preferensi */
+      var pref = null; try { pref = localStorage.getItem('ba-sb'); } catch (e) {}
+      H.classList.toggle('ba-collapsed', narrow || pref === 'collapsed');
+    }
+    last = narrow;
+  }
+  var sch = function () { clearTimeout(t); t = setTimeout(fit, 80); };
+  fit(); W.addEventListener('resize', sch); W.addEventListener('orientationchange', function () { setTimeout(fit, 250); });
+  if (W.visualViewport) W.visualViewport.addEventListener('resize', sch);
+  /* Tabel lebar dibungkus agar bisa digeser, bukan memotong kartu */
+  function wrap() {
+    D.querySelectorAll('.page table').forEach(function (tb) {
+      var p = tb.parentElement; if (!p || p.getAttribute('data-ba-sc')) return;
+      var ox = getComputedStyle(p).overflowX; p.setAttribute('data-ba-sc', 1); if (ox === 'auto' || ox === 'scroll') return;
+      var d = D.createElement('div'); d.setAttribute('data-ba-sc', 1); d.style.cssText = 'overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch';
+      p.insertBefore(d, tb); d.appendChild(tb);
+    });
+  }
+  setTimeout(wrap, 800); setInterval(function () { if (!D.hidden) wrap(); }, 4000);
+  D.addEventListener('click', function (e) { if (e.target && e.target.closest && e.target.closest('.nav-link')) setTimeout(wrap, 300); });
 })();
 </script>
 </body>
