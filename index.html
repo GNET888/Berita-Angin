@@ -161,7 +161,7 @@ window.BA_SUPABASE={url:'ISI_URL_SUPABASE',anonKey:'ISI_ANON_PUBLIC_KEY'};</scri
 (function(){
   var CK={};
   /* Isi URL Worker Cloudflare Anda di sini (contoh: 'https://ba-proxy.nama.workers.dev'), atau simpan lewat konsol: localStorage.setItem('ba-worker','https://...') */
-  window.__BA_WORKER='';try{window.__BA_WORKER=window.__BA_WORKER||localStorage.getItem('ba-worker')||''}catch(e){}
+  window.__BA_WORKER='';try{var __q=new URLSearchParams(location.search).get('worker');if(__q!==null){if(__q)localStorage.setItem('ba-worker',__q);else localStorage.removeItem('ba-worker')}}catch(e){}try{window.__BA_WORKER=window.__BA_WORKER||localStorage.getItem('ba-worker')||''}catch(e){}
   window.__baFetch=function(routes,u,txt,ms){
     var key=u,hit=CK[key];
     if(hit&&Date.now()-hit.t<30000)return hit.p.then(function(t){return txt?t:JSON.parse(t)});
@@ -408,7 +408,7 @@ html.light [class*="bg-black/6"],html.light [class*="bg-black/7"]{background-col
   window.stkDomains=D;window.stkIcon=function(sym){
     var t=String(sym||'').toUpperCase(), d=D[t];
     return '<span class="stk-ico" style="background:'+(C[t]||'#475569')+'"><b>'+t.slice(0,4)+'</b>'+
-      (d?'<img src="https://www.google.com/s2/favicons?domain='+d+'&sz=64" alt="Logo '+t+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">':'')+'</span>';
+      (d?'<img src="https://www.google.com/s2/favicons?domain='+d+'&sz=128" alt="Logo '+t+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">':'')+'</span>';
   };
 })();
 </script>
@@ -4333,6 +4333,20 @@ html.light #se-sub-3{--s-line:#dbe3ee;--s-mute:#64748b;--s-text:#334155;--s-stro
 #se-sub-3 .scr-cell span{font-size:9px}
 
 </style>
+<style id="sd-bigicon-css">
+/* Ikon perusahaan di tabel U.S. Stock Directory diperbesar (26px -> 40px) */
+#sd-dir-card #stock-table-body .stk-ico{width:40px;height:40px;flex:0 0 40px;border-radius:11px}
+#sd-dir-card #stock-table-body .stk-ico b{font-size:11px}
+#sd-dir-card #stock-table-body .stk-ico img{padding:5px}
+#sd-dir-card #stock-table-body .stk-sym{gap:.6rem}
+#sd-dir-card #stock-table-body .stk-sym>span:last-child{font-size:12.5px}
+#sd-dir-card #stock-table-body td{height:56px}
+@container sdd (max-width:680px){
+  #sd-dir-card #stock-table-body .stk-ico{width:34px;height:34px;flex:0 0 34px;border-radius:9px}
+  #sd-dir-card #stock-table-body .stk-ico b{font-size:9.5px}
+  #sd-dir-card #stock-table-body td{height:50px}
+}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-mload" role="status" aria-live="polite" aria-label="Memuat"><div class="ba-mring"><img class="mlg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
@@ -6015,7 +6029,7 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
 #ovx .ovx-nm{margin-left:6px;font-size:11.5px;color:var(--mu);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #ovx .ovx-tag{display:inline-flex;align-items:center;gap:5px;flex:none;font-size:10.5px;color:var(--mu);border:1px solid var(--bd);border-radius:999px;padding:1px 8px 1px 6px;white-space:nowrap}
 #ovx .ovx-tag i{width:6px;height:6px;border-radius:50%;background:var(--mu)}
-#ovx .ovx-tag.on i{background:var(--up)}
+#ovx .ovx-tag.on i{background:var(--up)}#ovx .ovx-tag.sv{color:#fbbf24;border-color:rgba(251,191,36,.38)}#ovx .ovx-tag.sv i{background:#fbbf24}
 #ovx .ovx-p{display:flex;align-items:baseline;gap:8px;margin-top:6px;flex-wrap:nowrap;white-space:nowrap}
 #ovx .ovx-p strong{font-size:clamp(20px,9.5cqw,28px);font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;border-radius:4px}
 #ovx .ovx-chg{font-size:12.5px!important;font-weight:600;font-variant-numeric:tabular-nums}
@@ -6050,8 +6064,10 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
 </div>
 <script>
 /* OVERVIEW MARKET — grafik candlestick gaya bursa, data nyata Yahoo Finance via __baFetch.
-   Header harga & candle diperbarui otomatis (20 dtk saat pasar buka, 5 mnt saat tutup); candle harian baru muncul sendiri tiap hari bursa.
-   Data terakhir disimpan di perangkat agar tampil langsung dan tetap ada saat offline. Ubah daftar saham di SYMS. */
+   AKTIF 24 JAM x 7 HARI saat online: header & candle diperbarui otomatis (20 dtk saat pasar buka, 2 mnt saat tutup; lebih jarang di tab latar),
+   tetap berjalan walau tab tidak terlihat, dan langsung menyambung lagi saat koneksi kembali.
+   Sumber utama Yahoo Finance; bila gagal otomatis pindah ke cadangan Kraken xStocks. Setiap hasil (semua rentang waktu) disimpan di perangkat,
+   jadi saat OFFLINE grafik & harga terakhir tetap tampil (ditandai "Tersimpan"). Ubah daftar saham di SYMS. */
 (function () {
   'use strict';
   window.__liveIndexCards = true; /* matikan simulasi acak lama */
@@ -6102,7 +6118,7 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
     return a;
   }
   /* kutipan harga selalu dari candle harian 5 hari: perubahan = vs penutupan sesi sebelumnya, apa pun rentang grafik */
-  function quote(sym) {
+  function quoteY(sym) {
     return yf(sym, '5d', '1d').then(function (r) {
       var m = r.meta, b = bars(r), n = b.length; if (!n) throw new Error('empty');
       var tp = m.currentTradingPeriod && m.currentTradingPeriod.regular, now = Date.now() / 1000, L = b[n - 1];
@@ -6111,7 +6127,45 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
         vol: m.regularMarketVolume != null ? m.regularMarketVolume : L.v, open: L.o, isOpen: !!tp && now >= tp.start && now <= tp.end, ts: (m.regularMarketTime || 0) * 1000 };
     });
   }
-  function chart(sym, t) { return yf(sym, t.r, t.i).then(function (r) { var b = bars(r); if (!b.length) throw new Error('empty'); return { cs: b.slice(-120), at: Date.now(), pc: r.meta.chartPreviousClose }; }); }
+  function chartY(sym, t) { return yf(sym, t.r, t.i).then(function (r) { var b = bars(r); if (!b.length) throw new Error('empty'); return { cs: b.slice(-120), at: Date.now(), pc: r.meta.chartPreviousClose }; }); }
+
+  /* ---------- sumber cadangan: Kraken xStocks (token saham, harga mengikuti NASDAQ) ---------- */
+  var KR = [function (f) { return f; }, function (f) { return 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(f); }, function (f) { return 'https://corsproxy.io/?' + encodeURIComponent(f); }];
+  var KM = { '1d': [5, 288], '5d': [30, 240], '1mo': [1440, 22], '3mo': [1440, 63], '1y': [10080, 52] };
+  function nyOpen() { try { var p = {}; new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'short', hour: 'numeric', minute: 'numeric', hour12: false }).formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; }); var mn = (+p.hour % 24) * 60 + +p.minute; return !/Sat|Sun/.test(p.weekday) && mn >= 570 && mn < 960; } catch (e) { return false; } }
+  function krOHLC(sym, iv) {
+    if (!window.__baFetch) return Promise.reject(new Error('no-fetch'));
+    var u = 'https://api.kraken.com/0/public/OHLC?pair=' + sym + 'xUSD&interval=' + iv + '&asset_class=tokenized_asset';
+    return window.__baFetch(KR, u, false, 8000).then(function (j) {
+      var res = j && j.result, key = res && Object.keys(res).filter(function (k) { return k !== 'last'; })[0], rows = key ? res[key] : null;
+      if (!rows || rows.length < 2) throw new Error('empty');
+      return rows.map(function (a) { return { t: a[0] * 1000, o: +a[1], h: +a[2], l: +a[3], c: +a[4], v: +a[6] || 0 }; }).filter(function (b) { return b.c > 0 && b.o > 0 && b.h > 0 && b.l > 0; });
+    });
+  }
+  function chartK(sym, t) {
+    var m = KM[t.k] || KM['3mo'];
+    return krOHLC(sym, m[0]).then(function (b) {
+      var f = b.filter(function (x) { return x.v > 0; }); if (f.length >= Math.min(20, b.length)) b = f;
+      b = b.slice(-m[1]).slice(-120); if (b.length < 5) throw new Error('empty');
+      return { cs: b, at: Date.now(), pc: null };
+    });
+  }
+  function quoteK(sym) {
+    return krOHLC(sym, 1440).then(function (b) {
+      var n = b.length; if (n < 2) throw new Error('empty'); var L = b[n - 1], P = b[n - 2];
+      return { price: L.c, prev: P.c, hi: L.h, lo: L.l, vol: L.v, open: L.o, isOpen: nyOpen(), ts: Math.min(Date.now(), L.t + 864e5) };
+    });
+  }
+  /* urutan sumber per saham: Yahoo dulu; bila Yahoo baru gagal, pakai Kraken dulu selama 3 menit lalu coba Yahoo lagi */
+  function viaSources(S, fy, fk) {
+    var ord = S.yRetryAt > Date.now() ? ['k', 'y'] : ['y', 'k'];
+    function go(i) {
+      var s = ord[i];
+      return (s === 'y' ? fy() : fk()).then(function (r) { if (s === 'y') S.yRetryAt = 0; S.src = s; r.src = s; return r; },
+        function (e) { if (s === 'y') S.yRetryAt = Date.now() + 18e4; if (i + 1 < ord.length) return go(i + 1); throw e; });
+    }
+    return go(0);
+  }
 
   /* ---------- indikator ---------- */
   function ema(a, n) { var k = 2 / (n + 1), p = a[0]; return a.map(function (v, i) { return i ? (p = v * k + p * (1 - k)) : v; }); }
@@ -6124,7 +6178,7 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
     var b = document.createElement('button'); b.type = 'button'; b.textContent = t.l; b.title = t.t; b.setAttribute('aria-pressed', t.k === tfk ? 'true' : 'false'); b.dataset.k = t.k;
     b.onclick = function () {
       tfk = t.k; sv('ovx1:tf', tfk); Array.prototype.forEach.call(tfBox.children, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-      info(); SYMS.forEach(function (y) { st[y.k].err[t.k] = false; loadCache(y); legend(y); draw(y); msg(y); }); again = true; refresh();
+      info(); SYMS.forEach(function (y) { var S = st[y.k]; S.err[t.k] = false; legend(y); draw(y); msg(y); if (!S.c[t.k] || Date.now() - (S.cAt[t.k] || 0) > 10000) S.nextAt = 0; }); wake();
     };
     tfBox.appendChild(b);
   });
@@ -6139,22 +6193,26 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
       '<div class="ovx-ma" data-r="ma"></div>' +
       '<div class="ovx-kv"><div>Buka<span data-r="op">–</span></div><div title="Tutup sesi sebelumnya">Tutup lalu<span data-r="pcv">–</span></div><div>Volume<span data-r="vo">–</span></div></div>';
     grid.appendChild(el);
-    var S = st[y.k] = { el: el, cv: el.querySelector('canvas'), q: null, c: {}, hx: null, hy: null, err: {}, last: null };
+    var S = st[y.k] = { el: el, cv: el.querySelector('canvas'), q: null, c: {}, hx: null, hy: null, err: {}, last: null, cAt: {}, qAt: 0, fail: 0, nextAt: 0, busy: false, yRetryAt: 0, src: 'y', stl: null, pfNext: {}, pfFail: {} };
     S.r = function (n) { return el.querySelector('[data-r=' + n + ']'); };
     var cv = S.cv;
     cv.addEventListener('pointermove', function (e) { var r = cv.getBoundingClientRect(); S.hx = e.clientX - r.left; S.hy = e.clientY - r.top; draw(y); });
     cv.addEventListener('pointerleave', function () { S.hx = null; legend(y); draw(y); });
-    new ResizeObserver(function () { draw(y); if (!lastAt && vis()) refresh(); }).observe(cv);
+    new ResizeObserver(function () { draw(y); if (vis() && Date.now() - lastKick > 30000) wake(); }).observe(cv);
     var cq = ld('ovx1:q:' + y.s); if (cq) { S.q = cq.d; head(y, true); }
     loadCache(y);
   });
-  function loadCache(y) { var S = st[y.k], t = cur(), c = ld('ovx1:c:' + y.s + ':' + t.k); if (c && !S.c[t.k]) S.c[t.k] = c.d; }
+  /* muat SEMUA rentang waktu yang pernah tersimpan di perangkat, supaya ganti rentang pun tetap tampil saat offline */
+  function loadCache(y) { var S = st[y.k]; TFS.forEach(function (t) { if (S.c[t.k]) return; var c = ld('ovx1:c:' + y.s + ':' + t.k); if (c && c.d && c.d.cs && c.d.cs.length) { S.c[t.k] = c.d; S.cAt[t.k] = c.t || 0; } }); }
   function msg(y) {
     var S = st[y.k], t = cur(), m = S.r('ms'), has = S.c[t.k] && S.c[t.k].cs && S.c[t.k].cs.length;
     if (has) { m.style.display = 'none'; return; }
     m.style.display = 'flex';
-    if (S.err[t.k]) { m.innerHTML = 'Data grafik belum dapat dimuat. Mencoba lagi otomatis.<button type="button">Coba lagi</button>'; m.querySelector('button').onclick = function () { again = true; refresh(); }; }
-    else m.textContent = 'Memuat data…';
+    if (!online()) { m.innerHTML = 'Offline · belum ada data tersimpan untuk rentang ini.<br>Otomatis aktif saat koneksi kembali.'; return; }
+    if (S.err[t.k]) {
+      m.innerHTML = 'Data grafik belum dapat dimuat.<br>Mencoba lagi otomatis' + (S.fail > 1 ? ' (percobaan ke-' + S.fail + ')' : '') + '.<button type="button">Coba lagi</button>';
+      m.querySelector('button').onclick = function () { S.nextAt = 0; S.fail = 0; tick(); };
+    } else m.textContent = 'Memuat data…';
   }
   function head(y, cached) {
     var S = st[y.k], q = S.q; if (!q) return; var id = 'ov-' + y.k, chg = q.price - q.prev, pct = chg / q.prev * 100, up = chg >= 0;
@@ -6166,7 +6224,9 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
     var a = S.r('abs'); a.textContent = (up ? '+' : '−') + fm(Math.abs(chg)); a.className = 'ovx-abs ' + (up ? 'up' : 'dn');
     r.textContent = 'H $' + fm(q.hi) + ' • L $' + fm(q.lo);
     S.r('op').textContent = fm(q.open); S.r('pcv').textContent = fm(q.prev); S.r('vo').textContent = fv(q.vol);
-    var mk = S.r('mk'); mk.className = 'ovx-tag' + (q.isOpen ? ' on' : ''); mk.innerHTML = '<i></i>' + (q.isOpen ? 'Buka' : 'Tutup'); mk.title = 'NASDAQ · pasar ' + (q.isOpen ? 'buka' : 'tutup');
+    var sv0 = stale(S), mk = S.r('mk');
+    if (sv0) { mk.className = 'ovx-tag sv'; mk.innerHTML = '<i></i>Tersimpan'; mk.title = 'Data tersimpan di perangkat' + (q.ts ? ' · harga terakhir ' + tfmt(q.ts, 'dmhm') : '') + ' · otomatis diperbarui saat online'; }
+    else { mk.className = 'ovx-tag' + (q.isOpen ? ' on' : ''); mk.innerHTML = '<i></i>' + (q.isOpen ? 'Buka' : 'Tutup'); mk.title = 'NASDAQ · pasar ' + (q.isOpen ? 'buka' : 'tutup'); }
   }
   function legend(y, i) {
     var S = st[y.k], t = cur(), c = S.c[t.k], o = S.r('ohlc'), ma = S.r('ma');
@@ -6228,33 +6288,85 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
     cv.setAttribute('aria-label', 'Grafik candlestick ' + y.s + ', ' + t.t + ', harga terakhir $' + fm(last));
   }
 
-  /* ---------- siklus pembaruan ---------- */
-  var busy = false, again = false, lastAt = 0, lastOk = 0, sp = $('ovx-status'), stx = $('ovx-st');
-  var vis = function () { return !document.hidden && root.offsetParent !== null; };
-  var anyOpen = function () { return SYMS.some(function (y) { return st[y.k].q && st[y.k].q.isOpen; }); };
-  function status(ok) {
-    if (!sp) return; var open = anyOpen(), cls, txt;
-    if (ok) { lastOk = Date.now(); cls = open ? 'text-emerald-400' : 'text-sky-400'; txt = open ? 'LIVE · ' + tfmt(lastOk, 'hms') : 'PASAR TUTUP · ' + tfmt(lastOk, 'hm'); }
-    else { var has = SYMS.some(function (y) { return st[y.k].q; }); cls = has ? 'text-amber-400' : 'text-rose-400'; txt = has ? 'OFFLINE · DATA TERSIMPAN' : 'OFFLINE · MENCOBA LAGI'; }
-    sp.className = 'text-xs ' + cls; stx.textContent = txt;
-    var ts = 0; SYMS.forEach(function (y) { var q = st[y.k].q; if (q && q.ts > ts) ts = q.ts; });
-    if (ts) $('ovx-note').textContent = 'Harga terakhir ' + tfmt(ts, 'dmhm') + ' ' + (tz() === 'Asia/Jakarta' ? 'WIB' : tz()) + '. Sumber: Yahoo Finance (NASDAQ). Data dapat tertunda dan bukan saran investasi.';
-  }
-  function refresh() {
-    if (busy) return; busy = true; again = false; var t = cur();
-    var delay = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
-    var jobs = SYMS.map(function (y, ix) {
-      var S = st[y.k];
-      var pq = delay(ix * 250).then(function () { return quote(y.s); }).then(function (q) { S.q = q; sv('ovx1:q:' + y.s, { t: Date.now(), d: q }); head(y); });
-      var pc = delay(ix * 250 + 120).then(function () { return chart(y.s, t); }).then(function (c) { S.c[t.k] = c; S.err[t.k] = false; sv('ovx1:c:' + y.s + ':' + t.k, { t: Date.now(), d: c }); }, function (e) { S.err[t.k] = true; throw e; });
-      return Promise.allSettled([pq, pc]).then(function (res) { if (t.k === tfk) { legend(y); draw(y); msg(y); } return res.some(function (r) { return r.status === 'fulfilled'; }); });
+  /* ---------- siklus pembaruan: aktif 24/7 saat online, data tersimpan saat offline ---------- */
+  var lastOk = 0, lastKick = 0, tmr = 0, lastOn = null, lastPf = 0, pfBusy = false, noteTxt = '';
+  var sp = $('ovx-status'), stx = $('ovx-st');
+  var NET = { run: 0, max: 2, q: [] };
+  var TTL = { '1d': 9e5, '5d': 18e5, '1mo': 108e5, '3mo': 108e5, '1y': 432e5 };
+  function online() { return navigator.onLine !== false; }
+  function vis() { return !document.hidden && root.offsetParent !== null; }
+  function anyOpen() { return SYMS.some(function (y) { var S = st[y.k]; return S && S.q && S.q.isOpen; }); }
+  /* jeda antar pembaruan sukses: pasar buka 20 dtk (60 dtk di tab latar); pasar tutup 2 mnt (5 mnt di tab latar) */
+  function okIv() { var o = anyOpen(), v = vis(); return o ? (v ? 20000 : 60000) : (v ? 120000 : 300000); }
+  function backoff(n) { return Math.min(60000, Math.round(3000 * Math.pow(1.7, Math.max(0, n - 1)))); }
+  function stale(S) { return !online() || !S.qAt || Date.now() - S.qAt > Math.max(9e5, 4 * okIv()); }
+  /* antrean permintaan: maks. 2 sekaligus (menghindari pembatasan proxy publik yang membuat kartu gagal bersamaan) */
+  function pump() { while (NET.run < NET.max && NET.q.length) { (function (it) { NET.run++; var done = function () { NET.run--; pump(); }; it.fn().then(function (v) { done(); it.res(v); }, function (e) { done(); it.rej(e); }); })(NET.q.shift()); } }
+  function task(fn, low) { return new Promise(function (res, rej) { var it = { fn: fn, res: res, rej: rej }; if (low) NET.q.push(it); else NET.q.unshift(it); pump(); }); }
+
+  function job(y) {
+    var S = st[y.k]; if (S.busy) return Promise.resolve(false); S.busy = true; var t = cur();
+    var pq = task(function () { return viaSources(S, function () { return quoteY(y.s); }, function () { return quoteK(y.s); }); })
+      .then(function (q) { S.q = q; S.qAt = Date.now(); sv('ovx1:q:' + y.s, { t: S.qAt, d: q }); S.stl = null; head(y); });
+    var pc = task(function () { return viaSources(S, function () { return chartY(y.s, t); }, function () { return chartK(y.s, t); }); })
+      .then(function (c) { var now = Date.now(); c.at = now; S.c[t.k] = c; S.cAt[t.k] = now; S.err[t.k] = false; sv('ovx1:c:' + y.s + ':' + t.k, { t: now, d: c }); },
+        function (e) { S.err[t.k] = true; throw e; });
+    return Promise.allSettled([pq, pc]).then(function (res) {
+      var okAll = res.every(function (r) { return r.status === 'fulfilled'; }), okAny = res.some(function (r) { return r.status === 'fulfilled'; });
+      S.busy = false;
+      if (okAll) { S.fail = 0; S.nextAt = Date.now() + okIv(); } else { S.fail++; S.nextAt = Date.now() + backoff(S.fail); }
+      if (okAny) lastOk = Date.now();
+      if (t.k === tfk) { legend(y); draw(y); msg(y); }
+      paintStatus(); return okAny;
     });
-    Promise.all(jobs).then(function (oks) { busy = false; lastAt = Date.now(); status(oks.some(Boolean)); if (again) refresh(); }, function () { busy = false; });
   }
+  /* cadangan offline: ambil rentang waktu lain di latar (1 permintaan tiap >=4 dtk, hanya saat semua kartu sehat) supaya semua rentang tersimpan */
+  function prefetch() {
+    var now = Date.now(); if (pfBusy || now - lastPf < 4000 || !SYMS.every(function (y) { return st[y.k].fail === 0 && st[y.k].q; })) return;
+    var pick = null;
+    SYMS.some(function (y) { var S = st[y.k]; return TFS.some(function (t) { if (t.k === tfk) return false; if (now - (S.cAt[t.k] || 0) < TTL[t.k] || now < (S.pfNext[t.k] || 0)) return false; pick = [y, t]; return true; }); });
+    if (!pick) return; var y = pick[0], t = pick[1], S = st[y.k]; pfBusy = true; lastPf = now;
+    task(function () { return viaSources(S, function () { return chartY(y.s, t); }, function () { return chartK(y.s, t); }); }, true)
+      .then(function (c) { var n = Date.now(); c.at = n; S.c[t.k] = c; S.cAt[t.k] = n; S.pfFail[t.k] = 0; sv('ovx1:c:' + y.s + ':' + t.k, { t: n, d: c }); },
+        function () { S.pfFail[t.k] = (S.pfFail[t.k] || 0) + 1; S.pfNext[t.k] = Date.now() + Math.max(60000, backoff(S.pfFail[t.k] + 3)); })
+      .then(function () { pfBusy = false; });
+  }
+  function paintStatus() {
+    var on = online(), has = SYMS.some(function (y) { return st[y.k].q; }), now = Date.now(), open = anyOpen(), cls, txt;
+    if (!on) { cls = 'text-amber-400'; txt = has ? 'OFFLINE · DATA TERSIMPAN' : 'OFFLINE · MENUNGGU KONEKSI'; }
+    else if (!lastOk) { cls = 'text-sky-400'; txt = has ? 'MEMPERBARUI…' : 'MENGHUBUNGKAN…'; }
+    else if (now - lastOk > Math.max(18e4, 3 * okIv())) { cls = 'text-amber-400'; txt = has ? 'KONEKSI TERBATAS · DATA TERSIMPAN' : 'MENCOBA LAGI…'; }
+    else { cls = open ? 'text-emerald-400' : 'text-sky-400'; txt = open ? 'LIVE · ' + tfmt(lastOk, 'hms') : 'PASAR TUTUP · ' + tfmt(lastOk, 'hm'); }
+    if (sp) { sp.className = 'text-xs ' + cls; stx.textContent = txt; }
+    if (lastOn !== on) { lastOn = on; SYMS.forEach(function (y) { msg(y); }); }
+    var anySv = false, ts = 0, kr = false;
+    SYMS.forEach(function (y) { var S = st[y.k], f = stale(S); if (f) anySv = true; if (S.stl !== f) { S.stl = f; if (S.q) head(y, true); } if (S.q && S.q.ts > ts) ts = S.q.ts; if (S.src === 'k') kr = true; });
+    if (ts) {
+      var nt = 'Harga terakhir ' + tfmt(ts, 'dmhm') + ' ' + (tz() === 'Asia/Jakarta' ? 'WIB' : tz()) + '. Sumber: Yahoo Finance (NASDAQ)' + (kr ? ', cadangan Kraken xStocks' : '') + '. Data dapat tertunda dan bukan saran investasi.' + (anySv ? ' Menampilkan data tersimpan di perangkat; otomatis diperbarui saat online.' : '');
+      if (nt !== noteTxt) { noteTxt = nt; $('ovx-note').textContent = nt; }
+    }
+  }
+  /* pemicu utama: tiap 1 dtk memeriksa kartu mana yang waktunya diperbarui; tidak ikut berhenti saat tab tersembunyi */
+  function tick() {
+    clearTimeout(tmr);
+    try {
+      if (online()) {
+        var now = Date.now(), due = SYMS.filter(function (y) { var S = st[y.k]; return !S.busy && now >= S.nextAt; });
+        due.forEach(function (y) { job(y); });
+        if (!due.length && !NET.run && !NET.q.length) prefetch();
+      }
+      paintStatus();
+    } catch (e) { }
+    tmr = setTimeout(tick, 1000);
+  }
+  function wake() { lastKick = Date.now(); SYMS.forEach(function (y) { var S = st[y.k]; S.nextAt = 0; S.fail = 0; }); tick(); }
+  window.addEventListener('online', function () { wake(); });
+  window.addEventListener('offline', function () { paintStatus(); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && Date.now() - lastOk > 15000) wake(); });
+  window.addEventListener('pageshow', function (e) { if (e.persisted) wake(); });
   info(); SYMS.forEach(function (y) { legend(y); msg(y); });
-  window.setInterval(function () { if (!vis()) return; var bad = SYMS.some(function (y) { return st[y.k].err[tfk] || !st[y.k].q; }); if (Date.now() - lastAt > (bad ? 12000 : (anyOpen() || !lastOk ? 20000 : 300000))) refresh(); }, 3000);
   new MutationObserver(function () { SYMS.forEach(function (y) { draw(y); }); }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-  if (vis()) refresh();
+  tick();
 })();
 </script>
 
@@ -6312,16 +6424,16 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
             </div>
             <!-- Bagian Bawah Stock Exchange: Overview &amp; Telemetry (Kiri) & CURRENCY CONVERTER Menempel Di Bawahnya -->
             <div id="se-lower-grid" class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-                <!-- Kolom Kiri (2 Kolom): U.S. Stock Directory & Fundamental Matrix (5 Halaman) + CURRENCY CONVERTER -->
+                <!-- Kolom Kiri (2 Kolom): U.S. Stock Directory & Fundamental Matrix (2 Halaman) + CURRENCY CONVERTER -->
                 <div id="se-col-left" class="lg:col-span-2 space-y-6">
                     <div id="sd-dir-card" class="bg-card-dark rounded-2xl border border-card-border overflow-hidden shadow-xl p-5 terminal-glow font-mono">
                         <div class="sd-dir-head border-b border-card-border pb-3">
                             <div class="min-w-0">
                                 <h3 class="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-1.5">
                                     <i class="fa-solid fa-building-columns text-brand-accent"></i>
-                                    <span>U.S. STOCK DIRECTORY & FUNDAMENTAL MATRIX (3 HALAMAN)</span>
+                                    <span>U.S. STOCK DIRECTORY & FUNDAMENTAL MATRIX (2 HALAMAN)</span>
                                 </h3>
-                                <p class="text-[11px] text-gray-400 mt-1">Indexed equities across NYSE & NASDAQ exchanges with 17 rows telemetry per page.</p>
+                                <p class="text-[11px] text-gray-400 mt-1">Indexed equities across NYSE & NASDAQ exchanges with 25 rows telemetry per page.</p>
                             </div>
                             <div class="sd-search relative">
                                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
@@ -6354,12 +6466,11 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
                             </table>
                         </div>
                         <div class="sd-pager flex flex-col sm:flex-row items-center justify-between pt-3 border-t border-card-border text-xs text-gray-400 gap-2">
-                            <span id="stock-pagination-info">Showing 1-10 of 50 entries (Page 1 of 5)</span>
+                            <span id="stock-pagination-info">Showing 1-25 of 50 entries (Page 1 of 2)</span>
                             <div class="flex items-center space-x-1 overflow-x-auto py-1" id="stock-pagination-controls">
                                 <button onclick="changeStockPage(currentStockPage - 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">Prev</button>
                                 <button onclick="changeStockPage(1)" id="stock-page-1-btn" class="px-2.5 py-1 bg-brand-primary text-white rounded font-bold text-[10px]">1</button>
                                 <button onclick="changeStockPage(2)" id="stock-page-2-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">2</button>
-                                <button onclick="changeStockPage(3)" id="stock-page-3-btn" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">3</button>
                                 <button onclick="changeStockPage(currentStockPage + 1)" class="px-2.5 py-1 bg-black border border-card-border rounded hover:bg-neutral-800 text-white text-[10px]">Next</button>
                             </div>
                         </div>
@@ -8285,7 +8396,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
         ];
         if (window.__dailyStocks) window.__dailyStocks(allStockDirectory);
         let currentStockPage = 1;
-        const stockItemsPerPage = 17;
+        const stockItemsPerPage = 25;
         let filteredStockData = allStockDirectory;
         function renderStockTable(listToRender = filteredStockData) {
             const tbody = document.getElementById('stock-table-body');
@@ -19236,6 +19347,7 @@ html.light #scr-body tr:nth-child(even) td{background:rgba(15,23,42,.025)}
   var CG = 'https://api.coingecko.com/api/v3/', BN = 'https://fapi.binance.com/', KEY = 'ba-cm3', MONO = 'ui-monospace,Menlo,monospace';
   var R = [function (u) { return u; }, function (u) { return 'https://api.codetabs.com/v1/proxy?quest=' + enc(u); }, function (u) { return 'https://corsproxy.io/?' + enc(u); }];
   var RT = [function (u) { return u; }, function (u) { return 'https://api.allorigins.win/raw?url=' + enc(u); }, function (u) { return 'https://corsproxy.io/?' + enc(u); }, function (u) { return 'https://api.codetabs.com/v1/proxy?quest=' + enc(u); }], MC = {};
+  (function () { var wk = W.__BA_WORKER; if (wk) RT.unshift(function (u) { return wk.replace(/\/+$/, '') + '/?url=' + enc(u); }); })();
   /* FETCH CEPAT: rute langsung dulu, proxy menyusul paralel (700 ms atau begitu langsung gagal); yang pertama valid menang; hasil di-cache 45 dtk */
   function get(u, v) {
     var h = MC[u]; if (h && Date.now() - h.t < 45e3) return h.p;
@@ -19382,7 +19494,46 @@ html.light #scr-body tr:nth-child(even) td{background:rgba(15,23,42,.025)}
     T(c, dl(o.d) + '  OI $' + o.o.toFixed(2) + 'B  F ' + ((o.f || 0) >= 0 ? '+' : '') + (o.f || 0).toFixed(3) + '%  L/S ' + (o.l == null ? '–' : o.l.toFixed(2)), 4, 8, p.tx, 'left', 9, 700);
   }
 
-  var drawD = mk('cd', function (c, w, h, p, s) { candles(c, w, h, p, s, DB.dom || [], { f: function (v) { return v == null ? '' : v.toFixed(2) + '%'; } }); });
+  /* BTC.D model baru: area halus bergradien + EMA9 putus-putus + panel perubahan harian (Δ) + titik live + crosshair.
+     Menggantikan candlestick yang tampak janggal (bar tebal) saat jumlah candle sedikit. */
+  function domArea(c, w, h, p, s, K) {
+    if (K.length < 2) return nodata(c, w, h, p);
+    K = K.slice(-Math.round(clamp(w / 5, 30, 90))); var n = K.length, i;
+    var f = function (v) { return v == null ? '' : v.toFixed(2) + '%'; };
+    var L = 8, Rr = 46, top = 36, dh = n > 2 ? 34 : 0, bt = 14, gap = dh ? 6 : 0, pw = w - L - Rr, ph = h - top - dh - gap - bt;
+    var cl = K.map(function (k) { return k.c; }), e9 = ma(cl, 9, 1);
+    var lo = Math.min.apply(null, cl.concat(e9)), hi = Math.max.apply(null, cl.concat(e9));
+    if (hi - lo < .12) { var mid = (hi + lo) / 2; lo = mid - .06; hi = mid + .06; }
+    var pd = (hi - lo) * .22; lo -= pd; hi += pd;
+    var X = function (j) { return L + j * pw / (n - 1); }, Y = function (v) { return top + (hi - v) / (hi - lo) * ph; };
+    var upT = cl[n - 1] >= cl[0], col = upT ? p.up : p.dn, cr = upT ? '38,166,154' : '239,83,80';
+    for (i = 0; i <= 4; i++) { var v = lo + (hi - lo) * i / 4, y = Math.round(Y(v)) + .5; c.strokeStyle = p.gr; c.lineWidth = 1; c.beginPath(); c.moveTo(L, y); c.lineTo(L + pw, y); c.stroke(); T(c, f(v), L + pw + 4, y, p.mu, 'left', 9); }
+    var pts = cl.map(function (v, j) { return [X(j), Y(v)]; });
+    function path() { c.beginPath(); c.moveTo(pts[0][0], pts[0][1]); for (var q = 1; q < n - 1; q++) { c.quadraticCurveTo(pts[q][0], pts[q][1], (pts[q][0] + pts[q + 1][0]) / 2, (pts[q][1] + pts[q + 1][1]) / 2); } c.lineTo(pts[n - 1][0], pts[n - 1][1]); }
+    var g = c.createLinearGradient(0, top, 0, top + ph); g.addColorStop(0, 'rgba(' + cr + ',.38)'); g.addColorStop(1, 'rgba(' + cr + ',0)');
+    path(); c.lineTo(X(n - 1), top + ph); c.lineTo(X(0), top + ph); c.closePath(); c.fillStyle = g; c.fill();
+    c.save(); c.shadowColor = 'rgba(' + cr + ',.55)'; c.shadowBlur = 7; path(); c.strokeStyle = col; c.lineWidth = 2.2; c.lineCap = 'round'; c.stroke(); c.restore();
+    c.save(); c.setLineDash([4, 3]); line(c, e9, X, Y, '#F59E0B', 1.2); c.restore();
+    if (dh) {
+      var pt = top + ph + gap, mz = pt + dh / 2, dm = .05, bw = Math.max(2, Math.min(14, pw / n * .6));
+      for (i = 1; i < n; i++) dm = Math.max(dm, Math.abs(cl[i] - cl[i - 1]));
+      dash(c, L, mz, L + pw, mz, p.gr); T(c, 'Δ', L + 1, pt + 5, p.mu, 'left', 8, 700);
+      for (i = 1; i < n; i++) { var dd0 = cl[i] - cl[i - 1], bh = Math.max(1.5, Math.abs(dd0) / dm * (dh / 2 - 2)); c.globalAlpha = .85; c.fillStyle = dd0 >= 0 ? p.up : p.dn; c.fillRect(X(i) - bw / 2, dd0 >= 0 ? mz - bh : mz, bw, bh); c.globalAlpha = 1; }
+    }
+    T(c, dl(K[0].d), L, h - 6, p.mu, 'left', 9); T(c, dl(K[n - 1].d), L + pw, h - 6, p.mu, 'right', 9);
+    var ly = Y(cl[n - 1]); dash(c, L, ly, L + pw, ly, col); tag(c, f(cl[n - 1]), L + pw + 2, clamp(ly, top, top + ph), col);
+    var inside = s.x >= L && s.x <= L + pw, hv = inside ? clamp(Math.round((s.x - L) / pw * (n - 1)), 0, n - 1) : n - 1, k = K[hv];
+    var ring = p.l ? '#ffffff' : '#0b0f19';
+    if (inside) { dash(c, X(hv), top, X(hv), top + ph + gap + dh, p.mu); }
+    c.beginPath(); c.arc(X(hv), Y(cl[hv]), inside ? 7 : 8, 0, 6.3); c.fillStyle = 'rgba(' + cr + ',.22)'; c.fill();
+    c.beginPath(); c.arc(X(hv), Y(cl[hv]), 3.6, 0, 6.3); c.fillStyle = col; c.fill(); c.strokeStyle = ring; c.lineWidth = 1.5; c.stroke();
+    var dd = hv ? cl[hv] - cl[hv - 1] : 0, dc = dd >= 0 ? p.up : p.dn;
+    T(c, dl(k.d), L, 9, p.tx, 'left', 9, 700);
+    T(c, f(k.c) + '  ' + (dd >= 0 ? '▲ ' : '▼ ') + Math.abs(dd).toFixed(2) + ' pt', L + 46, 9, dc, 'left', 9, 700);
+    T(c, 'EMA9 ' + f(e9[hv]), L, 22, '#F59E0B', 'left', 9, 600);
+    T(c, 'H ' + f(k.h) + '  L ' + f(k.l), L + 84, 22, p.mu, 'left', 9, 500);
+  }
+  var drawD = mk('cd', function (c, w, h, p, s) { domArea(c, w, h, p, s, domK()); });
   var drawA = mk('ca', altChart);
   var drawM = mk('cm', function (c, w, h, p, s) { candles(c, w, h, p, s, DB.mc || [], { vol: 1, f: function (v) { return v == null ? '' : v.toFixed(2) + 'T'; } }); });
   var drawO = mk('co', oiChart);
@@ -19423,8 +19574,55 @@ html.light #scr-body tr:nth-child(even) td{background:rgba(15,23,42,.025)}
       if (out.length < 4) throw new Error('oi'); DB.oi = out;
     });
   }
+  /* --- Cadangan OI: OKX (API publik, CORS terbuka) --- */
+  function okx() {
+    var OK = 'https://www.okx.com/api/v5/', ok = function (j) { return j && j.code === '0' && isArr(j.data) && j.data.length; };
+    return Promise.all([get(OK + 'rubik/stat/contracts/open-interest-volume?ccy=BTC&period=1D', ok),
+      get(OK + 'public/funding-rate-history?instId=BTC-USDT-SWAP&limit=100', ok).catch(function () { return null; }),
+      get(OK + 'rubik/stat/contracts/long-short-account-ratio?ccy=BTC&period=1D', ok).catch(function () { return null; })]).then(function (r) {
+      var fm = {}, lm = {}, lp = DB.bp && DB.bp.length ? DB.bp[DB.bp.length - 1][1] : 0;
+      ((r[1] && r[1].data) || []).forEach(function (x) { var d = utc(+x.fundingTime); (fm[d] = fm[d] || []).push(+x.fundingRate * 100); });
+      ((r[2] && r[2].data) || []).forEach(function (x) { lm[utc(+x[0])] = +x[1]; });
+      var out = r[0].data.slice().reverse().map(function (x) { var d = utc(+x[0]), v = +x[1], f = fm[d]; if (v < 1e7 && lp) v *= lp;
+        return { d: d, o: v / 1e9, f: f ? f.reduce(function (a, b) { return a + b; }, 0) / f.length : null, l: lm[d] != null ? lm[d] : null }; }).filter(function (o) { return o.o > 0 && isFinite(o.o); });
+      if (out.length < 4) throw new Error('oi'); DB.oi = out;
+    });
+  }
+  function gate() { /* Gate.io futures: riwayat OI harian + L/S, CORS terbuka */
+    var GT = 'https://api.gateio.ws/api/v4/futures/usdt/', ok = function (j) { return isArr(j) && j.length > 3; };
+    return Promise.all([get(GT + 'contract_stats?contract=BTC_USDT&interval=1d&limit=60', ok), get(GT + 'funding_rate?contract=BTC_USDT&limit=200', ok).catch(function () { return null; })]).then(function (r) {
+      var fm = {}; (r[1] || []).forEach(function (x) { var d = utc(+x.t * 1e3); (fm[d] = fm[d] || []).push(+x.r * 100); });
+      var out = r[0].map(function (x) { var d = utc(+x.time * 1e3), f = fm[d], l = +x.lsr_account; return { d: d, o: +x.open_interest_usd / 1e9, f: f ? f.reduce(function (a, b) { return a + b; }, 0) / f.length : null, l: l > 0 ? l : null }; }).filter(function (o) { return o.o > 0 && isFinite(o.o); });
+      if (out.length < 4) throw new Error('oi'); DB.oi = out;
+    });
+  }
+  function okxLive() { /* OI saat ini dari OKX, direkam tiap bacaan hingga cukup untuk grafik */
+    var OK = 'https://www.okx.com/api/v5/public/', ok = function (j) { return j && j.code === '0' && isArr(j.data) && j.data[0]; };
+    return Promise.all([get(OK + 'open-interest?instType=SWAP&instId=BTC-USDT-SWAP', ok), get(OK + 'funding-rate?instId=BTC-USDT-SWAP', ok).catch(function () { return null; })]).then(function (r) {
+      var v = +r[0].data[0].oiUsd, f = r[1] ? +r[1].data[0].fundingRate * 100 : null; if (!(v > 0)) throw new Error('oi');
+      var T = DB.oiT = DB.oiT || [], n = Date.now(); if (!T.length || n - T[T.length - 1][0] > 15e3) T.push([n, v / 1e9, f]); if (T.length > 300) T.shift();
+      if (T.length < 4) throw new Error('oi');
+      DB.oi = T.map(function (q) { return { d: utc(q[0]), o: q[1], f: q[2], l: null }; });
+    });
+  }
+  /* --- Dominasi live: CoinGecko, cadangan CoinLore; tiap bacaan direkam jadi candle live --- */
+  function pushTick(b) {
+    if (!(b > 0)) return; var T = DB.domT = DB.domT || [], n = Date.now();
+    if (T.length && n - T[T.length - 1][0] < 15e3) return; T.push([n, +b]); if (T.length > 300) T.shift(); save();
+  }
+  function domK() {
+    var d = DB.dom; if (d && d.length > 2) return d; var T = DB.domT || []; if (T.length < 3) return [];
+    return T.map(function (q, i) { var o = i ? T[i - 1][1] : q[1]; return { d: utc(q[0]), o: o, h: Math.max(o, q[1]), l: Math.min(o, q[1]), c: q[1], v: 0 }; });
+  }
+  function gSrc() {
+    return get(CG + 'global', function (j) { return j && j.data; }).catch(function () {
+      return get('https://api.coinlore.net/api/global/', function (j) { return isArr(j) && j[0] && +j[0].btc_d > 0; }).then(function (j) {
+        var x = j[0]; return { data: { market_cap_percentage: { btc: +x.btc_d, eth: +x.eth_d, usdt: (DB.g && DB.g.s) || 0 }, total_market_cap: { usd: +x.total_mcap }, total_volume: { usd: +x.total_volume }, market_cap_change_percentage_24h_usd: +x.mcap_change } };
+      });
+    }).then(function (j) { pushTick((j.data.market_cap_percentage || {}).btc); return j; });
+  }
   var JOBS = {
-    g: function () { return get(CG + 'global', function (j) { return j && j.data; }).then(function (j) { var g = j.data, q = g.market_cap_percentage || {};
+    g: function () { return gSrc().then(function (j) { var g = j.data, q = g.market_cap_percentage || {};
       DB.g = { b: q.btc, e: q.eth, s: (q.usdt || 0) + (q.usdc || 0), mc: g.total_market_cap.usd / 1e12, v: g.total_volume.usd / 1e9, ch: g.market_cap_change_percentage_24h_usd }; }); },
     mc: function () {
       var cm = get(CG + 'global/market_cap_chart?days=90', function (j) { return j && j.market_cap_chart; }).catch(function () { return null; });
@@ -19454,7 +19652,7 @@ html.light #scr-body tr:nth-child(even) td{background:rgba(15,23,42,.025)}
         (r[2] || []).forEach(function (x) { lm[utc(x.timestamp)] = +x.longShortRatio; });
         if (!(r[0] && r[0].length > 3)) throw new Error('oi');
         DB.oi = r[0].map(function (x) { var d = utc(x.timestamp), f = fm[d]; return { d: d, o: +x.sumOpenInterestValue / 1e9, f: f ? f.reduce(function (a, b) { return a + b; }, 0) / f.length : null, l: lm[d] != null ? lm[d] : null }; });
-      }).catch(bybit);
+      }).catch(gate).catch(bybit).catch(okx).catch(okxLive);
     }
   };
   function refresh() { Object.keys(JOBS).forEach(function (k) { job(k, JOBS[k]); }); }
@@ -19465,7 +19663,7 @@ html.light #scr-body tr:nth-child(even) td{background:rgba(15,23,42,.025)}
   var dcl = function (v) { return 'text-[10px] font-mono ' + (v >= 0 ? 'text-emerald-400' : 'text-rose-400'); }, ar = function (v) { return v >= 0 ? '▲ ' : '▼ '; };
   function render() {
     buildAlt();
-    var g = DB.g, d = DB.dom, m = DB.mc, o = DB.oi, a = DB.alt, l;
+    var g = DB.g, d = domK(), m = DB.mc, o = DB.oi, a = DB.alt, l;
     if (g) {
       tx('cd-lb', g.b.toFixed(1) + '%'); tx('cd-le', g.e.toFixed(1) + '%'); tx('cd-ls', g.s.toFixed(1) + '%'); tx('cd-lo', Math.max(0, 100 - g.b - g.e - g.s).toFixed(1) + '%');
       tx('cm-v', '$' + g.mc.toFixed(2) + ' T'); tx('cm-s', 'Volume 24j $' + g.v.toFixed(1) + ' Miliar'); if (g.ch != null) tx('cm-d', ar(g.ch) + Math.abs(g.ch).toFixed(2) + '%', dcl(g.ch));
@@ -19487,6 +19685,7 @@ html.light #scr-body tr:nth-child(even) td{background:rgba(15,23,42,.025)}
   var rb = $('refresh-crypto-btn'); if (rb) rb.addEventListener('click', function () { refresh(); });
   D.addEventListener('click', function (e) { if (e.target && e.target.closest && e.target.closest('.nav-link')) setTimeout(all, 150); });
   new MutationObserver(all).observe(D.documentElement, { attributes: true, attributeFilter: ['class'] });
+  setInterval(function () { if (!D.hidden && !SRC.g) job('g', JOBS.g); if (!D.hidden && !SRC.oi && DB.oiT && DB.oiT.length) job('oi', JOBS.oi); }, 5e4); /* dominasi live tiap ~50 dtk */
   render(); refresh();
 })();
 
@@ -19509,7 +19708,7 @@ html.light #scr-body tr:nth-child(even) td{background:rgba(15,23,42,.025)}
   var dl = function (d) { return +d.slice(8) + ' ' + MON[+d.slice(5, 7) - 1]; };
   var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); }, fin = function (v) { return v === v && isFinite(v); };
   var N = 90, BASE = 108.4, BASE_D = '2026-10-23'; /* jangkar kapitalisasi: $108.4T pada snapshot 23 Okt 2026, bergerak mengikuti indeks ACWI */
-  var SYM = { mc: ['ACWI'], dxy: ['DX-Y.NYB'], xau: ['XAUUSD=X', 'GC=F'], wti: ['CL=F'] };
+  var SYM = { mc: ['ACWI'], dxy: ['DX-Y.NYB', '@dxy'], xau: ['@xau', 'XAUUSD=X', 'GC=F'], wti: ['CL=F'] };
   var NAME = { mc: 'Mcap Global', dxy: 'DXY', xau: 'XAU/USD', wti: 'WTI Crude' };
   var DB = {}; try { DB = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
   DB.S = DB.S || {}; var SRC = {}, TRY = {}, FS = 1, YH2 = YH.replace('query1', 'query2');
@@ -19621,7 +19820,28 @@ html.light #scr-body tr:nth-child(even) td{background:rgba(15,23,42,.025)}
   var all = function () { Object.keys(CV).forEach(function (k) { CV[k](); }); };
 
   /* ---------- DATA ---------- */
+  /* Sumber cadangan yang CORS-terbuka (tanpa proxy): emas via PAXG (Binance Vision), DXY dihitung dari kurs ECB (rumus ICE) */
+  var ALT = {
+    xau: function () {
+      var u = function (h) { return 'https://' + h + '/api/v3/klines?symbol=PAXGUSDT&interval=1d&limit=200'; }, ok = function (j) { return Array.isArray(j) && j.length > 100; };
+      return get(u('data-api.binance.vision'), ok).catch(function () { return get(u('api.binance.com'), ok); }).then(function (j) {
+        return j.map(function (q) { return { d: utc(q[0]), o: +q[1], h: +q[2], l: +q[3], c: +q[4], v: +q[5] }; });
+      });
+    },
+    dxy: function () {
+      var st = utc(Date.now() - 200 * 864e5), q = '?base=USD&symbols=EUR,JPY,GBP,CAD,SEK,CHF', ok = function (j) { return j && j.rates && Object.keys(j.rates).length > 80; };
+      return get('https://api.frankfurter.dev/v1/' + st + '..' + q, ok).catch(function () { return get('https://api.frankfurter.app/' + st + '..' + q, ok); }).then(function (j) {
+        var pc = null, out = [];
+        Object.keys(j.rates).sort().forEach(function (d) {
+          var r = j.rates[d], v = 50.14348112 * Math.pow(r.EUR, .576) * Math.pow(r.JPY, .136) * Math.pow(r.GBP, .119) * Math.pow(r.CAD, .091) * Math.pow(r.SEK, .042) * Math.pow(r.CHF, .036);
+          if (!fin(v)) return; var o = pc == null ? v : pc; pc = v; out.push({ d: d, o: o, h: Math.max(o, v), l: Math.min(o, v), c: v, v: 0 });
+        });
+        if (out.length < 80) throw new Error('dxy'); return out;
+      });
+    }
+  };
   function pull(sym) {
+    if (sym.charAt(0) === '@') return ALT[sym.slice(1)]();
     var vv = function (j) { return j && j.chart && j.chart.result && j.chart.result[0]; };
     return get(YH + enc(sym) + '?range=6mo&interval=1d', vv).catch(function () { return get(YH2 + enc(sym) + '?range=6mo&interval=1d', vv); }).then(function (j) {
       var r = j.chart.result[0], ts = r.timestamp || [], q = r.indicators.quote[0], K = [], i, m = r.meta || {};
@@ -19647,7 +19867,7 @@ html.light #scr-body tr:nth-child(even) td{background:rgba(15,23,42,.025)}
   function apply() {
     Object.keys(SYM).forEach(function (k) { try { sync(k); } catch (e) {} });
     var u = $('gmx-upd'); if (u) { var st = Object.keys(SYM).map(function (k) { return NAME[k] + (SRC[k] ? ' …' : DB.ok && DB.ok[k] ? ' ✓' : ' ✗'); }).join(' • ');
-      u.textContent = (DB.ts ? 'Data harian otomatis • per ' + dl(DB.date) + ' (UTC) • ' + new Date(DB.ts).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' • ' : 'Memuat • ') + st + ' • Mcap = estimasi ACWI berjangkar $108.4T (23 Okt 2026)'; }
+      u.textContent = (DB.ts ? 'Data harian otomatis • per ' + dl(DB.date) + ' (UTC) • ' + new Date(DB.ts).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' • ' : 'Memuat • ') + st + ' • Mcap = estimasi ACWI berjangkar $108.4T (23 Okt 2026)' + (DB.S.dxy && DB.S.dxy.sym === '@dxy' ? ' • DXY = hitungan dari kurs ECB (harian)' : '') + (DB.S.xau && DB.S.xau.sym === '@xau' ? ' • Emas = PAXG/USDT (token emas 1 oz)' : ''); }
     mount(); all();
   }
 
@@ -19658,6 +19878,7 @@ html.light #scr-body tr:nth-child(even) td{background:rgba(15,23,42,.025)}
   setInterval(tick, 6e4); D.addEventListener('visibilitychange', function () { tick(); all(); });
   D.addEventListener('click', function (e) { if (e.target && e.target.closest && (e.target.closest('.nav-link') || e.target.closest('[data-gm-sub]'))) setTimeout(function () { mount(); all(); }, 200); });
   new MutationObserver(all).observe(D.documentElement, { attributes: true, attributeFilter: ['class'] });
+  setInterval(function () { if (!D.hidden && !SRC.xau && DB.S.xau && DB.S.xau.sym === '@xau') runOne('xau'); }, 6e4); /* emas live tiap menit */
   apply(); refresh();
 })();
 
@@ -19698,6 +19919,16 @@ main{padding-left:max(1rem,env(safe-area-inset-left))!important;padding-right:ma
   .gmk-wrap{height:clamp(150px,52vh,210px)!important}
   #market-mini-widgets>div>div[style*="height"]{height:clamp(140px,50vh,190px)!important}
 }
+</style>
+<style id="ba-cards4">
+/* 4 kartu sejajar seperti Overview Market: 1 kolom (HP) → 2 (tablet) → 4 (desktop); tinggi sama, grafik mengisi kartu */
+html #market-mini-widgets{display:grid!important;gap:12px;align-items:stretch;grid-template-columns:minmax(0,1fr)!important}
+@media(min-width:640px){html #market-mini-widgets{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(min-width:1024px){html #market-mini-widgets{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+#market-mini-widgets>div{min-width:0;display:flex;flex-direction:column;contain:layout style}
+#market-mini-widgets>div>div[style*="height"]{flex:1 1 auto;min-height:190px}
+#market-mini-widgets canvas{display:block;touch-action:pan-y}
+@media(max-width:1279px) and (min-width:1024px){#market-mini-widgets>div{padding:.75rem!important}}
 </style>
 <script id="ba-resp-v1-js">
 /* Responsif menyeluruh: pantau ukuran jendela nyata (resize, rotasi, jendela aplikasi) dan sesuaikan layout seperti di HP. */
