@@ -5440,9 +5440,9 @@ function finish(){if(fin)return;fin=true;
                     <span id="crypto-subpage-indicator" class="px-2 py-0.5 rounded bg-brand-primary/20 text-brand-accent">Halaman 1 dari 3</span>
                 </div>
                 <div class="cr-sub cr-sub-row" role="list">
-                    <a href="#" role="listitem" data-cr-sub="1" aria-current="page" class="cr-sublink is-active"><span class="cr-dot"></span><span>Live Index &amp; Aset Crypto</span></a>
-                    <a href="#" role="listitem" data-cr-sub="2" class="cr-sublink"><span class="cr-dot"></span><span>Gas Fee &amp; Platform Resmi</span></a>
-                    <a href="#" role="listitem" data-cr-sub="3" class="cr-sublink"><span class="cr-dot"></span><span>e-Wallet &amp; Vault</span></a>
+                    <a href="#" role="listitem" data-cr-sub="1" aria-current="page" class="cr-sublink is-active"><span class="cr-dot"></span><span>Live Index</span></a>
+                    <a href="#" role="listitem" data-cr-sub="2" class="cr-sublink"><span class="cr-dot"></span><span>Gas Fee</span></a>
+                    <a href="#" role="listitem" data-cr-sub="3" class="cr-sublink"><span class="cr-dot"></span><span>e-Wallet</span></a>
                 </div>
             </div>
             <!-- Compact auto-moving market mini charts -->
@@ -7075,9 +7075,38 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
 </div>
                     </div>
                     <div class="gm1-charts">
-    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-line text-cyan-400"></i> Likuiditas Bersih AS vs Neraca Fed <span class="normal-case text-gray-600">(harian, $T)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-net"></canvas></div></div>
-    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-chart-bar text-brand-accent"></i> Kontribusi per Komponen <span class="normal-case text-gray-600">(+ menambah / − menyerap)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-imp"></canvas></div></div>
-    <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-gauge-high text-cyan-400"></i> Riwayat Skor Komposit <span class="normal-case text-gray-600">(garis putus = batas rezim)</span></div><div style="position:relative;height:220px"><canvas id="mlc-ch-sc"></canvas></div></div>
+    <div class="mlc-panel lq-panel">
+        <div class="lq-hd"><div class="lq-ttl"><span class="lq-ic" style="--c:#22d3ee"><i class="fa-solid fa-chart-line"></i></span><div><h4>Likuiditas Bersih AS vs Neraca Fed</h4><p id="lq-net-sub">Harian · $ triliun</p></div></div><span class="lq-live"><i></i><span id="lq-net-src">HARIAN · FRED</span></span></div>
+        <div class="lq-kp">
+            <div class="lq-chip" style="--c:#22d3ee"><span>Likuiditas Bersih</span><b id="lq-net-v">--</b><em id="lq-net-d">--</em></div>
+            <div class="lq-chip" style="--c:#60a5fa"><span>Neraca Fed</span><b id="lq-fed-v">--</b><em id="lq-fed-d">--</em></div>
+            <div class="lq-chip" style="--c:#fbbf24"><span>TGA</span><b id="lq-tga-v">--</b><em>Kas Treasury</em></div>
+            <div class="lq-chip" style="--c:#a78bfa"><span>RRP</span><b id="lq-rrp-v">--</b><em>Reverse Repo</em></div>
+        </div>
+        <div class="lq-cv"><canvas id="mlc-ch-net" aria-label="Grafik likuiditas bersih AS dibanding neraca Fed"></canvas></div>
+        <div class="lq-ft"><span>Neraca Fed = Likuiditas Bersih + TGA + RRP</span></div>
+    </div>
+    <div class="mlc-panel lq-panel">
+        <div class="lq-hd"><div class="lq-ttl"><span class="lq-ic" style="--c:#d6b277"><i class="fa-solid fa-chart-bar"></i></span><div><h4>Kontribusi per Komponen</h4><p>Menambah (+) atau menyerap (−) likuiditas</p></div></div><span class="lq-live"><i></i>LIVE</span></div>
+        <div class="lq-kp">
+            <div class="lq-chip" style="--c:#34d399"><span>Menambah</span><b id="lq-imp-up">--</b><em>sumber likuiditas</em></div>
+            <div class="lq-chip" style="--c:#fb7185"><span>Menyerap</span><b id="lq-imp-dn">--</b><em>penyerap likuiditas</em></div>
+            <div class="lq-chip" style="--c:#94a3b8"><span>Impuls bersih</span><b id="lq-imp-net">--</b><em>skala −1 s/d +1</em></div>
+        </div>
+        <div class="lq-cv"><canvas id="mlc-ch-imp" aria-label="Grafik kontribusi tiap komponen terhadap likuiditas"></canvas></div>
+        <div class="lq-ft"><span>Garis tipis = EMA lambat tiap komponen</span></div>
+    </div>
+    <div class="mlc-panel lq-panel">
+        <div class="lq-hd"><div class="lq-ttl"><span class="lq-ic" style="--c:#fbbf24"><i class="fa-solid fa-gauge-high"></i></span><div><h4>Riwayat Skor Komposit</h4><p id="lq-sc-sub">Skor 0–100</p></div></div><span class="lq-live"><i></i><span id="lq-sc-src">HARIAN</span></span></div>
+        <div class="lq-kp">
+            <div class="lq-chip" style="--c:#fbbf24"><span>Skor saat ini</span><b id="lq-sc-v">--</b><em id="lq-sc-d">--</em></div>
+            <div class="lq-chip" style="--c:#94a3b8"><span>Rezim</span><b id="lq-sc-r">--</b><em>batas 38 / 62</em></div>
+            <div class="lq-chip" style="--c:#94a3b8"><span>EMA8</span><b id="lq-sc-e">--</b><em>tren jangka pendek</em></div>
+            <div class="lq-chip" style="--c:#94a3b8"><span>Rata-rata</span><b id="lq-sc-a">--</b><em>seluruh periode</em></div>
+        </div>
+        <div class="lq-cv"><canvas id="mlc-ch-sc" aria-label="Grafik riwayat skor komposit likuiditas"></canvas></div>
+        <div class="lq-ft"><span><i style="background:#34d399"></i>Ekspansif <b id="lq-sc-E">--</b></span><span><i style="background:#fbbf24"></i>Netral <b id="lq-sc-A">--</b></span><span><i style="background:#fb7185"></i>Ketat <b id="lq-sc-K">--</b></span><span>Garis putus = batas rezim</span></div>
+    </div>
                     </div>
                     <div class="gm1-bottom">
                     <div class="mlc-panel"><div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-link text-brand-accent"></i> Korelasi 30H dg Likuiditas Bersih</div><div id="mlc-corr"></div></div>
@@ -10465,7 +10494,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   var st = { iv: 2000, paused: false, f: 'all', q: '', sk: 'i', sd: 1, score: 50, shown: 50, reg: '' };
   var alerts = [], H = { t: [], net: [], fed: [], sc: [], rrp: [], tga: [] }, CH = {};
   window.__MLC = { C: C, H: H };
-  function step(c) { if (window.__MLC_DAILY && c.id !== 'stb') { c.p = c.x; c.x = c.b; return; } c.p = c.x; c.x = c.x + (c.b - c.x) * .05 + rnd(-1, 1) * c.b * c.r; }
+  function step(c) { if ((window.__MLC_TXT && window.__MLC_TXT.on) || (window.__MLC_DAILY && c.id !== 'stb')) { c.p = c.x; c.x = c.b; return; } c.p = c.x; c.x = c.x + (c.b - c.x) * .05 + rnd(-1, 1) * c.b * c.r; }
   C.forEach(function (c, i) { c.i = i; c.k = 0; c.dp = 0; c.x = c.b * (1 + rnd(-c.r, c.r) * 2); c.h = []; for (var j = 0; j < 40; j++) { step(c); c.h.push(c.x); } c.o = c.x; });
   var G = function (id) { return C.filter(function (c) { return c.id === id; })[0]; };
   function fm(c, v) {
@@ -10512,6 +10541,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     el.innerHTML = alerts.map(function (a) { return '<div class="mlc-row"><span style="color:' + a.c + '">●</span><span class="text-gray-500 font-mono">' + a.t + '</span><span class="text-gray-200">' + a.x + '</span></div>'; }).join('');
   }
   var CORR = [['Bitcoin (BTC)', .72], ['S&P 500', .61], ['Emas', .38], ['DXY', -.55]].map(function (q) { return { n: q[0], b: q[1], v: q[1] }; });
+  window.__MLC.CORR = CORR;
   function corrRender() {
     var el = $('mlc-corr'); if (!el) return;
     el.innerHTML = CORR.map(function (q) {
@@ -10608,7 +10638,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   function mkCharts() {
     if (CH.made) return; var K = window.__proKit; if (!K) return; CH.made = true;
     var T = K.T, Tw = K.Tw, tag = K.tag, tip = K.tip, hline = K.hline, vline = K.vline, hgrid = K.hgrid, dot = K.dot, tri = K.tri, sma = K.sma, ema = K.ema, lerp = K.lerp, TAU = 6.2832;
-    ['mlc-ch-net', 'mlc-ch-imp', 'mlc-ch-sc'].forEach(function (id) { var cv = $(id); if (!cv) return; cv.style.cssText = 'display:block;width:100%;height:100%'; cv.parentNode.style.height = '300px'; });
+    ['mlc-ch-net', 'mlc-ch-imp', 'mlc-ch-sc'].forEach(function (id) { var cv = $(id); if (!cv) return; cv.style.cssText = 'display:block;width:100%;height:100%'; });
     var cap = function (s, n) { return s.length > n ? s.slice(0, n - 1) + '…' : s; };
     /* ---- Helper desain grafik profesional (lokal) ---- */
     var MONO = 'ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
@@ -10636,135 +10666,168 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     function xAxis(c, X, n, L, R, y0, y1, P, TL) {
       for (var i = n - 1; i >= 0; i -= 10) { var x = X(i); if (x < L + 14) continue; c.save(); c.strokeStyle = P.gr; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(x) + .5, y0); c.lineTo(Math.round(x) + .5, y0 + 3); c.stroke(); c.restore(); K.T(c, (TL || H.t)[i], x, y1, P.mu, 'center', 8); }
     }
-    /* === 1. LIKUIDITAS BERSIH vs NERACA FED — AREA BERTUMPUK harian: Bersih + TGA + RRP = Neraca Fed, panel Δ harian === */
+    /* === Desain modern: judul, KPI & legenda di HTML (responsif); canvas bersih, skala font mengikuti lebar === */
+    var SANS = 'Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif';
+    var TX = function (c, t, x, y, col, al, sz, wt, mono) { c.font = (wt || 500) + ' ' + sz + 'px ' + (mono ? MONO : SANS); c.fillStyle = col; c.textAlign = al || 'left'; c.textBaseline = 'middle'; c.fillText(t, x, y); };
+    var setT = function (id, txt, col) { var e = $(id); if (!e) return; if (e._v !== txt) { e.textContent = txt; e._v = txt; } if (col && e._c !== col) { e.style.color = col; e._c = col; } };
+    var setBg = function (id, col) { var e = $(id); if (!e || e._b === col) return; e._b = col; e.style.background = ra(col, .12); e.style.borderColor = ra(col, .35); e.style.color = col; };
+    var smooth = function (c, pts, move) {
+      if (move === false) c.lineTo(pts[0][0], pts[0][1]); else c.moveTo(pts[0][0], pts[0][1]);
+      for (var i = 1; i < pts.length - 1; i++) c.quadraticCurveTo(pts[i][0], pts[i][1], (pts[i][0] + pts[i + 1][0]) / 2, (pts[i][1] + pts[i + 1][1]) / 2);
+      var l = pts[pts.length - 1]; c.lineTo(l[0], l[1]);
+    };
+    var tcard = function (c, w, x, y0, title, rows, P, u) {
+      var fs = Math.round(9.5 * u * 10) / 10, rh = Math.round(16 * u), bw = 0;
+      c.font = '700 ' + fs + 'px ' + SANS; bw = c.measureText(title).width;
+      rows.forEach(function (r) { c.font = '500 ' + fs + 'px ' + SANS; var lw = c.measureText(r[0]).width; c.font = '600 ' + fs + 'px ' + MONO; bw = Math.max(bw, lw + c.measureText(r[1]).width + 30); });
+      bw += 24; var bh = rh * rows.length + Math.round(30 * u), bx = x + 14 + bw > w - 2 ? x - 14 - bw : x + 14; bx = Math.max(2, bx);
+      c.save(); c.shadowColor = 'rgba(0,0,0,' + (P.l ? .14 : .5) + ')'; c.shadowBlur = 16; c.shadowOffsetY = 4; rr(c, bx, y0, bw, bh, 10); c.fillStyle = P.l ? 'rgba(255,255,255,.97)' : 'rgba(12,14,20,.96)'; c.fill(); c.restore();
+      rr(c, bx + .5, y0 + .5, bw - 1, bh - 1, 10); c.strokeStyle = P.l ? '#e2e8f0' : 'rgba(148,163,184,.22)'; c.lineWidth = 1; c.stroke();
+      TX(c, title, bx + 12, y0 + Math.round(14 * u), P.tx, 'left', fs, 700);
+      rows.forEach(function (r, i) { var y = y0 + Math.round(32 * u) + i * rh; c.beginPath(); c.arc(bx + 15, y, 3, 0, TAU); c.fillStyle = r[2]; c.fill(); TX(c, r[0], bx + 24, y, P.mu, 'left', fs, 500); TX(c, r[1], bx + bw - 12, y, P.tx, 'right', fs, 600, true); });
+    };
+    var ptag = function (c, t, x, y, col, P, u) { var fs = Math.round(9 * u * 10) / 10; c.font = '700 ' + fs + 'px ' + MONO; var tw = c.measureText(t).width + 10, hh = Math.round(16 * u); rr(c, x, y - hh / 2, tw, hh, hh / 2); c.fillStyle = col; c.fill(); TX(c, t, x + tw / 2, y, P.l ? '#fff' : '#06121c', 'center', fs, 700, true); };
+    var xlab = function (c, X, n, L, R, y, lab, P, u) {
+      var fs = Math.round(8.5 * u * 10) / 10, step = Math.max(1, Math.ceil(n / Math.max(2, Math.floor((R - L) / (62 * u)))));
+      for (var i = n - 1; i >= 0; i -= step) { var x = X(i); if (x < L + 18) continue; TX(c, lab[i], Math.min(x, R - 8), y, P.mu, 'center', fs, 500); }
+    };
+    /* === 1. LIKUIDITAS BERSIH vs NERACA FED — area bertumpuk halus: Bersih + TGA + RRP = Neraca Fed, panel Δ harian === */
     K.host('mlc-ch-net', function (c, w, h, now, s, P) {
       var MM = window.__MLC || {}, Dd = (MM.D && MM.D.t && MM.D.t.length >= 10) ? MM.D : H, daily = Dd !== H;
       var net = Dd.net, fed = Dd.fed, rrp = Dd.rrp || [], tga = Dd.tga || [], lab = Dd.t, n = net.length; if (n < 3) return;
+      var u = clamp(w / 360, .88, 1.18), f2 = Math.round(8.5 * u * 10) / 10;
       var cF = P.l ? '#2563EB' : '#60A5FA', cN = P.l ? '#0891B2' : '#22D3EE', cT = P.l ? '#d97706' : '#FBBF24', cR = P.l ? '#7c3aed' : '#A78BFA';
-      var L = 10, R = w - 44, a = 38, b = Math.round(h * .66), m0 = b + 22, m1 = h - 22, slot = (R - L) / (n - 1), i, mn = 1e9, mx = -1e9;
+      var L = 4, R = w - Math.round(46 * u), a = 10, b = Math.round(h * .67), m0 = b + Math.round(22 * u), m1 = h - Math.round(24 * u), slot = (R - L) / (n - 1), i, mn = 1e9, mx = -1e9;
       var X = function (k) { return L + k * slot; };
       for (i = 0; i < n; i++) { mn = Math.min(mn, net[i]); mx = Math.max(mx, fed[i]); }
-      var pd = (mx - mn) * .12 + .004, rg = K.lerp(s, 'r', mn - pd, mx + pd, .12); mn = rg.mn; mx = rg.mx;
+      var pd = (mx - mn) * .1 + .004, rg = K.lerp(s, 'r', mn - pd, mx + pd, .12); mn = rg.mn; mx = rg.mx;
       var Y = function (v) { return b - (v - mn) / (mx - mn) * (b - a); };
-      var cn = net[n - 1], cf = fed[n - 1], dr = cf - cn, d0 = cn - net[0], dp = d0 / net[0] * 100, d1 = cn - net[n - 2];
-      /* legenda 2 baris + penanda mode */
-      var lx = legend(c, L, 9, cN, 'bold', 'LIKUIDITAS BERSIH', fx(cn, 3) + 'T', cN, P);
-      K.T(c, (d1 >= 0 ? '▲ +' : '▼ ') + d1.toFixed(3) + 'T ' + (daily ? '1H' : 'tick') + '  ·  ' + (d0 >= 0 ? '+' : '') + dp.toFixed(2) + '%', R + 40, 9, d1 >= 0 ? P.up : P.dn, 'right', 8, 700);
-      lx = legend(c, L, 22, cF, 'line', 'NERACA FED', fx(cf, 3) + 'T', cF, P);
-      lx = legend(c, lx, 22, cT, 'box', 'TGA', fx(tga[n - 1] || 0, 3), cT, P);
-      legend(c, lx, 22, cR, 'box', 'RRP', fx(rrp[n - 1] || 0, 3), cR, P);
-      K.T(c, daily ? 'HARIAN · FRED' : 'LIVE', R + 40, 22, daily ? P.up : cT, 'right', 8, 700);
-      /* area plot */
-      rr(c, L, a, R - L, b - a, 4); c.fillStyle = P.bg; c.fill();
-      K.hgrid(c, L, R, a, b, mn, mx, P, 2, 4);
-      c.save(); rr(c, L, a, R - L, b - a, 4); c.clip();
-      /* pita bertumpuk: TGA di atas Bersih, RRP di atas TGA (puncak = Neraca Fed) */
-      var band = function (lo, hi, col) { c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(hi(i))) : c.moveTo(X(i), Y(hi(i))); for (i = n - 1; i >= 0; i--) c.lineTo(X(i), Y(lo(i))); c.closePath(); c.fillStyle = col; c.fill(); };
-      band(function (k) { return net[k] + (tga[k] || 0); }, function (k) { return fed[k]; }, ra(cR, P.l ? .30 : .42));
-      band(function (k) { return net[k]; }, function (k) { return net[k] + (tga[k] || 0); }, ra(cT, P.l ? .30 : .38));
-      var g = c.createLinearGradient(0, a, 0, b); g.addColorStop(0, ra(cN, P.l ? .34 : .42)); g.addColorStop(1, ra(cN, .04));
-      c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(net[i])) : c.moveTo(X(i), Y(net[i])); c.lineTo(X(n - 1), b); c.lineTo(X(0), b); c.closePath(); c.fillStyle = g; c.fill();
-      /* garis Fed (puncak tumpukan) */
-      c.lineWidth = 1.5; c.strokeStyle = cF; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(fed[i])) : c.moveTo(X(i), Y(fed[i])); c.stroke();
-      /* garis Net */
-      c.shadowColor = cN; c.shadowBlur = P.l ? 0 : 7; c.lineWidth = 2.2; c.lineCap = 'round'; c.lineJoin = 'round'; c.strokeStyle = cN; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(net[i])) : c.moveTo(X(i), Y(net[i])); c.stroke(); c.shadowBlur = 0;
+      var cn = net[n - 1], cf = fed[n - 1], d0 = cn - net[0], dp = d0 / net[0] * 100, d1 = cn - net[n - 2], ct = tga[n - 1] || 0, cr = rrp[n - 1] || 0;
+      /* sinkron ke header HTML */
+      setT('lq-net-v', '$' + fx(cn, 3) + 'T', cN); setT('lq-net-d', (d1 >= 0 ? '▲ +' : '▼ ') + d1.toFixed(3) + 'T ' + ((window.__MLC_TXT && window.__MLC_TXT.on) ? window.__MLC_TXT.unit : daily ? '1H' : 'tick'), d1 >= 0 ? P.up : P.dn);
+      setT('lq-fed-v', '$' + fx(cf, 3) + 'T', cF); setT('lq-fed-d', (dp >= 0 ? '+' : '') + dp.toFixed(2) + '% periode', dp >= 0 ? P.up : P.dn);
+      setT('lq-tga-v', '$' + fx(ct, 3) + 'T', cT); setT('lq-rrp-v', '$' + fx(cr, 3) + 'T', cR);
+      setT('lq-net-sub', ((window.__MLC_TXT && window.__MLC_TXT.on) ? (window.__MLC_TXT.unit === '1H' ? 'Harian · TXT · $ triliun · ' : 'Real time · TXT · $ triliun · ') : daily ? 'Harian · $ triliun · ' : 'Live · $ triliun · ') + lab[0] + ' – ' + lab[n - 1]); setT('lq-net-src', (window.__MLC_TXT && window.__MLC_TXT.on) ? 'TXT · REAL TIME' : daily ? 'HARIAN · FRED' : 'LIVE');
+      /* grid halus + label sumbu kanan */
+      c.save(); c.setLineDash([2, 5]); c.lineWidth = 1; c.strokeStyle = P.gr;
+      for (var g = 0; g <= 3; g++) { var gv = mn + (mx - mn) * g / 3, gy = Math.round(Y(gv)) + .5; c.beginPath(); c.moveTo(L, gy); c.lineTo(R, gy); c.stroke(); TX(c, gv.toFixed(2), R + 7, gy, P.mu, 'left', f2, 500, true); }
       c.restore();
-      /* garis nilai terakhir + tag sumbu kanan */
-      [[cn, cN], [cf, cF]].forEach(function (z) { K.hline(c, X(n - 1), R, Y(z[0]), ra(z[1], .7), [3, 3]); });
-      var yn = Y(cn), yf = Y(cf); if (yn - yf < 14) yn = yf + 14;
-      K.dot(c, X(n - 1), Y(cn), cN, now); axisTag(c, cn.toFixed(2), R + 2, yn, cN, P); axisTag(c, cf.toFixed(2), R + 2, yf, cF, P);
-      /* panel Δ harian likuiditas bersih (batang naik/turun dari garis nol) */
-      K.T(c, daily ? 'Δ HARIAN LIKUIDITAS BERSIH ($T)' : 'Δ PER TICK LIKUIDITAS BERSIH ($T)', L + 1, m0 - 7, P.mu, 'left', 7, 700);
+      var pN = [], pF = [], pNT = [];
+      for (i = 0; i < n; i++) { pN.push([X(i), Y(net[i])]); pF.push([X(i), Y(fed[i])]); pNT.push([X(i), Y(net[i] + (tga[i] || 0))]); }
+      c.save(); rr(c, L, a - 4, R - L, b - a + 8, 8); c.clip();
+      var band = function (top, bot, col) { c.beginPath(); smooth(c, top); smooth(c, bot.slice().reverse(), false); c.closePath(); c.fillStyle = col; c.fill(); };
+      band(pF, pNT, ra(cR, P.l ? .20 : .26)); band(pNT, pN, ra(cT, P.l ? .20 : .24));
+      var gr = c.createLinearGradient(0, a, 0, b); gr.addColorStop(0, ra(cN, P.l ? .30 : .38)); gr.addColorStop(1, ra(cN, .02));
+      c.beginPath(); smooth(c, pN); c.lineTo(X(n - 1), b + 6); c.lineTo(X(0), b + 6); c.closePath(); c.fillStyle = gr; c.fill();
+      c.lineCap = 'round'; c.lineJoin = 'round';
+      c.lineWidth = 1.5; c.strokeStyle = cF; c.beginPath(); smooth(c, pF); c.stroke();
+      c.lineWidth = 2.4; c.strokeStyle = cN; c.beginPath(); smooth(c, pN); c.stroke();
+      c.restore();
+      /* nilai terakhir */
+      var xe = X(n - 1), yn = Y(cn), yf = Y(cf), gap = Math.round(17 * u); if (yn - yf < gap) yn = yf + gap;
+      c.beginPath(); c.arc(xe, Y(cn), 4.2, 0, TAU); c.fillStyle = cN; c.fill(); c.lineWidth = 2; c.strokeStyle = P.l ? '#fff' : '#0b1220'; c.stroke();
+      c.beginPath(); c.arc(xe, Y(cn), 4.2 + 3 * ((now / 900) % 1), 0, TAU); c.strokeStyle = ra(cN, .4 * (1 - (now / 900) % 1)); c.lineWidth = 1.2; c.stroke();
+      ptag(c, cn.toFixed(2), R + 5, yn, cN, P, u); ptag(c, cf.toFixed(2), R + 5, yf, cF, P, u);
+      /* panel Δ harian */
+      TX(c, daily ? 'Δ HARIAN LIKUIDITAS BERSIH' : 'Δ PER TICK LIKUIDITAS BERSIH', L + 2, m0 - Math.round(9 * u), P.mu, 'left', f2 - .5, 700);
       var dl = [], dm = .001; for (i = 0; i < n; i++) { dl.push(i ? net[i] - net[i - 1] : 0); dm = Math.max(dm, Math.abs(dl[i])); } dm *= 1.15;
-      var zy = (m0 + m1) / 2, hh = (m1 - m0) / 2, bw = Math.max(1.6, slot * .66);
-      K.hline(c, L, R, zy, P.gr);
-      for (i = 1; i < n; i++) { var vh = Math.abs(dl[i]) / dm * hh; c.fillStyle = ra(dl[i] >= 0 ? (P.l ? '#059669' : '#34D399') : (P.l ? '#e11d48' : '#FB7185'), .85); c.fillRect(X(i) - bw / 2, dl[i] >= 0 ? zy - vh : zy, bw, Math.max(.6, vh)); }
-      xAxis(c, X, n, L, R, m1, h - 7, P, lab);
+      var zy = (m0 + m1) / 2, hh = (m1 - m0) / 2, bw = Math.max(1.6, Math.min(slot * .62, 9));
+      c.fillStyle = P.gr; c.fillRect(L, Math.round(zy), R - L, 1);
+      for (i = 1; i < n; i++) { var vh = Math.max(1.2, Math.abs(dl[i]) / dm * hh), up = dl[i] >= 0; c.fillStyle = ra(up ? (P.l ? '#059669' : '#34D399') : (P.l ? '#e11d48' : '#FB7185'), .85); rr(c, X(i) - bw / 2, up ? zy - vh : zy, bw, vh, Math.min(2, bw / 2)); c.fill(); }
+      xlab(c, X, n, L, R, h - Math.round(8 * u), lab, P, u);
       /* crosshair */
       if (s.mx >= L && s.mx <= R) {
         var k = clamp(Math.round((s.mx - L) / slot), 0, n - 1), x = X(k), dk = net[k] - (k ? net[k - 1] : net[k]);
-        K.vline(c, x, a, m1, P);
-        if (s.my >= a && s.my <= b) { K.hline(c, L, R, s.my, P.mu, [3, 3]); axisTag(c, (mn + (b - s.my) / (b - a) * (mx - mn)).toFixed(3), R + 2, s.my, P.l ? '#334155' : '#e2e8f0', P); }
-        [[net[k], cN], [fed[k], cF]].forEach(function (z) { c.beginPath(); c.arc(x, Y(z[0]), 3.4, 0, TAU); c.fillStyle = z[1]; c.fill(); c.lineWidth = 1.5; c.strokeStyle = P.l ? '#fff' : '#0b1220'; c.stroke(); });
-        timeTag(c, lab[k], x, h - 7, w, P);
-        card(c, w, x, a + 4, lab[k], [['Neraca Fed', fx(fed[k], 3) + 'T', cF], ['Likuiditas Bersih', fx(net[k], 3) + 'T', cN], ['TGA', fx(tga[k] || 0, 3) + 'T', cT], ['RRP', fx(rrp[k] || 0, 3) + 'T', cR], [daily ? 'Δ harian' : 'Δ / tick', (dk >= 0 ? '+' : '') + dk.toFixed(4), dk >= 0 ? P.up : P.dn]], P);
+        c.save(); c.setLineDash([3, 3]); c.strokeStyle = P.mu; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(x) + .5, a); c.lineTo(Math.round(x) + .5, m1); c.stroke(); c.restore();
+        [[net[k], cN], [fed[k], cF]].forEach(function (z) { c.beginPath(); c.arc(x, Y(z[0]), 4, 0, TAU); c.fillStyle = z[1]; c.fill(); c.lineWidth = 2; c.strokeStyle = P.l ? '#fff' : '#0b1220'; c.stroke(); });
+        tcard(c, w, x, a + 2, lab[k], [['Neraca Fed', fx(fed[k], 3) + 'T', cF], ['Likuiditas Bersih', fx(net[k], 3) + 'T', cN], ['TGA', fx(tga[k] || 0, 3) + 'T', cT], ['RRP', fx(rrp[k] || 0, 3) + 'T', cR], [daily ? 'Δ harian' : 'Δ / tick', (dk >= 0 ? '+' : '') + dk.toFixed(4), dk >= 0 ? P.up : P.dn]], P, u);
       }
     });
-    /* === 2. Kontribusi per komponen: bar diverging beranimasi, diurutkan live, penanda EMA lambat, total impuls === */
+    /* === 2. KONTRIBUSI PER KOMPONEN — bar diverging berujung bulat, diurutkan live, penanda EMA lambat, total impuls === */
     var cs = {};
     K.host('mlc-ch-imp', function (c, w, h, now, s, P) {
+      var u = clamp(w / 360, .88, 1.18), f1 = Math.round(10 * u * 10) / 10, f2 = Math.round(8.5 * u * 10) / 10;
       var rows = C.map(function (x) { var v = clamp(x.k, -1, 1), q = cs[x.id] || (cs[x.id] = { v: v, g: v, y: -1 }); q.v += (v - q.v) * .14; q.g += (v - q.g) * .02; return { x: x, q: q }; }).sort(function (p, q) { return q.q.v - p.q.v; });
-      var LN = Math.min(118, w * .36), zl = LN + 4, zr = w - 46, zx = (zl + zr) / 2, half = (zr - zl) / 2, top = 26, bot = h - 30, rh = (bot - top) / rows.length, i, pos = 0, neg = 0;
-      T(c, '◄ MENYERAP', zx - 6, 8, P.dn, 'right', 8, 700); T(c, 'MENAMBAH ►', zx + 6, 8, P.up, 'left', 8, 700);
-      [-1, -.5, 0, .5, 1].forEach(function (g) { var x = zx + g * half; c.save(); c.strokeStyle = g === 0 ? P.mu : P.gr; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(x) + .5, top - 4); c.lineTo(Math.round(x) + .5, bot + 2); c.stroke(); c.restore(); T(c, (g > 0 ? '+' : '') + g, x, bot + 9, P.mu, 'center', 7); });
+      var LN = Math.min(Math.round(128 * u), w * .4), zl = LN + 10, zr = w - Math.round(46 * u), zx = (zl + zr) / 2, half = (zr - zl) / 2;
+      var top = Math.round(26 * u), bot = h - Math.round(44 * u), rh = (bot - top) / rows.length, pos = 0, neg = 0, nS = 0, nK = 0;
+      TX(c, '◄ MENYERAP', zx - 6, Math.round(9 * u), P.dn, 'right', f2, 700); TX(c, 'MENAMBAH ►', zx + 6, Math.round(9 * u), P.up, 'left', f2, 700);
+      c.save(); c.lineWidth = 1;
+      [-1, -.5, 0, .5, 1].forEach(function (g) { var x = Math.round(zx + g * half) + .5; c.strokeStyle = g === 0 ? P.mu : P.gr; c.setLineDash(g === 0 ? [] : [2, 4]); c.globalAlpha = g === 0 ? .55 : 1; c.beginPath(); c.moveTo(x, top - 6); c.lineTo(x, bot + 2); c.stroke(); });
+      c.restore();
+      [-1, 0, 1].forEach(function (g) { TX(c, (g > 0 ? '+' : '') + g, zx + g * half, bot + Math.round(10 * u), P.mu, 'center', f2, 500, true); });
       var hy = -1; if (s.my >= top && s.my < bot && s.mx >= 0) hy = Math.floor((s.my - top) / rh);
       rows.forEach(function (r, k) {
         var x = r.x, q = r.q, ty = top + k * rh, y; if (q.y < 0) q.y = ty; q.y += (ty - q.y) * .2; y = q.y;
-        var col = q.v > .02 ? P.up : q.v < -.02 ? P.dn : P.mu, bh = Math.max(6, rh - 6), bx = zx, bwid = q.v * half;
-        if (k === hy) { c.fillStyle = 'rgba(56,189,248,.09)'; c.fillRect(0, y, w, rh); }
-        c.fillStyle = x.e > 0 ? P.up : P.dn; c.fillRect(2, y + rh / 2 - 3, 3, 6); T(c, cap(x.n.replace(/ \(.*\)/, ''), Math.floor((LN - 10) / 4.9)), 9, y + rh / 2, P.tx, 'left', 8, 600);
-        var gr = c.createLinearGradient(bx, 0, bx + bwid, 0); gr.addColorStop(0, col + '33'); gr.addColorStop(1, col);
-        c.shadowColor = col; c.shadowBlur = P.l ? 0 : 5; c.fillStyle = gr; c.fillRect(Math.min(bx, bx + bwid), y + (rh - bh) / 2, Math.max(1.5, Math.abs(bwid)), bh); c.shadowBlur = 0;
-        var gx = zx + q.g * half; c.fillStyle = P.tx; c.globalAlpha = .55; c.fillRect(gx - .5, y + (rh - bh) / 2 - 2, 1.5, bh + 4); c.globalAlpha = 1;
-        T(c, (q.v > 0 ? '+' : '') + q.v.toFixed(2), w - 3, y + rh / 2, col, 'right', 8, 700);
+        var col = q.v > .02 ? P.up : q.v < -.02 ? P.dn : P.mu, bh = Math.min(Math.round(14 * u), Math.max(5, rh - 9)), by = y + (rh - bh) / 2, bwid = q.v * half, cy = y + rh / 2;
+        if (k === hy) { rr(c, 2, y + 1, w - 4, rh - 2, 8); c.fillStyle = P.l ? 'rgba(15,23,42,.05)' : 'rgba(148,163,184,.10)'; c.fill(); }
+        else if (k > 0) { c.fillStyle = P.gr; c.fillRect(6, Math.round(y), w - 12, 1); }
+        c.beginPath(); c.arc(9, cy, 3, 0, TAU); c.fillStyle = x.e > 0 ? P.up : P.dn; c.fill();
+        TX(c, cap(x.n.replace(/ \(.*\)/, ''), Math.max(6, Math.floor((LN - 18) / (f1 * .56)))), 19, cy, P.tx, 'left', f1, 600);
+        var wd = Math.max(3, Math.abs(bwid)), bx0 = bwid >= 0 ? zx : zx - wd, gr = c.createLinearGradient(bx0, 0, bx0 + wd, 0);
+        if (bwid >= 0) { gr.addColorStop(0, ra(col, .35)); gr.addColorStop(1, col); } else { gr.addColorStop(0, col); gr.addColorStop(1, ra(col, .35)); }
+        rr(c, bx0, by, wd, bh, Math.min(bh / 2, wd / 2)); c.fillStyle = gr; c.fill();
+        var gx = zx + q.g * half; c.globalAlpha = .55; rr(c, gx - 1, by - 3, 2, bh + 6, 1); c.fillStyle = P.tx; c.fill(); c.globalAlpha = 1;
+        TX(c, (q.v > 0 ? '+' : '') + q.v.toFixed(2), w - 4, cy, col, 'right', f1, 700, true);
         if (q.v > 0) pos += q.v; else neg -= q.v;
-        if (k === hy) tip(c, w, Math.min(zx, w - 120), [[x.n, P.tx], [x.s, P.mu], [(x.e > 0 ? 'Sumber likuiditas' : 'Penyerap likuiditas') + ' · ' + (q.v > 0 ? '+' : '') + q.v.toFixed(2), col]], P);
+        if (q.v > .02) nS++; else if (q.v < -.02) nK++;
+        if (k === hy) tcard(c, w, Math.min(zx, w - 150), Math.min(y + rh + 4, h - 70), cap(x.n, 30), [[x.e > 0 ? 'Sumber likuiditas' : 'Penyerap likuiditas', (q.v > 0 ? '+' : '') + q.v.toFixed(2), col], ['Sumber data', cap(x.s, 18), P.mu]], P, u);
       });
-      var tot = pos - neg, sh = pos + neg > 0 ? pos / (pos + neg) : .5, by = h - 11, bl = LN, bw2 = zr - bl;
-      T(c, 'IMPULS BERSIH', 2, by, P.mu, 'left', 8, 700); c.fillStyle = P.dn; c.fillRect(bl + 20, by - 3, bw2 - 20, 6); c.fillStyle = P.up; c.fillRect(bl + 20, by - 3, (bw2 - 20) * sh, 6);
-      T(c, (tot >= 0 ? '+' : '') + tot.toFixed(2), w - 3, by, tot >= 0 ? P.up : P.dn, 'right', 9, 700);
+      var tot = pos - neg, sh = pos + neg > 0 ? pos / (pos + neg) : .5, by2 = h - Math.round(14 * u), bh2 = Math.round(7 * u);
+      TX(c, 'IMPULS BERSIH', 4, by2, P.mu, 'left', f2, 700);
+      rr(c, zl, by2 - bh2 / 2, zr - zl, bh2, bh2 / 2); c.fillStyle = ra(P.dn, .85); c.fill();
+      if (sh > 0) { rr(c, zl, by2 - bh2 / 2, Math.max(bh2, (zr - zl) * sh), bh2, bh2 / 2); c.fillStyle = P.up; c.fill(); }
+      TX(c, (tot >= 0 ? '+' : '') + tot.toFixed(2), w - 4, by2, tot >= 0 ? P.up : P.dn, 'right', f1 + 1, 700, true);
+      setT('lq-imp-up', nS + ' komponen', P.up); setT('lq-imp-dn', nK + ' komponen', P.dn); setT('lq-imp-net', (tot >= 0 ? '+' : '') + tot.toFixed(2), tot >= 0 ? P.up : P.dn);
     });
-    /* === 3. RIWAYAT SKOR KOMPOSIT — pita rezim, garis berwarna per rezim, batas putus-putus, strip rezim & distribusi === */
+    /* === 3. RIWAYAT SKOR KOMPOSIT — pita rezim lembut, garis halus berwarna per rezim, penanda lintas batas, strip rezim === */
     K.host('mlc-ch-sc', function (c, w, h, now, s, P) {
       var sc = H.sc.slice(), lt = H.t.slice(), lv = (window.__MLC_DAILY && isFinite(window.__MLC_DAILY.live)) ? window.__MLC_DAILY.live : null;
       var n = sc.length; if (n < 3) return;
+      var u = clamp(w / 360, .88, 1.18), f2 = Math.round(8.5 * u * 10) / 10;
       var cE = P.up, cA = P.l ? '#d97706' : '#FBBF24', cK = P.dn;
-      var L = 10, R = w - 36, a = 44, b = h - 46, sy = b + 6, slot = (R - L) / (n - 1), i, X = function (k) { return L + k * slot; }, Y = function (v) { return b - v / 100 * (b - a); };
+      var L = 4, R = w - Math.round(30 * u), a = 8, sh = Math.round(7 * u), b = h - Math.round(42 * u), sy = b + Math.round(10 * u), slot = (R - L) / (n - 1), i, X = function (k) { return L + k * slot; }, Y = function (v) { return b - v / 100 * (b - a); };
       var rgm = function (v) { return v >= 62 ? ['EKSPANSIF', cE] : v <= 38 ? ['KETAT', cK] : ['NETRAL', cA]; };
-      var cur = sc[n - 1], rc = rgm(cur), d0 = cur - sc[0], av = sc.reduce(function (p, q) { return p + q; }, 0) / n, em = K.ema(sc, 8);
-      /* header: skor besar + pil rezim */
-      K.T(c, cur.toFixed(1), L, 13, rc[1], 'left', 15, 700); var tx = L + c.measureText(cur.toFixed(1)).width + 8;
-      c.font = '700 8px ' + MONO; var pw = c.measureText(rc[0]).width + 12; rr(c, tx, 6, pw, 15, 7.5); c.fillStyle = ra(rc[1], .16); c.fill(); c.strokeStyle = ra(rc[1], .55); c.lineWidth = 1; c.stroke(); K.T(c, rc[0], tx + pw / 2, 13.5, rc[1], 'center', 8, 700);
-      K.T(c, (d0 >= 0 ? '▲ +' : '▼ ') + d0.toFixed(1) + ' poin', R + 34, 13, d0 >= 0 ? P.up : P.dn, 'right', 8, 700);
-      var lx = legend(c, L, 31, rc[1], 'bold', 'SKOR', '', P.tx, P); lx = legend(c, lx - 4, 31, P.tx, 'dash', 'EMA8', em[n - 1].toFixed(1), P.tx, P); legend(c, lx, 31, P.mu, 'dash', 'RATA2', av.toFixed(1), P.mu, P);
+      var cur = sc[n - 1], rc = rgm(cur), d0 = cur - sc[0], av = sc.reduce(function (p, q) { return p + q; }, 0) / n, em = K.ema(sc, 8), cnt = { E: 0, A: 0, K: 0 };
+      for (i = 0; i < n; i++) { var rv0 = rgm(sc[i])[0]; rv0 === 'EKSPANSIF' ? cnt.E++ : rv0 === 'KETAT' ? cnt.K++ : cnt.A++; }
+      var pc = function (v) { return Math.round(v / n * 100) + '%'; };
+      /* sinkron ke header HTML */
+      setT('lq-sc-v', cur.toFixed(1), rc[1]); setT('lq-sc-r', rc[0], rc[1]); setBg('lq-sc-rb', rc[1]);
+      setT('lq-sc-d', (d0 >= 0 ? '▲ +' : '▼ ') + d0.toFixed(1) + ' poin', d0 >= 0 ? P.up : P.dn); setT('lq-sc-e', em[n - 1].toFixed(1)); setT('lq-sc-a', av.toFixed(1));
+      setT('lq-sc-E', pc(cnt.E), cE); setT('lq-sc-A', pc(cnt.A), cA); setT('lq-sc-K', pc(cnt.K), cK);
+      setT('lq-sc-src', (window.__MLC_TXT && window.__MLC_TXT.on) ? 'TXT · REAL TIME' : lv != null ? 'LIVE · HARIAN' : 'HARIAN'); setT('lq-sc-sub', 'Skor 0–100 · ' + lt[0] + ' – ' + lt[n - 1]);
       /* pita rezim */
-      c.save(); rr(c, L, a, R - L, b - a, 4); c.clip();
-      c.fillStyle = ra(cE, P.l ? .10 : .09); c.fillRect(L, Y(100), R - L, Y(62) - Y(100));
-      c.fillStyle = ra(cA, P.l ? .05 : .035); c.fillRect(L, Y(62), R - L, Y(38) - Y(62));
-      c.fillStyle = ra(cK, P.l ? .10 : .09); c.fillRect(L, Y(38), R - L, Y(0) - Y(38));
+      c.save(); rr(c, L, a, R - L, b - a, 8); c.clip();
+      c.fillStyle = ra(cE, P.l ? .09 : .08); c.fillRect(L, Y(100), R - L, Y(62) - Y(100));
+      c.fillStyle = ra(cA, P.l ? .04 : .03); c.fillRect(L, Y(62), R - L, Y(38) - Y(62));
+      c.fillStyle = ra(cK, P.l ? .09 : .08); c.fillRect(L, Y(38), R - L, Y(0) - Y(38));
       c.restore();
-      [0, 25, 50, 75, 100].forEach(function (v) { K.hline(c, L, R, Y(v), P.gr); K.T(c, v + '', R + 4, Y(v), P.mu, 'left', 8); });
-      K.T(c, 'EKSPANSIF', L + 5, Y(100) + 8, ra(cE, .9), 'left', 7, 700); K.T(c, 'NETRAL', L + 5, Y(50), ra(cA, .9), 'left', 7, 700); K.T(c, 'KETAT', L + 5, Y(0) - 8, ra(cK, .9), 'left', 7, 700);
-      /* garis batas rezim (putus-putus) */
-      K.hline(c, L, R, Y(62), cE, [5, 4]); K.hline(c, L, R, Y(38), cK, [5, 4]);
-      var yc0 = Y(cur); if (Math.abs(yc0 - Y(62)) > 13) axisTag(c, '62', R + 2, Y(62) - 1, cE, P); if (Math.abs(yc0 - Y(38)) > 13) axisTag(c, '38', R + 2, Y(38) + 1, cK, P);
-      /* area + garis berwarna per rezim */
-      c.save(); c.beginPath(); c.rect(L, a, R - L, b - a); c.clip();
-      var g = c.createLinearGradient(0, a, 0, b); g.addColorStop(0, ra(rc[1], .30)); g.addColorStop(1, ra(rc[1], 0));
-      c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(sc[i])) : c.moveTo(X(i), Y(sc[i])); c.lineTo(X(n - 1), b); c.lineTo(X(0), b); c.closePath(); c.fillStyle = g; c.fill();
+      c.save(); c.setLineDash([2, 5]); c.lineWidth = 1; c.strokeStyle = P.gr; [0, 25, 50, 75, 100].forEach(function (v) { var gy = Math.round(Y(v)) + .5; c.beginPath(); c.moveTo(L, gy); c.lineTo(R, gy); c.stroke(); TX(c, v + '', R + 6, Y(v), P.mu, 'left', f2, 500, true); }); c.restore();
+      TX(c, 'EKSPANSIF', L + 8, Y(100) + Math.round(10 * u), ra(cE, .85), 'left', f2 - .5, 700); TX(c, 'NETRAL', L + 8, Y(50), ra(cA, .85), 'left', f2 - .5, 700); TX(c, 'KETAT', L + 8, Y(0) - Math.round(10 * u), ra(cK, .85), 'left', f2 - .5, 700);
+      c.save(); c.setLineDash([5, 4]); c.lineWidth = 1; c.strokeStyle = ra(cE, .65); c.beginPath(); c.moveTo(L, Math.round(Y(62)) + .5); c.lineTo(R, Math.round(Y(62)) + .5); c.stroke(); c.strokeStyle = ra(cK, .65); c.beginPath(); c.moveTo(L, Math.round(Y(38)) + .5); c.lineTo(R, Math.round(Y(38)) + .5); c.stroke(); c.restore();
+      TX(c, '62', R + 6, Y(62) - 1, cE, 'left', f2, 700, true); TX(c, '38', R + 6, Y(38) + 1, cK, 'left', f2, 700, true);
+      var pts = [], ep = []; for (i = 0; i < n; i++) { pts.push([X(i), Y(sc[i])]); ep.push([X(i), Y(em[i])]); }
+      c.save(); c.beginPath(); c.rect(L, a - 4, R - L, b - a + 8); c.clip();
+      var g = c.createLinearGradient(0, a, 0, b); g.addColorStop(0, ra(rc[1], .26)); g.addColorStop(1, ra(rc[1], 0));
+      c.beginPath(); smooth(c, pts); c.lineTo(X(n - 1), b); c.lineTo(X(0), b); c.closePath(); c.fillStyle = g; c.fill();
       var o62 = clamp((Y(62) - a) / (b - a), 0, 1), o38 = clamp((Y(38) - a) / (b - a), 0, 1), gl = c.createLinearGradient(0, a, 0, b);
       gl.addColorStop(0, cE); gl.addColorStop(o62, cE); gl.addColorStop(Math.min(1, o62 + .001), cA); gl.addColorStop(o38, cA); gl.addColorStop(Math.min(1, o38 + .001), cK); gl.addColorStop(1, cK);
-      c.setLineDash([2, 3]); c.lineWidth = 1; c.strokeStyle = P.tx; c.globalAlpha = .5; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(em[i])) : c.moveTo(X(i), Y(em[i])); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
-      c.shadowColor = rc[1]; c.shadowBlur = P.l ? 0 : 7; c.lineWidth = 2.2; c.lineCap = 'round'; c.strokeStyle = gl; c.beginPath(); for (i = 0; i < n; i++) i ? c.lineTo(X(i), Y(sc[i])) : c.moveTo(X(i), Y(sc[i])); c.stroke(); c.shadowBlur = 0;
-      /* penanda lintas batas rezim */
-      for (i = 1; i < n; i++) { var p = sc[i - 1], q = sc[i], th = (p < 62) !== (q < 62) ? 62 : (p > 38) !== (q > 38) ? 38 : 0; if (th) { var f = (th - p) / (q - p), mxp = X(i - 1) + f * slot; c.beginPath(); c.arc(mxp, Y(th), 3.2, 0, TAU); c.fillStyle = P.l ? '#fff' : '#0b1220'; c.fill(); c.lineWidth = 1.5; c.strokeStyle = rgm(q)[1]; c.stroke(); } }
+      c.setLineDash([2, 4]); c.lineWidth = 1.1; c.strokeStyle = P.tx; c.globalAlpha = .45; c.beginPath(); smooth(c, ep); c.stroke(); c.setLineDash([]); c.globalAlpha = 1;
+      c.lineWidth = 2.4; c.lineCap = 'round'; c.lineJoin = 'round'; c.strokeStyle = gl; c.beginPath(); smooth(c, pts); c.stroke();
+      for (i = 1; i < n; i++) { var p = sc[i - 1], q = sc[i], th = (p < 62) !== (q < 62) ? 62 : (p > 38) !== (q > 38) ? 38 : 0; if (th) { var f = (th - p) / (q - p), mxp = X(i - 1) + f * slot; c.beginPath(); c.arc(mxp, Y(th), 3.4, 0, TAU); c.fillStyle = P.l ? '#fff' : '#0b1220'; c.fill(); c.lineWidth = 1.6; c.strokeStyle = rgm(q)[1]; c.stroke(); } }
       c.restore();
-      K.dot(c, X(n - 1), Y(cur), rc[1], now); axisTag(c, cur.toFixed(1), R + 2, clamp(Y(cur), a + 7, b - 7), rc[1], P);
+      var xe = X(n - 1), ye = Y(cur);
+      c.beginPath(); c.arc(xe, ye, 4.2, 0, TAU); c.fillStyle = rc[1]; c.fill(); c.lineWidth = 2; c.strokeStyle = P.l ? '#fff' : '#0b1220'; c.stroke();
+      c.beginPath(); c.arc(xe, ye, 4.2 + 3 * ((now / 900) % 1), 0, TAU); c.strokeStyle = ra(rc[1], .4 * (1 - (now / 900) % 1)); c.lineWidth = 1.2; c.stroke();
+      ptag(c, cur.toFixed(1), R + 3, clamp(ye, a + 9, b - 9), rc[1], P, u);
       /* strip rezim */
-      var cnt = { E: 0, A: 0, K: 0 };
-      for (i = 0; i < n; i++) { var rv = rgm(sc[i]); rv[0] === 'EKSPANSIF' ? cnt.E++ : rv[0] === 'KETAT' ? cnt.K++ : cnt.A++; c.fillStyle = ra(rv[1], .9); c.fillRect(X(i) - slot / 2 + .3, sy, slot - .6, 6); }
-      /* sumbu waktu + distribusi rezim */
-      xAxis(c, X, n, L, R, sy + 6, sy + 18, P, lt);
-      var dx = L, dy = h - 7, pc = function (v) { return Math.round(v / n * 100) + '%'; };
-      [['EKSPANSIF', cE, cnt.E], ['NETRAL', cA, cnt.A], ['KETAT', cK, cnt.K]].forEach(function (z) { dx = legend(c, dx, dy, z[1], 'box', z[0], pc(z[2]), z[1], P); });
+      for (i = 0; i < n; i++) { var rv = rgm(sc[i]); c.fillStyle = ra(rv[1], .85); rr(c, X(i) - slot / 2 + .3, sy, Math.max(1, slot - .6), sh, 1.5); c.fill(); }
+      xlab(c, X, n, L, R, sy + sh + Math.round(12 * u), lt, P, u);
       /* crosshair */
       if (s.mx >= L && s.mx <= R) {
         var k = clamp(Math.round((s.mx - L) / slot), 0, n - 1), x = X(k), r = rgm(sc[k]), dk = sc[k] - (k ? sc[k - 1] : sc[k]), nb = sc[k] >= 50 ? 62 : 38;
-        K.vline(c, x, a, sy + 6, P);
-        if (s.my >= a && s.my <= b) { K.hline(c, L, R, s.my, P.mu, [3, 3]); axisTag(c, ((b - s.my) / (b - a) * 100).toFixed(1), R + 2, s.my, P.l ? '#334155' : '#e2e8f0', P); }
-        c.beginPath(); c.arc(x, Y(sc[k]), 3.6, 0, TAU); c.fillStyle = r[1]; c.fill(); c.lineWidth = 1.5; c.strokeStyle = P.l ? '#fff' : '#0b1220'; c.stroke();
-        timeTag(c, lt[k], x, sy + 18, w, P);
-        card(c, w, x, a + 4, lt[k], [['Skor', sc[k].toFixed(1), r[1]], ['Rezim', r[0], r[1]], ['Data', (lv != null && k === n - 1) ? 'LIVE' : 'Harian', (lv != null && k === n - 1) ? P.up : P.mu], ['EMA8', em[k].toFixed(1), P.mu], ['Δ harian', (dk >= 0 ? '+' : '') + dk.toFixed(1), dk >= 0 ? P.up : P.dn], ['Jarak ke ' + nb, (sc[k] - nb >= 0 ? '+' : '') + (sc[k] - nb).toFixed(1), P.mu]], P);
+        c.save(); c.setLineDash([3, 3]); c.strokeStyle = P.mu; c.lineWidth = 1; c.beginPath(); c.moveTo(Math.round(x) + .5, a); c.lineTo(Math.round(x) + .5, sy + sh); c.stroke(); c.restore();
+        c.beginPath(); c.arc(x, Y(sc[k]), 4, 0, TAU); c.fillStyle = r[1]; c.fill(); c.lineWidth = 2; c.strokeStyle = P.l ? '#fff' : '#0b1220'; c.stroke();
+        tcard(c, w, x, a + 2, lt[k], [['Skor', sc[k].toFixed(1), r[1]], ['Rezim', r[0], r[1]], ['EMA8', em[k].toFixed(1), P.mu], ['Δ harian', (dk >= 0 ? '+' : '') + dk.toFixed(1), dk >= 0 ? P.up : P.dn], ['Jarak ke ' + nb, (sc[k] - nb >= 0 ? '+' : '') + (sc[k] - nb).toFixed(1), P.mu]], P, u);
       }
     });
   }
@@ -10772,9 +10835,11 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   /* ---------- Render & siklus otomatis ---------- */
   function render() {
     var el, nSrc = 0, nSink = 0, nNeu = 0;
+    if (window.__MLC_TXT && window.__MLC_TXT.on) window.__MLC_TXT.enforce();
     C.forEach(function (c) {
-      var dp = (c.x / c.o - 1) * 100, dead = Math.abs(c.x - c.o) / c.o < c.r * .25, imp = dead ? 0 : c.e * (c.x > c.o ? 1 : -1);
+      var dp = c.o > 0 ? (c.x / c.o - 1) * 100 : 0, dead = c.o > 0 ? Math.abs(c.x - c.o) / c.o < c.r * .25 : Math.abs(c.x - c.o) < 1e-9, imp = dead ? 0 : c.e * (c.x > c.o ? 1 : -1);
       c.dp = dp; c.k = c.e * (c.x - c.b) / (c.b * c.r * 1.85);
+      if (window.__MLC_TXT && window.__MLC_TXT.on && window.__MLC_TXT.A && window.__MLC_TXT.A.k[c.id] !== undefined) { c.k = window.__MLC_TXT.A.k[c.id]; imp = Math.abs(c.k) < .03 ? 0 : (c.k > 0 ? 1 : -1); }
       imp > 0 ? nSrc++ : imp < 0 ? nSink++ : nNeu++;
       var col = imp > 0 ? '#34d399' : imp < 0 ? '#fb7185' : '#94a3b8', v = $('mlc-v-' + c.id);
       if (v) { v.textContent = fm(c, c.x); v.classList.remove('mlc-fu', 'mlc-fd'); void v.offsetWidth; v.classList.add(c.x >= c.p ? 'mlc-fu' : 'mlc-fd'); }
@@ -10798,7 +10863,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     if ((el = $('mlc-regime-d'))) el.textContent = rg[2];
     if (st.reg && st.reg !== rg[0]) pushAlert('Rezim likuiditas berubah menjadi <b style="color:' + rg[1] + '">' + rg[0] + '</b>', rg[1]);
     st.reg = rg[0];
-    CORR.forEach(function (q) { q.v = clamp(q.v + rnd(-.025, .025) + (q.b - q.v) * .1, -.95, .95); });
+    CORR.forEach(function (q) { if (q.real) { q.v = q.b; return; } q.v = clamp(q.v + rnd(-.025, .025) + (q.b - q.v) * .1, -.95, .95); });
     corrRender();
     if ((el = $('mlc-upd'))) el.textContent = 'Update ' + clock();
     if (!window.__MLC_DAILY) { H.t.push(clock()); H.net.push(+net.toFixed(3)); H.fed.push(+fed.x.toFixed(3)); H.sc.push(+st.score.toFixed(1)); H.rrp.push(+rrp.x.toFixed(3)); H.tga.push(+tga.x.toFixed(3));
@@ -14278,6 +14343,7 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
   function nz(p){return p.catch(function(){return NaN})}
   function liveMacro(){
     var M=W.__MLC;if(!M)return;
+    if(W.__MLC_TXT&&W.__MLC_TXT.on)return Promise.resolve();
     return Promise.all([nz(fred('WALCL')),nz(fred('RRPONTSYD')),nz(fred('WTREGEN')),nz(fred('M2SL')),nz(fred('DGS10')),nz(fred('ECBASSETSW')),nz(fred('JPNASSETS')),nz(yq('EURUSD=X')),nz(yq('USDJPY=X')),nz(yq('DX-Y.NYB'))]).then(function(a){
       var V={fed:a[0]/1e6,rrp:a[1]/1e3,tga:a[2]/1e6,m2:a[3]/1e3,ust:a[4],ecb:a[5]/1e6*a[7],boj:a[6]*1e8/a[8]/1e12,dxy:a[9]};
       if(cgCoins&&cgCoins.usdt&&cgCoins.usdc)V.stb=(cgCoins.usdt.market_cap+cgCoins.usdc.market_cap)/1e9;
@@ -14289,7 +14355,7 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
     })}
   function fh(id){return get('https://fred.stlouisfed.org/graph/fredgraph.csv?id='+id+'&cosd='+new Date(Date.now()-110*864e5).toISOString().slice(0,10),1).then(function(t){
     var o=[];t.trim().split('\n').slice(1).forEach(function(l){var p=l.split(','),v=parseFloat(p[1]);if(p[0]&&isFinite(v))o.push([p[0],v])});return o})}
-  function histMacro(){var M=W.__MLC;if(!M)return;var MN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  function histMacro(){var M=W.__MLC;if(!M)return;if(W.__MLC_TXT&&W.__MLC_TXT.on)return Promise.resolve();var MN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
     return Promise.all([fh('WALCL'),fh('RRPONTSYD'),fh('WTREGEN')]).then(function(r){
       var F=r[0],R=r[1],T=r[2];if(R.length<10||!F.length||!T.length)throw 0;
       var fi=0,ti=0,fv=null,tv=null,D={t:[],fed:[],rrp:[],tga:[],net:[],iso:[]};
@@ -14398,6 +14464,7 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
   function applyMods() {
     try {
       var M = W.__MLC; if (!M || !M.C) return;
+      if (W.__MLC_TXT && W.__MLC_TXT.on) return;
       M.C.forEach(function (c) {
         var s = S[c.id]; if (!s || !BY[c.id] || BY[c.id].g !== 'Makro' && c.id !== 'dxy') return;
         var v = s.pts.map(function (p) { return p[1]; }).filter(function (x) { return isFinite(x) && x > 0; });
@@ -15350,6 +15417,7 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
   }
   function apply(d){
     var M=W.__MLC;if(!M||!d||d.net.length<12)return false;
+    if(W.__MLC_TXT&&W.__MLC_TXT.on)return true;
     var H=M.H,n=d.net.length,L=n-1,keys=['fed','rrp','tga'],i;
     W.__MLC_DAILY={score:d.sc[L],base:d.sc[L],live:null,dNet:(d.net[L]/d.net[L-1]-1)*100,iso:d.iso[L]};
     H.t.length=H.net.length=H.fed.length=H.sc.length=H.rrp.length=H.tga.length=0;
@@ -15364,6 +15432,7 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
   }
   /* Skor LIVE = skor harian (FRED) + sentimen pasar global (saham dunia vs DXY), digeser maks ±8 poin; ttiap 2 dtk */
   function liveTick(){
+    if(W.__MLC_TXT&&W.__MLC_TXT.on)return;
     var Z=W.__MLC_DAILY,G=W.__GM;if(!Z||!G||!G.items||!G.items.length)return;
     var eq=G.items.filter(function(x){return x.g==='s'}),sum=0;eq.forEach(function(x){sum+=pct(x)});
     var dxy=G.items.filter(function(x){return x.n.indexOf('DXY')>-1})[0],dx=dxy?pct(dxy):0;
@@ -20396,5 +20465,326 @@ html:not(.light) .relative.h-40[class*="bg-black"]{background:#000!important}
 .vx .al-ft i{color:#3dd6a6}
 </style>
 <style id="ba-mini-hide">html #market-mini-widgets.hidden,html body #market-mini-widgets.hidden{display:none!important}</style>
+<style id="ba-lq-modern">
+.lq-panel{display:flex!important;flex-direction:column;gap:12px;min-width:0}
+.lq-hd{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.lq-ttl{display:flex;gap:10px;align-items:center;min-width:0}
+.lq-ic{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:13px;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);border:1px solid color-mix(in srgb,var(--c) 32%,transparent)}
+.lq-ttl h4{margin:0;font:700 13.5px/1.25 Inter,system-ui,sans-serif;color:#f1f5f9;letter-spacing:-.005em}
+.lq-ttl p{margin:2px 0 0;font:500 11px/1.3 Inter,system-ui,sans-serif;color:#8b95a5}
+.lq-live{flex:none;display:inline-flex;align-items:center;gap:6px;font:700 9.5px Inter,system-ui,sans-serif;letter-spacing:.07em;padding:4px 9px;border-radius:999px;color:#34d399;background:rgba(52,211,153,.10);border:1px solid rgba(52,211,153,.28);white-space:nowrap}
+.lq-live>i{width:6px;height:6px;border-radius:50%;background:currentColor;animation:lqp 1.8s ease-in-out infinite}
+@keyframes lqp{50%{opacity:.3}}
+.lq-kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px}
+.lq-chip{display:grid;gap:2px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(148,163,184,.14);border-left:3px solid var(--c);min-width:0}
+.lq-chip span{font:500 10px Inter,system-ui,sans-serif;color:#8b95a5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lq-chip b{font:700 13.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:#f1f5f9;white-space:nowrap}
+.lq-chip em{font:600 10px ui-monospace,SFMono-Regular,Menlo,monospace;font-style:normal;color:#8b95a5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#lq-sc-rb,#lq-sc-r{letter-spacing:.02em}
+.lq-cv{position:relative;height:clamp(240px,32vw,310px);min-height:240px;flex:1 1 auto}
+.lq-cv canvas{display:block;width:100%;height:100%;touch-action:pan-y}
+.lq-ft{display:flex;flex-wrap:wrap;gap:6px 14px;font:600 10.5px Inter,system-ui,sans-serif;color:#8b95a5;border-top:1px solid rgba(148,163,184,.14);padding-top:10px}
+.lq-ft span{display:inline-flex;align-items:center;gap:6px}
+.lq-ft i{width:8px;height:8px;border-radius:3px;display:inline-block}
+.lq-ft b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#f1f5f9}
+html.light .lq-ttl h4,html.light .lq-chip b,html.light .lq-ft b{color:#0f172a}
+html.light .lq-chip{background:#f8fafc;border-color:#e2e8f0;border-left-color:var(--c)}
+html.light .lq-ft{border-color:#e2e8f0}
+@media(max-width:480px){.lq-kp{grid-template-columns:repeat(2,minmax(0,1fr))}.lq-ttl h4{font-size:13px}}
+</style>
+<script id="ba-liq-txt">
+/* ============================================================
+   MODE DATA TXT REAL TIME — Komponen Likuiditas Makro (Global Market › Kontrol Likuiditas)
+   Membaca berkas TXT (default: liquidity.txt, satu folder dengan index.html) tiap 1/2/5 dtk
+   dan menggerakkan SEMUA panel di bagian itu dari satu sumber:
+   tabel komponen, Likuiditas Bersih vs Neraca Fed, Kontribusi per Komponen, Riwayat Skor Komposit,
+   gauge rezim, peta panas skor, korelasi, dan peringatan otomatis.
+   Bila berkas tidak ada / rusak, halaman otomatis memakai data online seperti sebelumnya.
+   ------------------------------------------------------------
+   FORMAT liquidity.txt (baris diawali # = komentar):
+     tanggal,fed,rrp,tga,ecb,boj,m2,ust,dxy,stb[,btc,spx,emas]
+     2026-11-06,6.748,0.000,0.957,6.636,4.085,23.343,5.28,101.9,257.6
+   - Kolom pertama = tanggal (YYYY-MM-DD) atau waktu (YYYY-MM-DDTHH:MM:SS) untuk data intraday.
+   - Satuan: fed/rrp/tga/ecb/boj/m2 = $ triliun · ust = % · dxy = indeks · stb = $ miliar.
+   - Kolom boleh dikurangi/diurutkan ulang selama baris header ada. Sel kosong = pakai nilai sebelumnya.
+   - Mode snapshot: cukup satu berkas berisi baris  kunci=nilai  (mis. fed=6.748), dan riwayatnya
+     dibangun otomatis di browser tiap kali nilainya berubah.
+   ============================================================ */
+(function () {
+  'use strict';
+  var W = window, D = document;
+  if (W.__MLC_TXT) return;
+  var KEY = 'ba-liq-txt', DEF = 'liquidity.txt', PAGE = 'page-global-market';
+  var E = { fed: 1, rrp: -1, tga: -1, ecb: 1, boj: 1, m2: 1, ust: -1, dxy: -1, stb: 1 };
+  var IDS = Object.keys(E), EXTRA = ['btc', 'spx', 'emas'], ALL = IDS.concat(EXTRA);
+  var ALIAS = { tanggal: 't', date: 't', waktu: 't', time: 't', timestamp: 't', ts: 't', datetime: 't',
+    walcl: 'fed', neracafed: 'fed', rrpontsyd: 'rrp', wtregen: 'tga', stablecoin: 'stb', gold: 'emas',
+    sp500: 'spx', bitcoin: 'btc', dgs10: 'ust', ust10y: 'ust', m2sl: 'm2' };
+  var MN = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+  var CMAP = { btc: 'Bitcoin (BTC)', spx: 'S&P 500', emas: 'Emas', dxy: 'DXY' };
+  var T = W.__MLC_TXT = { on: false, mode: 'txt', url: DEF, ok: false, A: null, raw: '', err: '', checked: 0, ver: 0,
+    unit: '1H', ring: [], handle: null, file: null, busy: null, shown: 0 };
+
+  var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+  var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
+  var clock = function (ms) { var d = new Date(ms); return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()); };
+  var nowLocal = function () { var d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()); };
+  var num = function (s) { var v = parseFloat(String(s).replace(/[$%]/g, '')); return isFinite(v) ? v : NaN; };
+  var isTime = function (s) { return /^\d{4}-\d{2}-\d{2}([T ]\d{1,2}:\d{2}(:\d{2})?)?(Z|[+-]\d{2}:?\d{2})?$/.test(s); };
+  var normT = function (s) { s = String(s).trim().replace(' ', 'T'); return s; };
+  var hasClock = function (s) { return s.indexOf('T') > -1; };
+  var ms = function (s) { var v = Date.parse(s); return isFinite(v) ? v : 0; };
+
+  /* ---------- Parser ---------- */
+  function split(l) {
+    var sep = /[,;\t]/.test(l), p = (sep ? l.split(/[,;\t]/) : l.split(/\s+/)).map(function (x) { return x.trim(); });
+    if (!sep && p.length > 1 && /^\d{4}-\d{2}-\d{2}$/.test(p[0]) && /^\d{1,2}:\d{2}(:\d{2})?$/.test(p[1])) p.splice(0, 2, p[0] + 'T' + p[1]);
+    return p;
+  }
+  function parse(text) {
+    var cols = ['t'].concat(IDS), rows = [], kv = null, head = false;
+    String(text).replace(/\r/g, '').split('\n').forEach(function (raw) {
+      var l = raw.replace(/(^|\s)#.*$/, '').trim();
+      if (!l || l.charAt(0) === '[') return;
+      var m = l.match(/^([A-Za-z_]\w*)\s*[=:]\s*(.+)$/);
+      if (m && !/[,;\t]/.test(m[2])) {
+        var k = m[1].toLowerCase().replace(/[^a-z0-9]/g, ''); k = ALIAS[k] || k;
+        kv = kv || { t: '', v: {} };
+        if (k === 't') kv.t = normT(m[2]); else { var v = num(m[2]); if (isFinite(v)) kv.v[k] = v; }
+        return;
+      }
+      var p = split(l);
+      if (!isTime(normT(p[0]))) {
+        if (!rows.length && !head && isNaN(num(p[0]))) {
+          cols = p.map(function (x) { x = x.toLowerCase().replace(/[^a-z0-9]/g, ''); return ALIAS[x] || x; });
+          cols[0] = 't'; head = true;
+        }
+        return;
+      }
+      var r = { t: normT(p[0]), v: {} };
+      for (var i = 1; i < p.length && i < cols.length; i++) { var x = num(p[i]); if (isFinite(x)) r.v[cols[i]] = x; }
+      rows.push(r);
+    });
+    if (kv) { kv.hasT = isTime(kv.t); if (!kv.hasT) kv.t = nowLocal(); }
+    return { rows: rows, kv: kv };
+  }
+
+  /* ---------- Statistik ---------- */
+  function sd(a) {
+    if (!a.length) return 1e-9;
+    var m = a.reduce(function (x, y) { return x + y; }, 0) / a.length;
+    return Math.sqrt(a.reduce(function (x, y) { return x + (y - m) * (y - m); }, 0) / a.length) || 1e-9;
+  }
+  function chg(a, k) { var o = []; for (var i = k; i < a.length; i++) o.push(a[i] - a[i - k]); return o; }
+  function pearson(x, y) {
+    var n = x.length, mx = x.reduce(function (p, q) { return p + q; }, 0) / n, my = y.reduce(function (p, q) { return p + q; }, 0) / n, sxy = 0, sxx = 0, syy = 0;
+    for (var i = 0; i < n; i++) { sxy += (x[i] - mx) * (y[i] - my); sxx += (x[i] - mx) * (x[i] - mx); syy += (y[i] - my) * (y[i] - my); }
+    return sxx > 0 && syy > 0 ? sxy / Math.sqrt(sxx * syy) : NaN;
+  }
+  function label(t, unit) {
+    if (unit === 'tick' && hasClock(t)) { var h = t.split('T')[1]; return h.slice(0, /:\d{2}:\d{2}/.test(h) ? 8 : 5); }
+    return t.slice(8, 10) + ' ' + MN[+t.slice(5, 7) - 1];
+  }
+
+  /* ---------- Analisis: seri → skor, kontribusi, korelasi ---------- */
+  function analyze(rows) {
+    if (!rows || rows.length < 4) return null;
+    rows = rows.slice().sort(function (a, b) { return ms(a.t) - ms(b.t); });
+    var dd = []; rows.forEach(function (r) { if (dd.length && dd[dd.length - 1].t === r.t) dd[dd.length - 1] = r; else dd.push(r); });
+    rows = dd; var n = rows.length;
+    var last = {}; rows.forEach(function (r) { r.f = {}; ALL.forEach(function (id) { if (r.v[id] != null) last[id] = r.v[id]; if (last[id] != null) r.f[id] = last[id]; }); });
+    var S = {}; ALL.forEach(function (id) {
+      var a = rows.map(function (r) { return r.f[id]; }), fk = null, i;
+      for (i = 0; i < n; i++) if (a[i] != null) { fk = a[i]; break; }
+      if (fk == null) return; S[id] = a.map(function (x) { return x == null ? fk : x; });
+    });
+    if (!S.fed) return null;
+    var zero = function () { var z = []; for (var i = 0; i < n; i++) z.push(0); return z; };
+    var fed = S.fed, rrp = S.rrp || zero(), tga = S.tga || zero();
+    var net = fed.map(function (f, i) { return f - rrp[i] - tga[i]; });
+    /* skor komposit = momentum likuiditas bersih (rumus sama dgn data harian: 20 & 5 observasi) */
+    var L1 = Math.min(20, Math.max(1, Math.floor((n - 1) / 2))), L2 = Math.min(5, Math.max(1, Math.floor(L1 / 4))), s1 = sd(chg(net, L1)), s2 = sd(chg(net, L2));
+    var sc = net.map(function (_, i) { if (i < L1) return null; return clamp(50 + 45 * Math.tanh(.6 * (net[i] - net[i - L1]) / s1 + .4 * (net[i] - net[i - L2]) / s2), 3, 97); });
+    var from = Math.max(L1, n - 90); if (n - from < 3) return null;
+    var clockRows = rows.filter(function (r) { return hasClock(r.t); }).length, span = ms(rows[n - 1].t) - ms(rows[0].t);
+    var unit = clockRows > n / 2 && span < 3 * 864e5 ? 'tick' : '1H';
+    var pick = function (a) { return a.slice(from).map(function (x) { return +x.toFixed(4); }); };
+    var iso = rows.slice(from).map(function (r) { return r.t.slice(0, 10); });
+    var A = { n: n, unit: unit, iso: iso, t: rows.slice(from).map(function (r) { return label(r.t, unit); }),
+      net: pick(net), fed: pick(fed), rrp: pick(rrp), tga: pick(tga), sc: sc.slice(from).map(function (x) { return +x.toFixed(1); }),
+      stamp: rows[n - 1].t, k: {}, cur: {}, prev: {}, hist: {}, corr: {}, has: [] };
+    A.score = A.sc[A.sc.length - 1];
+    A.dNet = net[n - 2] ? (net[n - 1] / net[n - 2] - 1) * 100 : 0;
+    /* kontribusi per komponen = arah × momentum relatif (z-score, dibatasi −1..+1) */
+    var w = Math.max(1, Math.min(5, Math.floor((n - 1) / 3)));
+    IDS.forEach(function (id) {
+      var a = S[id]; if (!a) return; A.has.push(id);
+      var mean = a.reduce(function (x, y) { return x + Math.abs(y); }, 0) / n, rel = [], i;
+      for (i = w; i < n; i++) rel.push((a[i] - a[i - w]) / Math.max(Math.abs(a[i - w]), mean * .05, 1e-9));
+      var s = sd(rel), z = rel[rel.length - 1] / s;
+      A.k[id] = rel[rel.length - 1] === 0 ? 0 : +clamp(E[id] * Math.tanh(.8 * z), -1, 1).toFixed(3);
+      A.cur[id] = a[n - 1]; A.prev[id] = a[n - 2];
+      var h = a.slice(-40); while (h.length < 40) h.unshift(h[0]); A.hist[id] = h;
+    });
+    /* korelasi 30 observasi: Δ likuiditas bersih vs perubahan % aset (hanya bila kolomnya ada di TXT) */
+    var m = Math.min(30, n - 1);
+    if (m >= 8) ['dxy', 'btc', 'spx', 'emas'].forEach(function (id) {
+      if (!S[id]) return; var x = [], y = [];
+      for (var i = n - m; i < n; i++) { x.push(net[i] - net[i - 1]); y.push(S[id][i] / S[id][i - 1] - 1); }
+      var r = pearson(x, y); if (isFinite(r)) A.corr[id] = r;
+    });
+    return A;
+  }
+  T.parse = parse; T.analyze = analyze;
+
+  /* ---------- Terapkan ke modul likuiditas (dipanggil tiap render()) ---------- */
+  function fill(dst, src) { dst.length = 0; Array.prototype.push.apply(dst, src); }
+  function enforce() {
+    var A = T.A, M = W.__MLC;
+    if (!T.on || !A || !M || !M.C) return;
+    var H = M.H;
+    if (T.applied !== T.ver) {
+      fill(H.t, A.t); fill(H.net, A.net); fill(H.fed, A.fed); fill(H.sc, A.sc); fill(H.rrp, A.rrp); fill(H.tga, A.tga);
+      M.D = { iso: A.iso.slice(), t: A.t.slice(), fed: A.fed.slice(), rrp: A.rrp.slice(), tga: A.tga.slice(), net: A.net.slice() };
+      T.applied = T.ver; T.unit = A.unit;
+      var tag = 'TXT · ' + (A.stamp.length > 10 ? A.stamp.replace('T', ' ').slice(0, 16) : A.stamp);
+      M.C.forEach(function (c) { var el = D.querySelector('#mlc-r-' + c.id + ' div.text-gray-500'); if (el && A.hist[c.id]) el.textContent = tag + ' · ' + srcName(); });
+    }
+    M.C.forEach(function (c) {
+      var id = c.id, h = A.hist[id]; if (!h) return;
+      c.b = A.cur[id]; c.o = A.prev[id]; c.h = h.slice(); c.k = A.k[id]; c.real = 1; c.s = 'TXT · ' + srcName();
+      if (!c._tx) { c.x = c.p = c.b; c._tx = 1; }
+    });
+    var Z = W.__MLC_DAILY; if (!Z || !Z.txt) Z = W.__MLC_DAILY = { txt: 1 };
+    Z.score = Z.base = A.score; Z.live = null; Z.dNet = A.dNet; Z.iso = A.stamp;
+    if (M.CORR) M.CORR.forEach(function (q) {
+      var id = null; Object.keys(CMAP).forEach(function (k) { if (CMAP[k] === q.n) id = k; });
+      if (id && A.corr[id] != null) { q.real = 1; q.b = q.v = clamp(A.corr[id], -.95, .95); } else q.real = 0;
+    });
+  }
+  function release() {
+    var M = W.__MLC; if (M && M.CORR) M.CORR.forEach(function (q) { q.real = 0; });
+  }
+  T.enforce = enforce;
+
+  /* ---------- Pemuatan & polling ---------- */
+  var srcName = function () { return T.handle ? T.handle.name : T.file ? T.file.name : (T.url || DEF).split('?')[0].split('/').pop(); };
+  function rowsFrom(P) {
+    var rows = P.rows.slice();
+    if (!P.kv) return rows;
+    if (rows.length >= 3) {
+      var lr = rows[rows.length - 1];
+      if (P.kv.hasT && ms(P.kv.t) > ms(lr.t)) rows.push({ t: P.kv.t, v: P.kv.v });
+      else Object.keys(P.kv.v).forEach(function (k) { lr.v[k] = P.kv.v[k]; });
+      return rows;
+    }
+    var key = JSON.stringify(P.kv.v), lt = T.ring[T.ring.length - 1];
+    if (!lt || JSON.stringify(lt.v) !== key) { T.ring.push({ t: P.kv.t, v: P.kv.v }); if (T.ring.length > 120) T.ring.shift(); }
+    return rows.concat(T.ring);
+  }
+  function load() {
+    if (T.busy) return T.busy;
+    var p;
+    if (T.handle) p = T.handle.getFile().then(function (f) { return f.text(); });
+    else if (T.file) p = T.file.text();
+    else { var u = T.url || DEF; p = fetch(u + (u.indexOf('?') < 0 ? '?' : '&') + '_=' + Date.now(), { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); }); }
+    T.busy = p.then(function (txt) {
+      T.checked = Date.now();
+      if (txt === T.raw && T.A) { T.err = ''; return; }
+      var A = analyze(rowsFrom(parse(txt)));
+      if (!A) throw new Error('butuh minimal 4 baris data valid');
+      T.raw = txt; T.A = A; T.ver++; T.on = true; T.err = '';
+      enforce();
+    }).catch(function (e) {
+      T.checked = Date.now(); T.err = (e && e.message) || 'gagal memuat'; if (!T.A) { T.on = false; release(); }
+    }).then(function () { T.busy = null; status(); });
+    return T.busy;
+  }
+  var ivMs = function () { var b = D.querySelector('#mlc-ivs .on'), v = b ? +b.getAttribute('data-iv') : 2000; return v >= 1000 ? v : 2000; };
+  var pageOn = function () { var p = D.getElementById(PAGE); return !D.hidden && !!p && p.classList.contains('active'); };
+  function loop() {
+    var wait = 3000;
+    try { if (T.mode === 'txt' && pageOn()) { load(); wait = T.on ? ivMs() : 10000; } } catch (e) { }
+    setTimeout(loop, wait);
+  }
+
+  /* ---------- Tampilan: tombol mode + status + panel sumber ---------- */
+  function save() { try { localStorage.setItem(KEY, JSON.stringify({ mode: T.mode, url: T.url })); } catch (e) { } }
+  function status() {
+    var el = D.getElementById('mlc-txt-st'), bs = D.querySelectorAll('#mlc-mode [data-m]');
+    Array.prototype.forEach.call(bs, function (b) { b.classList.toggle('on', b.getAttribute('data-m') === T.mode); });
+    if (!el) return;
+    var s, c, short = function (x) { return String(x).slice(0, 48); };
+    if (T.mode === 'online') { s = 'Sumber: online'; c = '#94a3b8'; }
+    else if (T.on && !T.err) { s = 'TXT · ' + srcName() + ' · ' + T.A.n + ' baris · cek ' + clock(T.checked); c = '#34d399'; }
+    else if (T.on) { s = 'TXT gagal dimuat — memakai data terakhir (' + short(T.err) + ')'; c = '#fbbf24'; }
+    else { s = 'TXT belum tersedia — memakai data online' + (T.err ? ' (' + short(T.err) + ')' : ''); c = '#fb7185'; }
+    el.textContent = s; el.style.color = c; el.title = T.err || s;
+  }
+  function template() {
+    var M = W.__MLC, ids = IDS, row = [new Date().toISOString().slice(0, 10)];
+    ids.forEach(function (id) { var c = M && M.C ? M.C.filter(function (x) { return x.id === id; })[0] : null; row.push(c ? +c.x.toFixed(c.d || 3) : ''); });
+    var tx = '# liquidity.txt — sumber data real time untuk panel Kontrol Likuiditas\n# Tambahkan 1 baris per tanggal/waktu (minimal 4 baris). Satuan: fed/rrp/tga/ecb/boj/m2 = $ triliun, ust = %, dxy = indeks, stb = $ miliar\n# Kolom opsional untuk korelasi nyata: btc, spx, emas\ntanggal,' + ids.join(',') + '\n' + row.join(',') + '\n';
+    var a = D.createElement('a'); a.href = URL.createObjectURL(new Blob([tx], { type: 'text/plain' })); a.download = 'liquidity.txt';
+    D.body.appendChild(a); a.click(); a.remove();
+  }
+  function pickFile() {
+    var done = function () { T.raw = ''; save(); load(); };
+    if (W.showOpenFilePicker) {
+      W.showOpenFilePicker({ types: [{ description: 'Berkas teks', accept: { 'text/plain': ['.txt', '.csv'] } }] }).then(function (h) { T.handle = h[0]; T.file = null; T.mode = 'txt'; done(); }).catch(function () { });
+      return;
+    }
+    var i = D.createElement('input'); i.type = 'file'; i.accept = '.txt,.csv,text/plain';
+    i.onchange = function () { if (i.files && i.files[0]) { T.file = i.files[0]; T.handle = null; T.mode = 'txt'; done(); } };
+    i.click();
+  }
+  function panel() {
+    var p = D.getElementById('mlc-txt-pop'); if (p) return p;
+    p = D.createElement('div'); p.id = 'mlc-txt-pop'; p.className = 'mlc-panel'; p.hidden = true;
+    p.style.cssText = 'position:fixed;z-index:60;width:min(92vw,400px);box-shadow:0 18px 50px -12px rgba(0,0,0,.6)';
+    p.innerHTML = '<div class="text-[11px] uppercase tracking-wider text-gray-400 font-bold mb-2"><i class="fa-solid fa-file-lines text-brand-accent"></i> Sumber data TXT</div>' +
+      '<label class="text-[11px] text-gray-400">Alamat berkas (relatif terhadap index.html atau URL penuh)</label>' +
+      '<input id="mlc-txt-url" class="mlc-in" style="width:100%;margin:4px 0 8px" type="text" autocomplete="off" spellcheck="false">' +
+      '<div class="flex flex-wrap gap-1 mb-2"><button class="liq-btn" id="mlc-txt-ok">Terapkan</button><button class="liq-btn" id="mlc-txt-file"><i class="fa-solid fa-folder-open"></i> Pilih berkas…</button><button class="liq-btn" id="mlc-txt-now"><i class="fa-solid fa-rotate"></i> Muat ulang</button><button class="liq-btn" id="mlc-txt-tpl"><i class="fa-solid fa-download"></i> Unduh template</button></div>' +
+      '<div class="text-[10px] text-gray-500 leading-relaxed">Format: baris header <b>tanggal,fed,rrp,tga,ecb,boj,m2,ust,dxy,stb</b> lalu satu baris per tanggal/waktu (min. 4 baris). Bisa juga berisi baris <b>kunci=nilai</b> (mis. fed=6.748) — riwayat dibangun otomatis. Berkas dibaca ulang sesuai interval 1/2/5 dtk. “Pilih berkas…” hanya bertahan selama halaman terbuka.</div>';
+    D.body.appendChild(p);
+    D.getElementById('mlc-txt-ok').onclick = function () { var v = D.getElementById('mlc-txt-url').value.trim() || DEF; T.url = v; T.handle = T.file = null; T.raw = ''; T.A = null; T.on = false; T.mode = 'txt'; save(); status(); load(); };
+    D.getElementById('mlc-txt-file').onclick = pickFile;
+    D.getElementById('mlc-txt-now').onclick = function () { T.raw = ''; load(); };
+    D.getElementById('mlc-txt-tpl').onclick = template;
+    D.addEventListener('click', function (e) { if (!p.hidden && !p.contains(e.target) && !(e.target.closest && e.target.closest('#mlc-txt-cfg'))) p.hidden = true; });
+    return p;
+  }
+  function ui() {
+    var iv = D.getElementById('mlc-ivs'); if (!iv) return false; if (D.getElementById('mlc-mode')) return true;
+    var g = D.createElement('div'); g.id = 'mlc-mode'; g.className = 'flex gap-1 items-center flex-wrap';
+    g.innerHTML = '<button class="liq-btn" data-m="txt" title="Baca data real time dari berkas TXT"><i class="fa-solid fa-file-lines"></i> TXT</button>' +
+      '<button class="liq-btn" data-m="online" title="Data online (FRED / Yahoo / DefiLlama)"><i class="fa-solid fa-globe"></i> Online</button>' +
+      '<button class="liq-btn" id="mlc-txt-cfg" title="Atur sumber TXT" aria-label="Atur sumber TXT"><i class="fa-solid fa-gear"></i></button>' +
+      '<span id="mlc-txt-st" class="px-3 py-1 bg-black border border-card-border rounded-lg font-mono text-gray-400" style="font-size:10px;max-width:340px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">…</span>';
+    iv.parentNode.insertBefore(g, iv);
+    Array.prototype.forEach.call(g.querySelectorAll('[data-m]'), function (b) {
+      b.onclick = function () {
+        var m = b.getAttribute('data-m'); if (m === T.mode) return;
+        T.mode = m; save(); status();
+        if (m === 'online') { T.on = false; release(); setTimeout(function () { location.reload(); }, 250); } else { T.raw = ''; load(); }
+      };
+    });
+    D.getElementById('mlc-txt-cfg').onclick = function () {
+      var p = panel(), r = this.getBoundingClientRect();
+      D.getElementById('mlc-txt-url').value = T.handle ? T.handle.name : T.file ? T.file.name : T.url;
+      p.style.top = (r.bottom + 6) + 'px'; p.style.right = Math.max(8, W.innerWidth - r.right) + 'px'; p.hidden = !p.hidden;
+    };
+    return true;
+  }
+  function start() {
+    try { var o = JSON.parse(localStorage.getItem(KEY) || 'null'); if (o) { if (o.mode === 'online' || o.mode === 'txt') T.mode = o.mode; if (o.url) T.url = o.url; } } catch (e) { }
+    ui(); status(); if (T.mode === 'txt') load(); loop();
+  }
+  function wait(n) { if (W.__MLC && D.getElementById('mlc-ivs')) return start(); if (n > 0) setTimeout(function () { wait(n - 1); }, 400); }
+  if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', function () { wait(75); }); else wait(75);
+})();
+
+</script>
 </body>
 </html>
