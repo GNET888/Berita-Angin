@@ -17656,6 +17656,36 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   setInterval(upd,1500);
 })();
 </script>
+<script id="ba-vlines-js">
+/* Garis kolom kiri & kanan beranda diteruskan dari atas halaman (melewati bar LIVE TICKS & navbar) sampai ke kolom.
+   Digambar langsung oleh skrip agar tidak tergantung lebar layar/pseudo-element yang terpotong. */
+(function(){
+  var L,R;
+  function mk(){var e=document.createElement('div');e.setAttribute('aria-hidden','true');
+    e.style.cssText='position:absolute;top:0;width:1px;height:0;z-index:45;pointer-events:none;display:none';
+    document.body.appendChild(e);return e}
+  function upd(){
+    try{
+      if(!L){L=mk();R=mk()}
+      var page=document.getElementById('page-home'),f=document.querySelector('#page-home .xp-feed');
+      if(!page||!f||!page.classList.contains('active')||window.innerWidth<640){L.style.display=R.style.display='none';return}
+      var r=f.getBoundingClientRect();
+      if(!r.width||!f.offsetParent){L.style.display=R.style.display='none';return}
+      var sx=window.pageXOffset||0,sy=window.pageYOffset||0,top=Math.round(r.top+sy);
+      if(top<=0){L.style.display=R.style.display='none';return}
+      var c=(getComputedStyle(f).getPropertyValue('--xp-line')||'').trim()||'#2f3336';
+      L.style.cssText+=';display:block;height:'+top+'px;left:'+Math.round(r.left+sx)+'px;background:'+c;
+      R.style.cssText+=';display:block;height:'+top+'px;left:'+Math.round(r.right+sx-1)+'px;background:'+c;
+    }catch(e){}
+  }
+  function go(){upd();window.addEventListener('resize',upd);window.addEventListener('load',upd);
+    try{var f=document.querySelector('#page-home .xp-feed');if(f&&window.ResizeObserver)new ResizeObserver(upd).observe(f);
+      new MutationObserver(upd).observe(document.documentElement,{attributes:true,attributeFilter:['class']});
+      var pg=document.getElementById('page-home');if(pg)new MutationObserver(upd).observe(pg,{attributes:true,attributeFilter:['class']})}catch(e){}
+    setInterval(upd,1000)}
+  if(document.body)go();else document.addEventListener('DOMContentLoaded',go);
+})();
+</script>
 <script id="ba-live-ticks-real">
 /* LIVE TICKS dari data pasar asli (tanpa angka acak):
    - Crypto: Binance (24j) -> cadangan CoinGecko   - Saham, indeks, emas, kurs: Yahoo Finance
@@ -18131,6 +18161,13 @@ html body #ba-fab.pr,html body #ba-fab:active{transform:translateZ(0) scale(.88)
   html body #page-home .xp-tabs{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 }
 @media (prefers-reduced-motion:reduce){html body #ba-fab{transition:none}}
+</style>
+<style id="ba-tabs-line-fix">
+/* Garis pemisah di bawah tab "Untuk Anda / Artikel / Status" dibuat jelas terlihat (sebelumnya #2f3336 di atas hitam, nyaris tak tampak) di HP/tablet, portrait & lanskap. Garis aksen pink tab aktif tidak berubah. */
+@media (max-width:1023px){
+  html body #page-home .xp-tabs{border-bottom:1px solid rgba(148,163,184,.42)!important}
+  html.light body #page-home .xp-tabs{border-bottom:1px solid rgba(14,165,233,.45)!important}
+}
 </style>
 <script id="ba-landscape-x-js">
 /* Tombol + (HP / mode aplikasi): otomatis tampil di Beranda (portrait & lanskap), respons instan saat disentuh, klik = layar tulis postingan ala X. */
