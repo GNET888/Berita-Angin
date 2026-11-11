@@ -1554,7 +1554,7 @@ html.light .ba-tab .di{color:#536471}html.light .ba-tab.on .di{color:#0f1419}
 /* ===== TAB BAR HP: sembunyi saat digulir ke bawah, muncul lagi saat digulir ke atas ===== */
 @media (max-width:767px), (orientation:landscape) and (pointer:coarse) and (max-height:500px){
   html body #ba-tabbar{transition:transform .28s cubic-bezier(.2,.8,.2,1)!important;will-change:transform}
-  html body #ba-tabbar.ba-hide{transform:translateY(105%)!important}
+  html body #ba-tabbar.ba-hide{transform:none!important}
 }
 @media (prefers-reduced-motion:reduce){html body #ba-tabbar{transition:none!important}}
 </style>
@@ -2522,7 +2522,7 @@ if(/^https?:/.test(pic)){var l=document.createElement('link');l.rel='preload';l.
   html body #ba-tabbar{
     grid-template-columns:repeat(var(--ba-n,5),minmax(0,1fr))!important;
     transition:transform .28s cubic-bezier(.2,.8,.2,1)!important;will-change:transform}
-  html body #ba-tabbar.ba-hide{transform:translateY(calc(100% + 2px))!important}
+  html body #ba-tabbar.ba-hide{transform:none!important}
   html body #ba-tabbar .ba-tab{min-width:0}
   html body #ba-tabbar .ba-tab-ico{width:64px!important;height:44px!important;background:none!important}
   html body #ba-tabbar .di{width:26px;height:26px}
@@ -15338,7 +15338,7 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
    - Jeda minimal antar perubahan (MIN_GAP) supaya tidak bolak-balik
    Ubah AUTOHIDE ke false untuk mematikan fitur sembunyi sama sekali. */
 (function(){
-  var AUTOHIDE=true, HIDE_ON_DOWN=true, STEP=28, TOP_ZONE=60, LOCK_MS=400, MIN_GAP=300;
+  var AUTOHIDE=false, HIDE_ON_DOWN=true, STEP=28, TOP_ZONE=60, LOCK_MS=400, MIN_GAP=300;
   var mq=window.matchMedia('(max-width:767px), (orientation:landscape) and (pointer:coarse) and (max-height:500px)');
   var last=0, acc=0, dir=0, ticking=false, lockUntil=0, lastToggle=0, lastH=0, lastW=window.innerWidth, hidden=false;
   function nav(){ return document.getElementById('ba-tabbar'); }
@@ -20988,6 +20988,47 @@ html.light .lq-tbl tr.lq-lv td{background:rgba(5,150,105,.08);color:#0f172a}
   if (D.readyState === 'loading') D.addEventListener('DOMContentLoaded', function () { wait(75); }); else wait(75);
 })();
 
+</script>
+<style id="ba-no-autohide">html body #ba-tabbar,html body #ba-tabbar.ba-hide{transform:none!important}</style>
+<style id="ba-nav-turbo-css">
+/* RESPONS NAVIGASI TINGGI: sorotan & pergantian menu instan (desktop, lanskap, aplikasi) */
+html .nav-link,html .sb-link,html .sb-sublink,html .ba-tab,html .tk-tab,html .hp-btn,html [data-cr-sub],html [data-se-sub],html [data-se-tab],html [data-gm-sub],html [data-gm-tab],html [data-st-sub]{transition:none!important;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+html .nav-link::after{transition:none!important}
+html .nav-link .nav-ico,html .nav-link .fa-chevron-down{transition-duration:.08s!important}
+html #mobile-sidebar,html #sidebar-content{transition-duration:.1s!important}
+html body .page{content-visibility:visible!important}
+</style>
+<script id="ba-nav-turbo-js">
+/* Ketukan layar sentuh/pena (lanskap, aplikasi) diaktifkan saat jari diangkat (pointerup),
+   tanpa menunggu rantai event klik. Geseran/scroll tidak ikut terhitung. Mouse sudah ditangani skrip lain. */
+(function(){
+  'use strict';
+  var D=document,W=window;
+  var SEL='a.nav-link[data-page],.hp-btn[data-page],.sb-link[data-page],.ba-tab,.tk-tab,[data-cr-sub],[data-ms-go],[data-se-sub],[data-se-tab],[data-gm-sub],[data-gm-tab],[data-st-sub],.se-sublink,.sb-sublink';
+  var sx=0,sy=0,st=0,tgt=null,skip=null,skipT=0,pid=-1;
+  D.addEventListener('pointerdown',function(e){
+    if(e.pointerType==='mouse'||e.button>0||!e.isPrimary)return;
+    var t=e.target&&e.target.closest?e.target.closest(SEL):null;
+    if(!t||t.disabled){tgt=null;return}
+    tgt=t;sx=e.clientX;sy=e.clientY;st=Date.now();pid=e.pointerId;
+  },{capture:true,passive:true});
+  D.addEventListener('pointercancel',function(){tgt=null},{capture:true,passive:true});
+  D.addEventListener('pointerup',function(e){
+    if(!tgt||e.pointerId!==pid)return;
+    var t=tgt;tgt=null;
+    if(Math.abs(e.clientX-sx)>8||Math.abs(e.clientY-sy)>8||Date.now()-st>450)return;
+    var u=e.target&&e.target.closest?e.target.closest(SEL):null;if(u!==t)return;
+    skip=t;skipT=Date.now();
+    try{t.click()}catch(x){}
+  },{capture:true,passive:true});
+  /* klik asli yang menyusul diabaikan sekali agar tidak terjadi klik ganda */
+  D.addEventListener('click',function(e){
+    if(!skip||!e.isTrusted)return;
+    var t=e.target.closest&&e.target.closest(SEL);
+    if(t===skip&&Date.now()-skipT<1200){skip=null;e.preventDefault();e.stopImmediatePropagation()}
+    else if(Date.now()-skipT>=1200)skip=null;
+  },true);
+})();
 </script>
 </body>
 </html>
