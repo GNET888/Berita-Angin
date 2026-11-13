@@ -1,10 +1,11 @@
-# Simpan sebagai .github/workflows/update-data.yml (gantikan update-data.yml lama)
-name: update-data
+name: Update data pasar harian
+
 on:
   schedule:
-    - cron: "30 22 * * *"   # 05.30 WIB, sebelum pembaca bangun
-    - cron: "0 6 * * *"     # 13.00 WIB, penyegaran siang
-    - cron: "30 14 * * 1-5" # 21.30 WIB hari kerja, setelah bursa AS buka
+    # Senin-Jumat, tiap 3 jam (UTC): tangkap Asia, Eropa, dan penutupan AS.
+    - cron: "10 0,3,6,9,12,15,18,21 * * 1-5"
+    # Sabtu: satu kali (kripto + data akhir pekan)
+    - cron: "10 2 * * 6"
   workflow_dispatch: {}
 
 permissions:
@@ -15,20 +16,28 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  data:
+  update:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Berita pasar + foto -> articles.json
-        run: python update_articles.py || echo "articles dilewati"
-      - name: Semua data halaman -> data.js
+
+      - name: Ambil data pasar & tulis data.js
         run: python update_data.py
-      - name: Commit bila berubah
+
+      - name: Commit bila ada perubahan
         run: |
-          git config user.name "berita-angin-bot"
+          git config user.name  "berita-angin-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add data.js articles.json
-          git diff --staged --quiet || (git commit -m "data: pembaruan harian" && git pull --rebase origin ${{ github.ref_name }} && git push)
+          git add data.js
+          if git diff --cached --quiet; then
+            echo "Tidak ada perubahan."
+          else
+            git commit -m "data: update pasar $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push
+          fi
