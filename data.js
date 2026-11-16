@@ -1,1 +1,29 @@
-window.__DAILY={"updated":"2026-11-13T13:00:00Z","global":{"S&P 500":{"v":7592.4,"c":-0.35},"NASDAQ Composite":{"v":25366.09,"c":-0.39},"Dow Jones Industrial":{"v":52297.09,"c":-0.36},"FTSE 100":{"v":10863.09,"c":0.25},"DAX Performance Index":{"v":26771.88,"c":0.41},"CAC 40":{"v":8361.36,"c":0.34},"Euro Stoxx 50":{"v":6398.98,"c":0.09},"Nikkei 225":{"v":61142.35,"c":0.53},"TOPIX Index":{"v":3941.57,"c":0.11},"Hang Seng Index":{"v":23573.99,"c":-1.81},"Shanghai Composite":{"v":3634.26,"c":-0.59},"CSI 300":{"v":4043.93,"c":-0.78},"Nifty 50":{"v":25144.3,"c":-0.61},"KOSPI":{"v":5290.53,"c":-0.98},"ASX 200":{"v":9072.6,"c":-0.81},"IHSG":{"v":5344.41,"c":1.78},"Spot Gold (XAU)":{"v":3908.66,"c":0.83},"Spot Silver (XAG)":{"v":50.43,"c":0.83},"Crude Oil WTI":{"v":88.25,"c":-0.55},"Brent Crude Oil":{"v":95.66,"c":-0.17},"Natural Gas":{"v":3.306,"c":-1.64},"Copper Futures":{"v":13647.0,"c":0.13},"US Dollar Index (DXY)":{"v":103.1,"c":0.28}},"stocks":{},"fx":{"USD/IDR":{"v":18192,"c":0}},"crypto":{},"hist":{}};
+/* data.js: dibaca index.html lewat window.__DAILY. Dibuat ulang otomatis oleh update_data.py.
+   Isi awal ini disusun manual dari berita pasar 16 Nov 2026 (Asia = penutupan, AS = penutupan Jumat 13 Nov,
+   komoditas & kripto = harga siang/sore WIB). Kunci yang tidak ada di sini memakai nilai bawaan index.html. */
+window.__DAILY = {
+  "updated": "2026-11-16T10:40:00Z",
+  "global": {
+    "IHSG":               { "v": 5320.98,  "c": -0.44 },
+    "Nikkei 225":         { "v": 59769.00, "c": -2.25 },
+    "KOSPI":              { "v": 5100.50,  "c": -3.59 },
+    "Shanghai Composite": { "v": 3602.57,  "c": -0.87 },
+    "Hang Seng Index":    { "v": 23753.84, "c": 0.49 },
+    "Straits Times Index":{ "v": 5183.18,  "c": -0.93 },
+    "S&P 500":            { "v": 7561.67,  "c": -0.40 },
+    "NASDAQ Composite":   { "v": 25136.27, "c": -0.91 },
+    "Spot Gold (XAU)":    { "v": 3837.73,  "c": -1.13 },
+    "Crude Oil WTI":      { "v": 87.92,    "c": -0.73 },
+    "Brent Crude Oil":    { "v": 94.92,    "c": -0.96 }
+  },
+  "crypto": {
+    "btc": { "p": 64573, "c": 1.10 },
+    "eth": { "p": 1805,  "c": 1.59 },
+    "sol": { "p": 72.35, "c": 2.39 }
+  },
+  "fx": {
+    "USD/IDR": { "v": 18268, "c": 0.34 }
+  },
+  "stocks": {},
+  "hist": {}
+};

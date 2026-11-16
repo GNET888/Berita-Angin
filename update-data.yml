@@ -2,11 +2,13 @@ name: Update data pasar harian
 
 on:
   schedule:
-    # Senin-Jumat, tiap 3 jam (UTC): tangkap Asia, Eropa, dan penutupan AS.
-    - cron: "10 0,3,6,9,12,15,18,21 * * 1-5"
-    # Sabtu: satu kali (kripto + data akhir pekan)
-    - cron: "10 2 * * 6"
-  workflow_dispatch: {}
+    # 10:30 UTC = 17:30 WIB (setelah IHSG & bursa Asia tutup)
+    - cron: "30 10 * * 1-5"
+    # 22:30 UTC = 05:30 WIB (setelah Wall Street tutup)
+    - cron: "30 22 * * 1-5"
+    # Sabtu 03:00 UTC: kripto + penutupan Jumat
+    - cron: "0 3 * * 6"
+  workflow_dispatch: {}   # tombol "Run workflow" untuk update manual
 
 permissions:
   contents: write
@@ -18,7 +20,6 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -26,18 +27,17 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Ambil data pasar & tulis data.js
+      - name: Tarik data terbaru
         run: python update_data.py
 
       - name: Commit bila ada perubahan
         run: |
-          git config user.name  "berita-angin-bot"
-          git config user.email "bot@users.noreply.github.com"
-          git add data.js
-          if git diff --cached --quiet; then
+          if git diff --quiet -- data.js; then
             echo "Tidak ada perubahan."
           else
-            git commit -m "data: update pasar $(date -u +'%Y-%m-%d %H:%M UTC')"
-            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git config user.name  "data-bot"
+            git config user.email "data-bot@users.noreply.github.com"
+            git add data.js
+            git commit -m "data: update pasar $(date -u +'%Y-%m-%d %H:%M') UTC"
             git push
           fi
