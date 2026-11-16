@@ -21753,5 +21753,136 @@ html{scrollbar-gutter:stable}
 /* desktop lebar: baris lebih lega */
 @media (min-width:1600px){html body #liq-tbl tbody tr{height:50px}html body #liq-tbl{font-size:13px}}
 </style>
+<style id="ba-land-nav-pro">
+/* ===== NAVIGASI LANSKAP PRO (HP / mode aplikasi diputar) =====
+   Blok ini sengaja ada di paling akhir agar menang atas aturan sebelumnya.
+   Penyebab celah kosong di kiri konten: "ba-resp-v2" memberi padding-kiri pada <body>
+   SEMENTARA "ba-landscape-nav" juga memberi margin-kiri pada <main>/topbar -> offset ganda.
+   Di sini offset ganda dihapus, rail dirampingkan, penanda aktif dibuat jelas, dan umpan balik sentuh dipercepat.
+   Hapus seluruh blok ini (style + script "ba-land-nav-js") untuk kembali ke perilaku lama. */
+@media (orientation:landscape) and (pointer:coarse) and (max-height:500px){
+  html:root{
+    --ba-rail:clamp(58px,8vw,72px);
+    --ba-ico-tab:26px;--ba-tab-box-w:46px;--ba-tab-box-h:38px;
+    --ba-rail-total:calc(var(--ba-rail) + env(safe-area-inset-left,0px))}
+
+  /* 1) HAPUS OFFSET GANDA: hanya satu pergeseran (margin pada main/topbar/footer) */
+  html body{padding-left:0!important}
+
+  /* 2) RAIL: ramping, solid, ikon tersebar rapi, tidak pernah tersembunyi */
+  html body #ba-tabbar{
+    width:var(--ba-rail-total)!important;box-sizing:border-box;
+    padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)!important;
+    justify-content:space-evenly!important;align-items:center!important;gap:0!important;
+    background:#000!important;border-right:1px solid rgba(231,233,234,.12)!important;
+    overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;
+    z-index:50;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+  html.light body #ba-tabbar{background:#fff!important;border-right-color:rgba(15,23,42,.12)!important}
+
+  /* 3) ITEM: tinggi mengikuti tinggi layar & jumlah tab; area sentuh penuh selebar rail */
+  html body #ba-tabbar .ba-tab[data-k]{
+    position:relative;flex:0 0 auto!important;width:100%!important;
+    height:clamp(44px,calc((var(--ba-vh,100vh) - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 12px) / calc(var(--ba-n,5) + .4)),62px)!important;
+    min-height:44px!important;padding:0!important;gap:0!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    background:transparent!important;border:0!important;outline:0!important;
+    touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer}
+  html body #ba-tabbar .ba-tab[data-k]:active{opacity:1!important;transform:none!important}
+
+  /* 4) WADAH IKON (pil): seragam untuk semua tab, termasuk logo G */
+  html body #ba-tabbar .ba-tab[data-k] .ba-tab-ico{
+    width:min(var(--ba-tab-box-w),calc(var(--ba-rail) - 14px))!important;height:var(--ba-tab-box-h)!important;
+    border-radius:14px!important;background:transparent!important;border:0!important;
+    display:flex!important;align-items:center;justify-content:center;flex:0 0 auto;
+    transition:background-color .1s linear,transform .07s ease-out!important}
+  html body #ba-tabbar .ba-tab[data-k] .di{width:var(--ba-ico-tab)!important;height:var(--ba-ico-tab)!important;color:#8b98a5!important}
+  html.light body #ba-tabbar .ba-tab[data-k] .di{color:#536471!important}
+  html body #ba-tabbar .ba-tab[data-k="stock-exchange"] .di{width:calc(var(--ba-ico-tab) - 2px)!important;height:calc(var(--ba-ico-tab) - 2px)!important}
+
+  /* 5) TAB AKTIF: ikon berwarna aksen + pil lembut + garis penanda di tepi kiri */
+  html body #ba-tabbar .ba-tab.on[data-k] .di,html.light body #ba-tabbar .ba-tab.on[data-k] .di{color:rgb(var(--ba-ac,56 189 248))!important}
+  html body #ba-tabbar .ba-tab.on[data-k] .ba-tab-ico{background:rgb(var(--ba-ac,56 189 248) / .14)!important}
+  html body #ba-tabbar .ba-tab.on[data-k]::before{
+    display:block!important;content:""!important;position:absolute!important;
+    left:0!important;top:50%!important;right:auto!important;bottom:auto!important;
+    width:3px!important;height:22px!important;margin:-11px 0 0 0!important;
+    border-radius:0 3px 3px 0!important;background:rgb(var(--ba-ac,56 189 248))!important}
+
+  /* 6) UMPAN BALIK SENTUH INSTAN */
+  html body #ba-tabbar .ba-tab.ba-press[data-k] .ba-tab-ico,html body #ba-tabbar .ba-tab[data-k]:active .ba-tab-ico{
+    transform:scale(.86)!important;background:rgb(148 163 184 / .2)!important}
+  html body #ba-tabbar .ba-tab.on.ba-press[data-k] .ba-tab-ico,html body #ba-tabbar .ba-tab.on[data-k]:active .ba-tab-ico{
+    background:rgb(var(--ba-ac,56 189 248) / .24)!important}
+  html body #ba-tabbar .ba-tab[data-k]:focus-visible .ba-tab-ico{outline:2px solid rgb(var(--ba-ac,56 189 248));outline-offset:-2px}
+
+  /* 7) Panel "Lainnya" membuka cepat dari sisi kanan */
+  html body #ba-sheet{transition:transform .16s cubic-bezier(.2,.8,.2,1)!important}
+  html body #ba-scrim{transition:opacity .12s linear!important}
+}
+/* layar lanskap sangat pendek: rail & pil sedikit lebih kecil */
+@media (orientation:landscape) and (pointer:coarse) and (max-height:340px){
+  html:root{--ba-ico-tab:24px;--ba-tab-box-w:42px;--ba-tab-box-h:34px}
+  html body #ba-tabbar .ba-tab[data-k]{min-height:40px!important}
+}
+@media (prefers-reduced-motion:reduce){
+  html body #ba-tabbar .ba-tab[data-k] .ba-tab-ico,html body #ba-sheet,html body #ba-scrim{transition:none!important}
+}
+</style>
+<script id="ba-land-nav-js">
+/* NAVIGASI LANSKAP RESPONS TINGGI (sentuh / stylus saja; mouse & keyboard tidak berubah)
+   - saat jari MENYENTUH: tab langsung disorot (tanpa menunggu pindah halaman)
+   - saat jari DIANGKAT: pindah halaman dijalankan segera (tanpa menunggu "klik" bawaan browser)
+     setelah satu frame, supaya sorotan sempat tergambar sebelum halaman berat dirender
+   - klik bawaan susulan ditahan agar tidak terjadi pindah ganda
+   - geser > 10px = dibatalkan (itu gulir, bukan ketukan) dan sorotan dikembalikan */
+(function(){
+  'use strict';
+  var W=window,D=document;
+  if(W.__baLandNav)return;W.__baLandNav=1;
+  var mq=W.matchMedia('(orientation:landscape) and (pointer:coarse) and (max-height:500px)');
+  var cur=null,pid=-1,sx=0,sy=0,prev=null,ghost=0,synth=false;
+  function tabOf(t){return t&&t.closest?t.closest('#ba-tabbar .ba-tab'):null}
+  function mark(b){
+    var nav=D.getElementById('ba-tabbar');if(!nav)return;
+    var a=nav.querySelectorAll('.ba-tab');
+    for(var i=0;i<a.length;i++){var on=a[i]===b;if(a[i].classList.contains('on')!==on)a[i].classList.toggle('on',on)}
+  }
+  function isMore(b){return b.getAttribute('data-k')==='more'}
+  function cancel(){
+    if(cur){cur.classList.remove('ba-press');if(prev&&prev!==cur&&!isMore(cur))mark(prev)}
+    cur=null;pid=-1;prev=null;
+  }
+  D.addEventListener('pointerdown',function(e){
+    if(!mq.matches||e.pointerType==='mouse'||e.button>0)return;
+    var b=tabOf(e.target);if(!b)return;
+    cur=b;pid=e.pointerId;sx=e.clientX;sy=e.clientY;
+    prev=b.parentNode.querySelector('.ba-tab.on');
+    b.classList.add('ba-press');
+    if(!isMore(b))mark(b);
+  },{capture:true,passive:true});
+  D.addEventListener('pointermove',function(e){
+    if(!cur||e.pointerId!==pid)return;
+    if(Math.abs(e.clientX-sx)>10||Math.abs(e.clientY-sy)>10)cancel();
+  },{capture:true,passive:true});
+  D.addEventListener('pointercancel',function(e){if(e.pointerId===pid)cancel()},{capture:true,passive:true});
+  D.addEventListener('pointerup',function(e){
+    if(!cur||e.pointerId!==pid)return;
+    var b=cur;cur=null;pid=-1;prev=null;
+    ghost=Date.now()+700;
+    W.requestAnimationFrame(function(){
+      W.setTimeout(function(){
+        b.classList.remove('ba-press');
+        synth=true;try{b.click()}finally{synth=false}
+      },0);
+    });
+  },{capture:true,passive:true});
+  /* tahan klik bawaan susulan (window capture berjalan lebih dulu dari semua pendengar document) */
+  W.addEventListener('click',function(e){
+    if(synth)return;
+    if(Date.now()<ghost&&tabOf(e.target)){e.stopImmediatePropagation();e.preventDefault()}
+  },true);
+})();
+</script>
+
 </body>
 </html>
