@@ -42,7 +42,7 @@ else if(k&&k!=='home'&&k!=='article-detail')r=k;
 if(r)h.setAttribute('data-ba-route',r)}catch(e){}})();</script>
 <script>/* ANTI-KEDIP: tentukan sidebar ikon/lebar SEBELUM halaman digambar, supaya konten tidak bergeser setelah loading. */
 (function(){try{var h=document.documentElement,p=null;try{p=localStorage.getItem('ba-sb')}catch(e){}
-if(p==='collapsed'||window.matchMedia('(max-width:1023px)').matches)h.classList.add('ba-collapsed')}catch(e){}})();</script>
+window.__baSbCollapsed=function(){var q=null;try{q=localStorage.getItem('ba-sb')}catch(e){}var w=window.innerWidth||document.documentElement.clientWidth;return w<1024||q==='collapsed'||(w<1280&&q!=='expanded')};if(window.__baSbCollapsed())h.classList.add('ba-collapsed')}catch(e){}})();</script>
 <style id="ba-noshift-css">html.ba-pre header.sticky,html.ba-pre body>main,html.ba-pre body>footer,html.ba-pre #ba-topbar,html.ba-pre #bg3d+div,html.ba-fade header.sticky,html.ba-fade body>main,html.ba-fade body>footer,html.ba-fade #ba-topbar,html.ba-fade #bg3d+div{transition:none!important}</style>
 <style id="ba-boot-css">
 @font-face{font-family:'Inter Fallback';src:local('Arial'),local('Helvetica Neue'),local('Roboto');size-adjust:107.4%;ascent-override:90.2%;descent-override:22.5%;line-gap-override:0%}
@@ -6596,7 +6596,6 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
                         </div>
                         <div id="sd-tools" class="sd-tools">
                             <label class="sd-field"><span>Sektor</span><select id="sd-sector" aria-label="Filter sektor"><option value="">Semua sektor</option></select></label>
-                            <button type="button" id="sd-wl-only" class="sd-btn" aria-pressed="false"><i class="fa-solid fa-star"></i><span>Watchlist</span><b id="sd-wl-count">0</b></button>
                             <button type="button" id="sd-reset" class="sd-btn" hidden>Atur ulang</button>
                             <span class="sd-hint">Klik judul kolom untuk mengurutkan</span>
                             <button type="button" id="sd-csv" class="sd-btn sd-end"><i class="fa-solid fa-file-arrow-down"></i><span>Ekspor CSV</span></button>
@@ -10009,10 +10008,15 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     '^FCHI': { p: 7782.82, d: -0.36 }, '^AXJO': { p: 8795.20, d: 0.02 }, '^BVSP': { p: 205082.56, d: 0.47 },
     '^GSPTSE': { p: 35788.18, d: -0.52 }, 'FTSEMIB.MI': { p: 48558.86, d: -0.36 }
   };
+  /* URUTAN TABEL: peringkat kapitalisasi bursa (perkiraan, WFE/Visual Capitalist; bergeser lambat), jam buka bursa (WIB), atau perubahan hari ini (live). */
+  var CAPORD = ['AS','China','Eropa','Jepang','Hong Kong','India','Inggris','Kanada','Taiwan','Arab Saudi','Jerman','Swiss','Korea','Prancis','Australia','Brasil','Spanyol','Italia','Belanda','Singapura','Swedia','Afrika Selatan','Indonesia','Thailand','Meksiko','Malaysia','Denmark','Polandia','Turki','Israel','Norwegia','Belgia','Finlandia','Irlandia','Filipina','Chile','Austria','Yunani','Portugal','Selandia Baru','Hungaria','Argentina','Mesir','Rusia'];
+  var OPEN = { 'Selandia Baru': -3, 'Australia': -1, 'Jepang': 0, 'Korea': 0, 'Taiwan': 1, 'Singapura': 1, 'Malaysia': 1, 'China': 1.5, 'Hong Kong': 1.5, 'Filipina': 1.5, 'Indonesia': 2, 'Thailand': 3, 'India': 3.75, 'Rusia': 7, 'Turki': 7, 'Israel': 7, 'Afrika Selatan': 7, 'Arab Saudi': 7, 'Mesir': 8, 'Brasil': 13, 'Chile': 13.5, 'Argentina': 14, 'Kanada': 14.5, 'AS': 14.5, 'Meksiko': 14.5 };  /* jam buka UTC; Eropa & lainnya = 8 */
+  var CAPIX = (function () { var ix = []; CAPORD.forEach(function (n) { for (var i = 0; i < MK.length; i++) if (MK[i].name === n) { ix.push(i); break; } }); MK.forEach(function (_, i) { if (ix.indexOf(i) < 0) ix.push(i); }); return ix; })();
+  var ORD = CAPIX.slice();
   var NM = MK.length, CI = NM, CORE = 6, PS = (W.matchMedia && W.matchMedia('(min-width:1024px)').matches) ? 13 : 7;                       /* indeks dataset komposit = 6 */
   var RG = [['1B', '1mo', 22], ['3B', '3mo', 64], ['6B', '6mo', 127], ['1T', '1y', 252]];
   var MON = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGU', 'SEP', 'OKT', 'NOV', 'DES'];
-  var st = { rg: 1, mode: 'line', paused: false, vis: MK.map(function () { return true; }).concat([true]), pg: 0, hl: null };
+  var st = { sort: 'cap', rg: 1, mode: 'line', paused: false, vis: MK.map(function () { return true; }).concat([true]), pg: 0, hl: null };
   var $ = function (id) { return D.getElementById(id); };
   var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
   var visible = function () { var p = $(PAGE); return !!p && p.classList.contains('active') && !D.hidden; };
@@ -10243,6 +10247,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   }
   /* ---------- KPI, panel pasar, peta panas ---------- */
   function kpi() {
+    if (st.sort === 'chg' && reorder()) { cards(); return; }
     var M = model, n = M.dates.length, v = M.comp[n - 1], p5 = M.comp[Math.max(0, n - 6)], m = (v / p5 - 1) * 100, k, q, e, rank = 0;
     if ((e = $('liq-k-bal'))) { e.textContent = v.toFixed(1); e.style.color = v >= 100 ? '#5eead4' : '#fde047'; }
     if ((e = $('liq-k-mom'))) { e.textContent = (m >= 0 ? '▲ ' : '▼ ') + sg(m, 2) + '%'; e.style.color = m >= 0 ? '#34d399' : '#fb7185'; }
@@ -10373,15 +10378,27 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     if (c) c.classList.toggle('off', !v);
     render();
   }
+  function dayChg(q) {
+    var M = model, n = M.dates ? M.dates.length : 0, SN = SNAP[MK[q].sym], useSN = !!SN && (M.src === 'sim' || !M.s[q]);
+    if (useSN) return SN.d; var a = M.s && M.s[q]; return a && n > 1 ? (a[n - 1] / a[n - 2] - 1) * 100 : null;
+  }
+  function reorder() {
+    var a = CAPIX.slice(), pos = function (i) { return CAPIX.indexOf(i); };
+    try {
+      if (st.sort === 'open') a.sort(function (x, y) { var u = OPEN[MK[x].name], v = OPEN[MK[y].name]; return (u == null ? 8 : u) - (v == null ? 8 : v) || pos(x) - pos(y); });
+      else if (st.sort === 'chg') a.sort(function (x, y) { var u = dayChg(x), v = dayChg(y); return (v == null ? -1e9 : v) - (u == null ? -1e9 : u) || pos(x) - pos(y); });
+    } catch (e) {}
+    var ch = a.join(',') !== ORD.join(','); ORD = a; return ch;
+  }
   function cards() {
     var rg = $('liq-regions'); if (!rg) return;
     var pages = Math.ceil(NM / PS); st.pg = Math.max(0, Math.min(pages - 1, st.pg));
     rg.innerHTML = '<table id="liq-tbl"><thead><tr><th>#</th><th>Negara · Indeks</th><th>Hari ini</th><th>Periode</th><th>Tren Kekuatan</th><th class="r">Harga terakhir</th><th>Grafik</th></tr></thead><tbody></tbody></table>';
     var tb = rg.querySelector('tbody');
-    MK.slice(st.pg * PS, st.pg * PS + PS).forEach(function (g, k) {
-      var r = st.pg * PS + k, tr = D.createElement('tr');
+    ORD.slice(st.pg * PS, st.pg * PS + PS).forEach(function (qi, k) {
+      var g = MK[qi], r = qi, pos = st.pg * PS + k, tr = D.createElement('tr');
       tr.className = 'liq-card' + (st.vis[r] ? '' : ' off'); tr.dataset.q = r; tr.style.setProperty('--c', g.col);
-      tr.innerHTML = '<td class="n">' + (r + 1) + '</td><td class="nm"><img class="fl" alt="" src="' + FLG[r] + '">' + g.name + '<small>' + g.sym.replace('^', '').replace('.SS', '') + '</small></td><td><b class="d" id="liq-rd' + r + '">--</b></td><td><b id="liq-rv' + r + '">--</b></td><td><svg class="spk" id="liq-sp' + r + '" width="96" height="28" viewBox="0 0 96 28"></svg></td><td class="px" id="liq-ra' + r + '">--</td><td><em></em></td>';
+      tr.innerHTML = '<td class="n">' + (pos + 1) + '</td><td class="nm"><img class="fl" alt="" src="' + FLG[r] + '">' + g.name + '<small>' + g.sym.replace('^', '').replace('.SS', '') + '</small></td><td><b class="d" id="liq-rd' + r + '">--</b></td><td><b id="liq-rv' + r + '">--</b></td><td><svg class="spk" id="liq-sp' + r + '" width="96" height="28" viewBox="0 0 96 28"></svg></td><td class="px" id="liq-ra' + r + '">--</td><td><em></em></td>';
       tr.onclick = function () { setVis(r, !st.vis[r]); };
       tr.onmouseenter = function () { st.hl = r; render(); };
       tr.onmouseleave = function () { st.hl = null; render(); };
@@ -10437,6 +10454,15 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     cards(); net();
     if (W.matchMedia) { var mqPS = W.matchMedia('(min-width:1024px)'); var fnPS = function (e) { PS = e.matches ? 13 : 7; st.pg = 0; cards(); }; if (mqPS.addEventListener) mqPS.addEventListener('change', fnPS); }
     var pv = $('liq-pv'), nx = $('liq-nx'), al = $('liq-all'), co = $('liq-core');
+    if (co && !$('liq-sort')) {
+      var sw = D.createElement('div'); sw.id = 'liq-sort'; sw.setAttribute('role', 'group'); sw.setAttribute('aria-label', 'Urutan tabel');
+      [['cap', 'Kap. pasar', 'Urut kapitalisasi bursa terbesar (perkiraan)'], ['open', 'Jam buka', 'Urut jam buka bursa (WIB): Asia → Eropa → Amerika'], ['chg', 'Hari ini', 'Urut perubahan hari ini, naik tertinggi dulu']].forEach(function (m) {
+        var b = btn(m[1], m[0] === st.sort ? 'on' : ''); b.title = m[2];
+        b.onclick = function () { st.sort = m[0]; Array.prototype.forEach.call(sw.children, function (x) { x.classList.remove('on'); }); b.classList.add('on'); reorder(); st.pg = 0; cards(); };
+        sw.appendChild(b);
+      });
+      co.parentNode.parentNode.appendChild(sw);
+    }
     if (pv) pv.onclick = function () { st.pg--; cards(); };
     if (nx) nx.onclick = function () { st.pg++; cards(); };
     if (al) al.onclick = function () { MK.forEach(function (_, i) { st.vis[i] = true; }); cards(); chips && Array.prototype.forEach.call(chips.children, function (c) { c.classList.remove('off'); }); render(); };
@@ -13805,7 +13831,7 @@ Array.prototype.forEach.call(m.querySelectorAll('.sb-link[data-page]'),function(
     /* Sidebar: lebar/ikon, otomatis ikut ukuran layar, ingat pilihan pengguna */
     var pref=null; try{pref=localStorage.getItem('ba-sb');}catch(e){}
     var mq=window.matchMedia('(max-width:1023px)');
-    function apply(){ root.classList.toggle('ba-collapsed', mq.matches || pref==='collapsed'); }
+    function apply(){ root.classList.toggle('ba-collapsed', window.__baSbCollapsed ? window.__baSbCollapsed() : (mq.matches || pref==='collapsed')); }
     function toggle(){
       var now=root.classList.contains('ba-collapsed');
       pref=now?'expanded':'collapsed';
@@ -17957,6 +17983,17 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
   function money(v){return v>=1e12?'$'+(v/1e12).toFixed(2)+'T':v>=1e9?'$'+(v/1e9).toFixed(1)+'B':'$'+(v/1e6).toFixed(0)+'M'}
   function cap(str){var m=String(str||'').match(/^\$([\d.,]+)([TBM])$/i);if(!m)return 0;return parseFloat(m[1].replace(/,/g,''))*({T:1e12,B:1e9,M:1e6}[m[2].toUpperCase()])}
   function hm(t){return new Date(t).toLocaleTimeString('id-ID',{hour12:false}).replace(/\./g,':')}
+  /* snapshot harga pasar terakhir: dipakai langsung saat halaman dibuka (sebelum data online masuk) */
+  var SK='ba-stk-snap-v1',snapT=0;
+  function snapSave(){try{var d={};allStockDirectory.forEach(function(s){d[s.symbol]={p:+s.price,c:s.change,m:s.mktCap,h:s._hi||null,l:s._lo||null}});localStorage.setItem(SK,JSON.stringify({t:Date.now(),d:d}))}catch(e){}}
+  function snapLoad(){try{var o=JSON.parse(localStorage.getItem(SK)||'null');if(!o||!o.d||typeof allStockDirectory==='undefined'||W.__stkRealAt)return;
+    allStockDirectory.forEach(function(s){var x=o.d[s.symbol];if(!x||!(x.p>0))return;
+      if(s._bp===undefined){s._bp=+s.price;s._bm=cap(s.mktCap)}
+      s.price=x.p;s.change=x.c;s.mktCap=x.m;if(x.h)s._hi=x.h;if(x.l)s._lo=x.l;s._lc=parseFloat(x.c)||0;s._lsrc='cache'});
+    snapT=o.t;allStockDirectory.sort(function(a,b){return cap(b.mktCap)-cap(a.mktCap)});
+    if(typeof renderStockTable==='function')renderStockTable();
+    badge(false,'Data tersimpan · '+new Date(o.t).toLocaleString('id-ID')+' · memperbarui dari pasar…')}catch(e){}}
+  var dayKey=new Date().toDateString();
   function badge(ok,msg){var el=D.getElementById('ba-live-st');
     if(!el){var a=D.getElementById('stock-table-body');a=a&&(a.closest('.overflow-x-auto')||a.closest('table')||a);if(!a||!a.parentNode)return;
       el=D.createElement('div');el.id='ba-live-st';el.className='text-[10px] font-mono px-1 py-1';a.parentNode.insertBefore(el,a.nextSibling)}
@@ -17983,12 +18020,15 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
       if(n<5){badge(false,'Yahoo Finance belum terjangkau · memakai data terakhir · mencoba lagi otomatis');return}
       W.__stkRealAt=Date.now();okN=n;
       allStockDirectory.sort(function(a,b){return cap(b.mktCap)-cap(a.mktCap)});
+      snapSave();
       try{if(typeof renderStockTable==='function')renderStockTable()}catch(e){}
       badge(true,'Yahoo Finance · '+n+' emiten · '+(W.__stkMktOpen?'pasar buka · live':'pasar tutup · penutupan terakhir')+' · urut kap. pasar · diperbarui '+hm(Date.now()))
     },function(){busy=false})}
   function pageOn(){var p=D.getElementById('page-stock-exchange');return p&&p.classList.contains('active')}
+  setTimeout(snapLoad,300);
   setTimeout(refresh,2500);
-  setInterval(function(){if(D.hidden)return;var gap=pageOn()?30000:300000;if(Date.now()-last>=gap)refresh()},5000);
+  setInterval(function(){if(D.hidden)return;var dk=new Date().toDateString();if(dk!==dayKey){dayKey=dk;last=0}  /* ganti hari -> segarkan penuh */
+    var gap=pageOn()?30000:300000;if(Date.now()-last>=gap)refresh()},5000);
   D.addEventListener('visibilitychange',function(){if(!D.hidden&&Date.now()-last>60000)refresh()});
   W.addEventListener('online',refresh);
 })();
@@ -18631,7 +18671,7 @@ html body #ba-fab.pr,html body #ba-fab:active{transform:translateZ(0) scale(.88)
 (function () {
   'use strict';
   var D = document, KEY = 'ba-sd-watch-v1';
-  var S = { sector: '', wl: false, sort: '', dir: -1 };
+  var S = { sector: '', wl: false, sort: 'cap', dir: -1 };
   var wl = [];
   try { wl = JSON.parse(localStorage.getItem(KEY) || '[]'); if (!Array.isArray(wl)) wl = []; } catch (e) { wl = []; }
 
@@ -18692,17 +18732,17 @@ html body #ba-fab.pr,html body #ba-fab:active{transform:translateZ(0) scale(.88)
   function decorate() {
     var tb = $('stock-table-body'); if (!tb) return;
     var rows = tb.querySelectorAll('tr[data-st]');
+    var rk = {}; dir().slice().sort(function (a, b) { return cap(b) - cap(a); }).forEach(function (s, i) { rk[s.symbol] = i + 1; });
     rows.forEach(function (tr) {
       var sym = tr.getAttribute('data-st'), host = tr.querySelector('.stk-sym'); if (!host) return;
-      var b = host.querySelector('.sd-star');
-      if (!b) { b = D.createElement('button'); b.type = 'button'; b.className = 'sd-star'; b.innerHTML = '<i class="fa-solid fa-star"></i>'; host.insertBefore(b, host.firstChild); }
-      var on = inWL(sym);
-      b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); b.setAttribute('data-sym', sym);
-      b.setAttribute('aria-label', (on ? 'Hapus ' + sym + ' dari watchlist' : 'Tambah ' + sym + ' ke watchlist'));
+      var nb = host.querySelector('.sd-rank');
+      if (!nb) { nb = D.createElement('span'); nb.className = 'sd-rank'; nb.title = 'Peringkat market cap'; host.insertBefore(nb, host.firstChild); }
+      nb.textContent = rk[sym] || ''; nb.classList.toggle('top', (rk[sym] || 99) <= 3);
+      var oldStar = host.querySelector('.sd-star'); if (oldStar) oldStar.remove();
     });
     var em = tb.querySelector('.sd-empty');
     if (!rows.length && !em) {
-      tb.innerHTML = '<tr class="sd-empty"><td colspan="11">' + (S.wl && !wl.length ? 'Watchlist masih kosong. Klik ★ di baris saham untuk menambahkan.' : 'Tidak ada saham yang cocok. Ubah kata kunci atau sektor.') + '</td></tr>';
+      tb.innerHTML = '<tr class="sd-empty"><td colspan="11">' + (S.wl && !wl.length ? 'Tidak ada saham yang cocok.' : 'Tidak ada saham yang cocok. Ubah kata kunci atau sektor.') + '</td></tr>';
     } else if (rows.length && em) em.remove();
   }
   function headers() {
@@ -18731,7 +18771,7 @@ html body #ba-fab.pr,html body #ba-fab:active{transform:translateZ(0) scale(.88)
     var b = $('sd-wl-only'), n = $('sd-wl-count'), r = $('sd-reset'), inp = $('stock-search-input');
     if (n) n.textContent = wl.length;
     if (b) b.setAttribute('aria-pressed', S.wl ? 'true' : 'false');
-    if (r) r.hidden = !(S.sector || S.wl || S.sort || (inp && inp.value));
+    if (r) r.hidden = !(S.sector || S.wl || !(S.sort === 'cap' && S.dir === -1) || (inp && inp.value));
   }
 
   /* ---------- Market Pulse ---------- */
@@ -18941,7 +18981,7 @@ html body #ba-fab.pr,html body #ba-fab:active{transform:translateZ(0) scale(.88)
   }
   function sortBy(k) {
     var first = (k === 'price' || k === 'change' || k === 'cap') ? -1 : 1;
-    if (S.sort !== k) { S.sort = k; S.dir = first; } else if (S.dir === first) { S.dir = -first; } else { S.sort = ''; S.dir = -1; }
+    if (S.sort !== k) { S.sort = k; S.dir = first; } else if (S.dir === first) { S.dir = -first; } else { S.sort = 'cap'; S.dir = -1; }
     apply();
   }
   function search(sym) { var i = $('stock-search-input'); if (i) { i.value = sym; apply(); var t = $('stock-table-body'); if (t && t.scrollIntoView) t.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }
@@ -18969,7 +19009,7 @@ html body #ba-fab.pr,html body #ba-fab:active{transform:translateZ(0) scale(.88)
     if ((el = t.closest('#sd-head th[data-sort]'))) { sortBy(el.getAttribute('data-sort')); return; }
     if (t.closest('#sd-wl-only')) { S.wl = !S.wl; apply(); return; }
     if (t.closest('#sd-csv')) { exportCSV(); return; }
-    if (t.closest('#sd-reset')) { S.sector = ''; S.wl = false; S.sort = ''; S.dir = -1; var i = $('stock-search-input'); if (i) i.value = ''; var s = $('sd-sector'); if (s) s.value = ''; apply(); return; }
+    if (t.closest('#sd-reset')) { S.sector = ''; S.wl = false; S.sort = 'cap'; S.dir = -1; var i = $('stock-search-input'); if (i) i.value = ''; var s = $('sd-sector'); if (s) s.value = ''; apply(); return; }
   });
   D.addEventListener('keydown', function (e) {
     if (e.key !== 'Enter' && e.key !== ' ') return;
@@ -20413,12 +20453,12 @@ html #market-mini-widgets{display:grid!important;gap:12px;align-items:stretch;gr
   if (window.__baResp) return; window.__baResp = 1;
   var W = window, D = document, H = D.documentElement, last = null, t;
   function fit() {
-    var w = W.innerWidth || H.clientWidth, narrow = w < 1024;
+    var w = W.innerWidth || H.clientWidth, narrow = w < 1024 ? 0 : w < 1280 ? 1 : 2;
     H.setAttribute('data-ba-w', w < 480 ? 'xs' : w < 640 ? 'sm' : w < 1024 ? 'md' : w < 1280 ? 'lg' : 'xl');
     H.classList.toggle('ba-phone', w < 640);
-    if (last !== null && last !== narrow) { /* lewat batas 1024px: sidebar ikut menciut / kembali sesuai preferensi */
+    if (last !== null && last !== narrow) { /* lewat batas 1024px / 1280px: sidebar ikut menciut / kembali sesuai preferensi */
       var pref = null; try { pref = localStorage.getItem('ba-sb'); } catch (e) {}
-      H.classList.toggle('ba-collapsed', narrow || pref === 'collapsed');
+      H.classList.toggle('ba-collapsed', W.__baSbCollapsed ? W.__baSbCollapsed() : (narrow === 0 || pref === 'collapsed'));
     }
     last = narrow;
   }
@@ -21601,6 +21641,117 @@ html.dark .stk-ico.stk-hint.has-img img.stk-img{filter:drop-shadow(0 0 1px rgba(
 /* ikon sub-menu Stock Exchange: tanpa kotak latar/bingkai, hanya ikon garis aslinya */
 .se-sublink .nav-ico,#page-stock-exchange .se-sublink .nav-ico{background:transparent!important;border:0!important;box-shadow:none!important}
 .se-sublink .nav-ico::before{display:none!important}
+</style>
+<style id="ba-resp-v2">
+/* ===== RESPONSIF V2: desktop lebar, tablet, lanskap HP, mode aplikasi =====
+   Blok ini sengaja diletakkan paling akhir agar menang atas aturan sebelumnya.
+   Hapus seluruh blok (style + script) untuk mengembalikan perilaku lama. */
+:root{--ba-rail:64px;--ba-capw:1800px}
+html body{min-height:100vh;min-height:100dvh}
+
+/* 0) ANTI-LONCAT: tanpa transisi geser saat ukuran layar berubah; tab bar minggir saat keyboard terbuka (potret) */
+html.ba-rs header.sticky,html.ba-rs header.sticky *,html.ba-rs body>main,html.ba-rs body>footer,html.ba-rs #ba-topbar,html.ba-rs #bg3d+div,
+html.ba-rs #ba-tabbar,html.ba-rs #ba-sheet,html.ba-rs #mobile-sidebar,html.ba-rs #sidebar-content{transition:none!important}
+html{scrollbar-gutter:stable}
+@media (orientation:portrait) and (pointer:coarse){html.ba-kb body #ba-tabbar{display:none!important}}
+/* 1) LANSKAP HP: tab bar pindah ke rel vertikal di kiri, tinggi layar sepenuhnya untuk konten */
+@media (orientation:landscape) and (pointer:coarse) and (max-height:500px){
+  html body{padding-left:calc(var(--ba-rail) + env(safe-area-inset-left,0px))}
+  html body #ba-tabbar{
+    top:0!important;bottom:0!important;left:0!important;right:auto!important;
+    width:calc(var(--ba-rail) + env(safe-area-inset-left,0px))!important;height:auto!important;
+    display:flex!important;flex-direction:column;justify-content:center;align-items:stretch;gap:2px;
+    grid-template-columns:none!important;
+    padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)!important;
+    border-top:0!important;border-right:1px solid rgba(148,163,184,.12)!important;
+    overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
+  html body #ba-tabbar::-webkit-scrollbar{display:none}
+  html body #ba-tabbar .ba-tab{flex:0 0 auto;width:100%;height:auto!important;min-height:44px!important}
+  html body #ba-tabbar .ba-tab-ico{width:44px!important;height:40px!important}
+  html body #ba-tabbar .ba-tab.on::before{display:block!important;top:50%!important;left:0!important;width:3px!important;height:24px!important;margin:-12px 0 0 0!important;border-radius:0 3px 3px 0!important}
+  html body>main{padding:10px calc(12px + env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) 12px!important}
+  html body #ba-install{bottom:calc(12px + env(safe-area-inset-bottom,0px))!important}
+  html body #ba-ticker-bar{padding-top:3px;padding-bottom:3px}
+  html body #ba-topbar{padding:4px calc(12px + env(safe-area-inset-right,0px)) 4px 12px}
+}
+
+/* 2) DESKTOP LAYAR SANGAT LEBAR: isi dibatasi & dipusatkan di area di sebelah sidebar */
+@media (min-width:2000px) and (min-height:501px), (min-width:2000px) and (pointer:fine){
+  html body>main{
+    width:min(calc(100% - var(--ba-sb)),var(--ba-capw))!important;
+    margin-left:calc(var(--ba-sb) + max(0px,(100% - var(--ba-sb) - var(--ba-capw))/2))!important}
+  html body #ba-topbar,html body>footer{
+    max-width:var(--ba-capw);box-sizing:border-box;
+    margin-left:calc(var(--ba-sb) + max(0px,(100% - var(--ba-sb) - var(--ba-capw))/2))!important}
+}
+
+/* 3) JENDELA DESKTOP / TABLET LANSKAP PENDEK: sidebar dipadatkan agar semua menu muat */
+@media (min-width:768px) and (min-height:501px) and (max-height:640px), (min-width:768px) and (max-height:640px) and (pointer:fine){
+  header.sticky>nav>div{padding-top:10px!important;padding-bottom:8px!important}
+  header.sticky>nav>div>div:nth-child(1){padding-bottom:8px!important;margin-bottom:6px!important}
+  header.sticky .nav-link{padding-top:7px!important;padding-bottom:7px!important}
+  html.ba-collapsed header.sticky:not(:hover) .nav-link{padding:7px 0!important}
+  header.sticky>nav>div>div:nth-child(3){margin-top:6px!important;padding-top:8px!important}
+}
+</style>
+<script id="ba-resp-v2-js">
+/* Anti-loncat: (1) sidebar mengikuti SATU aturan (window.__baSbCollapsed) di semua skrip; (2) selama resize/rotasi transisi tata letak
+   dimatikan agar isi tidak "meluncur"; (3) di HP potret tab bar disembunyikan saat keyboard terbuka agar tidak melompat naik. */
+(function(){
+  'use strict';
+  if(window.__baResp2)return;window.__baResp2=1;
+  var W=window,D=document,H=D.documentElement,t,rt;
+  function side(){if(W.__baSbCollapsed)H.classList.toggle('ba-collapsed',W.__baSbCollapsed())}
+  function quiet(ms){H.classList.add('ba-rs');clearTimeout(rt);rt=setTimeout(function(){H.classList.remove('ba-rs')},ms||260)}
+  function later(ms){quiet(ms+120);clearTimeout(t);t=setTimeout(side,ms)}
+  side();
+  W.addEventListener('resize',function(){later(120)},{passive:true});
+  W.addEventListener('orientationchange',function(){quiet(500);later(300)});
+  if(W.visualViewport)W.visualViewport.addEventListener('resize',function(){later(120)});
+  var inp='input:not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]),textarea,select,[contenteditable=""],[contenteditable="true"]';
+  D.addEventListener('focusin',function(e){if(e.target&&e.target.matches&&e.target.matches(inp))H.classList.add('ba-kb')});
+  D.addEventListener('focusout',function(){setTimeout(function(){var a=D.activeElement;if(!(a&&a.matches&&a.matches(inp)))H.classList.remove('ba-kb')},120)});
+})();
+</script>
+<style id="ba-sd-rank-css">
+/* nomor peringkat market cap (1 = terbesar) di sel SYMBOL, tidak menggeser kolom lain */
+#sd-dir-card #stock-table-body .stk-sym .sd-rank{flex:0 0 auto;min-width:1.6em;text-align:right;font:600 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums;color:#64748b}
+#sd-dir-card #stock-table-body .stk-sym .sd-rank.top{color:#38bdf8}
+</style>
+<style id="ba-global-resp">
+/* ===== GLOBAL MARKET · tabel Negara · Indeks: responsif HP / lanskap / tablet / desktop ===== */
+#liq-sort{display:flex;flex-wrap:wrap;gap:4px;margin-top:2px}
+#liq-sort .liq-btn{padding:5px 10px}
+.liq-nethead>div.flex{flex-wrap:wrap;row-gap:6px}
+/* tablet / jendela sedang: kolom Grafik disembunyikan, tabel muat tanpa geser */
+@media (max-width:1023px){
+  html body #liq-tbl{min-width:0;width:100%}
+  html body #liq-tbl th:last-child,html body #liq-tbl td:last-child{display:none}
+}
+/* HP potret: hanya #, Negara·Indeks, Hari ini, Harga terakhir (tanpa geser kiri-kanan) */
+@media (max-width:700px){
+  html body #liq-regions{overflow-x:hidden}
+  html body #liq-tbl th:nth-child(4),html body #liq-tbl td:nth-child(4),
+  html body #liq-tbl th:nth-child(5),html body #liq-tbl td:nth-child(5){display:none}
+  html body #liq-tbl th:first-child,html body #liq-tbl td.n,
+  html body #liq-tbl th:nth-child(2),html body #liq-tbl td.nm{position:static;box-shadow:none;border-right:0}
+  html body #liq-tbl th,html body #liq-tbl td{padding:0 6px!important}
+  html body #liq-tbl th:first-child,html body #liq-tbl td.n{width:30px;min-width:30px;max-width:30px;padding:0 2px!important}
+  html body #liq-tbl td.nm{min-width:0;white-space:normal;line-height:1.15}
+  html body #liq-tbl td.nm small{display:block;margin:2px 0 0 32px}
+  html body #liq-tbl th:nth-child(3),html body #liq-tbl td:nth-child(3){width:76px}
+  html body #liq-tbl th:nth-child(6),html body #liq-tbl td.px{width:auto;text-align:right}
+  html body #liq-tbl th:nth-child(3),html body #liq-tbl td:nth-child(3){text-align:right}
+  html body #liq-tbl tbody tr{height:52px}
+}
+/* lanskap HP: baris lebih rapat supaya lebih banyak negara terlihat */
+@media (orientation:landscape) and (pointer:coarse) and (max-height:500px){
+  html body #liq-tbl tbody tr{height:38px}
+  html body #liq-tbl thead th{height:30px}
+  html body #liq-tbl td.nm small{display:inline;margin:0 0 0 6px}
+}
+/* desktop lebar: baris lebih lega */
+@media (min-width:1600px){html body #liq-tbl tbody tr{height:50px}html body #liq-tbl{font-size:13px}}
 </style>
 </body>
 </html>
