@@ -12421,6 +12421,9 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   function buildAssets(list) {
     var box = $('cxp-asset'); if (!box) return;
     if (list.indexOf(S.coin) < 0) list = list.concat([S.coin]);
+    /* DOGE selalu tampil, tepat di samping BNB */
+    list = list.filter(function (c) { return c !== 'doge'; });
+    var bi = list.indexOf('bnb'); list.splice(bi < 0 ? list.length : bi + 1, 0, 'doge');
     box.innerHTML = list.map(function (c) { return '<button type="button" data-coin="' + c + '" class="cxp-b' + (c === S.coin ? ' on' : '') + '">' + c.toUpperCase() + '</button>'; }).join('');
     box.querySelectorAll('[data-coin]').forEach(function (b) { b.addEventListener('click', function () { if (b.dataset.coin !== S.coin) setAsset(b.dataset.coin); }); });
   }
@@ -22140,5 +22143,81 @@ html.light #ba-gmp-list [style*="background:#1f1f1f"],html.light #ba-gmp-br [sty
 #ba-gmp .liq-btn:focus-visible{outline:2px solid #34d399;outline-offset:2px}
 </style>
 
+
+<style id="ba-scrollfix-css">
+/* ===== Scroll mulus: tanpa loncatan & tanpa patah-patah ===== */
+html{scroll-behavior:auto!important;overflow-anchor:auto}
+body{overflow-anchor:auto}
+/* desktop: lebar halaman tetap saat scrollbar muncul/hilang (tidak bergeser) */
+@media (hover:hover) and (pointer:fine){html{scrollbar-gutter:stable}}
+/* angka live (harga, persen, tabel) selebar sama: konten tidak melebar/menyempit saat update */
+table td,table th,.font-mono,[class*="price"],[class*="pct"],[class*="change"],[id*="price"],[id*="ticker"]{font-variant-numeric:tabular-nums}
+/* respons sentuh instan (tanpa jeda 300 ms / zoom-ganda) */
+a,button,[role="button"],summary,label,input,select,.ba-tab{touch-action:manipulation}
+/* bar tetap diangkat ke lapisan GPU sendiri */
+#ba-tabbar,header.sticky,#sidebar-content{transform:translateZ(0);backface-visibility:hidden}
+/* HP / layar sentuh: blur latar (backdrop-filter) adalah penyebab utama patah-patah saat scroll */
+@media (pointer:coarse),(max-width:767px){
+  *,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+}
+/* animasi berulang dijeda sebentar selama scroll, lanjut otomatis setelah berhenti */
+html.ba-scr *,html.ba-scr *::before,html.ba-scr *::after{animation-play-state:paused!important}
+/* tab disembunyikan: semua animasi berhenti (hemat CPU/baterai) */
+html.ba-bg *,html.ba-bg *::before,html.ba-bg *::after{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+</style>
+<script id="ba-scrollfix-js">
+(function(){
+  var D=document,W=window,H=D.documentElement,t=0,on=false;
+  /* 1) tandai "sedang scroll" cukup sekali per gestur; satu listener pasif (capture = termasuk panel/tabel yang bisa digeser) */
+  function end(){on=false;H.classList.remove('ba-scr')}
+  function go(){if(!on){on=true;H.classList.add('ba-scr')}clearTimeout(t);t=setTimeout(end,140)}
+  D.addEventListener('scroll',go,{passive:true,capture:true});
+  D.addEventListener('wheel',go,{passive:true});
+  D.addEventListener('touchmove',go,{passive:true});
+  /* 2) tab tersembunyi -> jeda animasi */
+  D.addEventListener('visibilitychange',function(){H.classList.toggle('ba-bg',D.hidden)});
+  /* 3) gambar didekode di luar thread utama (tidak menahan scroll); ukuran tidak diubah sehingga tidak ada pergeseran tata letak */
+  function imgs(){try{D.querySelectorAll('img:not([decoding])').forEach(function(i){i.decoding='async'})}catch(e){}}
+  var it=0;function imgsSoon(){clearTimeout(it);it=setTimeout(imgs,300)}
+  if(D.readyState==='loading')D.addEventListener('DOMContentLoaded',imgs);else imgs();
+  W.addEventListener('load',function(){imgs();setTimeout(imgs,1500)});
+  D.addEventListener('click',imgsSoon,true);
+})();
+</script>
+<style id="gm1-align-pro">
+/* ===== Global Market: semua kartu sejajar (atas & bawah) dan isi tiap kartu terisi rata ===== */
+@media (min-width:1024px){
+  /* kartu induk: baris tabel + Peta Panas mengisi seluruh sisa tinggi, tidak ada ruang kosong di bawah */
+  html body #gm-sub-1 #liq-pro-card{display:flex;flex-direction:column}
+  html body #gm-sub-1 #liq-pro-card>.grid:last-child{flex:1 1 auto;align-items:stretch}
+  /* kartu tabel Negara·Indeks: tinggi penuh, baris tabel membagi tinggi sama rata */
+  html body #gm-sub-1 .liq-netwrap{height:100%;min-height:0}
+  html body #gm-sub-1 #liq-regions{flex:1 1 auto;min-height:0}
+  html body #gm-sub-1 #liq-tbl{flex:1 1 auto;height:100%}
+  html body #gm-sub-1 #liq-tbl tbody tr{height:auto;min-height:46px}
+  /* kartu Peta Panas: isi disebar merata, tanpa celah besar di tengah */
+  html body #gm-sub-1 .liq-heatbox{display:flex;flex-direction:column;height:100%}
+  html body #gm-sub-1 .liq-heatbox>.liq-ex{flex:1 1 auto;display:flex;flex-direction:column;justify-content:space-between;gap:14px;min-height:0}
+  html body #gm-sub-1 .liq-ex>.ex-t:last-child{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
+  html body #gm-sub-1 #liq-tb{flex:1 1 auto;display:flex;flex-direction:column;justify-content:space-between;margin-top:6px}
+  html body #gm-sub-1 #liq-tb>div{padding:2px 0}
+}
+/* kolom kanan: panel mengisi tinggi baris yang sama & tepi bawah sejajar dengan kartu kiri */
+html body #gm-sub-1 .gm1-row{align-items:stretch}
+html body #gm-sub-1 .gm1-side{align-self:stretch}
+html body #gm-sub-1 .gm1-side>*{min-width:0}
+</style>
+<style id="liq-fill-fix">
+/* === Tabel Negara · Indeks: tinggi baris menyesuaikan tinggi kartu (sejajar dengan Peta Panas) === */
+@media (min-width:1024px){
+  html body .liq-netwrap{height:100%;min-height:0}
+  html body #liq-regions{display:block;flex:1 1 0;min-height:0;height:auto;overflow-y:hidden}
+  html body #liq-regions>.ba-scroll{height:100%;min-height:0}
+  html body #liq-tbl{display:table;width:100%;height:100%;flex:none}
+  html body #liq-tbl tbody tr,html body #gm-sub-1 #liq-tbl tbody tr{height:46px;min-height:0}
+  html body #liq-tbl thead tr{height:38px}
+}
+</style>
 </body>
 </html>
