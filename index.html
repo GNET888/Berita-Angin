@@ -438,6 +438,7 @@ html.light #sidebar-content .nav-item.is-active{color:#0284c7!important;backgrou
 .se2-tag{font:700 9px/1 ui-monospace,monospace;letter-spacing:.06em;padding:3px 6px;border-radius:6px;border:1px solid}
 .se2-live{color:#34d399;border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.08)}
 .se2-sim{color:#fbbf24;border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.08)}
+@media(min-width:1024px){.se2-rc{contain:size}.se2-rc>*{flex-shrink:0}.se2-rc>.se2-fut{flex:1 1 0;min-height:320px;flex-shrink:1;overflow:hidden}.se2-fut #se2-mac{flex:1 1 0;min-height:0;overflow-y:auto;scrollbar-width:thin}.se2-fut #se2-mac>div{flex:0 0 auto}}
 .se2-row{cursor:pointer;transition:background .15s}.se2-row:hover{background:rgba(56,189,248,.07)}
 .se2-flash{animation:se2f .6s ease-out}@keyframes se2f{from{background:rgba(56,189,248,.25)}to{background:transparent}}
 .se2-srow{position:absolute;left:0;right:0;top:0;height:30px;display:flex;align-items:center;gap:8px;padding:0 6px;border-radius:8px;cursor:pointer;background:rgba(148,163,184,.05);transition:top .8s cubic-bezier(.22,1,.36,1),background .2s}
@@ -6579,9 +6580,9 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
       <div id="se2-breadth" class="flex h-2 rounded-full overflow-hidden bg-neutral-800"></div>
       <div id="se2-breadtxt" class="text-[10px] text-gray-400"></div>
       <div class="overflow-x-auto"><table class="w-full text-xs font-mono"><thead><tr class="text-gray-500 text-[10px] uppercase"><th class="text-left py-1.5">Simbol</th><th class="text-right">Harga</th><th class="text-right">Perubahan</th><th class="text-right hidden sm:table-cell">Volume</th></tr></thead><tbody id="se2-mv"></tbody></table></div>
-    </div><div class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl space-y-3 min-w-0">
+    </div><div class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl space-y-3 min-w-0 flex flex-col se2-fut">
       <div class="border-b border-card-border pb-3 flex items-start justify-between gap-2"><div><h3 class="text-sm font-bold text-white uppercase tracking-wide">Futures &amp; Makro</h3><p class="text-[11px] text-gray-400">Arah sebelum bursa buka &bull; bergerak saat pasar tutup</p></div><span id="se2-mac-tag" class="se2-tag se2-sim">OFF</span></div>
-      <div id="se2-mac" class="space-y-4 text-xs"></div>
+      <div id="se2-mac" class="flex flex-col gap-4 text-xs"></div>
       <p class="text-[10px] text-gray-500">Futures memakai kontrak front-month. Bukan jaminan arah pembukaan. Jadwal libur bursa tetap ada di kartu Agenda Pasar AS di bawah.</p>
     </div></div>
   </div>
@@ -13014,12 +13015,14 @@ function clock(){var s=session(),e=$('se2-session');e.textContent=s.ph;e.style.c
   $('se2-clock').textContent='NY '+s.ny+' · WIB '+new Date().toLocaleTimeString('id-ID',{timeZone:'Asia/Jakarta',hour12:false});
   $('se2-cd').textContent=s.cd+' · Refresh data dalam '+nextPoll+' dtk'}
 var MAC=[['Futures Indeks',[['ES=F','S&P 500 (ES)',7650],['NQ=F','Nasdaq-100 (NQ)',27500],['YM=F','Dow (YM)',48500],['RTY=F','Russell 2000 (RTY)',2450]]],
- ['Sentimen & Makro',[['^VIX','VIX',17],['DX-Y.NYB','Indeks Dolar',99],['^TNX','Yield UST 10Y',4.1],['GC=F','Emas',4000],['CL=F','Minyak WTI',60],['BTC-USD','Bitcoin',90000]]]];
+ ['Sentimen & Makro',[['^VIX','VIX',17],['DX-Y.NYB','Indeks Dolar',99],['^TNX','Yield UST 10Y',4.1],['GC=F','Emas',4000],['CL=F','Minyak WTI',60],['BTC-USD','Bitcoin',89600]]],
+ ['Obligasi & Kurs',[['^FVX','Yield UST 5Y',3.8],['^TYX','Yield UST 30Y',4.7],['EURUSD=X','EUR/USD',1.16],['JPY=X','USD/JPY',155],['IDR=X','USD/IDR',16700],['GBPUSD=X','GBP/USD',1.31]]],
+ ['Komoditas & Kripto',[['SI=F','Perak',50],['HG=F','Tembaga',5.1],['NG=F','Gas Alam',3.2],['ETH-USD','Ethereum',3100]]]];
 MAC.forEach(function(g){g[1].forEach(function(a){if(!S[a[0]])mk(a[0],a[1],a[2])})});
 function rMac(){var el=$('se2-mac');if(!el)return;var lv=0,tt=0;
  el.innerHTML=MAC.map(function(g){return '<div><div class="text-[10px] text-gray-500 uppercase tracking-wider mb-1.5">'+g[0]+'</div><div class="grid grid-cols-2 gap-2">'+g[1].map(function(a){var o=S[a[0]];if(!o)return '';tt++;if(o.src==='live')lv++;
-  var y=a[0]==='^TNX',d=y?(o.p-o.pc)*100:pct(o),c=col(a[0]==='^VIX'?-d:d),big=o.p>=1000;
-  return '<div class="p-2.5 bg-black/50 border border-card-border rounded-xl min-w-0"><div class="text-[10px] text-gray-400 truncate">'+esc(a[1])+'</div><div class="flex items-baseline justify-between gap-1 mt-0.5"><span class="font-mono font-bold text-white">'+(y?F(o.p,3)+'%':F(o.p,big?0:2))+'</span><span class="font-mono text-[11px]" style="color:'+c+'">'+(d>=0?'+':'')+F(d,2)+(y?' bp':'%')+'</span></div></div>'}).join('')+'</div></div>'}).join('');
+  var y=a[0]==='^TNX'||a[0]==='^FVX'||a[0]==='^TYX',d=y?(o.p-o.pc)*100:pct(o),c=col(a[0]==='^VIX'?-d:d),big=o.p>=1000,fx=/USD=X$/.test(a[0])&&o.p<10;
+  return '<div class="p-2.5 bg-black/50 border border-card-border rounded-xl min-w-0"><div class="text-[10px] text-gray-400 truncate">'+esc(a[1])+'</div><div class="flex items-baseline justify-between gap-1 mt-0.5"><span class="font-mono font-bold text-white">'+(y?F(o.p,3)+'%':F(o.p,big?0:(fx?4:2)))+'</span><span class="font-mono text-[11px]" style="color:'+c+'">'+(d>=0?'+':'')+F(d,2)+(y?' bp':'%')+'</span></div></div>'}).join('')+'</div></div>'}).join('');
  var t=$('se2-mac-tag');if(t){t.className='se2-tag '+(lv?'se2-live':'se2-sim');t.textContent=lv?'LIVE '+lv+'/'+tt:'OFF'}}
 function holidays(){var n=ny(),t=Date.UTC(n.y,n.m-1,n.d),all=[];Object.keys(HOL).forEach(function(k){all.push([k,HOL[k],0])});Object.keys(EARLY).forEach(function(k){all.push([k,EARLY[k],1])});
   all.sort();var out=all.filter(function(a){var p=a[0].split('-');return Date.UTC(+p[0],p[1]-1,+p[2])>=t}).slice(0,5);
@@ -13217,31 +13220,43 @@ function rRadar(R,L){var V=radVals(),cnt=0,sm=0,lg=0,sh=0,gl=[0,0,0,0];RAD.V=V;
   if(!lh||snap.some(function(v,i){return Math.abs(v-lh[i])>.03})){RAD2.hist.push(snap);if(RAD2.hist.length>6)RAD2.hist.shift()}
   RAD2.R=R;RAD2.L=L;RAD2.sc=sc;RAD2.lv=lv;RAD2.d=d;RAD2.lg=lg;RAD2.sh=sh;RAD2.gl=gl;
   radDraw();
-  var e=$('se2-dec');if(!e)return;
+  var e=$('se2-dec');if(!e)return;e.style.alignItems='stretch';
   var top=V.filter(function(x){return x.s}).sort(function(a,b){return Math.abs(b.v)-Math.abs(a.v)}).slice(0,3),ls=lv>.33?'LONG':lv<-.33?'SHORT':'NETRAL',diff=(sc>.33&&lv<-.33)||(sc<-.33&&lv>.33),
    sp=SEC.map(function(s){return {k:s[0],n:s[1],p:pct(S[s[0]])}}).sort(function(a,b){return b.p-a.p}),
    av=function(Q){var v=sp.filter(function(q){return Q.indexOf(q.k)>=0});return v.reduce(function(s,q){return s+q.p},0)/(v.length||1)},rd=av(CYC)-av(DEF),
    rg=rd>.15?['RISK-ON',UP]:rd<-.15?['RISK-OFF',DN]:['NETRAL','#fbbf24'],up=sp.filter(function(q){return q.p>=0}).length,
-   box='bg-black/50 border border-card-border rounded-xl p-3 space-y-2 min-w-0',
-   hd=function(t,r){return '<div class="flex items-center justify-between"><span class="text-[10px] text-gray-500 uppercase tracking-wider">'+t+'</span>'+(r||'')+'</div>'},
+   box='bg-black/50 border border-card-border rounded-xl p-3 space-y-2 min-w-0 flex flex-col',
+   hd=function(t,r){return '<div class="flex items-center justify-between gap-2 min-h-[28px]"><span class="min-w-0 text-[10px] leading-tight text-gray-500 uppercase tracking-wider">'+t+'</span>'+(r?'<span class="shrink-0">'+r+'</span>':'')+'</div>'},
    tile=function(h2,v2,c2,s2){return '<div class="bg-black/50 border border-card-border rounded-lg p-2 min-w-0"><div class="text-[9px] text-gray-500 uppercase">'+h2+'</div><b class="font-mono text-xs" style="color:'+c2+'">'+v2+'</b>'+(s2?' <span class="text-[10px] text-gray-400">'+s2+'</span>':'')+'</div>'};
+  var ta=0,tn=0,oa=0,on=0;V.forEach(function(x,j){if(!x.s)return;if(VN[j][1]){oa+=x.v;on++}else{ta+=x.v;tn++}});ta=tn?ta/tn:0;oa=on?oa/on:0;
+  var pc=function(v){return (v>=0?'+':'')+Math.round(v*100)+'%'},bst=sp[0],wst=sp[sp.length-1];
   var bars=V.map(function(x,j){var cc=x.s>0?UP:x.s<0?DN:'#6b7280';return '<div class="flex items-center gap-1.5 py-[2px]"><span class="w-[76px] truncate text-[9px]" style="color:'+(VN[j][1]?'#c084fc':'#38bdf8')+'">'+esc(x.n)+'</span><div class="relative flex-1 h-1.5 rounded bg-neutral-800"><div class="absolute top-0 h-1.5 rounded" style="background:'+cc+';'+(x.v>=0?'left:50%':'right:50%')+';width:'+(Math.abs(x.v)*50)+'%"></div><div class="absolute left-1/2 -top-px w-px h-2 bg-gray-500"></div></div><span class="w-[44px] text-right font-mono text-[9px] text-gray-300">'+esc(x.t)+'</span></div>'}).join('');
-  var tiles=sp.map(function(q){var cc=col(q.p);return '<div class="rounded px-1 py-1 text-center" style="background:'+cc+'22;border:1px solid '+cc+'44" title="'+esc(q.n)+'"><div class="text-[9px] font-bold text-white">'+q.k+'</div><div class="text-[9px] font-mono" style="color:'+cc+'">'+(q.p>=0?'+':'')+F(q.p,1)+'%</div></div>'}).join('');
+  var dbar=function(lbl,lc,v,t){var cc=v>.0001?UP:v<-.0001?DN:'#6b7280';return '<div class="flex items-center gap-1.5 py-[1px]"><span class="w-[76px] truncate text-[9px]" style="color:'+lc+'">'+lbl+'</span><div class="relative flex-1 h-1.5 rounded bg-neutral-800"><div class="absolute top-0 h-1.5 rounded" style="background:'+cc+';'+(v>=0?'left:50%':'right:50%')+';width:'+Math.min(50,Math.abs(v)*50)+'%"></div><div class="absolute left-1/2 -top-px w-px h-2 bg-gray-500"></div></div><span class="w-[44px] text-right font-mono text-[9px] text-gray-300">'+t+'</span></div>'},
+   lbl9=function(t){return '<div class="text-[9px] text-gray-500 uppercase tracking-wider mb-1">'+t+'</div>'},
+   mxs=Math.max(.5,Math.max.apply(null,sp.map(function(q){return Math.abs(q.p)}))),
+   secBlock='<div>'+lbl9('Kinerja harian per sektor')+sp.map(function(q){return dbar(q.k,'#e5e7eb',q.p/mxs,(q.p>=0?'+':'')+F(q.p,2)+'%')}).join('')+'</div>',
+   H=RAD2.hist.map(function(sn){var a=0;sn.forEach(function(v){a+=v});return sn.length?a/sn.length:0}),
+   H2=H.length>1?H:[H[0]||0,H[0]||0],
+   spk=H2.map(function(v,i){return (i/(H2.length-1)*120).toFixed(1)+','+(18-Math.max(-1,Math.min(1,v))*15).toFixed(1)}).join(' '),
+   grpBlock='<div>'+lbl9('Kekuatan per kelompok')+dbar('Trend','#38bdf8',ta,pc(ta))+dbar('Osilator','#c084fc',oa,pc(oa))+dbar('Gabungan','#f8fafc',lv,pc(lv))+'<div class="flex justify-between text-[10px] mt-1"><span class="text-gray-400">Indikator netral</span><b class="font-mono text-gray-300">'+(V.length-cnt)+' / '+V.length+'</b></div></div>',
+   hisBlock='<div>'+lbl9('Riwayat skor live ('+H.length+' pembaruan)')+'<svg viewBox="0 0 120 36" preserveAspectRatio="none" class="w-full h-9"><line x1="0" y1="18" x2="120" y2="18" stroke="#6b7280" stroke-dasharray="3 3" stroke-width=".6"/><polyline points="'+spk+'" fill="none" stroke="'+c+'" stroke-width="1.6" vector-effect="non-scaling-stroke"/></svg></div>';
+  
+  var tiles=sp.map(function(q){var cc=col(q.p);return '<div class="rounded px-1 h-9 flex flex-col items-center justify-center text-center" style="background:'+cc+'22;border:1px solid '+cc+'44" title="'+esc(q.n)+'"><div class="text-[9px] font-bold text-white">'+q.k+'</div><div class="text-[9px] font-mono" style="color:'+cc+'">'+(q.p>=0?'+':'')+F(q.p,1)+'%</div></div>'}).join('');
   var gtxt=function(lbl,gc,a,b){return '<div class="flex items-center justify-between text-[10px]"><span style="color:'+gc+'">'+lbl+'</span><span class="font-mono"><b style="color:'+UP+'">'+a+'▲</b> <b style="color:'+DN+'">'+b+'▼</b></span></div>'};
   e.innerHTML=
    '<div class="'+box+'">'+hd('Radar Keputusan · '+esc(M.sym),'<span class="flex items-center gap-1 text-[10px]" style="color:'+c+'"><span class="se2-pulse"></span>SCANNING</span>')+
-    '<div class="rounded-lg p-2.5 text-center" style="border:1px solid '+c+'66;background:'+c+'14"><div class="text-[9px] text-gray-400 uppercase tracking-wider">Keputusan terkonfirmasi close</div><div class="text-base font-extrabold" style="color:'+c+'">'+d[0]+'</div><div class="font-mono text-[11px] text-gray-300">Skor MTPI '+(sc>=0?'+':'')+F(sc)+'</div></div>'+
+    '<div class="rounded-lg p-2.5 text-center flex flex-col justify-center xl:h-[116px]" style="border:1px solid '+c+'66;background:'+c+'14"><div class="text-[9px] text-gray-400 uppercase tracking-wider">Keputusan terkonfirmasi close</div><div class="text-base font-extrabold" style="color:'+c+'">'+d[0]+'</div><div class="font-mono text-[11px] text-gray-300">Skor MTPI '+(sc>=0?'+':'')+F(sc)+'</div></div>'+
     '<div class="grid grid-cols-2 gap-2">'+tile('Skor live',(lv>=0?'+':'')+F(lv),col(lv),ls)+tile('Keyakinan',Math.round(Math.abs(sc)*100)+'%','#f8fafc','')+tile('Regime',R.regime+' bar','#f8fafc','')+tile('EMA setuju',R.agree+'%','#f8fafc','')+'</div>'+
-    '<div><div class="flex justify-between text-[10px] mb-1"><b style="color:'+UP+'">'+lg+' LONG</b><b style="color:'+DN+'">'+sh+' SHORT</b></div><div class="flex h-2 rounded-full overflow-hidden bg-neutral-800"><div style="width:'+(cnt?lg/cnt*100:0)+'%;background:'+UP+'"></div><div style="width:'+(cnt?sh/cnt*100:0)+'%;background:'+DN+'"></div></div></div>'+
-    gtxt('Trend-following ('+VN.filter(function(v){return !v[1]}).length+')','#38bdf8',gl[0],gl[1])+gtxt('Osilator ('+VN.filter(function(v){return v[1]}).length+')','#c084fc',gl[2],gl[3])+
-    (diff?'<div class="text-[10px] text-amber-400">Sinyal live berlawanan dengan bar terkonfirmasi — tunggu close.</div>':'')+'</div>'+
-   '<div class="'+box+'">'+hd('Medan Indikator (12)','<span class="text-[9px] text-gray-500">&larr; SHORT | LONG &rarr;</span>')+bars+
+    '<div class="flex-1 flex flex-col justify-evenly gap-2"><div><div class="flex justify-between text-[10px] mb-1"><b style="color:'+UP+'">'+lg+' LONG</b><b style="color:'+DN+'">'+sh+' SHORT</b></div><div class="flex h-2 rounded-full overflow-hidden bg-neutral-800"><div style="width:'+(cnt?lg/cnt*100:0)+'%;background:'+UP+'"></div><div style="width:'+(cnt?sh/cnt*100:0)+'%;background:'+DN+'"></div></div></div>'+
+    '<div class="space-y-2">'+gtxt('Trend-following ('+VN.filter(function(v){return !v[1]}).length+')','#38bdf8',gl[0],gl[1])+gtxt('Osilator ('+VN.filter(function(v){return v[1]}).length+')','#c084fc',gl[2],gl[3])+'</div>'+
+    (diff?'<div class="text-[10px] text-amber-400">Sinyal live berlawanan dengan bar terkonfirmasi — tunggu close.</div>':'')+grpBlock+hisBlock+'<div class="grid grid-cols-2 gap-2">'+tile('Rata trend',pc(ta),col(ta),'')+tile('Rata osilator',pc(oa),col(oa),'')+'</div></div></div>'+
+   '<div class="'+box+'">'+hd('Medan Indikator (12)','')+bars+'<div class="flex pl-[82px] pr-[50px] text-[9px] text-gray-500"><span class="flex-1 text-right pr-1.5">&larr; SHORT</span><span class="w-px bg-gray-600"></span><span class="flex-1 pl-1.5">LONG &rarr;</span></div>'+
     '<div class="pt-1 border-t border-card-border/50"><div class="text-[9px] text-gray-500 uppercase tracking-wider mb-1">Sinyal terkuat terdeteksi</div>'+top.map(function(x){return '<div class="flex justify-between py-0.5"><span class="text-gray-300">'+esc(x.n)+'</span><b style="color:'+col(x.v)+'">'+(x.s>0?'▲ LONG':'▼ SHORT')+' '+Math.round(Math.abs(x.v)*100)+'%</b></div>'}).join('')+'</div></div>'+
    '<div class="'+box+'">'+hd('Orbit Sektor (11)','<span class="se2-tag" style="color:'+rg[1]+';border-color:'+rg[1]+'66">'+rg[0]+'</span>')+
     '<div class="grid grid-cols-4 gap-1">'+tiles+'</div>'+
     '<div class="grid grid-cols-2 gap-2">'+tile('Siklikal',(av(CYC)>=0?'+':'')+F(av(CYC),2)+'%',col(av(CYC)),'')+tile('Defensif',(av(DEF)>=0?'+':'')+F(av(DEF),2)+'%',col(av(DEF)),'')+tile('Spread',(rd>=0?'+':'')+F(rd,2)+'%',col(rd),'')+tile('Breadth',up+' / '+sp.length,up>=6?UP:DN,'naik')+'</div>'+
-    '<div class="text-[9px] text-gray-500">Cincin luar = % perubahan harian 11 sektor (naik = keluar dari garis dasar). Cincin dalam = 18 indikator MTPI. Garis putus-putus putih = sinyal terkonfirmasi close.</div>'+
-    '<div class="text-[9px] text-gray-500">Analisis indikator otomatis, bukan saran investasi.</div></div>'}
+    '<div class="flex-1 flex flex-col justify-evenly gap-2">'+secBlock+'<div class="grid grid-cols-2 gap-2">'+tile('Terkuat',bst.k,col(bst.p),(bst.p>=0?'+':'')+F(bst.p,1)+'%')+tile('Terlemah',wst.k,col(wst.p),(wst.p>=0?'+':'')+F(wst.p,1)+'%')+'</div><div class="text-[9px] text-gray-500">Cincin luar = % perubahan harian 11 sektor (naik = keluar dari garis dasar). Cincin dalam = 18 indikator MTPI. Garis putus-putus putih = sinyal terkonfirmasi close.</div>'+
+    '<div class="text-[9px] text-gray-500">Analisis indikator otomatis, bukan saran investasi.</div></div></div>'}
 var SW={a:0,t:0};
 function sweepFrame(ts){requestAnimationFrame(sweepFrame);if(ts-SW.t<33)return;var dt=SW.t?Math.min(.1,(ts-SW.t)/1000):0;SW.t=ts;SW.a=(SW.a+dt*.75)%RP;
   var cv=$('se2-sweep');if(!cv||!RAD2.R||!active())return;var z=radSize();if(!z)return;if(z.ch)radDraw();
