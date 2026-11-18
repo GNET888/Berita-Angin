@@ -8744,7 +8744,7 @@ function parse(s){var out=[];(s||'').split(/[\s,;]+/).forEach(function(x){if(x==
             { name: 'Nifty 50', region: 'India', category: 'Ekuitas Berkembang', value: '25,144.30', change: '-0.61%', status: 'Tutup' },
             { name: 'KOSPI', region: 'Korea Selatan', category: 'Ekuitas Utama', value: '5,290.53', change: '-0.98%', status: 'Tutup' },
             { name: 'ASX 200', region: 'Australia', category: 'Ekuitas Pasifik', value: '9,072.60', change: '-0.81%', status: 'Tutup' },
-            { name: 'IHSG', region: 'Indonesia', category: 'Ekuitas Domestik', value: '5,344.41', change: '+1.78%', status: 'Tutup' },
+            { name: 'IHSG', region: 'Indonesia', category: 'Ekuitas Domestik', value: '5,327.41', change: '+0.43%', status: 'Tutup' },
             { name: 'Straits Times Index', region: 'Singapura', category: 'Ekuitas Asia Tenggara', value: '5,413.42', change: '-0.03%', status: 'Tutup' },
             { name: 'MSCI Emerging Markets', region: 'Global', category: 'Pasar Berkembang', value: '1,745.36', change: '+0.02%', status: 'Tutup' },
             { name: 'Spot Gold (XAU)', region: 'Global', category: 'Logam Mulia', value: '$3,908.66', change: '+0.83%', status: 'Buka' },
@@ -10015,7 +10015,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     '^N225': { p: 62693.16, d: -0.34 }, '^FTSE': { p: 10690.36, d: -0.32 }, '^STOXX50E': { p: 6068.22, d: -0.31 },
     '000001.SS': { p: 3690.48, d: 0.89 }, '^GSPC': { p: 7623.68, d: -0.52 }, '^NSEI': { p: 22600.00, d: -0.39 },
     '^HSI': { p: 23093.37, d: 0.69 }, '^KS11': { p: 5550.30, d: 0.30 }, '^TWII': { p: 46041.43, d: 0, note: 'Bursa Taiwan libur 23 Okt; penutupan 22 Okt' },
-    '^STI': { p: 5413.42, d: -0.03 }, '^JKSE': { p: 5439.26, d: 0.95 }, '^GDAXI': { p: 25181.65, d: -0.75 },
+    '^STI': { p: 5413.42, d: -0.03 }, '^JKSE': { p: 5327.41, d: 0.43 }, '^GDAXI': { p: 25181.65, d: -0.75 },
     '^FCHI': { p: 7782.82, d: -0.36 }, '^AXJO': { p: 8795.20, d: 0.02 }, '^BVSP': { p: 205082.56, d: 0.47 },
     '^GSPTSE': { p: 35788.18, d: -0.52 }, 'FTSEMIB.MI': { p: 48558.86, d: -0.36 }
   };
@@ -11036,7 +11036,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     ["FTSE 100","Inggris / Eropa","Ekuitas Regional","10,863.09","+0.25%","eu","s"], ["DAX Performance Index","Jerman / Eropa","Ekuitas Utama","26,771.88","+0.41%","eu","s"], ["CAC 40","Prancis / Eropa","Ekuitas Utama","8,361.36","+0.34%","eu","s"], ["Euro Stoxx 50","Zona Euro","Indeks Gabungan","6,398.98","+0.09%","eu","s"],
     ["Nikkei 225","Jepang / Asia","Ekuitas Utama","61,142.35","+0.53%","jp","s"], ["TOPIX Index","Jepang / Asia","Ekuitas Luas","3,941.57","+0.11%","jp","s"], ["Hang Seng Index","Hong Kong","Ekuitas Asia","23,573.99","-1.81%","cn","s"], ["Shanghai Composite","Tiongkok","Ekuitas Domestik","3,634.26","-0.59%","cn","s"],
     ["CSI 300","Tiongkok","Saham Unggulan","4,043.93","-0.78%","cn","s"], ["Nifty 50","India","Ekuitas Berkembang","25,144.30","-0.61%","in","s"], ["KOSPI","Korea Selatan","Ekuitas Utama","5,290.53","-0.98%","kr","s"], ["ASX 200","Australia","Ekuitas Pasifik","9,072.60","-0.81%","au","s"],
-    ["IHSG","Indonesia","Ekuitas Domestik","5,304.76","-0.30%","id","s"], ["Straits Times Index","Singapura","Ekuitas Asia Tenggara","5,413.42","-0.03%","sg","s"], ["MSCI Emerging Markets","Global","Pasar Berkembang","1,745.36","+0.02%","gl","s"], ["Spot Gold (XAU)","Global","Logam Mulia","$3,908.66","+0.83%","gl","k"],
+    ["IHSG","Indonesia","Ekuitas Domestik","5,327.41","+0.43%","id","s"], ["Straits Times Index","Singapura","Ekuitas Asia Tenggara","5,413.42","-0.03%","sg","s"], ["MSCI Emerging Markets","Global","Pasar Berkembang","1,745.36","+0.02%","gl","s"], ["Spot Gold (XAU)","Global","Logam Mulia","$3,908.66","+0.83%","gl","k"],
     ["Spot Silver (XAG)","Global","Logam Mulia","$50.43","+0.83%","gl","k"], ["Crude Oil WTI","Global","Energi / Minyak","$88.25","-0.55%","gl","k"], ["Brent Crude Oil","Global","Energi / Minyak","$95.66","-0.17%","gl","k"], ["Natural Gas","Global","Energi / Komoditas","$3.306","-1.64%","gl","k"],
     ["Copper Futures","Global","Logam Industri","$13,647.00","+0.13%","gl","k"], ["US Dollar Index (DXY)","Amerika Serikat","Mata Uang / Valas","103.10","+0.28%","gl","v"], ["Bloomberg Commodity Index","Global","Komoditas Gabungan","140.19","+0.00%","gl","k"], ["Bitcoin Dominance Index","Global","Indeks Aset Kripto","56.4%","+0.44%","cx","v"]
   ];
@@ -15022,7 +15022,7 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
 (function(){
 var W=window,D=document,enc=encodeURIComponent,$=function(i){return D.getElementById(i)};
 var LV=W.__LV=W.__LV||{};
-var P=[function(u){return W.__BA_PROXY?'/api/proxy?url='+enc(u):null},function(u){return u},function(u){return 'https://api.codetabs.com/v1/proxy?quest='+enc(u)},function(u){return 'https://corsproxy.io/?'+enc(u)}];
+var P=[function(u){return W.__BA_PROXY?'/api/proxy?url='+enc(u):null},function(u){return u},function(u){return 'https://api.codetabs.com/v1/proxy?quest='+enc(u)},function(u){return 'https://corsproxy.io/?'+enc(u)},function(u){return 'https://api.allorigins.win/raw?url='+enc(u)},function(u){return 'https://thingproxy.freeboard.io/fetch/'+u}];
 function get(u){return window.__baFetch(P,u,false,8000)}
 function chart(sym,rg,iv){var q='/v8/finance/chart/'+enc(sym)+'?range='+rg+'&interval='+iv;return get('https://query1.finance.yahoo.com'+q).catch(function(){return get('https://query2.finance.yahoo.com'+q)}).then(function(j){
  var r=j.chart.result[0],m=r.meta,q=r.indicators.quote[0].close||[],ts=r.timestamp||[],a=[],i;
@@ -15099,7 +15099,7 @@ function render(){var box=$('ms-bias');if(!box)return;var el=$('ms-daily');
  var rows=ST.days.slice(-14).reverse().map(function(r){return '<tr class="border-t border-card-border"><td class="py-1.5 pr-3 text-gray-400">'+r.d+'</td><td class="pr-3">$'+f(r.btc,0)+' '+ch(r.btcc)+'</td><td class="pr-3">$'+f(r.eth,0)+'</td><td class="pr-3">'+f(r.spx,0)+' '+ch(r.spxc)+'</td><td class="pr-3">'+f(r.ndx,0)+' '+ch(r.ndxc)+'</td><td class="pr-3">$'+f(r.gold,0)+' '+ch(r.goldc)+'</td><td class="pr-3">'+f(r.dxy,2)+'</td><td class="pr-3">'+(r.fng==null?'--':r.fng)+'</td><td>'+(r.alt==null?'--':r.alt)+'</td></tr>'}).join('');
  el.innerHTML='<div class="flex items-center justify-between mb-2"><h3 class="text-sm font-bold text-white"><i class="fa-solid fa-calendar-day text-brand-accent mr-1.5"></i>Rangkuman Harian (Online)</h3><span class="text-[10px] font-mono text-gray-500">'+(ST.t?'Sinkron '+new Date(ST.t).toLocaleTimeString('id-ID',{hour12:false}).replace(/\./g,':'):'belum sinkron')+'</span></div><p class="text-xs text-gray-300 mb-3">'+summary()+'</p><div class="overflow-x-auto"><table class="w-full text-[11px] font-mono text-white whitespace-nowrap"><thead class="text-gray-500 text-left"><tr><th class="pb-1 pr-3">Tanggal</th><th class="pr-3">BTC</th><th class="pr-3">ETH</th><th class="pr-3">S&amp;P 500</th><th class="pr-3">NASDAQ</th><th class="pr-3">Emas</th><th class="pr-3">DXY</th><th class="pr-3">F&amp;G</th><th>Alt</th></tr></thead><tbody>'+rows+'</tbody></table></div><p class="text-[10px] text-gray-500 mt-2">Riwayat terkumpul tiap hari dari data online dan disimpan di perangkat ini (maks. 90 hari).</p>'}
 var busy=0;function sync(){if(busy)return;busy=1;Promise.all([liveCrypto(),liveStock(),liveGlobal()]).then(function(){snap()}).catch(function(){}).then(function(){busy=0;render()})}
-render();setTimeout(sync,1500);setInterval(function(){if(!D.hidden)sync()},2*60*1000);
+render();setTimeout(sync,1500);setInterval(function(){if(!D.hidden)sync()},60*1000);
 var dk=function(){return new Date().toISOString().slice(0,10)},day0=dk();
 setInterval(function(){if(dk()!==day0){day0=dk();sync()}},30000);
 setTimeout(function(){var q=W.__GMLIVE;if(!q||q.ok<q.total*.6)sync()},20000);
@@ -15702,7 +15702,7 @@ window.addEventListener('load',function(){navigator.serviceWorker.register('sw.j
         '<div style="text-align:right;font:600 10px ui-monospace,monospace"><div style="color:#e2e8f0">'+esc(x.v)+'</div><div style="color:'+col+'">'+(x.c>=0?'▲ ':'▼ ')+fmt(x.c)+'</div></div></div>'});
     var box=D.getElementById('ba-gmp-list'),sc0=box.scrollTop;box.innerHTML=h||'<div style="color:#64748b;font-size:11px;padding:8px 0">Belum ada data.</div>';box.scrollTop=sc0;
     var q=W.__GMLIVE,tm=q?new Date(q.ts).toLocaleTimeString('id-ID',{hour12:false}).replace(/\./g,':'):'--';
-    (function(t){var e=D.getElementById('ba-gmp-ft');if(e&&e.textContent!==t)e.textContent=t})('Data online harian (Yahoo Finance, cadangan Stooq, CoinGecko) \u00b7 '+(q?q.ok+'/'+q.total+' pasar tersinkron \u00b7 sinkron '+tm:'menyinkronkan\u2026')+' \u00b7 pembaruan otomatis tiap 2 menit & saat ganti hari \u00b7 \u25cf pasar buka \u25cb tutup \u00b7 \u201ctertunda\u201d = belum ada data terbaru, tidak dihitung di statistik');
+    (function(t){var e=D.getElementById('ba-gmp-ft');if(e&&e.textContent!==t)e.textContent=t})('Data online harian (Yahoo Finance, cadangan Stooq, CoinGecko) \u00b7 '+(q?q.ok+'/'+q.total+' pasar tersinkron \u00b7 sinkron '+tm:'menyinkronkan\u2026')+' \u00b7 pembaruan otomatis tiap 1 menit (IHSG tiap 30 dtk) & saat ganti hari \u00b7 \u25cf pasar buka \u25cb tutup \u00b7 \u201ctertunda\u201d = belum ada data terbaru, tidak dihitung di statistik');
   }
   W.__baGmpPaint=function(){try{paintPanel()}catch(e){}};
   function sync(force){
@@ -22257,5 +22257,39 @@ html body #gm-sub-1 .gm1-side>*{min-width:0}
   html #xp-tools button{min-width:36px}
 }
 </style>
+<script id="ba-ihsg-auto">
+/* IHSG OTOMATIS (proxy luar, tiap saat): Yahoo chart -> Yahoo quote -> Stooq lewat rantai proxy window.__baFetch
+   (Worker pribadi bila diisi, /api/proxy, langsung, codetabs, corsproxy, allorigins, thingproxy).
+   Jalan tiap 30 dtk saat tab terlihat, saat tab dibuka lagi, saat online kembali; gagal = rute berikutnya + jeda bertahap. */
+(function(){
+  var W=window,D=document,enc=encodeURIComponent,F=W.__baFetch;if(!F)return;
+  var P=[function(u){return W.__BA_PROXY?'/api/proxy?url='+enc(u):null},function(u){return u},
+    function(u){return 'https://api.codetabs.com/v1/proxy?quest='+enc(u)},function(u){return 'https://corsproxy.io/?'+enc(u)},
+    function(u){return 'https://api.allorigins.win/raw?url='+enc(u)},function(u){return 'https://thingproxy.freeboard.io/fetch/'+u}];
+  var ok=function(r){return r&&r.px>1000&&r.px<30000&&r.prev>1000&&Math.abs(r.px/r.prev-1)<.2?r:Promise.reject(0)};
+  function yh(p){return F(P,'https://query1.finance.yahoo.com'+p,false,8000).catch(function(){return F(P,'https://query2.finance.yahoo.com'+p,false,8000)})}
+  function sChart(){return yh('/v8/finance/chart/%5EJKSE?range=5d&interval=1d').then(function(j){
+    var r=j.chart.result[0],m=r.meta,a=(r.indicators.quote[0].close||[]).filter(function(v){return v!=null&&isFinite(v)}),n=a.length,px=m.regularMarketPrice||a[n-1];
+    return ok({px:px,prev:(n>1&&Math.abs(a[n-1]/px-1)<1e-4)?a[n-2]:a[n-1],h:a})})}
+  function sQuote(){return yh('/v7/finance/quote?symbols=%5EJKSE').then(function(j){var q=j.quoteResponse.result[0];return ok({px:q.regularMarketPrice,prev:q.regularMarketPreviousClose,h:[]})})}
+  function sStooq(){return F(P,'https://stooq.com/q/d/l/?s=%5Ejci&i=d',true,9000).then(function(t){
+    var r=String(t).trim().split(/\r?\n/).slice(1).map(function(l){return l.split(',')}).filter(function(c){return c.length>=5&&+c[4]>0}),h=r.slice(-40).map(function(c){return +c[4]});
+    return ok({px:h[h.length-1],prev:h[h.length-2],h:h})})}
+  var fails=0,busy=0,last=0,timer;
+  function apply(r){var G=W.__GM,o=G&&G.items&&G.items.filter(function(x){return x.n==='IHSG'})[0];if(!o)return;
+    o.liveAt=Date.now();o.v=o.v0=r.px;o.p=r.prev;o.live=1;
+    if(r.h&&r.h.length>3){var h=r.h.slice(-40);h[h.length-1]=r.px;o.h=h}else if(o.h&&o.h.length)o.h[o.h.length-1]=r.px;
+    try{W.__LV&&(W.__LV.ihsg=r.px)}catch(e){}
+    try{W.__baGmpPaint&&W.__baGmpPaint()}catch(e){}
+    try{D.dispatchEvent(new CustomEvent('ba:ihsg',{detail:{px:r.px,prev:r.prev,pct:(r.px/r.prev-1)*100,t:Date.now()}}))}catch(e){}}
+  function run(){if(busy||(D.hidden&&last))return;busy=1;
+    sChart().catch(sQuote).catch(sStooq).then(function(r){fails=0;last=Date.now();apply(r)},function(){fails++}).then(function(){busy=0;sched()})}
+  function sched(){clearTimeout(timer);timer=setTimeout(run,Math.min(30000*Math.pow(2,Math.min(fails,2)),120000))}
+  W.__baIhsgNow=run;
+  setTimeout(run,2500);
+  D.addEventListener('visibilitychange',function(){if(!D.hidden&&Date.now()-last>15000){clearTimeout(timer);run()}});
+  W.addEventListener('online',function(){fails=0;clearTimeout(timer);setTimeout(run,500)});
+})();
+</script>
 </body>
 </html>
