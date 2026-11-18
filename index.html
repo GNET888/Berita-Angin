@@ -137,6 +137,10 @@ W.__baOff=function(el){try{var r=el.getBoundingClientRect();return r.bottom<-80|
 window.BA_SUPABASE={url:'ISI_URL_SUPABASE',anonKey:'ISI_ANON_PUBLIC_KEY'};</script>
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script defer src="ba-cloud.js"></script>
+<script id="ba-flash-helper">/* Flash harga tanpa memaksa layout per baris: tambah kelas animasi di frame berikutnya (batch). */
+(function(){var q=[],busy=false;window.__baFlash=function(el,up){el.classList.remove('cx-fu','cx-fd');q.push([el,up?'cx-fu':'cx-fd']);if(busy)return;busy=true;
+requestAnimationFrame(function(){requestAnimationFrame(function(){var a=q;q=[];busy=false;for(var i=0;i<a.length;i++)a[i][0].classList.add(a[i][1])})})}})();
+</script>
 <link rel="manifest" href="manifest.webmanifest?v=2">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -6790,7 +6794,7 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
       <div class="flex flex-wrap items-center gap-1.5 text-[10px]" id="se2-chips"></div>
       <div class="flex gap-2"><input id="se2-q" maxlength="10" placeholder="Cari ticker AS, mis. AMD" class="flex-1 min-w-0 bg-black/50 border border-card-border rounded-lg px-3 py-1.5 text-xs text-white outline-none focus:border-brand-accent"><button id="se2-go" type="button" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-primary text-white">Muat</button></div>
       <div class="space-y-3">
-        <div class="flex flex-wrap items-center justify-between gap-2 text-[10px] uppercase tracking-wider text-gray-500"><span>Radar Multi-Lapis &bull; 12 indikator MTPI (dalam) + orbit 11 sektor (luar)</span><span class="flex items-center gap-1.5"><span class="se2-pulse"></span>sapuan otomatis &bull; arahkan kursor ke blip</span></div>
+        <div class="flex flex-wrap items-center justify-between gap-2 text-[10px] uppercase tracking-wider text-gray-500"><span>Radar Multi-Lapis &bull; 18 indikator MTPI (dalam) + orbit 11 sektor (luar)</span><span class="flex items-center gap-1.5"><span class="se2-pulse"></span>sapuan otomatis &bull; arahkan kursor ke blip</span></div>
 <div class="se2-rl"><div class="se2-rl-l"><div class="se2-sl bg-black/50 border border-card-border rounded-xl p-3"><div class="flex items-center justify-between mb-2"><h4 class="text-[11px] font-bold text-white uppercase tracking-wide">Daftar Sektor &amp; Saham Utama</h4><span class="text-[9px] text-gray-500">klik ETF / saham &rarr; MTPI</span></div><div id="se2-seclist" class="space-y-1.5 max-h-[440px] overflow-y-auto pr-1"></div></div></div><div class="se2-rr"><div class="flex items-center justify-center"><div id="se2-radwrap" class="relative w-full max-w-[min(100%,380px)] sm:max-w-[400px] aspect-square mx-auto rounded-2xl overflow-hidden border border-card-border" style="max-width:min(100%,400px);margin-left:auto;margin-right:auto;background:radial-gradient(circle at 50% 50%,rgba(56,189,248,.08),rgba(2,6,12,.94) 74%);box-shadow:inset 0 0 60px rgba(56,189,248,.06)"><canvas id="se2-main" style="position:absolute;left:0;top:0;width:100%;height:100%"></canvas><canvas id="se2-sweep" style="position:absolute;left:0;top:0;width:100%;height:100%"></canvas><div id="se2-rtip" style="position:absolute;display:none;pointer-events:none;z-index:5;background:rgba(2,6,12,.95);border:1px solid rgba(148,163,184,.35);border-radius:8px;padding:6px 8px;font:600 10px ui-monospace,Menlo,monospace;color:#e5e7eb;white-space:nowrap"></div></div></div></div></div>
         <div id="se2-dec" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 text-[11px]"></div>
       </div>
@@ -6818,8 +6822,9 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
       <div id="se2-breadtxt" class="text-[10px] text-gray-400"></div>
       <div class="overflow-x-auto"><table class="w-full text-xs font-mono"><thead><tr class="text-gray-500 text-[10px] uppercase"><th class="text-left py-1.5">Simbol</th><th class="text-right">Harga</th><th class="text-right">Perubahan</th><th class="text-right hidden sm:table-cell">Volume</th></tr></thead><tbody id="se2-mv"></tbody></table></div>
     </div><div class="bg-card-dark border border-card-border rounded-2xl p-4 sm:p-5 shadow-xl space-y-3 min-w-0">
-      <div class="border-b border-card-border pb-3"><h3 class="text-sm font-bold text-white uppercase tracking-wide">Kalender Libur Bursa AS</h3><p class="text-[11px] text-gray-400">Dihitung otomatis dari tanggal hari ini</p></div>
-      <div id="se2-hol" class="space-y-2 text-xs"></div>
+      <div class="border-b border-card-border pb-3 flex items-start justify-between gap-2"><div><h3 class="text-sm font-bold text-white uppercase tracking-wide">Futures &amp; Makro</h3><p class="text-[11px] text-gray-400">Arah sebelum bursa buka &bull; bergerak saat pasar tutup</p></div><span id="se2-mac-tag" class="se2-tag se2-sim">OFF</span></div>
+      <div id="se2-mac" class="space-y-4 text-xs"></div>
+      <p class="text-[10px] text-gray-500">Futures memakai kontrak front-month. Bukan jaminan arah pembukaan. Jadwal libur bursa tetap ada di kartu Agenda Pasar AS di bawah.</p>
     </div></div>
   </div>
   
@@ -11553,7 +11558,8 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
     c.textAlign = 'left'; c.fillStyle = G.txt; c.fillText('BID ' + fmt(model.cumB[N - 1]), 4, 9); c.textAlign = 'right'; c.fillText('ASK ' + fmt(model.cumA[N - 1]), w - 4, 9);
   }
   window.addEventListener('resize', drawDepth, { passive: true });
-  if (typeof MutationObserver !== 'undefined') new MutationObserver(drawDepth).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  var lastLight = null;
+  if (typeof MutationObserver !== 'undefined') new MutationObserver(function () { var lt = document.documentElement.classList.contains('light'); if (lt === lastLight) return; lastLight = lt; drawDepth(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   step(true); setTimeout(step, 400); setInterval(step, 800);
   /* Render awal tanpa menunggu timer + saat kartu tampil / ukuran berubah (hindari daftar ASK/BID kosong) */
   var kick = function () { try { step(true); } catch (e) {} };
@@ -11564,13 +11570,15 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   if (card && 'IntersectionObserver' in window) new IntersectionObserver(function (en) { if (en[0] && en[0].isIntersecting) kick(); }).observe(card);
   if (card && 'ResizeObserver' in window) new ResizeObserver(function () { drawDepth(); }).observe(card);
   var shown = function () { var c = $('l2-card'); return !!(c && c.offsetParent !== null); };
+  var lastRev = 0;
   var reveal = function () {
+    var nowT = performance.now(); if (nowT - lastRev < 90) return; lastRev = nowT;
     step(true); drawDepth();
     requestAnimationFrame(function () { step(true); drawDepth(); requestAnimationFrame(function () { var c = $('l2-card'); if (c && shown()) c.classList.add('l2-ready'); }); });
   };
   var pg = $('page-stock-exchange');
   if (pg && 'MutationObserver' in window) new MutationObserver(function () { if (shown()) reveal(); else { var c = $('l2-card'); if (c) c.classList.remove('l2-ready'); } }).observe(pg, { attributes: true, attributeFilter: ['class', 'style', 'hidden'] });
-  var tap = function (e) { var t = e.target && e.target.closest ? e.target.closest('[data-page="stock-exchange"],[data-se-sub],[data-se-tab]') : null; if (t) { step(true); requestAnimationFrame(reveal); setTimeout(reveal, 120); } };
+  var tap = function (e) { var t = e.target && e.target.closest ? e.target.closest('[data-page="stock-exchange"],[data-se-sub],[data-se-tab]') : null; if (t) { requestAnimationFrame(reveal); setTimeout(reveal, 120); } };
   document.addEventListener('pointerdown', tap, true); document.addEventListener('click', tap, true);
   if (shown()) reveal();
 })();
@@ -12833,7 +12841,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       var c = coins[tr.getAttribute('data-cx')], st = CS[tr.getAttribute('data-cx')]; if (!c) return;
       var p = tr.querySelector('.cx-price'), g = tr.querySelector('.cx-pct'), v = tr.querySelector('.cx-vol'), pct = c.price_change_percentage_24h;
       if (p) { var old = p.getAttribute('data-p') * 1, nw = c.current_price; p.textContent = '$' + cxFmt(nw); p.setAttribute('data-p', nw);
-        if (old && old !== nw) { p.classList.remove('cx-fu', 'cx-fd'); void p.offsetWidth; p.classList.add(nw > old ? 'cx-fu' : 'cx-fd'); } }
+        if (old && old !== nw) { window.__baFlash(p, nw > old); } }
       if (g) { g.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%'; g.classList.remove('text-emerald-400', 'text-rose-400'); g.classList.add(pct >= 0 ? 'text-emerald-400' : 'text-rose-400'); }
       if (v) v.textContent = window.__cxVol(c.total_volume);
     });
@@ -12878,7 +12886,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       var s = stocks[tr.getAttribute('data-st')]; if (!s) return;
       var p = tr.querySelector('.cx-sprice'), g = tr.querySelector('.cx-schg'), up = s.change.indexOf('-') < 0;
       if (p) { var old = p.getAttribute('data-p') * 1; p.textContent = '$' + s.price.toFixed(2); p.setAttribute('data-p', s.price);
-        if (old && old !== s.price) { p.classList.remove('cx-fu', 'cx-fd'); void p.offsetWidth; p.classList.add(s.price > old ? 'cx-fu' : 'cx-fd'); } }
+        if (old && old !== s.price) { window.__baFlash(p, s.price > old); } }
       if (g) { g.textContent = s.change; g.classList.remove('text-emerald-400', 'text-rose-400'); g.classList.add(up ? 'text-emerald-400' : 'text-rose-400'); }
     });
   }
@@ -13158,7 +13166,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       var c = coins[tr.getAttribute('data-cx')], st = CS[tr.getAttribute('data-cx')]; if (!c) return;
       var p = tr.querySelector('.cx-price'), g = tr.querySelector('.cx-pct'), v = tr.querySelector('.cx-vol'), pct = c.price_change_percentage_24h;
       if (p) { var old = p.getAttribute('data-p') * 1, nw = c.current_price; p.textContent = '$' + cxFmt(nw); p.setAttribute('data-p', nw);
-        if (old && old !== nw) { p.classList.remove('cx-fu', 'cx-fd'); void p.offsetWidth; p.classList.add(nw > old ? 'cx-fu' : 'cx-fd'); } }
+        if (old && old !== nw) { window.__baFlash(p, nw > old); } }
       if (g) { g.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%'; g.classList.remove('text-emerald-400', 'text-rose-400'); g.classList.add(pct >= 0 ? 'text-emerald-400' : 'text-rose-400'); }
       if (v) v.textContent = window.__cxVol(c.total_volume);
     });
@@ -13195,7 +13203,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
       var s = stocks[tr.getAttribute('data-st')]; if (!s) return;
       var p = tr.querySelector('.cx-sprice'), g = tr.querySelector('.cx-schg'), up = s.change.indexOf('-') < 0;
       if (p) { var old = p.getAttribute('data-p') * 1; p.textContent = '$' + s.price.toFixed(2); p.setAttribute('data-p', s.price);
-        if (old && old !== s.price) { p.classList.remove('cx-fu', 'cx-fd'); void p.offsetWidth; p.classList.add(s.price > old ? 'cx-fu' : 'cx-fd'); } }
+        if (old && old !== s.price) { window.__baFlash(p, s.price > old); } }
       if (g) { g.textContent = s.change; g.classList.remove('text-emerald-400', 'text-rose-400'); g.classList.add(up ? 'text-emerald-400' : 'text-rose-400'); }
     });
   }
@@ -13340,6 +13348,14 @@ function session(){var n=ny(),k=key(n.y,n.m,n.d),tr=trading(n.y,n.m,n.d),mn=n.h*
 function clock(){var s=session(),e=$('se2-session');e.textContent=s.ph;e.style.color=s.open?UP:(s.ph==='PRE-MARKET'||s.ph==='AFTER-HOURS'?'#fbbf24':'#9ca3af');
   $('se2-clock').textContent='NY '+s.ny+' · WIB '+new Date().toLocaleTimeString('id-ID',{timeZone:'Asia/Jakarta',hour12:false});
   $('se2-cd').textContent=s.cd+' · Refresh data dalam '+nextPoll+' dtk'}
+var MAC=[['Futures Indeks',[['ES=F','S&P 500 (ES)',7650],['NQ=F','Nasdaq-100 (NQ)',27500],['YM=F','Dow (YM)',48500],['RTY=F','Russell 2000 (RTY)',2450]]],
+ ['Sentimen & Makro',[['^VIX','VIX',17],['DX-Y.NYB','Indeks Dolar',99],['^TNX','Yield UST 10Y',4.1],['GC=F','Emas',4000],['CL=F','Minyak WTI',60],['BTC-USD','Bitcoin',90000]]]];
+MAC.forEach(function(g){g[1].forEach(function(a){if(!S[a[0]])mk(a[0],a[1],a[2])})});
+function rMac(){var el=$('se2-mac');if(!el)return;var lv=0,tt=0;
+ el.innerHTML=MAC.map(function(g){return '<div><div class="text-[10px] text-gray-500 uppercase tracking-wider mb-1.5">'+g[0]+'</div><div class="grid grid-cols-2 gap-2">'+g[1].map(function(a){var o=S[a[0]];if(!o)return '';tt++;if(o.src==='live')lv++;
+  var y=a[0]==='^TNX',d=y?(o.p-o.pc)*100:pct(o),c=col(a[0]==='^VIX'?-d:d),big=o.p>=1000;
+  return '<div class="p-2.5 bg-black/50 border border-card-border rounded-xl min-w-0"><div class="text-[10px] text-gray-400 truncate">'+esc(a[1])+'</div><div class="flex items-baseline justify-between gap-1 mt-0.5"><span class="font-mono font-bold text-white">'+(y?F(o.p,3)+'%':F(o.p,big?0:2))+'</span><span class="font-mono text-[11px]" style="color:'+c+'">'+(d>=0?'+':'')+F(d,2)+(y?' bp':'%')+'</span></div></div>'}).join('')+'</div></div>'}).join('');
+ var t=$('se2-mac-tag');if(t){t.className='se2-tag '+(lv?'se2-live':'se2-sim');t.textContent=lv?'LIVE '+lv+'/'+tt:'OFF'}}
 function holidays(){var n=ny(),t=Date.UTC(n.y,n.m-1,n.d),all=[];Object.keys(HOL).forEach(function(k){all.push([k,HOL[k],0])});Object.keys(EARLY).forEach(function(k){all.push([k,EARLY[k],1])});
   all.sort();var out=all.filter(function(a){var p=a[0].split('-');return Date.UTC(+p[0],p[1]-1,+p[2])>=t}).slice(0,5);
   $('se2-hol').innerHTML=out.map(function(a){var p=a[0].split('-'),dd=Math.round((Date.UTC(+p[0],p[1]-1,+p[2])-t)/864e5);
@@ -13357,7 +13373,7 @@ var SECH={XLK:['NVDA','AAPL','MSFT'],XLF:['BRK-B','JPM','V'],XLE:['XOM','CVX','C
 var XB={'BRK-B':470,CVX:155,COP:105,LLY:800,UNH:500,JNJ:160,HD:380,COST:950,PG:165,GE:250,CAT:400,RTX:150,LIN:450,SHW:350,FCX:45,NEE:75,SO:90,DUK:115,PLD:110,AMT:200,EQIX:850},EXT=[];
 Object.keys(SECH).forEach(function(k){SECH[k].forEach(function(t){if(!S[t]&&EXT.indexOf(t)<0){mk(t,t,XB[t]||100);EXT.push(t)}})});
 function cp(t){var o=S[t];if(!o)return '';var p=pct(o);return ' <span style="color:'+col(p)+'">'+(p>=0?'+':'')+F(p)+'%</span>'}
-function allSyms(){var u={};[M.sym,'SPY','QQQ'].concat(SEC.map(function(s){return s[0]}),WL.map(function(w){return w[0]}),EXT).forEach(function(k){u[k]=1});return Object.keys(u)}
+function allSyms(){var u={};[M.sym,'SPY','QQQ'].concat(SEC.map(function(s){return s[0]}),WL.map(function(w){return w[0]}),EXT,[].concat.apply([],MAC.map(function(g){return g[1].map(function(a){return a[0]})}))).forEach(function(k){u[k]=1});return Object.keys(u)}
 function rSecList(a){var el=$('se2-seclist');if(!el)return;
   var h=a.map(function(x,i){var c=col(x.p),cy=CYC.indexOf(x.k)>=0,gc=cy?'#38BDF8':'#c084fc';
    return '<div class="se2-row p-2 rounded-lg border border-card-border bg-black/40" data-sym="'+x.k+'"><div class="flex items-center justify-between gap-2"><span class="flex items-center gap-1.5 min-w-0"><span class="text-[10px] text-gray-500 font-mono w-4 text-right">'+(i+1)+'</span><b class="text-white font-mono text-[11px]">'+x.k+'</b><span class="text-[10px] text-gray-400 truncate">'+esc(x.n)+'</span></span><span class="flex items-center gap-2 font-mono text-[11px] shrink-0"><span class="text-gray-300">$'+F(x.o.p)+'</span><b style="color:'+c+'">'+(x.p>=0?'+':'')+F(x.p)+'%</b></span></div><div class="flex flex-wrap items-center gap-1 mt-1.5"><span class="se2-tag" style="color:'+gc+';border-color:'+gc+'55">'+(cy?'SIKLIKAL':'DEFENSIF')+'</span>'+(SECH[x.k]||[]).map(function(t){return '<button type="button" data-sym="'+t+'" class="px-1.5 py-0.5 rounded border border-card-border bg-black text-[10px] font-mono text-gray-300 hover:text-white hover:border-brand-accent">'+t+cp(t)+'</button>'}).join('')+'</div></div>'}).join('');
@@ -13408,19 +13424,25 @@ function rMov(){var L=[],nl=0,ts=0;
   $('se2-breadtxt').innerHTML='Naik <b style="color:'+UP+'">'+adv+'</b> · Turun <b style="color:'+DN+'">'+dec+'</b> dari '+L.length+' saham large cap (≥ $10B) · sumber: U.S. Stock Directory · <b style="color:'+lb[1]+'">'+lb[0]+'</b>'+(dt?' · harga per '+dt:'');
   L.sort(tab==='g'?function(a,b){return b.c-a.c}:tab==='l'?function(a,b){return a.c-b.c}:function(a,b){return b.v-a.v||b.c-a.c});
   mvRows(L.slice(0,8))}
-/* ---------- Confirmed Close MTPI (12 indikator, skor -1..+1) ---------- */
+/* ---------- Confirmed Close MTPI (18 indikator, skor -1..+1) ---------- */
 function ema(a,n){var k=2/(n+1),o=[],p;for(var i=0;i<a.length;i++){p=i?a[i]*k+p*(1-k):a[i];o.push(p)}return o}
 function sma(a,n){var o=[],s=0;for(var i=0;i<a.length;i++){s+=a[i];if(i>=n)s-=a[i-n];o.push(i>=n-1?s/n:null)}return o}
 function rsiA(a,n){var o=[null],g=0,l=0;for(var i=1;i<a.length;i++){var d=a[i]-a[i-1],u=d>0?d:0,w=d<0?-d:0;if(i<=n){g+=u;l+=w;if(i===n){g/=n;l/=n;o.push(l===0?100:100-100/(1+g/l))}else o.push(null)}else{g=(g*(n-1)+u)/n;l=(l*(n-1)+w)/n;o.push(l===0?100:100-100/(1+g/l))}}return o}
-var VN=[['EMA 12/26',0],['SMA 50/200',0],['MACD 12/26/9',0],['Harga > EMA 50',0],['Donchian 55',0],['ROC 63',0],['RSI 14',1],['Stochastic 14',1],['CCI 20',1],['Momentum 10',1],['Awesome Osc',1],['Bollinger %B',1]];
-function mtpi(c,f){var n=c.length-f,x=c.slice(0,n),e12=ema(x,12),e26=ema(x,26),e50=ema(x,50),s50=sma(x,50),s200=sma(x,200),s5=sma(x,5),s34=sma(x,34),s20=sma(x,20),ml=e12.map(function(v,i){return v-e26[i]}),sg=ema(ml,9),rs=rsiA(x,14);
+function aroonV(x,i,n){if(i<n)return null;var hi=-1/0,lo=1/0,hk=0,lk=0,j;for(j=i-n;j<=i;j++){if(x[j]>=hi){hi=x[j];hk=j}if(x[j]<=lo){lo=x[j];lk=j}}return 100*(n-(i-hk))/n-100*(n-(i-lk))/n}
+function tsiA(x,a,b){var d=[0],q=[0],i;for(i=1;i<x.length;i++){d.push(x[i]-x[i-1]);q.push(Math.abs(x[i]-x[i-1]))}var u=ema(ema(d,a),b),w=ema(ema(q,a),b);return u.map(function(v,k){return w[k]?100*v/w[k]:0})}
+function trixA(x,n){var t=ema(ema(ema(x,n),n),n);return t.map(function(v,k){return k&&t[k-1]?(v/t[k-1]-1)*100:0})}
+function cmoV(x,i,n){if(i<n)return null;var u=0,w=0,j,d;for(j=i-n+1;j<=i;j++){d=x[j]-x[j-1];if(d>0)u+=d;else w-=d}return u+w?100*(u-w)/(u+w):null}
+var VN=[['EMA 12/26',0],['SMA 50/200',0],['MACD 12/26/9',0],['Harga > EMA 50',0],['Donchian 55',0],['ROC 63',0],['RSI 14',1],['Stochastic 14',1],['CCI 20',1],['Momentum 10',1],['Awesome Osc',1],['Bollinger %B',1],['EMA 20/50',0],['Harga > SMA 200',0],['Aroon 25',0],['TRIX 15',1],['TSI 25/13',1],['CMO 14',1]];
+function mtpi(c,f){var n=c.length-f,x=c.slice(0,n),e12=ema(x,12),e26=ema(x,26),e50=ema(x,50),s50=sma(x,50),s200=sma(x,200),s5=sma(x,5),s34=sma(x,34),s20=sma(x,20),ml=e12.map(function(v,i){return v-e26[i]}),sg=ema(ml,9),rs=rsiA(x,14),e20=ema(x,20),trx=trixA(x,15),tsx=tsiA(x,25,13);
   var fn=[function(i){return e12[i]>e26[i]},function(i){return s200[i]==null?null:s50[i]>s200[i]},function(i){return ml[i]>sg[i]},function(i){return x[i]>e50[i]},
    function(i){if(i<55)return null;var h=-1/0,l=1/0;for(var j=i-55;j<i;j++){if(x[j]>h)h=x[j];if(x[j]<l)l=x[j]}return x[i]>(h+l)/2},function(i){return i<63?null:x[i]>x[i-63]},
    function(i){return rs[i]==null?null:rs[i]>50},function(i){if(i<14)return null;var h=-1/0,l=1/0;for(var j=i-13;j<=i;j++){if(x[j]>h)h=x[j];if(x[j]<l)l=x[j]}return h===l?null:(x[i]-l)/(h-l)>.5},
    function(i){if(i<19||s20[i]==null)return null;var d=0;for(var j=i-19;j<=i;j++)d+=Math.abs(x[j]-s20[i]);d/=20;return d?(x[i]-s20[i])/(.015*d)>0:null},function(i){return i<10?null:x[i]>x[i-10]},
-   function(i){return s34[i]==null?null:s5[i]>s34[i]},function(i){return s20[i]==null?null:x[i]>s20[i]}];
+   function(i){return s34[i]==null?null:s5[i]>s34[i]},function(i){return s20[i]==null?null:x[i]>s20[i]},
+   function(i){return i<50?null:e20[i]>e50[i]},function(i){return s200[i]==null?null:x[i]>s200[i]},function(i){var a=aroonV(x,i,25);return a==null?null:a>0},
+   function(i){return i<50?null:trx[i]>0},function(i){return i<40?null:tsx[i]>0},function(i){var v=cmoV(x,i,14);return v==null?null:v>0}];
   var V=fn.map(function(){return []}),sc=[],st=[],fl=[],ag=0,ac=0,tot=0,s;
-  for(var i=0;i<n;i++){s=0;fn.forEach(function(g,j){var r=g(i),v=r==null?(i?V[j][i-1]:0):(r?1:-1);V[j].push(v);s+=v});sc.push(s/12);
+  for(var i=0;i<n;i++){s=0;fn.forEach(function(g,j){var r=g(i),v=r==null?(i?V[j][i-1]:0):(r?1:-1);V[j].push(v);s+=v});sc.push(s/fn.length);
    var pv=i?st[i-1]:0,cur=sc[i]>0?1:sc[i]<0?-1:pv;st.push(cur);fl.push(i&&cur!==pv&&pv!==0?cur:0);if(i>=200){tot++;if(Math.sign(sc[i])===V[0][i])ag++}}
   if(f){sc.push(sc[n-1]);st.push(st[n-1]);fl.push(0);V.forEach(function(v){v.push(v[n-1])})}
   var rg=1;for(var k=c.length-2;k>=0&&st[k]===st[c.length-1];k--)rg++;
@@ -13440,13 +13462,20 @@ function ivals(c){var n=c.length,i=n-1,x=c[i],e12=ema(c,12),e26=ema(c,26),e50=em
   o[9]=i<10?null:{t:P((x/c[i-10]-1)*100),s:sg1(x>c[i-10])};
   o[10]=s34[i]==null?null:{t:P((s5[i]/s34[i]-1)*100),s:sg1(s5[i]>s34[i])};
   if(s20[i]==null)o[11]=null;else{sd=0;for(j=i-19;j<=i;j++)sd+=Math.pow(c[j]-s20[i],2);sd=Math.sqrt(sd/20);o[11]=sd?{t:F((x-(s20[i]-2*sd))/(4*sd),2),s:sg1(x>s20[i])}:null}
+  var e20=ema(c,20),ar=aroonV(c,i,25),tr=trixA(c,15),ts=tsiA(c,25,13),cm=cmoV(c,i,14);
+  o[12]=i<50?null:{t:P((e20[i]/e50[i]-1)*100),s:sg1(e20[i]>e50[i])};
+  o[13]=s200[i]==null?null:{t:P((x/s200[i]-1)*100),s:sg1(x>s200[i])};
+  o[14]=ar==null?null:{t:F(ar,0),s:sg1(ar>0)};
+  o[15]=i<50?null:{t:F(tr[i],3),s:sg1(tr[i]>0)};
+  o[16]=i<40?null:{t:F(ts[i],1),s:sg1(ts[i]>0)};
+  o[17]=cm==null?null:{t:F(cm,1),s:sg1(cm>0)};
   return o}
 function indBox(g,R,L){var rows=[],lg=0,sh=0;
   VN.forEach(function(v,j){if(v[1]!==g)return;var iv=LIV[j];
    if(!iv){rows.push('<div class="flex items-center justify-between py-1 border-b border-card-border/40 last:border-0"><span class="text-gray-400">'+v[0]+'</span><span class="text-gray-600 font-mono">menunggu data</span></div>');return}
    var u=iv.s>0,k=M.sym+'|'+j,ch=PSIG[k]!=null&&PSIG[k]!==iv.s,pre=R.votes[j][L]!==iv.s;PSIG[k]=iv.s;if(u)lg++;else sh++;
-   rows.push('<div class="flex items-center justify-between gap-2 py-1 border-b border-card-border/40 last:border-0 rounded'+(ch?' se2-flash':'')+'"><span class="text-gray-400 truncate">'+v[0]+'</span><span class="font-mono text-gray-300 ml-auto">'+iv.t+'</span><b class="w-16 text-right" style="color:'+(u?UP:DN)+'">'+(u?'▲ LONG':'▼ SHORT')+'</b>'+(pre?'<span class="se2-tag" style="color:#fbbf24;border-color:#fbbf2455" title="Sinyal live — belum terkonfirmasi close">LIVE</span>':'')+'</div>')});
-  return '<div class="bg-black/50 border border-card-border rounded-xl p-3 text-[11px]"><div class="flex items-center justify-between mb-1"><span class="text-[10px] text-brand-accent uppercase tracking-wider">'+(g?'Osilator (6)':'Trend-following (6)')+'</span><span class="text-[10px] font-mono"><b style="color:'+UP+'">'+lg+'▲</b> <b style="color:'+DN+'">'+sh+'▼</b></span></div>'+rows.join('')+'</div>'}
+   rows.push('<div class="flex items-center justify-between gap-2 py-1 border-b border-card-border/40 last:border-0 rounded'+(ch?' se2-flash':'')+'"><span class="text-gray-400 truncate" title="'+v[0]+'">'+v[0]+'</span><span class="font-mono text-gray-300 ml-auto">'+iv.t+'</span><b class="w-16 text-right" style="color:'+(u?UP:DN)+'">'+(u?'▲ LONG':'▼ SHORT')+'</b>'+(pre?'<span class="se2-tag" style="color:#fbbf24;border-color:#fbbf2455" title="Sinyal live — belum terkonfirmasi close">LIVE</span>':'')+'</div>')});
+  return '<div class="bg-black/50 border border-card-border rounded-xl p-3 text-[11px]"><div class="flex items-center justify-between mb-1"><span class="text-[10px] text-brand-accent uppercase tracking-wider">'+(g?'Osilator (':'Trend-following (')+VN.filter(function(v){return v[1]===g}).length+')'+'</span><span class="text-[10px] font-mono"><b style="color:'+UP+'">'+lg+'▲</b> <b style="color:'+DN+'">'+sh+'▼</b></span></div>'+rows.join('')+'</div>'}
 function rMain(){var o=S[M.sym];if(!o||!M.data.length)return;M.data[M.data.length-1]=o.p;
   var f=(session().open||M.src==='sim')?1:0,R=mtpi(M.data,f),n=M.data.length,N=Math.min(RG[M.range],n),a=n-N,sl=function(z){return z.slice(a)},p=pct(o),c=col(p),L=n-1;
   $('se2-msym').textContent=M.sym;$('se2-mname').textContent=o.n;$('se2-mtag').outerHTML=tag(o).replace('class="','id="se2-mtag" class="');
@@ -13465,15 +13494,15 @@ function rMain(){var o=S[M.sym];if(!o||!M.data.length)return;M.data[M.data.lengt
    '<div class="flex justify-between text-[10px] text-gray-400"><span>Regime: <b class="text-white">'+R.regime+' bar</b></span><span>EMA-cross setuju: <b class="text-white">'+R.agree+'%</b></span></div></div>'+
    indBox(0,R,L)+indBox(1,R,L);
   $('se2-cf').textContent=f?'Bar berjalan (garis putus-putus) tidak dihitung — skor & sinyal hanya berubah setelah bar close terkonfirmasi. Bar terkonfirmasi terakhir: '+last:'Semua bar sudah close — skor dihitung dari bar terakhir: '+last}
-function rAll(){if(!inited||!active())return;safe(rSec)();safe(rMov)();safe(rMain)();safe(rTape)();
+function rAll(){if(!inited||!active())return;safe(rMac)();safe(rSec)();safe(rMov)();safe(rMain)();safe(rTape)();
   var ks=Object.keys(S),lv=ks.filter(function(k){return S[k].src==='live'}).length,e=$('se2-src');e.className='se2-tag '+(lv?'se2-live':'se2-sim');e.textContent=lv?'ONLINE · '+lv+'/'+ks.length+' LIVE':'OFFLINE'}
-/* ---------- SPY RADAR MULTI-LAPIS: 12 indikator MTPI (dalam) + orbit 11 sektor (luar) + sapuan otomatis ---------- */
-var RAD={V:[],c:UP},RSC=[.8,2,.25,3,3,8,0,0,0,4,1.5,0];
+/* ---------- SPY RADAR MULTI-LAPIS: 18 indikator MTPI (dalam) + orbit 11 sektor (luar) + sapuan otomatis ---------- */
+var RAD={V:[],c:UP},RSC=[.8,2,.25,3,3,8,0,0,0,4,1.5,0,.6,6,0,.12,0,0];
 var RAD2={hist:[],sym:'',R:null,L:0,sc:0,lv:0,d:null,lg:0,sh:0,gl:[0,0,0,0],HIT:[],lock:'',bound:false};
 function cl1(x){return Math.max(-1,Math.min(1,x))}
 function radVals(){return VN.map(function(nm,j){var iv=LIV[j];if(!iv)return {v:0,s:0,t:'--',n:nm[0]};var n=parseFloat(String(iv.t).replace('+','')),v;
-  v=j===6?(n-50)/25:j===7?(n-50)/50:j===8?n/150:j===11?(n-.5)*2:Math.tanh(n/RSC[j]);v=cl1(v);v=iv.s*Math.max(.08,Math.abs(v));return {v:v,s:iv.s,t:iv.t,n:nm[0]}})}
-var SL=['EMA','SMA','MACD','P>EMA50','Donchian','ROC','RSI','Stoch','CCI','Mom','AO','%B'];
+  v=j===6?(n-50)/25:j===7?(n-50)/50:j===8?n/150:j===11?(n-.5)*2:(j===14||j===16||j===17)?n/100:Math.tanh(n/RSC[j]);v=cl1(v);v=iv.s*Math.max(.08,Math.abs(v));return {v:v,s:iv.s,t:iv.t,n:nm[0]}})}
+var SL=['EMA','SMA','MACD','P>EMA50','Donchian','ROC','RSI','Stoch','CCI','Mom','AO','%B','E20/50','P>S200','Aroon','TRIX','TSI','CMO'];
 var RMONO='ui-monospace,Menlo,monospace',RP=Math.PI*2;
 function radGeo(W){var Rb=W/2-6,sm=W<420;return {cx:W/2,cy:W/2,Rb:Rb,Ri:Rb*(sm?.46:.54),Ro:Rb*.8,am:Rb*.045,sm:sm}}
 function radSize(){var w=$('se2-radwrap'),a=$('se2-main'),b=$('se2-sweep');if(!w||!a||!b)return null;var W=w.clientWidth;if(!W)return null;var dp=Math.min(2,window.devicePixelRatio||1),px=Math.round(W*dp),ch=false;
@@ -13546,14 +13575,14 @@ function rRadar(R,L){var V=radVals(),cnt=0,sm=0,lg=0,sh=0,gl=[0,0,0,0];RAD.V=V;
     '<div class="rounded-lg p-2.5 text-center" style="border:1px solid '+c+'66;background:'+c+'14"><div class="text-[9px] text-gray-400 uppercase tracking-wider">Keputusan terkonfirmasi close</div><div class="text-base font-extrabold" style="color:'+c+'">'+d[0]+'</div><div class="font-mono text-[11px] text-gray-300">Skor MTPI '+(sc>=0?'+':'')+F(sc)+'</div></div>'+
     '<div class="grid grid-cols-2 gap-2">'+tile('Skor live',(lv>=0?'+':'')+F(lv),col(lv),ls)+tile('Keyakinan',Math.round(Math.abs(sc)*100)+'%','#f8fafc','')+tile('Regime',R.regime+' bar','#f8fafc','')+tile('EMA setuju',R.agree+'%','#f8fafc','')+'</div>'+
     '<div><div class="flex justify-between text-[10px] mb-1"><b style="color:'+UP+'">'+lg+' LONG</b><b style="color:'+DN+'">'+sh+' SHORT</b></div><div class="flex h-2 rounded-full overflow-hidden bg-neutral-800"><div style="width:'+(cnt?lg/cnt*100:0)+'%;background:'+UP+'"></div><div style="width:'+(cnt?sh/cnt*100:0)+'%;background:'+DN+'"></div></div></div>'+
-    gtxt('Trend-following (6)','#38bdf8',gl[0],gl[1])+gtxt('Osilator (6)','#c084fc',gl[2],gl[3])+
+    gtxt('Trend-following ('+VN.filter(function(v){return !v[1]}).length+')','#38bdf8',gl[0],gl[1])+gtxt('Osilator ('+VN.filter(function(v){return v[1]}).length+')','#c084fc',gl[2],gl[3])+
     (diff?'<div class="text-[10px] text-amber-400">Sinyal live berlawanan dengan bar terkonfirmasi — tunggu close.</div>':'')+'</div>'+
    '<div class="'+box+'">'+hd('Medan Indikator (12)','<span class="text-[9px] text-gray-500">&larr; SHORT | LONG &rarr;</span>')+bars+
     '<div class="pt-1 border-t border-card-border/50"><div class="text-[9px] text-gray-500 uppercase tracking-wider mb-1">Sinyal terkuat terdeteksi</div>'+top.map(function(x){return '<div class="flex justify-between py-0.5"><span class="text-gray-300">'+esc(x.n)+'</span><b style="color:'+col(x.v)+'">'+(x.s>0?'▲ LONG':'▼ SHORT')+' '+Math.round(Math.abs(x.v)*100)+'%</b></div>'}).join('')+'</div></div>'+
    '<div class="'+box+'">'+hd('Orbit Sektor (11)','<span class="se2-tag" style="color:'+rg[1]+';border-color:'+rg[1]+'66">'+rg[0]+'</span>')+
     '<div class="grid grid-cols-4 gap-1">'+tiles+'</div>'+
     '<div class="grid grid-cols-2 gap-2">'+tile('Siklikal',(av(CYC)>=0?'+':'')+F(av(CYC),2)+'%',col(av(CYC)),'')+tile('Defensif',(av(DEF)>=0?'+':'')+F(av(DEF),2)+'%',col(av(DEF)),'')+tile('Spread',(rd>=0?'+':'')+F(rd,2)+'%',col(rd),'')+tile('Breadth',up+' / '+sp.length,up>=6?UP:DN,'naik')+'</div>'+
-    '<div class="text-[9px] text-gray-500">Cincin luar = % perubahan harian 11 sektor (naik = keluar dari garis dasar). Cincin dalam = 12 indikator MTPI. Garis putus-putus putih = sinyal terkonfirmasi close.</div>'+
+    '<div class="text-[9px] text-gray-500">Cincin luar = % perubahan harian 11 sektor (naik = keluar dari garis dasar). Cincin dalam = 18 indikator MTPI. Garis putus-putus putih = sinyal terkonfirmasi close.</div>'+
     '<div class="text-[9px] text-gray-500">Analisis indikator otomatis, bukan saran investasi.</div></div>'}
 /* lapisan dinamis: sapuan, blip, ping, HUD jam */
 var SW={a:0,t:0};
@@ -13683,7 +13712,7 @@ var PI=5,pre=false,polling=false,LT=[],LTs='',tapeChart;
 function bgOk(){return !document.hidden}
 function active(){var p=$('page-stock-exchange'),s=$('se-sub-2');return p&&p.classList.contains('active')&&s&&!s.classList.contains('hidden')&&!document.hidden}
 function boot(){if(pre)return;pre=true;mvPoll();genSim();poll(allSyms()).then(rAll);loadMain();news()}
-function enter(){if(inited)return;inited=true;chips();holidays();boot();rAll()}
+function enter(){if(inited)return;inited=true;chips();boot();rAll()}
 var TK={timeZone:'America/New_York',hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'};
 function liveFill(sym){fetchChart(sym,'1d','5m').then(function(r){if(sym!==M.sym)return;LT=r.labels.map(function(l,i){return [l,r.data[i]]}).concat(LT).slice(-300)}).catch(function(){if(sym!==M.sym||LT.length>5)return;var o=S[sym];if(!o)return;var g=rng(hash(sym+'intra')),x=o.p,A=[],t=Date.now();for(var i=0;i<78;i++){A.unshift([new Date(t-i*3e5).toLocaleTimeString('en-US',TF),x]);x/=1+(g()-.5)*Math.max(o.vol,.006)*.35}LT=A.concat(LT).slice(-300)})}
 function tickLive(){var o=S[M.sym];if(!o)return;if(LTs!==M.sym){LTs=M.sym;LT=[];liveFill(M.sym)}LT.push([new Date().toLocaleTimeString('en-US',TK),o.p]);if(LT.length>300)LT.shift()}
@@ -13694,7 +13723,7 @@ setInterval(safe(function(){if(!bgOk())return;if(!pre)boot();if(active()){if(!in
 setInterval(safe(function(){if(!bgOk()||!pre)return;stepSim();tickLive();rAll()}),2000);
 setInterval(safe(function(){if(!bgOk()||!pre||polling||nextPoll>0)return;nextPoll=PI;pollN++;polling=true;var full=pollN%6===0;
   poll(full?allSyms():[M.sym]).then(function(){polling=false;rAll()},function(){polling=false});
-  if(full)holidays();if(full||M.src==='sim')loadMain()}),1000);
+  if(full||M.src==='sim')loadMain()}),1000);
 /* ---------- Top Movers: polling khusus berkecepatan tinggi, tampil progresif tanpa menunggu semua saham ---------- */
 var mvBusy=false,mvLast=0,mvT=0;
 function mvPaint(){if(mvT)return;mvT=setTimeout(function(){mvT=0;if(active())safe(rMov)()},150)}
@@ -22217,6 +22246,15 @@ html body #gm-sub-1 .gm1-side>*{min-width:0}
   html body #liq-tbl{display:table;width:100%;height:100%;flex:none}
   html body #liq-tbl tbody tr,html body #gm-sub-1 #liq-tbl tbody tr{height:46px;min-height:0}
   html body #liq-tbl thead tr{height:38px}
+}
+</style>
+<style id="ba-nav-fit">
+/* Sidebar desktop (>=1280px): label panjang ("Stock Exchange", "Market Statistik") tidak lagi terpotong "..." */
+@media (min-width:1280px){html header.sticky .nav-link{gap:12px!important}html header.sticky .nav-link>span:not([class]){font-size:18px}}
+/* Layar sentuh (HP/tablet/aplikasi): target sentuh lebih besar tanpa mengubah tata letak */
+@media (pointer:coarse){
+  html .xp-tags a{padding:8px 3px;margin:-8px -3px}
+  html #xp-tools button{min-width:36px}
 }
 </style>
 </body>
