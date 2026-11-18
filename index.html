@@ -15052,13 +15052,20 @@ function sq(e){var o=e[0].filter(function(x){return x.n===e[1]})[0];if(!o||!SQ[e
  return W.__baFetch(P,'https://stooq.com/q/d/l/?s='+enc(SQ[e[2]])+'&i=d',true,9000).then(function(t){
   var r=String(t).trim().split(/\r?\n/).slice(1).map(function(l){return l.split(',')}).filter(function(c){return c.length>=5&&+c[4]>0});
   if(r.length<2)throw 0;var h=r.slice(-40).map(function(c){return +c[4]}),px=h[h.length-1],pv=h[h.length-2];
-  if(!(Math.abs(px/o.v-1)<.2))throw 0;
+  if(!(px>0)||(o.live&&!(Math.abs(px/o.v-1)<.35)))throw 0;
   put(o,{px:px,prev:pv,h:h},1);okS[e[2]]=1;NOW[e[2]]={px:px,prev:pv,h:h};GC[e[2]]={px:px,prev:pv,h:h.slice(-40),t:Date.now()};gPaint()})}
 function liveGlobal(){var G=W.__GM;if(!G)return Promise.resolve();okS={};var L=[],k,bad=[];
  for(k in GS)L.push([G.items,k,GS[k]]);for(k in FXS)L.push([G.FX,k,FXS[k]]);
  var one=function(e,rg){return chart(e[2],rg,'1d').then(function(r){var o=e[0].filter(function(x){return x.n===e[1]})[0];if(!o)return;
   okS[e[2]]=1;put(o,r,e[2]==='HG=F'?2204.62:1);NOW[e[2]]=r;GC[e[2]]={px:r.px,prev:r.prev,h:r.h.slice(-40),t:Date.now()};gPaint()})};
- return pool(L,function(e){return one(e,'1mo').catch(function(){bad.push(e);throw 0})},6).then(function(){
+ function sparkAll(){var ss=L.map(function(e){return e[2]}),cs=[],i;for(i=0;i<ss.length;i+=14)cs.push(ss.slice(i,i+14));
+  return Promise.all(cs.map(function(c){var q='/v8/finance/spark?range=1mo&interval=1d&symbols='+enc(c.join(','));
+   return get('https://query1.finance.yahoo.com'+q).catch(function(){return get('https://query2.finance.yahoo.com'+q)}).then(function(j){
+    var rs=(j.spark&&j.spark.result)||Object.keys(j).map(function(k){var z=j[k]||{};return{symbol:k,response:[{meta:{},indicators:{quote:[{close:z.close}]}}]}});
+    rs.forEach(function(x){try{var r=x.response[0],a=(r.indicators.quote[0].close||[]).filter(function(v){return v!=null&&isFinite(v)}),n=a.length,px=(r.meta&&r.meta.regularMarketPrice)||a[n-1],pv=(n>1&&Math.abs(a[n-1]/px-1)<1e-4)?a[n-2]:a[n-1];
+     if(!(px>0)||!(pv>0)||n<2)return;var e=L.filter(function(y){return y[2]===x.symbol})[0];if(!e)return;var o=e[0].filter(function(y){return y.n===e[1]})[0];if(!o)return;
+     var rr={px:px,prev:pv,h:a};okS[e[2]]=1;put(o,rr,e[2]==='HG=F'?2204.62:1);NOW[e[2]]=rr;GC[e[2]]={px:px,prev:pv,h:a.slice(-40),t:Date.now()}}catch(z){}});gPaint()}).catch(function(){})}))}
+ return sparkAll().then(function(){return pool(L.filter(function(e){return !okS[e[2]]}),function(e){return one(e,'1mo').catch(function(){bad.push(e);throw 0})},4)}).then(function(){
   return bad.length?pool(bad,function(e){return one(e,'5d')},3):0}).then(function(){
   var rest=L.filter(function(e){return !okS[e[2]]&&SQ[e[2]]});return rest.length?pool(rest,sq,3):0}).then(function(){gSave();
   W.__GMLIVE={ok:G.items.filter(function(x){return x.live&&Date.now()-(x.liveAt||0)<3*864e5}).length,total:G.items.length,ts:Date.now()};gPaint()})}
