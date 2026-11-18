@@ -144,6 +144,10 @@ requestAnimationFrame(function(){requestAnimationFrame(function(){var a=q;q=[];b
   var CK={};
   
   window.__BA_WORKER='';try{var __q=new URLSearchParams(location.search).get('worker');if(__q!==null){if(__q)localStorage.setItem('ba-worker',__q);else localStorage.removeItem('ba-worker')}}catch(e){}try{window.__BA_WORKER=window.__BA_WORKER||localStorage.getItem('ba-worker')||''}catch(e){}
+  /* SUMBER BERSAMA: market.json (ditulis GitHub Actions tiap 5 mnt) dibaca semua browser -> angka seragam */
+  var MK=null,MKt=0;window.__baMarket=function(){var n=Date.now();if(MK&&n-MKt<6e4)return MK;MKt=n;
+    MK=fetch('market.json?t='+Math.floor(n/6e4),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){if(!j||!j.items||!j.t)throw 0;return j});
+    MK.catch(function(){MK=null});return MK};
   window.__baPrev=function(r,a){var m=r.meta||{},ts=r.timestamp||[],cl=(r.indicators&&r.indicators.quote&&r.indicators.quote[0].close)||[],n=a.length,i=cl.length-1;
     while(i>=0&&(cl[i]==null||!isFinite(cl[i])))i--;if(n<2)return a[n-1];var px=m.regularMarketPrice||a[n-1];
     if(ts[i]&&m.regularMarketTime){var off=m.gmtoffset||0;return Math.floor((ts[i]+off)/86400)===Math.floor((m.regularMarketTime+off)/86400)?a[n-2]:a[n-1]}
@@ -14682,14 +14686,17 @@ function liveGlobal(){var G=W.__GM;if(!G)return Promise.resolve();okS={};var L=[
  for(k in GS)L.push([G.items,k,GS[k]]);for(k in FXS)L.push([G.FX,k,FXS[k]]);
  var one=function(e,rg){return chart(e[2],rg,'1d').then(function(r){var o=e[0].filter(function(x){return x.n===e[1]})[0];if(!o)return;
   okS[e[2]]=1;put(o,r,e[2]==='HG=F'?2204.62:1);NOW[e[2]]=r;GC[e[2]]={px:r.px,prev:r.prev,h:r.h.slice(-40),t:Date.now()};gPaint()})};
- function sparkAll(){var ss=L.map(function(e){return e[2]}),cs=[],i;for(i=0;i<ss.length;i+=14)cs.push(ss.slice(i,i+14));
+ function sparkAll(){var ss=L.filter(function(e){return !okS[e[2]]}).map(function(e){return e[2]}),cs=[],i;for(i=0;i<ss.length;i+=14)cs.push(ss.slice(i,i+14));
   return Promise.all(cs.map(function(c){var q='/v8/finance/spark?range=1mo&interval=1d&symbols='+enc(c.join(','));
    return get('https://query1.finance.yahoo.com'+q).catch(function(){return get('https://query2.finance.yahoo.com'+q)}).then(function(j){
     var rs=(j.spark&&j.spark.result)||Object.keys(j).map(function(k){var z=j[k]||{};return{symbol:k,response:[{meta:{},indicators:{quote:[{close:z.close}]}}]}});
     rs.forEach(function(x){try{var r=x.response[0],a=(r.indicators.quote[0].close||[]).filter(function(v){return v!=null&&isFinite(v)}),n=a.length,px=(r.meta&&r.meta.regularMarketPrice)||a[n-1],pv=W.__baPrev(r,a);
      if(!(px>0)||!(pv>0)||n<2)return;var e=L.filter(function(y){return y[2]===x.symbol})[0];if(!e)return;var o=e[0].filter(function(y){return y.n===e[1]})[0];if(!o)return;
      var rr={px:px,prev:pv,h:a};okS[e[2]]=1;put(o,rr,e[2]==='HG=F'?2204.62:1);NOW[e[2]]=rr;GC[e[2]]={px:px,prev:pv,h:a.slice(-40),t:Date.now()}}catch(z){}});gPaint()}).catch(function(){})}))}
- return sparkAll().then(function(){return pool(L.filter(function(e){return !okS[e[2]]}),function(e){return one(e,'1mo').catch(function(){bad.push(e);throw 0})},4)}).then(function(){
+ function localAll(){return W.__baMarket().then(function(j){if(Date.now()/1e3-j.t>1200)return;
+  L.forEach(function(e){var r=j.items[e[2]];if(!r||!(r.px>0)||!(r.prev>0))return;var o=e[0].filter(function(y){return y.n===e[1]})[0];if(!o)return;
+   var rr={px:r.px,prev:r.prev,h:r.h||[]};okS[e[2]]=1;put(o,rr,e[2]==='HG=F'?2204.62:1);NOW[e[2]]=rr;GC[e[2]]={px:r.px,prev:r.prev,h:rr.h.slice(-40),t:Date.now()}});gPaint()}).catch(function(){})}
+ return localAll().then(sparkAll).then(function(){return pool(L.filter(function(e){return !okS[e[2]]}),function(e){return one(e,'1mo').catch(function(){bad.push(e);throw 0})},4)}).then(function(){
   return bad.length?pool(bad,function(e){return one(e,'5d')},3):0}).then(function(){
   var rest=L.filter(function(e){return !okS[e[2]]&&SQ[e[2]]});return rest.length?pool(rest,sq,3):0}).then(function(){gSave();
   W.__GMLIVE={ok:G.items.filter(function(x){return x.live&&Date.now()-(x.liveAt||0)<3*864e5}).length,total:G.items.length,ts:Date.now()};gPaint()})}
@@ -21634,6 +21641,7 @@ html body #gm-sub-1 .gm1-side>*{min-width:0}
   function sStooq(){return F(P,'https://stooq.com/q/d/l/?s=%5Ejci&i=d',true,9000).then(function(t){
     var r=String(t).trim().split(/\r?\n/).slice(1).map(function(l){return l.split(',')}).filter(function(c){return c.length>=5&&+c[4]>0}),h=r.slice(-40).map(function(c){return +c[4]});
     return ok({px:h[h.length-1],prev:h[h.length-2],h:h})})}
+  function sLocal(){return W.__baMarket().then(function(j){var r=j.items['^JKSE'];if(!r||Date.now()/1e3-j.t>600)return Promise.reject(0);return ok({px:r.px,prev:r.prev,h:r.h})})}
   var fails=0,busy=0,last=0,timer;
   function apply(r){var G=W.__GM,o=G&&G.items&&G.items.filter(function(x){return x.n==='IHSG'})[0];if(!o)return;
     o.liveAt=Date.now();o.v=o.v0=r.px;o.p=r.prev;o.live=1;
@@ -21642,12 +21650,40 @@ html body #gm-sub-1 .gm1-side>*{min-width:0}
     try{W.__baGmpPaint&&W.__baGmpPaint()}catch(e){}
     try{D.dispatchEvent(new CustomEvent('ba:ihsg',{detail:{px:r.px,prev:r.prev,pct:(r.px/r.prev-1)*100,t:Date.now()}}))}catch(e){}}
   function run(){if(busy||(D.hidden&&last))return;busy=1;
-    sChart().catch(sQuote).catch(sStooq).then(function(r){fails=0;last=Date.now();apply(r)},function(){fails++}).then(function(){busy=0;sched()})}
+    sLocal().catch(sChart).catch(sQuote).catch(sStooq).then(function(r){fails=0;last=Date.now();apply(r)},function(){fails++}).then(function(){busy=0;sched()})}
   function sched(){clearTimeout(timer);timer=setTimeout(run,Math.min(30000*Math.pow(2,Math.min(fails,2)),120000))}
   W.__baIhsgNow=run;
   setTimeout(run,2500);
   D.addEventListener('visibilitychange',function(){if(!D.hidden&&Date.now()-last>15000){clearTimeout(timer);run()}});
   W.addEventListener('online',function(){fails=0;clearTimeout(timer);setTimeout(run,500)});
+})();
+</script>
+<style id="ba-lite-css">
+/* MODE RINGAN OTOMATIS (aplikasi terpasang, desktop, lanskap): hapus efek paling mahal GPU, percepat transisi. Matikan dengan ?lite=0 */
+html.ba-lite *,html.ba-lite *::before,html.ba-lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+html.ba-lite header.sticky,html.ba-lite #ba-tabbar,html.ba-lite #mobile-sidebar,html.ba-lite #ba-sheet{background-color:var(--ba-bg,#000)!important}
+html.ba-lite [class^="blur-"],html.ba-lite [class*=" blur-"]{filter:none!important}
+html.ba-lite .bg-card-dark{box-shadow:none!important}
+html.ba-lite *,html.ba-lite *::before,html.ba-lite *::after{transition-duration:.12s!important}
+html.ba-lite{scroll-behavior:auto!important}
+html.ba-lite .ba-scroll,html.ba-lite [class*="overflow-y-auto"],html.ba-lite #ba-gmp-list{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+html.ba-lite #bg3d{display:none!important}
+html.ba-lite body .page.active:not([data-ba-first]),html.ba-lite body .page.ba-enter:not([data-ba-first]){animation-duration:.08s!important}
+@keyframes baFast{from{opacity:.35}to{opacity:1}}
+html.ba-lite.ba-hid *,html.ba-lite.ba-hid *::before,html.ba-lite.ba-hid *::after{animation-play-state:paused!important}
+html.ba-lite #gm-tbody tr,html.ba-lite #ba-gmp-list>div,html.ba-lite #liq-tbl tbody tr{contain:layout paint style}
+</style>
+<script id="ba-lite-js">
+(function(){
+  var W=window,D=document,h=D.documentElement,on=true;
+  try{var q=new URLSearchParams(location.search).get('lite');if(q==='0')localStorage.setItem('ba-lite','0');else if(q==='1')localStorage.removeItem('ba-lite');on=localStorage.getItem('ba-lite')!=='0'}catch(e){}
+  if(!on)return;
+  h.classList.add('ba-lite');
+  /* kanvas 3D latar: selalu mati (hemat GPU/baterai); pengaturan lain tidak bisa menyalakannya kembali */
+  try{Object.defineProperty(W,'__BA_3D_OFF',{configurable:true,get:function(){return true},set:function(){}})}catch(e){}
+  /* animasi berhenti saat tab/aplikasi tidak terlihat */
+  function vis(){h.classList.toggle('ba-hid',D.hidden)}
+  D.addEventListener('visibilitychange',vis);vis();
 })();
 </script>
 </body>
