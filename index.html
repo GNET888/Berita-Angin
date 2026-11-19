@@ -4120,6 +4120,13 @@ html.light #se-sub-3{--s-line:#dbe3ee;--s-mute:#64748b;--s-text:#334155;--s-stro
   #sd-dir-card #stock-table-body td{height:50px}
 }
 </style>
+<style id="mlc-sticky-fix">
+/* Header tabel sticky harus opak agar baris yang di-scroll tidak tembus */
+html body .mlc-tbl thead th{position:sticky!important;top:0!important;z-index:5!important;background-color:#0a0a0a!important;background-image:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:0 1px 0 #222}
+html body .mlc-tbl thead{position:relative;z-index:5}
+html.light body .mlc-tbl thead th{background-color:#f1f5f9!important;box-shadow:0 1px 0 #dbe3ee}
+html body .mlc-tbl tbody td{position:relative;z-index:0}
+</style>
 </head>
 <body class="antialiased flex flex-col min-h-screen bg-pure-black text-gray-100">
 <div id="ba-mload" role="status" aria-live="polite" aria-label="Memuat"><div class="ba-mring"><img loading="lazy" decoding="async" class="mlg" alt="" width="88" height="88"></div><b>Berita Angin</b><span>1% Issue 99% Fact</span></div>
