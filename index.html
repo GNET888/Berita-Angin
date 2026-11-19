@@ -13863,7 +13863,7 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
       if(navigator.vibrate){try{navigator.vibrate(8);}catch(_){}}
       if(k==='more'){openSheet(!sheet.classList.contains('open'));return;}
       if(k==='search'){openSheet(false);if(cur()!=='home')go('home');setTimeout(function(){var q=D.getElementById('xp-q3');if(q){try{q.scrollIntoView({block:'center'});}catch(_){}q.focus();}},cur()==='home'?0:120);return;}
-      if(k===cur())W.scrollTo({top:0,behavior:'smooth'});else go(k);
+      if(k===cur())W.scrollTo({top:0,behavior:'auto'});else go(k);
     });
     var evt=null;
     sheet.addEventListener('click',function(e){
@@ -13985,7 +13985,7 @@ document.addEventListener('DOMContentLoaded',function(){w();var m=document.query
   
   document.addEventListener('click',function(e){
     var t=e.target.closest&&e.target.closest('.ba-tab,.ba-row[data-go]');
-    if(t&&matchMedia('(max-width:767px), (orientation:landscape) and (pointer:coarse) and (max-height:500px)').matches)setTimeout(function(){window.scrollTo(0,0)},40);
+    if(t&&matchMedia('(max-width:767px), (orientation:landscape) and (pointer:coarse) and (max-height:500px)').matches)void 0;
   },true);
 }catch(e){}})();
 </script>
@@ -16941,7 +16941,6 @@ html.light .bs-sh{background:#fff;color:#0f1419;border-color:#dbe3ee}
     menu.innerHTML=s
       ?'<div class="bal-mh"><b>'+esc(s.name)+'</b><span>'+esc(s.email)+'</span></div>'
       +(app?'':'<button type="button" role="menuitem" data-bal-photo><i class="fa-solid fa-camera"></i>Ubah foto profil</button>')
-      +(s.picture?'<button type="button" role="menuitem" data-bal-photo-del><i class="fa-solid fa-trash-can"></i>Hapus foto profil</button>':'')
       +'<button type="button" role="menuitem" data-bal-settings><i class="fa-solid fa-gear"></i>Pengaturan</button>'
       +'<button type="button" role="menuitem" class="out" data-bal-out><i class="fa-solid fa-right-from-bracket"></i>Sign Out '+esc(handle(s.email))+'</button>'
       :'<div class="bal-mh"><b>Tamu</b><span>Belum Sign In</span></div>'
@@ -21760,5 +21759,62 @@ img,video,canvas{max-width:100%}
 /* 7) Hormati preferensi gerak minimal */
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
 </style>
+<style id="ba-nojump">
+/* ===== Tanpa loncatan / lipatan: desktop, aplikasi terpasang, lanskap ===== */
+:root{--ba-tab-h:56px}
+/* Menu: ketebalan huruf tetap supaya lebar teks tidak bergeser saat aktif */
+header.sticky a.nav-link,header.sticky a.nav-link.ba-active,#sidebar-content .sb-link,#sidebar-content .sb-link.active,#sidebar-content .sb-sublink,#ba-tabbar .ba-tab,#ba-tabbar .ba-tab.on{font-weight:600!important}
+/* Submenu tidak dianimasikan melipat (max-height/padding) -> isi di bawahnya tidak naik-turun */
+header.sticky .group>div.absolute,header.sticky .group.ba-open>div.absolute{transition:none!important}
+#mobile-sidebar,#sidebar-content,#ba-sheet,#ba-scrim{transition-duration:.12s!important}
+/* Sidebar & konten utama: lebar tidak dianimasikan */
+header.sticky,header.sticky>nav>div,#bg3d+div,body>main,body>footer,#ba-topbar{transition:none!important}
+/* Tinggi bilah atas tetap */
+#ba-topbar{min-height:52px;box-sizing:border-box}
+.ba-clock,.ba-date,.ba-live{font-variant-numeric:tabular-nums;min-width:max-content}
+/* Tidak ada efek geser/skala saat hover atau tekan */
+.hp-stat:hover,#page-home .card-3d:hover,.card-3d:hover,header.sticky .nav-link:hover .nav-ico,header.sticky .nav-link:active,#ba-collapse:hover,.nav-link:active,.sb-link:active,.sb-sublink:active,.ba-tab:active{transform:none!important;translate:none!important;scale:1!important}
+html body #ba-tabbar .ba-tab.ba-press .ba-tab-ico{transform:none!important}
+/* Gulir stabil */
+html{overflow-anchor:none;scroll-behavior:auto!important}
+.page{contain:layout style}
+@media (min-width:768px) and (min-height:501px),(min-width:768px) and (pointer:fine){html{scrollbar-gutter:stable}}
+/* Aplikasi terpasang */
+@media (display-mode:standalone),(display-mode:fullscreen),(display-mode:minimal-ui){
+  html,body{overscroll-behavior:none!important}
+  body>main{padding-top:max(22px,env(safe-area-inset-top,0px))}
+}
+/* Mode mobile & lanskap: satu tinggi tab bar, satu padding bawah, tanpa tab bar yang bergeser */
+@media (max-width:767px),(orientation:landscape) and (pointer:coarse) and (max-height:500px){
+  html{scrollbar-gutter:auto;scrollbar-width:none}
+  html body #ba-tabbar{height:calc(var(--ba-tab-h) + env(safe-area-inset-bottom,0px));transform:none!important;transition:none!important}
+  html body #ba-tabbar .ba-tab{height:var(--ba-tab-h)!important;min-height:var(--ba-tab-h)!important}
+  html body #ba-tabbar.ba-hide{transform:none!important}
+  body>main{padding-bottom:calc(var(--ba-tab-h) + 20px + env(safe-area-inset-bottom,0px))!important;padding-left:calc(.875rem + env(safe-area-inset-left,0px))!important;padding-right:calc(.875rem + env(safe-area-inset-right,0px))!important}
+  #ba-install{bottom:calc(var(--ba-tab-h) + 12px + env(safe-area-inset-bottom,0px))!important}
+}
+@media (max-width:900px) and (max-height:480px){
+  :root{--ba-tab-h:48px}
+  html body #ba-tabbar .ba-tab{height:var(--ba-tab-h)!important;min-height:var(--ba-tab-h)!important}
+  body>main{padding-bottom:calc(var(--ba-tab-h) + 20px + env(safe-area-inset-bottom,0px))!important}
+}
+</style>
+<script id="ba-nojump-js">
+(function(){try{
+  var W=window,D=document,de=D.documentElement;
+  // Pindah halaman: kembali ke atas sekali, instan, sebelum frame berikutnya digambar
+  var last=null,raf=0;
+  function check(){raf=0;var a=D.querySelector('body>main .page.active');var id=a&&a.id;
+    if(last!==null&&id&&id!==last){var h=de.style.scrollBehavior;de.style.scrollBehavior='auto';W.scrollTo(0,0);de.style.scrollBehavior=h}
+    if(id)last=id}
+  function sched(){if(!raf)raf=requestAnimationFrame(check)}
+  var main=D.querySelector('body>main');
+  if(main){new MutationObserver(sched).observe(main,{attributes:true,attributeFilter:['class'],subtree:true});check()}
+  // Tinggi layar & orientasi: perbarui satu kali per frame, tanpa kedip
+  var vh=0;function fit(){vh=0;de.style.setProperty('--ba-vh',W.innerHeight+'px')}
+  function onr(){if(!vh)vh=requestAnimationFrame(fit)}
+  W.addEventListener('resize',onr,{passive:true});W.addEventListener('orientationchange',function(){setTimeout(onr,60)},{passive:true});
+}catch(e){}})();
+</script>
 </body>
 </html>
