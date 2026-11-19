@@ -21722,5 +21722,36 @@ html.light #bal-ov.gate .bal-tag,html.light #bal-ov.gate .bal-tag-s{color:#0f141
   #bal-ov:not(.gate) .bal-in input{font-size:16px}
 }
 </style>
+<style id="ba-smooth">
+/* ===== Navigasi ringan & tanpa loncatan (desktop, aplikasi terpasang, lanskap) ===== */
+/* 1) Pindah halaman: instan, tanpa fade/geser */
+html body .page,html body .page.active,html body .page.ba-in,html body .page.ba-enter,
+html body .page.active:not([data-ba-first]),html body .page.ba-enter:not([data-ba-first]){animation:none!important;transition:none!important;transform:none!important;opacity:1!important;filter:none!important}
+/* 2) Layout utama tidak dianimasikan (lebar/margin berubah langsung, tanpa reflow berulang tiap frame) */
+#bg3d+div,body>main,body>footer,#ba-topbar,header.sticky{transition:none!important}
+header.sticky>nav,header.sticky>nav *{transition-property:background-color,color,opacity!important;transition-duration:.12s!important}
+header.sticky .group>div.absolute{transition:none!important}
+header.sticky .group.ba-open>.nav-link .fa-chevron-down,#ba-collapse i{transition:none!important}
+header.sticky a.nav-link:hover{translate:none!important}
+/* 3) Buang efek dekoratif yang berat saat berpindah */
+#ba-pro-bar,.ba-pro-rip{display:none!important}
+#page-home .card-3d:hover,.card-3d:hover{transform:none!important}
+#page-home .card-3d{transition:border-color .12s,box-shadow .12s!important}
+/* 4) Tekan tombol: ringan, tanpa menggeser layout */
+button:not(:disabled):active,[role=button]:active,.nav-link:active,.sb-link:active,.sb-sublink:active,summary:active{scale:1!important}
+/* 5) Stabilitas layout */
+html{scrollbar-gutter:stable;overflow-anchor:none}
+body>main{overflow-anchor:none}
+img,video,canvas{max-width:100%}
+.page canvas{display:block}
+/* 6) Aplikasi terpasang & lanskap: kunci tinggi dan cegah tarik-pantul */
+@media (display-mode:standalone),(display-mode:fullscreen){html,body{overscroll-behavior:none!important}}
+@media (orientation:landscape) and (max-height:520px){
+  html{scrollbar-gutter:auto}
+  body>main{padding-left:calc(.875rem + env(safe-area-inset-left,0px))!important;padding-right:calc(.875rem + env(safe-area-inset-right,0px))!important}
+}
+/* 7) Hormati preferensi gerak minimal */
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important}}
+</style>
 </body>
 </html>
