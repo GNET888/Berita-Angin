@@ -21817,32 +21817,81 @@ html{overflow-anchor:none;scroll-behavior:auto!important}
 }catch(e){}})();
 </script>
 <style id="ba-logo-xl">
-/* ===== Perbesar logo (BUKAN ikon navigasi) ===== */
-
-/* DESKTOP: logo sidebar 72px -> 84px; rail collapsed 80px -> 96px agar muat */
+/* ===== LOGO LEBIH BESAR (bukan ikon navigasi) ===== */
+/* DESKTOP: 72 -> 100px, rail collapsed 80 -> 112px */
 @media (min-width:768px) and (min-height:501px), (min-width:768px) and (pointer:fine){
-  html.ba-collapsed{--ba-sb:96px}
-  html body header.sticky>nav>div>div:nth-child(1) a::before{width:84px!important;height:84px!important;flex:0 0 84px!important}
+  html.ba-collapsed{--ba-sb:112px}
+  html body header.sticky>nav>div>div:nth-child(1) a::before{width:100px!important;height:100px!important;flex:0 0 100px!important}
 }
-
-/* APLIKASI / MOBILE (portrait) + LANSKAP: logo di topbar */
+/* APLIKASI (portrait) + LANSKAP: logo topbar */
 @media (max-width:767px), (orientation:landscape) and (pointer:coarse) and (max-height:500px){
-  html body #ba-topbar::after{width:clamp(68px,18vw,80px)!important;height:clamp(68px,18vw,80px)!important}
-  html body #ba-topbar{min-height:calc(clamp(68px,18vw,80px) + 8px)!important}
-  html body #sidebar-content .sb-avatar{width:56px!important;height:56px!important}
+  html body #ba-topbar::after{width:clamp(76px,20vw,92px)!important;height:clamp(76px,20vw,92px)!important}
+  html body #ba-topbar{min-height:calc(clamp(76px,20vw,92px) + 8px)!important}
+  html body #sidebar-content .sb-avatar{width:64px!important;height:64px!important}
 }
-
-/* LANSKAP (layar HP diputar): logo 32px -> 46px */
+/* LANSKAP: 32 -> 56px */
 @media (orientation:landscape) and (pointer:coarse) and (max-height:500px){
-  html body #ba-topbar::after{width:46px!important;height:46px!important}
-  html body #ba-topbar{min-height:56px!important}
+  html body #ba-topbar::after{width:56px!important;height:56px!important}
+  html body #ba-topbar{min-height:64px!important}
 }
-
-/* LANSKAP layar sangat pendek: 28px -> 38px */
+/* LANSKAP sangat pendek: 28 -> 46px */
 @media (orientation:landscape) and (pointer:coarse) and (max-height:340px){
-  html body #ba-topbar::after{width:38px!important;height:38px!important}
-  html body #ba-topbar{min-height:46px!important}
+  html body #ba-topbar::after{width:46px!important;height:46px!important}
+  html body #ba-topbar{min-height:54px!important}
 }
 </style>
+<style id="ba-perf-xl">
+/* ===== RINGAN & CEPAT: scroll + sentuhan navigasi (semua mode) ===== */
+
+/* 1) Sentuhan: tanpa delay 300ms / double-tap-zoom, tanpa kilau tap */
+html body :is(a,button,summary,[role="button"],.nav-link,.sb-link,.ba-tab,.tk-tab,.hp-btn,.xp-tabs button,#ba-dots,#ba-fab,.bal-top){
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+/* umpan balik instan saat disentuh */
+html body :is(.ba-tab,.sb-link,.nav-link,.tk-tab,.hp-btn,.xp-tabs button,#ba-fab):active{
+  transition:none!important;opacity:.62}
+html body .ba-tab:active .ba-tab-ico,html body .ba-tab:active .di{transform:scale(.92)}
+html body :is(.ba-tab,.sb-link,.nav-link,.tk-tab,.xp-tabs button){transition-duration:.06s!important}
+
+/* 2) Topbar: lapisan sendiri, tidak repaint saat scroll (tab bar & sidebar sengaja
+      tidak diberi containment agar dropdown/sheet tidak terpotong) */
+html body #ba-topbar{contain:layout style}
+
+/* 3) Scroll: scroll native mulus, tidak "memantul"/memicu rantai scroll */
+html{scroll-behavior:auto!important;-webkit-overflow-scrolling:touch}
+html body :is(#sidebar-content .sb-nav,.overflow-y-auto,.overflow-auto,.xp-tabs,.ba-scroll){
+  overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+
+/* 4) Render hanya yang terlihat: feed panjang & footer */
+html body .xp-post{content-visibility:auto;contain-intrinsic-size:auto 190px}
+html body>footer{content-visibility:auto;contain-intrinsic-size:auto 220px}
+html body img{decoding:async}
+
+/* 5) Selama scroll: jeda animasi, matikan transisi/tilt (dipasang oleh JS) */
+html.ba-scrolling-any *,html.ba-scrolling-any *::before,html.ba-scrolling-any *::after{
+  animation-play-state:paused!important;transition:none!important}
+html.ba-scrolling-any :is(.card-3d,.hp-stat,.xp-post){transform:none!important}
+html.ba-scrolling-any :is(.card-3d,.hp-stat,.xp-post,.bg-card-dark){pointer-events:none}
+
+/* 6) Perangkat sentuh: tanpa efek hover/tilt yang boros */
+@media (hover:none){
+  html body :is(.card-3d,.hp-stat):hover{transform:none!important;box-shadow:none!important}
+}
+/* 7) Hormati "kurangi gerakan" */
+@media (prefers-reduced-motion:reduce){html *{scroll-behavior:auto!important}}
+</style>
+<script id="ba-perf-xl-js">
+(function(){
+  var D=document,H=D.documentElement,t=0,on=false;
+  function end(){on=false;H.classList.remove('ba-scrolling-any')}
+  function go(){if(!on){on=true;H.classList.add('ba-scrolling-any')}clearTimeout(t);t=setTimeout(end,140)}
+  /* satu listener pasif untuk semua scroller (capture) */
+  D.addEventListener('scroll',go,{capture:true,passive:true});
+  D.addEventListener('wheel',go,{passive:true});
+  D.addEventListener('touchmove',go,{passive:true});
+  D.addEventListener('touchend',function(){clearTimeout(t);t=setTimeout(end,220)},{passive:true});
+  D.addEventListener('visibilitychange',function(){clearTimeout(t);end()});
+})();
+</script>
 </body>
 </html>
