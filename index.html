@@ -70,6 +70,7 @@ W.__baSkip=function(fn,now){if(W.__baNavBusy)return true;if(!gap||!now)return fa
 W.__baOff=function(el){try{var r=el.getBoundingClientRect();return r.bottom<-80||r.top>(W.innerHeight||800)+80}catch(e){return false}}})();
 </script>
 <script>document.write('<script src="data.js?d='+new Date().toISOString().slice(0,13)+'"><\/script>')</script>
+<script>document.write('<script src="market-data.js?d='+new Date().toISOString().slice(0,13)+'"><\/script>')</script>
 <script>(function(){
   var D=window.__DAILY||null;
   var nf=function(n,d){return n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d})};
@@ -5923,7 +5924,7 @@ function finish(){if(fin)return;fin=true;
             <div id="se-sub-1" class="space-y-6">
             <div class="bg-card-dark border border-card-border rounded-2xl p-5 shadow-xl space-y-4">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-card-border pb-3">
-                <div><h2 class="text-lg font-bold text-white uppercase tracking-wide">Overview Market</h2><p class="text-xs text-gray-400">Pergerakan saham NASDAQ, diperbarui otomatis dari data bursa.</p></div>
+                <div><h2 class="text-lg font-bold text-white uppercase tracking-wide">Overview Market</h2><p class="text-xs text-gray-400">Pergerakan saham NASDAQ, diperbarui otomatis dari data bursa + snapshot harian.</p></div>
                 <span id="ovx-status" class="text-xs text-emerald-400" role="status"><i class="fa-solid fa-circle animate-pulse mr-1"></i><b id="ovx-st" class="font-semibold">AUTO UPDATE</b></span>
               </div>
               <style id="ovx-css">
@@ -5977,7 +5978,7 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
     <div class="ovx-info" id="ovx-info"></div>
   </div>
   <div class="ovx-grid" id="ovx-grid"></div>
-  <p class="ovx-note" id="ovx-note">Sumber: Yahoo Finance (NASDAQ). Data dapat tertunda beberapa menit dan bukan saran investasi.</p>
+  <p class="ovx-note" id="ovx-note">Sumber: Yahoo Finance (NASDAQ), dengan snapshot harian otomatis sebagai cadangan. Data dapat tertunda beberapa menit dan bukan saran investasi.</p>
 </div>
 <script>
 (function () {
@@ -6074,6 +6075,18 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
     });
   }
   
+  var SNAP = null, SNAPP = null;
+  function snapLoad() {
+    if (SNAPP) return SNAPP;
+    if (window.__MARKET_SNAPSHOT && window.__MARKET_SNAPSHOT.symbols) { SNAP = window.__MARKET_SNAPSHOT; SNAPP = Promise.resolve(SNAP); return SNAPP; }
+    var d = new Date().toISOString().slice(0, 10);
+    SNAPP = fetch('market-data.json?d=' + d, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error('nosnap'); return r.json(); })
+      .then(function (j) { if (!j || !j.symbols) throw new Error('nosnap'); SNAP = j; return j; });
+    SNAPP.catch(function () { SNAPP = null; });
+    return SNAPP;
+  }
+  function snapQ(sym) { return snapLoad().then(function (j) { var s = j.symbols[sym]; if (!s || !s.quote) throw new Error('empty'); var q = {}; for (var k in s.quote) q[k] = s.quote[k]; q.isOpen = false; q.src = 's'; return q; }); }
+  function snapC(sym, t) { return snapLoad().then(function (j) { var s = j.symbols[sym], cs = s && s.charts && s.charts[t.k]; if (!cs || cs.length < 5) throw new Error('empty'); return { cs: cs.slice(-120), at: Date.now(), pc: null, src: 's' }; }); }
   function viaSources(S, fy, fk) {
     var ord = S.yRetryAt > Date.now() ? ['k', 'y'] : ['y', 'k'];
     return new Promise(function (res, rej) {
@@ -6145,7 +6158,7 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
     r.textContent = 'H $' + fm(q.hi) + ' • L $' + fm(q.lo);
     S.r('op').textContent = fm(q.open); S.r('pcv').textContent = fm(q.prev); S.r('vo').textContent = fv(q.vol);
     var sv0 = stale(S), mk = S.r('mk');
-    if (sv0) { mk.className = 'ovx-tag sv'; mk.innerHTML = '<i></i>Tersimpan'; mk.title = 'Data tersimpan di perangkat' + (q.ts ? ' · harga terakhir ' + tfmt(q.ts, 'dmhm') : '') + ' · otomatis diperbarui saat online'; }
+    if (sv0 || q.src === 's') { mk.className = 'ovx-tag sv'; mk.innerHTML = '<i></i>' + (q.src === 's' ? 'Snapshot' : 'Tersimpan'); mk.title = 'Data tersimpan di perangkat' + (q.ts ? ' · harga terakhir ' + tfmt(q.ts, 'dmhm') : '') + ' · otomatis diperbarui saat online'; }
     else { mk.className = 'ovx-tag' + (q.isOpen ? ' on' : ''); mk.innerHTML = '<i></i>' + (q.isOpen ? 'Buka' : 'Tutup'); mk.title = 'NASDAQ · pasar ' + (q.isOpen ? 'buka' : 'tutup'); }
   }
   function legend(y, i) {
@@ -6226,9 +6239,9 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
 
   function job(y) {
     var S = st[y.k]; if (S.busy) return Promise.resolve(false); S.busy = true; var t = cur();
-    var gotQ = function (q) { S.q = q; S.qAt = Date.now(); sv('ovx1:q:' + y.s, { t: S.qAt, d: q }); S.stl = null; head(y); };
-    var qTask = function () { return task(function () { return viaSources(S, function () { return quoteY(y.s); }, function () { return quoteK(y.s); }); }).then(gotQ); };
-    var pc = task(function () { return viaSources(S, function () { return chartY(y.s, t); }, function () { return chartK(y.s, t); }); })
+    var gotQ = function (q) { S.q = q; S.qAt = Date.now(); sv('ovx1:q:' + y.s, { t: S.qAt, d: q }); S.stl = null; if (q.src === 's') S.src = 's'; head(y); if (window.__sdFromCard) { try { window.__sdFromCard(y.s, q); } catch (e) { } } };
+    var qTask = function () { return task(function () { return viaSources(S, function () { return quoteY(y.s); }, function () { return quoteK(y.s); }).catch(function () { return snapQ(y.s); }); }).then(gotQ); };
+    var pc = task(function () { return viaSources(S, function () { return chartY(y.s, t); }, function () { return chartK(y.s, t); }).catch(function () { return snapC(y.s, t); }); })
       .then(function (c) { var now = Date.now(); c.at = now; S.c[t.k] = c; S.cAt[t.k] = now; S.err[t.k] = false; var q = c.q; delete c.q; sv('ovx1:c:' + y.s + ':' + t.k, { t: now, d: c }); c.q = q; return c; },
         function (e) { S.err[t.k] = true; throw e; });
     
@@ -6248,7 +6261,7 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
     var pick = null;
     SYMS.some(function (y) { var S = st[y.k]; return TFS.some(function (t) { if (t.k === tfk) return false; if (now - (S.cAt[t.k] || 0) < TTL[t.k] || now < (S.pfNext[t.k] || 0)) return false; pick = [y, t]; return true; }); });
     if (!pick) return; var y = pick[0], t = pick[1], S = st[y.k]; pfN++; S.pfNext[t.k] = now + 30000; lastPf = now;
-    task(function () { return viaSources(S, function () { return chartY(y.s, t); }, function () { return chartK(y.s, t); }); }, true)
+    task(function () { return viaSources(S, function () { return chartY(y.s, t); }, function () { return chartK(y.s, t); }).catch(function () { return snapC(y.s, t); }); }, true)
       .then(function (c) { var n = Date.now(); c.at = n; S.c[t.k] = c; S.cAt[t.k] = n; S.pfFail[t.k] = 0; sv('ovx1:c:' + y.s + ':' + t.k, { t: n, d: c }); },
         function () { S.pfFail[t.k] = (S.pfFail[t.k] || 0) + 1; S.pfNext[t.k] = Date.now() + Math.max(60000, backoff(S.pfFail[t.k] + 3)); })
       .then(function () { pfN--; });
@@ -6264,7 +6277,7 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
     var anySv = false, ts = 0, kr = false;
     SYMS.forEach(function (y) { var S = st[y.k], f = stale(S); if (f) anySv = true; if (S.stl !== f) { S.stl = f; if (S.q) head(y, true); } if (S.q && S.q.ts > ts) ts = S.q.ts; if (S.src === 'k') kr = true; });
     if (ts) {
-      var nt = 'Harga terakhir ' + tfmt(ts, 'dmhm') + ' ' + (tz() === 'Asia/Jakarta' ? 'WIB' : tz()) + '. Sumber: Yahoo Finance (NASDAQ)' + (kr ? ', cadangan Kraken xStocks' : '') + '. Data dapat tertunda dan bukan saran investasi.' + (anySv ? ' Menampilkan data tersimpan di perangkat; otomatis diperbarui saat online.' : '');
+      var nt = 'Harga terakhir ' + tfmt(ts, 'dmhm') + ' ' + (tz() === 'Asia/Jakarta' ? 'WIB' : tz()) + '. Sumber: Yahoo Finance (NASDAQ)' + (kr ? ', cadangan Kraken xStocks' : '') + (SYMS.some(function (y) { var z = st[y.k].q; return z && z.src === 's'; }) ? ', snapshot harian' + (SNAP && SNAP.updated ? ' (' + SNAP.updated.slice(0, 10) + ')' : '') : '') + '. Data dapat tertunda dan bukan saran investasi.' + (anySv ? ' Menampilkan data tersimpan di perangkat; otomatis diperbarui saat online.' : '');
       if (nt !== noteTxt) { noteTxt = nt; $('ovx-note').textContent = nt; }
     }
   }
@@ -6286,6 +6299,11 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
   window.addEventListener('offline', function () { paintStatus(); });
   document.addEventListener('visibilitychange', function () { if (!document.hidden && Date.now() - lastOk > 15000) wake(); });
   window.addEventListener('pageshow', function (e) { if (e.persisted) wake(); });
+  window.__ovx = {
+    get: function (sym) { var y = SYMS.filter(function (z) { return z.s === sym; })[0]; return y ? st[y.k].q : null; },
+    put: function (sym, q) { var y = SYMS.filter(function (z) { return z.s === sym; })[0]; if (!y) return; var S = st[y.k]; S.q = q; S.qAt = Date.now(); S.stl = null; head(y); legend(y); draw(y); },
+    syms: SYMS.map(function (z) { return z.s; })
+  };
   info(); SYMS.forEach(function (y) { legend(y); msg(y); });
   new MutationObserver(function () { SYMS.forEach(function (y) { draw(y); }); }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   tick();
@@ -6355,7 +6373,7 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
                                     <i class="fa-solid fa-building-columns text-brand-accent"></i>
                                     <span>U.S. STOCK DIRECTORY & FUNDAMENTAL MATRIX (2 HALAMAN)</span>
                                 </h3>
-                                <p class="text-[11px] text-gray-400 mt-1">Indexed equities across NYSE & NASDAQ, 25 rows per page. Harga, perubahan, kap. pasar &amp; fundamental mengikuti data pasar dan diperbarui otomatis.</p>
+                                <p class="text-[11px] text-gray-400 mt-1">Indexed equities across NYSE & NASDAQ, 25 rows per page. Harga, perubahan, kap. pasar &amp; fundamental (P/E, EPS, dividen, 52 minggu) mengikuti data pasar Yahoo Finance; snapshot harian otomatis sebagai cadangan. Bukan saran investasi.</p>
                             </div>
                             <div class="sd-search relative">
                                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
@@ -6411,7 +6429,7 @@ html.light #ovx{--tx:#0f172a;--mu:#64748b;--grid:rgba(15,23,42,.09);--card:#f8fa
                                     <i class="fa-solid fa-layer-group text-brand-accent"></i>
                                     <span>LEVEL 2 ADDED BOOK DEPTH</span>
                                 </span>
-                                <span class="text-gray-400 text-[10px]">NYSE</span>
+                                <span id="l2-sym" class="text-gray-400 text-[10px]">NASDAQ · NVDA</span>
                             </div>
                             <div class="flex justify-between items-center py-2 text-[11px] border-b border-card-border/60">
                                 <span class="text-gray-400">SPREAD <span id="l2-spread" class="text-white font-bold">$0.02 (0.009%)</span></span>
@@ -11167,7 +11185,7 @@ function updateAutoMiniCharts(){Object.values(miniChartInstances).forEach(c=>{co
   var fmt = function (n) { return Math.round(n).toLocaleString('en-US'); };
   var bidSz = [], askSz = [], bias = 0.5, prevMid = 0, model = null;
   for (var i = 0; i < N; i++) { bidSz.push(r50(rnd(500, 2600) * (1 + i * 0.12))); askSz.push(r50(rnd(500, 2600) * (1 + i * 0.12))); }
-  function livePrice() { return (window.stockLive && window.stockLive.price) || 228.87; }
+  function livePrice() { var u = window.__unifiedPrice && window.__unifiedPrice('NVDA'); if (u && u.p > 0) return u.p; return (window.stockLive && window.stockLive.price) || 228.87; }
   function row(side, lv, cum, max, added) {
     var pct = Math.min(100, cum / max * 100).toFixed(0), a = side === 'a';
     return '<div class="grid grid-cols-3 ' + (a ? 'text-rose-400' : 'text-emerald-400') + ' py-1 px-1 rounded ' + (added ? (a ? 'l2-add-a' : 'l2-add-b') : '') +
@@ -12997,7 +13015,16 @@ function fetchChart(sym,rg,iv){return getJ('https://query1.finance.yahoo.com/v8/
 function apply(sym,r){var o=S[sym]||(S[sym]={sym:sym,n:r.name||sym,v:0,vol:.01});o.p=r.price;o.pc=r.pc;if(r.vol)o.v=r.vol;o.ser=r.data.slice(-80);o.src='live';if(r.t)o.t=r.t;if(r.name&&(!o.n||o.n===sym))o.n=r.name}
 function poll(list){var q=list.slice();function w(){var s=q.shift();if(!s)return Promise.resolve();return fetchChart(s,'1d','5m').then(function(r){apply(s,r)}).catch(function(){var o=S[s];if(o&&o.src==='live'&&Date.now()<deadUntil)o.src=MVS[s]?'cache':'sim'}).then(w)}
   return Promise.all([w(),w(),w(),w(),w(),w()]).then(function(){saveMv();$('se2-upd').textContent='Pembaruan terakhir: '+new Date().toLocaleTimeString('id-ID')})}
-function stepSim(){Object.keys(S).forEach(function(k){var o=S[k];if(o.src!=='sim')return;o.p*=1+(Math.random()-.5)*o.vol*.12;o.v+=Math.round(Math.random()*4e4);o.ser.push(o.p);if(o.ser.length>80)o.ser.shift()})}
+function syncUnified(){var L=dirAll(),m={},q=window.__sdQuotes;L.forEach(function(x){m[x.symbol]=x});
+  Object.keys(S).forEach(function(k){var o=S[k],d=m[k],p=0,pc=0,t=0,lv=false,v=0;
+    if(d&&+d.price>0){p=+d.price;var c=parseFloat(d.change);pc=isFinite(c)?p/(1+c/100):p;t=d._lt||0;lv=d._lsrc==='live';v=d._lv||0}
+    else if(q&&q[k]&&q[k].price>0){p=q[k].price;pc=q[k].prev>0?q[k].prev:p;t=(q[k].ts||0)/1000}
+    if(!(p>0))return;
+    if(o.src==='live'&&(o.t||0)>=t)return;
+    if(o.src!=='sim'&&o.p===p&&o.pc===pc)return;
+    var fake=o.src==='sim';o.p=p;o.pc=pc;if(v)o.v=v;if(t)o.t=t;
+    o.ser=(fake||!o.ser||o.ser.length<2)?[pc,p]:o.ser.slice(0,-1).concat([p]);o.src=lv?'live':'cache'})}
+function stepSim(){try{syncUnified()}catch(e){}Object.keys(S).forEach(function(k){var o=S[k];if(o.src!=='sim')return;o.p*=1+(Math.random()-.5)*o.vol*.12;o.v+=Math.round(Math.random()*4e4);o.ser.push(o.p);if(o.ser.length>80)o.ser.shift()})}
 function genSim(){var o=S[M.sym];if(!o)return;var r=rng(hash(M.sym+'mtpi')),n=504,x=o.p,D=[],L=[],d=new Date(),ph=r()*6;
   for(var i=0;i<n;i++){D.unshift(x);while(d.getDay()===0||d.getDay()===6)d.setDate(d.getDate()-1);L.unshift(d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'2-digit'}));d.setDate(d.getDate()-1);
    var dr=.0007*Math.sin(i/38+ph),sh=(r()+r()+r()-1.5)*Math.max(o.vol,.008)*.9;x/=1+dr+sh}
@@ -18207,7 +18234,7 @@ html body #ba-fab.pr,html body #ba-fab:active{transform:translateZ(0) scale(.88)
     $('hm-n').textContent = R.length + ' US STOCKS';
     var ch = $('hm-chg'); ch.textContent = fp(idx); ch.className = 'hm-chg ' + (idx >= 0 ? 'up' : 'dn');
     $('hm-idx').innerHTML = '<span class="' + (idx >= 0 ? 'up' : 'dn') + '">' + fp(idx) + '</span>';
-    var live = R.some(function (r) { return r.live; }), lb = $('hm-live'); lb.textContent = live ? 'LIVE' : 'DATA TERAKHIR'; lb.className = 'hm-badge ' + (live ? 'ok' : 'warn');
+    var live = R.some(function (r) { return r.live; }), lb = $('hm-live'); lb.textContent = live ? (window.__stkMktOpen === false ? 'PASAR TUTUP' : 'LIVE') : (window.__sdSnapDate ? 'SNAPSHOT' : 'DATA TERAKHIR'); lb.className = 'hm-badge ' + (live ? 'ok' : 'warn');
     if (hist.length === 0 || Math.abs(hist[hist.length - 1] - idx) > 1e-9) { hist.push(idx); if (hist.length > 60) hist.shift(); }
     var hs = hist.length > 1 ? hist : [idx, idx], mn = Math.min.apply(null, hs), mx = Math.max.apply(null, hs), sp = (mx - mn) || 1, pts = hs.map(function (v, i) { return (i / (hs.length - 1) * 180).toFixed(1) + ',' + (40 - (v - mn) / sp * 34 - 3).toFixed(1); }).join(' ');
     var scol = idx >= 0 ? '#34d399' : '#fb7185';
@@ -18244,7 +18271,7 @@ html body #ba-fab.pr,html body #ba-fab:active{transform:translateZ(0) scale(.88)
     });
     map.innerHTML = html;
     lastLayout = layoutKey; drawn = true; R.forEach(function (r) { prev[r.sym] = r.c; });
-    $('hm-note').textContent = (mode === 'cap' ? 'Ukuran kotak = market cap' : 'Ukuran kotak sama rata') + ' • warna = perubahan harian';
+    $('hm-note').textContent = (mode === 'cap' ? 'Ukuran kotak = market cap' : 'Ukuran kotak sama rata') + ' • warna = perubahan harian • data sama dengan U.S. Stock Directory & Overview Market (' + (R.some(function (r) { return r.live; }) ? 'Yahoo Finance' : window.__sdSnapDate ? 'snapshot harian ' + window.__sdSnapDate : 'data tersimpan') + '). Bukan saran investasi.';
     detail(R);
   }
 
@@ -19059,7 +19086,12 @@ html.light #scr-body tr:nth-child(even) td{background:rgba(15,23,42,.025)}
     var mx = Math.max.apply(null, L.map(function (s) { return Math.abs(pct(s)); }).concat([1]));
     var wl = wlist(), now = new Date(), pad = function (v) { return String(v).padStart(2, '0'); };
     txt('scr-total', all.length + ' saham dalam direktori');
-    txt('scr-upd', 'diperbarui ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds()));
+    (function () {
+      var Ld = dir(), lv = Ld.some(function (s) { return s._lsrc === 'live'; }), mt = 0; Ld.forEach(function (s) { if (s._lt > mt) mt = s._lt; });
+      var tt = mt ? new Date(mt * 1000).toLocaleString('id-ID', { timeZone: 'Asia/Jakarta', hour12: false, day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }).replace(/\./g, ':') + ' WIB' : '';
+      txt('scr-upd', lv ? 'LIVE · data ' + tt : (window.__sdSnapDate ? 'SNAPSHOT ' + window.__sdSnapDate : 'DATA TERSIMPAN'));
+      var e = document.getElementById('scr-upd'); if (e) e.style.color = lv ? '' : '#fbbf24';
+    })();
     txt('scr-count', n ? n + ' dari ' + all.length + ' saham memenuhi filter' : 'Tidak ada saham yang memenuhi filter');
     txt('scr-sc-n', n + ' saham');
     put('scr-kpis', '<div><span>Saham cocok</span><b>' + n + '</b><small>dari ' + all.length + ' saham</small></div>' +
@@ -20925,6 +20957,101 @@ html body header.sticky .group>div.absolute{transition-duration:.1s!important}
   setInterval(function () { if (D.hidden) return; var pg = D.getElementById('page-stock-exchange'), on = pg && pg.classList.contains('active'); if (Date.now() - last >= (on ? 6e5 : 18e5) || (!stamp && Date.now() - last >= 6e4)) refresh(); }, 15000);
   D.addEventListener('visibilitychange', function () { if (!D.hidden && Date.now() - last > 6e5) refresh(); });
   W.addEventListener('online', refresh);
+})();
+</script>
+<script id="ba-sd-snap">
+(function () {
+  'use strict';
+  var W = window, D = document, DATA = null, tries = 0;
+  function dir() { try { return allStockDirectory; } catch (e) { return []; } }
+  function money(v) { return v >= 1e12 ? '$' + (v / 1e12).toFixed(2) + 'T' : v >= 1e9 ? '$' + (v / 1e9).toFixed(1) + 'B' : '$' + (v / 1e6).toFixed(0) + 'M'; }
+  function capn(s) { if (s._mc > 0) return s._mc; var m = String(s.mktCap || '').match(/^\$([\d.,]+)([TBM])$/i); return m ? parseFloat(m[1].replace(/,/g, '')) * { T: 1e12, B: 1e9, M: 1e6 }[m[2].toUpperCase()] : 0; }
+  function fresh() { return W.__stkRealAt && Date.now() - W.__stkRealAt < 6e5; }
+  function badge(msg) {
+    var el = D.getElementById('ba-snap-st');
+    if (!el) { var a = D.querySelector('#sd-dir-card .sd-scroll'); if (!a || !a.parentNode) return; el = D.createElement('div'); el.id = 'ba-snap-st'; el.className = 'text-[10px] font-mono px-1 py-1'; el.style.color = '#fbbf24'; a.parentNode.insertBefore(el, a.nextSibling); }
+    el.textContent = msg ? '○ ' + msg : ''; el.hidden = !msg;
+  }
+  function apply() {
+    if (!DATA || !DATA.directory) return;
+    var d = DATA.directory, live = fresh(), n = 0;
+    W.__sdSnapDate = String(DATA.updated || '').slice(0, 10);
+    W.__sdQuotes = DATA.quotes || null;
+    dir().forEach(function (s) {
+      var x = d[s.symbol]; if (!x) return; n++;
+      if (!live && x.price > 0) { s.price = x.price; s.change = (x.chg >= 0 ? '+' : '') + (x.chg || 0).toFixed(2) + '%'; if (x.cap > 0) { s.mktCap = money(x.cap); s._mc = x.cap; } s._lsrc = 'cache'; }
+      if (s._eps == null && x.eps != null) s._eps = x.eps;
+      if (s._pe0 == null && x.pe != null) s._pe0 = x.pe;
+      if (s._dy == null && x.dy != null) s._dy = x.dy;
+      if (!(s._hi > 0) && x.hi > 0) s._hi = x.hi;
+      if (!(s._lo > 0) && x.lo > 0) s._lo = x.lo;
+    });
+    if (!live && n) { dir().sort(function (a, b) { return capn(b) - capn(a); }); try { renderStockTable(); } catch (e) {} }
+    badge(live ? '' : 'Snapshot harian ' + String(DATA.updated || '').slice(0, 10) + ' · ' + n + ' emiten · cadangan sampai Yahoo live terjangkau; diperbarui otomatis tiap hari');
+  }
+  function load() {
+    if (W.__MARKET_SNAPSHOT && W.__MARKET_SNAPSHOT.directory) { DATA = W.__MARKET_SNAPSHOT; apply(); return; }
+    var day = new Date().toISOString().slice(0, 10);
+    fetch('market-data.json?d=' + day, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function (j) { DATA = j; apply(); }).catch(function () { if (tries++ < 3) setTimeout(load, 60000); });
+  }
+
+  /* ---- Satu sumber kebenaran: kartu Overview Market <-> direktori (data terbaru menang) ---- */
+  var rt = 0;
+  function find(sym) { var L = dir(); for (var i = 0; i < L.length; i++) if (L[i].symbol === sym) return L[i]; return null; }
+  function repaint() { clearTimeout(rt); rt = setTimeout(function () { var L = dir(); L.sort(function (a, b) { return capn(b) - capn(a); }); try { renderStockTable(); } catch (e) {} }, 150); }
+  W.__sdFromCard = function (sym, q) {
+    var s = find(sym); if (!s || !q || !(q.price > 0) || !(q.prev > 0)) return;
+    var cts = q.ts || Date.now(), dts = (s._lt || 0) * 1000;
+    if (s._lsrc === 'live' && dts > cts) return;
+    var old = +s.price, chg = (q.price / q.prev - 1) * 100;
+    if (Math.abs(old - q.price) < 0.005 && Math.abs((parseFloat(s.change) || 0) - chg) < 0.005) return;
+    var cap = capn(s); if (cap > 0 && old > 0) { s._mc = cap * q.price / old; s.mktCap = money(s._mc); }
+    s.price = q.price; s.change = (chg >= 0 ? '+' : '') + chg.toFixed(2) + '%'; s._lc = chg; s._lt = cts / 1000;
+    if (q.src !== 's') s._lsrc = 'live'; repaint();
+  };
+  function toCards() {
+    if (!W.__ovx) return;
+    W.__ovx.syms.forEach(function (sym) {
+      var s = find(sym), q = W.__ovx.get(sym); if (!s || s._lsrc !== 'live' || !(s.price > 0)) return;
+      var dts = (s._lt || 0) * 1000; if (q && q.ts && dts <= q.ts + 30000) return;
+      var chg = parseFloat(s.change) || 0, p = +s.price;
+      W.__ovx.put(sym, { price: p, prev: p / (1 + chg / 100), hi: Math.max(q ? q.hi : p, p), lo: Math.min(q ? q.lo : p, p), vol: s._lv || (q ? q.vol : 0), open: q ? q.open : p, isOpen: !!W.__stkMktOpen, ts: dts || Date.now(), src: 'y' });
+    });
+  }
+  setInterval(function () { if (!D.hidden) toCards(); }, 5000);
+  setTimeout(function () { if (W.__ovx) W.__ovx.syms.forEach(function (sym) { var q = W.__ovx.get(sym); if (q) W.__sdFromCard(sym, q); }); }, 6000);
+
+  /* ---- Harga terpadu NVDA untuk Level 2 (data terbaru antara kartu Overview Market dan direktori) ---- */
+  W.__unifiedPrice = function (sym) {
+    var q = W.__ovx && W.__ovx.get(sym), s = find(sym), b = null;
+    if (q && q.price > 0) b = { p: q.price, t: q.ts || 0, src: q.src === 's' ? 'snapshot harian' : 'Yahoo Finance' };
+    if (s && +s.price > 0) { var t = (s._lt || 0) * 1000; if (!b || t > b.t) b = { p: +s.price, t: t, src: s._lsrc === 'live' ? 'Yahoo Finance' : (W.__sdSnapDate ? 'snapshot harian' : 'data tersimpan') }; }
+    return b;
+  };
+  function l2Note() {
+    var sp = D.getElementById('l2-spread'), row = sp && sp.closest('div'); if (!row || !row.parentNode) return;
+    var el = D.getElementById('l2-note');
+    if (!el) { el = D.createElement('p'); el.id = 'l2-note'; el.className = 'text-[10px] text-gray-500 py-1'; row.parentNode.insertBefore(el, row); }
+    var u = W.__unifiedPrice('NVDA'), t = u && u.t ? new Date(u.t).toLocaleString('id-ID', { timeZone: 'Asia/Jakarta', hour12: false, day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }).replace(/\./g, ':') + ' WIB' : '';
+    var txt = u ? 'Harga acuan NVDA $' + u.p.toFixed(2) + ' = Overview Market · ' + u.src + (t ? ' · ' + t : '') + '. Ukuran order bid/ask adalah simulasi ilustratif, bukan data bursa. Bukan saran investasi.' : 'Menunggu harga acuan NVDA dari Overview Market…';
+    if (el.textContent !== txt) el.textContent = txt;
+  }
+  setInterval(function () { if (!D.hidden) l2Note(); }, 3000);
+  setTimeout(l2Note, 1500);
+
+  function se2Note() {
+    var cf = D.getElementById('se2-cf'); if (!cf || !cf.parentNode) return;
+    var el = D.getElementById('se2-note');
+    if (!el) { el = D.createElement('p'); el.id = 'se2-note'; el.className = 'text-[10px] text-gray-500'; cf.parentNode.insertBefore(el, cf.nextSibling); }
+    var live = dir().some(function (x) { return x._lsrc === 'live'; });
+    var txt = 'Harga saham = Overview Market & U.S. Stock Directory (' + (live ? 'Yahoo Finance' : (W.__sdSnapDate ? 'snapshot harian ' + W.__sdSnapDate : 'data tersimpan')) + '). ETF sektor, futures & makro: Yahoo Finance atau snapshot harian; bila keduanya belum terjangkau, bagian itu tampil sebagai simulasi ilustratif (label OFF). Bukan saran investasi.';
+    if (el.textContent !== txt) el.textContent = txt;
+  }
+  setInterval(function () { if (!D.hidden) se2Note(); }, 3000);
+  setTimeout(load, 4000);
+  setInterval(function () { if (!D.hidden) { if (DATA && !fresh()) apply(); } }, 60000);
+  setInterval(function () { if (!D.hidden) { tries = 0; load(); } }, 36e5);
 })();
 </script>
 <style id="ba-sd-icon-fix">
