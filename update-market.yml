@@ -1,0 +1,51 @@
+# Simpan sebagai:  .github/workflows/update-market.yml
+# Memperbarui data pasar otomatis dan menyimpannya di branch "market-data"
+# (satu commit yang ditimpa tiap run, jadi riwayat repo & deploy situs tidak terganggu).
+name: Update data pasar
+
+on:
+  schedule:
+    - cron: "*/10 * * * 1-5"   # hari kerja: tiap 10 menit
+    - cron: "*/30 * * * 0,6"   # akhir pekan: tiap 30 menit
+  workflow_dispatch: {}          # tombol "Run workflow" manual
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-market
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Ambil kode
+        uses: actions/checkout@v4
+
+      - name: Ambil data lama (jika ada)
+        run: |
+          mkdir -p old-data
+          if git ls-remote --exit-code --heads origin market-data >/dev/null 2>&1; then
+            git fetch origin market-data --depth=1
+            git archive FETCH_HEAD | tar -x -C old-data
+          fi
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Ambil data pasar terbaru
+        run: python update_market.py out-data old-data
+
+      - name: Terbitkan ke branch market-data
+        run: |
+          cd out-data
+          git init -q -b market-data
+          git config user.name  "market-bot"
+          git config user.email "market-bot@users.noreply.github.com"
+          git add -A
+          git commit -q -m "data pasar $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" market-data
