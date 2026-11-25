@@ -7,6 +7,7 @@ on:
   schedule:
     - cron: "*/10 * * * 1-5"   # hari kerja: tiap 10 menit
     - cron: "*/30 * * * 0,6"   # akhir pekan: tiap 30 menit
+    - cron: "20 20,21 * * 1-5" # harian: sesudah penutupan bursa AS (musim panas & dingin)
   workflow_dispatch: {}          # tombol "Run workflow" manual
 
 permissions:

@@ -4,9 +4,10 @@
  * - Data pasar (market.json, market-data.json, daily.json, raw.githubusercontent.com) dan
  *   semua permintaan ke domain lain: TIDAK disentuh, selalu langsung ke jaringan,
  *   supaya semua browser menerima data terbaru yang sama.
- * - Naikkan VER setiap kali ingin memaksa semua perangkat membuang cache lama.
+ * - Otomatis: cache statis > 24 jam tidak dipakai lebih dulu; halaman membersihkan cache tiap hari (lihat ba-housekeeping).
+ * - Naikkan VER bila ingin memaksa semua perangkat membuang cache lama sekarang juga.
  */
-const VER = 'ba-v2';
+const VER = 'ba-v3';
 const CACHE = VER + '-static';
 const SHELL = ['index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 const SCOPE = self.registration.scope;
@@ -65,12 +66,17 @@ async function handleNavigate(req) {
 }
 
 /* File statis lokal: cache dulu, perbarui di belakang */
+const MAX_AGE = 864e5; // cache statis lebih tua dari 24 jam tidak dipakai lebih dulu dari jaringan
 async function handleStatic(req) {
   const hit = await caches.match(req);
   const refresh = fetch(req)
     .then((res) => { putCache(req, res.clone()); return res; })
     .catch(() => null);
-  if (hit) return hit;
+  if (hit) {
+    const t = Date.parse(hit.headers.get('date') || '');
+    if (t && Date.now() - t > MAX_AGE) { const fresh = await refresh; return fresh || hit; }
+    return hit;
+  }
   const res = await refresh;
   return res || Response.error();
 }
@@ -95,4 +101,8 @@ self.addEventListener('fetch', (e) => {
 
 self.addEventListener('message', (e) => {
   if (e.data === 'skipWaiting') self.skipWaiting();
+  if (e.data === 'refresh-shell') {
+    e.waitUntil(caches.open(CACHE).then((c) =>
+      Promise.all(SHELL.map((u) => c.add(new Request(SCOPE + u, { cache: 'reload' })).catch(() => {})))));
+  }
 });
